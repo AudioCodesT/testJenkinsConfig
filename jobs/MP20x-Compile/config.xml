@@ -277,7 +277,7 @@ ${WORKSPACE}/rg/build/MP2*.rms=&gt;com/ac/MP/$Major/$Build
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.5">
-      <template>${NEWTAG}</template>
+      <template>$NEWTAG</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
