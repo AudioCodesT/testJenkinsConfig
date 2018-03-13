@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>SmartTAP Build static server - run nightly</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/SmartTAP.git</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/Development</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
+      <url>https://test-gerrit/plugins/gitblit/</url>
+      <projectName>SmartTAP/SmartTAP</projectName>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+    </extensions>
+  </scm>
+  <assignedNode>smt-Build</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H  3 * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!c:\cygwin\bin\bash --login -i
+
+cd $WORKSPACE
+#
+fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
+BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH`
+DATE=`date`
+
+#calculate new tag
+# Tag structure is X.X.X.XXXXY
+# where X is a digit Y is a letter
+# If vesion number is to be handled by Jenkins,
+# parse it from OLDTAG here.
+#
+# Define new build number
+MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
+MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
+POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
+SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
+OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
+NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
+NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
+VERSION=$MAJOR.$MINOR.$POINT
+
+
+sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
+
+# Need these details for the UpdateVI job
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
+#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$fullBranch | sed s/\&quot;/\&apos;/g`
+#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$fullBranch | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
+RN=&quot;&quot;
+while read -r hash; do 
+  subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+  VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/^Issue: //g; s/[^0-9] .*//g&apos;)
+  RN+=---$subject::$hash::$VI
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$fullBranch)&quot;
+
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
+GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
+
+echo NEWBUILD=${NEWBUILD} &gt; release.prop
+echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
+echo GERRIT_BRANCH=${BRANCH} &gt;&gt; release.prop
+echo VERSION=${VERSION} &gt;&gt; release.prop
+echo RN=${RN} &gt;&gt; release.prop
+echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.prop
+echo EMAIL=${EMAIL} &gt;&gt; release.prop
+echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
+echo DATE=${DATE} &gt;&gt; release.prop
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
+</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.3">
+      <info>
+        <propertiesFilePath>release.prop</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+    <hudson.plugins.powershell.PowerShell plugin="powershell@1.3">
+      <command>&lt;#
+    .SYNOPSIS
+    Runs the specified command in an elevated context.
+
+    .DESCRIPTION
+    Runs the specified command in an elevated context. This is useful on Windows
+    systems where the user account control is enabled. Input object and result
+    objects are serialized using XML.
+    It&apos;s important, the command does use the current user context. This means,
+    the current user needs administrative permissions on the local system.
+    If no file path or script block is specified, the current running process
+    will be run as administrator.
+
+    .INPUTS
+    None.
+
+    .OUTPUTS
+    Output of the invoked script block or command.
+
+    .EXAMPLE
+    PS C:\&gt; Invoke-Elevated
+    Will start the current process, e.g. PowerShell Console or ISE, in an
+    elevated session as Administrator.
+
+    .EXAMPLE
+    PS C:\&gt; Invoke-Elevated -FilePath &apos;C:\Temp\script.ps1&apos;
+    Start the script in an elevated session and return the result.
+
+    .EXAMPLE
+    PS C:\&gt; Invoke-Elevated -ScriptBlock { Get-DscLocalConfigurationManager }
+    Start the script in an elevated session and return the result.
+
+    .EXAMPLE
+    PS C:\&gt; Invoke-Elevated -ScriptBlock { param ($Path) Remove-Item -Path $Path } -ArgumentList &apos;C:\Windows\test.txt&apos;
+    Delete a file from the program files folder with elevated permission,
+    beacuse a normal user account has no permissions.
+
+    .NOTES
+    Author : Claudio Spizzi
+    License : MIT License
+
+    .LINK
+    https://github.com/claudiospizzi/SecurityFever
+#&gt;
+
+function Invoke-Elevated
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute(&apos;PSShouldProcess&apos;, &apos;&apos;, Scope=&apos;Function&apos;, Target=&apos;Invoke-Elevated&apos;)]
+    [CmdletBinding(DefaultParameterSetName = &apos;None&apos;)]
+    [Alias(&apos;sudo&apos;)]
+    param
+    (
+        # The path to an executable program.
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = &apos;FilePath&apos;)]
+        [ValidateScript({Test-Path -Path $_})]
+        [System.String]
+        $FilePath,
+
+        # The script block to execute in an elevated context.
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = &apos;ScriptBlock&apos;)]
+        [System.Management.Automation.ScriptBlock]
+        $ScriptBlock,
+
+        # Optional argument list for the program or the script block.
+        [Parameter(Mandatory = $false, Position = 1)]
+        [System.Object[]]
+        $ArgumentList
+    )
+
+    if ($PSCmdlet.ParameterSetName -eq &apos;None&apos;)
+    {
+        # If no file path and script block was specified, just elevate the
+        # current session for interactive use. For this, use the start info
+        # object of the current process and start an elevated new one.
+        $currentProcess = Get-Process -Id $PID
+
+        $processStart = $currentProcess.StartInfo
+        $processStart.FileName         = $currentProcess.Path
+        $processStart.Verb             = &apos;RunAs&apos;
+
+        $process = New-Object -TypeName System.Diagnostics.Process
+        $process.StartInfo = $processStart
+        $process.Start() | Out-Null
+    }
+
+    if ($PSCmdlet.ParameterSetName -eq &apos;FilePath&apos;)
+    {
+        # If a file path instead of a script block was specified, just load the
+        # file content and parse it as script block.
+        $ScriptBlock = [System.Management.Automation.ScriptBlock]::Create((Get-Content -Path $FilePath -ErrorAction Stop -Raw))
+    }
+
+    if ($PSCmdlet.ParameterSetName -eq &apos;FilePath&apos; -or $PSCmdlet.ParameterSetName -eq &apos;ScriptBlock&apos;)
+    {
+        try
+        {
+            # To transport the parameters, script outputs and the errors, we use
+            # the CliXml object serialization and temporary files. This is
+            # necessary because the elevated process runs in an elevated context
+            $scriptBlockFile   = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
+            $argumentListFile  = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
+            $commandOutputFile = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
+            $commandErrorFile  = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
+
+            $ScriptBlock  | Export-Clixml -Path $scriptBlockFile
+            $ArgumentList | Export-Clixml -Path $argumentListFile
+
+            # Create a command string which contains all command executed in the
+            # elevated session. The wrapper of the script block is needed to
+            # pass the parameters and return all outputs objects and errors.
+            $commandString = &apos;&apos;
+            $commandString += &apos;Set-Location -Path &quot;{0}&quot;;&apos; -f $pwd.Path
+            $commandString += &apos;$scriptBlock = [System.Management.Automation.ScriptBlock]::Create((Import-Clixml -Path &quot;{0}&quot;));&apos; -f $scriptBlockFile
+            $commandString += &apos;$argumentList = [System.Object[]] (Import-Clixml -Path &quot;{0}&quot;);&apos; -f $argumentListFile
+            $commandString += &apos;$output = Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $argumentList;&apos;
+            $commandString += &apos;$error | Export-Clixml -Path &quot;{0}&quot;;&apos; -f $commandErrorFile
+            $commandString += &apos;$output | Export-Clixml -Path &quot;{0}&quot;;&apos; -f $commandOutputFile
+
+            $commandEncoded = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($commandString))
+
+            $processStart = New-Object -TypeName System.Diagnostics.ProcessStartInfo -ArgumentList &apos;C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe&apos;
+            $processStart.Arguments   = &apos;-NoProfile -NonInteractive -EncodedCommand {0}&apos; -f $commandEncoded
+            $processStart.Verb        = &apos;RunAs&apos;
+            $processStart.WindowStyle = &apos;Hidden&apos;
+
+            $process = New-Object -TypeName System.Diagnostics.Process
+            $process.StartInfo = $processStart
+            $process.Start() | Out-Null
+
+            Write-Verbose &quot;Elevated powershell.exe process started with id $($process.Id).&quot;
+
+            $process.WaitForExit()
+
+            Write-Verbose &quot;Elevated powershell.exe process stopped with exit code $($process.ExitCode).&quot;
+
+            if ((Test-Path -Path $commandErrorFile))
+            {
+                Import-Clixml -Path $commandErrorFile | ForEach-Object { Write-Error $_ }
+            }
+
+            if ((Test-Path -Path $commandOutputFile))
+            {
+                Import-Clixml -Path $commandOutputFile | Write-Output
+            }
+        }
+        catch
+        {
+            throw $_
+        }
+        finally
+        {
+            if ($null -ne $process)
+            {
+                $process.Dispose()
+            }
+
+            Remove-Item -Path $scriptBlockFile   -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path $argumentListFile  -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path $commandOutputFile -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path $commandErrorFile  -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
+
+Invoke-Elevated -ScriptBlock {
+	foreach($line in Get-Content .\release.prop) {
+		if(-Not $line.startswith(&quot;#&quot;)){
+			$data = $line.split(&apos;=&apos;)
+			$var = $data[0]
+			$val = $data[1].replace(&apos;&quot;&apos;,&apos;&apos;)
+			[Environment]::SetEnvironmentVariable($var, $val, &quot;Machine&quot;)
+		}
+	}
+}</command>
+    </hudson.plugins.powershell.PowerShell>
+    <hudson.tasks.BatchFile>
+      <command>cd ACU\NGP\Build&#xd;
+echo &quot;Running build batch with build number (%NEWBUILD%) and InstallShield NOT disabled (0)&quot;&#xd;
+LaunchOneTouchEx.bat %NEWBUILD% 0</command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>cd ACU\NGP\Build&#xd;
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\smtBLD\ACU\NGP\Build\Release\</command>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
+          <publisherList>
+            <hudson.tasks.ArtifactArchiver>
+              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\*.*</artifacts>
+              <allowEmptyArchive>false</allowEmptyArchive>
+              <onlyIfSuccessful>false</onlyIfSuccessful>
+              <fingerprint>false</fingerprint>
+              <defaultExcludes>true</defaultExcludes>
+              <caseSensitive>true</caseSensitive>
+            </hudson.tasks.ArtifactArchiver>
+            <hudson.tasks.ArtifactArchiver>
+              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\InstallShield\*.*</artifacts>
+              <allowEmptyArchive>false</allowEmptyArchive>
+              <onlyIfSuccessful>false</onlyIfSuccessful>
+              <fingerprint>false</fingerprint>
+              <defaultExcludes>true</defaultExcludes>
+              <caseSensitive>true</caseSensitive>
+            </hudson.tasks.ArtifactArchiver>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+    <hudson.plugins.git.GitPublisher plugin="git@3.0.1">
+      <configVersion>2</configVersion>
+      <pushMerge>false</pushMerge>
+      <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
+      <forcePush>false</forcePush>
+      <tagsToPush>
+        <hudson.plugins.git.GitPublisher_-TagToPush>
+          <targetRepoName>origin</targetRepoName>
+          <tagName>${NEWTAG}</tagName>
+          <tagMessage>Jenkins auto tagging</tagMessage>
+          <createTag>true</createTag>
+          <updateTag>true</updateTag>
+        </hudson.plugins.git.GitPublisher_-TagToPush>
+      </tagsToPush>
+    </hudson.plugins.git.GitPublisher>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>yuvaly shukyr</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.57.2">
+      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.1">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.FileBuildParameters>
+              <propertiesFile>release.prop</propertiesFile>
+              <failTriggerOnMissing>false</failTriggerOnMissing>
+              <useMatrixChild>false</useMatrixChild>
+              <onlyExactRuns>false</onlyExactRuns>
+            </hudson.plugins.parameterizedtrigger.FileBuildParameters>
+          </configs>
+          <projects>UpdateVI-Jira</projects>
+          <condition>UNSTABLE_OR_BETTER</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+  </publishers>
+  <buildWrappers>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.5.0">
+      <details>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>smt-release</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
+        <stagingPlugin/>
+      </details>
+      <resolverDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+      </resolverCredentialsConfig>
+      <deployPattern>C:\j\workspace\smtBLD\${NEWTAG}.7z=&gt;com/ac/smt-release/SmartTAP/${VERSION}/</deployPattern>
+      <resolvePattern></resolvePattern>
+      <matrixParams></matrixParams>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <multiConfProject>false</multiConfProject>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+  </buildWrappers>
+</project>
