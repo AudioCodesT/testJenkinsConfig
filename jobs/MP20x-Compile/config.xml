@@ -173,7 +173,7 @@ cd rg
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-#./dceBuild.sh  --board=$BOARD --fast=no --full=yes
+./dceBuild.sh  --board=$BOARD --fast=no --full=yes
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.3">
