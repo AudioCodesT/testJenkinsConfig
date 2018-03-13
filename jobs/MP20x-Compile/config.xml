@@ -163,9 +163,6 @@ Build=`echo ${NEWTAG} | cut -d_ -f2,3`
 
 echo Major=$Major &gt;&gt; generated_version.properties
 echo Build=$Build &gt;&gt; generated_version.properties
-echo TAGNAME=$Build &gt; for_copy.properties
-echo GERRIT_BRANCH=$Major &gt;&gt; for_copy.properties
-echo REPOSITORY=MP20x &gt;&gt; for_copy.properties
 
 BL=`git describe --tags --first-parent`
 echo BL ver is: ${BL}
@@ -183,6 +180,10 @@ sudo chown -R centos:centos .
     <EnvInjectBuilder plugin="envinject@2.1.3">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
+        <propertiesContent>TAGNAME=$Build
+GERRIT_BRANCH=$Major
+REPOSITORY=MP20x
+</propertiesContent>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -191,12 +192,9 @@ sudo chown -R centos:centos .
       <configs>
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
-            <hudson.plugins.parameterizedtrigger.FileBuildParameters>
-              <propertiesFile>for_copy.properties</propertiesFile>
-              <failTriggerOnMissing>false</failTriggerOnMissing>
-              <useMatrixChild>false</useMatrixChild>
-              <onlyExactRuns>false</onlyExactRuns>
-            </hudson.plugins.parameterizedtrigger.FileBuildParameters>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties></properties>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <projects>sbc-copy-to-netapp1</projects>
           <condition>ALWAYS</condition>
