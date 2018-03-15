@@ -1,0 +1,355 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.13-SNAPSHOT">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>10</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>REFSPEC</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>true</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    <EnvInjectJobProperty plugin="envinject@2.1.3">
+      <info>
+        <propertiesContent>ARTIFACTORY_HOST=test-artifactory
+DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
+BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
+PATH=/bin:$PATH</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.39">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+      <on>true</on>
+      <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
+      <keepBuildVariables>true</keepBuildVariables>
+      <overrideBuildParameters>false</overrideBuildParameters>
+    </EnvInjectJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <refspec>$REFSPEC</refspec>
+        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>$REFSPEC</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.BuildChooserSetting>
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.2">
+          <separator>#</separator>
+        </buildChooser>
+      </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+    </extensions>
+  </scm>
+  <assignedNode>sbc-mc-fathers</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <axes>
+    <hudson.matrix.LabelAxis>
+      <name>label</name>
+      <values>
+        <string>sbc-linux-build</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+    <hudson.matrix.TextAxis>
+      <name>BOARDNAME</name>
+      <values>
+        <string>M1000_MSBG</string>
+        <string>M4000</string>
+        <string>MP500_ESBC</string>
+        <string>MP500_MSBG</string>
+        <string>HostedTP</string>
+      </values>
+    </hudson.matrix.TextAxis>
+  </axes>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>artifactory_host=${ARTIFACTORY_HOST}
+User=&quot;$artifactory_user:$artifactory_password&quot;
+
+cd TrunkPackRam
+NEWTAG=`./MakeBrdVersion.sh`
+git describe --tags
+git log -n10 --decorate --oneline
+head -12 Bsps/Common/Include/BrdVersion.h | tail -3
+
+echo BOARDNAME=${BOARDNAME} &gt; ../generated_sbc_version.properties
+
+if [[ $GERRIT_BRANCH =~ &quot;collab/&quot; ]]; then
+  GERRIT_BRANCH=`git branch -r --contains $(git describe --tag --abbrev=0) | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+fi
+echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
+
+TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
+
+if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
+chmod +x GetImages.sh
+./GetImages.sh $BOARDNAME $artifactory_host $User
+
+cd ..
+sudo chmod -R 755 .
+sudo chown -R centos:centos .
+cd TrunkPackRam
+
+</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.3">
+      <info>
+        <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+    <hudson.tasks.Shell>
+      <command>artifactory_host=${ARTIFACTORY_HOST}
+User=&quot;$artifactory_user:$artifactory_password&quot;
+
+if [ ! -d &quot;$WORKSPACE/CompilationResults&quot; ]; then
+  rm -rf $WORKSPACE/CompilationResults
+fi
+
+if curl -ks -u $User https://$artifactory_host/api/storage/sbc-review/com/ac/sbc/DRT/Firmware/${TARGET}/${BOARDNAME}_SIP.cmp | grep -q uri
+then 
+	echo ${TARGET}/${BOARDNAME}_SIP.cmp exist already!... Abort without error;
+    exit 0
+fi
+
+cd TrunkPackRam
+
+if [ $BOARDNAME == &quot;HostedTP&quot; ]; then SERVER=&quot;--server=localhost &quot;; else SERVER=&quot;&quot;; fi
+./buildAll.sh --board=${BOARDNAME} --sip=yes --user=no --fast=yes $SERVER --custom-version=-d$BUILD_NUMBER
+
+cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin
+mv ram${BOARDNAME}_SIP.cmp ${BOARDNAME}_SIP.cmp
+
+#zip -r ${BOARDNAME}_SIP.map.zip ram${BOARDNAME}_SIP.map
+#zip -r ${BOARDNAME}_SIP.elf.zip ram${BOARDNAME}_SIP.elf
+</command>
+    </hudson.tasks.Shell>
+    <hudson.plugins.parameterizedtrigger.TriggerBuilder plugin="parameterized-trigger@2.35.1">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>REFSPEC=${REFSPEC}
+GERRIT_BRANCH=${GERRIT_BRANCH}
+EMAIL=${EMAIL}
+BOARD=${BOARDNAME}_SIP.cmp</properties>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>sbc-drt-copy-to-netapp1</projects>
+          <condition>ALWAYS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+          <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
+        </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.TriggerBuilder>
+  </builders>
+  <publishers>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+            <worstResult>
+              <name>FAILURE</name>
+              <ordinal>2</ordinal>
+              <color>RED</color>
+              <completeBuild>true</completeBuild>
+            </worstResult>
+            <bestResult>
+              <name>SUCCESS</name>
+              <ordinal>0</ordinal>
+              <color>BLUE</color>
+              <completeBuild>true</completeBuild>
+            </bestResult>
+          </condition>
+          <publisherList>
+            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@0.17">
+              <buildSteps>
+                <hudson.tasks.Shell>
+                  <command>#!/usr/bin/env ruby
+
+require &apos;json&apos;
+
+if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
+  change=$1
+  ps=$2
+else
+  puts &apos;Invalid refspec&apos;
+  exit 0
+end
+
+data = {
+  labels: { DRT: &apos;-1&apos; },
+  message: &apos;Compilation Failed - &apos; + ENV[&apos;BUILD_URL&apos;],
+  notify: &apos;OWNER&apos;,
+  tag: &apos;DRT&apos;,
+}
+
+system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
+       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)
+</command>
+                </hudson.tasks.Shell>
+              </buildSteps>
+              <scriptOnlyIfSuccess>false</scriptOnlyIfSuccess>
+              <scriptOnlyIfFailure>true</scriptOnlyIfFailure>
+              <markBuildUnstable>false</markBuildUnstable>
+              <executeOn>MATRIX</executeOn>
+            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+  </publishers>
+  <buildWrappers>
+    <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
+      <script>EMAIL=`git log FETCH_HEAD -n1 --not --remotes --pretty=format:&quot;%ce&quot; | head -1`
+echo EMAIL=${EMAIL}
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
+-d &quot;{\&quot;message\&quot;: \&quot;DRT compilation has started - $BUILD_URL\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
+-H &apos;Content-Type: application/json&apos; &gt; /dev/null
+
+</script>
+      <scriptType>unixScript</scriptType>
+      <runOnlyOnParent>true</runOnlyOnParent>
+      <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
+    </com.lookout.jenkins.EnvironmentScript>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.5.0">
+      <details>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>sbc-review</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
+        <stagingPlugin/>
+      </details>
+      <resolverDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+      </resolverCredentialsConfig>
+      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.cmp=&gt;com/ac/sbc/DRT/Firmware/${TARGET}
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.*.zip=&gt;com/ac/sbc/DRT/Firmware/${TARGET}/map</deployPattern>
+      <resolvePattern></resolvePattern>
+      <matrixParams></matrixParams>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>true</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <artifactoryCombinationFilter>label==&quot;sbc-linux-build&quot;</artifactoryCombinationFilter>
+      <multiConfProject>true</multiConfProject>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.3">
+      <info>
+        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.39">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.3">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artifactory_password</name>
+          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.5">
+      <template>#${BUILD_NUMBER} -- ${REFSPEC}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+  <childCustomWorkspace>${SHORT_COMBINATION}</childCustomWorkspace>
+</matrix-project>
