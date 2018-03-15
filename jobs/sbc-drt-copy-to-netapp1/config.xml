@@ -74,7 +74,6 @@ Artifactory=&quot;https://test-artifactory/api/storage/sbc-review/com/ac/sbc&quo
 DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
 REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
-CountFiles=0
 
 if ! [ -d &quot;$Target&quot; ]; then
   mkdir &quot;$Target&quot;
