@@ -94,6 +94,7 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
      if [ $ArtSize != $DestSize ]; then 
        echo $ArtSize--$DestSize: $file is differ, copy again...
        rm -f $Target/$FileName
+       exit 1
      fi
    done &lt; &quot;$REFTARGET.list&quot;
 fi
@@ -128,6 +129,11 @@ EMAIL=${EMAIL}
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>yossim Shuky.Riechard</recipients>
+      <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
     <EnvInjectBuildWrapper plugin="envinject@2.1.3">
