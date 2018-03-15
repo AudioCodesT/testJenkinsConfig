@@ -74,7 +74,6 @@ Artifactory=&quot;https://test-artifactory/api/storage/sbc-review/com/ac/sbc&quo
 DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
 REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
-CountDownload=0
 CountFiles=0
 
 if ! [ -d &quot;$Target&quot; ]; then
@@ -89,22 +88,17 @@ curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep uri | grep 
 if [ -s &quot;$REFTARGET.list&quot; ]; then
    while read -r FileName
    do
-     if [ -e &quot;$Target/$FileName&quot; ]; then 
-       ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
-       DestSize=`wc -c &lt;$Target/$FileName`
-       if [ $ArtSize != $DestSize ]; then 
-         echo $ArtSize--$DestSize: $file is differ, copy again...
-         rm -f $Target/$FileName
-       else
-        continue;
-       fi
+     if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
+     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output &quot;$Target/$FileName&quot;
+     ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+     DestSize=`wc -c &lt;$Target/$FileName`
+     if [ $ArtSize != $DestSize ]; then 
+       echo $ArtSize--$DestSize: $file is differ, copy again...
+       rm -f $Target/$FileName
      fi
-     ((CountDownload+=1))
-     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output &quot;$Target/$FileName&quot;    
    done &lt; &quot;$REFTARGET.list&quot;
 fi
 
-#if [ $CountDownload == 0 ]; then echo &quot;All files has already been copied, exiting job&quot;; exit 2; fi
 if [ `find $Target -maxdepth 1 -size +20000 -print | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
 if [ -e /tmp/$REFTARGET ]; then
