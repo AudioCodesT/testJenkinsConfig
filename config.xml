@@ -849,7 +849,6 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>smtBLD</string>
         <string>smtCRV</string>
-        <string>smtRVIS</string>
       </jobNames>
       <jobFilters/>
       <columns>
