@@ -353,7 +353,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       </tagsToPush>
     </hudson.plugins.git.GitPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yuvaly shukyr</recipients>
+      <recipients>yuvaly shukyr briank</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
