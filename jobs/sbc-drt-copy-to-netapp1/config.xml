@@ -90,7 +90,7 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
    while read -r FileName
    do
      if [ -e &quot;$Target/$FileName&quot; ]; then 
-       ArtSize=`$curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+       ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
        DestSize=`wc -c &lt;$Target/$FileName`
        if [ $ArtSize != $DestSize ]; then 
          echo $ArtSize--$DestSize: $file is differ, copy again...
