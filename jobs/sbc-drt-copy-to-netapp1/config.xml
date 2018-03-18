@@ -101,6 +101,18 @@ fi
 
 if [ `find $Target -maxdepth 1 -size +20000 -print | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
+# check if sbc-drt-request job is in the queue or already running
+for job in \
+$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt-request); do
+  if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
+    echo &quot;DRT was executed already, job $job&quot;; 
+    exit 2
+  fi
+done
+
+
 if [ -e /tmp/$REFTARGET ]; then
   if [ `expr $(date +%s) - $(stat --printf=&apos;%Y&apos; /tmp/$REFTARGET)` -le 300 ]; then echo &quot;DRT was executed already&quot;; exit 2; fi
   rm -f /tmp/$REFTARGET
