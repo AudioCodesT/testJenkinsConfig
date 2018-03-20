@@ -258,7 +258,7 @@ python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
 git checkout server_$NEW_TAG
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting
-
+python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
 
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
@@ -295,7 +295,10 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat /home/centos/jenkinsslave/workspace/sanity.properties)&quot;&#xd;
+          <script>cd $WORKSPACE/EMS/VersionRelease&#xd;
+python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
+&#xd;
+export &quot;$(cat /home/centos/jenkinsslave/workspace/sanity.properties)&quot;&#xd;
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
