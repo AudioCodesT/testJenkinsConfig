@@ -212,14 +212,16 @@ aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-ma
 #keep ip address into &quot;vmIP&quot;
 vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cut -d &apos;&quot;&apos; -f 4)&quot;
 
-echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; /home/centos/jenkinsslave/workspace/sanity.properties
-
-#wait for the new machine to come up
-sleep 300
-
 # find what branch is it?
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
+
+echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; /home/centos/jenkinsslave/workspace/sanity.properties
+echo &quot;vmIP=${vmIP}&quot; &gt; /home/centos/jenkinsslave/workspace/sanity.properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt; /home/centos/jenkinsslave/workspace/sanity.properties
+
+#wait for the new machine to come up
+sleep 300
 
 #find the latest official tag
 #if the current new ISO is official (ISO_DEPLOY_DESTINATION==official_iso) and (current branch == upgrade_from)
