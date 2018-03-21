@@ -261,7 +261,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
 &#xd;
 export &quot;$(cat sanity.properties)&quot;&#xd;
-#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</script>
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
