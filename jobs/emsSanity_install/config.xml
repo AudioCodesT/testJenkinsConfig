@@ -215,12 +215,19 @@ echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
 #f [[ $status != &quot;running&quot; ]]; then sleep 3; fi
 sleep 300
 
-#2. run python scripts. install, integration tests
+#find what is the current branch
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+
+#2. run python scripts: set network, install
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
-python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting
-python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
+# run sanity tests and log collect
+if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
+	then python2.7 SanityTest.py $NEW_TAG $vmIP
+	else python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting
+    	python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
+fi
 
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
