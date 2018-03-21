@@ -63,7 +63,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -261,12 +261,12 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
 &#xd;
 export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</script>
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher</recipients>
+      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
