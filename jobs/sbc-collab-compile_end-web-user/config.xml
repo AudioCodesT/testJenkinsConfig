@@ -1,0 +1,288 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.13-SNAPSHOT">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>60</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>10</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue>collab/end-web-user</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    <EnvInjectJobProperty plugin="envinject@2.1.5">
+      <info>
+        <propertiesContent>ARTIFACTORY_HOST=test-artifactory
+DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
+BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
+PATH=/bin:$PATH</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.42">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+      <on>true</on>
+      <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
+      <keepBuildVariables>true</keepBuildVariables>
+      <overrideBuildParameters>false</overrideBuildParameters>
+    </EnvInjectJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>collab/end-web-user</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+    </extensions>
+  </scm>
+  <assignedNode>sbc-mc-fathers</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <axes>
+    <hudson.matrix.TextAxis>
+      <name>BOARD</name>
+      <values>
+        <string>--board=MP500_MSBG --sip=yes --lab=yes</string>
+        <string>--board=MP500_ESBC --sip=yes --lab=yes</string>
+      </values>
+    </hudson.matrix.TextAxis>
+    <hudson.matrix.LabelAxis>
+      <name>label</name>
+      <values>
+        <string>sbc-linux-build</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/sh -x
+
+artifactory_host=${ARTIFACTORY_HOST}
+output_folder=${DEPENDENCIES_FOLDER}
+User=&quot;$artifactory_user:$artifactory_password&quot;
+GERRIT_BRANCH_TEST=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+
+# find the board that need to be compiled
+BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
+
+#rm -f $output_folder/*external_version_data.h
+
+BOARDFINALNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
+BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
+
+cd TrunkPackRam
+NEWTAG=`git describe --abbrev=1 --tags`
+Fix=$((`echo $NEWTAG | cut -d- -f1 | cut -d. -f4 | sed -r &apos;s/^0*//&apos;`+`echo $NEWTAG | cut -d- -f2`))
+Minor=`echo $NEWTAG | cut -d- -f1 | cut -d. -f3 | sed -r &apos;s/^0*//&apos;`
+sed &quot;9,12 s/%MINOR%/$Minor/;9,12 s/%FIX%/$Fix/&quot; BrdVersion.h.in &gt; Bsps/Common/Include/BrdVersion.h
+
+echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
+echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; ../generated_sbc_version.properties
+echo GERRIT_BRANCH=$(echo $GERRIT_BRANCH | cut -d/ -f2) &gt;&gt; ../generated_sbc_version.properties
+
+EMAIL=`git log -n1 --pretty=format:&quot;%ce&quot;`
+echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
+
+if [ -e ../OpenSource/$BOARDNAME.deps ]; then
+  if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
+  chmod +x GetImages.sh
+  ./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release
+  if [ $? -eq 1 ]; then
+    echo EXITFLAG=2 &gt;&gt; ../generated_sbc_version.properties
+    exit 2; 
+  fi
+fi
+
+cd ..
+sudo chmod -R 755 .
+sudo chown -R centos:centos .
+
+BOARDNAME=${BOARDFINALNAME}
+echo EXITFLAG=0 &gt;&gt; ../generated_sbc_version.properties
+
+</command>
+      <unstableReturn>2</unstableReturn>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+    <hudson.tasks.Shell>
+      <command>
+if [ ! -d &quot;$WORKSPACE/CompilationResults&quot; ]; then
+  rm -rf $WORKSPACE/CompilationResults
+fi
+
+if [ $EXITFLAG  == 1 ]; then exit 0; fi
+if [ $EXITFLAG  == 2 ]; then exit 2; fi
+
+cd TrunkPackRam
+./buildAll.sh ${BOARD} --fast=yes --user=no
+
+cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
+rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
+zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map
+zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
+#zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
+
+</command>
+      <unstableReturn>2</unstableReturn>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>$EMAIL, yossim</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>Need to wait for dependent artifact</regexpForRerun>
+      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunMatrixPart>true</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestChildrenRetriggerMatched</regexpForMatrixStrategy>
+      <noChildStrategy>DontRun</noChildStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>600</delay>
+      </delay>
+      <maxSchedule>3</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
+  <buildWrappers>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+      <deployerDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>true</useSpecs>
+      <uploadSpec>
+        <spec></spec>
+      </uploadSpec>
+      <downloadSpec>
+        <spec></spec>
+      </downloadSpec>
+      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/collab/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/collab/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.zip=&gt;com/ac/sbc/collab/${GERRIT_BRANCH}/${NEWTAG}/map
+</deployPattern>
+      <resolvePattern></resolvePattern>
+      <deploymentProperties></deploymentProperties>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>true</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <artifactoryCombinationFilter>label==&quot;sbc-linux-build&quot;</artifactoryCombinationFilter>
+      <multiConfProject>true</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+      <info>
+        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.42">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artifactory_password</name>
+          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+  <childCustomWorkspace>${SHORT_COMBINATION}</childCustomWorkspace>
+</matrix-project>
