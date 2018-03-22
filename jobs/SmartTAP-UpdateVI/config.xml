@@ -1,0 +1,140 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>manual run</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/SmartTAP.git</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
+      <url>https://test-gerrit/plugins/gitblit/</url>
+      <projectName>SmartTAP/SmartTAP</projectName>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+    </extensions>
+  </scm>
+  <assignedNode>smt-Build</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!c:\cygwin\bin\bash --login -i
+
+cd $WORKSPACE
+#
+fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
+BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+OLDTAG=`git describe --abbrev=0 --first-parent --tags HEAD^`
+DATE=`date`
+
+#calculate new tag
+# If vesion number is to be handled by Jenkins,
+# parse it from OLDTAG here.
+#
+# Define new build number
+# Note that suffix &quot;I&quot; is hard coded!!
+MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
+MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
+POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
+OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
+NEWBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF+1}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
+NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD&quot;I&quot;
+VERSION=$MAJOR.$MINOR.$POINT
+
+# Need these details for the UpdateVI job
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
+RN=&quot;&quot;
+while read -r hash; do 
+  subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+  VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos;)
+  RN+=---$subject::$hash::$VI
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$fullBranch)&quot;
+
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
+GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
+
+echo NEWBUILD=${NEWBUILD} &gt; release.prop
+echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
+echo GERRIT_BRANCH=${BRANCH} &gt;&gt; release.prop
+echo VERSION=${VERSION} &gt;&gt; release.prop
+echo RN=${RN} &gt;&gt; release.prop
+echo GERRIT_HOST=${GERRIT_NAME}  &gt;&gt; release.prop
+echo EMAIL=${EMAIL} &gt;&gt; release.prop
+echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
+echo DATE=${DATE} &gt;&gt; release.prop
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
+
+echo cat release.prop:
+cat release.prop
+</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>release.prop</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.FileBuildParameters>
+              <propertiesFile>release.prop</propertiesFile>
+              <failTriggerOnMissing>false</failTriggerOnMissing>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+              <useMatrixChild>false</useMatrixChild>
+              <onlyExactRuns>false</onlyExactRuns>
+            </hudson.plugins.parameterizedtrigger.FileBuildParameters>
+          </configs>
+          <projects>UpdateVI-Jira</projects>
+          <condition>UNSTABLE_OR_BETTER</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+  </publishers>
+  <buildWrappers/>
+</project>
