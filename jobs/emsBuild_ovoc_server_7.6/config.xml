@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
   <description>1.       Get latest code from branch 7.6&#xd;
@@ -19,7 +19,7 @@
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -58,7 +58,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -92,7 +92,7 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <org.jfrog.hudson.maven3.Maven3Builder plugin="artifactory@2.5.0">
+    <org.jfrog.hudson.maven3.Maven3Builder plugin="artifactory@2.15.0">
       <mavenName>maven-for-ems</mavenName>
       <rootPom>pom.xml</rootPom>
       <goals>clean install -U</goals>
@@ -181,7 +181,7 @@ echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ems_build.properties
 sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.3">
+    <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
         <propertiesFilePath>ems_build.properties</propertiesFilePath>
       </info>
@@ -196,7 +196,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.git.GitPublisher plugin="git@3.0.1">
+    <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
       <configVersion>2</configVersion>
       <pushMerge>false</pushMerge>
       <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
@@ -211,7 +211,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
         </hudson.plugins.git.GitPublisher_-TagToPush>
       </tagsToPush>
     </hudson.plugins.git.GitPublisher>
-    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.1">
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
@@ -220,6 +220,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
               <properties>NEW_TAG=${NEW_TAG}
 BRANCH=7.6
 FullTesting=$FullTesting</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <projects>ems_sanity_multijob</projects>
@@ -240,8 +241,9 @@ GERRIT_BRANCH=$BRANCH
 AuthorCommitter=$AuthorCommitter
 Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
 </properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@3.0.1">
+            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@3.8.0">
               <combineQueuedCommits>false</combineQueuedCommits>
             </hudson.plugins.git.GitRevisionBuildParameters>
           </configs>
@@ -252,26 +254,36 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@0.17">
-      <buildSteps>
-        <hudson.tasks.Shell>
-          <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
+    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
+      <config>
+        <scriptFiles/>
+        <groovyScripts/>
+        <buildSteps>
+          <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+            <results>
+              <string>SUCCESS</string>
+            </results>
+            <role>BOTH</role>
+            <buildSteps>
+              <hudson.tasks.Shell>
+                <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
 	qaServerIP=10.3.180.50
     cd ${WORKSPACE}/EMS/VersionRelease
     python2.7 iso2qa.py $NEW_TAG $qaServerIP
 fi</command>
-        </hudson.tasks.Shell>
-      </buildSteps>
-      <scriptOnlyIfSuccess>true</scriptOnlyIfSuccess>
-      <scriptOnlyIfFailure>false</scriptOnlyIfFailure>
-      <markBuildUnstable>true</markBuildUnstable>
+              </hudson.tasks.Shell>
+            </buildSteps>
+          </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+        </buildSteps>
+        <markBuildUnstable>true</markBuildUnstable>
+      </config>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
           <condition class="org.jenkins_ci.plugins.run_condition.core.NeverRun" plugin="run-condition@1.0"/>
           <publisherList>
-            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.57.2">
+            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
               <recipientList>sqa_core_mgmt@audiocodes.com, Marina.Risher@audiocodes.com, Gal.Erez, Gennady.Tsiporkin, Natan.Merfish@audiocodes.com, Kairat.Ziman@audiocodes.com, Yacov.Alster@audiocodes.com, cc:Aliya.Peretz@audiocodes.com, cc:Hadas.Attal@audiocodes.com, cc:Mark.Kemel@audiocodes.com, cc:Itamar.Suissa@audiocodes.com, cc:Liran.Badiri@audiocodes.com, cc:Leonid.Fayngold@audiocodes.com, cc:Erez.NejatHaim@audiocodes.com, cc:Kfir.Gershon@audiocodes.com, cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com, cc:Natali.Elashvili@audiocodes.com</recipientList>
               <configuredTriggers>
                 <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
@@ -313,17 +325,12 @@ fi</command>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.5.0">
-      <details>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+      <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>ems-release</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
         <stagingPlugin/>
-      </details>
+      </deployerDetails>
       <resolverDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
@@ -336,6 +343,7 @@ fi</command>
         </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
         <credentials>
@@ -344,12 +352,20 @@ fi</command>
         </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
+      <useSpecs>true</useSpecs>
+      <uploadSpec>
+        <spec></spec>
+      </uploadSpec>
+      <downloadSpec>
+        <spec></spec>
+      </downloadSpec>
       <deployPattern>${WORKSPACE}/EMS/target/DVD3*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/${ISO_DEPLOY_DESTINATION}
 
 </deployPattern>
       <resolvePattern></resolvePattern>
-      <matrixParams></matrixParams>
+      <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>true</includeEnvVars>
       <envVarsPatterns>
@@ -358,9 +374,12 @@ fi</command>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.3">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -370,7 +389,7 @@ fi</command>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.5">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
