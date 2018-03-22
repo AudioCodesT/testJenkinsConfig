@@ -1,0 +1,209 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>15</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>ARTIFACTORY</name>
+          <description></description>
+          <defaultValue>test-artifactory</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>SOURCE</name>
+          <description></description>
+          <defaultValue>sbc-release/com/ac/sbc/7.2.150/Firmware</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>DESTINATION</name>
+          <description></description>
+          <defaultValue>\\aclnas03\Versions\CompilationResults\7.2.150 Release\7.2.154</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>FROMDIR</name>
+          <description></description>
+          <defaultValue>7.20A.153.000</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TODIR</name>
+          <description></description>
+          <defaultValue>7.20A.153.241</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MAX</name>
+          <description>The maximum number of directories you want to save in this build</description>
+          <defaultValue>250</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>DELETE_ELF</name>
+          <description></description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>compile3</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>mkdir -p &quot;%DESTINATION%&quot;&#xd;
+net use T: /delete&#xd;
+net use T: &quot;%DESTINATION%&quot;&#xd;
+&#xd;
+</command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.Shell>
+      <command>#!c:\cygwin_aclnas03\bin\bash  --login -i
+
+User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
+curl=c:/curl/curl
+
+cd $WORKSPACE
+DirList=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE | grep uri | cut -d&apos;&quot;&apos; -f4 | cut -c 2- | sort -V | grep -A $MAX $FROMDIR | grep -B $MAX $TODIR -m1`
+if [ $(echo $DirList | wc -w) -gt $MAX ]; then 
+   echo Over the max range... abort; 
+   exit 1;
+fi
+
+function DeleteELF() {
+  local Folder=$1
+  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep &apos;uri\|folder&apos; | while read line
+  do
+    if echo $line | grep folder | grep -q true; then DeleteELF ${Folder}$uri;
+    else
+      uri=`echo $line | cut -d&apos;&quot;&apos; -f4`;
+      if echo $line | grep -q .\\.elf; then
+        echo Delete file ${Folder}$uri
+        $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+      fi
+    fi
+  done
+}
+
+echo Going to download: &quot;$DirList&quot; into &quot;$DESTINATION&quot;
+GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
+
+for Dir in $DirList; do
+   FileEqual=0
+   NotDelete=0
+   echo ---- Start $Dir
+   
+   if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
+
+   echo Download $Dir
+   if [ `$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE/$Dir | grep folder | grep false | wc -l` = 0 ]; then
+     $curl -ks -u $User -X GET https://$ARTIFACTORY/$SOURCE/$Dir --output &quot;t:/$Dir&quot;
+   else
+     $curl -ks -u $User -X GET https://$ARTIFACTORY/api/archive/download/$SOURCE/$Dir?archiveType=zip&gt; $Dir.zip
+     echo Extract zip into $DESTINATION...
+     unzip -o $Dir.zip -d t:/$Dir &gt; /dev/null
+     if [ $? -gt 0 ]; then
+       echo Failed to extract ZIP file... exit
+       cat $Dir.zip
+       exit 1
+     fi
+   fi
+
+   for file in $(find t:/$Dir -type f -print0 | xargs -0); do
+       echo Compare size of $file... 
+       ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE$(echo $file | cut -d: -f2) | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+       DestSize=`wc -c &lt;$file`
+       if [ $ArtSize != $DestSize ]; then 
+         echo $ArtSize--$DestSize: $file is differ - No delete
+         ((NotDelete++))
+       else
+         echo Size equals - delete from Artifactory
+         $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE$(echo $file | cut -d: -f2)
+         ((FileEqual++))
+       fi
+   done
+
+   if [ $FileEqual -gt 1 ] &amp;&amp; [ $NotDelete -eq 0 ]; then
+     echo Remove $Dir from the Artifactory...
+     $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE/$Dir
+     rm -f $Dir.zip
+   fi
+done
+
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>yossim shukyr</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+      <info>
+        <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.42">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>ARTIFACTORY_PASSWORD</name>
+          <value>{AQAAABAAAAAQP7YB5qfoH7d77gN7dK0t6aE7KnTasaJzn7I1RwqhBGw=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER}, $SOURCE: $FROMDIR -- $TODIR</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
