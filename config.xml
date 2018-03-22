@@ -3,7 +3,7 @@
   <disabledAdministrativeMonitors>
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
   </disabledAdministrativeMonitors>
-  <version>2.89.4</version>
+  <version>2.107.1</version>
   <installState class="jenkins.install.InstallState$5">
     <isSetupComplete>true</isSetupComplete>
     <name>RESTART</name>
@@ -637,6 +637,7 @@
         <string>CheckJira</string>
         <string>CheckVI</string>
         <string>MoveArtifactoryToLocalStorage</string>
+        <string>MoveArtifactoryToLocalStorage1</string>
         <string>SmartTAP-UpdateVI</string>
         <string>test-email</string>
         <string>Update-VI_emsBuild_ovoc_server_7.4.1000</string>
