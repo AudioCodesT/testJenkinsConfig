@@ -265,6 +265,11 @@ sed -i.bak &apos;s/\\/ /g&apos; ../generated_sbc_version.properties
     </EnvInjectBuilder>
   </builders>
   <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients></recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
