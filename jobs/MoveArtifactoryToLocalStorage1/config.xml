@@ -130,13 +130,14 @@ function EachFolder() {
   local TargetPath=$(echo $Folder | sed s:$SOURCE::)
   $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep uri | grep -v https: | sort -V | while read line
   do
-    uri=`echo $line | cut -d&apos;&quot;&apos; -f4`;
+    uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
+    DestSize=0; ArtSize=0
     ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
         echo Download file ${Folder}$uri...
         $curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
         DestSize=`wc -c &lt;${DESTINATION}${TargetPath}$uri`
-        if [ $ArtSize != $DestSize ]; then 
+        if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
           echo $ArtSize--$DestSize: $file is differ - No delete and exit......
           exit 1
         else
@@ -155,13 +156,21 @@ function EachFolder() {
 echo Going to download: &quot;$DirList&quot; into &quot;$DESTINATION&quot;
 GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
 
+DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
+
 for Dir in $DirList; do
    echo --------------------------------- Start $Dir
    
    if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
 
    echo Download $Dir
+   mkdir ${DESTINATION}$Dir
    EachFolder $SOURCE/$Dir
+   ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE/$Dir | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+   if [ &quot;$ArtSize&quot; == &quot;&quot; ]; then
+     echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
+     $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE/$Dir
+   fi  
 done
 
 </command>
