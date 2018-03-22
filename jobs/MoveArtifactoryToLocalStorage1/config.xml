@@ -168,8 +168,8 @@ for Dir in $DirList; do
    echo Download $Dir
    mkdir ${DESTINATION}/$Dir
    EachFolder $SOURCE/$Dir
-   echo Delete it ------------------
-   $curl -ks -X GET https://$ARTIFACTORY/$SOURCE/$Dir | grep -F &apos;&quot;children&quot; : [ ],&apos;
+   echo Delete it ------------------ $curl -ks -X GET https://$ARTIFACTORY/$SOURCE/$Dir
+   $curl -ks -X GET https://$ARTIFACTORY/$SOURCE/$Dir
    if $curl -ks -X GET https://$ARTIFACTORY/$SOURCE/$Dir | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
      echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
      $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE/$Dir
