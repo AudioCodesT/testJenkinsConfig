@@ -135,7 +135,6 @@ function EachFolder() {
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
         echo Download file ${Folder}$uri...
         $curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
-        echo Compare size of $file...
         DestSize=`wc -c &lt;${DESTINATION}${TargetPath}$uri`
         if [ $ArtSize != $DestSize ]; then 
           echo $ArtSize--$DestSize: $file is differ - No delete and exit......
@@ -144,13 +143,11 @@ function EachFolder() {
           echo Size equel - delete from Artifactory...
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
          fi
-        echo ------
     else
         mkdir ${DESTINATION}${TargetPath}$uri
         EachFolder ${Folder}$uri;
-        echo Delete the empty directory from Artifactory ${Folder}$uri...
+        echo ----- Delete the empty directory from Artifactory ${Folder}$uri...
         $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
-        echo -------------
     fi
   done
 }
@@ -159,7 +156,7 @@ echo Going to download: &quot;$DirList&quot; into &quot;$DESTINATION&quot;
 GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
 
 for Dir in $DirList; do
-   echo ---- Start $Dir
+   echo --------------------------------- Start $Dir
    
    if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
 
