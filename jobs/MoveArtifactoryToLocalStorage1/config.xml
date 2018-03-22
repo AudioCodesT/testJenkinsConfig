@@ -78,7 +78,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -125,49 +124,49 @@ function DeleteELF() {
   done
 }
 
+function EachFolder() {
+  
+  local Folder=$1
+  local TargetPath=$(echo $Folder | sed s:$SOURCE::)
+  curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep uri | grep -v https: | sort -V | while read line
+  do
+    uri=`echo $line | cut -d&apos;&quot;&apos; -f4`;
+    ArtSize=`curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
+        echo Download file ${Folder}$uri...
+        curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
+        echo Compare size of $file...
+        DestSize=`wc -c &lt;${DESTINATION}${TargetPath}$uri`
+        if [ $ArtSize != $DestSize ]; then 
+          echo $ArtSize--$DestSize: $file is differ - No delete and exit......
+          exit 1
+        else
+          echo Size equel - delete from Artifactory...
+          curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+         fi
+        echo ------
+    else
+        if [ $(echo &quot;${TargetPath}$uri&quot; |  awk -F &apos;/&apos; &apos;{print NF-1}&apos;) -eq 1 ]; then ((Count++)); echo Count: $Count; fi
+        if [ $Count -gt $MAX ]; then exit 0; fi        
+        mkdir ${DESTINATION}${TargetPath}$uri
+        EachFolder ${Folder}$uri;
+        echo Delete the empty directory from Artifactory ${Folder}$uri...
+        curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+        echo -------------
+    fi
+  done
+}
+
 echo Going to download: &quot;$DirList&quot; into &quot;$DESTINATION&quot;
 GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
 
 for Dir in $DirList; do
-   FileEqual=0
-   NotDelete=0
    echo ---- Start $Dir
    
    if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
 
    echo Download $Dir
-   if [ `$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE/$Dir | grep folder | grep false | wc -l` = 0 ]; then
-     $curl -ks -u $User -X GET https://$ARTIFACTORY/$SOURCE/$Dir --output &quot;t:/$Dir&quot;
-   else
-     $curl -ks -u $User -X GET https://$ARTIFACTORY/api/archive/download/$SOURCE/$Dir?archiveType=zip&gt; $Dir.zip
-     echo Extract zip into $DESTINATION...
-     unzip -o $Dir.zip -d t:/$Dir &gt; /dev/null
-     if [ $? -gt 0 ]; then
-       echo Failed to extract ZIP file... exit
-       cat $Dir.zip
-       exit 1
-     fi
-   fi
-
-   for file in $(find t:/$Dir -type f -print0 | xargs -0); do
-       echo Compare size of $file... 
-       ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE$(echo $file | cut -d: -f2) | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
-       DestSize=`wc -c &lt;$file`
-       if [ $ArtSize != $DestSize ]; then 
-         echo $ArtSize--$DestSize: $file is differ - No delete
-         ((NotDelete++))
-       else
-         echo Size equals - delete from Artifactory
-         $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE$(echo $file | cut -d: -f2)
-         ((FileEqual++))
-       fi
-   done
-
-   if [ $FileEqual -gt 1 ] &amp;&amp; [ $NotDelete -eq 0 ]; then
-     echo Remove $Dir from the Artifactory...
-     $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE/$Dir
-     rm -f $Dir.zip
-   fi
+   EachFolder $SOURCE/$Dir
 done
 
 </command>
