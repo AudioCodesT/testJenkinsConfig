@@ -34,7 +34,7 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.3">
+    <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
         <scriptContent>export PATH=$HOME/Utils:$PATH
 (
