@@ -1,0 +1,94 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>ISO_DEPLOY_DESTINATION=official_iso
+NEW_TAG=194
+LAST_OFFICIAL=187
+
+if [ $ISO_DEPLOY_DESTINATION == &quot;official_iso&quot; ]; then
+  ARTIFACTORY=https://test-artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/official_iso
+  echo LAST_OFFICIAL=${LAST_OFFICIAL} &gt;&gt; ems_build.properties
+  LINK=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/official_iso/DVD3_EMS_7.4.$NEW_TAG.iso&quot;
+  echo LINK=${LINK} &gt;&gt; ems_build.properties
+  echo NEW_TAG=$NEW_TAG &gt;&gt; ems_build.properties
+fi</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>ems_build.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>shuky.riechard</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
+      <contentType>text/html</contentType>
+      <defaultSubject>EMS new release to QA:  7.4.$NEW_TAG</defaultSubject>
+      <defaultContent>&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;EMS ovoc server release to QA&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Tag: 7.4.$NEW_TAG&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Download from:&amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;$LINK&quot;&gt;7.4.$NEW_TAG&lt;/a&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;What have we added or fixed since 7.4.$LAST_OFFICIAL? &amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;http://websrvqa/GITCompilationResults/EMS_ovoc_server/master/All_baseline_reports.html&quot;&gt;VIs list&lt;/a&gt;&amp;nbsp;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/h2&gt;</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>
