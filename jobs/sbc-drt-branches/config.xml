@@ -1,0 +1,210 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<matrix-project plugin="matrix-project@1.13-SNAPSHOT">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>10</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>3</maxConcurrentPerNode>
+      <maxConcurrentTotal>3</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>true</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <matrixOptions>
+        <throttleMatrixBuilds>true</throttleMatrixBuilds>
+        <throttleMatrixConfigurations>true</throttleMatrixConfigurations>
+      </matrixOptions>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <assignedNode>test-Sanjer</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <axes>
+    <hudson.matrix.TextAxis>
+      <name>BRANCH</name>
+      <values>
+        <string>7.2.158</string>
+        <string>7.2.202</string>
+      </values>
+    </hudson.matrix.TextAxis>
+    <hudson.matrix.LabelAxis>
+      <name>test-sunjer</name>
+      <values>
+        <string>test-Sanjer</string>
+      </values>
+    </hudson.matrix.LabelAxis>
+  </axes>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>artifactory_host=&quot;test-artifactory&quot;
+
+echo Check branch $BRANCH
+LastTag=$(git describe --tags --abbrev=0 --first-parent origin/$BRANCH)
+echo LastTag=${LastTag} &gt; generated_drt_version.properties
+  
+if curl -ks https://$artifactory_host/api/storage/sbc-release/com/ac/sbc/${BRANCH}/Firmware/${LastTag}/drtWasDone.txt | grep -q uri; then
+    echo DRT was done for this TAG: $LastTag
+    exit 0
+fi
+
+git checkout origin/$BRANCH
+
+echo -n &quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
+
+# Can run with major version only: 7.2.150, 7.2.170
+GERRIT_BRANCH=$(echo $BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
+Target=&quot;/netapp1/CompilationResults/$GERRIT_BRANCH Release/Firmware/F$NEWTAG&quot;
+
+for BOARD in M1000_MSBG M4000 MP500_ESBC MP500_MSBG HostedTP
+  
+do
+
+#batchID=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&quot; --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed &apos;s/.*Black.&gt;//&apos; | sed &apos;s/&lt;.font&gt;.*//&apos;)&quot;
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
+LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
+
+echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
+echo batchID=${batchID} &gt;&gt; generated_drt.properties
+echo url=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+
+if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
+  echo $Output | grep &apos;BatchRunner Is Down&apos;
+  echo &quot;No Batch ID... exit with error&quot;
+  exit 1;
+fi
+
+if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
+  echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
+  exit 1;
+fi
+# check DRT status
+# &quot;BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed&quot;
+# Status options: 
+#    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
+#    6) Running. 7) Pending. 8) WaitingForStop. 9) Stopped.
+
+for i in {1..5000}
+do
+  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetDrtBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
+  [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
+  [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; -o &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; exit 1
+  sleep 300s
+done
+
+echo Exit the while after some days
+curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+exit 1</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>generated_drt_version.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+      <deployerDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>true</useSpecs>
+      <uploadSpec>
+        <spec></spec>
+      </uploadSpec>
+      <downloadSpec>
+        <spec></spec>
+      </downloadSpec>
+      <deployPattern>${WORKSPACE}/drtWasDone.txt=&gt;com/ac/sbc/${BRANCH}/Firmware/${LastTag}
+</deployPattern>
+      <resolvePattern></resolvePattern>
+      <deploymentProperties></deploymentProperties>
+      <deployBuildInfo>false</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <artifactoryCombinationFilter>test-sunjer</artifactoryCombinationFilter>
+      <multiConfProject>false</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+  </buildWrappers>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+  <childCustomWorkspace>${SHORT_COMBINATION}</childCustomWorkspace>
+</matrix-project>
