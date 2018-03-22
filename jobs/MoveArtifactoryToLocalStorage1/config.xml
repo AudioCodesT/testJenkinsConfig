@@ -146,8 +146,6 @@ function EachFolder() {
          fi
         echo ------
     else
-        if [ $(echo &quot;${TargetPath}$uri&quot; |  awk -F &apos;/&apos; &apos;{print NF-1}&apos;) -eq 1 ]; then ((Count++)); echo Count: $Count; fi
-        if [ $Count -gt $MAX ]; then exit 0; fi        
         mkdir ${DESTINATION}${TargetPath}$uri
         EachFolder ${Folder}$uri;
         echo Delete the empty directory from Artifactory ${Folder}$uri...
