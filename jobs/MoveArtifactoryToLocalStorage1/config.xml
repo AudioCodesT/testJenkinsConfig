@@ -128,13 +128,13 @@ function EachFolder() {
   
   local Folder=$1
   local TargetPath=$(echo $Folder | sed s:$SOURCE::)
-  curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep uri | grep -v https: | sort -V | while read line
+  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep uri | grep -v https: | sort -V | while read line
   do
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`;
-    ArtSize=`curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
         echo Download file ${Folder}$uri...
-        curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
+        $curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
         echo Compare size of $file...
         DestSize=`wc -c &lt;${DESTINATION}${TargetPath}$uri`
         if [ $ArtSize != $DestSize ]; then 
@@ -142,7 +142,7 @@ function EachFolder() {
           exit 1
         else
           echo Size equel - delete from Artifactory...
-          curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
          fi
         echo ------
     else
@@ -151,7 +151,7 @@ function EachFolder() {
         mkdir ${DESTINATION}${TargetPath}$uri
         EachFolder ${Folder}$uri;
         echo Delete the empty directory from Artifactory ${Folder}$uri...
-        curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+        $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
         echo -------------
     fi
   done
