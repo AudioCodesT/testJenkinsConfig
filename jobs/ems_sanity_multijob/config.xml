@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<com.tikal.jenkins.plugins.multijob.MultiJobProject plugin="jenkins-multijob-plugin@1.28">
+<?xml version='1.1' encoding='UTF-8'?>
+<com.tikal.jenkins.plugins.multijob.MultiJobProject plugin="jenkins-multijob-plugin@1.29">
   <actions/>
   <description>triggered by:    ems_build_ovoc_server (any branch)&#xd;
 input:  new tag, ISO_deploy_destination (latest/official)&#xd;
@@ -16,7 +16,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -26,6 +26,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <name>NEW_TAG</name>
           <description></description>
           <defaultValue></defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>ISO_DEPLOY_DESTINATION</name>
@@ -42,6 +43,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <description>what major version do we sanitize?
 </description>
           <defaultValue></defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>FullTesting</name>
@@ -64,9 +66,9 @@ output: if official &amp; all jobs succeeded then email to QA</description>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.3">
+    <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
-        <secureGroovyScript plugin="script-security@1.39">
+        <secureGroovyScript plugin="script-security@1.42">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -93,6 +95,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>emsSanity_install</jobName>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -109,6 +112,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>emsSanity_upgrade</jobName>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -118,8 +122,9 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <abortAllJob>true</abortAllJob>
           <condition>&quot;${BRANCH}&quot;.startsWith(&quot;7.4&quot;)</condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.1">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.4</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
@@ -129,6 +134,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>emsSanity_upgrade</jobName>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -138,8 +144,9 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <abortAllJob>true</abortAllJob>
           <condition>&quot;${BRANCH}&quot;.startsWith(&quot;7.4.&quot;)</condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.1">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.4.1000</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
@@ -149,6 +156,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>emsSanity_upgrade</jobName>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -158,8 +166,9 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <abortAllJob>true</abortAllJob>
           <condition>&quot;${BRANCH}&quot;.startsWith(&quot;7.4.2&quot;) || &quot;${BRANCH}&quot;.startsWith(&quot;7.4.3&quot;)</condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.1">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.4.2000</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
@@ -169,6 +178,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>emsSanity_upgrade</jobName>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -178,8 +188,9 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <abortAllJob>true</abortAllJob>
           <condition>&quot;${BRANCH}&quot;.startsWith(&quot;7.4.3&quot;) || &quot;${BRANCH}&quot;.startsWith(&quot;7.6&quot;)</condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.1">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.4.3000</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
@@ -189,6 +200,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>emsSanity_upgrade</jobName>
           <currParams>true</currParams>
+          <aggregatedTestResults>false</aggregatedTestResults>
           <exposedSCM>false</exposedSCM>
           <disableJob>false</disableJob>
           <parsingRulesPath></parsingRulesPath>
@@ -198,8 +210,9 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <abortAllJob>true</abortAllJob>
           <condition>&quot;${BRANCH}&quot;.startsWith(&quot;7.6&quot;)</condition>
           <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.1">
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.6</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <killPhaseOnJobResultCondition>NEVER</killPhaseOnJobResultCondition>
@@ -210,7 +223,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
       <continuationCondition>ALWAYS</continuationCondition>
       <executionType>PARALLEL</executionType>
     </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
-    <EnvInjectBuilder plugin="envinject@2.1.3">
+    <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
         <propertiesContent>LINK=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/${BRANCH}/official_iso/DVD3_EMS_${NEW_TAG}.iso&quot;</propertiesContent>
       </info>
@@ -226,7 +239,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
             <ignoreCase>false</ignoreCase>
           </condition>
           <publisherList>
-            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.57.2">
+            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
               <recipientList>sqa_core_mgmt@audiocodes.com, Marina.Risher@audiocodes.com, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz@audiocodes.com, Natan.Merfish@audiocodes.com, Kairat.Ziman@audiocodes.com, Yacov.Alster@audiocodes.com, cc:Aliya.Peretz@audiocodes.com, cc:Hadas.Attal@audiocodes.com, cc:Mark.Kemel@audiocodes.com, cc:Itamar.Suissa@audiocodes.com, cc:Liran.Badiri@audiocodes.com, cc:Leonid.Fayngold@audiocodes.com, cc:Erez.NejatHaim@audiocodes.com, cc:Kfir.Gershon@audiocodes.com, cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com, cc:Natali.Elashvili@audiocodes.com</recipientList>
               <configuredTriggers>
                 <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
@@ -268,7 +281,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.5">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
