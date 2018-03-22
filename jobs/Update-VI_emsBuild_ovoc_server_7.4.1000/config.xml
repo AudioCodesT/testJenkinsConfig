@@ -1,0 +1,190 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>1.       Get latest code from branch 7.4.1000&#xd;
+2.       Run maven clean install&#xd;
+3.       find last tag and increment&#xd;
+3.       Run generate_iso script&#xd;
+4.       deploy the new iso to artifctory&#xd;
+5.       tag the remote repo with the new tag&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/7.4.1000</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
+      <url>https://test-gerrit/plugins/gitblit/</url>
+      <projectName>EMS/ovoc_server</projectName>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.LocalBranch>
+        <localBranch>refs/heads/7.4.1000</localBranch>
+      </hudson.plugins.git.extensions.impl.LocalBranch>
+    </extensions>
+  </scm>
+  <assignedNode>ems-build</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH^`
+DATE=`date`
+#calculate new tag with &quot;server_&quot; prefix
+FULL_NEW_TAG=`echo $OLDTAG | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $OLDTAG | awk -F. &apos;{print $NF+1}&apos;`
+#calculate new tag without &quot;server_&quot; prefix
+NEW_TAG=${FULL_NEW_TAG:7}
+
+echo &quot;NEW_TAG=${NEW_TAG}&quot; &gt; ems_build.properties
+echo &quot;FULL_NEW_TAG=${FULL_NEW_TAG}&quot; &gt;&gt; ems_build.properties
+
+# For UpdateVI job
+cd ${WORKSPACE}
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$GIT_BRANCH | sort -u | sed s/$/\;/g`
+#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$GIT_BRANCH | sed s/\&quot;/\&apos;/g`
+#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$GIT_BRANCH | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;`
+RN=&quot;&quot;
+while read -r hash; do 
+  subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+  VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;)
+  RN+=---$subject::$hash::$VI
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$GIT_BRANCH)&quot;
+
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
+
+#tag also the web-ui/ovoc repository:
+cd ${WORKSPACE}
+cd ..
+if [ -d &quot;ovoc-ui&quot; ]; then rm -rf ovoc-ui; fi
+echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+git -c http.sslVerify=false clone -n https://gerrit/web-ui/ovoc ovoc-ui
+cd ovoc-ui
+git checkout 7.4.1000
+head=$(git rev-parse HEAD)
+curl -k -u jenkins:$jpass --basic -X PUT --header &apos;Content-Type: application/json;charset=UTF-8&apos; https://gerrit/a/projects/web-ui%2fovoc/tags/$FULL_NEW_TAG -d &apos; { &quot;message&quot;: &quot;Automatic tag&quot;, &quot;revision&quot;: &quot;&apos;$head&apos;&quot;  }&apos;
+git -c http.sslVerify=false fetch
+
+# Gathering information to UpdateVI from web-ui/ovoc repository as well
+AuthorCommitter+=&quot; &quot;`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$FULL_NEW_TAG | sort -u | sed s/$/\;/g`
+#RN+=&quot; &quot;`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$FULL_NEW_TAG | sed s/\&quot;/\&apos;/g`
+#VIS+=&quot; &quot;`git log --pretty=format:&quot;%B&quot; $OLDTAG..$FULL_NEW_TAG | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;`
+#VIS=`echo $VIS |tr &quot; &quot; &quot;\n&quot; | sort -u`
+while read -r hash; do 
+  subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+  VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;)
+  RN+=---$subject::$hash::$VI
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$FULL_NEW_TAG)&quot;
+
+EMAIL+=&quot; &quot;`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$FULL_NEW_TAG`
+EMAIL=`echo $EMAIL |tr &quot; &quot; &quot;\n&quot; | sort -u`
+
+cd ${WORKSPACE}
+
+echo RN=${RN} &gt;&gt; ems_build.properties
+echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; ems_build.properties
+echo EMAIL=${EMAIL} &gt;&gt; ems_build.properties
+echo BRANCH=`echo $GIT_BRANCH | sed &apos;s:origin/::&apos;` &gt;&gt; ems_build.properties
+echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;` &gt;&gt; ems_build.properties
+echo DATE=${DATE} &gt;&gt; ems_build.properties
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ems_build.properties
+
+#replace backslash with space, because it is not a valid properties file if it has a backslash char
+#it save a &quot;ems_build.properties.bak&quot; backup file for debug if we will encounter problems
+sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
+</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>ems_build.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>NEWTAG=$NEW_TAG
+RN=$RN
+GERRIT_HOST=$GERRIT_HOST
+EMAIL=$EMAIL
+PROJECT=$PROJECT
+DATE=$DATE
+GERRIT_BRANCH=$BRANCH
+AuthorCommitter=$AuthorCommitter
+Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
+</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@3.8.0">
+              <combineQueuedCommits>false</combineQueuedCommits>
+            </hudson.plugins.git.GitRevisionBuildParameters>
+          </configs>
+          <projects>UpdateVI-Jira</projects>
+          <condition>UNSTABLE_OR_BETTER</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+  </publishers>
+  <buildWrappers>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>jpass</name>
+          <value>{AQAAABAAAAAQ7pBBn7p+qjtEM3NIRgLpHBduw9fbhwUcrJXOWQXyqxo=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
