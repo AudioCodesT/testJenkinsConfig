@@ -1,0 +1,246 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>This job is a new variation for the &quot;UpdateVI&quot; job&#xd;
+it pairs VI/Issue with the relevant commit&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>100</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NEWTAG</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.TextParameterDefinition>
+          <name>RN</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.TextParameterDefinition>
+        <hudson.model.TextParameterDefinition>
+          <name>GERRIT_HOST</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.TextParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>EMAIL</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PROJECT</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>DATE</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>AuthorCommitter</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>Destination</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>VI-Update</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <authToken>VI-Jira</authToken>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>cd /d D:\tools\update-vi&#xd;
+del %WORKSPACE%\index.html&#xd;
+&#xd;
+set PASS=%VIpass%&#xd;
+&#xd;
+update_after_new_tag.pl &quot;%NEWTAG%&quot; &quot;%RN%&quot; &quot;%GERRIT_HOST%&quot; &quot;%PROJECT%&quot; &quot;%DATE%&quot; &quot;%GERRIT_BRANCH%&quot; &quot;%VIpass%&quot; &quot;%Jirapass%&quot; &quot;%AuthorCommitter%&quot; &quot;%Destination%&quot;&#xd;
+&#xd;
+copy log\%NewTag%.html %WORKSPACE%\index.html&#xd;
+if ERRORLEVEL 1 (&#xd;
+    echo No log\%NewTag%.html file.. Abort&#xd;
+    exit /b&#xd;
+)&#xd;
+&#xd;
+rem ccperl update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
+update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
+&#xd;
+cd /d %WORKSPACE%&#xd;
+echo SendTo=yossim &gt; SendTo.txt&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=Benny.Lavi, cc:amos.bublil, cc:ilan.avner, cc:Tova.Shoham &amp; goto ProjectFound&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=IppSwReleases &amp; goto ProjectFound&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;EMS&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz &amp; goto ProjectFound&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;MP&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=Hagayh, MP20xdeliveries &amp; goto ProjectFound&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;Arm&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=R^^^&amp;D-ARM, Einav.Levy, Pavel.Smolyar, Shirly.Golan, Zahi.Raz &amp; goto ProjectFound&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;mediatech&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=Yishai.Gil, Maayan.Aharoni &amp; goto ProjectFound&#xd;
+&#xd;
+ECHO.%PROJECT%| FIND /I &quot;Smart&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=Brian.Kling, Alex.Shlachter &amp; goto ProjectFound&#xd;
+&#xd;
+:ProjectFound&#xd;
+&#xd;
+echo SendTo=%SendTo% &gt; SendTo.txt&#xd;
+&#xd;
+set errorlevel=0&#xd;
+&#xd;
+</command>
+    </hudson.tasks.BatchFile>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>SendTo.txt</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.14">
+      <reportTargets>
+        <htmlpublisher.HtmlPublisherTarget>
+          <reportName>Tag Summary</reportName>
+          <reportDir>.</reportDir>
+          <reportFiles>index.html</reportFiles>
+          <alwaysLinkToLastBuild>false</alwaysLinkToLastBuild>
+          <reportTitles></reportTitles>
+          <keepAll>true</keepAll>
+          <allowMissing>false</allowMissing>
+          <includes>**/*</includes>
+        </htmlpublisher.HtmlPublisherTarget>
+      </reportTargets>
+    </htmlpublisher.HtmlPublisher>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>$SendTo,  cc:yossim, cc:Shuky.Riechard</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <recipientList>$EMAIL</recipientList>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>text/html</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+        <hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
+          <email>
+            <recipientList>yossim,Shuky.Riechard</recipientList>
+            <subject>UpdateVI job has failed - $PROJECT_DEFAULT_SUBJECT</subject>
+            <body>Job failed!
+$BUILD_URL</body>
+            <recipientProviders/>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+          <failureCount>0</failureCount>
+        </hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
+      </configuredTriggers>
+      <contentType>text/html</contentType>
+      <defaultSubject>$PROJECT new TAG $NEWTAG</defaultSubject>
+      <defaultContent>${FILE, path=&quot;index.html&quot;}</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript></postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>yossim@audiocodes.com</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
+  <buildWrappers>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>false</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>VIpass</name>
+          <value>{AQAAABAAAAAQYtbLUulRoST32CWPd+YgkFYAjnevlpPvB1y6Cx8K1M8=}</value>
+        </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>Jirapass</name>
+          <value>{AQAAABAAAAAQdV+ilWA5ifcXyKraTfuQhbEZq/bgV5sRBfG0wnlkpIw=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER}__${PROJECT}__${NEWTAG}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
