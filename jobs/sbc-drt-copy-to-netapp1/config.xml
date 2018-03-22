@@ -126,11 +126,11 @@ oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
   fi
 done
 
-if [ -e /tmp/$REFTARGET ]; then
-  if [ `expr $(date +%s) - $(stat --printf=&apos;%Y&apos; /tmp/$REFTARGET)` -le 300 ]; then echo &quot;DRT was executed already&quot;; exit 2; fi
-  rm -f /tmp/$REFTARGET
-fi
-echo $BOARD &gt; /tmp/$REFTARGET
+#if [ -e /tmp/$REFTARGET ]; then
+#  if [ `expr $(date +%s) - $(stat --printf=&apos;%Y&apos; /tmp/$REFTARGET)` -le 300 ]; then echo &quot;DRT was executed already&quot;; exit 2; fi
+#  rm -f /tmp/$REFTARGET
+#fi
+#echo $BOARD &gt; /tmp/$REFTARGET
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
