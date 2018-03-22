@@ -226,6 +226,11 @@ echo Build=$Build</script>
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>MP20x</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -251,7 +256,7 @@ echo Build=$Build</script>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
+      <useSpecs>false</useSpecs>
       <uploadSpec>
         <spec></spec>
       </uploadSpec>
