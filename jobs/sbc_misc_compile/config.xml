@@ -303,6 +303,11 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>sbc-release</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -328,7 +333,7 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
+      <useSpecs>false</useSpecs>
       <uploadSpec>
         <spec></spec>
       </uploadSpec>
