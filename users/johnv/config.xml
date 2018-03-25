@@ -1,0 +1,62 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <fullName>John Vituli</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAwzSaj2zbcC69JJt1mc8HD/JE9vFK3S5CXBEVCPf8qobrOI0pDwK+wwXEVaGjNvS7glpqB6nfzZGODgFYvtGtARQ==}</apiToken>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>John.Vituli@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string># All Beer Sheva</string>
+        <string>authenticated</string>
+        <string># All ISRAEL</string>
+        <string># All__Beer_Sheva</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>NewUser_Israel-BS</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+      </roles>
+      <timestamp>1521984755280</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+  </properties>
+</user>
