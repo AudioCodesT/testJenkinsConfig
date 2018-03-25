@@ -176,7 +176,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 if [ `curl -k -s $User https://$artifactory_host/api/storage/sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/Mibs.zip | grep uri | wc -l` == 1 ]
 then 
 	echo ${NEWTAG}/Mibs.zip exist already!... Abort with error;
-    exit 1
+    exit 0
 fi
 
 echo Create ConfGenerator.zip
@@ -302,6 +302,17 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun></regexpForRerun>
+      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>false</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>60</delay>
+      </delay>
+      <maxSchedule>1</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
