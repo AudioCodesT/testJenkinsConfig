@@ -312,7 +312,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 		python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
 fi&#xd;
 &#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
