@@ -147,9 +147,9 @@ function EachFolder() {
     else
         mkdir &quot;${DESTINATION}${TargetPath}$uri&quot;
         EachFolder &quot;${Folder}$uri&quot;;
-        if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/${Folder}$uri&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${Folder}$uri...
-          $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/${Folder}$uri&quot;
+          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
         fi
     fi
   done
@@ -166,11 +166,11 @@ for Dir in $DirList; do
    if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
 
    echo Download $Dir
-   mkdir ${DESTINATION}/$Dir
+   mkdir &quot;${DESTINATION}/$Dir&quot;
    EachFolder $SOURCE/$Dir
-   if $curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE/$Dir | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+   if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$SOURCE/$Dir&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
      echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
-     $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$SOURCE/$Dir
+     $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$SOURCE/$Dir&quot;
    fi  
 done
 
