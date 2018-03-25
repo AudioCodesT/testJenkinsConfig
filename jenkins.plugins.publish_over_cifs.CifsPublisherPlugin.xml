@@ -1,0 +1,50 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.publish__over__cifs.CifsPublisherPlugin_-Descriptor plugin="publish-over-cifs@0.9">
+  <hostConfigurations>
+    <jenkins.plugins.publish__over__cifs.CifsHostConfiguration>
+      <name>netapp</name>
+      <hostname>10.1.0.101</hostname>
+      <username>AUDIOCODES\compile</username>
+      <secretPassword>{AQAAABAAAAAQVDtcEQDp20nZf6QuLl5ELMd3OEQfnK7GQrso5eZ8si0=}</secretPassword>
+      <remoteRootDir>CM</remoteRootDir>
+      <port>445</port>
+      <timeout>30000</timeout>
+      <bufferSize>4096</bufferSize>
+    </jenkins.plugins.publish__over__cifs.CifsHostConfiguration>
+  </hostConfigurations>
+  <defaults class="jenkins.plugins.publish_over_cifs.options.CifsOverrideDefaults">
+    <overrideInstanceConfig>
+      <continueOnError>false</continueOnError>
+      <failOnError>false</failOnError>
+      <alwaysPublishFromMaster>false</alwaysPublishFromMaster>
+    </overrideInstanceConfig>
+    <overrideParamPublish>
+      <parameterName></parameterName>
+    </overrideParamPublish>
+    <overridePublisher>
+      <configName></configName>
+      <useWorkspaceInPromotion>false</useWorkspaceInPromotion>
+      <usePromotionTimestamp>false</usePromotionTimestamp>
+      <verbose>false</verbose>
+    </overridePublisher>
+    <overridePublisherLabel>
+      <label></label>
+    </overridePublisherLabel>
+    <overrideRetry>
+      <retries>0</retries>
+      <retryDelay>10000</retryDelay>
+    </overrideRetry>
+    <overrideTransfer>
+      <sourceFiles></sourceFiles>
+      <removePrefix></removePrefix>
+      <remoteDirectory></remoteDirectory>
+      <excludes></excludes>
+      <remoteDirectorySDF>false</remoteDirectorySDF>
+      <flatten>false</flatten>
+      <cleanRemote>false</cleanRemote>
+      <noDefaultExcludes>false</noDefaultExcludes>
+      <makeEmptyDirs>false</makeEmptyDirs>
+      <patternSeparator>[, ]+</patternSeparator>
+    </overrideTransfer>
+  </defaults>
+</jenkins.plugins.publish__over__cifs.CifsPublisherPlugin_-Descriptor>

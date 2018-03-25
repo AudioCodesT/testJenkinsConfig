@@ -1,0 +1,5 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.plugins.spotinst.cloud.SpotinstTokenConfig plugin="spotinst@2.0.4">
+  <spotinstToken>8b25043d0383ca09382d6e339195769c1452e7134d99df570094688dd6d6bf4e</spotinstToken>
+  <accountId></accountId>
+</hudson.plugins.spotinst.cloud.SpotinstTokenConfig>
