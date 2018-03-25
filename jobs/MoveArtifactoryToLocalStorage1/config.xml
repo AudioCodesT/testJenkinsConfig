@@ -145,11 +145,11 @@ function EachFolder() {
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
          fi
     else
-        mkdir ${DESTINATION}${TargetPath}$uri
-        EachFolder ${Folder}$uri;
-        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+        mkdir &quot;${DESTINATION}${TargetPath}$uri&quot;
+        EachFolder &quot;${Folder}$uri&quot;;
+        if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/${Folder}$uri&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${Folder}$uri...
-          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+          $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/${Folder}$uri&quot;
         fi
     fi
   done
