@@ -212,8 +212,8 @@ BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; 
 if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
-echo &quot;VM_IP=${vmIP}&quot; &gt; sanity.properties
-echo &quot;BRANCH=${BRANCH}&quot; &gt; sanity.properties
+echo &quot;VM_IP=${vmIP}&quot; &gt;&gt; sanity.properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; sanity.properties
 
 #wait for the new machine to come up
 #tatus=&quot;notknown&quot;    
