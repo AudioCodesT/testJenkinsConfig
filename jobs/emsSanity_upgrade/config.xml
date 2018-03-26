@@ -218,9 +218,9 @@ vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cu
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
 
-echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; /home/centos/jenkinsslave/workspace/sanity.properties
-echo &quot;vmIP=${vmIP}&quot; &gt;&gt; /home/centos/jenkinsslave/workspace/sanity.properties
-echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; /home/centos/jenkinsslave/workspace/sanity.properties
+echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
+echo &quot;vmIP=${vmIP}&quot; &gt;&gt; sanity.properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; sanity.properties
 
 #wait for the new machine to come up
 sleep 300
@@ -276,7 +276,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
-        <propertiesFilePath>/home/centos/jenkinsslave/workspace/sanity.properties</propertiesFilePath>
+        <propertiesFilePath>sanity.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -304,8 +304,8 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>source /home/centos/jenkinsslave/workspace/sanity.properties&#xd;
-export $(cut -d= -f1 /home/centos/jenkinsslave/workspace/sanity.properties)&#xd;
+          <script>source sanity.properties&#xd;
+export $(cut -d= -f1 sanity.properties)&#xd;
 &#xd;
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]&#xd;
 	then echo &quot;no python script for log collection in this version&quot;&#xd;
