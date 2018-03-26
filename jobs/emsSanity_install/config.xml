@@ -270,7 +270,8 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
+          <script>source sanity.properties&#xd;
+export $(cut -d= -f1 sanity.properties)&#xd;
 &#xd;
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]&#xd;
 	then echo &quot;no python script for log collection in this version&quot;&#xd;
