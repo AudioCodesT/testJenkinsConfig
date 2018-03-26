@@ -1,7 +1,18 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <hudson.plugins.s3.S3BucketPublisher_-DescriptorImpl plugin="s3@0.11.0">
   <profiles>
-    <null/>
+    <hudson.plugins.s3.S3Profile>
+      <name></name>
+      <accessKey></accessKey>
+      <secretKey>{AQAAABAAAAAQpnQOt6yq6zyBgaGXWmVQAF/QmbBIV3VcJ7z3XxKB+hY=}</secretKey>
+      <maxUploadRetries>5</maxUploadRetries>
+      <uploadRetryTime>5</uploadRetryTime>
+      <maxDownloadRetries>5</maxDownloadRetries>
+      <downloadRetryTime>5</downloadRetryTime>
+      <keepStructure>false</keepStructure>
+      <useRole>false</useRole>
+      <signedUrlExpirySeconds>60</signedUrlExpirySeconds>
+    </hudson.plugins.s3.S3Profile>
   </profiles>
   <regions>
     <com.amazonaws.regions.Regions>GovCloud</com.amazonaws.regions.Regions>
