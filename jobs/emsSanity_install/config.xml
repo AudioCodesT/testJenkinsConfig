@@ -212,7 +212,7 @@ BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; 
 if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
-echo &quot;VM_IP=${vmIP}&quot; &gt;&gt; sanity.properties
+echo &quot;vmIP=${vmIP}&quot; &gt;&gt; sanity.properties
 echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; sanity.properties
 
 #wait for the new machine to come up
@@ -270,13 +270,18 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>source sanity.properties&#xd;
+          <script>pwd&#xd;
+ls -la&#xd;
+source sanity.properties&#xd;
 export $(cut -d= -f1 sanity.properties)&#xd;
 &#xd;
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]&#xd;
 	then echo &quot;no python script for log collection in this version&quot;&#xd;
-	else cd $WORKSPACE/EMS/VersionRelease&#xd;
-                python2.7 SanityCopyLogs.py $NEW_TAG $VM_IP&#xd;
+	        else&#xd;
+                cd EMS/VersionRelease&#xd;
+                pwd&#xd;
+                ls -la&#xd;
+		python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
 fi&#xd;
 &#xd;
 #aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
