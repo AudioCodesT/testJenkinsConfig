@@ -284,7 +284,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 		python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
 fi&#xd;
 &#xd;
-#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
@@ -296,6 +296,12 @@ fi&#xd;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
+        <timeoutMinutes>3</timeoutMinutes>
+      </strategy>
+      <operationList/>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
       <runAtStart>true</runAtStart>
