@@ -45,18 +45,16 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string>#All Breakfast</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
-        <string># Al Volunteers</string>
         <string># All Lunch</string>
+        <string># Al Volunteers</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>QA Group</string>
         <string># Gym</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -65,14 +63,13 @@
         <string># All HotMobile</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1522058307925</timestamp>
+      <timestamp>1522133111513</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
