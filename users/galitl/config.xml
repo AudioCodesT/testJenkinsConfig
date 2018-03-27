@@ -37,7 +37,6 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -45,7 +44,6 @@
         <string>Logistics_maintenance</string>
         <string>QA Group</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -54,14 +52,13 @@
         <string># All HotMobile</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1522069110002</timestamp>
+      <timestamp>1522136860581</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Galit.Levi@audiocodes.com</emailAddress>
