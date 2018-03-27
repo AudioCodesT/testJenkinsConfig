@@ -270,9 +270,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>pwd&#xd;
-ls -la&#xd;
-export &quot;$(cat sanity.properties)&quot;&#xd;
+          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
 export &quot;$(cat sanity2.properties)&quot;&#xd;
 export &quot;$(cat sanity3.properties)&quot;&#xd;
 &#xd;
@@ -281,9 +279,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 	then echo &quot;no python script for log collection in this version&quot;&#xd;
 	        else&#xd;
                 cd EMS/VersionRelease&#xd;
-                pwd&#xd;
-                ls -la&#xd;
-		python2.7 SanityCopyLogs.py $NEW_TAG $vmIP&#xd;
+		python2.7 SanityCopyLogs.py $NEW_TAG $vmIP || aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 fi&#xd;
 &#xd;
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
