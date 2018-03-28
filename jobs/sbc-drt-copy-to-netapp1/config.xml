@@ -139,33 +139,15 @@ done
     <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
       <tasks>
         <hudson.plugins.postbuildtask.TaskProperties>
-          <logTexts/>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText></logText>
+              <operator>AND</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
-          <script>#!/usr/bin/env ruby&#xd;
-&#xd;
-require &apos;json&apos;&#xd;
-require &apos;uri&apos;&#xd;
-&#xd;
-if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}&#xd;
-  change=$1&#xd;
-  ps=$2&#xd;
-else&#xd;
-  puts &apos;Invalid refspec&apos;&#xd;
-  exit 0&#xd;
-end&#xd;
-&#xd;
-data = {&#xd;
-  message: &apos;DRT Compilation was finished successfully, Sent to DRT system https://test-jenkins/view/SBC-GWApp/job/sbc-drt-request/&apos;,&#xd;
-  notify: &apos;NONE&apos;,&#xd;
-  tag: &apos;DRT&apos;,&#xd;
-}&#xd;
-&#xd;
-require &apos;pp&apos;&#xd;
-pp data&#xd;
-&#xd;
-system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +&#xd;
-       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)</script>
+          <script></script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
