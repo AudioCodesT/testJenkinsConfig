@@ -143,6 +143,10 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
 
+change=`echo $REFSPEC | cut -d/ -f4`
+ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2)
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query change:$ID | grep -A3 OpenSource &gt; match.txt
+
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
 ./GetImages.sh $BOARDNAME $artifactory_host $User
@@ -274,6 +278,14 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
   </publishers>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
       <script>EMAIL=`git log FETCH_HEAD -n1 --not --remotes --pretty=format:&quot;%ce&quot; | head -1`
 echo EMAIL=${EMAIL}
