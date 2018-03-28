@@ -147,7 +147,10 @@ done
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
-          <script></script>
+          <script>revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)&#xd;
+curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \&#xd;
+&gt; -d &quot;{\&quot;message\&quot;: \&quot;DRT Compilation was finished successfully, Sent to DRT system https://test-jenkins/view/SBC-GWApp/job/sbc-drt-request\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \&#xd;
+&gt; -H &apos;Content-Type: application/json&apos; &gt; /dev/null</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
