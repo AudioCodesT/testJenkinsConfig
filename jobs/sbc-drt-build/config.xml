@@ -144,8 +144,18 @@ TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
 
 change=`echo $REFSPEC | cut -d/ -f4`
-#ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2)
-#ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query change:$ID | grep -A3 OpenSource &gt; match.txt
+ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID | grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; match.txt
+
+while IFS= read -r line; do
+   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;); fi
+   if echo $line | grep -q revision; then
+     revision=$(echo $line | cut -d: -f2)
+     git ls-files --stage ../$path
+     git update-index --cacheinfo 160000 $revision $path
+     git ls-files --stage ../$path
+   fi
+done &lt; match.txt
 
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
