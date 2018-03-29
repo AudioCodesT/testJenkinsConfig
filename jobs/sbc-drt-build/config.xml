@@ -154,7 +154,7 @@ while IFS= read -r line; do
      git update-index --cacheinfo 160000 $revision $path
      git ls-files --stage ../$path
    fi
-done &lt;&lt;&lt; $(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID | grep -A30 OpenSource | grep &apos;project\|revision&apos;)
+done &lt;&lt;&lt; $(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH | grep -A30 OpenSource | grep &apos;project\|revision&apos;)
 
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
