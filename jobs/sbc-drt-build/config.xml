@@ -143,6 +143,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
 
+# Find if this build should use another Opensorce Images with the same Commit change-ID
 change=`echo $REFSPEC | cut -d/ -f4`
 ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
 
@@ -156,6 +157,7 @@ while IFS= read -r line; do
    fi
 done &lt;&lt;&lt; $(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH | grep -A30 OpenSource | grep &apos;project\|revision&apos;)
 
+# Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
 ./GetImages.sh $BOARDNAME $artifactory_host $User
