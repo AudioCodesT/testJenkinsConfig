@@ -250,6 +250,14 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
     </EnvInjectBuilder>
   </builders>
   <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>EMS/VersionRelease/logs/**/*</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>false</defaultExcludes>
+      <caseSensitive>false</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
       <tasks>
         <hudson.plugins.postbuildtask.TaskProperties>
