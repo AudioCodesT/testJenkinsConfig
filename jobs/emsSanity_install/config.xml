@@ -231,8 +231,11 @@ python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 # run sanity tests and log collect
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 	then python2.7 SanityTest.py $NEW_TAG $vmIP
-	else python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting
-    	python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
+	# run sanity test and copy logs, and if sanity fails then copy logs and exit with error:
+    else python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
+         &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
+         || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
+              &amp;&amp; exit 1; }
 fi
 
 #3. if tests pass then terminate the tested machine
@@ -247,6 +250,14 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
     </EnvInjectBuilder>
   </builders>
   <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>EMS/VersionRelease/logs/**/*</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>false</defaultExcludes>
+      <caseSensitive>false</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
       <tasks>
         <hudson.plugins.postbuildtask.TaskProperties>
@@ -263,30 +274,11 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-export &quot;$(cat sanity2.properties)&quot;&#xd;
-export &quot;$(cat sanity3.properties)&quot;&#xd;
-&#xd;
-&#xd;
-if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]&#xd;
-	then echo &quot;no python script for log collection in this version&quot;&#xd;
-	        else&#xd;
-                cd EMS/VersionRelease&#xd;
-		python2.7 SanityCopyLogs.py $NEW_TAG $vmIP || aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
-fi&#xd;
-&#xd;
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>EMS/VersionRelease/logs/**/*</artifacts>
-      <allowEmptyArchive>false</allowEmptyArchive>
-      <onlyIfSuccessful>false</onlyIfSuccessful>
-      <fingerprint>false</fingerprint>
-      <defaultExcludes>true</defaultExcludes>
-      <caseSensitive>true</caseSensitive>
-    </hudson.tasks.ArtifactArchiver>
     <hudson.tasks.Mailer plugin="mailer@1.20">
       <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
