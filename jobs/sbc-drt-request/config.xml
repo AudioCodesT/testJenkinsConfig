@@ -75,33 +75,6 @@ actions:&#xd;
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!/usr/bin/env ruby
-
-require &apos;json&apos;
-require &apos;uri&apos;
-
-if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
-  change=$1
-  ps=$2
-else
-  puts &apos;Invalid refspec&apos;
-  exit 0
-end
-
-data = {
-  message: &apos;DRT request has started &apos; + ENV[&apos;BUILD_URL&apos;],
-  notify: &apos;NONE&apos;,
-  tag: &apos;DRT&apos;,
-}
-
-require &apos;pp&apos;
-pp data
-
-system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
-       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)
-</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command># send DRT request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
 REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
@@ -137,6 +110,33 @@ fi
         <propertiesFilePath>generated_drt.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
+    <hudson.tasks.Shell>
+      <command>#!/usr/bin/env ruby
+
+require &apos;json&apos;
+require &apos;uri&apos;
+
+if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
+  change=$1
+  ps=$2
+else
+  puts &apos;Invalid refspec&apos;
+  exit 0
+end
+
+data = {
+  message: &apos;DRT request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &apos; DRT status: &apos; + ENV[&apos;LinkToPage&apos;],
+  notify: &apos;NONE&apos;,
+  tag: &apos;DRT&apos;,
+}
+
+require &apos;pp&apos;
+pp data
+
+system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
+       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)
+</command>
+    </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command># check DRT status
 # &quot;BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed&quot;
