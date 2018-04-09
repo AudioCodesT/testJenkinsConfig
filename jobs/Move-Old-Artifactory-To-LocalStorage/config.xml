@@ -72,7 +72,7 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin_aclnas03\bin\bash  --login -i
+      <command>#!c:\cygwin_aclnas03\bin\bash -i
 
 User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
@@ -91,8 +91,8 @@ function RemoveEachFolder() {
     DestSize=0; ArtSize=0
     ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
-        echo Download file ${RemoveFolder}$uri to ${DESTINATION}${TargetPath}$uri...
-        # $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
+        echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
+        # $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot;
         DestSize=`wc -c &lt;&quot;${DESTINATION}${TargetPath}$uri&quot;`
         if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
           echo $ArtSize--$DestSize: $file is differ - No delete and exit......
@@ -103,7 +103,7 @@ function RemoveEachFolder() {
          fi
     else
         mkdir &quot;${DESTINATION}${TargetPath}$uri&quot;
-        RemoveEachFolder &quot;${RemoveFolder}$uri&quot; &quot;${TargetPath}$uri&quot;
+        RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
         if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
           # $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
@@ -123,7 +123,7 @@ function CheckFolder() {
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
-    RemoveEachFolder $Folder $Target
+    RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$Folder&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----------------- Delete the empty directory from Artifactory $Folder...
       # $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$Folder&quot;
@@ -133,7 +133,7 @@ function CheckFolder() {
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
-      CheckFolder ${Folder}$uri ${Target}$uri
+      CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
     done
   fi
 }
