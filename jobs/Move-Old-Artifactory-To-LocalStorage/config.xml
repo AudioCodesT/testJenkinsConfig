@@ -1,7 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>This job go over all the folders in the Artifactory and move the old version to aclnas03.&#xd;
+Executed periodically every night.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -28,46 +29,17 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>ARTIFACTORY</name>
-          <description></description>
-          <defaultValue>test-artifactory</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>SOURCE</name>
-          <description></description>
-          <defaultValue>sbc-release/com/ac/sbc/7.2.150/Firmware</defaultValue>
+          <name>OLD</name>
+          <description>Delete all Artifacts OLD of this number of days </description>
+          <defaultValue>60</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>DESTINATION</name>
           <description></description>
-          <defaultValue>\\aclnas03\Versions\CompilationResults\7.2.150 Release\7.2.154</defaultValue>
+          <defaultValue>\\aclnas03\Versions\CompilationResults</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>FROMDIR</name>
-          <description></description>
-          <defaultValue>7.20A.153.000</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>TODIR</name>
-          <description></description>
-          <defaultValue>7.20A.153.241</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>MAX</name>
-          <description>The maximum number of directories you want to save in this build</description>
-          <defaultValue>250</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>DELETE_ELF</name>
-          <description></description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -78,7 +50,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
