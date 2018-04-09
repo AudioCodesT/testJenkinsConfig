@@ -130,7 +130,7 @@ function CheckFolder() {
    fi  
   else
     echo $Folder is not old - check its sub folders
-    $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
+    $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
