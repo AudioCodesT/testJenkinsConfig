@@ -127,6 +127,10 @@ function CheckFolder() {
     echo ---------------------
     mkdir &quot;${DESTINATION}/$Target&quot;
     RemoveEachFolder $Folder &quot;$Target&quot;
+    if $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+      echo ----- Delete the empty directory from Artifactory $Folder...
+      $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
+    fi
   else
     echo $Folder is not old - check its sub folders
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
