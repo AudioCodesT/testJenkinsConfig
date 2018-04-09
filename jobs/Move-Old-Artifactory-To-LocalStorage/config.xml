@@ -102,7 +102,7 @@ function RemoveEachFolder() {
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
          fi
     else
-        mkdir &quot;${DESTINATION}${TargetPath}$uri&quot;
+        mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
         RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
         if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
@@ -124,6 +124,7 @@ function CheckFolder() {
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
+    mkdir &quot;${DESTINATION}/$Target&quot;
     RemoveEachFolder $Folder &quot;$Target&quot;
   else
     echo $Folder is not old - check its sub folders
@@ -145,7 +146,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmwa
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yossim shukyr</recipients>
+      <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
