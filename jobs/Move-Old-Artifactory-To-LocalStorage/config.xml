@@ -113,11 +113,6 @@ function EachFolder() {
   done
 }
 
-echo Going to download: &quot;$DirList&quot; into &quot;$DESTINATION&quot;
-GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
-
-DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
-
 # this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
 function MoveFolder() {
   
@@ -129,6 +124,10 @@ function MoveFolder() {
     echo move $Folder
     echo ---------------------
     EachFolder $Folder
+    if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$SOURCE/$Dir&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+      echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
+      $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$SOURCE/$Dir&quot;
+   fi  
   else
     echo $Folder is not old - check its sub folders
     curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
@@ -139,20 +138,11 @@ function MoveFolder() {
   fi
 }
 
-for Dir in $DirList; do
-   echo --------------------------------- Start $Dir
-   
 
-   echo Download $Dir
-   mkdir &quot;${DESTINATION}/$Dir&quot;
-   EachFolder $SOURCE/$Dir
-   if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$SOURCE/$Dir&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
-     echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
-     $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$SOURCE/$Dir&quot;
-   fi  
-done
+DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
-</command>
+ARTIFACTORY=test-artifactory
+MoveFolder sbc-release/com/ac/sbc/7.2.150/Firmware</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
