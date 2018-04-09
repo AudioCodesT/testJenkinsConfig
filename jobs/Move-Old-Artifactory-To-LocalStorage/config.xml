@@ -58,7 +58,11 @@ Executed periodically every night.</description>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H 22 * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
@@ -73,28 +77,10 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 
 User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
+# Calculate the date we are going to delete
+oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 
 cd $WORKSPACE
-DirList=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE | grep uri | cut -d&apos;&quot;&apos; -f4 | cut -c 2- | sort -V | grep -A $MAX $FROMDIR | grep -B $MAX $TODIR -m1`
-if [ $(echo $DirList | wc -w) -gt $MAX ]; then 
-   echo Over the max range... abort; 
-   exit 1;
-fi
-
-function DeleteELF() {
-  local Folder=$1
-  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep &apos;uri\|folder&apos; | while read line
-  do
-    if echo $line | grep folder | grep -q true; then DeleteELF ${Folder}$uri;
-    else
-      uri=`echo $line | cut -d&apos;&quot;&apos; -f4`;
-      if echo $line | grep -q .\\.elf; then
-        echo Delete file ${Folder}$uri
-        $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
-      fi
-    fi
-  done
-}
 
 function EachFolder() {
   
@@ -132,10 +118,30 @@ GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
 
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
+# this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
+function MoveFolder() {
+  
+  local Folder=$1
+  # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
+  lastModified=$(curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
+  
+  if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
+    echo move $Folder
+    echo ---------------------
+    EachFolder $Folder
+  else
+    echo $Folder is not old - check its sub folders
+    curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
+    do
+      echo Execute this function again to check the following directory: ${Folder}$uri
+      MoveFolder ${Folder}$uri;
+    done
+  fi
+}
+
 for Dir in $DirList; do
    echo --------------------------------- Start $Dir
    
-   if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
 
    echo Download $Dir
    mkdir &quot;${DESTINATION}/$Dir&quot;
