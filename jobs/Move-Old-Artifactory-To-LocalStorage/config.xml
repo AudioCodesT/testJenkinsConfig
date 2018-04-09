@@ -84,7 +84,7 @@ cd $WORKSPACE
 function RemoveEachFolder() {
   
   local RemoveFolder=$1
-  local TargetPath=$(echo $RemoveFolder | sed s:$SOURCE::)
+  local TargetPath=$2
   $curl -ks -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
   do
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
@@ -116,13 +116,14 @@ function RemoveEachFolder() {
 function CheckFolder() {
   
   local Folder=$1
+  local Target=$2
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
   
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
-    RemoveEachFolder $Folder
+    RemoveEachFolder $Folder $Target
     if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$Folder&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----------------- Delete the empty directory from Artifactory $Folder...
       # $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$Folder&quot;
@@ -132,7 +133,7 @@ function CheckFolder() {
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
-      CheckFolder ${Folder}$uri;
+      CheckFolder ${Folder}$uri ${Target}$uri
     done
   fi
 }
@@ -141,8 +142,8 @@ function CheckFolder() {
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
 ARTIFACTORY=test-artifactory
-DESTINATION=&quot;$DESTINATION/7.2.150 Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware</command>
+CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
