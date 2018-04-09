@@ -102,6 +102,7 @@ function RemoveEachFolder() {
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
          fi
     else
+        echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
         mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
         RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
         if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
