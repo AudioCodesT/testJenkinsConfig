@@ -66,8 +66,7 @@ Executed periodically every night.</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>mkdir -p &quot;%DESTINATION%&quot;&#xd;
-net use T: /delete&#xd;
+      <command>net use T: /delete&#xd;
 net use T: &quot;%DESTINATION%&quot;&#xd;
 &#xd;
 </command>
@@ -82,39 +81,39 @@ oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 
 cd $WORKSPACE
 
-function EachFolder() {
+function RemoveEachFolder() {
   
-  local Folder=$1
-  local TargetPath=$(echo $Folder | sed s:$SOURCE::)
-  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep uri | grep -v https: | sort -V | while read line
+  local RemoveFolder=$1
+  local TargetPath=$(echo $RemoveFolder | sed s:$SOURCE::)
+  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
   do
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
     DestSize=0; ArtSize=0
-    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
-        echo Download file ${Folder}$uri...
-        $curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
+        echo Download file ${RemoveFolder}$uri to ${DESTINATION}${TargetPath}$uri...
+        # $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
         DestSize=`wc -c &lt;&quot;${DESTINATION}${TargetPath}$uri&quot;`
         if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
           echo $ArtSize--$DestSize: $file is differ - No delete and exit......
           exit 1
         else
           echo Size equel - delete from Artifactory...
-          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+          # $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
          fi
     else
         mkdir &quot;${DESTINATION}${TargetPath}$uri&quot;
-        EachFolder &quot;${Folder}$uri&quot;;
-        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
-          echo ----- Delete the empty directory from Artifactory ${Folder}$uri...
-          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
+        RemoveEachFolder &quot;${RemoveFolder}$uri&quot;;
+        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+          echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
+          # $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
         fi
     fi
   done
 }
 
 # this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
-function MoveFolder() {
+function CheckFolder() {
   
   local Folder=$1
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
@@ -123,17 +122,17 @@ function MoveFolder() {
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
-    EachFolder $Folder
-    if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$SOURCE/$Dir&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
-      echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
-      $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$SOURCE/$Dir&quot;
+    RemoveEachFolder $Folder
+    if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$Folder&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+      echo ----------------- Delete the empty directory from Artifactory $Folder...
+      # $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$Folder&quot;
    fi  
   else
     echo $Folder is not old - check its sub folders
     curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
-      MoveFolder ${Folder}$uri;
+      CheckFolder ${Folder}$uri;
     done
   fi
 }
@@ -142,7 +141,7 @@ function MoveFolder() {
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
 ARTIFACTORY=test-artifactory
-MoveFolder sbc-release/com/ac/sbc/7.2.150/Firmware</command>
+CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
