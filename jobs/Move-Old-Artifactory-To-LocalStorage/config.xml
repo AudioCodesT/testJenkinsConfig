@@ -117,7 +117,7 @@ function CheckFolder() {
   
   local Folder=$1
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
-  lastModified=$(curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
+  lastModified=$($curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
   
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
@@ -129,7 +129,7 @@ function CheckFolder() {
    fi  
   else
     echo $Folder is not old - check its sub folders
-    curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
+    $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
       CheckFolder ${Folder}$uri;
@@ -173,7 +173,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware</command>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}, $SOURCE: $FROMDIR -- $TODIR</template>
+      <template>#${BUILD_NUMBER}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
