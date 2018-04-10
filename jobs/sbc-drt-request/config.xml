@@ -125,7 +125,7 @@ else
 end
 
 data = {
-  message: &apos;DRT request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &apos; DRT status: &apos; + ENV[&apos;LinkToPage&apos;],
+  message: &apos;DRT request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &apos;\n DRT status: &apos; + ENV[&apos;LinkToPage&apos;],
   notify: &apos;NONE&apos;,
   tag: &apos;DRT&apos;,
 }
