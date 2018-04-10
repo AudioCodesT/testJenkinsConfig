@@ -1,0 +1,90 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <fullName>Brian Kling</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAwwA1MlMjDVXWD2FTq9yxLZdN1B8mF4dXs+GxlPAro6NG4xUh80nWHt/5Ufb8eLiuYy3bT2IoLezfs11w8NsZ0Fw==}</apiToken>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>Agile users</string>
+        <string>AI-SmartLockAdmin</string>
+        <string># AUDC - NJ Engineering Team Leads</string>
+        <string>authenticated</string>
+        <string>TECHSUPPORTSAMBA</string>
+        <string>AWS_Jira_Users</string>
+        <string>RDP-AISMARKLOCK</string>
+        <string>AI-Engineering</string>
+        <string>BBL.Quality</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>BACKPRINTGROUP</string>
+        <string>BBL.ENGINEERING</string>
+        <string>AI-Tech Support</string>
+        <string>AI-TECHSUPP</string>
+        <string>AI-LOGIXALL</string>
+        <string># AUDC - NJ office</string>
+        <string># ACPortal - Finance_USA</string>
+        <string>AI-SmartLock</string>
+        <string>AI-ENG</string>
+        <string># AUDC - HR - All USA</string>
+        <string>CatalogApps_Everyone</string>
+        <string>AI-QA</string>
+        <string>allusers</string>
+        <string>Password Manager Apply</string>
+        <string># All ACI - USA</string>
+        <string># Oracle</string>
+        <string>MUSIC Telecom SDevel</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>AI-OPT</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string>AI-SmartTAP_Log</string>
+        <string># ACPortal - HR USA</string>
+        <string>AI-QMS-RO</string>
+        <string>AudioCodes_VPN</string>
+        <string>SmartTAP Dev</string>
+        <string># Oracle USA</string>
+        <string>Software Configuration Management</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># Audiocodes USA-Development</string>
+        <string>AI-ClearCase</string>
+        <string>sp365-smarttap-modify</string>
+      </roles>
+      <timestamp>1523325905685</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Brian.Kling@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+  </properties>
+</user>
