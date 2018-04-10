@@ -125,6 +125,7 @@ function CheckFolder() {
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
+    firstMove=1
     mkdir &quot;${DESTINATION}/$Target&quot;
     RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
@@ -132,10 +133,12 @@ function CheckFolder() {
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
   else
+    if [ $firstMove -eq 1 ]; then echo Probably all next folder are not older...exit; exit 0; fi
     echo $Folder is not old - check its sub folders
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
+      firstMove=0
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
     done
   fi
@@ -145,6 +148,7 @@ function CheckFolder() {
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
 ARTIFACTORY=test-artifactory
+firstMove=0
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
 </command>
     </hudson.tasks.Shell>
