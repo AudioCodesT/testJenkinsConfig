@@ -150,6 +150,8 @@ DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 ARTIFACTORY=test-artifactory
 firstMove=0
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
+firstMove=0
+CheckFolder sbc-release/com/ac/sbc/7.2.152/Firmware &quot;7.2.150 Release/7.2.152&quot;
 </command>
     </hudson.tasks.Shell>
   </builders>
