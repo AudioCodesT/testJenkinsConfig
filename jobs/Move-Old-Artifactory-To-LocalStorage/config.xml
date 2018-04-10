@@ -78,6 +78,7 @@ User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
 # Calculate the date we are going to delete
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
+firstMove=0
 
 cd $WORKSPACE
 
@@ -133,12 +134,15 @@ function CheckFolder() {
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
   else
-    if [ $firstMove -eq 1 ]; then echo Probably all next folder are not older...exit; exit 0; fi
     echo $Folder is not old - check its sub folders
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
+      if [ $firstMove -eq 1 ]; then 
+        echo Probably all next folder are not older... exit from this loop
+        firstMove=0
+        break
+      fi
       echo Execute this function again to check the following directory: ${Folder}$uri
-      firstMove=0
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
     done
   fi
@@ -148,9 +152,7 @@ function CheckFolder() {
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
 ARTIFACTORY=test-artifactory
-firstMove=0
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
-firstMove=0
 CheckFolder sbc-release/com/ac/sbc/7.2.152/Firmware &quot;7.2.150 Release/7.2.152&quot;
 </command>
     </hudson.tasks.Shell>
