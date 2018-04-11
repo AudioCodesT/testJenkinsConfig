@@ -143,12 +143,15 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
 # Status options: 
 #    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
 #    6) Running. 7) Pending. 8) WaitingForStop. 9) Stopped.
+count=0
 
 for i in {1..5000}
 do
   Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetDrtBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
   [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
-  [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; -o &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; exit 1
+  [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; ] &amp;&amp; exit 1
+  [ &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; ((count++))
+  [ $count -eq 10 ] &amp;&amp; exit 1
   sleep 300s
 done
 
