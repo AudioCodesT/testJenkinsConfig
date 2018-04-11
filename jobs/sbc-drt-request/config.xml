@@ -56,8 +56,8 @@ actions:&#xd;
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
-      <maxConcurrentPerNode>3</maxConcurrentPerNode>
-      <maxConcurrentTotal>3</maxConcurrentTotal>
+      <maxConcurrentPerNode>18</maxConcurrentPerNode>
+      <maxConcurrentTotal>18</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
       <throttleEnabled>true</throttleEnabled>
       <throttleOption>project</throttleOption>
