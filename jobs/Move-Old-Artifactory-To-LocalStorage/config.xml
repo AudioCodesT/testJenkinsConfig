@@ -134,17 +134,17 @@ function CheckFolder() {
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
   else
+    if [ $firstMove -eq 1 ]; then 
+      echo Probably all next folder are not older... exit
+      exit 0
+    fi
     echo $Folder is not old - check its sub folders
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
-      if [ $firstMove -eq 1 ]; then 
-        echo Probably all next folder are not older... exit from this loop
-        firstMove=0
-        break
-      fi
       echo Execute this function again to check the following directory: ${Folder}$uri
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
     done
+    firstMove=0
   fi
 }
 
