@@ -175,7 +175,7 @@ sonar.report.export.path=sonar-report.json</properties>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Ben.Magriso@audiocodes.com , Shuky.Riechard@audiocodes.com , Natan.Merfish@audiocodes.com</recipientList>
+      <recipientList>cc:Ben.Magriso@audiocodes.com , cc:Shuky.Riechard@audiocodes.com , Natan.Merfish@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
