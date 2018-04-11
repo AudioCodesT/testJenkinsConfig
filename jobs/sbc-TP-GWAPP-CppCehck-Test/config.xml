@@ -193,8 +193,12 @@ sonar.report.export.path=sonar-report.json</properties>
         </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>SBC TP-GWAPP  CPPCheck</defaultSubject>
-      <defaultContent>The Build url is $BUILD_URL</defaultContent>
+      <defaultSubject>Weekly CppCheck for SBC TP-GWAPP </defaultSubject>
+      <defaultContent>Please review CppCheck reports from the last weekly run:
+$JOB_URL
+
+Regards,
+DevOps Team</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript></postsendScript>
