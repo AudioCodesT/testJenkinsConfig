@@ -31,7 +31,7 @@ Executed periodically every night.</description>
         <hudson.model.StringParameterDefinition>
           <name>OLD</name>
           <description>Delete all Artifacts OLD of this number of days </description>
-          <defaultValue>60</defaultValue>
+          <defaultValue>120</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -153,7 +153,7 @@ DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 
 ARTIFACTORY=test-artifactory
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.152/Firmware &quot;7.2.150 Release/7.2.152&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware &quot;7.2.150 Release/7.2.154&quot;
 </command>
     </hudson.tasks.Shell>
   </builders>
