@@ -78,7 +78,7 @@ User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
 # Calculate the date we are going to delete
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
-firstMove=0
+moveDone=0
 
 cd $WORKSPACE
 
@@ -126,25 +126,26 @@ function CheckFolder() {
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
-    firstMove=1
     mkdir &quot;${DESTINATION}/$Target&quot;
     RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
+    return 1
   else
-    if [ $firstMove -eq 1 ]; then 
-      echo Probably all next folder are not older... exit
-      exit 0
-    fi
     echo $Folder is not old - check its sub folders
     $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
-      CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
+      lastMovedone=$moveDone
+      moveDone=`CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;`
+      if [ $lastMovedone -eq 1 &amp;&amp; $moveDone -eq 0 ]; then 
+        echo ---------- Probably all next folder are not older... break from this folder check ------------
+        break
+      fi
     done
-    firstMove=0
+    return 0
   fi
 }
 
