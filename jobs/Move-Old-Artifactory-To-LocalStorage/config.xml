@@ -140,7 +140,7 @@ function CheckFolder() {
       echo Execute this function again to check the following directory: ${Folder}$uri
       lastMovedone=$moveDone
       moveDone=`CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;`
-      if [ $lastMovedone -eq 1 &amp;&amp; $moveDone -eq 0 ]; then 
+      if [[ $lastMovedone -eq 1 &amp;&amp; $moveDone -eq 0 ]]; then 
         echo ---------- Probably all next folder are not older... break from this folder check ------------
         break
       fi
