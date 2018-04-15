@@ -65,13 +65,12 @@
 displayName=$(echo $Customer | sed &apos;s:,\|&quot;::g&apos;)
 name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
 
-if ! curl -ks -u $Jirapass -X GET $Jira/rest/api/2/user?username=&quot;$Customer&quot;; then
-
-  curl -k -u $Jirapass -X POST --header &apos;Accept: application/json&apos; --header &apos;Content-Type: application/json&apos; \
+if curl -ks -u $Jirapass -X GET $Jira/rest/api/2/user?username=&quot;$Customer&quot; | grep -q &quot;does not exist&quot;; then
+  curl -ks -u $Jirapass -X POST --header &apos;Accept: application/json&apos; --header &apos;Content-Type: application/json&apos; \
     --data &apos;{&quot;displayName&quot;: &quot;$displayName&quot;, &quot;emailAddress&quot;: &quot;$name@rndcustomer.local&quot;, &quot;name&quot;:&quot;$name&quot;, &quot;applicationKeys&quot;: []}&apos; \
     $Jira/rest/api/2/user
-else
-
+    echo $?
+else   
   echo This customer exist already
 fi
 </command>
