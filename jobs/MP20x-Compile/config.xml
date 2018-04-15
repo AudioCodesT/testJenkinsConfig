@@ -176,8 +176,9 @@ sudo chown -R centos:centos .
 
 ./dceBuild.sh  --board=$BOARD --fast=no --full=yes
 
-#Major_=$(echo $Major | sed &apos;s:\.:_:g&apos;)
+Major_=$(echo $Major | sed &apos;s:\.:_:g&apos;)
 #rename $Major_ $Major  MP2*.*
+echo netapp=&quot;sed s/${Major_}_$Build.*/${Major}_$Build/&quot; &gt;&gt; generated_version.properties
 
 
 
@@ -198,7 +199,7 @@ sudo chown -R centos:centos .
               <properties>TAGNAME=$Build
 GERRIT_BRANCH=$Major
 REPOSITORY=MP20x
-</properties>
+netapp=$netapp</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
