@@ -58,14 +58,17 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>curl -k -u $Jirapass -X GET $Jira/rest/api/2/user?username=$Customer
+      <command>if ! curl -k -u $Jirapass -X GET $Jira/rest/api/2/user?username=$Customer; then
 
-displayName=$(echo $Customer | sed &apos;s:,\|&quot;::g&apos;)
-name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
-curl -k -u $Jirapass -X POST --header &apos;Accept: application/json&apos; --header &apos;Content-Type: application/json&apos; \
---data &apos;{&quot;displayName&quot;: &quot;$displayName&quot;, &quot;emailAddress&quot;: &quot;$name@rndcustomer.com&quot;, &quot;name&quot;:&quot;$name&quot;, &quot;applicationKeys&quot;: []}&apos; \
-$Jira/rest/api/2/user
 
+  displayName=$(echo $Customer | sed &apos;s:,\|&quot;::g&apos;)
+  name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
+
+  curl -k -u $Jirapass -X POST --header &apos;Accept: application/json&apos; --header &apos;Content-Type: application/json&apos; \
+    --data &apos;{&quot;displayName&quot;: &quot;$displayName&quot;, &quot;emailAddress&quot;: &quot;$name@rndcustomer.com&quot;, &quot;name&quot;:&quot;$name&quot;, &quot;applicationKeys&quot;: []}&apos; \
+    $Jira/rest/api/2/user
+
+fi
 </command>
     </hudson.tasks.Shell>
   </builders>
@@ -77,7 +80,7 @@ $Jira/rest/api/2/user
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>Jirapass</name>
-          <value>{AQAAABAAAAAgBNI63Dw5YXDdFeOxOOKN1MDlZPqPEgYGEzWdGfsTyxLepC4HBTnCrLCKWUOWDAr8}</value>
+          <value>{AQAAABAAAAAgXD9hjiIgN8GXOm2RtjD/Ob5l7mWDFWM54np4btIzZhd0Qkh6US9kkc+7rxpz//NB}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
