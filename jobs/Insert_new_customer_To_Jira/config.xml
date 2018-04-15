@@ -72,14 +72,16 @@ if curl -ks -u $Jirapass -X GET $Jira/rest/api/2/user?username=$name | grep -q &
     --header &apos;Content-Type: application/json&apos; \
     --data &quot;{\&quot;displayName\&quot;: \&quot;$displayName\&quot;, \&quot;emailAddress\&quot;: \&quot;$name@rndcustomer.local\&quot;, \&quot;name\&quot;:\&quot;$name\&quot;, \&quot;applicationKeys\&quot;: []}&quot; \
     $Jira/rest/api/2/user
-else    
+    
   echo Adding the new customer to the &apos;Customer&apos; group
   curl -ks -u $Jirapass -X POST \
   --header &apos;Accept: application/json&apos; \
   --header &apos;Content-Type: application/json&apos; \
   --data &quot;{\&quot;name\&quot;: \&quot;$name\&quot;}&quot; \
-  --url &quot;$Jira/rest/api/2/group/user?groupname=Customers&quot;
-
+  $Jira/rest/api/2/group/user?groupname=Customers
+  
+else
+  
   echo This customer exist already
 fi
 </command>
