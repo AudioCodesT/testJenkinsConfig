@@ -93,8 +93,9 @@ fi
 
 if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then 
   Target=&quot;/netapp1/CompilationResults/$Firmware/F$NEWTAG&quot;
-elif [ &quot;$REPOSITORY&quot; == &quot;MP20x&quot; ]; then 
-  Target=&quot;/netapp1/CompilationResults/MP20x/$Branch/$NEWTAG&quot;
+elif [ &quot;$REPOSITORY&quot; == &quot;MP20x&quot; ]; then
+  # Rakefet ask from $Branch/$NEWTAG To $Branch/${Branch}_$NEWTAG
+  Target=&quot;/netapp1/CompilationResults/MP20x/$Branch/${Branch}_$NEWTAG&quot;
 fi
 
 if ! [ -d &quot;$Target&quot; ]; then
