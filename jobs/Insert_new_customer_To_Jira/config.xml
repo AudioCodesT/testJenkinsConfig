@@ -1,7 +1,9 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>this job add customer to the Jira and define it as a member of the &apos;Customers&apos; group - should be executed automatically by the CRM application.</description>
+  <description>This job add customer to the Jira and define it as a member of the &apos;Customers&apos; group.&#xd;
+Should be executed automatically by the Oracle Service Cloud application:&#xd;
+before OSC creates an issue it triggers this job with parameter &quot;Customer&quot; - if the &quot;Customer&quot; value does not exist then this job add it.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
