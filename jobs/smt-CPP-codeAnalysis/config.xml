@@ -25,6 +25,8 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
@@ -139,7 +141,17 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>true</concurrentBuild>
-  <builders/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command></command>
+    </hudson.tasks.Shell>
+  </builders>
   <publishers/>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER} - ${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
 </project>
