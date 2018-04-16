@@ -174,5 +174,11 @@ LaunchOneTouchEx.bat 0000 1</command>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
   </publishers>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER} - ${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
 </project>
