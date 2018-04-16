@@ -352,7 +352,48 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0ddf3404114b55cd8</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0ddf3404114b55cd8</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-04-16 07:11:39.72 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-t3frg25n</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-t3frg25n</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-04-16 07:11:35.280 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0c87129f6fba4ef76</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0c87129f6fba4ef76</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-04-16 07:11:07.951 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-9qtrjq4n</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-9qtrjq4n</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-04-16 07:11:15.931 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -866,6 +907,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>smt-CPP-codeAnalysis</string>
         <string>smtBLD</string>
         <string>smtCRV</string>
       </jobNames>
