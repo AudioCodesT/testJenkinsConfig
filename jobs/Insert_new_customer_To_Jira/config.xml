@@ -51,6 +51,7 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <authToken>ORACLE</authToken>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
