@@ -70,11 +70,14 @@ if curl -ks -u $Jirapass -X GET $Jira/user?username=$name | grep -q &quot;does n
     $Jira/user
     
   echo Adding the new customer to the &apos;Customer&apos; group
-  curl -ks -u $Jirapass -X POST \
+  if curl -ks -u $Jirapass -X POST \
   --header &apos;Accept: application/json&apos; \
   --header &apos;Content-Type: application/json&apos; \
   --data &quot;{\&quot;name\&quot;: \&quot;$name\&quot;}&quot; \
-  $Jira/group/user?groupname=Customers
+  $Jira/group/user?groupname=Customers | grep -q &quot;Cannot add user&quot;; then
+    echo  Adding the customer \&quot;$displayName\&quot; to the &apos;Customer&apos; group was failed
+    exit 1
+  fi
   
 else
   
