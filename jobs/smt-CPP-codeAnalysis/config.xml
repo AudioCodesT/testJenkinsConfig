@@ -85,7 +85,36 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
+
+cd ${WORKSPACE}/..
+rm -rf tools
+git clone -n ssh://gerrit/devops/tools
+
+cd tools
+
+git checkout -f origin/master -- cppcheck/cppreview.sh
+git checkout -f origin/master -- cppcheck/suppressions.txt
+git checkout -f origin/master -- cppcheck/exclude.txt
+
+cp cppcheck/* ${WORKSPACE}/
+
+cd ${WORKSPACE}
+
+while read line; do [[ &quot;$line&quot; ]] &amp;&amp; printf &quot;%s-i&quot;$line&quot;%s &quot; ; done &lt; exclude.txt &gt; onestring
+_exclude=`cat onestring`
+
+## Process cppcheck report:
+## Running cppcheck with option files from above and generating a flat text file report.
+## The report is processed and avote on Gerrit is done according to these results.
+. ./cppreview.sh</command>
+    </hudson.tasks.Shell>
+  </builders>
   <publishers/>
   <buildWrappers>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
