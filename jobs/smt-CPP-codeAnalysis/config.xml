@@ -107,9 +107,6 @@ cp cppcheck/* ${WORKSPACE}/
 
 cd ${WORKSPACE}
 
-while read line; do [[ &quot;$line&quot; ]] &amp;&amp; printf &quot;%s-i&quot;$line&quot;%s &quot; ; done &lt; exclude.txt &gt; onestring
-_exclude=`cat onestring`
-
 ## Process cppcheck report:
 ## Running cppcheck with option files from above and generating a flat text file report.
 ## The report is processed and avote on Gerrit is done according to these results.
