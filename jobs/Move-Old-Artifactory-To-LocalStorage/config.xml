@@ -31,7 +31,7 @@ Executed periodically every night.</description>
         <hudson.model.StringParameterDefinition>
           <name>OLD</name>
           <description>Delete all Artifacts OLD of this number of days </description>
-          <defaultValue>120</defaultValue>
+          <defaultValue>60</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -162,6 +162,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.162/Firmware &quot;7.2.150 Release/7.2.16
 CheckFolder sbc-release/com/ac/sbc/7.2.170/Firmware &quot;7.2.170 Release/7.2.170&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
 
 
 
