@@ -157,6 +157,15 @@ ARTIFACTORY=test-artifactory
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware &quot;7.2.150 Release/7.2.154&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.156/Firmware &quot;7.2.150 Release/7.2.156&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.158/Firmware &quot;7.2.150 Release/7.2.158&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.162/Firmware &quot;7.2.150 Release/7.2.162&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.170/Firmware &quot;7.2.170 Release/7.2.170&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmware&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
+
+
+
+
 </command>
     </hudson.tasks.Shell>
   </builders>
