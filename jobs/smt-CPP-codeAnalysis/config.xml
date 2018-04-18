@@ -145,7 +145,7 @@ cd tools
 
 git checkout -f origin/master -- cppcheck/cppreview.sh
 git checkout -f origin/master -- cppcheck/suppressions.txt
-git checkout -f origin/master -- cppcheck/exclude.txt
+#git checkout -f origin/master -- cppcheck/exclude.txt
 
 cp cppcheck/* ${WORKSPACE}/
 
