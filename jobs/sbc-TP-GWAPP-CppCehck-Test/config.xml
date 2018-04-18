@@ -152,8 +152,8 @@ sonar.report.export.path=sonar-report.json</properties>
           <severityPortability>false</severityPortability>
         </configSeverityEvaluation>
         <configGraph>
-          <xSize>500</xSize>
-          <ySize>200</ySize>
+          <xSize>1000</xSize>
+          <ySize>400</ySize>
           <numBuildsInGraph>0</numBuildsInGraph>
           <displayAllErrors>false</displayAllErrors>
           <displayErrorSeverity>true</displayErrorSeverity>
