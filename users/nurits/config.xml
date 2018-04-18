@@ -40,7 +40,6 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D Sys SW Group Leaders</string>
         <string># R&amp;D System Software</string>
@@ -49,7 +48,6 @@
         <string>Logistics_maintenance</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -59,7 +57,6 @@
         <string># All HotMobile</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string># Senior Forum</string>
@@ -69,7 +66,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1522061515077</timestamp>
+      <timestamp>1524046280990</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Nurit.Shenhar@audiocodes.com</emailAddress>
