@@ -82,7 +82,7 @@ REM rename SmartTAP smtCRV</scriptContent>
   </scm>
   <assignedNode>SMRT-Windows-Build-Dynamic</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
