@@ -160,7 +160,7 @@ cd ${WORKSPACE}
 ## Run Sputnik
 #sed -i &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 #cat /home/centos/jenkinsslave/test-gerrit.properties
-#sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
+sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=rulesets\/java\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 
 cat &lt;&lt; EOF &gt; /home/centos/jenkinsslave/pmd-basic.xml
   &lt;?xml version=&quot;1.0&quot; ?&gt; 
