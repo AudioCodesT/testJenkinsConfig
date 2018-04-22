@@ -144,7 +144,8 @@ function CheckFolder() {
       lastMovedone=$moveDone
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
       moveDone=$?
-      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 0 ]]; then 
+      echo Deep: $deep *******
+      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 1 ]]; then 
         echo ---------- Probably all next folder are not older... break from this folder check ------------
         break
       fi
