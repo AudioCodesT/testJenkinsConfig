@@ -31,7 +31,7 @@ Executed periodically every night.</description>
         <hudson.model.StringParameterDefinition>
           <name>OLD</name>
           <description>Delete all Artifacts OLD of this number of days </description>
-          <defaultValue>60</defaultValue>
+          <defaultValue>120</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -165,7 +165,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.20
 CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
 
 ARTIFACTORY=artifactory
-CheckFolder ipp-release/com/ac/ipp/SFB/3.0.0 &quot;IPP/SFB/3.0.0&quot;
+CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot;
 
 
 
