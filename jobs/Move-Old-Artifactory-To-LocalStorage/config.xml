@@ -164,6 +164,10 @@ CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmwa
 CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
 
+ARTIFACTORY=artifactory
+CheckFolder ipp-release/com/ac/ipp/SFB/3.0.0 &quot;IPP/SFB/3.0.0&quot;
+
+
 
 
 
