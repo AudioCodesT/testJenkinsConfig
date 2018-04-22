@@ -80,6 +80,7 @@ curl=c:/curl/curl
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 moveDone=0
 
+
 cd $WORKSPACE
 
 function RemoveEachFolder() {
@@ -117,6 +118,7 @@ function RemoveEachFolder() {
 # this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
 function CheckFolder() {
   
+  ((deep+=1))
   local Folder=$1
   local Target=$2
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
@@ -132,6 +134,7 @@ function CheckFolder() {
       echo ----- Delete the empty directory from Artifactory $Folder...
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
+    ((deep-=1))
     return 1
   else
     echo $Folder is not old - check its sub folders
@@ -141,17 +144,19 @@ function CheckFolder() {
       lastMovedone=$moveDone
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
       moveDone=$?
-      if [ $moveDone -eq 0 ]; then 
+      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 0 ]]; then 
         echo ---------- Probably all next folder are not older... break from this folder check ------------
         break
       fi
     done
+    ((deep-=1))
     return 0
   fi
 }
 
 
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
+deep=1
 
 ARTIFACTORY=test-artifactory
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
@@ -165,7 +170,8 @@ CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.20
 CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
 
 ARTIFACTORY=artifactory
-CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot;
+deep=0
+CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
 
 
 
