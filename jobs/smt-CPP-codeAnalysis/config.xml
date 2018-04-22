@@ -159,6 +159,7 @@ cd ${WORKSPACE}
 
 ## Run Sputnik
 sed &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
+sed &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 
 /opt/sputnik/bin/sputnik --conf /home/centos/jenkinsslave/test-gerrit.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*** sputnik failed but exit 0 ***&quot; &amp;&amp; exit 0; }
 echo &quot;exit 0 workaround&quot;</command>
