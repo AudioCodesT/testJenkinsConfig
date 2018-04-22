@@ -156,8 +156,8 @@ sonar.report.export.path=sonar-report.json</properties>
           <ySize>400</ySize>
           <numBuildsInGraph>0</numBuildsInGraph>
           <displayAllErrors>false</displayAllErrors>
-          <displayErrorSeverity>false</displayErrorSeverity>
-          <displayWarningSeverity>false</displayWarningSeverity>
+          <displayErrorSeverity>true</displayErrorSeverity>
+          <displayWarningSeverity>true</displayWarningSeverity>
           <displayStyleSeverity>false</displayStyleSeverity>
           <displayPerformanceSeverity>false</displayPerformanceSeverity>
           <displayInformationSeverity>false</displayInformationSeverity>
