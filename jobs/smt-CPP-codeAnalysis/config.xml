@@ -158,7 +158,7 @@ cd ${WORKSPACE}
 
 
 ## Run Sputnik
-cat &lt;&lt; EOF &gt; /home/centos/jenkinsslave/basic.xml
+cat &lt;&lt;EOF &gt; /home/centos/jenkinsslave/basic.xml
 &lt;?xml version=&quot;1.0&quot; ?&gt; 
 &lt;ruleset name=&quot;Basic&quot; xmlns=&quot;http://pmd.sourceforge.net/ruleset/2.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd&quot;&gt;
   &lt;description&gt;The Basic ruleset contains a collection of good practices which should be followed.&lt;/description&gt; 
