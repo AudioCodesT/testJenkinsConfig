@@ -158,38 +158,6 @@ cd ${WORKSPACE}
 
 
 ## Run Sputnik
-cat &lt;&lt;EOF &gt; /home/centos/jenkinsslave/basic.xml
-&lt;?xml version=&quot;1.0&quot; ?&gt; 
-&lt;ruleset name=&quot;Basic&quot; xmlns=&quot;http://pmd.sourceforge.net/ruleset/2.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd&quot;&gt;
-  &lt;description&gt;The Basic ruleset contains a collection of good practices which should be followed.&lt;/description&gt; 
-  &lt;!--  Rules, that have been moved into a category --&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidMultipleUnaryOperators&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidUsingOctalValues&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/BrokenNullCheck&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/CheckSkipResult&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/ClassCastExceptionWithToArray&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/DontUseFloatTypeForLoopIndices&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/JumbledIncrementer&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/MisplacedNullCheck&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/OverrideBothEqualsAndHashcode&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/ReturnFromFinallyBlock&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/errorprone.xml/UnconditionalIfStatement&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/multithreading.xml/AvoidThreadGroup&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/multithreading.xml/DontCallThreadRun&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/multithreading.xml/DoubleCheckedLocking&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/bestpractices.xml/AvoidUsingHardCodedIP&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/bestpractices.xml/CheckResultSet&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/codestyle.xml/ExtendsObject&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/codestyle.xml/ForLoopShouldBeWhileLoop&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/performance.xml/BigIntegerInstantiation&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/performance.xml/BooleanInstantiation&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/design.xml/CollapsibleIfStatements&quot; /&gt; 
-  &lt;rule ref=&quot;category/java/design.xml/SimplifiedTernary&quot; /&gt; 
-&lt;/ruleset&gt;
-EOF
-
 #sed -i &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 #cat /home/centos/jenkinsslave/test-gerrit.properties
 sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
