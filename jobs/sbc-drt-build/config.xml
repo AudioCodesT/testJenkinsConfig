@@ -149,7 +149,7 @@ change=`echo $REFSPEC | cut -d/ -f4`
 ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
 ls -l ../id_rsa_gerrit
 chmod 600 ../id_rsa_gerrit
-ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH | \
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
   grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt  || echo ChangeId not found
 
 cat othersCommits.txt
