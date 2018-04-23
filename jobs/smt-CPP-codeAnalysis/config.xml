@@ -140,6 +140,8 @@ EOF
 cd ${WORKSPACE}/..
 rm -rf tools
 git clone -n ssh://gerrit/devops/tools
+
+cd ${WORKSPACE}
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -160,7 +162,7 @@ cd ${WORKSPACE}
 . ./cppreview.sh
 
 
-</command>
+cd ${WORKSPACE}</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Get sputnik/pdm tools
@@ -181,7 +183,7 @@ cat smt-pdm.properties
 /opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pdm.properties --changeId SmartTAP/SmartTAP~Development~$GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION
 
 
-
+cd ${WORKSPACE}
 </command>
     </hudson.tasks.Shell>
   </builders>
