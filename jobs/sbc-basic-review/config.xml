@@ -140,10 +140,10 @@ change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
 ls -l ../id_rsa_gerrit
 chmod 600 ../id_rsa_gerrit
-ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH | grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH | \
+     grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
 
-if (( `du othersCommits.txt | cut -f1` &gt; 0 )); then
- while IFS= read -r line; do
+while IFS= read -r line; do
    if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
    elif echo $line | grep -q revision; then
      revision=$(echo $line | cut -d: -f2)
@@ -151,8 +151,8 @@ if (( `du othersCommits.txt | cut -f1` &gt; 0 )); then
      git update-index --cacheinfo 160000 $revision $path
      git ls-files --stage ../$path
    fi
- done &lt; othersCommits.txt
-fi
+done &lt; othersCommits.txt
+
 
 if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
