@@ -153,17 +153,17 @@ ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patc
 
 cat othersCommits.txt
 
-if (( `du othersCommits.txt | cut -f1` &gt; 0 )); then
- while IFS= read -r line; do
-   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
-   elif echo $line | grep -q revision; then
-     revision=$(echo $line | cut -d: -f2)
-     git ls-files --stage ../$path
-     git update-index --cacheinfo 160000 $revision $path
-     git ls-files --stage ../$path
-   fi
- done &lt; othersCommits.txt
-fi
+#if (( `du othersCommits.txt | cut -f1` &gt; 0 )); then
+# while IFS= read -r line; do
+#   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
+#   elif echo $line | grep -q revision; then
+#     revision=$(echo $line | cut -d: -f2)
+#     git ls-files --stage ../$path
+#     git update-index --cacheinfo 160000 $revision $path
+#     git ls-files --stage ../$path
+#   fi
+# done &lt; othersCommits.txt
+#fi
 
 # Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
