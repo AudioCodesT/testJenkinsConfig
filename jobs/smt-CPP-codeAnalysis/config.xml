@@ -182,7 +182,7 @@ cd ${WORKSPACE}
 #sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 cat smt-pdm.properties
 
-/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pdm.properties --changeId Proj~Development~$GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || {echo &quot;sputnik failed&quot; &amp;&amp; exit 0}
+/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pdm.properties --changeId Proj~Development~$GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
 
 
 cd ${WORKSPACE}
