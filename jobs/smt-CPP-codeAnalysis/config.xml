@@ -146,6 +146,7 @@ cd ${WORKSPACE}
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Get cppcheck tools
+cd ${WORKSPACE}/..
 cd tools
 
 git checkout -f origin/master -- cppcheck/cppreview.sh
@@ -166,6 +167,7 @@ cd ${WORKSPACE}</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Get sputnik/pdm tools
+cd ${WORKSPACE}/..
 cd tools
 
 git checkout -f origin/master -- sputnik/test-gerrit/smt-pdm.properties
