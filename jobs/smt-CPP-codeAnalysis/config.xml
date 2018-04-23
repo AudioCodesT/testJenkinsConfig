@@ -140,7 +140,10 @@ EOF
 cd ${WORKSPACE}/..
 rm -rf tools
 git clone -n ssh://gerrit/devops/tools
-
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>## Get cppcheck tools
 cd tools
 
 git checkout -f origin/master -- cppcheck/cppreview.sh
@@ -160,13 +163,22 @@ cd ${WORKSPACE}
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>## Run Sputnik
+      <command>## Get sputnik/pdm tools
+cd tools
+
+git checkout -f origin/master -- sputnik/test-gerrit/smt-pdm.properties
+
+cp sputnik/test-gerrit/smt-pdm.properties ${WORKSPACE}/
+
+cd ${WORKSPACE}
+
+## Run Sputnik
 #sed -i &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 #cat /home/centos/jenkinsslave/test-gerrit.properties
-sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
-cat /home/centos/jenkinsslave/test-gerrit.properties
+#sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
+cat smt-pdm.properties
 
-/opt/sputnik/bin/sputnik --conf /home/centos/jenkinsslave/test-gerrit.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION
+/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pdm.properties --changeId SmartTAP/SmartTAP~Development~$GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION
 
 
 
