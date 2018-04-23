@@ -158,13 +158,48 @@ cd ${WORKSPACE}
 
 
 ## Run Sputnik
+cat &lt;&lt; EOF &gt; /home/centos/jenkinsslave/basic.xml
+&lt;?xml version=&quot;1.0&quot; ?&gt; 
+&lt;ruleset name=&quot;Basic&quot; xmlns=&quot;http://pmd.sourceforge.net/ruleset/2.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd&quot;&gt;
+  &lt;description&gt;The Basic ruleset contains a collection of good practices which should be followed.&lt;/description&gt; 
+  &lt;!--  Rules, that have been moved into a category --&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidMultipleUnaryOperators&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/AvoidUsingOctalValues&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/BrokenNullCheck&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/CheckSkipResult&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/ClassCastExceptionWithToArray&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/DontUseFloatTypeForLoopIndices&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/JumbledIncrementer&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/MisplacedNullCheck&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/OverrideBothEqualsAndHashcode&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/ReturnFromFinallyBlock&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/errorprone.xml/UnconditionalIfStatement&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/multithreading.xml/AvoidThreadGroup&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/multithreading.xml/DontCallThreadRun&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/multithreading.xml/DoubleCheckedLocking&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/bestpractices.xml/AvoidUsingHardCodedIP&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/bestpractices.xml/CheckResultSet&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/codestyle.xml/ExtendsObject&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/codestyle.xml/ForLoopShouldBeWhileLoop&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/performance.xml/BigIntegerInstantiation&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/performance.xml/BooleanInstantiation&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/design.xml/CollapsibleIfStatements&quot; deprecated=&quot;true&quot; /&gt; 
+  &lt;rule ref=&quot;category/java/design.xml/SimplifiedTernary&quot; deprecated=&quot;true&quot; /&gt; 
+&lt;/ruleset&gt;
+EOF
+
 #sed -i &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 #cat /home/centos/jenkinsslave/test-gerrit.properties
-sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=rulesets\/java\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
+sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 cat /home/centos/jenkinsslave/test-gerrit.properties
 
 /opt/sputnik/bin/sputnik --conf /home/centos/jenkinsslave/test-gerrit.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*** sputnik failed but exit 0 ***&quot; &amp;&amp; exit 0; }
-echo &quot;exit 0 workaround&quot;</command>
+echo &quot;exit 0 workaround&quot;
+
+
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
