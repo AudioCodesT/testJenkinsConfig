@@ -166,8 +166,8 @@ cd ${WORKSPACE}
 sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 cat /home/centos/jenkinsslave/test-gerrit.properties
 
-/opt/sputnik/bin/sputnik --conf /home/centos/jenkinsslave/test-gerrit.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*** sputnik failed but exit 0 ***&quot; &amp;&amp; exit 0; }
-echo &quot;exit 0 workaround&quot;
+/opt/sputnik/bin/sputnik --conf /home/centos/jenkinsslave/test-gerrit.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION
+
 
 
 </command>
