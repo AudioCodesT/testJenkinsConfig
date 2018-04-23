@@ -398,7 +398,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} -- ${REFSPEC}</template>
+      <template>#${BUILD_NUMBER} ${REFSPEC}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
