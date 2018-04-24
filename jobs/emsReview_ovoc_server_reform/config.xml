@@ -158,7 +158,7 @@ cp sputnik/test-gerrit/ems-ovoc-pdm.properties ${WORKSPACE}/
 cd ${WORKSPACE}
 
 ## Run Sputnik
-cat arm-pdm.properties
+cat ems-ovoc-pdm.properties
 /opt/sputnik/bin/sputnik --conf ${WORKSPACE}/ems-ovoc-pdm.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
 
 
