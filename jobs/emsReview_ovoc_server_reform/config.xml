@@ -140,9 +140,14 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
 #echo &quot;exit 0 workaround&quot;
 
 # Run Sputnik pmd
+cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
+
 cd ${WORKSPACE}/..
 rm -rf tools
-git clone -n ssh://gerrit/devops/tools
+git -c http.sslverify=false clone -n ssh://gerrit/devops/tools
 
 git checkout -f origin/master -- sputnik/test-gerrit/ems-ovoc-pdm.properties
 
