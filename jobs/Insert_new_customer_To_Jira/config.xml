@@ -64,7 +64,7 @@ JiraURL=https://test-acjira/rest/api/2
 
 displayName=$(echo $Customer | sed &apos;s:,\|&quot;::g&apos;)
 name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
-displayJiraName$(echo $displayName  | sed &apos;s: :%20:g&apos;)
+displayJiraName=$(echo $displayName  | sed &apos;s: :%20:g&apos;)
 
 # Check if this customer exist in the Jira database, the searce have to be with the &apos;user&apos; name (not the displayName)
 echo Checking if user exist
