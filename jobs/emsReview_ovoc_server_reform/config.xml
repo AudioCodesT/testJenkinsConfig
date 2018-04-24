@@ -149,6 +149,8 @@ cd ${WORKSPACE}/..
 rm -rf tools
 git -c http.sslverify=false clone -n https://gerrit/devops/tools
 
+cd tools
+
 git checkout -f origin/master -- sputnik/test-gerrit/ems-ovoc-pdm.properties
 
 cp sputnik/test-gerrit/ems-ovoc-pdm.properties ${WORKSPACE}/
