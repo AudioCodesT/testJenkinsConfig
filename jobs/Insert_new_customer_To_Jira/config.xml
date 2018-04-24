@@ -69,34 +69,33 @@ name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
 #replace spaces in display name with %20
 displayJiraName=$(echo $displayName  | sed &apos;s: :%20:g&apos;)
 
-# Check if this customer exist in the Jira database, the searce have to be with the &apos;user&apos; name (not the displayName)
-echo Checking if user exist
+# Check if this customer exist in the Jira database, the search have to be with the &apos;user&apos; name (not the displayName)
+echo &quot;Checking if user exist&quot;
 if curl -ks -u $JiraUserAndPass -X GET $JiraURL/user?username=$name | grep -q &quot;does not exist&quot;; then
-
-  # this REST API add it as a record into the &apos;user picker&apos; fields
-  echo Found that user does not exist
+  # the following REST API add this customer as a new jira internal user
+  echo &quot;Found that user does not exist&quot;
   curl -ks -u $JiraUserAndPass -X POST \
     --header &apos;Accept: application/json&apos; \
     --header &apos;Content-Type: application/json&apos; \
     --data &quot;{\&quot;displayName\&quot;: \&quot;$displayJiraName\&quot;, \&quot;emailAddress\&quot;: \&quot;$name@rndcustomer.local\&quot;, \&quot;name\&quot;:\&quot;$name\&quot;, \&quot;applicationKeys\&quot;: []}&quot; \
     $JiraURL/user
-    
-  # And define it as a member of the &apos;customers&apos; group  
-  echo Adding the new customer to the &apos;Customer&apos; group
+  echo &quot;new customer \&quot;$displayName\&quot; was added as Jira internal user&quot;&quot;
+  # And define it as a member of the &apos;Customers&apos; group  
+  echo &quot;Adding the new customer to Customers group&quot;
   if curl -ks -u $JiraUserAndPass -X POST \
     --header &apos;Accept: application/json&apos; \
     --header &apos;Content-Type: application/json&apos; \
     --data &quot;{\&quot;name\&quot;: \&quot;$name\&quot;}&quot; \
     $JiraURL/group/user?groupname=Customers | grep -q &quot;Cannot add user&quot;; then
-      echo  Adding the customer \&quot;$displayJiraName\&quot; to the &apos;Customer&apos; group was failed
+      echo  &quot;Failed to add new customer \&quot;$displayJiraName\&quot; to the Customers group&quot;
       exit 1
   else
-    echo New customer was added successfully to “Customers” group
+    echo &quot;New customer  \&quot;$displayJiraName\&quot; was added successfully to Customers group&quot;
   fi
   
 else
-  
-  echo This customer exist already
+  echo &quot;Customer \&quot;$displayJiraName\&quot; is already exist&quot;
+  echo &quot;Exit build without adding new customer&quot;
 fi
 </command>
     </hudson.tasks.Shell>
