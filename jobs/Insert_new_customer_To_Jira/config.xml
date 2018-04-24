@@ -48,6 +48,7 @@ before OSC creates an issue it triggers this job with parameter &quot;Customer&q
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
+  <quietPeriod>5</quietPeriod>
   <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
