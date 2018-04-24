@@ -139,7 +139,7 @@ EOF
 
 cd ${WORKSPACE}/..
 rm -rf tools
-git clone -n ssh://gerrit/devops/tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
 
 cd ${WORKSPACE}
 </command>
