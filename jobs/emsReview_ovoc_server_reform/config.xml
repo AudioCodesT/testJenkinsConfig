@@ -147,7 +147,7 @@ EOF
 
 cd ${WORKSPACE}/..
 rm -rf tools
-git -c http.sslverify=false clone -n ssh://gerrit/devops/tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
 
 git checkout -f origin/master -- sputnik/test-gerrit/ems-ovoc-pdm.properties
 
