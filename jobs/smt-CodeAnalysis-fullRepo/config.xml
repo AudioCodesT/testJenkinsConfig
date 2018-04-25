@@ -89,7 +89,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>## Run pmd on entire repository java files
-/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R category/java/bestpractices.xml,category/java/errorprone.xml -min 2 -encoding UTF-8 | grep &apos;This analysis could be faster&apos;&gt; pmd.xml
+/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R category/java/bestpractices.xml,category/java/errorprone.xml -min 2 -encoding UTF-8 | grep -v &apos;This analysis could be faster&apos;&gt; pmd.xml
 </command>
     </hudson.tasks.Shell>
   </builders>
