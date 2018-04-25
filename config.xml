@@ -925,6 +925,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>smt-CodeAnalysis</string>
+        <string>smt-CodeAnalysis-fullRepo</string>
         <string>smtBLD</string>
         <string>smtCRV</string>
       </jobNames>
