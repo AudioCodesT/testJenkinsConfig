@@ -79,7 +79,7 @@ if curl -ks -u $JiraUserAndPass -X GET $JiraURL/user?username=$name | grep -q &q
     --header &apos;Content-Type: application/json&apos; \
     --data &quot;{\&quot;displayName\&quot;: \&quot;$displayJiraName\&quot;, \&quot;emailAddress\&quot;: \&quot;$name@rndcustomer.local\&quot;, \&quot;name\&quot;:\&quot;$name\&quot;, \&quot;applicationKeys\&quot;: []}&quot; \
     $JiraURL/user
-  echo &quot;new customer \&quot;$displayName\&quot; was added as Jira internal user&quot;&quot;
+  echo new customer $displayName was added as Jira internal user
   # And define it as a member of the &apos;Customers&apos; group  
   echo &quot;Adding the new customer to Customers group&quot;
   if curl -ks -u $JiraUserAndPass -X POST \
@@ -87,15 +87,15 @@ if curl -ks -u $JiraUserAndPass -X GET $JiraURL/user?username=$name | grep -q &q
     --header &apos;Content-Type: application/json&apos; \
     --data &quot;{\&quot;name\&quot;: \&quot;$name\&quot;}&quot; \
     $JiraURL/group/user?groupname=Customers | grep -q &quot;Cannot add user&quot;; then
-      echo  &quot;Failed to add new customer \&quot;$displayJiraName\&quot; to the Customers group&quot;
+      echo  Failed to add new customer $displayJiraName to the Customers group
       exit 1
   else
-    echo &quot;New customer  \&quot;$displayJiraName\&quot; was added successfully to Customers group&quot;
+    echo New customer  $displayJiraName was added successfully to Customers group
   fi
   
 else
-  echo &quot;Customer \&quot;$displayJiraName\&quot; is already exist&quot;
-  echo &quot;Exit build without adding new customer&quot;
+  echo Customer $displayJiraName is already exist
+  echo Exit build without adding new customer
 fi
 </command>
     </hudson.tasks.Shell>
