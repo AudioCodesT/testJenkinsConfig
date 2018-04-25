@@ -63,7 +63,7 @@ before OSC creates an issue it triggers this job with parameter &quot;Customer&q
 JiraURL=https://test-acjira/rest/api/2
 
 # take the parameter from build trigger and put it in &quot;display name&quot;
-displayName=$(echo $Customer | sed &apos;s:,\|&quot;\|;\|#\|\$\|\\::g&apos; | sed s:\&apos;::g)
+displayName=$(echo $Customer | sed &apos;s:,\|&quot;\|;\|#\|\$\|\\\|\@::g&apos; | sed s:\&apos;::g)
 
 echo $displayName
 
