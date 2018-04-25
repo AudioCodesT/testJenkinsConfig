@@ -63,7 +63,7 @@ before OSC creates an issue it triggers this job with parameter &quot;Customer&q
 JiraURL=https://test-acjira/rest/api/2
 
 # take the parameter from build trigger and put it in &quot;display name&quot;
-displayName=$(echo $Customer | sed &apos;s:,\|&quot;::g&apos;)
+displayName=$(echo $Customer | sed &apos;s:,\|&quot;\|;\|\#\|\$\|\\\|&apos;::g&apos;)
 #create a user name from the display name
 name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
 #replace spaces in display name with %20
