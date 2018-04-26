@@ -31,7 +31,7 @@ Executed periodically every night.</description>
         <hudson.model.StringParameterDefinition>
           <name>OLD</name>
           <description>Delete all Artifacts OLD of this number of days </description>
-          <defaultValue>120</defaultValue>
+          <defaultValue>90</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -124,6 +124,7 @@ function CheckFolder() {
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
+  if [ &quot;$lastModified&quot; == &quot;&quot; ]; then return 0; fi
   echo &quot;$lastModified -le $oldThan&quot;
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
