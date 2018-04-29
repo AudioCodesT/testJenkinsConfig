@@ -171,6 +171,16 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/$EXT
     <hudson.tasks.Shell>
       <command>#GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 
+
+# Find if this build should use another Opensorce Images with the same Commit change-ID
+chmod 600 id_rsa_gerrit
+change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+url=&quot;&quot;
+url=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
+     grep -A30 GWApp | grep -m1 url: | cut -d: -f2 | sed &apos;s: ::g&apos;) || echo ChangeId not found
+echo Url: $url
+
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 cd ../..
@@ -205,6 +215,14 @@ fi
   </builders>
   <publishers/>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
