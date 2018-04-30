@@ -173,6 +173,14 @@ GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}</properties>
 
 date
 
+change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
+chmod 600 id_rsa_gerrit
+echo Calibrate Verified - $change,$ps
+ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
+--notify NONE --label Verified=0 \
+$change,$ps
+
 export PATH=$HOME/Utils:$PATH
 rm -f build-error.log
 git gwinit
@@ -284,6 +292,14 @@ if (m.count &gt; 0) {
     </org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder>
   </publishers>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper plugin="ssh-agent@1.15">
       <credentialIds>
         <string>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</string>
