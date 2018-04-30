@@ -88,23 +88,6 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cat &lt;&lt;-EOF &gt; ~/.netrc
-machine test-gerrit login jenkins password $jpass
-machine gerrit login jenkins password $jpass
-EOF
-
-cd ${WORKSPACE}/..
-rm -rf tools
-git -c http.sslverify=false clone -n https://gerrit/devops/tools
-
-cd tools
-git checkout -f origin/master -- cppcheck/cppreview.sh
-cp cppcheck/* ${WORKSPACE}/
-
-cd ${WORKSPACE}
-</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command>## Run cppcheck on entire repository java files
 /usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 2&gt; cppcheck.xml
 
