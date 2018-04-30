@@ -212,7 +212,7 @@
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>cc:Shuky.Riechard@audiocodes.com , Natan.Merfish@audiocodes.com</recipientList>
+      <recipientList>Shuky.Riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
