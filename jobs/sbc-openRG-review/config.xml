@@ -176,12 +176,10 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/$EXT
 chmod 600 id_rsa_gerrit
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
-url=&quot;&quot;
-url=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
-     grep -A30 GWApp | grep -m1 url: | sed &apos;s^url:\| ^^g&apos;) || echo ChangeId not found
-echo Url: $url
-
-if [ &quot;$url&quot; != &quot;&quot; ]; then exit 1; fi
+tpChange=&quot;&quot;
+tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
+     grep -A30 GWApp | grep -m1 url: | sed &apos;s^url:.*/\| ^^g&apos;) || echo ChangeId not found
+echo tpChange: tpChange
 
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
@@ -194,11 +192,16 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
-#git fetch origin refs/changes/68/64868/5
-#git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA
-#git checkout -f FETCH_HEAD -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
+if [ &quot;$tpChange&quot; != &quot;&quot; ]; then 
+  ref=$(ssh -p 29418 -i $CurrentPath/id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set $tpChange | grep ref: | cut -d: -f2)
+  echo git fetch origin $ref
+  git fetch origin $ref
+  git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA
+  git checkout -f FETCH_HEAD -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
+else
+  git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
+  git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
+}
 cd $CurrentPath
 
 sudo chmod -R 755 .
