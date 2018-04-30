@@ -78,13 +78,13 @@ java --&gt; pmd, findbugs&#xd;
   <builders>
     <hudson.tasks.Shell>
       <command>## Run pmd on entire repository java files
-/home/centos/pmd/bin/run.sh pmd -d . -f xml -language java -R category/java/bestpractices.xml,category/java/errorprone.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
+/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R category/java/bestpractices.xml,category/java/errorprone.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
 
 /usr/bin/sed -i -n &apos;/xml/,$p&apos; pmd.xml
 
 
 ## Run FindBugs on entire repository java files
-/home/centos/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
+/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
 </command>
     </hudson.tasks.Shell>
   </builders>
