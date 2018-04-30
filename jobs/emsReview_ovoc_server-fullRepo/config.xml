@@ -121,7 +121,7 @@ java --&gt; pmd, findbugs&#xd;
       <shouldDetectModules>false</shouldDetectModules>
       <dontComputeNew>true</dontComputeNew>
       <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
-      <pattern>**.pmd.xml</pattern>
+      <pattern>**/pmd.xml</pattern>
     </hudson.plugins.pmd.PmdPublisher>
     <hudson.plugins.findbugs.FindBugsPublisher plugin="findbugs@4.72">
       <healthy></healthy>
@@ -154,7 +154,7 @@ java --&gt; pmd, findbugs&#xd;
       <shouldDetectModules>false</shouldDetectModules>
       <dontComputeNew>true</dontComputeNew>
       <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
-      <pattern>**.findbugs.xml</pattern>
+      <pattern>**/findbugs.xml</pattern>
       <isRankActivated>false</isRankActivated>
       <excludePattern></excludePattern>
       <includePattern></includePattern>
