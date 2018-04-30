@@ -88,7 +88,22 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>## Run pmd on entire repository java files
+      <command>cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
+
+cd ${WORKSPACE}/..
+rm -rf tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
+
+cd ${WORKSPACE}</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>## Run cppcheck on entire repository java files
+/usr/bin/cppcheck 
+
+## Run pmd on entire repository java files
 /opt/pmd/bin/run.sh pmd -d . -f xml -language java -R category/java/bestpractices.xml,category/java/errorprone.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
 
 /usr/bin/sed -i -n &apos;/xml/,$p&apos; pmd.xml
