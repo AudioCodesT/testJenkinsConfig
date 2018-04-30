@@ -87,14 +87,39 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#prepare a file for suppressions -  messages that we do not want to appear
-echo &quot;// suppress syntaxError errors in header files&quot; &gt;suppressions.txt
-echo &quot;// syntaxError:*.h&quot; &gt;&gt;suppressions.txt
-echo &quot;// suppress unusedStructMember errors because clang will warn about it&quot; &gt;&gt;suppressions.txt
-echo &quot;// unusedStructMember&quot; &gt;&gt;suppressions.txt
+      <command>cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
 
-# Get list of cppcheck excludes
-scp -i ${WORKSPACE}/id_rsa_jenkins -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null centos@test-sanjer:/home/centos/exclude.txt .
+cd ${WORKSPACE}/..
+rm -rf tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
+
+cd ${WORKSPACE}</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>##prepare a file for suppressions -  messages that we do not want to appear
+#echo &quot;// suppress syntaxError errors in header files&quot; &gt;suppressions.txt
+#echo &quot;// syntaxError:*.h&quot; &gt;&gt;suppressions.txt
+#echo &quot;// suppress unusedStructMember errors because clang will warn about it&quot; &gt;&gt;suppressions.txt
+#echo &quot;// unusedStructMember&quot; &gt;&gt;suppressions.txt
+#
+## Get list of cppcheck excludes
+#scp -i ${WORKSPACE}/id_rsa_jenkins -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null centos@test-sanjer:/home/centos/exclude.txt .
+
+## Get cppcheck tools
+cd ${WORKSPACE}/..
+cd tools
+
+git checkout -f origin/master -- cppcheck/cppreview.sh
+git checkout -f origin/master -- cppcheck/suppressions.txt
+git checkout -f origin/master -- cppcheck/exclude.txt
+
+cp cppcheck/* ${WORKSPACE}/
+
+cd ${WORKSPACE}
+
 while read line; do [[ &quot;$line&quot; ]] &amp;&amp; printf &quot;%s-i&quot;$line&quot;%s &quot; ; done &lt; exclude.txt &gt; onestring
 _exclude=`cat onestring`
 echo _exclude
