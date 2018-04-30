@@ -181,6 +181,8 @@ url=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-p
      grep -A30 GWApp | grep -m1 url: | cut -d: -f2 | sed &apos;s: ::g&apos;) || echo ChangeId not found
 echo Url: $url
 
+if [ &quot;$url&quot; != &quot;&quot; ]; then exit 1; fi
+
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 cd ../..
