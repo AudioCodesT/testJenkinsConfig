@@ -329,6 +329,11 @@ fi</command>
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>ems-release</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -354,7 +359,7 @@ fi</command>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
+      <useSpecs>false</useSpecs>
       <uploadSpec>
         <spec></spec>
       </uploadSpec>
