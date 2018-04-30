@@ -175,7 +175,7 @@
       <cppcheckConfig>
         <pattern>**/cppcheck.xml</pattern>
         <ignoreBlankFiles>false</ignoreBlankFiles>
-        <allowNoReport>false</allowNoReport>
+        <allowNoReport>true</allowNoReport>
         <configSeverityEvaluation>
           <threshold></threshold>
           <newThreshold></newThreshold>
@@ -194,7 +194,7 @@
         <configGraph>
           <xSize>1000</xSize>
           <ySize>400</ySize>
-          <numBuildsInGraph>0</numBuildsInGraph>
+          <numBuildsInGraph>30</numBuildsInGraph>
           <displayAllErrors>true</displayAllErrors>
           <displayErrorSeverity>false</displayErrorSeverity>
           <displayWarningSeverity>false</displayWarningSeverity>
