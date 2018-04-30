@@ -179,7 +179,7 @@ ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | gr
 tpChange=&quot;&quot;
 tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
      grep -A30 GWApp | grep -m1 url: | sed &apos;s^url:.*/\| ^^g&apos;) || echo ChangeId not found
-echo tpChange: tpChange
+echo tpChange: $tpChange
 
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
@@ -201,7 +201,8 @@ if [ &quot;$tpChange&quot; != &quot;&quot; ]; then
 else
   git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
   git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
-}
+fi
+
 cd $CurrentPath
 
 sudo chmod -R 755 .
