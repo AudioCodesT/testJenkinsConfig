@@ -178,6 +178,24 @@ sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
 cd TrunkPackRam
+
+# Find if this build should use another Opensorce Images with the same Commit change-ID
+chmod 600 ../id_rsa_gerrit
+change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID status:open | \
+     grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
+
+while IFS= read -r line; do
+   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
+   elif echo $line | grep -q revision; then
+     revision=$(echo $line | cut -d: -f2)
+     git ls-files --stage ../$path
+     git update-index --cacheinfo 160000 $revision $path
+     git ls-files --stage ../$path
+   fi
+done &lt; othersCommits.txt
+
 if [ -e ../OpenSource/$BOARD.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
@@ -413,6 +431,14 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
