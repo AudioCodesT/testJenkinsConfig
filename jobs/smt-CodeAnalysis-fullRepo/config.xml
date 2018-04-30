@@ -174,7 +174,7 @@
     <org.jenkinsci.plugins.cppcheck.CppcheckPublisher plugin="cppcheck@1.21">
       <cppcheckConfig>
         <pattern>**/cppcheck.xml</pattern>
-        <ignoreBlankFiles>false</ignoreBlankFiles>
+        <ignoreBlankFiles>true</ignoreBlankFiles>
         <allowNoReport>true</allowNoReport>
         <configSeverityEvaluation>
           <threshold></threshold>
@@ -195,10 +195,10 @@
           <xSize>1000</xSize>
           <ySize>400</ySize>
           <numBuildsInGraph>30</numBuildsInGraph>
-          <displayAllErrors>true</displayAllErrors>
-          <displayErrorSeverity>false</displayErrorSeverity>
+          <displayAllErrors>false</displayAllErrors>
+          <displayErrorSeverity>true</displayErrorSeverity>
           <displayWarningSeverity>false</displayWarningSeverity>
-          <displayStyleSeverity>false</displayStyleSeverity>
+          <displayStyleSeverity>true</displayStyleSeverity>
           <displayPerformanceSeverity>false</displayPerformanceSeverity>
           <displayInformationSeverity>false</displayInformationSeverity>
           <displayNoCategorySeverity>false</displayNoCategorySeverity>
