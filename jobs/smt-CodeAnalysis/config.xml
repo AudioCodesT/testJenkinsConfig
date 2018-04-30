@@ -170,9 +170,9 @@ cd ${WORKSPACE}</command>
 cd ${WORKSPACE}/..
 cd tools
 
-git checkout -f origin/master -- sputnik/test-gerrit/smt-pdm.properties
+git checkout -f origin/master -- sputnik/test-gerrit/smt-pmd.properties
 
-cp sputnik/test-gerrit/smt-pdm.properties ${WORKSPACE}/
+cp sputnik/test-gerrit/smt-pmd.properties ${WORKSPACE}/
 
 cd ${WORKSPACE}
 
@@ -180,9 +180,9 @@ cd ${WORKSPACE}
 #sed -i &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
 #cat /home/centos/jenkinsslave/test-gerrit.properties
 #sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
-cat smt-pdm.properties
+cat smt-pmd.properties
 
-/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pdm.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
+/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
 
 
 cd ${WORKSPACE}
