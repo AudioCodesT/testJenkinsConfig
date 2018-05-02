@@ -67,7 +67,7 @@ run python build script from the repo which copy files to Lambda and commit and 
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>clm-build-slave</assignedNode>
+  <assignedNode>clm-build-static-slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
