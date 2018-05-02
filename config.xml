@@ -860,6 +860,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>clmBuild</string>
         <string>ems_sanity_multijob</string>
         <string>emsBuild_oracle_triggers</string>
         <string>emsBuild_ovoc_server_7.4</string>
