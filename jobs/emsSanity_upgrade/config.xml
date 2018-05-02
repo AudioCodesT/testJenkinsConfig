@@ -318,6 +318,10 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
               <logText>Build was aborted</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>marked build as failure</logText>
+              <operator>AND</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
