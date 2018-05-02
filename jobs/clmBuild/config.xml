@@ -76,7 +76,8 @@ run python build script from the repo which copy files to Lambda and commit and 
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>python build.py --new_version $VERSION</command>
+      <command>#python build.py --new_version $VERSION
+echo &quot;Running the Job&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
