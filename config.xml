@@ -22,7 +22,9 @@
           <permission>jenkins.metrics.api.Metrics.View</permission>
           <permission>hudson.model.Run.Replay</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>ramn</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_EMS_DEVELOPERS" pattern="(ems.*)">
         <permissions>
@@ -129,8 +131,8 @@
           <sid>yossim</sid>
           <sid>yuvaly</sid>
           <sid>shukyr</sid>
-          <sid>orgads</sid>
           <sid>benm</sid>
+          <sid>orgads</sid>
           <sid>natanm</sid>
         </assignedSIDs>
       </role>
@@ -155,6 +157,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.6">
     <domains>
