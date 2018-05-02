@@ -13,6 +13,17 @@
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
     <roleMap type="projectRoles">
+      <role name="CI_CLM_developers" pattern="(clm.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
       <role name="CI_EMS_DEVELOPERS" pattern="(ems.*)">
         <permissions>
           <permission>hudson.model.Item.Read</permission>
@@ -144,7 +155,6 @@
         </assignedSIDs>
       </role>
     </roleMap>
-    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.6">
     <domains>
