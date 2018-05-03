@@ -165,7 +165,7 @@ java --&gt; pmd, findbugs&#xd;
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Shuky.Riechard@audiocodes.com</recipientList>
+      <recipientList>Shuky.Riechard@audiocodes.com,Marina.Risher@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
