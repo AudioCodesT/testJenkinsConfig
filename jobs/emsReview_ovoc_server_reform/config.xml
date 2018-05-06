@@ -152,6 +152,7 @@ git -c http.sslverify=false clone -n https://gerrit/devops/tools
 cd tools
 
 git checkout -f origin/master -- sputnik/test-gerrit/ems-ovoc-pmd.properties
+git checkout -f origin/master -- pmd/audc-ruleset.xml
 
 cp sputnik/test-gerrit/ems-ovoc-pmd.properties ${WORKSPACE}/
 cp pmd/audc-ruleset.xml ${WORKSPACE}/
