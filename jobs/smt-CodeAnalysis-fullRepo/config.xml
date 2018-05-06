@@ -91,8 +91,25 @@
       <command>## Run cppcheck on entire repository java files
 /usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 . 2&gt; cppcheck.xml
 
+
 ## Run pmd on entire repository java files
-/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R category/java/bestpractices.xml,category/java/errorprone.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
+cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
+
+cd ${WORKSPACE}/..
+
+rm -rf tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
+
+cd tools
+git checkout -f origin/master -- sputnik/gerrit/arm-pmd.properties
+cp pmd/audc-ruleset.xml ${WORKSPACE}/
+
+cd ${WORKSPACE}
+
+/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R audc-ruleset.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
 
 /usr/bin/sed -i -n &apos;/xml/,$p&apos; pmd.xml
 
