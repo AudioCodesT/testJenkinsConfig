@@ -77,7 +77,7 @@ run python build script from the repo which copy files to Lambda and commit and 
   <builders>
     <hudson.tasks.Shell>
       <command>echo &quot;Running the Job&quot;
-#python build.py --new_version $VERSION
+#python build.py Production
 </command>
     </hudson.tasks.Shell>
   </builders>
