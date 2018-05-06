@@ -76,9 +76,13 @@ run python build script from the repo which copy files to Lambda and commit and 
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;Running the Job&quot;
-#python build.py Production
-</command>
+      <command>#echo &quot;Running the Job&quot;
+python build.py Production
+
+
+#version=$(git describe --abbrev=0 --tags)
+#[[ &quot;$version&quot; =~ (.*[^0-9])([0-9]+)$ ]] &amp;&amp; version=&quot;${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))&quot;;
+#git tag -a $version </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
