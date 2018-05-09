@@ -232,7 +232,7 @@ cd ${WORKSPACE}
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>Shuky.Riechard@audiocodes.com,Natan.Merfish@audiocodes.com,Alex.Shlachter@audiocodes.com</recipientList>
       <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
@@ -245,7 +245,7 @@ cd ${WORKSPACE}
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
             <contentType>project</contentType>
           </email>
-        </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Weekly Code Analysis for SmartTAP</defaultSubject>
