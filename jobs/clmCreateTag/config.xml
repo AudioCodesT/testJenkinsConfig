@@ -127,7 +127,7 @@ cat &lt;&lt;-EOF &gt; ~/.netrc
 machine test-gerrit login jenkins password $jpass
 machine gerrit login jenkins password $jpass
 EOF
-
+git config http.sslverify &quot;false&quot;
 #get the last commit created
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 
@@ -170,7 +170,7 @@ fi</command>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jpass</name>
-          <value>{AQAAABAAAAAQxvKTbHAw7xyCuzckgYAokRuMKos8xwBLPt7FUEJJw0s=}</value>
+          <value>{AQAAABAAAAAQjRHUheTrkLJbOfj15TOVdEzV73UHV58djMiW+L2z6ZA=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
