@@ -52,6 +52,38 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then exit 0; else exit 1; fi
+</command>
+      </condition>
+      <buildStep class="hudson.plugins.copyartifact.CopyArtifact" plugin="copyartifact@1.39">
+        <project>emsBuild_ovoc_server_7.4.3000</project>
+        <filter></filter>
+        <target>EMS/target</target>
+        <excludes>mkiso.log</excludes>
+        <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+        <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
+</command>
+      </condition>
+      <buildStep class="hudson.plugins.copyartifact.CopyArtifact" plugin="copyartifact@1.39">
+        <project>emsBuild_ovoc_server_7.6</project>
+        <filter></filter>
+        <target>EMS/target</target>
+        <excludes>mkiso.log</excludes>
+        <selector class="hudson.plugins.copyartifact.StatusBuildSelector"/>
+        <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>DefaultGateway=&quot;172.16.132.1&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
@@ -64,6 +96,10 @@ aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsCreateAm
 aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
 #keep ip address into &quot;vmIP&quot;
 vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cut -d &apos;&quot;&apos; -f 4)&quot;
+
+echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
+echo &quot;vmIP=${vmIP}&quot; &gt; sanity2.properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt; sanity3.properties
 
 #wait for the new machine to come up
 sleep 300
