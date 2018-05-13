@@ -159,16 +159,5 @@ fi</command>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
-  <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
-      <injectGlobalPasswords>false</injectGlobalPasswords>
-      <maskPasswordParameters>true</maskPasswordParameters>
-      <passwordEntries>
-        <EnvInjectPasswordEntry>
-          <name>jpass</name>
-          <value>{AQAAABAAAAAQjRHUheTrkLJbOfj15TOVdEzV73UHV58djMiW+L2z6ZA=}</value>
-        </EnvInjectPasswordEntry>
-      </passwordEntries>
-    </EnvInjectPasswordWrapper>
-  </buildWrappers>
+  <buildWrappers/>
 </project>
