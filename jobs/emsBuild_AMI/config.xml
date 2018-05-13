@@ -69,12 +69,16 @@ sleep 300
 #2. run python scripts: set network, install
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
-python2.7 SanityInstall.py $BRANCH $vmIP official_iso  #$ISO_DEPLOY_DESTINATION
+python2.7 SanityInstall.py $BRANCH $vmIP official_iso  #/  $ISO_DEPLOY_DESTINATION
 
+aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;Ami From EMS Build&quot; --description &quot;An AMI&quot; --no-reboot
 
+aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;***********************\&quot;}]}&quot;
 
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+
+</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
