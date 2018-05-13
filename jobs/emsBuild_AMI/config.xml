@@ -1,15 +1,102 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class="hudson.scm.NullSCM"/>
-  <canRoam>true</canRoam>
-  <disabled>false</disabled>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>$BRANCH</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <assignedNode>ems-build</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
-  <publishers/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>DefaultGateway=&quot;172.16.132.1&quot;
+#1. create a tested VM: launch new instance from sanity AMI and get its IP address
+emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+#keep instance ID
+INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+#add tag to this instans:  &quot;emsSanity&quot;
+aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsCreateAmi
+#set to its delete volume when instance will be terminated
+aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
+#keep ip address into &quot;vmIP&quot;
+vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cut -d &apos;&quot;&apos; -f 4)&quot;
+
+#wait for the new machine to come up
+sleep 300
+
+#2. run python scripts: set network, install
+cd EMS/VersionRelease
+python2.7 setNetwork.py $vmIP $DefaultGateway
+python2.7 SanityInstall.py $BRANCH $vmIP official_iso  #$ISO_DEPLOY_DESTINATION
+
+
+
+#3. if tests pass then terminate the tested machine
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Build was aborted</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>marked build as failure</logText>
+              <operator>AND</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>false</RunIfJobSuccessful>
+          <script>aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+  </publishers>
   <buildWrappers/>
 </project>
