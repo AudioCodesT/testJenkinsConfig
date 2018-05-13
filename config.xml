@@ -875,6 +875,7 @@
         <string>clmBuild</string>
         <string>clmCreateTag</string>
         <string>ems_sanity_multijob</string>
+        <string>emsBuild_AMI</string>
         <string>emsBuild_oracle_triggers</string>
         <string>emsBuild_ovoc_server_7.4</string>
         <string>emsBuild_ovoc_server_7.4.1000</string>
