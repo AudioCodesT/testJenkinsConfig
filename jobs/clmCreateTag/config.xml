@@ -140,8 +140,8 @@ CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
   do
       FirstCommitToTag=$(echo ${CommitsListWithOutTags} | awk &apos;{ print $NF }&apos;)
       [[ &quot;$NEW_TAG&quot; =~ (.*[^0-9])([0-9]+)$ ]] &amp;&amp; NEW_TAG=&quot;${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))&quot;;
-      #git tag -a -m &quot;Jenkins auto tag after commit&quot; $NEW_TAG $FirstCommitToTag
-      #git push origin $NEW_TAG
+      git tag -a -m &quot;Jenkins auto tag after commit&quot; $NEW_TAG $FirstCommitToTag
+      git push origin $NEW_TAG
       CommitsListWithOutTags=$(echo ${CommitsListWithOutTags} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;)
       CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
   done
