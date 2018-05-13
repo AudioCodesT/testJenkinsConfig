@@ -122,11 +122,8 @@
     <hudson.tasks.Shell>
       <command>git config --global user.name &quot;Jenkins&quot;
 git config --global user.email devops@audiocodes.com
+git config  url.ssh://git@github.com/.insteadOf https://github.com/
 
-cat &lt;&lt;-EOF &gt; ~/.netrc
-machine test-gerrit login jenkins password $jpass
-machine gerrit login jenkins password $jpass
-EOF
 
 #get the last commit created
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
