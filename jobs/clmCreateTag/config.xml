@@ -118,19 +118,21 @@ if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; 
 then
 #get the last tag of current branch
 LATEST_TAG=$(git describe --abbrev=0 --tags)
-NEW_TAG=LATEST_TAG
+NEW_TAG=$LATEST_TAG
 #get all the new commits since the last tag created
 CommitsListWithOutTags=$(git log $LATEST_TAG..HEAD --oneline | cut -f1 -d &apos; &apos;)
-CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -c)
-  while [[ $CountHowManyCommit != 0 ]]
-  then
+CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
+  while [[ $CountHowManyCommit != &quot;0&quot; ]]
+  do
       FirstCommitToTag=$(echo ${CommitsListWithOutTags} | awk &apos;{ print $NF }&apos;)
-      $NEW_TAG&quot; =~ (.*[^0-9])([0-9]+)$ ]] &amp;&amp; NEW_TAG=&quot;${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))&quot;;
+      [[ &quot;$NEW_TAG&quot; =~ (.*[^0-9])([0-9]+)$ ]] &amp;&amp; NEW_TAG=&quot;${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))&quot;;
       git tag -a -m &quot;Jenkins auto tag after commit&quot; $NEW_TAG $FirstCommitToTag
       git push origin $NEW_TAG
-      CommitsListWithOutTags=$(echo ${CommitsListWithOutTags} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;
-      CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -c)
-  fi
+      CommitsListWithOutTags=$(echo ${CommitsListWithOutTags} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;)
+      CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
+  done
+
+
 
 
 fi</command>
