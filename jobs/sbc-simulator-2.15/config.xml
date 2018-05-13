@@ -33,7 +33,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -41,7 +40,7 @@
 (
   flock 200
   if ! [ -d $HOME/Utils ]; then
-    git clone -c http.sslverify=false https://test-gerrit/Utils $HOME/Utils
+    git clone -c http.sslverify=false https://172.16.143.25/Utils $HOME/Utils
   else
     git update-utils
   fi
@@ -64,7 +63,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFSPEC +refs/heads/*:refs/remotes/origin/*</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
+        <url>ssh://jenkins@172.16.143.25:29418/TP/GWApp</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -113,7 +112,7 @@
       </gerritProjects>
       <dynamicGerritProjects class="empty-list"/>
       <skipVote>
-        <onSuccessful>true</onSuccessful>
+        <onSuccessful>false</onSuccessful>
         <onFailed>false</onFailed>
         <onUnstable>false</onUnstable>
         <onNotBuilt>false</onNotBuilt>
@@ -134,7 +133,7 @@
       <buildNotBuiltMessage></buildNotBuiltMessage>
       <buildUnsuccessfulFilepath>build-error.log</buildUnsuccessfulFilepath>
       <customUrl></customUrl>
-      <serverName>test-gerrit</serverName>
+      <serverName>test-gerrit-update</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
@@ -150,25 +149,6 @@
   </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
-    <hudson.plugins.parameterizedtrigger.TriggerBuilder plugin="parameterized-trigger@2.35.2">
-      <configs>
-        <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-          <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>GERRIT_REFSPEC=${GERRIT_REFSPEC}
-GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}
-GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}</properties>
-              <textParamValueOnNewLine>false</textParamValueOnNewLine>
-            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-          </configs>
-          <projects>sbc-basic-review</projects>
-          <condition>ALWAYS</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <triggerFromChildProjects>false</triggerFromChildProjects>
-          <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
-        </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-      </configs>
-    </hudson.plugins.parameterizedtrigger.TriggerBuilder>
     <hudson.tasks.Shell>
       <command>#!/bin/sh -x
 
@@ -178,7 +158,7 @@ change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
 chmod 600 id_rsa_gerrit
 echo Calibrate Verified - $change,$ps
-ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
+ssh -p 29418  -i id_rsa_gerrit jenkins@172.16.143.25 gerrit review \
 --notify NONE --label Verified=0 \
 $change,$ps
 
