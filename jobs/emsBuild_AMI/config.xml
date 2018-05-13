@@ -1,5 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -75,6 +76,11 @@ python2.7 SanityInstall.py $BRANCH $vmIP official_iso  #$ISO_DEPLOY_DESTINATION
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>sanity.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
@@ -92,7 +98,8 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
