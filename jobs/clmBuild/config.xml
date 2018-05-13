@@ -69,7 +69,7 @@ run python build script from the repo which copy files to Lambda and commit and 
   </scm>
   <assignedNode>clm-build-slave</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
