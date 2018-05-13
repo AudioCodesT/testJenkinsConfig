@@ -127,7 +127,9 @@ cat &lt;&lt;-EOF &gt; ~/.netrc
 machine test-gerrit login jenkins password $jpass
 machine gerrit login jenkins password $jpass
 EOF
-git config http.sslverify &quot;false&quot;
+
+git -c http.sslverify=false clone -n https://test-gerrit/EMS/CLM-CM
+cd CLM-CM
 #get the last commit created
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 
