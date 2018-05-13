@@ -1037,6 +1037,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>smt-CodeAnalysis-fullRepo-Test-Gerrit-Update</string>
       </jobNames>
       <jobFilters/>
       <columns>
