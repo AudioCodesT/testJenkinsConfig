@@ -122,7 +122,6 @@
     <hudson.tasks.Shell>
       <command>git config --global user.name &quot;Jenkins&quot;
 git config --global user.email devops@audiocodes.com
-git config  url.ssh://git@github.com/.insteadOf https://github.com/
 
 
 #get the last commit created
