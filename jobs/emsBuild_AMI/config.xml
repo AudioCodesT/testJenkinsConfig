@@ -70,9 +70,9 @@ sleep 300
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $BRANCH $vmIP official_iso  #/  $ISO_DEPLOY_DESTINATION
-
+#create a new AMI After install
 aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;Ami From EMS Build&quot; --description &quot;An AMI&quot; --no-reboot
-
+#give permissions to QA Account
 aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;***********************\&quot;}]}&quot;
 
 #3. if tests pass then terminate the tested machine
