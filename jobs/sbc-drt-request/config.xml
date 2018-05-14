@@ -327,7 +327,17 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
                       <hudson.tasks.Shell>
                         <command>echo ----------------- Stop it after it was aborted --------------------
 curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
-echo ----------------- Done ------------------------</command>
+echo ----------------- Done ------------------------
+
+change=`echo $REFSPEC | cut -d/ -f4`
+ps=`echo $REFSPEC | cut -d/ -f5`
+
+ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
+--message &quot;&apos;DRT was aborted&apos;&quot; \
+--notify OWNER \
+--tag &quot;&apos;DRT&apos;&quot; \
+$change,$ps
+</command>
                       </hudson.tasks.Shell>
                     </buildSteps>
                   </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
