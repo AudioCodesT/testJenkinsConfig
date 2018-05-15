@@ -128,8 +128,8 @@ git config --global user.email devops@audiocodes.com
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 
 #check if its the last commit
-#if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
-#then
+if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
+then
 #get the last tag of current branch
 LATEST_TAG=$(git describe --abbrev=0 --tags)
 NEW_TAG=$LATEST_TAG
@@ -140,12 +140,12 @@ CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
   do
       FirstCommitToTag=$(echo ${CommitsListWithOutTags} | awk &apos;{ print $NF }&apos;)
       [[ &quot;$NEW_TAG&quot; =~ (.*[^0-9])([0-9]+)$ ]] &amp;&amp; NEW_TAG=&quot;${BASH_REMATCH[1]}$((${BASH_REMATCH[2]} + 1))&quot;;
-      #git tag -a -m &quot;Jenkins auto tag after commit&quot; $NEW_TAG $FirstCommitToTag
-      #git push origin $NEW_TAG
+      git tag -a -m &quot;Jenkins auto tag after commit&quot; $NEW_TAG $FirstCommitToTag
+      git push origin $NEW_TAG
       CommitsListWithOutTags=$(echo ${CommitsListWithOutTags} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;)
       CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
   done
-#fi</command>
+fi</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
