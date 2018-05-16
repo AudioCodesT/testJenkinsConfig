@@ -10,6 +10,14 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>30</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -98,8 +106,6 @@ aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-ma
 vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cut -d &apos;&quot;&apos; -f 4)&quot;
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
-echo &quot;vmIP=${vmIP}&quot; &gt; sanity2.properties
-echo &quot;BRANCH=${BRANCH}&quot; &gt; sanity3.properties
 
 #wait for the new machine to come up
 sleep 300
@@ -108,10 +114,18 @@ sleep 300
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
-#create a new AMI After install
-aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;emsAMI${BUILD_NUMBER}_${NEW_TAG}&quot; --description &quot;ems AMI&quot; --no-reboot
+# stop the  instance before creating AMI
+
+#check if stopped before creating AMI
+
+#create a new AMI After install and keep ImageID value
+aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${BUILD_NUMBER}_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot;
+#check if image available
+
 #give permissions to QA Account
 aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
+
+#check if shared
 
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
