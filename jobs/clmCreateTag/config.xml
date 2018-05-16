@@ -143,6 +143,10 @@ CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
       CommitsListWithOutTags=$(echo ${CommitsListWithOutTags} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;)
       CountHowManyCommit=$(echo $CommitsListWithOutTags | wc -w)
   done
+else
+echo &quot;***********************************************&quot;
+echo &quot;Exit The Build. This is not the Last Commit&quot;
+echo &quot;***********************************************&quot;
 fi</command>
     </hudson.tasks.Shell>
   </builders>
