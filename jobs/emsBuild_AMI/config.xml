@@ -133,7 +133,7 @@ checkImageStatus=$(aws ec2 describe-images --image-ids $ImageId)
 while [[ &quot;$checkImageStatus&quot; != &quot;available&quot; ]]
 do
   sleep 30
-  checkInstanceStatus=$(aws ec2 describe-instance-status --instance-ids ${INSTANCE_ID})
+  checkImageStatus=$(aws ec2 describe-images --image-ids $ImageId)
 done
 
 #give permissions to QA Account
