@@ -95,7 +95,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
     <hudson.tasks.Shell>
       <command>DefaultGateway=&quot;172.16.132.1&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
-emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+ovocCreateAmi=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 #keep instance ID
 INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
 #add tag to this instans:  &quot;emsSanity&quot;
@@ -115,12 +115,26 @@ cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 # stop the  instance before creating AMI
-
+aws ec2 stop-instances --instance-ids ${INSTANCE_ID}
 #check if stopped before creating AMI
+checkInstanceStatus=$(aws ec2 describe-instance-status --instance-ids ${INSTANCE_ID})
 
+while [[ &quot;$checkInstanceStatus&quot; != &quot;stopped&quot; ]]
+do
+  sleep 30
+  checkInstanceStatus=$(aws ec2 describe-instance-status --instance-ids ${INSTANCE_ID})
+done
 #create a new AMI After install and keep ImageID value
-aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${BUILD_NUMBER}_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot;
+ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot;)
+ImageId=$(echo $ImageId | grep ImageId | cut -d &apos;&quot;&apos; -f 4)
 #check if image available
+checkImageStatus=$(aws ec2 describe-images --image-ids $ImageId)
+
+while [[ &quot;$checkImageStatus&quot; != &quot;available&quot; ]]
+do
+  sleep 30
+  checkInstanceStatus=$(aws ec2 describe-instance-status --instance-ids ${INSTANCE_ID})
+done
 
 #give permissions to QA Account
 aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
