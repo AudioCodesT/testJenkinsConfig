@@ -70,7 +70,7 @@ echo $displayName
 #create a user name from the display name
 name=$(echo $displayName  | sed &apos;s: \|\.::g&apos;)
 #replace spaces in display name with +
-displayJiraName=$(echo $displayName  | sed &apos;s: :+:g&apos;)
+#displayJiraName=$(echo $displayName  | sed &apos;s: :+:g&apos;)
 
 # Check if this customer exist in the Jira database, the search have to be with the &apos;user&apos; name (not the displayName)
 echo Checking if user exist
