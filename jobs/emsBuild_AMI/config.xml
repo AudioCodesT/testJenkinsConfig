@@ -140,7 +140,12 @@ done
 aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
 
 #check if shared
+checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission)
 
+if [&quot;$checkImagePermissions&quot; == &quot;$&quot;]
+then
+
+fi
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
