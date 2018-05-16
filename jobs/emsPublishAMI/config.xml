@@ -46,7 +46,30 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-ImageName=ovocAMI_${NEW_TAG}</command>
+ImageName=ovocAMI_${NEW_TAG}
+currentRegion=&quot;eu-central-1&quot;
+echo &quot;Regions And ids List&quot; &gt; output.txt
+ echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+#Get Image Id
+ImageId=$(aws ec2 describe-images --filters Name=name,Values=${ImageName})
+#make The Image Public
+aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
+#get list of all the regions
+listOfAllRegions=$(aws ec2 describe-regions --query &apos;Regions[].{Name:RegionName}&apos; --output text) 
+CountHowManyRegions=$(echo $listOfAllRegions | wc -w)
+#copy the ami to all the regions
+	while [[ $CountHowManyRegions != &quot;0&quot; ]]
+ 	do
+    	destRegionName=$(echo ${listOfAllRegions} | awk &apos;{ print $NF }&apos;)
+		newRegionAmiId=$(aws ec2 copy-image --source-image-id ${ImageId} --source-region ${currentRegion} --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot;)
+        listOfAllRegions=$(echo ${listOfAllRegions} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;)
+        CountHowManyRegions=$(echo $listOfAllRegions | wc -w)
+		echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt;output.txt
+        echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt;output.txt
+        echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+ 	done
+    
+    </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
