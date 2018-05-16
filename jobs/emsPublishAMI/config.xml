@@ -64,9 +64,12 @@ do
     echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; output.txt
     echo -e &quot;\r\n&quot; &gt;&gt; output.txt
 done
+awsAccountID=$()
+#run the instance of the new image 
 
-#upload the Image to S3
-
+#upload the Image to S3 (run it from the new instance)
+ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem  --cert /root/Certificate.pem  -u $awsAccountID
+ec2-upload-bundle -b yourbucketname00404042009 -m /mnt/image.manifest.xml -a your_s3_access_key -s your_s3_secret_access_key
 #download the image from S3 to local directory
 
 #push the file to artifactory
