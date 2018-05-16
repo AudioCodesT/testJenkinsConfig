@@ -58,8 +58,6 @@ aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{
 for destRegionName in `aws ec2 describe-regions --query &apos;Regions[*].RegionName&apos; --output text`
 do
 	newRegionAmiId=$(aws ec2 copy-image --source-image-id ${ImageId} --source-region ${currentRegion} --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot;)
-    listOfAllRegions=$(echo ${listOfAllRegions} | awk &apos;{$NF=&quot;&quot;;sub(/[ \t]+$/,&quot;&quot;)}1&apos;)
-    CountHowManyRegions=$(echo $listOfAllRegions | wc -w)
 	echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt;output.txt
     echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt;output.txt
     echo -e &quot;\r\n&quot; &gt;&gt; output.txt
