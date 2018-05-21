@@ -147,7 +147,7 @@ function CheckFolder() {
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
       moveDone=$?
       echo Deep: $deep *******
-      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 1 ]]; then 
+      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]; then 
         echo ---------- Probably all next folder are not older... break from this folder check ------------
         break
       fi
@@ -159,7 +159,7 @@ function CheckFolder() {
 
 
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
-deep=1
+deep=2
 
 ARTIFACTORY=test-artifactory
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
@@ -173,7 +173,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.20
 CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
 
 ARTIFACTORY=artifactory
-deep=0
+deep=1
 CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
 CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
 
