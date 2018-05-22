@@ -56,7 +56,7 @@ bucketName=S3OvocAmis
 echo &quot;Regions And ids List&quot; &gt; output.txt
 echo -e &quot;\r\n&quot; &gt;&gt; output.txt
 #Get Image Id
-ImageId=$(aws ec2 describe-images --filters Name=name,Values=${ImageName})
+ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query &apos;Images[*].ImageId&apos;)
 #make The Image Public
 aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
 #copy Image to other Regions
