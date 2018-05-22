@@ -97,7 +97,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
 ovocCreateAmi=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 #keep instance ID
-INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+INSTANCE_ID=&quot;$(echo &quot;${ovocCreateAmi}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
 #add tag to this instans:  &quot;emsSanity&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsCreateAmi
 #set to its delete volume when instance will be terminated
@@ -107,34 +107,65 @@ vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cu
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
 
-#wait for the new machine to come up
-sleep 300
+echo &quot;Wait until the instance is up&quot;
+OLD_STATE=&quot;&quot;
+while true; do
+    sleep 10
+    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
+    if [[ $STATE != $OLD_STATE ]]; then
+        echo $STATE
+        OLD_STATE=$STATE
+    fi
+    if [[ $STATE == &quot;running&quot; ]]; then
+        break
+    fi
+done
+
+echo &quot;Wait until instance is fully loaded&quot;
+sleep 60
 
 #2. run python scripts: set network, install
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 # stop the  instance before creating AMI
+echo &quot;Stop instance&quot;
 aws ec2 stop-instances --instance-ids ${INSTANCE_ID}
 #check if stopped before creating AMI
-checkInstanceStatus=$(aws ec2 describe-instance-status --instance-ids ${INSTANCE_ID})
-
-while [[ &quot;$checkInstanceStatus&quot; != &quot;stopped&quot; ]]
-do
-  sleep 30
-  checkInstanceStatus=$(aws ec2 describe-instance-status --instance-ids ${INSTANCE_ID})
+OLD_STATE=&quot;&quot;
+while true; do
+    sleep 10
+    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
+    if [[ $STATE != $OLD_STATE ]]; then
+        echo $STATE
+        OLD_STATE=$STATE
+    fi
+    if [[ $STATE == &quot;stopped&quot; ]]; then
+        break
+    fi
 done
+
+echo &quot;Wait for the instance to stop&quot;
+sleep 30
+
 #create a new AMI After install and keep ImageID value
-ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot;)
-ImageId=$(echo $ImageId | grep ImageId | cut -d &apos;&quot;&apos; -f 4)
-#check if image available
-checkImageStatus=$(aws ec2 describe-images --image-ids $ImageId)
+ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
+#ImageId=$(echo $ImageId | grep ImageId | cut -d &apos;&quot;&apos; -f 4)
 
-while [[ &quot;$checkImageStatus&quot; != &quot;available&quot; ]]
-do
-  sleep 30
-  checkImageStatus=$(aws ec2 describe-images --image-ids $ImageId)
+#check if image available
+OLD_STATE=&quot;&quot;
+while true; do
+    sleep 10
+    STATE=$(aws ec2 describe-images --image-ids $ImageId --output text --query &quot;Images[0].State&quot;)
+    if [[ $STATE != $OLD_STATE ]]; then
+        echo $STATE
+        OLD_STATE=$STATE
+    fi
+    if [[ $STATE == &quot;available&quot; ]]; then
+        break
+    fi
 done
+
 
 #give permissions to QA Account
 aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
@@ -146,6 +177,7 @@ if [&quot;$checkImagePermissions&quot; == &quot;$&quot;]
 then
 
 fi
+
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
