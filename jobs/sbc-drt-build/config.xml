@@ -150,7 +150,7 @@ ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change |
 ls -l ../id_rsa_gerrit
 chmod 600 ../id_rsa_gerrit
 ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
-  grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt  || echo ChangeId not found
+  grep -A30 &apos;project: TP/OpenSource&apos; | grep &apos;project\|revision&apos; &gt; othersCommits.txt  || echo ChangeId not found
 
 cat othersCommits.txt
 
