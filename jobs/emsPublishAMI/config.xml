@@ -47,9 +47,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>
-ImageName=ovocAMI_${NEW_TAG}
+      <command>#list of other regions
+OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
+#`aws ec2 describe-regions --query &apos;Regions[*].RegionName&apos; --output text`  check
 currentRegion=&quot;eu-central-1&quot;
+ImageName=ovocAMI_${NEW_TAG}
+
 echo &quot;Regions And ids List&quot; &gt; output.txt
 echo -e &quot;\r\n&quot; &gt;&gt; output.txt
 #Get Image Id
@@ -57,7 +60,7 @@ ImageId=$(aws ec2 describe-images --filters Name=name,Values=${ImageName})
 #make The Image Public
 aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
 #get list of all the regions and copy the ami to all the regions
-for destRegionName in `aws ec2 describe-regions --query &apos;Regions[*].RegionName&apos; --output text`
+for destRegionName in 
 do
 	newRegionAmiId=$(aws ec2 copy-image --source-image-id ${ImageId} --source-region ${currentRegion} --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot;)
 	echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; output.txt
