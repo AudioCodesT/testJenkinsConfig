@@ -105,14 +105,16 @@ done
 echo &quot;Wait until instance is fully loaded&quot;
 sleep 60
 
-#create an Image with ec2-tools (run it from the new instance)
-aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem -c /root/Certificate.pem -u $awsAccountID&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
+#aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;mkdir /tmp/cert&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
 
+#create an Image with ec2-tools (run it from the new instance)
+#aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-bundle-vol -d /mnt -k tmp/Jenkins &amp; App subnets machines key pair.pem -c tmp/root/AudioCodes-CICD-Apps.pem -u $awsAccountID -r x86_64&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
+cat output.txt
 
 
 #upload the Image to S3 (run it from the new instance)
 
-aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-upload-bundle -b $bucketName -m /mnt/image.manifest.xml -a $s3_access_key -s $s3_secret_access_key&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
+#aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-upload-bundle -b $bucketName -m /mnt/image.manifest.xml -a $s3_access_key -s $s3_secret_access_key&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
 
 
 #download the image from S3 to local directory
@@ -130,11 +132,11 @@ aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>s3_access_key</name>
-          <value>{AQAAABAAAAAQgP/tZDw2jzrqNRPcNy0NK7H/PGfv0Dab3q6oHLf4Jq4=}</value>
+          <value>{AQAAABAAAAAQBII/TXQsI2WEAhYOup1AYchUcZ/SPwijrhyIvOXTgBo=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>s3_secret_access_key</name>
-          <value>{AQAAABAAAAAQiPqWKOxOKjVCPl9UDDd3ayeJWLfMkMtb56k1AXD6ORA=}</value>
+          <value>{AQAAABAAAAAQvRq4pT77FVhk14yIDAmgiCYIDiYib5nsO1cAAP6D+gI=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
