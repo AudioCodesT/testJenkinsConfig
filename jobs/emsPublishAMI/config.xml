@@ -60,7 +60,7 @@ ImageId=$(aws ec2 describe-images --filters Name=name,Values=${ImageName})
 #make The Image Public
 aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
 #get list of all the regions and copy the ami to all the regions
-for destRegionName in 
+for destRegionName in $OTHER_REGIONS
 do
 	newRegionAmiId=$(aws ec2 copy-image --source-image-id ${ImageId} --source-region ${currentRegion} --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot;)
 	echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; output.txt
