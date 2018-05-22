@@ -136,11 +136,11 @@ cat output.txt
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>s3_access_key</name>
-          <value>{AQAAABAAAAAQFef3xsZG7Y55dLfKEOXkxi8BnnytLiLmCrarJ+4uCiA=}</value>
+          <value>{AQAAABAAAAAQAoeni0yibmqmAYGuRGYdIinOy2S6iHTiNyKPZzncvDU=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>s3_secret_access_key</name>
-          <value>{AQAAABAAAAAQYywGxkvVPofYwVxehQTH2A3bS6BQZ77gd5YXKom6haA=}</value>
+          <value>{AQAAABAAAAAQQHWzpS0J9EW1sfr6w1/K1ZOd/VooBHyqt/34m6ZwRkg=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
