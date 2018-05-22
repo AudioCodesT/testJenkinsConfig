@@ -52,7 +52,7 @@ OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
 #OTHER_REGIONS=$(aws ec2 describe-regions --output text --query &quot;Regions[*].RegionName&quot;)  check
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
-
+bucketName=S3OvocAmis
 echo &quot;Regions And ids List&quot; &gt; output.txt
 echo -e &quot;\r\n&quot; &gt;&gt; output.txt
 #Get Image Id
@@ -106,12 +106,14 @@ echo &quot;Wait until instance is fully loaded&quot;
 sleep 60
 
 #create an Image with ec2-tools (run it from the new instance)
+aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem -c /root/Certificate.pem -u $awsAccountID&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
 
-ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem -c /root/Certificate.pem -u $awsAccountID
+
 
 #upload the Image to S3 (run it from the new instance)
 
- ec2-upload-bundle -b yourbucketname00404042009 -m /mnt/image.manifest.xml -a $s3_access_key -s $s3_secret_access_key
+aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-upload-bundle -b $bucketName -m /mnt/image.manifest.xml -a $s3_access_key -s $s3_secret_access_key&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
+
 
 #download the image from S3 to local directory
 
@@ -128,11 +130,11 @@ ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem -c /root/Certificate.pem -u $awsA
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>s3_access_key</name>
-          <value>{AQAAABAAAAAQ2BUjV5By5IWGalDzuZ0waRsABkF0fA7CK7YCq2+Ea88=}</value>
+          <value>{AQAAABAAAAAQgP/tZDw2jzrqNRPcNy0NK7H/PGfv0Dab3q6oHLf4Jq4=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>s3_secret_access_key</name>
-          <value>{AQAAABAAAAAQdORVUZnUB33P0Vl6Bxoew7GvQwRxdfuJDLgGhUp1lXc=}</value>
+          <value>{AQAAABAAAAAQiPqWKOxOKjVCPl9UDDd3ayeJWLfMkMtb56k1AXD6ORA=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
