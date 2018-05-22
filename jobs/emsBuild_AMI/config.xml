@@ -107,6 +107,7 @@ vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cu
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
 
+#Wait for the instance to up
 echo &quot;Wait until the instance is up&quot;
 OLD_STATE=&quot;&quot;
 while true; do
@@ -120,7 +121,6 @@ while true; do
         break
     fi
 done
-
 echo &quot;Wait until instance is fully loaded&quot;
 sleep 60
 
@@ -128,9 +128,11 @@ sleep 60
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+
 # stop the  instance before creating AMI
 echo &quot;Stop instance&quot;
 aws ec2 stop-instances --instance-ids ${INSTANCE_ID}
+
 #check if stopped before creating AMI
 OLD_STATE=&quot;&quot;
 while true; do
@@ -144,7 +146,6 @@ while true; do
         break
     fi
 done
-
 echo &quot;Wait for the instance to stop&quot;
 sleep 30
 
