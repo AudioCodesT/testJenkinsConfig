@@ -80,36 +80,40 @@ do
     echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; output.txt
     echo -e &quot;\r\n&quot; &gt;&gt; output.txt
 done
-awsAccountID=$()
+
+echo &quot;Region Name &amp; Id&quot;
+cat output.txt
+#awsAccountID=$()
 #run the instance of the new image 
-ovocAmi=&quot;$(aws ec2 run-instances --image-id $ImageId --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id $ImageId --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+#ovocAmi=&quot;$(aws ec2 run-instances --image-id $ImageId --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id $ImageId --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 
 #keep instance ID
-INSTANCE_ID=&quot;$(echo &quot;${ovocAmi}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+#INSTANCE_ID=&quot;$(echo &quot;${ovocAmi}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
 #INSTANCE_ID=&quot;$(aws ec2 describe-images --image-id $ImageId --output text --query Instances[*].ImageId)&quot;
 
 #Wait for the instance to up
-echo &quot;Wait until the instance is up&quot;
-OLD_STATE=&quot;&quot;
-while true; do
-    sleep 10
-    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
-    if [[ $STATE != $OLD_STATE ]]; then
-        echo $STATE
-        OLD_STATE=$STATE
-    fi
-    if [[ $STATE == &quot;running&quot; ]]; then
-        break
-    fi
-done
-echo &quot;Wait until instance is fully loaded&quot;
-sleep 60
+#echo &quot;Wait until the instance is up&quot;
+#OLD_STATE=&quot;&quot;
+#while true; do
+#    sleep 10
+#    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
+#    if [[ $STATE != $OLD_STATE ]]; then
+#        echo $STATE
+#        OLD_STATE=$STATE
+#    fi
+#    if [[ $STATE == &quot;running&quot; ]]; then
+#        break
+#    fi
+#done
+#echo &quot;Wait until instance is fully loaded&quot;
+#sleep 60
+
 
 #aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;mkdir /tmp/cert&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
 
 #create an Image with ec2-tools (run it from the new instance)
 #aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-bundle-vol -d /mnt -k tmp/Jenkins &amp; App subnets machines key pair.pem -c tmp/root/AudioCodes-CICD-Apps.pem -u $awsAccountID -r x86_64&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
-cat output.txt
+
 
 
 #upload the Image to S3 (run it from the new instance)
@@ -132,11 +136,11 @@ cat output.txt
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>s3_access_key</name>
-          <value>{AQAAABAAAAAQBII/TXQsI2WEAhYOup1AYchUcZ/SPwijrhyIvOXTgBo=}</value>
+          <value>{AQAAABAAAAAQFef3xsZG7Y55dLfKEOXkxi8BnnytLiLmCrarJ+4uCiA=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>s3_secret_access_key</name>
-          <value>{AQAAABAAAAAQvRq4pT77FVhk14yIDAmgiCYIDiYib5nsO1cAAP6D+gI=}</value>
+          <value>{AQAAABAAAAAQYywGxkvVPofYwVxehQTH2A3bS6BQZ77gd5YXKom6haA=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
