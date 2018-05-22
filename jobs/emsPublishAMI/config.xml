@@ -82,10 +82,37 @@ do
 done
 awsAccountID=$()
 #run the instance of the new image 
+ovocAmi=&quot;$(aws ec2 run-instances --image-id $ImageId --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id $ImageId --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+
+#keep instance ID
+INSTANCE_ID=&quot;$(echo &quot;${ovocAmi}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+#INSTANCE_ID=&quot;$(aws ec2 describe-images --image-id $ImageId --output text --query Instances[*].ImageId)&quot;
+
+#Wait for the instance to up
+echo &quot;Wait until the instance is up&quot;
+OLD_STATE=&quot;&quot;
+while true; do
+    sleep 10
+    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
+    if [[ $STATE != $OLD_STATE ]]; then
+        echo $STATE
+        OLD_STATE=$STATE
+    fi
+    if [[ $STATE == &quot;running&quot; ]]; then
+        break
+    fi
+done
+echo &quot;Wait until instance is fully loaded&quot;
+sleep 60
+
+#create an Image with ec2-tools (run it from the new instance)
+
+ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem -c /root/Certificate.pem -u $awsAccountID
 
 #upload the Image to S3 (run it from the new instance)
-ec2-bundle-vol -d /mnt -k /root/PrivateKey.pem  --cert /root/Certificate.pem  -u $awsAccountID
-ec2-upload-bundle -b yourbucketname00404042009 -m /mnt/image.manifest.xml -a your_s3_access_key -s your_s3_secret_access_key
+
+ ec2-upload-bundle -b yourbucketname00404042009 -m /mnt/image.manifest.xml -a $s3_access_key -s $s3_secret_access_key
+
 #download the image from S3 to local directory
 
 #push the file to artifactory
@@ -94,5 +121,20 @@ ec2-upload-bundle -b yourbucketname00404042009 -m /mnt/image.manifest.xml -a you
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
-  <buildWrappers/>
+  <buildWrappers>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>s3_access_key</name>
+          <value>{AQAAABAAAAAQ2BUjV5By5IWGalDzuZ0waRsABkF0fA7CK7YCq2+Ea88=}</value>
+        </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>s3_secret_access_key</name>
+          <value>{AQAAABAAAAAQdORVUZnUB33P0Vl6Bxoew7GvQwRxdfuJDLgGhUp1lXc=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+  </buildWrappers>
 </project>
