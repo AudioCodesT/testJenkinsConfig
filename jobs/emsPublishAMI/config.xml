@@ -79,7 +79,7 @@ do
         done
         echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; output.txt
         echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; output.txt
-      echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+      	echo -e &quot;\r\n&quot; &gt;&gt; output.txt
     
 done
 
