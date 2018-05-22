@@ -129,20 +129,5 @@ cat output.txt
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
-  <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
-      <injectGlobalPasswords>false</injectGlobalPasswords>
-      <maskPasswordParameters>true</maskPasswordParameters>
-      <passwordEntries>
-        <EnvInjectPasswordEntry>
-          <name>s3_access_key</name>
-          <value>{AQAAABAAAAAQAoeni0yibmqmAYGuRGYdIinOy2S6iHTiNyKPZzncvDU=}</value>
-        </EnvInjectPasswordEntry>
-        <EnvInjectPasswordEntry>
-          <name>s3_secret_access_key</name>
-          <value>{AQAAABAAAAAQQHWzpS0J9EW1sfr6w1/K1ZOd/VooBHyqt/34m6ZwRkg=}</value>
-        </EnvInjectPasswordEntry>
-      </passwordEntries>
-    </EnvInjectPasswordWrapper>
-  </buildWrappers>
+  <buildWrappers/>
 </project>
