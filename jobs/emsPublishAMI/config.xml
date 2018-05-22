@@ -48,8 +48,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#list of other regions
-OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
-#OTHER_REGIONS=$(aws ec2 describe-regions --output text --query &quot;Regions[*].RegionName&quot;)  check
+#OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
+OTHER_REGIONS=$(aws ec2 describe-regions --output text --query &quot;Regions[*].RegionName&quot;)  
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
 bucketName=S3OvocAmis
@@ -62,23 +62,26 @@ aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{
 #copy Image to other Regions
 for destRegionName in $OTHER_REGIONS
 do
-	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot; --description &quot;Some Description&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
-    #wait for The image to Create
-    OLD_STATE=&quot;&quot;
-    while true; do
-        sleep 10
-        STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query &quot;Images[0].State&quot;)
-        if [[ $STATE != $OLD_STATE ]]; then
-            echo $STATE
-            OLD_STATE=$STATE
-        fi
-        if [[ $STATE == &quot;available&quot; ]]; then
-            break
-        fi
-    done
-	echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; output.txt
-    echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; output.txt
-    echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+	if [ &quot;$currentRegion&quot; != &quot;$destRegionName&quot; ]
+    then
+    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot; --description &quot;Some Description&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
+        #wait for The image to Create
+        OLD_STATE=&quot;&quot;
+        while true; do
+            sleep 10
+            STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query &quot;Images[0].State&quot;)
+            if [[ $STATE != $OLD_STATE ]]; then
+                echo $STATE
+                OLD_STATE=$STATE
+            fi
+            if [[ $STATE == &quot;available&quot; ]]; then
+                break
+            fi
+        done
+        echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; output.txt
+        echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; output.txt
+        echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+    fi
 done
 
 echo &quot;Region Name &amp; Id&quot;
