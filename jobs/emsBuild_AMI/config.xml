@@ -72,7 +72,9 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+    </extensions>
   </scm>
   <assignedNode>ems-build</assignedNode>
   <canRoam>false</canRoam>
@@ -181,7 +183,7 @@ done
 #aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;952166219867\&quot;}]}&quot;
 
 #check if shared
-checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission)
+#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission)
 
 
 
