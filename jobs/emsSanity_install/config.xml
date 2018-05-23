@@ -234,12 +234,22 @@ echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
 echo &quot;vmIP=${vmIP}&quot; &gt; sanity2.properties
 echo &quot;BRANCH=${BRANCH}&quot; &gt; sanity3.properties
 
-#wait for the new machine to come up
-#tatus=&quot;notknown&quot;    
-#ntil [[ $status == &quot;running&quot; ]]; do
-#tatus=$(EC2 tools command to get the status)
-#f [[ $status != &quot;running&quot; ]]; then sleep 3; fi
-sleep 300
+#Wait for the instance to up
+echo &quot;Wait until the instance is up&quot;
+OLD_STATE=&quot;&quot;
+while true; do
+    sleep 10
+    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
+    if [[ $STATE != $OLD_STATE ]]; then
+        echo $STATE
+        OLD_STATE=$STATE
+    fi
+    if [[ $STATE == &quot;running&quot; ]]; then
+        break
+    fi
+done
+echo &quot;Wait until instance is fully loaded&quot;
+sleep 100
 
 
 
@@ -247,6 +257,60 @@ sleep 300
 cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; == &quot;7.6&quot; ]]
+then
+	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
+    then
+            #create a new AMI After install and keep ImageID value
+            ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
+            
+            #check if image available
+            OLD_STATE=&quot;&quot;
+            while true; do
+                sleep 100
+                STATE=$(aws ec2 describe-images --image-ids $ImageId --output text --query &quot;Images[0].State&quot;)
+                if [[ $STATE != $OLD_STATE ]]; then
+                    echo $STATE
+                    OLD_STATE=$STATE
+                fi
+                if [[ $STATE == &quot;available&quot; ]]; then
+                    break
+                fi
+            done
+            
+            #get Snapshot id    
+            snapshotId=$(aws ec2 describe-images --image-ids ami-55a78fbe --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
+            
+            #give name to the AMI 
+            aws ec2 create-tags --resources $ImageId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+            #give name to the snapshot 
+            aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+            
+            
+            qaAccount=191324562914
+            devAccount=952166219867
+            #give permissions to ovoc QA Account
+            aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
+            
+            #give permissions to ovoc DEV Account
+            
+            aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
+            
+            #check if shared
+            checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
+            ImagePermissionsInArray=($checkImagePermissions)
+            #if ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
+            #then
+            #    echo &quot;**************************************************************************&quot;
+            #    echo &quot;give Permissions Failed&quot;
+            #    echo &quot;**************************************************************************&quot;
+            #fi
+    fi
+fi
+
+
+
 # run sanity tests and log collect
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 	then python2.7 SanityTest.py $NEW_TAG $vmIP
