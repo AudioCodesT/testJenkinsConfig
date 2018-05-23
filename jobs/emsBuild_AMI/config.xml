@@ -204,17 +204,26 @@ aws ec2 create-tags --resources $ImageId --tags Key=Name,Value=OvocAMI_${NEW_TAG
 #give name to the snapshot 
 aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
 
-#give permissions to ovoc QA Account
 
-aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
+qaAccount=191324562914
+devAccount=952166219867
+#give permissions to ovoc QA Account
+aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
 
 #give permissions to ovoc DEV Account
 
-aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;952166219867\&quot;}]}&quot;
+aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
 
 #check if shared
-#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission)
-
+checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
+ImagePermissionsInArray=($checkImagePermissions)
+if [[ &quot;${ImagePermissionsInArray[1]}&quot; != &quot;$qaAccount&quot; &amp;&amp; &quot;${ImagePermissionsInArray[0]}&quot; != &quot;$devAccount&quot; ]]
+then
+	echo &quot;***********************&quot;
+	echo &quot;give Permissions Failed&quot;
+    echo &quot;***********************&quot;
+    exit 1
+fi
 
 
 #3. if tests pass then terminate the tested machine
