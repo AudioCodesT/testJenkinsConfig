@@ -117,15 +117,16 @@ if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
     <hudson.tasks.Shell>
       <command>DefaultGateway=&quot;172.16.132.1&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
-ovocCreateAmi=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
-#keep instance ID
+#ovocCreateAmi=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+ovocCreateAmi=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1  --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+#keep instance ID,
 INSTANCE_ID=&quot;$(echo &quot;${ovocCreateAmi}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
 #add tag to this instans:  &quot;emsSanity&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=forOvocAMI_${NEW_TAG}
 #set to its delete volume when instance will be terminated
 aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
 #keep ip address into &quot;vmIP&quot;
-vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cut -d &apos;&quot;&apos; -f 4)&quot;
+vmIP=$(aws ec2 describe-instances --instance-id $INSTANCE_ID --output text --query &apos;Reservations[*].Instances[*].PrivateIpAddress&apos;)
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
 
