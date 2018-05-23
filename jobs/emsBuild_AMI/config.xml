@@ -156,7 +156,6 @@ python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
 #create a new AMI After install and keep ImageID value
 ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
-#ImageId=$(echo $ImageId | grep ImageId | cut -d &apos;&quot;&apos; -f 4)
 
 #check if image available
 OLD_STATE=&quot;&quot;
