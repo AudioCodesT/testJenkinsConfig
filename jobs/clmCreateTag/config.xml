@@ -147,8 +147,14 @@ else
 echo &quot;***********************************************&quot;
 echo &quot;Exit The Build. This is not the Last Commit&quot;
 echo &quot;***********************************************&quot;
-fi</command>
+fi
+echo &quot;NEW_TAG=${NEW_TAG}&quot; &gt; properties</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
