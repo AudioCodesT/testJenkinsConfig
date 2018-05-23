@@ -263,13 +263,13 @@ then
 	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
     then
             #create a new AMI After install and keep ImageID value
-            ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
+            AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
             
             #check if image available
             OLD_STATE=&quot;&quot;
             while true; do
                 sleep 100
-                STATE=$(aws ec2 describe-images --image-ids $ImageId --output text --query &quot;Images[0].State&quot;)
+                STATE=$(aws ec2 describe-images --image-ids $AmiId --output text --query &quot;Images[0].State&quot;)
                 if [[ $STATE != $OLD_STATE ]]; then
                     echo $STATE
                     OLD_STATE=$STATE
@@ -283,7 +283,7 @@ then
             snapshotId=$(aws ec2 describe-images --image-ids ami-55a78fbe --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
             
             #give name to the AMI 
-            aws ec2 create-tags --resources $ImageId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+            aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
             #give name to the snapshot 
             aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
             
@@ -291,14 +291,14 @@ then
             qaAccount=191324562914
             devAccount=952166219867
             #give permissions to ovoc QA Account
-            aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
+            aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
             
             #give permissions to ovoc DEV Account
             
-            aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
+            aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
             
             #check if shared
-            checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
+            checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
             ImagePermissionsInArray=($checkImagePermissions)
             #if ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
             #then
