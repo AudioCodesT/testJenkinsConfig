@@ -117,6 +117,28 @@ if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
+      <command># in branch 7.4.* we need to arrange the directory EMS/target
+# so it will contain only the 5 jar files we copied from build-ovoc job archive
+# and all executables
+cd EMS
+chmod 0775 target
+cp FKGenerator.ini target
+cd target
+cp common/target/common-7.*-SNAPSHOT.jar  .
+cp database/target/database-7.*-SNAPSHOT.jar .
+cp EMS/target/server-7.*-SNAPSHOT.jar .
+cp oracle_triggers/target/oracle_trigger-7.*-SNAPSHOT.jar .
+cp rest-core/target/rest-core-7.*-SNAPSHOT.jar .
+rm -rf common
+rm -rf EMS
+rm -rf rest-core
+rm -rf oracle_triggers
+rm -rf database
+rm -rf target
+chmod 0775 *
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command>DefaultGateway=&quot;172.16.132.1&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
 ovocCreateAmi=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
