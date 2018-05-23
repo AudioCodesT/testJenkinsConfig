@@ -52,8 +52,8 @@ OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
 #OTHER_REGIONS=$(aws ec2 describe-regions --output text --query &quot;Regions[*].RegionName&quot;)  
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
-echo &quot;Regions And ids List&quot; &gt; output.txt
-echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+echo &quot;Regions And ids List&quot; &gt; RegionsNameAndIds.txt
+echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #Get Image Id
 ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query &apos;Images[*].ImageId&apos;)
 #make The Image Public
@@ -76,14 +76,14 @@ do
                 break
             fi
         done
-        echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; output.txt
-        echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; output.txt
-      	echo -e &quot;\r\n&quot; &gt;&gt; output.txt
+        echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; RegionsNameAndIds.txt
+        echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
+      	echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
     
 done
 
 echo &quot;Region Name &amp; Id&quot;
-cat output.txt
+cat RegionsNameAndIds.txt
 #bucketName=S3OvocAmis
 #awsAccountID=$()
 #run the instance of the new image 
@@ -131,6 +131,14 @@ cat output.txt
     </hudson.tasks.Shell>
   </builders>
   <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>RegionsNameAndIds.txt</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
     <hudson.tasks.Mailer plugin="mailer@1.20">
       <recipients>ben.magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
