@@ -45,15 +45,16 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
+        <string># OVOC MGMT</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
-        <string># R&amp;D EMS</string>
+        <string># OVOC</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1523198186727</timestamp>
+      <timestamp>1527063388286</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Mark.Kemel@audiocodes.com</emailAddress>
