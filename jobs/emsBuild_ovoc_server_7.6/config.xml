@@ -199,7 +199,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
               <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                 <properties>NEW_TAG=${NEW_TAG}
 BRANCH=7.6
-FullTesting=$FullTesting</properties>
+</properties>
                 <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             </configs>
