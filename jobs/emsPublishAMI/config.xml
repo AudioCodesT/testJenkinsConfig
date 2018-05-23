@@ -52,7 +52,6 @@ OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
 #OTHER_REGIONS=$(aws ec2 describe-regions --output text --query &quot;Regions[*].RegionName&quot;)  
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
-bucketName=S3OvocAmis
 echo &quot;Regions And ids List&quot; &gt; output.txt
 echo -e &quot;\r\n&quot; &gt;&gt; output.txt
 #Get Image Id
@@ -85,6 +84,7 @@ done
 
 echo &quot;Region Name &amp; Id&quot;
 cat output.txt
+#bucketName=S3OvocAmis
 #awsAccountID=$()
 #run the instance of the new image 
 #ovocAmi=&quot;$(aws ec2 run-instances --image-id $ImageId --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id $ImageId --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
@@ -130,6 +130,12 @@ cat output.txt
     </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>ben.magriso@audiocodes.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
   <buildWrappers/>
 </project>
