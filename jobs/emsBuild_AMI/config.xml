@@ -195,6 +195,15 @@ while true; do
     fi
 done
 
+#get Snapshot id
+
+snapshotId=$(aws ec2 describe-images --image-ids ami-55a78fbe --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
+
+#give name to the image and to the snapshot
+
+aws ec2 create-tags --resources $ImageId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+
+aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
 
 #give permissions to ovoc QA Account
 
