@@ -184,7 +184,7 @@ ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI
 #check if image available
 OLD_STATE=&quot;&quot;
 while true; do
-    sleep 10
+    sleep 100
     STATE=$(aws ec2 describe-images --image-ids $ImageId --output text --query &quot;Images[0].State&quot;)
     if [[ $STATE != $OLD_STATE ]]; then
         echo $STATE
