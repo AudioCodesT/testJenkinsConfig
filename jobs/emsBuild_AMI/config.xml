@@ -202,10 +202,7 @@ done
 #check if shared
 checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission)
 
-if [&quot;$checkImagePermissions&quot; == &quot;$&quot;]
-then
 
-fi
 
 #3. if tests pass then terminate the tested machine
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
