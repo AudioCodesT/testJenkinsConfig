@@ -152,25 +152,7 @@ cd EMS/VersionRelease
 python2.7 setNetwork.py $vmIP $DefaultGateway
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
-# stop the  instance before creating AMI
-echo &quot;Stop instance&quot;
-aws ec2 stop-instances --instance-ids ${INSTANCE_ID}
 
-#check if stopped before creating AMI
-OLD_STATE=&quot;&quot;
-while true; do
-    sleep 10
-    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
-    if [[ $STATE != $OLD_STATE ]]; then
-        echo $STATE
-        OLD_STATE=$STATE
-    fi
-    if [[ $STATE == &quot;stopped&quot; ]]; then
-        break
-    fi
-done
-echo &quot;Wait for the instance to stop&quot;
-sleep 30
 
 #create a new AMI After install and keep ImageID value
 ImageId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
