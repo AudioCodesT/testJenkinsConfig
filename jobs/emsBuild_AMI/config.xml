@@ -192,9 +192,12 @@ done
 
 
 #give permissions to ovoc QA Account
-aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
+
+#aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;191324562914\&quot;}]}&quot;
+
 #give permissions to ovoc DEV Account
-aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;952166219867\&quot;}]}&quot;
+
+#aws ec2 modify-image-attribute --image-id $ImageId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;952166219867\&quot;}]}&quot;
 
 #check if shared
 checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $ImageId --attribute launchPermission)
