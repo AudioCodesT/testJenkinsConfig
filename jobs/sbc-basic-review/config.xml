@@ -158,6 +158,10 @@ if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
   ./GetImages.sh $BOARDNAME $artifactory_host $User
+  if [ $? -eq 1 ]; then
+    echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
+    exit 2; 
+  fi
 fi
 
 chmod +x MakeBrdVersion.sh
@@ -173,11 +177,12 @@ echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
 #TARGET=`echo $GERRIT_REFSPEC | sed &apos;s/[^0-9]*//g&apos;`
 TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 echo TARGET=${TARGET} &gt;&gt; generated_sbc_version.properties
-
+echo EXITFLAG=0 &gt;&gt; generated_sbc_version.properties
 
 BOARD=`echo ${BOARD} | sed -rn s/--user=no//p`
 BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 </command>
+      <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
@@ -185,7 +190,10 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>cd TrunkPackRam
+      <command>if [ &quot;$EXITFLAG&quot; == 1 ]; then exit 0; fi
+if [ &quot;$EXITFLAG&quot; == 2 ]; then exit 2; fi
+
+cd TrunkPackRam
 
 ( ./buildAll.sh ${BOARD} --fast=yes --user=no --custom-version=-d${BUILD_NUMBER} 2&gt;&amp;1 1&gt;&amp;3 | tee ../build-error.log; ) 3&gt;&amp;1 1&gt;&amp;2
 
@@ -195,6 +203,7 @@ mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
 #zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map
 #zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf
 </command>
+      <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -345,7 +354,7 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>Need to wait for dependent artifact</regexpForRerun>
-      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
       <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
