@@ -221,6 +221,8 @@ emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-mar
 INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
 #add tag to this instans:  &quot;emsSanity&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityInstall
+#add tag to this instans:  &quot;Spotinst&quot;
+aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Creator,Value=Spotinst
 #set to its delete volume when instance will be terminated
 aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
 #keep ip address into &quot;vmIP&quot;
