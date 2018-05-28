@@ -82,6 +82,7 @@ Change=`echo $REFTARGET | sed &apos;s:-:_:&apos;`
 echo -n &quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
 
 # Can run with major version only: 7.2.150, 7.2.170
+GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_fix::&apos;)
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
 
 #batchID=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&quot; --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed &apos;s/.*Black.&gt;//&apos; | sed &apos;s/&lt;.font&gt;.*//&apos;)&quot;
