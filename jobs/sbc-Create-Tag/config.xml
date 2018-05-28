@@ -83,6 +83,8 @@ git config --global user.email devops@audiocodes.com
 Artifact=test-artifactory
 Repo=sbc-release
 
+git tag -d 7.20A.202.029
+
 function createSubModuleTag() {
   echo create a new TAG for the $SubModule submodule too
   SubModule=$1
