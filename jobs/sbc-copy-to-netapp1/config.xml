@@ -76,7 +76,7 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/sbc/$Branch/Firmware&quot;
   Firmware=&quot;$Branch Release/Firmware&quot;
   if (( $(echo $Branch | cut -d. -f3) % 10 != 0 )); then
-    Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:\.160:\.150:&apos;) Release/$Branch&quot;
+    Firmware=&quot;$(echo $Branch | sed &apos;s/_fix//; s/.$/0/; s:\.160:\.150:&apos;) Release/$Branch&quot;
   fi
 elif [ &quot;$REPOSITORY&quot; == &quot;MP20x&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/MP/$Branch&quot;
