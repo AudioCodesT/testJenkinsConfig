@@ -169,7 +169,7 @@ echo &quot;LAST_TAG=${LAST_TAG}&quot; &gt; params.properties</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/stack_mg.zip=&gt;com/ac/sbc/stack-mgr/stack_mg_${LAST_TAG}.zip</deployPattern>
+      <deployPattern>${WORKSPACE}/stack_mgr.zip=&gt;com/ac/sbc/stack-mgr/stack_mg_${LAST_TAG}.zip</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
