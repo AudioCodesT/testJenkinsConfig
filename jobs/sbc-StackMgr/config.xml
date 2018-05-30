@@ -134,7 +134,7 @@ echo &quot;LAST_TAG=${LAST_TAG}&quot; &gt; params.properties</command>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect>sbc-review</keyFromSelect>
+          <keyFromSelect>sbc-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
@@ -169,7 +169,7 @@ echo &quot;LAST_TAG=${LAST_TAG}&quot; &gt; params.properties</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/stack_mg.zip=&gt;com/ac/sbc/stack-mgr</deployPattern>
+      <deployPattern>${WORKSPACE}/stack_mg.zip=&gt;com/ac/sbc/stack-mgr/stack_mg_${LAST_TAG}.zip</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
@@ -186,7 +186,7 @@ echo &quot;LAST_TAG=${LAST_TAG}&quot; &gt; params.properties</command>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}_{LAST_TAG}</template>
+      <template>#${BUILD_NUMBER}_${LAST_TAG}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
