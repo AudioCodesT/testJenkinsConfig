@@ -364,7 +364,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>sir-v4j8k2sp</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-v4j8k2sp</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-05-30 12:08:33.884 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -554,7 +565,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-c2878797</name>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0618e621c2e516a26</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0618e621c2e516a26</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
+            <createdAt>2018-05-30 12:06:11.34 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -790,7 +812,7 @@
         <string>sbc-drt-request</string>
         <string>sbc-iso</string>
         <string>sbc-simulator</string>
-        <string>sbc-tp-StackMgr</string>
+        <string>sbc-StackMgr</string>
         <string>sbc-user-build</string>
         <string>sbc_misc_compile</string>
       </jobNames>
