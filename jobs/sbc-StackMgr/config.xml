@@ -110,7 +110,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>git tag -d 1.0.0 1.0.1 17.5.2
+      <command>#git tag -d 1.0.0 1.0.1 17.5.2
 
 sh pack.sh
 LAST_TAG=$(git describe --abbrev=0 --tags) 
