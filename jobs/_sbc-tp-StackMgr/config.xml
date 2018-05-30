@@ -110,7 +110,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>sh stack_mgr/pack.sh
+      <command>sh pack.sh
 LAST_TAG=$(git describe --abbrev=0 --tags) 
 echo &quot;LAST_TAG=${LAST_TAG}&quot; &gt; params.properties</command>
     </hudson.tasks.Shell>
