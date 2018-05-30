@@ -780,7 +780,6 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>_sbc-tp-StackMgr</string>
         <string>sbc-basic-review</string>
         <string>sbc-collab-compile_end-web-user</string>
         <string>sbc-compile</string>
@@ -791,6 +790,7 @@
         <string>sbc-drt-request</string>
         <string>sbc-iso</string>
         <string>sbc-simulator</string>
+        <string>sbc-tp-StackMgr</string>
         <string>sbc-user-build</string>
         <string>sbc_misc_compile</string>
       </jobNames>
