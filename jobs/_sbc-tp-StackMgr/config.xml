@@ -134,7 +134,7 @@ echo &quot;LAST_TAG=${LAST_TAG}&quot; &gt; params.properties</command>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect>sbc-release</keyFromSelect>
+          <keyFromSelect>sbc-review</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
