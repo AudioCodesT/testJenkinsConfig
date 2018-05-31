@@ -35,7 +35,33 @@
       <emailAddress>Guy.Mast@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>AI-QA</string>
+        <string># All Beer Sheva</string>
+        <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
+        <string>AI-Engineering</string>
+        <string># All ISRAEL</string>
+        <string># All__Beer_Sheva</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string>AudioCodes_VPN</string>
+        <string>SmartTAP Dev</string>
+        <string># SmartTap-BS</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>NewUser_Israel-BS</string>
+        <string>AI-ENG</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+      </roles>
+      <timestamp>1527786325770</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
