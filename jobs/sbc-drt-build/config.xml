@@ -178,8 +178,8 @@ done &lt; othersCommits.txt
 
 if [[ $CHANGES != &quot;&quot; ]]; then 
   for rep in $CHANGES; do 
-    path=$(echo $rep | cut -d: -f1 | sed &apos;s:TP/::&apos;) );
-    revision=$(echo $rep | cut -d: -f2 ); 
+    path=$(echo $rep | cut -d: -f1 | sed &apos;s:TP/::&apos;)
+    revision=$(echo $rep | cut -d: -f2 )
     git update-index --cacheinfo 160000 $revision $path
   done
 fi
