@@ -179,11 +179,11 @@ done &lt; othersCommits.txt
 if [[ $CHANGES != &quot;&quot; ]]; then 
   for rep in $CHANGES; do 
     path=$(echo $rep | cut -d: -f1 | sed &apos;s:TP/::&apos;)
-    revision=$(echo $rep | cut -d: -f2 )
+    revision=$(echo $rep | cut -d: -f2)
+    echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
   done
 fi
-
 
 # Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
