@@ -176,7 +176,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
               <properties>REFSPEC=${REFSPEC}
 GERRIT_BRANCH=${GERRIT_BRANCH}
 EMAIL=${EMAIL}
-</properties>
+CHANGES=${CHANGES}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
