@@ -39,6 +39,18 @@
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>EMAIL</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CHANGES</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -163,6 +175,14 @@ while IFS= read -r line; do
      git ls-files --stage ../$path
    fi
 done &lt; othersCommits.txt
+
+if [[ $CHANGES != &quot;&quot; ]]; then 
+  for rep in $CHANGES; do 
+    path=$(echo $rep | cut -f1 -d:);
+    revision=$(echo $rep | cut -f2 -d:); 
+    git update-index --cacheinfo 160000 $revision $path
+  done
+fi
 
 
 # Download the Images from the Artifactory
