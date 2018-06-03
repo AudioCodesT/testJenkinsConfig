@@ -236,7 +236,8 @@ mv ram${BOARDNAME}_SIP.cmp ${BOARDNAME}_SIP.cmp
               <properties>REFSPEC=${REFSPEC}
 GERRIT_BRANCH=${GERRIT_BRANCH}
 EMAIL=${EMAIL}
-BOARD=${BOARDNAME}_SIP.cmp</properties>
+BOARD=${BOARDNAME}_SIP.cmp
+CHANGES=${CHANGES}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
@@ -338,9 +339,7 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
-      <script>EMAIL=`git log FETCH_HEAD -n1 --not --remotes --pretty=format:&quot;%ce&quot; | head -1`
-echo EMAIL=${EMAIL}
-revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+      <script>revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
 -d &quot;{\&quot;message\&quot;: \&quot;DRT compilation has started - $BUILD_URL\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
 -H &apos;Content-Type: application/json&apos; &gt; /dev/null
