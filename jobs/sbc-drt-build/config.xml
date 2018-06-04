@@ -152,6 +152,11 @@ if [[ $GERRIT_BRANCH =~ &quot;collab/&quot; ]]; then
 fi
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
+# if the REFSPEC=&lt;Branch name&gt;
+if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
+  REFSPEC=refs/changes/00/$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
+fi
+
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
 
