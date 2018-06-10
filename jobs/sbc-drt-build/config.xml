@@ -153,8 +153,12 @@ fi
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
 # if the REFSPEC=&lt;Branch name&gt;
+# CHANGESNumbers = All the chnages that should be updated with DRT label
+CHANGESNumbers=&quot;&quot;
 if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
   REFSPEC=refs/changes/00/$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
+else
+  CHANGESNumbers=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
 fi
 
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
@@ -187,9 +191,11 @@ if [[ $CHANGES != &quot;&quot; ]]; then
     revision=$(echo $rep | cut -d: -f2)
     echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
+    CHANGESNumbers=&quot;$CHANGESNumbers $(echo $rep | cut -d: -f3)&quot;
   done
 fi
 
+echo CHANGES=${CHANGESNumbers} &gt;&gt; ../generated_sbc_version.properties
 # Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
