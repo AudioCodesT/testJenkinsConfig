@@ -320,7 +320,7 @@ fi</command>
           <condition class="org.jenkins_ci.plugins.run_condition.core.NeverRun" plugin="run-condition@1.0"/>
           <publisherList>
             <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-              <recipientList>sqa_core_mgmt@audiocodes.com, Marina.Risher@audiocodes.com, Gal.Erez, Gennady.Tsiporkin, Natan.Merfish@audiocodes.com, Kairat.Ziman@audiocodes.com, Yacov.Alster@audiocodes.com, cc:Aliya.Peretz@audiocodes.com, cc:Hadas.Attal@audiocodes.com, cc:Mark.Kemel@audiocodes.com, cc:Itamar.Suissa@audiocodes.com, cc:Liran.Badiri@audiocodes.com, cc:Leonid.Fayngold@audiocodes.com, cc:Erez.NejatHaim@audiocodes.com, cc:Kfir.Gershon@audiocodes.com, cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com, cc:Natali.Elashvili@audiocodes.com</recipientList>
+              <recipientList>ovocqa@audiocodes.com, Marina.Risher@audiocodes.com, Gal.Erez, Gennady.Tsiporkin, Natan.Merfish@audiocodes.com, Kairat.Ziman@audiocodes.com, Yacov.Alster@audiocodes.com, cc:Aliya.Peretz@audiocodes.com, cc:Hadas.Attal@audiocodes.com, cc:Mark.Kemel@audiocodes.com, cc:Itamar.Suissa@audiocodes.com, cc:Liran.Badiri@audiocodes.com, cc:Leonid.Fayngold@audiocodes.com, cc:Erez.NejatHaim@audiocodes.com, cc:Kfir.Gershon@audiocodes.com, cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com, cc:Natali.Elashvili@audiocodes.com</recipientList>
               <configuredTriggers>
                 <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
                   <email>
