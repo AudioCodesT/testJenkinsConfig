@@ -336,14 +336,18 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
 curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 echo ----------------- Done ------------------------
 
-change=`echo $REFSPEC | cut -d/ -f4`
-ps=`echo $REFSPEC | cut -d/ -f5`
+for rep in $CHANGES; do
 
-ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
---message &quot;&apos;DRT was aborted&apos;&quot; \
---notify OWNER \
---tag &quot;&apos;DRT&apos;&quot; \
-$change,$ps
+  change=`echo $rep | cut -d/ -f1`
+  ps=`echo $rep | cut -d/ -f2`
+
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
+  --message &quot;&apos;DRT was aborted&apos;&quot; \
+  --notify OWNER \
+  --tag &quot;&apos;DRT&apos;&quot; \
+  $change,$ps
+
+done
 </command>
                       </hudson.tasks.Shell>
                     </buildSteps>
