@@ -211,37 +211,43 @@ exit 1</command>
                     <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
-                        <command>change=`echo $REFSPEC | cut -d/ -f4`
-ps=`echo $REFSPEC | cut -d/ -f5`
-RunPhases=1
-checkPS=$ps
+                        <command>for rep in $CHANGES; do
+
+  change=`echo $rep | cut -d/ -f1`
+  ps=`echo $rep | cut -d/ -f2`
+
+  #change=`echo $REFSPEC | cut -d/ -f4`
+  #ps=`echo $REFSPEC | cut -d/ -f5`
+  RunPhases=1
+  checkPS=$ps
 
 #Check if they are not a new PS - if yes, check if the code was changed
 #In case the code was not changed, give the score to the last PS - should be store in the checkPS variable. 
-ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; /tmp/$change.txt
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; /tmp/$change.txt
 # $field Could be: number or kind
 # $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
-while IFS=: read -r field value; do   
-  if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
-  else
-    echo Check PS $checkPS: $value;
-    if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; &quot;$value&quot; == &quot;REWORK&quot; ]]; then
-      RunPhases=0
-  fi; fi
-done &lt; /tmp/$change.txt
+  while IFS=: read -r field value; do   
+    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
+    else
+      echo Check PS $checkPS: $value;
+      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; &quot;$value&quot; == &quot;REWORK&quot; ]]; then
+        RunPhases=0
+    fi; fi
+  done &lt; /tmp/$change.txt
 
-if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
+  if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
 
-echo Send OK message to Gerrit - $change,$ps
-ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
---message &quot;&apos;DRT Passed successfully - $BUILD_URL \
-    CMP files: $url \
-    DRT results: $LinkToPage&apos;&quot; \
---notify OWNER \
---label DRT=1 \
---tag &quot;&apos;DRT&apos;&quot; \
-$change,$ps
-</command>
+  echo Send OK message to Gerrit - $change,$ps
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
+  --message &quot;&apos;DRT Passed successfully - $BUILD_URL \
+      CMP files: $url \
+      DRT results: $LinkToPage&apos;&quot; \
+  --notify OWNER \
+  --label DRT=1 \
+  --tag &quot;&apos;DRT&apos;&quot; \
+  $change,$ps
+
+done</command>
                       </hudson.tasks.Shell>
                     </buildSteps>
                   </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
