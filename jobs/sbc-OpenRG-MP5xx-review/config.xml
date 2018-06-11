@@ -151,7 +151,7 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/Open
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-./build_openrg_ugw.sh --board=${BOARD}
+./build_openrg_ugw.sh --board=MP5XXNG
 
 cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/OpenRG_external_version_data.h
 
