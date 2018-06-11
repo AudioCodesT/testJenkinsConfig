@@ -364,18 +364,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>sir-v4j8k2sp</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>sir-v4j8k2sp</id>
-            <status>SPOT_PENDING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2018-05-30 12:08:33.884 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -565,18 +554,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-c2878797</name>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0618e621c2e516a26</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0618e621c2e516a26</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
-            <createdAt>2018-05-30 12:06:11.34 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -847,6 +825,7 @@
         <string>sbc-HostedBL-review</string>
         <string>sbc-iso-review</string>
         <string>sbc-openRG-Compile</string>
+        <string>sbc-OpenRG-MP5xx-review</string>
         <string>sbc-openRG-review</string>
         <string>sbc-uboot2.0-compile</string>
         <string>sbc-uboot2.0-review</string>
