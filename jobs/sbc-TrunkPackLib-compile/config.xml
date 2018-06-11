@@ -221,6 +221,11 @@ copy /Y voplibtcl\voplibext\voplibcon\* y:\TCL\%BL%&#xd;
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>sbc-release</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -246,7 +251,7 @@ copy /Y voplibtcl\voplibext\voplibcon\* y:\TCL\%BL%&#xd;
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
+      <useSpecs>false</useSpecs>
       <uploadSpec>
         <spec></spec>
       </uploadSpec>
