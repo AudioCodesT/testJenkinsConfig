@@ -30,6 +30,7 @@
     </hudson.search.UserSearchProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
+        <string># TRAVEL IL</string>
         <string># All Dinner</string>
         <string>authenticated</string>
         <string>Password Manager Apply</string>
@@ -54,7 +55,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1524044001500</timestamp>
+      <timestamp>1528705424768</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Irina.Veisas@audiocodes.com</emailAddress>
