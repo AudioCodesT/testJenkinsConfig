@@ -267,33 +267,22 @@ done</command>
                     <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
-                        <command>#!/usr/bin/env ruby
+                        <command>for rep in $CHANGES; do
 
-require &apos;json&apos;
-require &apos;uri&apos;
+  change=`echo $rep | cut -d/ -f1`
+  ps=`echo $rep | cut -d/ -f2`
 
-if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
-  change=$1
-  ps=$2
-else
-  puts &apos;Invalid refspec&apos;
-  exit 0
-end
+  echo Send OK message to Gerrit - $change,$ps
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
+  --message &quot;&apos;DRT Failed - $BUILD_URL \
+      CMP files: $url \
+      DRT results: $LinkToPage&apos;&quot; \
+  --notify OWNER \
+  --label DRT=-1 \
+  --tag &quot;&apos;DRT&apos;&quot; \
+  $change,$ps
 
-url = File.read(&apos;artifactory.url&apos;).rstrip
-
-data = {
-  labels: { DRT: &apos;-1&apos; },
-  message: &apos;DRT Failed - &apos; + ENV[&apos;BUILD_URL&apos;] + &quot;\n\nCMP files: &quot; + url + &quot;\n\nDRT results: &quot; + ENV[&apos;LinkToPage&apos;].to_s,
-  notify: &apos;OWNER&apos;,
-  tag: &apos;DRT&apos;,
-}
-
-require &apos;pp&apos;
-pp data
-
-system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
-       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)
+done      
 </command>
                       </hudson.tasks.Shell>
                     </buildSteps>
