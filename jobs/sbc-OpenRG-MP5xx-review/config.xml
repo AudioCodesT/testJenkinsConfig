@@ -33,7 +33,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -54,7 +53,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFSPEC</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/Hosted02</url>
+        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/OpenRG-UGW</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -85,7 +84,7 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>ANT</compareType>
-          <pattern>TP/OpenSource/Hosted02</pattern>
+          <pattern>TP/OpenSource/OpenRG-UGW</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -139,7 +138,7 @@
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
-echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/external_version_data.h
+echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/OpenRG-UGW_external_version_data.h
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
@@ -149,23 +148,18 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/exte
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-rm -f ssbc.vmlinux.tar.gz
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-ifconfig -a  | grep inet
-id
+./build_openrg_ugw.sh --board=${BOARD}
 
-sudo /dce/scripts/dce.sh -a chroot -e SSBC2 -c &quot;rm -f /var/lib/rpm/__db* &amp;&amp; rpm --rebuilddb&quot;
-./buildKernel.sh --server=localhost
+cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/OpenRG_external_version_data.h
 
-cp  $WORKSPACE/external_version_data.h $WORKSPACE/hosted02_external_version_data.h
-
-gzfile=ssbc.vmlinux.tar.gz
-if [ ! -f $gzfile ] || [ &quot;`du $gzfile | cut -f1`&quot; -lt 40000 ]; then
-  echo &quot;ssbc.vmlinux.tar.gz Image too small.. exit with error&quot;
+if (( `du MP5XXNG.OpenRG.img.gz | cut -f1` &lt; 500 )); then
+  echo &quot;MP5XXNG.OpenRG.img.gz Image is too small.. exit with error&quot;
   exit -1
-fi</command>
+fi
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
@@ -211,8 +205,8 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc.vmlinux.tar.gz=&gt;com/ac/sbc/Hosted02/${COMP_VER}
-$WORKSPACE/hosted02_external_version_data.h=&gt;com/ac/sbc/Hosted02/${COMP_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/MP5XXNG.OpenRG.img.gz=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}
+$WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
