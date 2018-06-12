@@ -139,7 +139,7 @@
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
-echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/OpenRG-UGW_external_version_data.h
+echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/acLinuxUGW_external_version_data.h
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
