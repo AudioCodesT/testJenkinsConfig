@@ -364,18 +364,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0fcb1f7f7640ea7ce</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0fcb1f7f7640ea7ce</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2018-06-12 07:57:11.43 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -827,6 +816,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>sbc-acLinux-compile</string>
         <string>sbc-acLinux-review</string>
+        <string>sbc-acLinux-UGW-review</string>
         <string>sbc-acLinux20-compile</string>
         <string>sbc-acLinux20-review</string>
         <string>sbc-coverity-for-OpenRG</string>
