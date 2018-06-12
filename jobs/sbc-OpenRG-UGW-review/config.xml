@@ -36,6 +36,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
+        <propertiesContent>EXTERNAL_VERSION=rg/pkg/include</propertiesContent>
         <secureGroovyScript plugin="script-security@1.42">
           <script></script>
           <sandbox>false</sandbox>
@@ -138,7 +139,7 @@
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
-echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/OpenRG-UGW_external_version_data.h
+echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
@@ -153,7 +154,7 @@ sudo chown -R centos:centos .
 
 ./build_openrg_ugw.sh --board=MP5XXNG
 
-cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/OpenRG_external_version_data.h
+cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/OpenRG-UGW_external_version_data.h
 
 if (( `du MP5XXNG.OpenRG.img.gz | cut -f1` &lt; 500 )); then
   echo &quot;MP5XXNG.OpenRG.img.gz Image is too small.. exit with error&quot;
