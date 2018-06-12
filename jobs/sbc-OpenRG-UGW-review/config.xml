@@ -164,9 +164,9 @@ rev=$(git log -1 --pretty=format:%H)
 cd $WORKSPACE
 
 uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel)
-downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`)
+downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 echo &quot;--- Download MP5XXNG.kernel from $downloadUri&quot;
-curl -ks $downloadUri --output TPApp/MPCBin/MP5XXNG.kernel-headers.gz
+curl -ks $downloadUri --output MP5XXNG.kernel-headers.gz
 
 ./build_openrg_ugw.sh --board=MP5XXNG
 
