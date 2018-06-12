@@ -168,6 +168,8 @@ downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&
 echo &quot;--- Download MP5XXNG.kernel from $downloadUri&quot;
 curl -ks $downloadUri --output MP5XXNG.kernel-headers.gz
 
+pwd
+ls -l
 ./build_openrg_ugw.sh --board=MP5XXNG
 
 cp  $WORKSPACE/include/external_version_data.h $WORKSPACE/OpenRG-UGW_external_version_data.h
