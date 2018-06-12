@@ -147,7 +147,8 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>
+      <command>User=&quot;admin:$artifactory_password&quot;
+
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
@@ -166,7 +167,7 @@ cd $WORKSPACE
 uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel)
 downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 echo &quot;--- Download MP5XXNG.kernel from $downloadUri&quot;
-curl -ks $downloadUri --output MP5XXNG.kernel-headers.gz
+curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
 
 pwd
 ls -l
@@ -241,5 +242,15 @@ $WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_V
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artifactory_password</name>
+          <value>{AQAAABAAAAAQiTYTRSTYCaDNoRV/H6Z7uR9nvU1/n5HQGah49rjkEU0=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
   </buildWrappers>
 </project>
