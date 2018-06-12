@@ -33,7 +33,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -54,9 +53,10 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFSPEC</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/OpenRG-UGW</url>
+        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/acLinuxUGW</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
+      <hudson.plugins.git.UserRemoteConfig/>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
@@ -85,7 +85,7 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>ANT</compareType>
-          <pattern>TP/OpenSource/OpenRG-UGW</pattern>
+          <pattern>TP/OpenSource/acLinuxUGW</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -206,8 +206,9 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/MP5XXNG.OpenRG.img.gz=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}
-$WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/MP5XXNG.vmlinux.gz=&gt;com/ac/sbc/acLinux-UGW/${COMP_VER}
+$WORKSPACE/MP5XXNG.kernel-headers.gz=&gt;com/ac/sbc/acLinux-UGW/${COMP_VER}
+$WORKSPACE/acLinuxUGW_external_version_data.h=&gt;com/ac/sbc/acLinux-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
