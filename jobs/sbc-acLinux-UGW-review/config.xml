@@ -155,7 +155,7 @@ sudo chown -R centos:centos .
 
 cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/acLinuxUGW_external_version_data.h
 
-if (( `du MP5XXNG.vmlinux.gz | cut -f1` &lt; 500 )); then
+if (( `du MP5XXNG.vmlinux.gz | cut -f1` &lt; 15000 )); then
   echo &quot;MP5XXNG.vmlinux.gz Image is too small.. exit with error&quot;
   exit -1
 fi
