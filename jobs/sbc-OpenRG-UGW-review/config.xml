@@ -151,6 +151,23 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+cd ..
+if [ ! -d .git ]; then
+  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
+  mv acLinuxUGW/.git .
+  rm -rf acLinuxUGW
+else
+  git fetch origin $GERRIT_BRANCH
+fi
+
+rev=$(git log -1 --pretty=format:%H)
+cd $WORKSPACE
+
+uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel)
+downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`)
+echo &quot;--- Download MP5XXNG.kernel from $downloadUri&quot;
+curl -ks $downloadUri --output TPApp/MPCBin/MP5XXNG.kernel-headers.gz
+
 ./build_openrg_ugw.sh --board=MP5XXNG
 
 cp  $WORKSPACE/include/external_version_data.h $WORKSPACE/OpenRG-UGW_external_version_data.h
