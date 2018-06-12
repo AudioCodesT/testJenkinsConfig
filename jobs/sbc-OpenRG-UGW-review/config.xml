@@ -166,7 +166,7 @@ cd $WORKSPACE
 
 uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel)
 downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
-echo &quot;--- Download MP5XXNG.kernel from $downloadUri&quot;
+rm -f MP5XXNG.kernel-headers.gz
 curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
 
 pwd
