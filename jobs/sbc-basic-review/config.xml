@@ -122,7 +122,8 @@ date
 artifactory_host=${ARTIFACTORY_HOST}
 output_folder=${DEPENDENCIES_FOLDER}
 User=&quot;$artifactory_user:$artifactory_password&quot;
-BOARD=&quot;--board=M4000 --sip=yes --lab=no&quot;
+#BOARD=&quot;--board=M4000 --sip=yes --lab=no&quot;
+BOARD=$(grep board= boards2review.yml | head -1 | sed &apos;s:  - ::&apos;)
 
 # find the board that need to be compiled
 BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
