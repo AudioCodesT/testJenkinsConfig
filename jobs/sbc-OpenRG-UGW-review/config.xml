@@ -152,18 +152,31 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-cd ..
-if [ ! -d .git ]; then
-  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
-  mv acLinuxUGW/.git .
-  rm -rf acLinuxUGW
-else
-  git fetch origin $GERRIT_BRANCH
+# Find if this build should use another Opensorce Images with the same Commit change-ID
+chmod 600 ../id_rsa_gerrit
+change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | \
+   grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+rev=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query \
+     --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
+     grep -A30 acLinuxUGW | grep revision | cut -d: -f2 || echo ChangeId not found)
+
+#In case you don&apos;t find the revision from another commit, take it from the last submitted commit
+if [ &quot;$rev&quot; == &quot;&quot; ]; then
+  cd ..
+  if [ ! -d .git ]; then
+    git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
+    mv acLinuxUGW/.git .
+    rm -rf acLinuxUGW
+  else
+    git fetch origin $GERRIT_BRANCH
+  fi
+
+  rev=$(git log -1 --pretty=format:%H)
+  cd $WORKSPACE
 fi
 
-rev=$(git log -1 --pretty=format:%H)
-cd $WORKSPACE
-
+#Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
 uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel)
 downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f MP5XXNG.kernel-headers.gz
@@ -182,6 +195,14 @@ fi
   </builders>
   <publishers/>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
