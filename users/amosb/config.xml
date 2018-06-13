@@ -42,6 +42,7 @@
         <string>ActionBase Users</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -67,7 +68,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1524466806608</timestamp>
+      <timestamp>1528891352641</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amos.Bublil@audiocodes.com</emailAddress>
