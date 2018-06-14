@@ -193,5 +193,15 @@ cat ems-ovoc-pmd.properties
         <hudson.plugins.build__timeout.operations.FailOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>jpass</name>
+          <value>{AQAAABAAAAAQd3K/+hVSM/onknLuVg7XBFoF3M3bHBlBjw9HBO/IdtU=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
   </buildWrappers>
 </project>
