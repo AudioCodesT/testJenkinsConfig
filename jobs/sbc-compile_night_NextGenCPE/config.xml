@@ -80,7 +80,12 @@ PATH=/bin:$PATH</propertiesContent>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H 21 * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
   <concurrentBuild>true</concurrentBuild>
   <axes>
     <org.jenkinsci.plugins.yamlaxis.YamlAxis plugin="yaml-axis@0.2.0">
@@ -115,13 +120,8 @@ BOARDFINALNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
-FindTAG=`./MakeBrdVersion.sh`
-head -12 Bsps/Common/Include/BrdVersion.h | tail -3
-if [ $FindTAG != $NEWTAG ]; then
-  echo Must be the same TAG name... abort
-  echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
-  exit 1;
-fi
+NEWTAG=`git describe --tags --first-parent`
+
 
 echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; ../generated_sbc_version.properties
