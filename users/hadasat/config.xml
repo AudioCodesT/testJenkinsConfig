@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <user>
   <fullName>Hadas Attal</fullName>
   <properties>
@@ -15,7 +15,7 @@
         </entry>
       </domainCredentialsMap>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
-    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.57.2">
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
     <hudson.model.MyViewsProperty>
@@ -40,6 +40,7 @@
         <string># All Beer Sheva</string>
         <string>authenticated</string>
         <string>Password Manager Apply</string>
+        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>CI_EMS_Developers</string>
@@ -52,20 +53,21 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
+        <string># OVOC MGMT</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
-        <string># R&amp;D EMS</string>
+        <string># OVOC</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1521462404012</timestamp>
+      <timestamp>1528984044948</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Hadas.Attal@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
   </properties>
