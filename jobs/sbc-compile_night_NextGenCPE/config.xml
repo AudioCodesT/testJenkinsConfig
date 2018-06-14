@@ -120,8 +120,8 @@ BOARDFINALNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
-NEWTAG=`git describe --tags --first-parent`
-
+NEWTAG=`git describe --tags --first-parent | cut -d- -f1,2`
+./MakeBrdVersion.sh
 
 echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; ../generated_sbc_version.properties
