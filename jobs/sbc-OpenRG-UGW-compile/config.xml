@@ -147,7 +147,8 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed s:origin/::`
+
 #In case you don&apos;t find the revision from another commit, take it from the last submitted commit
 cd ..
 if [ ! -d .git ]; then
