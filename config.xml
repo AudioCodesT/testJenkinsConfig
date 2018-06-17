@@ -364,7 +364,48 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>sir-cmnrkrsq</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-cmnrkrsq</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-06-17 15:02:44.517 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-538rjxjp</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-538rjxjp</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-06-17 15:02:44.579 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-3dcgh7vq</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-3dcgh7vq</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-06-17 15:02:44.548 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-3pxggarn</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-3pxggarn</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-06-17 15:02:44.485 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -829,6 +870,7 @@
         <string>sbc-iso-review</string>
         <string>sbc-openRG-Compile</string>
         <string>sbc-openRG-review</string>
+        <string>sbc-OpenRG-UGW-compile</string>
         <string>sbc-OpenRG-UGW-review</string>
         <string>sbc-uboot2.0-compile</string>
         <string>sbc-uboot2.0-review</string>
