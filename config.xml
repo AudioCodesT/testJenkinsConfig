@@ -366,13 +366,13 @@
       <groupId>sig-e20df392</groupId>
       <pendingInstances>
         <entry>
-          <string>sir-kybigken</string>
+          <string>i-0584b490f02ff1f82</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>sir-kybigken</id>
-            <status>SPOT_PENDING</status>
+            <id>i-0584b490f02ff1f82</id>
+            <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2018-06-17 14:32:14.941 UTC</createdAt>
+            <createdAt>2018-06-17 14:33:11.256 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
@@ -839,7 +839,6 @@
         <string>sbc-iso-review</string>
         <string>sbc-openRG-Compile</string>
         <string>sbc-openRG-review</string>
-        <string>sbc-OpenRG-UGW-compile</string>
         <string>sbc-OpenRG-UGW-review</string>
         <string>sbc-uboot2.0-compile</string>
         <string>sbc-uboot2.0-review</string>
