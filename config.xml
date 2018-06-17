@@ -364,7 +364,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>sir-kybigken</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-kybigken</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-06-17 14:32:14.941 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -828,6 +839,7 @@
         <string>sbc-iso-review</string>
         <string>sbc-openRG-Compile</string>
         <string>sbc-openRG-review</string>
+        <string>sbc-OpenRG-UGW-compile</string>
         <string>sbc-OpenRG-UGW-review</string>
         <string>sbc-uboot2.0-compile</string>
         <string>sbc-uboot2.0-review</string>
