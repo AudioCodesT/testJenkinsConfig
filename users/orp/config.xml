@@ -39,6 +39,7 @@
         <string>authenticated</string>
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
+        <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -63,7 +64,7 @@
         <string>NewUser_Israel-BS</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1526456897448</timestamp>
+      <timestamp>1529318161888</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
