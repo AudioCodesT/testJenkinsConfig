@@ -93,7 +93,6 @@ it pairs VI/Issue with the relevant commit&#xd;
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -139,7 +138,7 @@ ECHO.%PROJECT%| FIND /I &quot;MP&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Hagayh, MP20xdeliveries &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;Arm&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=R^^^&amp;D-ARM, Einav.Levy, Pavel.Smolyar, Shirly.Golan, Zahi.Raz &amp; goto ProjectFound&#xd;
+if %errorlevel% equ 0 set SendTo=RnD-ARM, _ARMQA &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;mediatech&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Yishai.Gil, Maayan.Aharoni &amp; goto ProjectFound&#xd;
