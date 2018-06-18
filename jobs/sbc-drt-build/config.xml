@@ -239,6 +239,11 @@ mv ram${BOARDNAME}_SIP.cmp ${BOARDNAME}_SIP.cmp
 #zip -r ${BOARDNAME}_SIP.elf.zip ram${BOARDNAME}_SIP.elf
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
     <hudson.plugins.parameterizedtrigger.TriggerBuilder plugin="parameterized-trigger@2.35.2">
       <configs>
         <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
