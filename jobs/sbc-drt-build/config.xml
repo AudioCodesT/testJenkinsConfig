@@ -163,6 +163,7 @@ fi
 
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
+echo REFSPEC=${REFSPEC} &gt;&gt; ../generated_sbc_version.properties
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
 chmod 600 ../id_rsa_gerrit
