@@ -186,6 +186,11 @@ curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
 
 cp  $WORKSPACE/include/external_version_data.h $WORKSPACE/OpenRG-UGW_external_version_data.h
 
+if [ ! -f MP5XXNG.OpenRG.img.gz ]; then
+  echo &quot;MP5XXNG.OpenRG.img.gz does not exist.. exit with error&quot;
+  exit -1
+fi
+
 if (( `du MP5XXNG.OpenRG.img.gz | cut -f1` &lt; 1500 )); then
   echo &quot;MP5XXNG.OpenRG.img.gz Image is too small.. exit with error&quot;
   exit -1
