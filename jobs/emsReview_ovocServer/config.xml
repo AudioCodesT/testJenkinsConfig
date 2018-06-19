@@ -138,8 +138,8 @@ if [[ -e compile_perl_scripts.pl ]]
 then
 	if [[ $GERRIT_BRANCH == &quot;7.6&quot; ]]
     then	
-		perl compile_perl_scripts.pl
-		RetunedValue=$?
+		#perl compile_perl_scripts.pl
+		#RetunedValue=$?
 		if [[ ! $RetunedValue == &quot;0&quot; ]]
     	then
     	#if the script failed
