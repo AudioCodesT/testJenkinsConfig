@@ -133,7 +133,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd EMS/tools/compile_perl_scripts.pl
+      <command>cd EMS/tools/
 if [[ -e compile_perl_scripts.pl ]]
 then
 	if [[ $GERRIT_BRANCH == &quot;7.6&quot; ]]
