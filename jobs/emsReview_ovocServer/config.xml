@@ -138,6 +138,7 @@ if [[ -e compile_perl_scripts.pl ]]
 then
 	if [[ $GERRIT_BRANCH == &quot;7.6&quot; ]]
     then	
+    	set +e
 		sudo perl compile_perl_scripts.pl
 		RetunedValue=$?
 		if [[ ! $RetunedValue == &quot;0&quot; ]]
