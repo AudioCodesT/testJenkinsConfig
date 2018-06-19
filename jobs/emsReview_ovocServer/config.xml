@@ -213,7 +213,7 @@ cat ems-ovoc-pmd.properties
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>$GERRIT_CHANGE_OWNER_EMAIL	</recipients>
+      <recipients></recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
