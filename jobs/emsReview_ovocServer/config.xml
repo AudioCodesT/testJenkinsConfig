@@ -135,16 +135,19 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
     <hudson.tasks.Shell>
       <command>if [[ -e EMS/tools/compile_perl_scripts.pl ]]
 then
-	echo &quot;found the Script&quot;
-	perl EMS/tools/compile_perl_scripts.pl
-	RetunedValue=$?
-	if [[ ! $RetunedValue == &quot;0&quot; ]]
+	if [[ $GERRIT_BRANCH == &quot;7.6&quot; ]]
     then
-    #if the script failed
-    exit 0
-    else
-    #if the script Pass
-    exit 0
+		echo &quot;found the Script&quot;
+		#perl EMS/tools/compile_perl_scripts.pl
+		RetunedValue=$?
+		if [[ ! $RetunedValue == &quot;0&quot; ]]
+    	then
+    	#if the script failed
+    	exit 0
+    	else
+    	#if the script Pass
+    	exit 0
+    	fi
     fi
 fi</command>
     </hudson.tasks.Shell>
