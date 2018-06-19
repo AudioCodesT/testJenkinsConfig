@@ -132,6 +132,21 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
+    <hudson.tasks.Shell>
+      <command>if [[ -e /EMS/tools/compile_perl_scripts.pl ]]
+then
+	perl /EMS/tools/compile_perl_scripts.pl
+	RetunedValue=$?
+	if [[ ! $RetunedValue == &quot;0&quot; ]]
+    then
+    #if the script failed
+    exit 0
+    else
+    #if the script Pass
+    exit 0
+    fi
+fi</command>
+    </hudson.tasks.Shell>
     <org.jfrog.hudson.maven3.Maven3Builder plugin="artifactory@2.15.0">
       <mavenName>maven-for-ems</mavenName>
       <rootPom>pom.xml</rootPom>
