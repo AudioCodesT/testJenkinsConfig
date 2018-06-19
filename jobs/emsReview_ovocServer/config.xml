@@ -215,7 +215,7 @@ cat ems-ovoc-pmd.properties
     <hudson.tasks.Mailer plugin="mailer@1.20">
       <recipients></recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
+      <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
