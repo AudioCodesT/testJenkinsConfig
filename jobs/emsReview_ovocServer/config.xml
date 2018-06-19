@@ -137,7 +137,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
 then
 	if [[ $GERRIT_BRANCH == &quot;7.6&quot; ]]
     then
-		#perl EMS/tools/compile_perl_scripts.pl
+		perl EMS/tools/compile_perl_scripts.pl
 		RetunedValue=$?
 		if [[ ! $RetunedValue == &quot;0&quot; ]]
     	then
