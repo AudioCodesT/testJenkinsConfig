@@ -136,7 +136,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       <command>cd EMS/tools/
 if [[ -e compile_perl_scripts.pl ]]
 then
-	if [[ ! $GERRIT_BRANCH == &quot;7.4.*&quot; ]]
+	if [[ ! $GERRIT_BRANCH == 7.4.* ]]
     then	
     	set +e
         echo &quot;***************************** running the perl script******************************&quot;
