@@ -139,8 +139,10 @@ then
 	if [[ $GERRIT_BRANCH == &quot;7.6&quot; ]]
     then	
     	set +e
+        echo &quot;***************************** running the perl script******************************&quot;
 		sudo perl compile_perl_scripts.pl
 		RetunedValue=$?
+        echo &quot;***************************** finish running the script******************************&quot;
         set -e
 		if [[ ! $RetunedValue == &quot;0&quot; ]]
     	then
