@@ -1,13 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>1.       Get latest code from branch 7.4.1000&#xd;
-2.       Run maven clean install&#xd;
-3.       find last tag and increment&#xd;
-3.       Run generate_iso script&#xd;
-4.       deploy the new iso to artifctory&#xd;
-5.       tag the remote repo with the new tag&#xd;
-</description>
+  <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -43,7 +37,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/heads/7.4.1000</name>
+        <name>refs/heads/7.6</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -55,7 +49,7 @@
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.LocalBranch>
-        <localBranch>refs/heads/7.4.1000</localBranch>
+        <localBranch>refs/heads/7.6</localBranch>
       </hudson.plugins.git.extensions.impl.LocalBranch>
     </extensions>
   </scm>
