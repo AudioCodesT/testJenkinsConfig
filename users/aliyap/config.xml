@@ -34,6 +34,7 @@
         <string>authenticated</string>
         <string>R&amp;D HDGW software</string>
         <string>TG1000</string>
+        <string>AWS_Jira_Users</string>
         <string>CI_EMS_Developers</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -42,7 +43,6 @@
         <string>Sp365-Devops-Read</string>
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
-        <string># R&amp;D EMS</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
@@ -53,14 +53,17 @@
         <string># R&amp;D HDGW GROUP</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
+        <string># OVOC MGMT</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string># OVOC</string>
+        <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1525077871313</timestamp>
+      <timestamp>1529823718294</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Aliya.Peretz@audiocodes.com</emailAddress>
