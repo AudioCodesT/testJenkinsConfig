@@ -857,6 +857,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>clmBuild</string>
         <string>clmCreateTag</string>
+        <string>ems_ova</string>
         <string>ems_sanity_multijob</string>
         <string>emsBuild_AMI</string>
         <string>emsBuild_oracle_triggers</string>
@@ -865,7 +866,6 @@
         <string>emsBuild_ovoc_server_7.4.2000</string>
         <string>emsBuild_ovoc_server_7.4.3000</string>
         <string>emsBuild_ovoc_server_7.6</string>
-        <string>emsOVA_ovoc_server</string>
         <string>emsPublishAMI</string>
         <string>emsReview_oracle_triggers</string>
         <string>emsReview_ovoc_server-fullRepo</string>
