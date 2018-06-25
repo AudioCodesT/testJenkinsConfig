@@ -1,13 +1,12 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Triggered by a finished ovoc_server night build and performs:&#xd;
-1. create a tested VM: launch new instance from sanity AMI and get its IP address&#xd;
-2. run python script which ssh to the tested VM and download the latest DVD3.iso&#xd;
-3. tests: install, integration tests&#xd;
-4. python script copies all logs from tested VM to the jenkins slave&#xd;
-5. archive the logs&#xd;
-6.if build passed then terminate the tested machine&#xd;
+  <description>Creating VMware ova for ovoc server&#xd;
+1. Launch vm from basic ova (DVD 1 &amp; 2)&#xd;
+2. Run install script on the target vm with given tag and ISO type&#xd;
+3. Clean file system on vm&#xd;
+4. Export as new ova&#xd;
+5. Run sanity on the newly created ova&#xd;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -62,7 +61,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -84,7 +82,7 @@
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>ems-build</assignedNode>
+  <assignedNode>ems-ova</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
