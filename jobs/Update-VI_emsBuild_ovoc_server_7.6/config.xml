@@ -17,6 +17,22 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>FULL_NEW_TAG</name>
+          <description></description>
+          <defaultValue>server_7.6.41</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>OLDTAG</name>
+          <description></description>
+          <defaultValue>server_7.6.40</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -63,10 +79,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH^`
 DATE=`date`
-#calculate new tag with &quot;server_&quot; prefix
-FULL_NEW_TAG=`echo $OLDTAG | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $OLDTAG | awk -F. &apos;{print $NF+1}&apos;`
 #calculate new tag without &quot;server_&quot; prefix
 NEW_TAG=${FULL_NEW_TAG:7}
 
@@ -75,7 +88,7 @@ echo &quot;FULL_NEW_TAG=${FULL_NEW_TAG}&quot; &gt;&gt; ems_build.properties
 
 # For UpdateVI job
 cd ${WORKSPACE}
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$GIT_BRANCH | sort -u | sed s/$/\;/g`
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$FULL_NEW_TAG | sort -u | sed s/$/\;/g`
 #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$GIT_BRANCH | sed s/\&quot;/\&apos;/g`
 #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$GIT_BRANCH | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;`
 RN=&quot;&quot;
