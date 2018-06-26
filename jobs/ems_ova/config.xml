@@ -121,6 +121,14 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 # will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
 ####################################################################################################
 
+# function for getting vm IP address
+function getIP () {
+    return $(ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 ipAddress | cut -d&apos;&quot;&apos; -f2)
+    # If there are more then one NIC, look for network name, e.g. &quot;ovoc Network&quot;, and then grep the IP:
+    # ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -A3 &quot;ovoc Network&quot; | \
+    # grep -oE &quot;\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b&quot;
+}
+
 # function for verifying if new VM is up
 function isUp () {
     for i in {1..30}; do
