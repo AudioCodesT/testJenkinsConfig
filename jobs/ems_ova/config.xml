@@ -122,7 +122,8 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 ####################################################################################################
 
 # function for getting vm IP address
-function getIP () {
+function getIP ()
+{
     return $(ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 ipAddress | cut -d&apos;&quot;&apos; -f2)
     # If there are more then one NIC, look for network name, e.g. &quot;ovoc Network&quot;, and then grep the IP:
     # ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -A3 &quot;ovoc Network&quot; | \
@@ -130,7 +131,8 @@ function getIP () {
 }
 
 # function for verifying if new VM is up
-function isUp () {
+function isUp ()
+{
     for i in {1..30}; do
         getState=$(ssh root@10.7.10.7 vim-cmd vmsvc/power.getstate $vmid | grep Powered | cut -d&apos; &apos; -f2)
         if [[ $getState == on ]]; then
@@ -141,10 +143,11 @@ function isUp () {
 }
 
 # function for verifyong ssh to new vm
-function isSsh () {
+function isSsh ()
+{
     for i in {1..30}; do
         sleep 1
-        exec 5&gt;/dev/tcp/ovoc_base/22
+        exec 5&gt;/dev/tcp/$vmip/22
         if [[ $? -eq 0 ]]; then
             return 1
         fi
@@ -170,12 +173,20 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-# find new vmid
+# find new vm id
 vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
+echo &quot;$(date) : vm id is $vmid&quot; &gt;&amp;3
+
+# find new vm IP address
+vmip=getIP
+echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
+
+# Verify new ovoc base is up and accessible by ssh
+isUp &amp;&amp; isSsh || exit &gt;&amp;3
 
 # Apply DVD-3
 cd EMS/VersionRelease
-python2.7 python2.7 SanityInstall.py $TAG 10.3.180.239 official_iso
+python2.7 python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
 
 # clean logs before shutdown
 echo &quot;$(date) : ssh to clean router webapp folder and log files&quot; &gt;&amp;3          
@@ -190,7 +201,7 @@ sleep 30
 # export the new VM to an OVA file
 echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&amp;3
 mkdir -p $WORKSPACE/$TAG/ovoc_base_for_$TAG
-ovftool -o --noSSLVerify vi://root:rootroot@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_base_for_$TAG/ovoc_base_for_$TAG.ova
+ovftool -o --noSSLVerify vi://root:rootroot@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_base_for_$TAG/ovoc_base_for_$TAG.ova &gt;&amp;3
 
 cd ~
 
