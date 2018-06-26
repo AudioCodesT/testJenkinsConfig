@@ -1,5 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description>Create ova for ovoc server official release</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -48,6 +49,8 @@
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
@@ -62,7 +65,6 @@
         <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
-      <hudson.plugins.git.UserRemoteConfig/>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
@@ -80,7 +82,99 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># verify argument was provided
+if [ $# -eq 0 ]
+  then
+    echo &quot;Please supply Tag Name (e.g. server_7.4.3000.13)&quot;  &gt;&amp;3
+                exit
+fi
+
+# set logger ###############
+exec 3&gt;&amp;1 4&gt;&amp;2
+trap &apos;exec 2&gt;&amp;4 1&gt;&amp;3&apos; 0 1 2 3
+exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
+# Everything below will go to the file &apos;ems_ovoc_vm_log.out&apos;:
+
+echo &quot;$(date) : *****************  START  ******************&quot; &gt;&amp;3
+#check if VM name ovoc_base_for_$TAG is already exists
+vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
+if [ ! -z &quot;$vmid&quot; ]; then
+    echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot;  &gt;&amp;3
+    ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid}  &gt;&amp;3
+	ssh root@10.7.10.7 vim-cmd vmsvc/unregister ${vmid}  &gt;&amp;3
+	ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid}  &gt;&amp;3
+fi
+
+ create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
+echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&amp;3
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=datastore1 --diskMode=thin --acceptAllEulas --powerOn /home/centos/data/ovoc/ova/$OVA.ova vi://root@10.7.10.7 &gt;&amp;3
+if [ $? -ne 0 ]; then
+    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot;  &gt;&amp;3
+    exit
+fi
+
+# find new vmid
+vmid=$(ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep ovoc_base_for_$TAG | gawk &apos;{print $4}&apos; | cut -d&apos;/&apos; -f1)
+
+# verify if new VM is up
+function isUp () {
+    getState=$(ssh root@10.7.10.7 vim-cmd vmsvc/power.getstate $vmid | grep Powered | cut -d&apos; &apos; -f2)
+    if [[ $getState == on ]]
+        then
+        return 1
+        else return 0
+    fi
+}
+
+# verify if new VM`s network is alive
+function isNetwork () {
+    for i in {1..10}; do
+	    sleep 3
+        exec 3&gt;/dev/tcp/ovoc_base/22
+        [[ $? -eq 0 ]] &amp;&amp; return 0
+	done
+	return -1
+}
+
+# Apply DVD-3
+cd EMS/VersionRelease
+python2.7 python2.7 SanityInstall.py $TAG 10.3.180.239 official_iso
+
+# clean logs before shutdown
+echo &quot;$(date) : ssh to clean router webapp folder and log files&quot; &gt;&amp;3          
+cleanTopologyFiles $vmIPaddress
+
+###########################
+# graceful shutdouwn this new VM with new war file in it
+echo &quot;$(date) : shutdown new VM&quot; &gt;&amp;3
+vmware-cmd -H 10.7.20.101 -U root -P rootroot $newVmLocation stop soft
+sleep 30
+
+# export the new VM to an OVA file
+echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&amp;3
+mkdir -p $WORKSPACE/$TAG/ovoc_base_for_$TAG
+ovftool -o --noSSLVerify vi://root:rootroot@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_base_for_$TAG/ovoc_base_for_$TAG.ova
+
+cd ~
+
+# start the VM
+echo &quot;$(date) : start the new VM&quot; &gt;&amp;3
+vmware-cmd -H 10.7.20.101 -U root -P rootroot $newVmLocation start
+sleep 5
+
+# add configurator VM IP address to a properties file:
+echo Conf_IP_address=$vmIPaddress &gt; $WORKSPACE/params.properties
+
+# what left is to upload new OVA to Artifactory
+echo &quot;$(date) : ********        FINISH      ***********&quot; &gt;&amp;3
+echo &quot;$(date) : what left is to upload new OVA to Artifactory&quot; &gt;&amp;3
+echo &quot;$(date) : ********    **************   ***********&quot; &gt;&amp;3
+
+</command>
+    </hudson.tasks.Shell>
+  </builders>
   <publishers/>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
