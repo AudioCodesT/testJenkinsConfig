@@ -114,7 +114,11 @@ AuthorCommitter+=&quot; &quot;`git log --first-parent --pretty=format:&quot;%aN%
 #RN+=&quot; &quot;`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$FULL_NEW_TAG | sed s/\&quot;/\&apos;/g`
 #VIS+=&quot; &quot;`git log --pretty=format:&quot;%B&quot; $OLDTAG..$FULL_NEW_TAG | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;`
 #VIS=`echo $VIS |tr &quot; &quot; &quot;\n&quot; | sort -u`
-while read -r hash; do 
+
+echo git log --first-parent $OLDTAG..$FULL_NEW_TAG
+git log --first-parent $OLDTAG..$FULL_NEW_TAG
+
+while read -r hash; do
   subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
   VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;)
   RN+=---$subject::$hash::$VI
@@ -133,7 +137,8 @@ echo ISO_DEPLOY_DESTINATION=latest_iso &gt;&gt; ems_build.properties
 #replace backslash with space, because it is not a valid properties file if it has a backslash char
 #it save a &quot;ems_build.properties.bak&quot; backup file for debug if we will encounter problems
 sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
-</command>
+
+exit 1</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
