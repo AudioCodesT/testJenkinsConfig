@@ -139,20 +139,6 @@ set errorlevel=0&#xd;
         </htmlpublisher.HtmlPublisherTarget>
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
-    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>yossim@audiocodes.com</recipientList>
-      <contentType>text/html</contentType>
-      <defaultSubject>$PROJECT new TAG $NEWTAG</defaultSubject>
-      <defaultContent>${FILE, path=&quot;index.html&quot;}</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
-      <postsendScript></postsendScript>
-      <attachBuildLog>false</attachBuildLog>
-      <compressBuildLog>false</compressBuildLog>
-      <replyTo>yossim@audiocodes.com</replyTo>
-      <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
-    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
