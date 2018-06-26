@@ -107,7 +107,6 @@ git -c http.sslVerify=false clone -n https://gerrit/web-ui/ovoc ovoc-ui
 cd ovoc-ui
 git checkout 7.6
 head=$(git rev-parse HEAD)
-curl -k -u jenkins:$jpass --basic -X PUT --header &apos;Content-Type: application/json;charset=UTF-8&apos; https://gerrit/a/projects/web-ui%2fovoc/tags/$FULL_NEW_TAG -d &apos; { &quot;message&quot;: &quot;Automatic tag&quot;, &quot;revision&quot;: &quot;&apos;$head&apos;&quot;  }&apos;
 git -c http.sslVerify=false fetch
 
 # Gathering information to UpdateVI from web-ui/ovoc repository as well
