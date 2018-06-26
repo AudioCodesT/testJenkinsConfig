@@ -130,11 +130,8 @@ function isUp () {
 
 # verify if new VM`s network is alive
 function isNetwork () {
-    for i in {1..10}; do
-	    sleep 3
-        exec 3&gt;/dev/tcp/ovoc_base/22
-        [[ $? -eq 0 ]] &amp;&amp; return 0
-	done
+    exec 3&gt;/dev/tcp/ovoc_base/22
+    [[ $? -eq 0 ]] &amp;&amp; return 0
 	return -1
 }
 
