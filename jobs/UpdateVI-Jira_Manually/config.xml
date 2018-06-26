@@ -93,11 +93,10 @@ it pairs VI/Issue with the relevant commit&#xd;
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>VI-Update</assignedNode>
+  <assignedNode>compile14</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -112,7 +111,7 @@ del %WORKSPACE%\index.html&#xd;
 &#xd;
 set PASS=%VIpass%&#xd;
 &#xd;
-update_after_new_tag.pl &quot;%NEWTAG%&quot; &quot;%RN%&quot; &quot;%GERRIT_HOST%&quot; &quot;%PROJECT%&quot; &quot;%DATE%&quot; &quot;%GERRIT_BRANCH%&quot; &quot;%VIpass%&quot; &quot;%Jirapass%&quot; &quot;%AuthorCommitter%&quot; &quot;%Destination%&quot;&#xd;
+update_after_new_tag_manually.pl &quot;%NEWTAG%&quot; &quot;%RN%&quot; &quot;%GERRIT_HOST%&quot; &quot;%PROJECT%&quot; &quot;%DATE%&quot; &quot;%GERRIT_BRANCH%&quot; &quot;%VIpass%&quot; &quot;%Jirapass%&quot; &quot;%AuthorCommitter%&quot; &quot;%Destination%&quot;&#xd;
 &#xd;
 copy log\%NewTag%.html %WORKSPACE%\index.html&#xd;
 if ERRORLEVEL 1 (&#xd;
@@ -120,46 +119,10 @@ if ERRORLEVEL 1 (&#xd;
     exit /b&#xd;
 )&#xd;
 &#xd;
-rem ccperl update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
-update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
-&#xd;
-cd /d %WORKSPACE%&#xd;
-echo SendTo=yossim &gt; SendTo.txt&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Benny.Lavi, cc:amos.bublil, cc:ilan.avner, cc:Tova.Shoham &amp; goto ProjectFound&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=IppSwReleases &amp; goto ProjectFound&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;EMS&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz &amp; goto ProjectFound&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;MP&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Hagayh, MP20xdeliveries &amp; goto ProjectFound&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;Arm&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=RnD-ARM, _ARMQA &amp; goto ProjectFound&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;mediatech&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Yishai.Gil, Maayan.Aharoni &amp; goto ProjectFound&#xd;
-&#xd;
-ECHO.%PROJECT%| FIND /I &quot;Smart&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Brian.Kling, Alex.Shlachter &amp; goto ProjectFound&#xd;
-&#xd;
-:ProjectFound&#xd;
-&#xd;
-echo SendTo=%SendTo% &gt; SendTo.txt&#xd;
-&#xd;
 set errorlevel=0&#xd;
 &#xd;
 </command>
     </hudson.tasks.BatchFile>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
-      <info>
-        <propertiesFilePath>SendTo.txt</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
     <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.14">
@@ -177,39 +140,7 @@ set errorlevel=0&#xd;
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$SendTo,  cc:yossim, cc:Shuky.Riechard</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-          <email>
-            <recipientList>$EMAIL</recipientList>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>text/html</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-        <hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
-          <email>
-            <recipientList>yossim,Shuky.Riechard</recipientList>
-            <subject>UpdateVI job has failed - $PROJECT_DEFAULT_SUBJECT</subject>
-            <body>Job failed!
-$BUILD_URL</body>
-            <recipientProviders/>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-          <failureCount>0</failureCount>
-        </hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
-      </configuredTriggers>
+      <recipientList>yossim@audiocodes.com</recipientList>
       <contentType>text/html</contentType>
       <defaultSubject>$PROJECT new TAG $NEWTAG</defaultSubject>
       <defaultContent>${FILE, path=&quot;index.html&quot;}</defaultContent>
