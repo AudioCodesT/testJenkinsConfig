@@ -130,7 +130,7 @@ echo BRANCH=`echo $GIT_BRANCH | sed &apos;s:origin/::&apos;` &gt;&gt; ems_build.
 echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;` &gt;&gt; ems_build.properties
 echo DATE=${DATE} &gt;&gt; ems_build.properties
 echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ems_build.properties
-
+echo ISO_DEPLOY_DESTINATION=latest_iso &gt;&gt; ems_build.properties
 #replace backslash with space, because it is not a valid properties file if it has a backslash char
 #it save a &quot;ems_build.properties.bak&quot; backup file for debug if we will encounter problems
 sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
