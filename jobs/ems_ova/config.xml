@@ -85,55 +85,85 @@
   <builders>
     <hudson.tasks.Shell>
       <command># verify argument was provided
-if [ $# -eq 0 ]
-  then
+if [ $# -eq 0 ]; then
     echo &quot;Please supply Tag Name (e.g. server_7.4.3000.13)&quot;  &gt;&amp;3
-                exit
+    exit
 fi
 
 # set logger ###############
 exec 3&gt;&amp;1 4&gt;&amp;2
 trap &apos;exec 2&gt;&amp;4 1&gt;&amp;3&apos; 0 1 2 3
 exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
-# Everything below will go to the file &apos;ems_ovoc_vm_log.out&apos;:
+# Everything below will go to the file &apos;ems_ovoc_vm_log.out&apos;
+
+####################################################################################################
+# Explanation:
+# 
+# exec 3&gt;&amp;1 4&gt;&amp;2
+# 
+# Saves file descriptors so they can be restored to whatever they were before redirection or used
+# themselves to output to whatever they were before the following redirect.
+# 
+# trap &apos;exec 2&gt;&amp;4 1&gt;&amp;3&apos; 0 1 2 3
+# 
+# Restore file descriptors for particular signals. Not generally necessary since they should be
+# restored when the sub-shell exits.
+# 
+# exec 1&gt;log.out 2&gt;&amp;1
+# 
+# Redirect stdout to file log.out then redirect stderr to stdout. Note that the order is important
+# when you want them going to the same file. stdout must be redirected before stderr is redirected
+# to stdout.
+# 
+# From then on, to see output on the console (maybe), you can simply redirect to &amp;3. For example,
+# 
+# echo &quot;$(date) : part 1 - start&quot; &gt;&amp;3
+# will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
+####################################################################################################
+
+# function for verifying if new VM is up
+function isUp () {
+    for i in {1..30}; do
+        getState=$(ssh root@10.7.10.7 vim-cmd vmsvc/power.getstate $vmid | grep Powered | cut -d&apos; &apos; -f2)
+        if [[ $getState == on ]]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
+# function for verifyong ssh to new vm
+function isSsh () {
+    for i in {1..30}; do
+        sleep 1
+        exec 5&gt;/dev/tcp/ovoc_base/22
+        if [[ $? -eq 0 ]]; then
+            return 1
+        fi
+    done
+    return 0
+}
 
 echo &quot;$(date) : *****************  START  ******************&quot; &gt;&amp;3
-#check if VM name ovoc_base_for_$TAG is already exists
+# check if VM name ovoc_base_for_$TAG already exists
 vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
 if [ ! -z &quot;$vmid&quot; ]; then
-    echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot;  &gt;&amp;3
-    ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid}  &gt;&amp;3
-	ssh root@10.7.10.7 vim-cmd vmsvc/unregister ${vmid}  &gt;&amp;3
-	ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid}  &gt;&amp;3
+    echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&amp;3
+    ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid} &gt;&amp;3
+	ssh root@10.7.10.7 vim-cmd vmsvc/unregister ${vmid} &gt;&amp;3
+	ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
 fi
 
  create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&amp;3
 ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=datastore1 --diskMode=thin --acceptAllEulas --powerOn /home/centos/data/ovoc/ova/$OVA.ova vi://root@10.7.10.7 &gt;&amp;3
 if [ $? -ne 0 ]; then
-    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot;  &gt;&amp;3
+    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; &gt;&amp;3
     exit
 fi
 
 # find new vmid
-vmid=$(ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep ovoc_base_for_$TAG | gawk &apos;{print $4}&apos; | cut -d&apos;/&apos; -f1)
-
-# verify if new VM is up
-function isUp () {
-    getState=$(ssh root@10.7.10.7 vim-cmd vmsvc/power.getstate $vmid | grep Powered | cut -d&apos; &apos; -f2)
-    if [[ $getState == on ]]
-        then
-        return 1
-        else return 0
-    fi
-}
-
-# verify if new VM`s network is alive
-function isNetwork () {
-    exec 3&gt;/dev/tcp/ovoc_base/22
-    [[ $? -eq 0 ]] &amp;&amp; return 0
-	return -1
-}
+vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
 
 # Apply DVD-3
 cd EMS/VersionRelease
@@ -146,7 +176,7 @@ cleanTopologyFiles $vmIPaddress
 ###########################
 # graceful shutdouwn this new VM with new war file in it
 echo &quot;$(date) : shutdown new VM&quot; &gt;&amp;3
-vmware-cmd -H 10.7.20.101 -U root -P rootroot $newVmLocation stop soft
+ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown ${vmid} &gt;&amp;3
 sleep 30
 
 # export the new VM to an OVA file
@@ -155,14 +185,6 @@ mkdir -p $WORKSPACE/$TAG/ovoc_base_for_$TAG
 ovftool -o --noSSLVerify vi://root:rootroot@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_base_for_$TAG/ovoc_base_for_$TAG.ova
 
 cd ~
-
-# start the VM
-echo &quot;$(date) : start the new VM&quot; &gt;&amp;3
-vmware-cmd -H 10.7.20.101 -U root -P rootroot $newVmLocation start
-sleep 5
-
-# add configurator VM IP address to a properties file:
-echo Conf_IP_address=$vmIPaddress &gt; $WORKSPACE/params.properties
 
 # what left is to upload new OVA to Artifactory
 echo &quot;$(date) : ********        FINISH      ***********&quot; &gt;&amp;3
