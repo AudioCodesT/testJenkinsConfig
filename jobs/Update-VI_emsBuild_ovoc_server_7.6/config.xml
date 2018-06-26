@@ -89,16 +89,14 @@ echo &quot;FULL_NEW_TAG=${FULL_NEW_TAG}&quot; &gt;&gt; ems_build.properties
 # For UpdateVI job
 cd ${WORKSPACE}
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$FULL_NEW_TAG | sort -u | sed s/$/\;/g`
-#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$GIT_BRANCH | sed s/\&quot;/\&apos;/g`
-#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$GIT_BRANCH | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;`
+#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$FULL_NEW_TAG | sed s/\&quot;/\&apos;/g`
+#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$FULL_NEW_TAG | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;`
 RN=&quot;&quot;
 while read -r hash; do 
   subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
   VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;)
   RN+=---$subject::$hash::$VI
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$GIT_BRANCH)&quot;
-
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$FULL_NEW_TAG)&quot;
 
 #tag also the web-ui/ovoc repository:
 cd ${WORKSPACE}
@@ -122,9 +120,6 @@ while read -r hash; do
   VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;)
   RN+=---$subject::$hash::$VI
 done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$FULL_NEW_TAG)&quot;
-
-EMAIL+=&quot; &quot;`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$FULL_NEW_TAG`
-EMAIL=`echo $EMAIL |tr &quot; &quot; &quot;\n&quot; | sort -u`
 
 cd ${WORKSPACE}
 
@@ -169,7 +164,7 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
               <combineQueuedCommits>false</combineQueuedCommits>
             </hudson.plugins.git.GitRevisionBuildParameters>
           </configs>
-          <projects>UpdateVI-Jira</projects>
+          <projects>UpdateVI-Jira_Manually</projects>
           <condition>UNSTABLE_OR_BETTER</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
