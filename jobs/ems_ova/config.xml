@@ -72,6 +72,14 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>true</shallow>
+        <noTags>false</noTags>
+        <reference></reference>
+        <timeout>15</timeout>
+        <depth>100</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
   <assignedNode>ems_ova</assignedNode>
