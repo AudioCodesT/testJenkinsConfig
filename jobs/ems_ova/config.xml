@@ -31,7 +31,6 @@
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>7.4.3000</string>
-              <string>7.6</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -71,7 +70,9 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+    </extensions>
   </scm>
   <assignedNode>ems_ova</assignedNode>
   <canRoam>false</canRoam>
