@@ -158,13 +158,15 @@ function isSsh ()
 }
 
 echo &quot;$(date) : *****************  START  ******************&quot; &gt;&amp;3
-# check if VM name ovoc_base_for_$TAG already exists
-vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
-if [ ! -z &quot;$vmid&quot; ]; then
+# check and deete old ovoc_base_for_$TAG vm`s
+vms=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
+if [[ ! -z &quot;$vms&quot; ]]; then
     echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&amp;3
-    ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid} &gt;&amp;3
-	ssh root@10.7.10.7 vim-cmd vmsvc/unregister ${vmid} &gt;&amp;3
-	ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
+
+    for vm in $vms; do
+        ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid} &gt;&amp;3
+	    ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
+    done
 fi
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
