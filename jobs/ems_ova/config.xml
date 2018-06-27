@@ -122,6 +122,11 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 # will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
 ####################################################################################################
 
+# Get ESXi password from encrypted file
+cd ~/.sll
+vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
+cd $WORKSPACE
+
 # function for getting vm IP address
 function getIP ()
 {
@@ -168,7 +173,7 @@ fi
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&amp;3
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=datastore1 --diskMode=thin --acceptAllEulas --powerOn /home/centos/data/ovoc/ova/$OVA.ova vi://root@10.7.10.7 &gt;&amp;3
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=datastore1 --diskMode=thin --acceptAllEulas --powerOn /home/centos/data/ovoc/ova/$OVA.ova vi://root:$vipw@10.7.10.7 &gt;&amp;3
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; &gt;&amp;3
     exit
@@ -202,7 +207,7 @@ sleep 30
 # export the new VM to an OVA file
 echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&amp;3
 mkdir -p $WORKSPACE/$TAG/ovoc_base_for_$TAG
-ovftool -o --noSSLVerify vi://root@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_base_for_$TAG/ovoc_base_for_$TAG.ova &gt;&amp;3
+ovftool -o --noSSLVerify vi://root:$vipw@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_base_for_$TAG/ovoc_base_for_$TAG.ova &gt;&amp;3
 
 cd ~
 
