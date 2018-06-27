@@ -187,8 +187,8 @@ cd EMS/VersionRelease
 python2.7 python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
 
 # clean logs before shutdown
-echo &quot;$(date) : ssh to clean router webapp folder and log files&quot; &gt;&amp;3          
-cleanTopologyFiles $vmIPaddress
+echo &quot;$(date) : ssh to clean log files&quot; &gt;&amp;3          
+
 
 ###########################
 # graceful shutdouwn this new VM with new war file in it
