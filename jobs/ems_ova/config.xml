@@ -76,7 +76,7 @@
         <shallow>true</shallow>
         <noTags>false</noTags>
         <reference></reference>
-        <timeout>15</timeout>
+        <timeout>30</timeout>
         <depth>100</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
