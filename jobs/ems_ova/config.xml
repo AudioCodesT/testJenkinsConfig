@@ -122,12 +122,6 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 # will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
 ####################################################################################################
 
-# verify argument was provided
-if [ $# -eq 0 ]; then
-    echo &quot;Please supply Tag Name (e.g. server_7.4.3000.13)&quot;  &gt;&amp;3
-    exit
-fi
-
 # function for getting vm IP address
 function getIP ()
 {
