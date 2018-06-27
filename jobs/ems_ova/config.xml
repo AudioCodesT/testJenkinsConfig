@@ -123,7 +123,7 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 ####################################################################################################
 
 # Get ESXi password from encrypted file
-cd ~/.sll
+cd ~/.ssl
 vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
 cd $WORKSPACE
 
