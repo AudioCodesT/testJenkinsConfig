@@ -130,7 +130,7 @@ cd $WORKSPACE
 # function for getting vm IP address
 function getIP ()
 {
-    return $(ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 ipAddress | cut -d&apos;&quot;&apos; -f2)
+    $(ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 ipAddress | cut -d&apos;&quot;&apos; -f2) &amp;&amp; return
     # If there are more then one NIC, look for network name, e.g. &quot;ovoc Network&quot;, and then grep the IP:
     # ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -A3 &quot;ovoc Network&quot; | \
     # grep -oE &quot;\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b&quot;
@@ -141,11 +141,9 @@ function isUp ()
 {
     for i in {1..30}; do
         getState=$(ssh root@10.7.10.7 vim-cmd vmsvc/power.getstate $vmid | grep Powered | cut -d&apos; &apos; -f2)
-        if [[ $getState == on ]]; then
-            return 1
-        fi
+        [[ $getState == on ]] &amp;&amp; return 0
     done
-    return 0
+    return 1
 }
 
 # function for verifyong ssh to new vm
@@ -154,11 +152,9 @@ function isSsh ()
     for i in {1..30}; do
         sleep 1
         exec 5&gt;/dev/tcp/$vmip/22
-        if [[ $? -eq 0 ]]; then
-            return 1
-        fi
+        [[ $? -eq 0 ]] &amp;&amp; return 0
     done
-    return 0
+    return 1
 }
 
 echo &quot;$(date) : *****************  START  ******************&quot; &gt;&amp;3
@@ -184,11 +180,11 @@ vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG
 echo &quot;$(date) : vm id is $vmid&quot; &gt;&amp;3
 
 # find new vm IP address
-vmip=${getIP}
+vmip=$(getIP)
 echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
 # Verify new ovoc base is up and accessible by ssh
-${isUp} &amp;&amp; ${isSsh} || exit &gt;&amp;3
+[[ isUp ]] &amp;&amp; [[ isSsh ]] || exit &gt;&amp;3
 
 # Apply DVD-3
 cd EMS/VersionRelease
