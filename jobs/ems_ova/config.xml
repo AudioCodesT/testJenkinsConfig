@@ -166,7 +166,7 @@ if [ ! -z &quot;$vmid&quot; ]; then
 	ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
 fi
 
- create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
+# create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&amp;3
 ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=datastore1 --diskMode=thin --acceptAllEulas --powerOn /home/centos/data/ovoc/ova/$OVA.ova vi://root@10.7.10.7 &gt;&amp;3
 if [ $? -ne 0 ]; then
