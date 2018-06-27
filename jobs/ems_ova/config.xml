@@ -184,11 +184,11 @@ vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG
 echo &quot;$(date) : vm id is $vmid&quot; &gt;&amp;3
 
 # find new vm IP address
-vmip=getIP
+vmip=${getIP}
 echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
 # Verify new ovoc base is up and accessible by ssh
-isUp &amp;&amp; isSsh || exit &gt;&amp;3
+${isUp} &amp;&amp; ${isSsh} || exit &gt;&amp;3
 
 # Apply DVD-3
 cd EMS/VersionRelease
