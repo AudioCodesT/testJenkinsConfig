@@ -127,15 +127,6 @@ cd ~/.ssl
 vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
 cd $WORKSPACE
 
-# function for getting vm IP address
-function getIP ()
-{
-    $(ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 ipAddress | cut -d&apos;&quot;&apos; -f2) &amp;&amp; return
-    # If there are more then one NIC, look for network name, e.g. &quot;ovoc Network&quot;, and then grep the IP:
-    # ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -A3 &quot;ovoc Network&quot; | \
-    # grep -oE &quot;\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b&quot;
-}
-
 # function for verifying if new VM is up
 function isUp ()
 {
@@ -182,7 +173,7 @@ vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG
 echo &quot;$(date) : vm id is $vmid&quot; &gt;&amp;3
 
 # find new vm IP address
-vmip=$(getIP)
+vmip=`ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
 echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
 # Verify new ovoc base is up and accessible by ssh
