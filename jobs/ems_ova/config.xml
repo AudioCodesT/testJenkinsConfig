@@ -30,8 +30,6 @@
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>7.4.1000</string>
-              <string>7.4.2000</string>
               <string>7.4.3000</string>
               <string>7.6</string>
             </a>
@@ -68,7 +66,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>server_${NEW_TAG}</name>
+        <name>server_${TAG}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
