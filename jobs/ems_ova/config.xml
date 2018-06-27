@@ -182,7 +182,7 @@ echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
 # Apply DVD-3
 cd EMS/VersionRelease
-python2.7 python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
+python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
 
 # clean logs before shutdown
 echo &quot;$(date) : ssh to clean log files&quot; &gt;&amp;3          
