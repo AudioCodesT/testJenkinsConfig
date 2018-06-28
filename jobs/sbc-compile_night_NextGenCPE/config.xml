@@ -143,9 +143,6 @@ if curl -ks -u $User https://$artifactory_host/api/storage/sbc-release/com/ac/sb
     exit 0
 fi
 
-EMAIL=`git log -n1 --pretty=format:&quot;%ce&quot;`
-echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
-
 if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
@@ -224,6 +221,11 @@ $PROJECT_DEFAULT_CONTENT</body>
       <attachmentsPattern></attachmentsPattern>
       <presendScript></presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <classpath>
+        <hudson.plugins.emailext.GroovyScriptPath>
+          <path></path>
+        </hudson.plugins.emailext.GroovyScriptPath>
+      </classpath>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
@@ -245,6 +247,13 @@ $PROJECT_DEFAULT_CONTENT</body>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
+    <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
+      <script>echo EMAIL=`git log -n1 --pretty=format:&quot;%ce&quot;`
+NEWTAG=`git describe --tags --first-parent | cut -d- -f1,2`</script>
+      <scriptType>unixScript</scriptType>
+      <runOnlyOnParent>true</runOnlyOnParent>
+      <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
+    </com.lookout.jenkins.EnvironmentScript>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
