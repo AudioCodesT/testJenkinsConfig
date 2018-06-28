@@ -28,15 +28,9 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>NEWTAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
           <description></description>
-          <defaultValue></defaultValue>
+          <defaultValue>NextGenCPE</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -141,7 +135,6 @@ NEWTAG=`git describe --tags --first-parent | cut -d- -f1,2`
 
 echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; ../generated_sbc_version.properties
-echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
 if curl -ks -u $User https://$artifactory_host/api/storage/sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/${BOARDFINALNAME}_F$NEWTAG.cmp | grep -q uri; then
 	echo ${NEWTAG}/${BOARDFINALNAME}_F$NEWTAG.cmp exist already!... Abort without error;
@@ -252,13 +245,6 @@ $PROJECT_DEFAULT_CONTENT</body>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
-      <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
-      <scriptType>unixScript</scriptType>
-      <runOnlyOnParent>false</runOnlyOnParent>
-      <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
-    </com.lookout.jenkins.EnvironmentScript>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
