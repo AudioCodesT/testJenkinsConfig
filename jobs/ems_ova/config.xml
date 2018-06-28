@@ -122,6 +122,11 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 # will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
 ####################################################################################################
 
+vmnewip=&quot;10.7.10.77&quot;
+vmnewgw=&quot;10.7.0.1&quot;
+vmdns1=&quot;10.1.1.10&quot;
+vmdns2=&quot;10.1.1.6&quot;
+
 # Get ESXi password from encrypted file
 cd ~/.ssl
 vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
@@ -178,7 +183,40 @@ vmip=&quot;10.3.180.239&quot;
 echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
 # Verify new ovoc base is up and accessible by ssh
-[[ isUp ]] &amp;&amp; [[ isSsh ]] || exit &gt;&amp;3
+isup=isUp
+isssh=isSsh
+[[ &quot;$isup&quot; -eq 0 ]] &amp;&amp; [[ &quot;$isssh&quot; -eq 0 ]] || exit &gt;&amp;3
+
+# Change network setting
+python2.7 setIP.py $vmip
+
+# Shutdown ovoc server
+ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown $vmid
+
+# Wait for shutdown
+do
+    isup=isUp
+    sleep 10
+while [[ &quot;$isup&quot; -eq 0 ]]
+
+# Change vm network (vSwitch)
+echo &quot;sed -i &apos;s/VM\ Network/AUDC\ Network/g&apos; /vmfs/volumes/datastore1/ovoc_base_for_$TAG/ovoc_base_for_$TAG.vmx&quot; | ssh root@10.7.10.7
+
+# Power on
+ssh root@10.7.10.7 vim-cmd vmsvc/power.on $vmid
+
+# Wait for SSH on ovoc server
+do
+    isup=isUp
+    sleep 5
+while [[ &quot;$isup&quot; -eq 0 ]]
+
+do
+    isssh=isSsh
+    sleep 5
+while [[ &quot;$isssh&quot; -eq 0 ]]
+
+sleep 30
 
 # Apply DVD-3
 cd EMS/VersionRelease
