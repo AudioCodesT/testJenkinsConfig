@@ -188,10 +188,10 @@ isssh=isSsh
 [[ &quot;$isup&quot; -eq 0 ]] &amp;&amp; [[ &quot;$isssh&quot; -eq 0 ]] || exit &gt;&amp;3
 
 # Change network setting
-python2.7 setIP.py $vmip
+python2.7 setIP.py $vmip &gt;&amp;3
 
 # Shutdown ovoc server
-ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown $vmid
+ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown $vmid &gt;&amp;3
 
 # Wait for shutdown
 do
@@ -200,10 +200,13 @@ do
 while [[ &quot;$isup&quot; -eq 0 ]]
 
 # Change vm network (vSwitch)
-echo &quot;sed -i &apos;s/VM\ Network/AUDC\ Network/g&apos; /vmfs/volumes/datastore1/ovoc_base_for_$TAG/ovoc_base_for_$TAG.vmx&quot; | ssh root@10.7.10.7
+echo &quot;sed -i &apos;s/VM\ Network/AUDC\ Network/g&apos; /vmfs/volumes/datastore1/ovoc_base_for_$TAG/ovoc_base_for_$TAG.vmx&quot; | ssh root@10.7.10.7 &gt;&amp;3
+vmip=`ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+vmip=&quot;10.7.10.77&quot;
+echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
 # Power on
-ssh root@10.7.10.7 vim-cmd vmsvc/power.on $vmid
+ssh root@10.7.10.7 vim-cmd vmsvc/power.on $vmid &gt;&amp;3
 
 # Wait for SSH on ovoc server
 do
