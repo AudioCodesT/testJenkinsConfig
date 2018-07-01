@@ -224,8 +224,10 @@ python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
 echo &quot;$(date) : ssh to clean log files&quot; &gt;&amp;3          
 
 
-###########################
-# graceful shutdouwn this new VM with new war file in it
+#########################################################################
+# Create ova from full ovoc server and upload to artifactory server
+
+# graceful shutdouwn this new VM full ovoc server
 echo &quot;$(date) : shutdown new VM&quot; &gt;&amp;3
 ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown ${vmid} &gt;&amp;3
 sleep 30
