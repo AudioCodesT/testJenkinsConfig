@@ -159,7 +159,7 @@ ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | \
    grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
 rev=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
      --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
-     grep -A30 acLinuxUGW | grep revision | cut -d: -f2 || echo ChangeId not found)
+     grep -A30 acLinuxUGW | grep revision | cut -d: -f2 | sed &apos;s: ::g&apos; || echo ChangeId not found)
 
 #In case you don&apos;t find the revision from another commit, take it from the last submitted commit
 if [ &quot;$rev&quot; == &quot;&quot; ]; then
