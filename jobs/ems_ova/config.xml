@@ -99,25 +99,25 @@ exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
 
 ####################################################################################################
 # Explanation:
-# 
+#
 # exec 3&gt;&amp;1 4&gt;&amp;2
-# 
+#
 # Saves file descriptors so they can be restored to whatever they were before redirection or used
 # themselves to output to whatever they were before the following redirect.
-# 
+#
 # trap &apos;exec 2&gt;&amp;4 1&gt;&amp;3&apos; 0 1 2 3
-# 
+#
 # Restore file descriptors for particular signals. Not generally necessary since they should be
 # restored when the sub-shell exits.
-# 
+#
 # exec 1&gt;log.out 2&gt;&amp;1
-# 
+#
 # Redirect stdout to file log.out then redirect stderr to stdout. Note that the order is important
 # when you want them going to the same file. stdout must be redirected before stderr is redirected
 # to stdout.
-# 
+#
 # From then on, to see output on the console (maybe), you can simply redirect to &amp;3. For example,
-# 
+#
 # echo &quot;$(date) : part 1 - start&quot; &gt;&amp;3
 # will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
 ####################################################################################################
@@ -149,16 +149,25 @@ function isSsh ()
 }
 
 echo &quot;$(date) : *****************  START  ******************&quot; &gt;&amp;3
-# check and deete old ovoc_base_for_$TAG vm`s
+
+###################################################################################################
+# Check &amp; delete old ovoc servers
+
+# check and delete old ovoc_base_for_ vm`s
 vms=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
-if [[ ! -z &quot;$vms&quot; ]]; then
+for vmid in $vms; do
     echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&amp;3
 
     for vm in $vms; do
         ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid} &gt;&amp;3
-	    ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
+        sleep 10
+        ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
+        sleep 10
     done
-fi
+done
+
+###################################################################################################
+# Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova and adjust network settings
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&amp;3
@@ -183,16 +192,16 @@ isssh=isSsh
 [[ &quot;$isup&quot; -eq 0 ]] &amp;&amp; [[ &quot;$isssh&quot; -eq 0 ]] || exit &gt;&amp;3
 
 # Change network setting
-python2.7 setIP.py $vmip &gt;&amp;3
+python2.7 EMS/VersionRelease/setIP.py $vmip &gt;&amp;3
 
 # Shutdown ovoc server
 ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown $vmid &gt;&amp;3
 
 # Wait for shutdown
-do
-    isup=isUp
-    sleep 10
-while [[ &quot;$isup&quot; -eq 0 ]]
+while (( ! isUp )); do
+    sleep 5
+done
+
 
 # Change vm network (vSwitch)
 echo &quot;sed -i &apos;s/VM\ Network/AUDC\ Network/g&apos; /vmfs/volumes/datastore1/ovoc_base_for_$TAG/ovoc_base_for_$TAG.vmx&quot; | ssh root@10.7.10.7 &gt;&amp;3
@@ -200,19 +209,21 @@ vmip=`ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddre
 vmip=&quot;10.7.10.77&quot;
 echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
 
-# Power on
+
+###################################################################################################
+# Install DVD 3 on basic vovoc server
+
+# Power on VM
 ssh root@10.7.10.7 vim-cmd vmsvc/power.on $vmid &gt;&amp;3
 
 # Wait for SSH on ovoc server
-do
-    isup=isUp
+while (( isUp )); do
     sleep 5
-while [[ &quot;$isup&quot; -eq 0 ]]
+done
 
-do
-    isssh=isSsh
+while (( isSsh )); do
     sleep 5
-while [[ &quot;$isssh&quot; -eq 0 ]]
+done
 
 sleep 30
 
@@ -220,12 +231,12 @@ sleep 30
 cd EMS/VersionRelease
 python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
 
-# clean logs before shutdown
-echo &quot;$(date) : ssh to clean log files&quot; &gt;&amp;3          
 
-
-#########################################################################
+###################################################################################################
 # Create ova from full ovoc server and upload to artifactory server
+
+# clean logs before shutdown
+echo &quot;$(date) : ssh to clean log files&quot; &gt;&amp;3
 
 # graceful shutdouwn this new VM full ovoc server
 echo &quot;$(date) : shutdown new VM&quot; &gt;&amp;3
