@@ -186,8 +186,6 @@ while (( isSsh )); do
     sleep 5
 done
 
-sleep 30
-
 # find new vm id
 vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
 echo &quot;$(date) : vm id is $vmid&quot; &gt;&amp;3
