@@ -201,7 +201,7 @@ if %size% LSS %maxbytesize% (&#xd;
 cd ..\..\..&#xd;
 WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
 &#xd;
-set MAIN_GIT_BRANCH=7.2.200&#xd;
+set MAIN_GIT_BRANCH=%GIT_BRANCH:~0,-1%0&#xd;
 &#xd;
 net use y: /DELETE&#xd;
 net use y: &quot;\\netapp1\cm\CompilationResults\%MAIN_GIT_BRANCH% Release&quot;&#xd;
