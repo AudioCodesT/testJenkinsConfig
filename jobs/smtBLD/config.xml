@@ -103,8 +103,8 @@ if [[ &quot;X$PARAM_TAG&quot; -eq &quot;X&quot; ]]; then
     MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
     POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-    SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
     OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
+    SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
     NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
     VERSION=$MAJOR.$MINOR.$POINT
@@ -124,17 +124,6 @@ if [[ &quot;X$PARAM_TAG&quot; -eq &quot;X&quot; ]]; then
     
     EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
     GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
-    
-    echo NEWBUILD=${NEWBUILD} &gt; release.prop
-    echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
-    echo GERRIT_BRANCH=${BRANCH} &gt;&gt; release.prop
-    echo VERSION=${VERSION} &gt;&gt; release.prop
-    echo RN=${RN} &gt;&gt; release.prop
-    echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.prop
-    echo EMAIL=${EMAIL} &gt;&gt; release.prop
-    echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
-    echo DATE=${DATE} &gt;&gt; release.prop
-    echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
 else
     ## Only build given tag and publish to Artifactory
     $OLDTAG=${PARAM_TAG}
@@ -142,25 +131,25 @@ else
     MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
     POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-    SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
     OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
+    SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
     NEWBUILD=${OLDBUILD}   ## We re-build a tagged build, so we do not want to advance the build number
     NEWTAG=${PARAM_TAG}
     VERSION=${MAJOR}.${MINOR}.${POINT}
     
     sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
-    
-    echo NEWBUILD=${NEWBUILD} &gt; release.prop
-    echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
-    echo GERRIT_BRANCH=${BRANCH} &gt;&gt; release.prop
-    echo VERSION=${VERSION} &gt;&gt; release.prop
-    echo RN=${RN} &gt;&gt; release.prop
-    echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.prop
-    echo EMAIL=${EMAIL} &gt;&gt; release.prop
-    echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
-    echo DATE=${DATE} &gt;&gt; release.prop
-    echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
-fi</command>
+fi
+
+echo NEWBUILD=${NEWBUILD} &gt; release.prop
+echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
+echo GERRIT_BRANCH=${BRANCH} &gt;&gt; release.prop
+echo VERSION=${VERSION} &gt;&gt; release.prop
+echo RN=${RN} &gt;&gt; release.prop
+echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.prop
+echo EMAIL=${EMAIL} &gt;&gt; release.prop
+echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
+echo DATE=${DATE} &gt;&gt; release.prop
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
