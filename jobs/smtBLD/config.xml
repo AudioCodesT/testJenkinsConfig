@@ -28,7 +28,7 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>GIT_TAG</name>
+          <name>PARAM_TAG</name>
           <description>GiT tag to fetch</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -86,7 +86,8 @@
 
 cd $WORKSPACE
 #
-if [[ &quot;T$PARAM_TAG&quot; -eq &quot;T&quot; ]]; then
+if [[ &quot;X$PARAM_TAG&quot; -eq &quot;X&quot; ]]; then
+    # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
     BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
     OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH`
@@ -136,7 +137,7 @@ if [[ &quot;T$PARAM_TAG&quot; -eq &quot;T&quot; ]]; then
     echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
 else
     ## Only build given tag and publish to Artifactory
-    $OLD_TAG=${PARAM_TAG}
+    $OLDTAG=${PARAM_TAG}
     
     MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
