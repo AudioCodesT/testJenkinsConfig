@@ -87,8 +87,10 @@ To build by a tag name enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TA
 
 cd $WORKSPACE
 #
+[[ &quot;$WhatToBuild&quot; =~ &quot;Development&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
+echo $WTB
 
-if [[ &quot;$WhatToBuild&quot; =~ &quot;Development&quot; ]]; then
+if [[ &quot;$WTB&quot; -eq &quot;ByBranch&quot; ]]; then
     # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
     BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
