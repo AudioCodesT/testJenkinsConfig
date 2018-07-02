@@ -28,9 +28,10 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>PARAM_TAG</name>
-          <description>GiT tag to fetch</description>
-          <defaultValue>HEAD</defaultValue>
+          <name>WhatToBuild</name>
+          <description>Default build is Development branch.
+To build by a tag name enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TAG_NAME&gt; is like 3.2.1.1234T</description>
+          <defaultValue>*/Development</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -55,7 +56,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/tags/${PARAM_TAG}</name>
+        <name>${WhatToBuild}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -86,7 +87,8 @@
 
 cd $WORKSPACE
 #
-if [[ &quot;$PARAM_TAG&quot; -eq &quot;HEAD&quot; ]]; then
+
+if [[ &quot;$WhatToBuild&quot; =~ &quot;Development&quot; ]]; then
     # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
     BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
@@ -109,7 +111,7 @@ if [[ &quot;$PARAM_TAG&quot; -eq &quot;HEAD&quot; ]]; then
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
     VERSION=$MAJOR.$MINOR.$POINT
     
-    sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
+    -i &quot;s/^Sm sedartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
     
     # Need these details for the UpdateVI job
     AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
