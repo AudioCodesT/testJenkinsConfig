@@ -30,7 +30,7 @@
         <hudson.model.StringParameterDefinition>
           <name>PARAM_TAG</name>
           <description>GiT tag to fetch</description>
-          <defaultValue></defaultValue>
+          <defaultValue>HEAD</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -55,7 +55,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/Development</name>
+        <name>refs/tags/${PARAM_TAG}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -86,7 +86,7 @@
 
 cd $WORKSPACE
 #
-if [[ &quot;X$PARAM_TAG&quot; -eq &quot;X&quot; ]]; then
+if [[ &quot;$PARAM_TAG&quot; -eq &quot;HEAD&quot; ]]; then
     # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
     BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
