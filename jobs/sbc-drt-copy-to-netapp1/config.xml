@@ -244,7 +244,7 @@ CHANGES=${CHANGES}</properties>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
-        <timeoutMinutes>30</timeoutMinutes>
+        <timeoutMinutes>15</timeoutMinutes>
       </strategy>
       <operationList>
         <hudson.plugins.build__timeout.operations.AbortAndRestartOperation>
