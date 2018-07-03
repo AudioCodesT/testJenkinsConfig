@@ -111,20 +111,8 @@ fi
 
 if [ `find $Target -maxdepth 1 -size +20000 -print | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
-# Check the checksum before executing the DRT itself
-for f in $Target/*.cmp; do
-  checkSum1=$(curl -ks -u $User -X GET \
-            $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
-            grep md5 | head -1 | cut -d\&quot; -f4)
-  checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
-  if [ $checkSum1 != $checkSum2 ]; then
-    echo Abort - the CheckSum of $(basename $f) is differ, copy again
-    rm -f $f
-    exit 1
-  fi
-done
-
-# check if sbc-drt-request job is in the queue or already running
+# Check if sbc-drt-request job is in the queue or already running
+# to avoid more than one sbc-drt-request execution 
 for job in \
   $(curl -ks https://test-jenkins/queue/api/json | \
   sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt-request); do
@@ -134,6 +122,7 @@ for job in \
   fi
 done
 
+# sbc-drt-request is running Already?
 for job in \
   $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
@@ -141,6 +130,19 @@ oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
   if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
     echo &quot;DRT was executed already, job $job&quot;; 
     exit 2
+  fi
+done
+
+# Check the checksum of the 5 cmp files before executing the DRT itself
+for f in $Target/*.cmp; do
+  checkSum1=$(curl -ks -u $User -X GET \
+            $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
+            grep md5 | head -1 | cut -d\&quot; -f4)
+  checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
+  if [ $checkSum1 != $checkSum2 ]; then
+    echo Abort - the CheckSum of $(basename $f) is differ, copy again
+    rm -f $f
+    exit 1
   fi
 done
 
@@ -240,6 +242,16 @@ CHANGES=${CHANGES}</properties>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
+        <timeoutMinutes>30</timeoutMinutes>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.AbortAndRestartOperation>
+          <maxRestarts>1</maxRestarts>
+        </hudson.plugins.build__timeout.operations.AbortAndRestartOperation>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <EnvInjectBuildWrapper plugin="envinject@2.1.5">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
