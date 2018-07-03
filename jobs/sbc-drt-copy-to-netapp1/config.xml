@@ -85,14 +85,17 @@ DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
 REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
 
+# Create the folder in netapp1, in case it wasn&apos;t done already
 if ! [ -d &quot;$Target&quot; ]; then
   mkdir &quot;$Target&quot;
 fi
 
+# in case of delay when the cmp files was ready and was successfully copied to the Artifactory
 if ! curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep -q $BOARD; then
   sleep 30
 fi
 
+# Go over all cmp files in the Artifactory and copy them to netapp1 ($Target)
 curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep uri | grep cmp | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $REFTARGET.list
 if [ -s &quot;$REFTARGET.list&quot; ]; then
    while read -r FileName
@@ -109,6 +112,7 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
    done &lt; &quot;$REFTARGET.list&quot;
 fi
 
+# Don&apos;t execute the next job in case you don&apos;t found 5 files in size of 20Mb at least
 if [ `find $Target -maxdepth 1 -size +20000 -print | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
 # Check if sbc-drt-request job is in the queue or already running
