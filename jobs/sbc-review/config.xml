@@ -311,7 +311,7 @@ $change,$ps
                     <results>
                       <string>FAILURE</string>
                     </results>
-                    <role>BOTH</role>
+                    <role>MASTER</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>#!/usr/bin/env ruby
