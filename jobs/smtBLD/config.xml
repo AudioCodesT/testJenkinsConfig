@@ -113,7 +113,7 @@ if [[ &quot;$WTB&quot; -eq &quot;ByBranch&quot; ]]; then
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
     VERSION=$MAJOR.$MINOR.$POINT
     
-    -i &quot;s/^Sm sedartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
+    sed -i &quot;s/^Sm sedartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
     
     # Need these details for the UpdateVI job
     AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
