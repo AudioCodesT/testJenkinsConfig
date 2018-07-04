@@ -38,6 +38,7 @@
         <string>ActionBase Users</string>
         <string># All Friday</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
         <string>Sp365-rdnetworking-modify</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -55,13 +56,14 @@
         <string>Vopp</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
+        <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1525008232531</timestamp>
+      <timestamp>1530703539592</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Hagay.Halili@audiocodes.com</emailAddress>
