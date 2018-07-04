@@ -289,14 +289,6 @@ $change,$ps
               <config>
                 <scriptFiles/>
                 <groovyScripts/>
-                <buildSteps/>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
                 <buildSteps>
                   <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
                     <results>
