@@ -138,8 +138,8 @@ else
     POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
     OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
     SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
-    NEWBUILD=${OLDBUILD}   ## We re-build a tagged build, so we do not want to advance the build number
-    NEWTAG=${PARAM_TAG}
+    NEWBUILD=${OLDBUILD}   ## We re-build a tagged build,
+    NEWTAG=${PARAM_TAG}    ## so we do not want to advance the build number
     VERSION=${MAJOR}.${MINOR}.${POINT}
     
     sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
