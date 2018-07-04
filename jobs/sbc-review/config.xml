@@ -12,8 +12,8 @@
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>14</daysToKeep>
-        <numToKeep>40</numToKeep>
+        <daysToKeep>7</daysToKeep>
+        <numToKeep>20</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
@@ -28,13 +28,25 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>NEWTAG</name>
+          <name>GERRIT_REFSPEC</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>GERRIT_BRANCH</name>
+          <name>EXITCODE</name>
+          <description></description>
+          <defaultValue>0</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_CHANGE_NUMBER</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_PATCHSET_NUMBER</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -53,7 +65,6 @@
         <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
       </matrixOptions>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -77,18 +88,24 @@ PATH=/bin:$PATH</propertiesContent>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <refspec>$GERRIT_REFSPEC +refs/heads/*:refs/remotes/origin/*</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>$NEWTAG</name>
+        <name>$GERRIT_REFSPEC</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
+      <hudson.plugins.git.extensions.impl.BuildChooserSetting>
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+          <separator>#</separator>
+        </buildChooser>
+      </hudson.plugins.git.extensions.impl.BuildChooserSetting>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
@@ -103,7 +120,7 @@ PATH=/bin:$PATH</propertiesContent>
     <org.jenkinsci.plugins.yamlaxis.YamlAxis plugin="yaml-axis@0.2.0">
       <name>BOARD</name>
       <values>
-        <string>boards2compile.yml</string>
+        <string>boards2review.yml</string>
       </values>
     </org.jenkinsci.plugins.yamlaxis.YamlAxis>
     <hudson.matrix.LabelAxis>
@@ -128,49 +145,59 @@ BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
 
 #rm -f $output_folder/*external_version_data.h
 
-BOARDFINALNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
-BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
+sudo chmod -R 755 .
+sudo chown -R centos:centos .
 
+rm -f build-error.log
 cd TrunkPackRam
-FindTAG=`./MakeBrdVersion.sh`
-head -12 Bsps/Common/Include/BrdVersion.h | tail -3
-if [ $FindTAG != $NEWTAG ]; then
-  echo Must be the same TAG name... abort
-  echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
-  exit 1;
-fi
 
-echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
-echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; ../generated_sbc_version.properties
-echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
+# Find if this build should use another Opensorce Images with the same Commit change-ID
+chmod 600 ../id_rsa_gerrit
+change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ls -l ../id_rsa_gerrit
+chmod 600 ../id_rsa_gerrit
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
+     grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
 
-if curl -ks -u $User https://$artifactory_host/api/storage/sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/${BOARDFINALNAME}_F$NEWTAG.cmp | grep -q uri; then
-	echo ${NEWTAG}/${BOARDFINALNAME}_F$NEWTAG.cmp exist already!... Abort without error;
-    # EXITFLAG=1 to exit from the next execute shell
-    echo EXITFLAG=1 &gt;&gt; ../generated_sbc_version.properties
-    exit 0
-fi
+while IFS= read -r line; do
+   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
+   elif echo $line | grep -q revision; then
+     revision=$(echo $line | cut -d: -f2)
+     git ls-files --stage ../$path
+     git update-index --cacheinfo 160000 $revision $path
+     git ls-files --stage ../$path
+   fi
+done &lt; othersCommits.txt
 
-EMAIL=`git log -n1 --pretty=format:&quot;%ce&quot;`
-echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
 
 if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
-  ./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release
+  ./GetImages.sh $BOARDNAME $artifactory_host $User
   if [ $? -eq 1 ]; then
-    echo EXITFLAG=2 &gt;&gt; ../generated_sbc_version.properties
+    echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
     exit 2; 
   fi
 fi
 
+chmod +x MakeBrdVersion.sh
+NEWTAG=`./MakeBrdVersion.sh`
+head -12 Bsps/Common/Include/BrdVersion.h | tail -3
+
 cd ..
-sudo chmod -R 755 .
-sudo chown -R centos:centos .
+echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
+BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
+BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
+echo BOARD=${BOARD} &gt;&gt; generated_sbc_version.properties
+echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
+#TARGET=`echo $GERRIT_REFSPEC | sed &apos;s/[^0-9]*//g&apos;`
+TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+echo TARGET=${TARGET} &gt;&gt; generated_sbc_version.properties
+echo EXITFLAG=0 &gt;&gt; generated_sbc_version.properties
 
-BOARDNAME=${BOARDFINALNAME}
-echo EXITFLAG=0 &gt;&gt; ../generated_sbc_version.properties
-
+BOARD=`echo ${BOARD} | sed -rn s/--user=no//p`
+BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
@@ -181,65 +208,23 @@ echo EXITFLAG=0 &gt;&gt; ../generated_sbc_version.properties
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-if [ ! -d &quot;$WORKSPACE/CompilationResults&quot; ]; then
-  rm -rf $WORKSPACE/CompilationResults
-fi
 
 if [ &quot;$EXITFLAG&quot; == 1 ]; then exit 0; fi
 if [ &quot;$EXITFLAG&quot; == 2 ]; then exit 2; fi
 
 cd TrunkPackRam
-./buildAll.sh ${BOARD} --fast=yes --user=no
+( ./buildAll.sh ${BOARD} --fast=yes --user=no --custom-version=-d${BUILD_NUMBER} 2&gt;&amp;1 1&gt;&amp;3 | tee ../build-error.log; ) 3&gt;&amp;1 1&gt;&amp;2
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
-rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
-
-find ../../Media/m5eEngine/MPCBin  ../../VoiceEngines/MPCBin -name &quot;DL*.c&quot; | ( xargs grep Descriptor.VersionNumber || true ) &gt; ${BOARDNAME}_DspVersions.txt
-
-zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map ${BOARDNAME}_DspVersions.txt
-zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
-#zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
-
+mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
+#rename ram${BOARDNAME} ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER} ram${BOARDNAME}.*
+#zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map
+#zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-          <email>
-            <recipientList>$EMAIL, yossim</recipientList>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>TAG: $NEWTAG
-Branch: $GERRIT_BRANCH
-$PROJECT_DEFAULT_CONTENT
-</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-      </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
-      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>false</attachBuildLog>
-      <compressBuildLog>false</compressBuildLog>
-      <replyTo>$DEFAULT_REPLYTO</replyTo>
-      <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
-      <matrixTriggerMode>ONLY_CONFIGURATIONS</matrixTriggerMode>
-    </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>Need to wait for dependent artifact</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
@@ -248,30 +233,20 @@ $PROJECT_DEFAULT_CONTENT
       <regexpForMatrixStrategy>TestChildrenRetriggerMatched</regexpForMatrixStrategy>
       <noChildStrategy>DontRun</noChildStrategy>
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
-        <delay>3600</delay>
+        <delay>600</delay>
       </delay>
       <maxSchedule>3</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
-    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
-      <configs>
-        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-          <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>TAGNAME=${NEWTAG}
-GERRIT_BRANCH=${GERRIT_BRANCH}
-REPOSITORY=sbc-release</properties>
-              <textParamValueOnNewLine>false</textParamValueOnNewLine>
-            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-          </configs>
-          <projects>sbc-copy-to-netapp1</projects>
-          <condition>ALWAYS</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <triggerFromChildProjects>false</triggerFromChildProjects>
-        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-      </configs>
-    </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
       <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
@@ -285,7 +260,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect>sbc-release</keyFromSelect>
+          <keyFromSelect>sbc-review</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
@@ -320,11 +295,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
-${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
-${WORKSPACE}/TrunkPackRam/Networking/ApplicationsAndProtocols/CLI/adsl_vrx_ext_version_data.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
-${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
-</deployPattern>
+      <deployPattern>${WORKSPACE}/CompilationResults/ram$BOARDNAME/TPApp/MPCBin/${BOARDNAME}.cmp=&gt;com/ac/sbc/Firmware/${TARGET}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
@@ -362,7 +333,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWT
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} ${NEWTAG}</template>
+      <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
