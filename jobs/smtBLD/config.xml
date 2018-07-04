@@ -87,7 +87,7 @@ To build by a tag name enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TA
 
 cd $WORKSPACE
 #
-[[ &quot;$WhatToBuild&quot; =~ &quot;Development&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
+[[ &quot;$WhatToBuild&quot; =~ &quot;Development&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
 echo $WTB
 
 if [[ &quot;$WTB&quot; -eq &quot;ByBranch&quot; ]]; then
@@ -130,6 +130,7 @@ if [[ &quot;$WTB&quot; -eq &quot;ByBranch&quot; ]]; then
     GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
 else
     ## Only build given tag and publish to Artifactory
+    $PARAM_TAG=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
     $OLDTAG=${PARAM_TAG}
     
     MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
