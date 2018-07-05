@@ -145,7 +145,15 @@ else
     sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
 fi
 
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
 echo $OLDTAG
+echo $NEWBUILD
+echo $NEWTAG
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
 
 echo NEWBUILD=${NEWBUILD} &gt; release.prop
 echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
