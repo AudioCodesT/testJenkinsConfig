@@ -301,7 +301,7 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
                 <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
 	qaServerIP=10.3.180.50
     cd ${WORKSPACE}/EMS/VersionRelease
-    python2.7 iso2qa.py $NEW_TAG $qaServerIP
+    python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.6
 fi</command>
               </hudson.tasks.Shell>
             </buildSteps>
