@@ -247,7 +247,7 @@ mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
                     <results>
                       <string>SUCCESS</string>
                     </results>
-                    <role>MASTER</role>
+                    <role>SLAVE</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>
@@ -277,16 +277,15 @@ if [[ &quot;$(echo $currentPS | awk &apos;{print $1}&apos;)&quot; -gt &quot;$ps&
 fi
 
 score=$(echo $currentPS | awk &apos;{print $2}&apos;)
-grade=&quot;&quot;
-if [ &quot;$score&quot; == &quot;&quot; ]; then 
-  grade=&quot;--label Verified=1&quot;
-  echo give grade verified +1
+
+if [ &quot;$score&quot; != &quot;&quot; ]; then
+  exit 0
 fi
 
 echo Send OK message to Gerrit - $change,$ps
 ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
 --message &quot;&apos;Built successfully - $BUILD_URL&apos;&quot; \
---notify NONE $grade \
+--notify NONE --label Verified=1 \
 --tag Jenkins \
 $change,$ps
 </command>
@@ -306,7 +305,7 @@ $change,$ps
                     <results>
                       <string>FAILURE</string>
                     </results>
-                    <role>MASTER</role>
+                    <role>SLAVE</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>#!/usr/bin/env ruby
@@ -353,8 +352,6 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
           <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-          <aggregationCondition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
-          <aggregationRunner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
