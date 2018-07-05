@@ -302,7 +302,8 @@ CHANGES=${CHANGES}</properties>
 
   change=`echo $rep | cut -d/ -f1`
   ps=`echo $rep | cut -d/ -f2`
-
+  chmod 600 id_rsa_gerrit
+  
   echo Send OK message to Gerrit - $change,$ps
   ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
   --message &quot;&apos;Compilation Failed - $BUILD_URL&apos;&quot; \
