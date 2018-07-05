@@ -130,8 +130,8 @@ if [[ &quot;$WTB&quot; -eq &quot;ByBranch&quot; ]]; then
     GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
 else
     ## Only build given tag and publish to Artifactory
-    $PARAM_TAG=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
-    $OLDTAG=${PARAM_TAG}
+    PARAM_TAG=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
+    OLDTAG=${PARAM_TAG}
     
     MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
