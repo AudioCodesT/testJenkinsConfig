@@ -145,6 +145,12 @@ BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
 
 #rm -f $output_folder/*external_version_data.h
 
+# Check if the image exist already in the Artifactory - if exist, exit without error
+if curl -ks https://$artifactory_host/api/storage/sbc-review/com/ac/sbc/Firmware/${TARGET} | grep -q $BOARDNAME; then
+  echo ${GERRIT_BRANCH}/$TARGET/$SHORTAUTOPRD exist already... Abort without error;
+  exit 0
+fi
+
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
@@ -358,21 +364,6 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
           <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-          <aggregationCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
-            <worstResult>
-              <name>FAILURE</name>
-              <ordinal>2</ordinal>
-              <color>RED</color>
-              <completeBuild>true</completeBuild>
-            </worstResult>
-            <bestResult>
-              <name>SUCCESS</name>
-              <ordinal>0</ordinal>
-              <color>BLUE</color>
-              <completeBuild>true</completeBuild>
-            </bestResult>
-          </aggregationCondition>
-          <aggregationRunner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
