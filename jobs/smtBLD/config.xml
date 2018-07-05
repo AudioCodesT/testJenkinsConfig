@@ -92,7 +92,7 @@ echo &quot;**************************************************************&quot;
 echo &quot;Building $WTB&quot;
 echo &quot;**************************************************************&quot;
 
-if [[ &quot;$WTB&quot; -eq &quot;ByBranch&quot; ]]; then
+if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
     BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
