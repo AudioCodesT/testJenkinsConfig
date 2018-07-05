@@ -142,12 +142,16 @@ User=&quot;$artifactory_user:$artifactory_password&quot;
 
 # find the board that need to be compiled
 BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
+#TARGET=`echo $GERRIT_REFSPEC | sed &apos;s/[^0-9]*//g&apos;`
+TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+echo TARGET=${TARGET} &gt; generated_sbc_version.properties
 
 #rm -f $output_folder/*external_version_data.h
 
 # Check if the image exist already in the Artifactory - if exist, exit without error
 if curl -ks https://$artifactory_host/api/storage/sbc-review/com/ac/sbc/Firmware/${TARGET} | grep -q $BOARDNAME; then
   echo ${GERRIT_BRANCH}/$TARGET/$SHORTAUTOPRD exist already... Abort without error;
+  echo EXITFLAG=1 &gt;&gt; generated_sbc_version.properties
   exit 0
 fi
 
@@ -182,7 +186,7 @@ if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   chmod +x GetImages.sh
   ./GetImages.sh $BOARDNAME $artifactory_host $User
   if [ $? -eq 1 ]; then
-    echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
+    echo EXITFLAG=2 &gt;&gt; ../generated_sbc_version.properties
     exit 2; 
   fi
 fi
@@ -192,14 +196,12 @@ NEWTAG=`./MakeBrdVersion.sh`
 head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
 cd ..
-echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
+echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 echo BOARD=${BOARD} &gt;&gt; generated_sbc_version.properties
 echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
-#TARGET=`echo $GERRIT_REFSPEC | sed &apos;s/[^0-9]*//g&apos;`
-TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-echo TARGET=${TARGET} &gt;&gt; generated_sbc_version.properties
+
 echo EXITFLAG=0 &gt;&gt; generated_sbc_version.properties
 
 BOARD=`echo ${BOARD} | sed -rn s/--user=no//p`
