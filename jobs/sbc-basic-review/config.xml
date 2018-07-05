@@ -256,7 +256,7 @@ if [[ &quot;$(echo $currentPS | awk &apos;{print $1}&apos;)&quot; -gt &quot;$ps&
     if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
     else
       echo Check PS $checkPS if big from $ps and the PS kind: $value;
-      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; &quot;$value&quot; == &quot;REWORK&quot; ]]; then
+      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; ! &quot;$value&quot; =~ NO_.*CHANGE ]]; then
         RunPhases=0
     fi; fi
   done &lt; $change.txt
