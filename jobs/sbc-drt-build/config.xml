@@ -147,9 +147,9 @@ head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
 echo BOARDNAME=${BOARDNAME} &gt; ../generated_sbc_version.properties
 
-if [[ $GERRIT_BRANCH =~ &quot;collab/&quot; ]]; then
-  GERRIT_BRANCH=`git branch -r --contains $(git describe --tag --abbrev=0) | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-fi
+#if [[ $GERRIT_BRANCH =~ &quot;collab/&quot; ]]; then
+#  GERRIT_BRANCH=`git branch -r --contains $(git describe --tag --abbrev=0) | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+#fi
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
 # if the REFSPEC=&lt;Branch name&gt;
