@@ -385,23 +385,33 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
           <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.CauseCondition" plugin="run-condition@1.0">
+            <buildCause>TIMER_CAUSE</buildCause>
+            <exclusiveCause>true</exclusiveCause>
+          </condition>
+          <publisherList>
+            <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
+              <configVersion>2</configVersion>
+              <pushMerge>false</pushMerge>
+              <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
+              <forcePush>false</forcePush>
+              <tagsToPush>
+                <hudson.plugins.git.GitPublisher_-TagToPush>
+                  <targetRepoName>origin</targetRepoName>
+                  <tagName>${NEWTAG}</tagName>
+                  <tagMessage>Jenkins auto tagging</tagMessage>
+                  <createTag>true</createTag>
+                  <updateTag>true</updateTag>
+                </hudson.plugins.git.GitPublisher_-TagToPush>
+              </tagsToPush>
+            </hudson.plugins.git.GitPublisher>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
-    <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
-      <configVersion>2</configVersion>
-      <pushMerge>false</pushMerge>
-      <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
-      <forcePush>false</forcePush>
-      <tagsToPush>
-        <hudson.plugins.git.GitPublisher_-TagToPush>
-          <targetRepoName>origin</targetRepoName>
-          <tagName>${NEWTAG}</tagName>
-          <tagMessage>Jenkins auto tagging</tagMessage>
-          <createTag>true</createTag>
-          <updateTag>true</updateTag>
-        </hudson.plugins.git.GitPublisher_-TagToPush>
-      </tagsToPush>
-    </hudson.plugins.git.GitPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.20">
       <recipients>yuvaly shukyr briank</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
