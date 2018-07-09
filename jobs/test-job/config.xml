@@ -10,14 +10,6 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
-    <jenkins.model.BuildDiscarderProperty>
-      <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>7</daysToKeep>
-        <numToKeep>-1</numToKeep>
-        <artifactDaysToKeep>-1</artifactDaysToKeep>
-        <artifactNumToKeep>-1</artifactNumToKeep>
-      </strategy>
-    </jenkins.model.BuildDiscarderProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -25,6 +17,16 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -33,319 +35,31 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
-      <info>
-        <scriptContent>export PATH=$HOME/Utils:$PATH
-(
-  flock 200
-  if ! [ -d $HOME/Utils ]; then
-    git clone -c http.sslverify=false https://test-gerrit/Utils $HOME/Utils
-  else
-    git update-utils
-  fi
-) 200&gt;/tmp/update-utils
-</scriptContent>
-        <secureGroovyScript plugin="script-security@1.42">
-          <script></script>
-          <sandbox>false</sandbox>
-        </secureGroovyScript>
-        <loadFilesFromMaster>false</loadFilesFromMaster>
-      </info>
-      <on>true</on>
-      <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
-      <keepBuildVariables>true</keepBuildVariables>
-      <overrideBuildParameters>false</overrideBuildParameters>
-    </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
-    <configVersion>2</configVersion>
-    <userRemoteConfigs>
-      <hudson.plugins.git.UserRemoteConfig>
-        <refspec>$GERRIT_REFSPEC +refs/heads/*:refs/remotes/origin/*</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
-        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
-      </hudson.plugins.git.UserRemoteConfig>
-    </userRemoteConfigs>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>$GERRIT_REFSPEC</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions>
-      <hudson.plugins.git.extensions.impl.CloneOption>
-        <shallow>true</shallow>
-        <noTags>false</noTags>
-        <reference></reference>
-        <depth>30</depth>
-        <honorRefspec>false</honorRefspec>
-      </hudson.plugins.git.extensions.impl.CloneOption>
-      <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
-          <separator>#</separator>
-        </buildChooser>
-      </hudson.plugins.git.extensions.impl.BuildChooserSetting>
-    </extensions>
-  </scm>
-  <assignedNode>sbc-linux-build</assignedNode>
-  <canRoam>false</canRoam>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
-      <gerritProjects>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-          <compareType>PLAIN</compareType>
-          <pattern>TP/GWApp</pattern>
-          <branches>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>ANT</compareType>
-              <pattern>**</pattern>
-            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-          </branches>
-          <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
-        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-      </gerritProjects>
-      <dynamicGerritProjects class="empty-list"/>
-      <skipVote>
-        <onSuccessful>true</onSuccessful>
-        <onFailed>false</onFailed>
-        <onUnstable>false</onUnstable>
-        <onNotBuilt>false</onNotBuilt>
-      </skipVote>
-      <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
-      <silentStartMode>false</silentStartMode>
-      <escapeQuotes>true</escapeQuotes>
-      <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
-      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
-      <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
-      <commentTextParameterMode>PLAIN</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath>build-error.log</buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
-      <serverName>test-gerrit</serverName>
-      <triggerOnEvents>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
-          <excludeDrafts>false</excludeDrafts>
-          <excludeTrivialRebase>false</excludeTrivialRebase>
-          <excludeNoCodeChange>true</excludeNoCodeChange>
-        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
-      </triggerOnEvents>
-      <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
-      <triggerInformationAction/>
-    </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
-  </triggers>
-  <concurrentBuild>true</concurrentBuild>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
   <builders>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
-      <buildStep class="hudson.plugins.parameterizedtrigger.TriggerBuilder" plugin="parameterized-trigger@2.35.2">
-        <configs>
-          <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-            <configs>
-              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-                <properties>GERRIT_REFSPEC=${GERRIT_REFSPEC}
-GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}
-GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}</properties>
-                <textParamValueOnNewLine>false</textParamValueOnNewLine>
-              </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            </configs>
-            <projects>sbc-basic-review</projects>
-            <condition>ALWAYS</condition>
-            <triggerWithNoParameters>false</triggerWithNoParameters>
-            <triggerFromChildProjects>false</triggerFromChildProjects>
-            <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
-          </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-        </configs>
+      <buildStep class="hudson.tasks.Shell">
+        <command>echo $GERRIT_BRANCH</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.core.NeverRun" plugin="run-condition@1.0"/>
-      <buildStep class="hudson.plugins.parameterizedtrigger.TriggerBuilder" plugin="parameterized-trigger@2.35.2">
-        <configs>
-          <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-            <configs>
-              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-                <properties>GERRIT_REFSPEC=${GERRIT_REFSPEC}
-GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}
-GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}</properties>
-                <textParamValueOnNewLine>false</textParamValueOnNewLine>
-              </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            </configs>
-            <projects>sbc-review</projects>
-            <condition>ALWAYS</condition>
-            <triggerWithNoParameters>false</triggerWithNoParameters>
-            <triggerFromChildProjects>false</triggerFromChildProjects>
-            <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
-          </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-        </configs>
+      <buildStep class="hudson.tasks.Shell">
+        <command>echo $GERRIT_BRANCH</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <hudson.tasks.Shell>
-      <command>#!/bin/sh -x
-
-date
-
-change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
-ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
-chmod 600 id_rsa_gerrit
-echo Calibrate Verified - $change,$ps
-ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
---notify NONE --label Verified=0 \
-$change,$ps
-
-export PATH=$HOME/Utils:$PATH
-rm -f build-error.log
-git gwinit
-scl enable devtoolset-4 &apos;git verify-gwapp&apos;
-res=$?
-cat build-error.log
-exit $res</command>
-    </hudson.tasks.Shell>
   </builders>
-  <publishers>
-    <hudson.plugins.warnings.WarningsPublisher plugin="warnings@4.66">
-      <healthy></healthy>
-      <unHealthy></unHealthy>
-      <thresholdLimit>low</thresholdLimit>
-      <pluginName>[WARNINGS] </pluginName>
-      <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
-      <usePreviousBuildAsReference>false</usePreviousBuildAsReference>
-      <useStableBuildAsReference>false</useStableBuildAsReference>
-      <useDeltaValues>false</useDeltaValues>
-      <thresholds plugin="analysis-core@1.95">
-        <unstableTotalAll></unstableTotalAll>
-        <unstableTotalHigh></unstableTotalHigh>
-        <unstableTotalNormal></unstableTotalNormal>
-        <unstableTotalLow></unstableTotalLow>
-        <unstableNewAll></unstableNewAll>
-        <unstableNewHigh></unstableNewHigh>
-        <unstableNewNormal></unstableNewNormal>
-        <unstableNewLow></unstableNewLow>
-        <failedTotalAll></failedTotalAll>
-        <failedTotalHigh></failedTotalHigh>
-        <failedTotalNormal></failedTotalNormal>
-        <failedTotalLow></failedTotalLow>
-        <failedNewAll></failedNewAll>
-        <failedNewHigh></failedNewHigh>
-        <failedNewNormal></failedNewNormal>
-        <failedNewLow></failedNewLow>
-      </thresholds>
-      <shouldDetectModules>false</shouldDetectModules>
-      <dontComputeNew>true</dontComputeNew>
-      <doNotResolveRelativePaths>true</doNotResolveRelativePaths>
-      <includePattern></includePattern>
-      <excludePattern></excludePattern>
-      <messagesPattern></messagesPattern>
-      <categoriesPattern></categoriesPattern>
-      <parserConfigurations/>
-      <consoleParsers>
-        <hudson.plugins.warnings.ConsoleParser>
-          <parserName>GNU C Compiler 4 (gcc)</parserName>
-        </hudson.plugins.warnings.ConsoleParser>
-      </consoleParsers>
-    </hudson.plugins.warnings.WarningsPublisher>
-    <hudson.plugins.analysis.collector.AnalysisPublisher plugin="analysis-collector@1.52">
-      <healthy></healthy>
-      <unHealthy></unHealthy>
-      <thresholdLimit>low</thresholdLimit>
-      <pluginName>[ANALYSIS-COLLECTOR] </pluginName>
-      <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
-      <usePreviousBuildAsReference>false</usePreviousBuildAsReference>
-      <useStableBuildAsReference>false</useStableBuildAsReference>
-      <useDeltaValues>false</useDeltaValues>
-      <thresholds plugin="analysis-core@1.95">
-        <unstableTotalAll></unstableTotalAll>
-        <unstableTotalHigh></unstableTotalHigh>
-        <unstableTotalNormal></unstableTotalNormal>
-        <unstableTotalLow></unstableTotalLow>
-        <unstableNewAll></unstableNewAll>
-        <unstableNewHigh></unstableNewHigh>
-        <unstableNewNormal></unstableNewNormal>
-        <unstableNewLow></unstableNewLow>
-        <failedTotalAll></failedTotalAll>
-        <failedTotalHigh></failedTotalHigh>
-        <failedTotalNormal></failedTotalNormal>
-        <failedTotalLow></failedTotalLow>
-        <failedNewAll></failedNewAll>
-        <failedNewHigh></failedNewHigh>
-        <failedNewNormal></failedNewNormal>
-        <failedNewLow></failedNewLow>
-      </thresholds>
-      <shouldDetectModules>false</shouldDetectModules>
-      <dontComputeNew>true</dontComputeNew>
-      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
-      <isCheckStyleDeactivated>false</isCheckStyleDeactivated>
-      <isDryDeactivated>false</isDryDeactivated>
-      <isFindBugsDeactivated>false</isFindBugsDeactivated>
-      <isPmdDeactivated>false</isPmdDeactivated>
-      <isOpenTasksDeactivated>false</isOpenTasksDeactivated>
-      <isWarningsDeactivated>false</isWarningsDeactivated>
-      <isAndroidLintDeactivated>false</isAndroidLintDeactivated>
-    </hudson.plugins.analysis.collector.AnalysisPublisher>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>jest.log</artifacts>
-      <allowEmptyArchive>true</allowEmptyArchive>
-      <onlyIfSuccessful>false</onlyIfSuccessful>
-      <fingerprint>false</fingerprint>
-      <defaultExcludes>true</defaultExcludes>
-      <caseSensitive>true</caseSensitive>
-    </hudson.tasks.ArtifactArchiver>
-    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.3.1">
-      <script plugin="script-security@1.42">
-        <script>def time_pattern = ~/(?m)^--- (\d+:\d+:\d+:.*)$/
-def m = manager.build.logFile.text =~ time_pattern
-if (m.count &gt; 0) {
-    summary = manager.createSummary(&quot;clock.png&quot;)
-    summary.appendText(&quot;Execution times:&lt;ul&gt;&quot;, false)
-    m.each {
-        summary.appendText(&quot;&lt;li&gt;${it[1]}&lt;/li&gt;&quot;, false)
-    }
-    summary.appendText(&quot;&lt;/ul&gt;&quot;, false)
-}
-</script>
-        <sandbox>false</sandbox>
-      </script>
-      <behavior>0</behavior>
-      <runForMatrixParent>false</runForMatrixParent>
-    </org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder>
-  </publishers>
-  <buildWrappers>
-    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
-      <includes>id_rsa_gerrit</includes>
-      <excludes></excludes>
-      <flatten>false</flatten>
-      <includeAntExcludes>false</includeAntExcludes>
-      <hudsonHomeRelative>false</hudsonHomeRelative>
-      <relativeTo>userContent</relativeTo>
-    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper plugin="ssh-agent@1.15">
-      <credentialIds>
-        <string>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</string>
-      </credentialIds>
-      <ignoreMissing>false</ignoreMissing>
-    </com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}: ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
-      <runAtStart>true</runAtStart>
-      <runAtEnd>false</runAtEnd>
-    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
-  </buildWrappers>
+  <publishers/>
+  <buildWrappers/>
 </project>
