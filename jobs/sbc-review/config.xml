@@ -247,7 +247,7 @@ mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
                     <results>
                       <string>SUCCESS</string>
                     </results>
-                    <role>SLAVE</role>
+                    <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>
@@ -305,7 +305,7 @@ $change,$ps
                     <results>
                       <string>FAILURE</string>
                     </results>
-                    <role>SLAVE</role>
+                    <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>#!/usr/bin/env ruby
