@@ -132,18 +132,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Qt\qt-mingw\bin;C:\Qt\mingw\bin&#xd;
-setup.bat&#xd;
+      <command>setup.rb&#xd;
 cd ACPlugins&#xd;
-qmake&#xd;
-mingw32-make -j4&#xd;
-</command>
+build_qbs.rb</command>
     </hudson.tasks.BatchFile>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
-      <info>
-        <propertiesFilePath>generated_version.properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers/>
   <buildWrappers>
