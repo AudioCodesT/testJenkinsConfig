@@ -148,6 +148,15 @@ else
     sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
 fi
 
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
+echo &quot;Old tag : $OLDTAG&quot;
+echo &quot;New build : $NEWBUILD&quot;
+echo &quot;New tag : $NEWTAG&quot;
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
+echo &quot;**************************************************************&quot;
 
 echo NEWBUILD=${NEWBUILD} &gt; release.prop
 echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
@@ -158,15 +167,7 @@ echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.
 echo EMAIL=${EMAIL} &gt;&gt; release.prop
 echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
 echo DATE=${DATE} &gt;&gt; release.prop
-echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
-
-echo &quot;**************************************************************&quot;
-echo &quot;****************** Exported Variables ************************&quot;
-echo &quot;**************************************************************&quot;
-cat release.prop
-echo &quot;**************************************************************&quot;
-echo &quot;**************************************************************&quot;
-echo &quot;**************************************************************&quot;</command>
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
