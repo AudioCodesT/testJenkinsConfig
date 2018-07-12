@@ -113,8 +113,8 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
    done &lt; &quot;$REFTARGET.list&quot;
 fi
 
-# Don&apos;t execute the next job in case you don&apos;t found 5 files in size of 20Mb at least
-if [ `find $Target -maxdepth 1 -size +20000 -print | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
+# Don&apos;t execute the next job in case you don&apos;t found 5 files
+if [ `ls $Target | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
 # Check if sbc-drt-request job is in the queue or already running
 # to avoid more than one sbc-drt-request execution 
@@ -128,10 +128,11 @@ for job in \
 done
 
 # sbc-drt-request is running Already?
-for job in \
-  $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-  sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt-request); do
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2)
+
+for job in $(echo $allRunning | grep sbc-drt-request); do
   if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
     echo &quot;DRT was executed already, job $job&quot;; 
     exit 2
@@ -145,17 +146,19 @@ for f in $Target/*.cmp; do
             grep md5 | head -1 | cut -d\&quot; -f4)
   checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
   if [ $checkSum1 != $checkSum2 ]; then
+    # sbc-drt-build is running now?
+    for job in $(echo $allRunning | grep sbc-drt-build); do
+      if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
+        echo &quot;sbc-drt-build is running now, job $job&quot;; 
+        exit 2
+      fi
+    done
+
     echo Abort - the CheckSum of $(basename $f) is differ, copy again
     rm -f $f
     exit 1
   fi
 done
-
-#if [ -e /tmp/$REFTARGET ]; then
-#  if [ `expr $(date +%s) - $(stat --printf=&apos;%Y&apos; /tmp/$REFTARGET)` -le 300 ]; then echo &quot;DRT was executed already&quot;; exit 2; fi
-#  rm -f /tmp/$REFTARGET
-#fi
-#echo $BOARD &gt; /tmp/$REFTARGET
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
