@@ -30,7 +30,8 @@
         <hudson.model.StringParameterDefinition>
           <name>WhatToBuild</name>
           <description>Default build is Development branch.
-To build by a tag name enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TAG_NAME&gt; is like 3.2.1.1234T</description>
+To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TAG_NAME&gt; is like 3.2.1.1234T
+e.g.: refs/tags/4.2.0.9145T</description>
           <defaultValue>*/Development</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
