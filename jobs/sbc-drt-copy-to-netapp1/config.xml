@@ -148,7 +148,7 @@ for f in $Target/*.cmp; do
     # sbc-drt-build is running now?
     for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-drt-build); do
       if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-        echo &quot;sbc-drt-build is running now, job $job&quot;; 
+        echo &quot;sbc-drt-build is running now, job $job, the files are not ready yet&quot;; 
         exit 2
       fi
     done
