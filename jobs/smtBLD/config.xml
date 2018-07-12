@@ -136,11 +136,11 @@ else
     PARAM_TAG=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
     OLDTAG=${PARAM_TAG}
     
-    MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
-    MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
-    POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-    OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
-    SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
+    MAJOR=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
+    MINOR=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
+    POINT=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
+    OLDBUILD=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
+    SUFFIX=`echo ${PARAM_TAG} | gawk &apos;{print substr($0,length($0),1)}&apos;`
     NEWBUILD=${OLDBUILD}   ## We re-build a tagged build,
     NEWTAG=${PARAM_TAG}    ## so we do not want to advance the build number
     VERSION=${MAJOR}.${MINOR}.${POINT}
