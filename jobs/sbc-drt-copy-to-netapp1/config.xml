@@ -185,7 +185,8 @@ done
       </runCondition>
       <conditionalbuilders>
         <hudson.tasks.Shell>
-          <command>exit 0
+          <command>echo &quot;Send a message regarding the compilation was comlete&quot;
+exit 0
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
 -d &quot;{\&quot;message\&quot;: \&quot;DRT Compilation was complete, Sent to DRT system https://test-jenkins/view/SBC-GWApp/job/sbc-drt-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
@@ -194,7 +195,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
       </conditionalbuilders>
     </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.0"/>
       <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
         <worstResult>
           <name>ABORTED</name>
