@@ -233,7 +233,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
 echo &quot;Check if they are sbc-drt-build that running now&quot;
 for job in $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt); do
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt-build); do
    if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
     echo &quot;Not the last execution, $job is in build processing - exit without message&quot;
     exit 1
@@ -245,7 +245,7 @@ echo &quot;Check if they are sbc-drt-copy-to-netapp1 in the queue&quot;
 for job in \
   $(curl -ks https://test-jenkins/queue/api/json | \
   sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt); do
-  if echo $job | grep sbc-drt-copy-to-netapp1 | grep -q $REFSPEC; then
+  if echo $job | grep -q $REFSPEC; then
     echo &quot;Not the last execution, $job is in the queue - exit without message&quot;; 
     exit 1
   fi
