@@ -213,11 +213,20 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
 # They are sbc-drt-build that running now?
 for job in $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | sbc-drt-build); do
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt); do
    if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-    echo Not the last execution
+    echo &quot;Not the last execution, $job is in build processing - exit without message&quot;
     exit 1
    fi
+done
+
+for job in \
+  $(curl -ks https://test-jenkins/queue/api/json | \
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt); do
+  if echo $job | grep sbc-drt-copy-to-netapp1 | grep -q $REFSPEC; then
+    echo &quot;Not the last execution, $job is in the queue - exit without message&quot;; 
+    exit 1
+  fi
 done
 
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
