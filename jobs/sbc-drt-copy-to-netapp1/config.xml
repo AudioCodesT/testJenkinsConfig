@@ -308,7 +308,7 @@ CHANGES=${CHANGES}</properties>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>900</timeoutSecondsString>
+        <timeoutSecondsString>10</timeoutSecondsString>
       </strategy>
       <operationList>
         <hudson.plugins.build__timeout.operations.AbortOperation/>
