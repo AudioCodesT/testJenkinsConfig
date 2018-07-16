@@ -143,6 +143,11 @@ build_qbs.rb</command>
       <deployerDetails>
         <artifactoryName>artifactory-pro</artifactoryName>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect></keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -168,7 +173,7 @@ build_qbs.rb</command>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
+      <useSpecs>false</useSpecs>
       <uploadSpec>
         <spec></spec>
       </uploadSpec>
