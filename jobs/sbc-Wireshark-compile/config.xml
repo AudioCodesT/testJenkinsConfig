@@ -134,8 +134,33 @@
     <hudson.tasks.BatchFile>
       <command>setup.rb&#xd;
 cd ACPlugins&#xd;
-build_qbs.rb</command>
+build_qbs.rb&#xd;
+&#xd;
+rem mkdir c:\temp\%GERRIT_REFNAME%&#xd;
+rem mkdir c:\temp\%GERRIT_REFNAME%\plugins&#xd;
+rem mkdir c:\temp\%GERRIT_REFNAME%\plugins_x64&#xd;
+rem copy Release_Win32\*.dll c:\temp\%GERRIT_REFNAME%\plugins&#xd;
+rem copy Release_x64\*.dll c:\temp\%GERRIT_REFNAME%\plugins_x64&#xd;
+rem cd /d c:\temp\%GERRIT_REFNAME%&#xd;
+&#xd;
+&#xd;
+</command>
     </hudson.tasks.BatchFile>
+    <hudson.tasks.Shell>
+      <command>#!c:\cygwin\bin\bash  --login
+
+mkdir c:/temp/$GERRIT_REFNAME
+mkdir c:/temp/$GERRIT_REFNAME/plugins
+mkdir c:/temp/$GERRIT_REFNAME/plugins_x64
+cp Release_Win32/*.dll c:/temp/$GERRIT_REFNAME/plugins
+cp Release_x64/*.dll c:/temp/$GERRIT_REFNAME/plugins_x64
+cd c:/temp/$GERRIT_REFNAME
+tar -cf ../Plugin.tar plugins plugins_x64
+gzip ../Plugin.tar
+
+
+</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers/>
   <buildWrappers>
@@ -180,8 +205,8 @@ build_qbs.rb</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/*.dll=&gt;com/ac/sbc/WireShark/${COMP_VER}
-${WORKSPACE}/tpncp_dat.zip=&gt;com/ac/sbc/WireShark/TPNCP_dat/${COMP_VER}</deployPattern>
+      <deployPattern>c:/temp/Plugin.tar.gz=&gt;com/ac/sbc/WireShark/${GERRIT_REFNAME}
+</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
