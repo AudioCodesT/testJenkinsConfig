@@ -145,7 +145,7 @@ build_qbs.rb</command>
         <artifactoryUrl>https://test-artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect></keyFromSelect>
+          <keyFromSelect>sbc-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
