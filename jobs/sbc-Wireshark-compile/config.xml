@@ -136,7 +136,8 @@
 cd ACPlugins&#xd;
 rem build_qbs.rb&#xd;
 &#xd;
-net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot;&#xd;
+IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
+) ELSE ( net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot; )&#xd;
 &#xd;
 &#xd;
 &#xd;
