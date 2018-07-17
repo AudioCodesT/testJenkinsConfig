@@ -132,9 +132,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>setup.rb&#xd;
-cd ACPlugins&#xd;
-build_qbs.rb&#xd;
+      <command>rem setup.rb&#xd;
+rem cd ACPlugins&#xd;
+rem build_qbs.rb&#xd;
 &#xd;
 IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
 ) ELSE ( net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot; )&#xd;
@@ -147,9 +147,9 @@ IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
     <hudson.tasks.Shell>
       <command>#!c:\cygwin64\bin\bash  --login
 
-cd $WORKSPACE
-cp -f ACPlugins/README.VERSION.txt z:/plugins
-cp -f ACPlugins/README.VERSION.txt z:/plugins_x64
+cd $WORKSPACE/ACPlugins
+cp -f README.VERSION.txt z:/plugins
+cp -f README.VERSION.txt z:/plugins_x64
 cp -f Release_Win32/*.dll z:/plugins
 cp -f Release_x64/*.dll z:/plugins_x64
 
