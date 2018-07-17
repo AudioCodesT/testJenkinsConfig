@@ -136,31 +136,36 @@
 cd ACPlugins&#xd;
 build_qbs.rb&#xd;
 &#xd;
-rem mkdir c:\temp\%GERRIT_REFNAME%&#xd;
-rem mkdir c:\temp\%GERRIT_REFNAME%\plugins&#xd;
-rem mkdir c:\temp\%GERRIT_REFNAME%\plugins_x64&#xd;
-rem copy Release_Win32\*.dll c:\temp\%GERRIT_REFNAME%\plugins&#xd;
-rem copy Release_x64\*.dll c:\temp\%GERRIT_REFNAME%\plugins_x64&#xd;
-rem cd /d c:\temp\%GERRIT_REFNAME%&#xd;
+net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot;&#xd;
+&#xd;
+&#xd;
 &#xd;
 &#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin\bin\bash  --login
+      <command>#!c:\cygwin64\bin\bash  --login
+
+cp -f ACPlugins/README.VERSION.txt z:/plugins
+cp -f ACPlugins/README.VERSION.txt z:/plugins_x64
+cp -f Release_Win32/*.dll z:/plugins
+cp -f Release_x64/*.dll z:/plugins_x64
 
 mkdir c:/temp/$GERRIT_REFNAME
 mkdir c:/temp/$GERRIT_REFNAME/plugins
 mkdir c:/temp/$GERRIT_REFNAME/plugins_x64
-cp Release_Win32/*.dll c:/temp/$GERRIT_REFNAME/plugins
-cp Release_x64/*.dll c:/temp/$GERRIT_REFNAME/plugins_x64
+cp -f Release_Win32/*.dll c:/temp/$GERRIT_REFNAME/plugins
+cp -f Release_x64/*.dll c:/temp/$GERRIT_REFNAME/plugins_x64
 cd c:/temp/$GERRIT_REFNAME
-tar -cf ../Plugin.tar plugins plugins_x64
-gzip ../Plugin.tar
-
+zip -r Plugin.zip . &gt; /dev/null
 
 </command>
     </hudson.tasks.Shell>
+    <hudson.tasks.BatchFile>
+      <command>z:&#xd;
+del /F acWireShark.zip&#xd;
+WZZIP -rpu acWireShark.zip</command>
+    </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
   <buildWrappers>
@@ -205,7 +210,7 @@ gzip ../Plugin.tar
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>c:/temp/Plugin.tar.gz=&gt;com/ac/sbc/WireShark/${GERRIT_REFNAME}
+      <deployPattern>c:/temp/$GERRIT_REFNAME/Plugin.zip=&gt;com/ac/sbc/WireShark/${GERRIT_REFNAME}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
