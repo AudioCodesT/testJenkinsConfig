@@ -134,7 +134,7 @@
     <hudson.tasks.BatchFile>
       <command>setup.rb&#xd;
 cd ACPlugins&#xd;
-build_qbs.rb&#xd;
+rem build_qbs.rb&#xd;
 &#xd;
 net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot;&#xd;
 &#xd;
@@ -146,6 +146,7 @@ net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot;&#xd;
     <hudson.tasks.Shell>
       <command>#!c:\cygwin64\bin\bash  --login
 
+cd $WORKSPACE
 cp -f ACPlugins/README.VERSION.txt z:/plugins
 cp -f ACPlugins/README.VERSION.txt z:/plugins_x64
 cp -f Release_Win32/*.dll z:/plugins
