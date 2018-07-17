@@ -134,7 +134,7 @@
     <hudson.tasks.BatchFile>
       <command>setup.rb&#xd;
 cd ACPlugins&#xd;
-rem build_qbs.rb&#xd;
+build_qbs.rb&#xd;
 &#xd;
 IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
 ) ELSE ( net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot; )&#xd;
