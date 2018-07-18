@@ -137,7 +137,6 @@ IF NOT EXIST .git (&#xd;
 )&#xd;
 &#xd;
 git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/PSTN/PSTN_Interface&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/Transmission/TransmInterface&#xd;
 git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/Common/Include&#xd;
 git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/Common/Source&#xd;
 git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/PerformanceMonitoring/Include/PerformanceMonitoringDef.h&#xd;
