@@ -285,6 +285,7 @@ CHANGES=${CHANGES}</properties>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>echo FAILED board ${BOARDNAME}_SIP.cmp
+echo CHANGES: $CHANGES
 for rep in $CHANGES; do
 
   change=`echo $rep | cut -d/ -f1`
@@ -342,6 +343,7 @@ done
                       </EnvInjectBuilder>
                       <hudson.tasks.Shell>
                         <command>echo POST action: FAILED board ${BOARDNAME}_SIP.cmp
+echo CHANGES: $CHANGES
 for rep in $CHANGES; do
 
   change=`echo $rep | cut -d/ -f1`
@@ -381,7 +383,7 @@ done
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
         <delay>600</delay>
       </delay>
-      <maxSchedule>2</maxSchedule>
+      <maxSchedule>1</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
