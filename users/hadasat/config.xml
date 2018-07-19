@@ -37,18 +37,20 @@
     </hudson.search.UserSearchProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string># All Beer Sheva</string>
         <string>authenticated</string>
-        <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
-        <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>CI_EMS_Developers</string>
-        <string># RnD Solutions SW group</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string># All Beer Sheva</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -59,10 +61,9 @@
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
         <string># OVOC</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
+        <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1528984044948</timestamp>
+      <timestamp>1532002555485</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Hadas.Attal@audiocodes.com</emailAddress>
