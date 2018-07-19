@@ -1,0 +1,76 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <fullName>Valery Sigalov</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAwhKlImv+sz5kJU1wSMPxWVTpQ0vfeqeJ6K5ySyX7lJMBpMjlAs925jH6ZLIRw6tzWltxwBROkFCU6nzvcGMI4Sw==}</apiToken>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>All</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>false</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>authenticated</string>
+        <string>System_Software</string>
+        <string>AI-Engineering</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>WirelessUsers</string>
+        <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
+        <string># All R&amp;D</string>
+        <string># AUDC - NJ office</string>
+        <string># ACPortal - Finance_USA</string>
+        <string># R&amp;D System Software</string>
+        <string>AI-ENG</string>
+        <string># AUDC - HR - All USA</string>
+        <string>CatalogApps_Everyone</string>
+        <string>AI-QA</string>
+        <string>Password Manager Apply</string>
+        <string># All ACI - USA</string>
+        <string># R&amp;D API</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>Linuxusers</string>
+        <string># ACPortal - HR USA</string>
+        <string>AI-QMS-RO</string>
+        <string>cc_api</string>
+        <string>AudioCodes_VPN</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string># R&amp;D Next Generation CPE</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+      </roles>
+      <timestamp>1532016833309</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Valery.Sigalov@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+  </properties>
+</user>
