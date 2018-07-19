@@ -268,6 +268,11 @@ CHANGES=${CHANGES}</properties>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
         <worstResult>
@@ -374,7 +379,7 @@ done
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>(ClosedChannel|no workspace from node|Workspace is not accessible|wait for dependent artifact)</regexpForRerun>
+      <regexpForRerun>wait for dependent artifact</regexpForRerun>
       <rerunIfUnstable>false</rerunIfUnstable>
       <rerunMatrixPart>true</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
