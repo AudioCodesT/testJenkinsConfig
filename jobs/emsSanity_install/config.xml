@@ -377,11 +377,6 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuvaly</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
