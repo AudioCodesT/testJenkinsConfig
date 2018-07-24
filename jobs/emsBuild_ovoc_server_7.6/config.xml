@@ -310,51 +310,6 @@ fi</command>
         <markBuildUnstable>true</markBuildUnstable>
       </config>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
-      <publishers>
-        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.NeverRun" plugin="run-condition@1.0"/>
-          <publisherList>
-            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-              <recipientList>ovocqa@audiocodes.com, Marina.Risher@audiocodes.com, Gal.Erez, Gennady.Tsiporkin, Natan.Merfish@audiocodes.com, Kairat.Ziman@audiocodes.com, Yacov.Alster@audiocodes.com, cc:Aliya.Peretz@audiocodes.com, cc:Hadas.Attal@audiocodes.com, cc:Mark.Kemel@audiocodes.com, cc:Itamar.Suissa@audiocodes.com, cc:Liran.Badiri@audiocodes.com, cc:Leonid.Fayngold@audiocodes.com, cc:Erez.NejatHaim@audiocodes.com, cc:Kfir.Gershon@audiocodes.com, cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com, cc:Natali.Elashvili@audiocodes.com</recipientList>
-              <configuredTriggers>
-                <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-                  <email>
-                    <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-                    <body>$PROJECT_DEFAULT_CONTENT</body>
-                    <recipientProviders>
-                      <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
-                    </recipientProviders>
-                    <attachmentsPattern></attachmentsPattern>
-                    <attachBuildLog>false</attachBuildLog>
-                    <compressBuildLog>false</compressBuildLog>
-                    <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-                    <contentType>project</contentType>
-                  </email>
-                </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-              </configuredTriggers>
-              <contentType>text/html</contentType>
-              <defaultSubject>EMS new release to QA:  $NEW_TAG</defaultSubject>
-              <defaultContent>&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;EMS ovoc server release to QA&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
-&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Tag: $NEW_TAG&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
-&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Download from:&amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;$LINK&quot;&gt;$NEW_TAG&lt;/a&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
-&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;What have we added or fixed since $LAST_OFFICIAL? &amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;http://websrvqa/GITCompilationResults/EMS_ovoc_server/master/All_baseline_reports.html&quot;&gt;VIs list&lt;/a&gt;&amp;nbsp;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
-&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/h2&gt;</defaultContent>
-              <attachmentsPattern></attachmentsPattern>
-              <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
-              <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-              <attachBuildLog>false</attachBuildLog>
-              <compressBuildLog>false</compressBuildLog>
-              <replyTo>Shuky.Riechard</replyTo>
-              <saveOutput>false</saveOutput>
-              <disabled>false</disabled>
-            </hudson.plugins.emailext.ExtendedEmailPublisher>
-          </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
-          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
-        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-      </publishers>
-    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
