@@ -273,7 +273,7 @@ fi
 
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
 then
-	echo &quot;Current Branch is 7.4 or 7.4.* , Unnecessary to Create Ami for this Versions.
+	echo &quot;Current Branch is 7.4 or 7.4.* , Unnecessary to Create Ami for this Versions.&quot;
 else
 	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
     then
