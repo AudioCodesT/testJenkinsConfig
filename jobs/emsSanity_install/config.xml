@@ -216,7 +216,13 @@ if [[ &quot;$BRANCH&quot; == &quot;master&quot; ]]; then exit 0; else exit 1; fi
       <command>
 DefaultGateway=&quot;172.16.132.1&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
+if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
+then
 emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+else
+emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-04da7357110ba7ff3 --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-04da7357110ba7ff3 --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+fi
+
 #keep instance ID
 INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
 #add tag to this instans:  &quot;emsSanity&quot;
@@ -265,54 +271,54 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
-if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]
+if [[ &quot;$BRANCH&quot; != &quot;7.4&quot; &amp;&amp; &quot;$BRANCH&quot; != &quot;7.4.1000&quot; &amp;&amp; &quot;$BRANCH&quot; != &quot;7.4.2000&quot; &amp;&amp; &quot;$BRANCH&quot; != &quot;7.4.3000&quot; ]]
 then
 	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
     then
             #create a new AMI After install and keep ImageID value
-   #         AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
+            AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
             
             #check if image available
-  #          OLD_STATE=&quot;&quot;
-  #          while true; do
-  #              sleep 100
-  #              STATE=$(aws ec2 describe-images --image-ids $AmiId --output text --query &quot;Images[0].State&quot;)
-  #              if [[ $STATE != $OLD_STATE ]]; then
-  #                  echo $STATE
-  #                  OLD_STATE=$STATE
-  #              fi
-  #              if [[ $STATE == &quot;available&quot; ]]; then
-  #                  break
-  #              fi
- #           done
+            OLD_STATE=&quot;&quot;
+            while true; do
+                sleep 100
+                STATE=$(aws ec2 describe-images --image-ids $AmiId --output text --query &quot;Images[0].State&quot;)
+                if [[ $STATE != $OLD_STATE ]]; then
+                    echo $STATE
+                    OLD_STATE=$STATE
+                fi
+                if [[ $STATE == &quot;available&quot; ]]; then
+                    break
+                fi
+           done
             
             #get Snapshot id    
-#            snapshotId=$(aws ec2 describe-images --image-ids ami-55a78fbe --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
+            snapshotId=$(aws ec2 describe-images --image-ids ami-55a78fbe --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
             
             #give name to the AMI 
-#            aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+            aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
             #give name to the snapshot 
- #           aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+            aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
             
             
             qaAccount=191324562914
             devAccount=952166219867
             #give permissions to ovoc QA Account
- #           aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
+            aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
             
             #give permissions to ovoc DEV Account
             
-#            aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
+            aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
             
             #check if shared
-#           checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
-#          ImagePermissionsInArray=($checkImagePermissions)
-            #if ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
-            #then
-            #    echo &quot;**************************************************************************&quot;
-            #    echo &quot;give Permissions Failed&quot;
-            #    echo &quot;**************************************************************************&quot;
-            #fi
+           	checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
+          	ImagePermissionsInArray=($checkImagePermissions)
+            if ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
+            then
+                echo &quot;**************************************************************************&quot;
+                echo &quot;give Permissions Failed&quot;
+                echo &quot;**************************************************************************&quot;
+            fi
     fi
 fi
 
