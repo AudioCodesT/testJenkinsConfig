@@ -255,9 +255,14 @@ sleep 100
 
 
 
-#2. run python scripts: set network for sanity , install
+#2. run python scripts: set network , install
 cd EMS/VersionRelease
-python2.7 setNetwork.py $vmIP sanity
+if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
+	# in old versions we send default gateway
+	then	python2.7 setNetwork.py $vmIP $DefaultGateway
+    # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
+    else	python2.7 setNetwork.py $vmIP sanity
+fi
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
 if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]
