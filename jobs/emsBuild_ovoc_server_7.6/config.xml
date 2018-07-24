@@ -207,6 +207,7 @@ BRANCH=7.6
 </properties>
                 <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
             </configs>
             <projects>emsBuild_AMI</projects>
             <condition>ALWAYS</condition>
