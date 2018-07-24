@@ -297,7 +297,7 @@ else
            done
             
             #get Snapshot id    
-            snapshotId=$(aws ec2 describe-images --image-ids ami-55a78fbe --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
+            snapshotId=$(aws ec2 describe-images --image-ids $AmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
             
             #give name to the AMI 
             aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
