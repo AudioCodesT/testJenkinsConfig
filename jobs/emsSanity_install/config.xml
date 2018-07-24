@@ -255,9 +255,9 @@ sleep 100
 
 
 
-#2. run python scripts: set network, install
+#2. run python scripts: set network for sanity , install
 cd EMS/VersionRelease
-python2.7 setNetwork.py $vmIP $DefaultGateway
+python2.7 setNetwork.py $vmIP sanity
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
 if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]
