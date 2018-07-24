@@ -317,12 +317,12 @@ else
             #check if shared
            	checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
           	ImagePermissionsInArray=($checkImagePermissions)
-            if ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
-            then
-                echo &quot;**************************************************************************&quot;
-                echo &quot;give Permissions Failed&quot;
-                echo &quot;**************************************************************************&quot;
-            fi
+            #if [ ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
+            #then
+            #    echo &quot;**************************************************************************&quot;
+            #    echo &quot;give Permissions Failed&quot;
+            #    echo &quot;**************************************************************************&quot;
+            #fi
     fi
 fi
 
