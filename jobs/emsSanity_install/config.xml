@@ -315,8 +315,8 @@ else
             aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
             
             #check if shared
-           	checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
-          	ImagePermissionsInArray=($checkImagePermissions)
+           	#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
+          	#ImagePermissionsInArray=($checkImagePermissions)
             #if [ ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]
             #then
             #    echo &quot;**************************************************************************&quot;
