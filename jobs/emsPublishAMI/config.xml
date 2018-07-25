@@ -65,6 +65,8 @@ for destRegionName in $OTHER_REGIONS
 do
 	
     	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
+        
+        sleep 20
         #wait for The image to Create
         #OLD_STATE=&quot;&quot;
         #while true; do
