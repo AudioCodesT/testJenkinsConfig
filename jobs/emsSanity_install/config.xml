@@ -259,7 +259,12 @@ done
 echo &quot;Wait until instance is fully loaded&quot;
 sleep 100
 
-
+if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
+then
+	sanityOrAmi=ami
+else
+	sanityOrAmi=sanity
+fi
 
 #2. run python scripts: set network , install
 cd EMS/VersionRelease
@@ -267,7 +272,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 	# in old versions we send default gateway
 	then	python2.7 setNetwork.py $vmIP $DefaultGateway
     # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
-    else	python2.7 setNetwork.py $vmIP sanity
+    else	python2.7 setNetwork.py $vmIP $sanityOrAmi
 fi
 echo &quot;Finish SetNetwork Configuration&quot;
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
