@@ -64,7 +64,7 @@ aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{
 for destRegionName in $OTHER_REGIONS
 do
 	
-    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${destRegionName}&quot; --description &quot;Some Description&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
+    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${NEW_TAG}_${destRegionName}&quot; --description &quot;Some Description&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
         #wait for The image to Create
         OLD_STATE=&quot;&quot;
         while true; do
@@ -78,6 +78,12 @@ do
                 break
             fi
         done
+        #get Snapshot id    
+        snapshotId=$(aws ec2 describe-images --image-ids $newRegionAmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
+        #give name to the snapshot 
+        aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+        # add public permissions to the rest of the regions
+        aws ec2 modify-image-attribute --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
         echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; RegionsNameAndIds.txt
         echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
       	echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
