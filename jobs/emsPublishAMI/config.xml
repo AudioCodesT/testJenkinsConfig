@@ -48,7 +48,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#list of other regions
-OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
+#OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
+OTHER_REGIONS=&quot;us-west-1 us-east-1&quot;
 OTHER_REGIONS=($OTHER_REGIONS)
 #OTHER_REGIONS=$(aws ec2 describe-regions --output text --query &quot;Regions[*].RegionName&quot;)  
 currentRegion=&quot;eu-central-1&quot;
@@ -85,50 +86,8 @@ done
 
 echo &quot;Region Name &amp; Id&quot;
 cat RegionsNameAndIds.txt
-#bucketName=S3OvocAmis
-#awsAccountID=$()
-#run the instance of the new image 
-#ovocAmi=&quot;$(aws ec2 run-instances --image-id $ImageId --instance-market-options MarketType=spot --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id $ImageId --count 1 --instance-type c4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 
-#keep instance ID
-#INSTANCE_ID=&quot;$(echo &quot;${ovocAmi}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
-#INSTANCE_ID=&quot;$(aws ec2 describe-images --image-id $ImageId --output text --query Instances[*].ImageId)&quot;
-
-#Wait for the instance to up
-#echo &quot;Wait until the instance is up&quot;
-#OLD_STATE=&quot;&quot;
-#while true; do
-#    sleep 10
-#    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
-#    if [[ $STATE != $OLD_STATE ]]; then
-#        echo $STATE
-#        OLD_STATE=$STATE
-#    fi
-#    if [[ $STATE == &quot;running&quot; ]]; then
-#        break
-#    fi
-#done
-#echo &quot;Wait until instance is fully loaded&quot;
-#sleep 60
-
-
-#aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;mkdir /tmp/cert&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
-
-#create an Image with ec2-tools (run it from the new instance)
-#aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-bundle-vol -d /mnt -k tmp/Jenkins &amp; App subnets machines key pair.pem -c tmp/root/AudioCodes-CICD-Apps.pem -u $awsAccountID -r x86_64&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
-
-
-
-#upload the Image to S3 (run it from the new instance)
-
-#aws ssm send-command --document-name &quot;AWS-RunShellScript&quot; --parameters commands=[&quot;ec2-upload-bundle -b $bucketName -m /mnt/image.manifest.xml -a $s3_access_key -s $s3_secret_access_key&quot;] --targets &quot;Key=instanceids,Values=$INSTANCE_ID&quot;
-
-
-#download the image from S3 to local directory
-
-#push the file to artifactory
-    
-    </command>
+ </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
