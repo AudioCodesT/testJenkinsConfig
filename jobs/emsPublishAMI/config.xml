@@ -64,7 +64,7 @@ aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{
 for destRegionName in $OTHER_REGIONS
 do
 	
-    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${NEW_TAG}_${destRegionName}&quot; --description &quot;Some Description&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
+    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${NEW_TAG}&quot; --description &quot;Some Description&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
         #wait for The image to Create
         OLD_STATE=&quot;&quot;
         while true; do
