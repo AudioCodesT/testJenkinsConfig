@@ -31,11 +31,13 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Citrix_Allow_Visio</string>
+        <string># ClearCase R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
@@ -48,6 +50,7 @@
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -56,7 +59,7 @@
         <string>NewUser_Israel-BS</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1522319400874</timestamp>
+      <timestamp>1532528410352</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yehiel.Zohar@audiocodes.com</emailAddress>
