@@ -66,18 +66,19 @@ do
 	
     	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
         #wait for The image to Create
-        OLD_STATE=&quot;&quot;
-        while true; do
-            sleep 60
-            STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query &quot;Images[0].State&quot;)
-            if [[ $STATE != $OLD_STATE ]]; then
-                echo $STATE
-                OLD_STATE=$STATE
-            fi
-            if [[ $STATE == &quot;available&quot; ]]; then
-                break
-            fi
-        done
+        #OLD_STATE=&quot;&quot;
+        #while true; do
+        #    sleep 60
+        #    STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query &quot;Images[0].State&quot;)
+        #    if [[ $STATE != $OLD_STATE ]]; then
+        #        echo $STATE
+        #        OLD_STATE=$STATE
+        #    fi
+        #    if [[ $STATE == &quot;available&quot; ]]; then
+        #        break
+        #    fi
+        #done
+        
         #get Snapshot id    
         snapshotId=$(aws ec2 describe-images --image-ids $newRegionAmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
         #give name to the snapshot 
