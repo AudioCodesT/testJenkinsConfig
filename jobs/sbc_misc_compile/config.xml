@@ -291,7 +291,7 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <projects>sbc-compile</projects>
-          <condition>FAILED_OR_BETTER</condition>
+          <condition>UNSTABLE_OR_BETTER</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
