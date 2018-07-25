@@ -33,6 +33,7 @@
         <string>Agile users</string>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
         <string># All Cars</string>
         <string>cc_users</string>
@@ -41,6 +42,7 @@
         <string>ActionBase Users</string>
         <string>cc_nsc</string>
         <string>Sp365-Devops-Read</string>
+        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -54,6 +56,7 @@
         <string># All Managers</string>
         <string>cc_oracle</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string>Clearcase</string>
         <string># Employee Mobility</string>
         <string># All ISRAEL</string>
@@ -65,6 +68,7 @@
         <string>Vopp</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -73,7 +77,7 @@
         <string>Sp365-DevOps-modify</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1522137120498</timestamp>
+      <timestamp>1532505217995</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yossi.Merzbach@audiocodes.com</emailAddress>
