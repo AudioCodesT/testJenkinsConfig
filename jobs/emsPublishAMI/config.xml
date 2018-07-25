@@ -68,7 +68,7 @@ do
         #wait for The image to Create
         OLD_STATE=&quot;&quot;
         while true; do
-            sleep 10
+            sleep 30
             STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query &quot;Images[0].State&quot;)
             if [[ $STATE != $OLD_STATE ]]; then
                 echo $STATE
