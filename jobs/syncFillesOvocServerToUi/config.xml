@@ -106,7 +106,10 @@
     <hudson.tasks.Shell>
       <command>cd ${WORKSPACE}
 
-git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc</command>
+git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc
+
+cp /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/. ovoc/src/schema/post/.
+cp /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/. ovoc/src/schema/put/.</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
