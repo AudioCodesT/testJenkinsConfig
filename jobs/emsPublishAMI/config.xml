@@ -86,7 +86,7 @@ do
         #give name to the snapshot 
         aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
         # add public permissions to the rest of the regions
-        aws ec2 modify-image-attribute --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
+        aws ec2 modify-image-attribute --region ${destRegionName} --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
         echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; RegionsNameAndIds.txt
         echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
       	echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
