@@ -33,6 +33,7 @@
         <string># All Beer Sheva</string>
         <string>authenticated</string>
         <string>Password Manager Apply</string>
+        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -43,6 +44,8 @@
         <string>Mailvision Branch Office Users</string>
         <string>Sp365-Devops-Read</string>
         <string>AudioCodes_VPN</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
         <string># All R&amp;D</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -52,7 +55,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1522246995025</timestamp>
+      <timestamp>1532531334665</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Ilan.Kazin@audiocodes.com</emailAddress>
