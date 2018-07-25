@@ -220,7 +220,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 then
 emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-ce2b84a1 --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-ce2b84a1 --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 else
-emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-04da7357110ba7ff3 --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-04da7357110ba7ff3 --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+emsTestedVM=&quot;$(aws ec2 run-instances --image-id ami-0d8106a396de98c86 --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ami-0d8106a396de98c86 --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 fi
 
 #keep instance ID
