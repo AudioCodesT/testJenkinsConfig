@@ -52,6 +52,7 @@
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -70,7 +71,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1528914756578</timestamp>
+      <timestamp>1532531063207</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Gal.Erez@audiocodes.com</emailAddress>
