@@ -276,16 +276,18 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
     else	python2.7 setNetwork.py $vmIP $sanityOrAmi
 fi
 echo &quot;Finish SetNetwork Configuration&quot;
+
 python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 echo &quot;Finish SanityInstall&quot;
+
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
 then
-	echo &quot;Unnecessary to Create Ami for Versions 7.4.* &quot;
+	echo &quot;We Don&apos;t Create Ami for Versions below 7.6 (the current branch is: $BRANCH)&quot;
 else
 	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
     then
-    		echo &quot;Creating New Ami&quot;
-            #create a new AMI After install and keep ImageID value
+    		echo &quot;Creating New Ovoc Ami&quot;
+            #create a new AMI After installation and keep ImageID value
             AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
             
             #check if image available
@@ -302,7 +304,7 @@ else
                 fi
            done
             
-            #get Snapshot id    
+            #get Snapshot id -  we need it in order to tag the snapshot as well
             snapshotId=$(aws ec2 describe-images --image-ids $AmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
             
             #give name to the AMI 
@@ -310,14 +312,13 @@ else
             #give name to the snapshot 
             aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
             
-            
+            #share the new created AMI with dev and QA teams:
+            echo &quot;Sharing the new created AMI with Dev and QA teams:&quot;
             qaAccount=191324562914
             devAccount=952166219867
             #give permissions to ovoc QA Account
             aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
-            
             #give permissions to ovoc DEV Account
-            
             aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
             
             #check if shared
@@ -335,6 +336,7 @@ fi
 
 
 # run sanity tests and log collect
+echo &quot;Run sanity tests and log collect&quot;
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 	then python2.7 SanityTest.py $NEW_TAG $vmIP
 	# run sanity test and copy logs, and if sanity fails then copy logs and exit with error:
