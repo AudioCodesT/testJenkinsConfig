@@ -78,7 +78,7 @@
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>CHANGE</name>
+          <name>CHANGES</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
