@@ -138,7 +138,7 @@ cp -r EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schem
 cp -r EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/ ovoc/src/schema/
 cd ovoc/
 git add src/schema
-git commit -m &quot;Change Schema&quot;
+git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
 #git push origin $GERRIT_BRANCH</command>
     </hudson.tasks.Shell>
   </builders>
