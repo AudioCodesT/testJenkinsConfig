@@ -121,8 +121,16 @@
 
 git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc
 
+cd ovoc/
+git checkout $GERRIT_BRANCH
+
 cp -r /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/. ovoc/src/schema/post
-cp -r /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/. ovoc/src/schema/put</command>
+cp -r /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/. ovoc/src/schema/put
+
+#git add ovoc/src/schema/post
+#git add ovoc/src/schema/put
+#git commit -m &quot;Change Schema&quot;
+#git push $$GERRIT_BRANCH</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
