@@ -52,7 +52,7 @@
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
     </extensions>
   </scm>
-  <assignedNode>test-Sanjer</assignedNode>
+  <assignedNode>ems-build</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
