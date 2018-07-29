@@ -124,6 +124,11 @@
     <hudson.tasks.Shell>
       <command>cd ${WORKSPACE}
 
+cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
+
 git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc
 mkdir -p ovoc/src/schema
 cd ovoc/
