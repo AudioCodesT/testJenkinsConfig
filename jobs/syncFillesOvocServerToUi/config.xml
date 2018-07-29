@@ -53,7 +53,7 @@
   </scm>
   <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -124,8 +124,8 @@ mkdir -p ovoc/src/schema
 cd ovoc/
 git checkout $GERRIT_BRANCH
 cd ..
-cp -r /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/. ovoc/src/schema/
-cp -r /ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/. ovoc/src/schema/
+cp -r EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/ ovoc/src/schema/
+cp -r EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/ ovoc/src/schema/
 cd ovoc/
 git add src/schema
 git commit -m &quot;Change Schema&quot;
