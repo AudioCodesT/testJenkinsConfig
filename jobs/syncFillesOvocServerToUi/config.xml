@@ -129,7 +129,7 @@ cp -r EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schem
 cd ovoc/
 git add src/schema
 git commit -m &quot;Change Schema&quot;
-#git push $GERRIT_BRANCH</command>
+#git push origin $GERRIT_BRANCH</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
