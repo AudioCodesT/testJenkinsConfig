@@ -276,7 +276,7 @@ LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifac
 fi
 
 #first, check out the branch that we want to upgrade from
-echo: &quot;*** first, check out the branch that we want to upgrade from ***&quot;
+echo &quot;*** first, check out the branch that we want to upgrade from ***&quot;
 if [ $UPGRADE_FROM == &quot;7.4&quot; ]; then FROM=&quot;master&quot;; else FROM=$UPGRADE_FROM; fi
 if [ $BRANCH != $UPGRADE_FROM ]; then
 	git fetch
