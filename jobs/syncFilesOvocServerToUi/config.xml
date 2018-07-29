@@ -123,24 +123,28 @@
   <builders>
     <hudson.tasks.Shell>
       <command>cd ${WORKSPACE}
-
+# if version is 7.4.* - not run the job
 if [[ &quot;$GERRIT_BRANCH&quot; == &quot;7.4&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
 then 
 echo &quot;The Versions 7.4.* irrelevant for this job&quot;
 exit 0
+# if version is 7.6 or higher - copy the REST Schemas files to web-ui ovoc
 else
 	cat &lt;&lt;-EOF &gt; ~/.netrc
 	machine test-gerrit login jenkins password $jpass
 	machine gerrit login jenkins password $jpass
 	EOF
-
+	#clone web-ui OVOC
 	git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc
 	mkdir -p ovoc/src/schema
+    #enter web-ui/ovoc repo and checkout to same Branch that is in the current change
 	cd ovoc/
 	git checkout $GERRIT_BRANCH
 	cd ..
+    #copy all files under this folders to web-ui ovoc
 	cp -rp EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/ ovoc/src/schema/
 	cp -rp EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/ ovoc/src/schema/
+    #create a new commit with the modified files in REST Schemas files and push the changes to web-ui OVOC
 	cd ovoc/
 	git add src/schema
 	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
