@@ -72,11 +72,11 @@
           <filePaths>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.FilePath>
               <compareType>ANT</compareType>
-              <pattern>/ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/</pattern>
+              <pattern>EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/post/</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.FilePath>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.FilePath>
               <compareType>ANT</compareType>
-              <pattern>/ovoc_server/EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/</pattern>
+              <pattern>EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.FilePath>
           </filePaths>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
