@@ -1,7 +1,11 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>1. check if the version is 7.6 or higher&#xd;
+2. clone web-ui/ovoc &#xd;
+3. copy all REST Schema files from ovoc server to web-ui ovoc&#xd;
+4. add commit &#xd;
+5. push to web-ui/ovoc repo</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
