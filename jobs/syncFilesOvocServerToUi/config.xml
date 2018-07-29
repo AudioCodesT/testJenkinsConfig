@@ -1,7 +1,9 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>1. check if the version is 7.6 or higher&#xd;
+  <description>This job trigger if there was changes in ovoc server in REST Schema files and copy these files to Web-ui ovoc&#xd;
+&#xd;
+1. check if the version is 7.6 or higher&#xd;
 2. clone web-ui/ovoc &#xd;
 3. copy all REST Schema files from ovoc server to web-ui ovoc&#xd;
 4. add commit &#xd;
