@@ -38,6 +38,7 @@
       <roles>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -67,7 +68,7 @@
         <string># All Airport City</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1523515320691</timestamp>
+      <timestamp>1532931553297</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
