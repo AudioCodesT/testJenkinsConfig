@@ -35,12 +35,14 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string># All 012 voip</string>
+        <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
+        <string># ClearCase R&amp;D</string>
         <string>#All Breakfast</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -49,6 +51,7 @@
         <string>Logistics_maintenance</string>
         <string>QA Group</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -58,6 +61,7 @@
         <string>Linuxusers</string>
         <string>cc_api</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -65,7 +69,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1523863067613</timestamp>
+      <timestamp>1532934913732</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Nava.Sherman@audiocodes.com</emailAddress>
