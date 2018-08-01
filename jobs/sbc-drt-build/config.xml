@@ -158,7 +158,7 @@ CHANGESNumbers=&quot;&quot;
 if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
   REFSPEC=refs/changes/00/$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
 else
-  CHANGESNumbers=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
+  CHANGESNumbers=&quot;$(echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;) &quot;
 fi
 
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
@@ -313,7 +313,7 @@ for rep in $CHANGESNumbers; do
   ps=`echo $rep | cut -d/ -f2`
   chmod 600 id_rsa_gerrit
   
-  echo Send OK message to Gerrit - $change,$ps
+  echo Send faild message to Gerrit - $change,$ps
   ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
   --message &quot;&apos;Compilation Failed - $BUILD_URL&apos;&quot; \
   --notify OWNER \
