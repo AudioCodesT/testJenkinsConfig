@@ -148,6 +148,7 @@ else
 	cp -rp EMS/src/main/java/com/audioCodes/ems/server/rest/v2/tools/marshaling/schemas/put/ ovoc/src/schema/
     #create a new commit with the modified files in REST Schemas files and push the changes to web-ui OVOC
 	cd ovoc/
+    # gitdir=$(git rev-parse --git-dir); scp -p -P 29418 benm@test-gerrit:hooks/commit-msg ${gitdir}/hooks/
 	git add src/schema
 	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
 	git push origin HEAD:refs/for/$GERRIT_BRANCH
