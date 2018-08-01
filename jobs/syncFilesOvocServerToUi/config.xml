@@ -136,7 +136,11 @@ else
 	machine test-gerrit login jenkins password $jpass
 	machine gerrit login jenkins password $jpass
 	EOF
-    ssh-keyscan -t rsa gerrit &gt;&gt; ~/.ssh/known_hosts
+    cat &lt;&lt;-EOF &gt; ~/.ssh/config
+	Host gerrit
+	StrictHostKeyChecking no
+	EOF
+	chmod 644 ~/.ssh/config
 	#clone web-ui OVOC
 	git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc
 	mkdir -p ovoc/src/schema
@@ -154,7 +158,6 @@ else
 	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
 	git push origin HEAD:refs/for/$GERRIT_BRANCH
     ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $GERRIT_CHANGE_ID&quot;
-    
 fi</command>
     </hudson.tasks.Shell>
   </builders>
