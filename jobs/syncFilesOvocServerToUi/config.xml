@@ -136,6 +136,7 @@ else
 	machine test-gerrit login jenkins password $jpass
 	machine gerrit login jenkins password $jpass
 	EOF
+#add permissions to avoid &quot;Host Key Verification Failed” when we try ssh to gerrit to add a reviewers (force to add &quot;gerrit&quot; automatically to known_hosts file)
     cat &lt;&lt;-EOF &gt; ~/.ssh/config
 	Host gerrit
 	StrictHostKeyChecking no
