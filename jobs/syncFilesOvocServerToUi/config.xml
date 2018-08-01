@@ -150,7 +150,8 @@ else
 	cd ovoc/
 	git add src/schema
 	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
-	git push origin $GERRIT_BRANCH
+	git push origin HEAD:refs/for/$GERRIT_BRANCH
+    #ssh -p 29418 jenkins@gerrit &apos;gerrit set-reviewers -a Michael.Lallouz@audiocodes.com -a Ron.Bensimon@audiocodes.com $GERRIT_CHANGE_ID&apos;
 fi</command>
     </hudson.tasks.Shell>
   </builders>
