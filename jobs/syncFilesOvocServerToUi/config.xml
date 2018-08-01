@@ -136,6 +136,7 @@ else
 	machine test-gerrit login jenkins password $jpass
 	machine gerrit login jenkins password $jpass
 	EOF
+    ssh-keyscan -t rsa gerrit &gt;&gt; ~/.ssh/known_hosts
 	#clone web-ui OVOC
 	git -c http.sslverify=false clone -n https://gerrit/web-ui/ovoc
 	mkdir -p ovoc/src/schema
