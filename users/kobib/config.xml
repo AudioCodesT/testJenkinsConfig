@@ -40,6 +40,7 @@
         <string># All Orange</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
+        <string># QA Networking</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -52,8 +53,10 @@
         <string># SQA_CORE</string>
         <string>QA Group</string>
         <string># MP20x deliveries</string>
+        <string># QA MSBR</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -69,7 +72,7 @@
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
       </roles>
-      <timestamp>1528632044481</timestamp>
+      <timestamp>1533216808443</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
       <providerId>default</providerId>
