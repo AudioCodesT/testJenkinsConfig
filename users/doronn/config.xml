@@ -34,6 +34,7 @@
         <string># R&amp;D HDGW SYSTEM</string>
         <string>authenticated</string>
         <string>TG1000</string>
+        <string>AWS_Jira_Users</string>
         <string># R&amp;D HDGW SYSTEM SW</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -48,6 +49,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string># R&amp;D HDGW GROUP</string>
@@ -56,6 +58,7 @@
         <string>Linuxusers</string>
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
+        <string># SBC SIP Infra</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -65,7 +68,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1531978046475</timestamp>
+      <timestamp>1533245305993</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Doron.Nimrod@audiocodes.com</emailAddress>
