@@ -43,6 +43,7 @@
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
         <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
         <string>#All Breakfast</string>
         <string># All R&amp;D</string>
         <string># SBC version release</string>
@@ -53,13 +54,16 @@
         <string>Logistics_maintenance</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string># R&amp;D MEM</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
+        <string># SBC ME</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -67,7 +71,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1530629211351</timestamp>
+      <timestamp>1533228190022</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Oren.Uri@audiocodes.com</emailAddress>
