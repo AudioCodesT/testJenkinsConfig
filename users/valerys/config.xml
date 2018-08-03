@@ -32,13 +32,16 @@
       <roles>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
+        <string># SBC Infra System</string>
         <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># AUDC - NJ office</string>
         <string># ACPortal - Finance_USA</string>
@@ -53,18 +56,20 @@
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NA Regions</string>
         <string>Linuxusers</string>
         <string># ACPortal - HR USA</string>
         <string>AI-QMS-RO</string>
         <string>cc_api</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string># R&amp;D Next Generation CPE</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
       </roles>
-      <timestamp>1532016833309</timestamp>
+      <timestamp>1533335888026</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Valery.Sigalov@audiocodes.com</emailAddress>
