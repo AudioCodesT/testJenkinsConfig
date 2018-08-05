@@ -156,7 +156,12 @@ else
 	cd ovoc/
     gitdir=$(git rev-parse --git-dir); scp -p -P 29418 jenkins@test-gerrit:hooks/commit-msg ${gitdir}/hooks/
 	git add src/schema
-	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
+	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
+    #filename = &quot;.git/COMMIT_EDITMSG&quot;
+    #template = File.read(filename)
+    #issue_line = &quot;Issue: OVOC-1287&quot;
+    #template.insert(template.index(/Change-Id:/) || -1, &quot;\n#{issue_line}\n&quot;)
+    #git filter-branch --msg-filter &quot;sed &apos;/ChangeId:/s§notreviewed§$myarg§&apos;&quot;
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
