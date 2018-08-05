@@ -166,7 +166,7 @@ fi</command>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>benm</recipients>
+      <recipients>benm,Ron.Bensimon</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
