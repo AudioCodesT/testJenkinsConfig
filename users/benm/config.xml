@@ -37,6 +37,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -52,7 +53,7 @@
         <string>Logistics_maintenance</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1525177456560</timestamp>
+      <timestamp>1533476963275</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
