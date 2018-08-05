@@ -223,13 +223,7 @@ if [[ &quot;$BRANCH&quot; == &quot;master&quot; ]]; then exit 0; else exit 1; fi
 DefaultGateway=&quot;172.16.132.1&quot;
 
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
-if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
-then
-	AMI_ID=ami-0e248a2cd4891f590
-else
-	AMI_ID=ami-09fa7e24939b99be4
-fi
-
+AMI_ID=ami-09fa7e24939b99be4
 emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 
 
