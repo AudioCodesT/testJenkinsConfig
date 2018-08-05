@@ -157,8 +157,10 @@ else
     gitdir=$(git rev-parse --git-dir); scp -p -P 29418 jenkins@test-gerrit:hooks/commit-msg ${gitdir}/hooks/
 	git add src/schema
 	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot;
+  	changeId=$(git log -1 | grep Change-Id)
+    changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 	git push origin HEAD:refs/for/$GERRIT_BRANCH
-    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $GERRIT_CHANGE_ID&quot;
+    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi</command>
     </hudson.tasks.Shell>
   </builders>
