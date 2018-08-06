@@ -162,8 +162,8 @@ else
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
-	#git push origin HEAD:refs/for/$GERRIT_BRANCH
-    #ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
+	git push origin HEAD:refs/for/$GERRIT_BRANCH
+    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
 echo &quot;changedFiles=$changedFiles&quot; &gt; properties</command>
     </hudson.tasks.Shell>
