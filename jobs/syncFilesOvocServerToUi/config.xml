@@ -175,7 +175,7 @@ echo &quot;changedFiles=$changedFiles&quot; &gt; properties</command>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Ron.Bensimon@audiocodes.com,benm@audiocodes.com</recipientList>
+      <recipientList>benm@audiocodes.com</recipientList>
       <contentType>default</contentType>
       <defaultSubject>Auto-Copy from Ovoc server: REST Schemas change</defaultSubject>
       <defaultContent>The Files that Copied from ovoc server to ovoc ui are:
