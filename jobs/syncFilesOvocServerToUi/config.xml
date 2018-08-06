@@ -197,7 +197,7 @@ fi</command>
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Auto-Copy from Ovoc server: REST Schemas change</defaultSubject>
-      <defaultContent>The Files that Copies from ovoc server to ovoc ui are:
+      <defaultContent>The Files that Copied from ovoc server to ovoc ui are:
 $changedFiles</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
