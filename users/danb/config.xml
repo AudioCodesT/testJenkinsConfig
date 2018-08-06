@@ -35,7 +35,29 @@
       <emailAddress>Dan.Benyosef@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string>Password Manager Apply</string>
+        <string>AWS_Jira_Users</string>
+        <string># All ISRAEL</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
+        <string># All AudioCodes</string>
+        <string>NewUser_Israel-Lod</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+      </roles>
+      <timestamp>1533552602496</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
