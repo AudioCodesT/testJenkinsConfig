@@ -51,6 +51,7 @@
         <string>Linuxusers</string>
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
+        <string># SBC SIP Infra</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -58,7 +59,7 @@
         <string>Domain Users</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1532521683159</timestamp>
+      <timestamp>1533719130728</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amrita.Garg@audiocodes.com</emailAddress>
