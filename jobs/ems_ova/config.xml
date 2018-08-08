@@ -91,178 +91,182 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># set logger ###############
-exec 3&gt;&amp;1 4&gt;&amp;2
-trap &apos;exec 2&gt;&amp;4 1&gt;&amp;3&apos; 0 1 2 3
-exec 1&gt;ems_ovoc_vm_log.out 2&gt;&amp;1
-# Everything below will go to the file &apos;ems_ovoc_vm_log.out&apos;
-
-####################################################################################################
-# Explanation:
-#
-# exec 3&gt;&amp;1 4&gt;&amp;2
-#
-# Saves file descriptors so they can be restored to whatever they were before redirection or used
-# themselves to output to whatever they were before the following redirect.
-#
-# trap &apos;exec 2&gt;&amp;4 1&gt;&amp;3&apos; 0 1 2 3
-#
-# Restore file descriptors for particular signals. Not generally necessary since they should be
-# restored when the sub-shell exits.
-#
-# exec 1&gt;log.out 2&gt;&amp;1
-#
-# Redirect stdout to file log.out then redirect stderr to stdout. Note that the order is important
-# when you want them going to the same file. stdout must be redirected before stderr is redirected
-# to stdout.
-#
-# From then on, to see output on the console (maybe), you can simply redirect to &amp;3. For example,
-#
-# echo &quot;$(date) : part 1 - start&quot; &gt;&amp;3
-# will go to wherever stdout was directed, presumably the console, prior to executing line 3 above.
-####################################################################################################
+      <command>
+# Set the following values to fit your need
+hostIP=&quot;10.7.10.7&quot;
+netMask=&quot;16&quot;
+DefaultGW=&quot;10.7.0.1&quot;
 
 # Get ESXi password from encrypted file
 cd ~/.ssl
 vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
+
 cd $WORKSPACE
 
-# function for verifying if new VM is up
-function isUp ()
-{
-    for i in {1..30}; do
-        getState=$(ssh root@10.7.10.7 vim-cmd vmsvc/power.getstate $vmid | grep Powered | cut -d&apos; &apos; -f2)
-        [[ $getState == on ]] &amp;&amp; return 0
+# Create a new log file
+now=`date +&quot;%Y%m%d-%H%M%S&quot;`
+logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
+[[ -f $logfile  ]] &amp;&amp; rm $logfile
+touch $logfile
+
+# Function for checking VM power state
+function isUp {
+    # Function gets VMhostIP &amp; vmid
+    # Timeout after 600 seconds
+
+    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; &gt;&gt; $logfile &amp;&amp; exit)
+    local id=$2
+
+    for i in {1..20}; do
+        sleep 30
+        echo &quot;$(date) : Getting VM $id power status&quot; &gt;&gt; $logfile
+        getState=$(ssh root@${hostIP} vim-cmd vmsvc/power.getstate $id | grep Powered | cut -d&apos; &apos; -f2)
+        if [[ &quot;$getState&quot; == &quot;on&quot; ]]; then
+            echo &quot;$(date) : VM $id is up!&quot; &gt;&gt; $logfile
+            return 0
+        fi
     done
+
+    echo &quot;$(date) : ovoc VM did not start within 600 seconds.&quot; &gt;&gt; $logfile
     return 1
 }
 
-# function for verifyong ssh to new vm
-function isSsh ()
-{
-    for i in {1..30}; do
-        sleep 1
-        exec 5&gt;/dev/tcp/$vmip/22
-        [[ $? -eq 0 ]] &amp;&amp; return 0
+# Function for checking VM guest SSH readiness
+function sshUp {
+    # Function gets serverIP
+    # Timeout after 60 seconds
+
+    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; &gt;&gt; $logfile &amp;&amp; exit)
+    local to=5s
+
+    for i in {1..10}; do
+        echo &quot;$(date) : Testing ssh readiness on $ip&quot; &gt;&gt; $logfile
+        if timeout $to bash -c &quot;exec 5&gt;/dev/tcp/$ip/22&quot; 2&gt;/dev/null; then
+            5&gt;&amp;-
+            echo &quot;$(date) : SSH on $ip is up&quot; &gt;&gt; $logfile
+            return 0
+        else
+            5&gt;&amp;-
+            echo &quot;$(date) : Waiting for SSH on $ip&quot; &gt;&gt; $logfile
+        fi
     done
+
+    echo &quot;$(date) : SSH on $ip is not up within 60s&quot; &gt;&gt; $logfile
     return 1
 }
 
-echo &quot;$(date) : *****************  START  ******************&quot; &gt;&amp;3
+echo &quot;$(date) : *****************  START  ******************&quot; &gt;&gt; $logfile
+
 
 ###################################################################################################
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc_base_for_ vm`s
-vms=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
-for vmid in $vms; do
-    echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&amp;3
-
-    for vm in $vms; do
-        ssh root@10.7.10.7 vim-cmd vmsvc/power.off ${vmid} &gt;&amp;3
+vms=`ssh root@${hostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
+if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
+    for vmid in $vms; do
+        echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&gt; $logfile
+        ssh root@${hostIP} vim-cmd vmsvc/power.off ${vmid} &gt;&gt; $logfile
         sleep 10
-        ssh root@10.7.10.7 vim-cmd vmsvc/destroy ${vmid} &gt;&amp;3
+        ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
         sleep 10
     done
-done
+fi
+
+ssh root@${hostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
 
 ###################################################################################################
-# Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova and adjust network settings
+# Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
-echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&amp;3
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=datastore1 --diskMode=thin --acceptAllEulas --powerOn /home/centos/data/ovoc/ova/$OVA.ova vi://root:$vipw@10.7.10.7 &gt;&amp;3
+echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&gt; $logfile
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${hostIP} &gt;&gt; $logfile
 if [ $? -ne 0 ]; then
-    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; &gt;&amp;3
+    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; &gt;&gt; $logfile
     exit
 fi
 
-# Wait for SSH on ovoc server
-while (( isUp )); do
-    sleep 5
-done
-
-while (( isSsh )); do
-    sleep 5
-done
-
 # find new vm id
-vmid=`ssh root@10.7.10.7 vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
-echo &quot;$(date) : vm id is $vmid&quot; &gt;&amp;3
+vmid=`ssh root@${hostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
+echo &quot;$(date) : vm id is $vmid&quot; &gt;&gt; $logfile
+
+# Wait for ovoc server power on
+#isUp $hostIP $vmid || exit
+echo &quot;$(date) : sleep 5 min.&quot; &gt;&gt; $logfile
+sleep 300
 
 # find new vm IP address
-vmip=`ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
-vmip=&quot;10.3.180.239&quot;
-echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
+vmip=`ssh root@${hostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; &gt;&gt; $logfile &amp;&amp; exit)
+echo &quot;$(date) : vm IP is $vmip&quot; &gt;&gt; $logfile
 
-# Verify new ovoc base is up and accessible by ssh
-isup=isUp
-isssh=isSsh
-[[ &quot;$isup&quot; -eq 0 ]] &amp;&amp; [[ &quot;$isssh&quot; -eq 0 ]] || exit &gt;&amp;3
-
-# Change network setting
-python2.7 EMS/VersionRelease/setIP.py $vmip &gt;&amp;3
-
-# Shutdown ovoc server
-ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown $vmid &gt;&amp;3
-
-# Wait for shutdown
-while (( ! isUp )); do
-    sleep 5
-done
-
-
-# Change vm network (vSwitch)
-echo &quot;sed -i &apos;s/VM\ Network/AUDC\ Network/g&apos; /vmfs/volumes/datastore1/ovoc_base_for_$TAG/ovoc_base_for_$TAG.vmx&quot; | ssh root@10.7.10.7 &gt;&amp;3
-vmip=`ssh root@10.7.10.7 vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
-vmip=&quot;10.7.10.77&quot;
-echo &quot;$(date) : vm IP is $vmip&quot; &gt;&amp;3
+# Check ssh readiness
+#sshUp $vmip || exit -2
 
 
 ###################################################################################################
 # Install DVD 3 on basic vovoc server
 
-# Power on VM
-ssh root@10.7.10.7 vim-cmd vmsvc/power.on $vmid &gt;&amp;3
+# Set Network
+echo &quot;$(date) : Applying DVD 3&quot; &gt;&gt; $logfile
+cd EMS/VersionRelease
+python2.7 setNetwork.py $vmip $netMask $DefaultGW || (echo &quot;$(date) : Failed network setting&quot; &gt;&gt; $logfile &amp;&amp; exit -1)
 
-# Wait for SSH on ovoc server
-while (( isUp )); do
-    sleep 5
-done
+# ovoc server was rebooted, so -
+# Wait for ovoc server power on
+#isUp ${hostIP} $vmid || exit -2
+echo &quot;$(date) : sleep 5 min.&quot; &gt;&gt; $logfile
+sleep 300
 
-while (( isSsh )); do
-    sleep 5
-done
+# Sanity Install DVD-3
+python2.7 SanityInstall.py $TAG $vmip official_iso || (echo &quot;$(date) : Failed sanity install&quot; &gt;&gt; $logfile &amp;&amp; exit -1)
+sleep 30
+echo &quot;$(date) : Done applying DVD 3&quot; &gt;&gt; $logfile
 
+# ovoc server was rebooted during DVD 3 installation, so -
+# Wait for ovoc server power on
+#isUp ${hostIP} $vmid || exit -2
+echo &quot;$(date) : sleep 5 min.&quot; &gt;&gt; $logfile
+sleep 300
+
+###################################################################################################
+# Export to ova
+
+# clean logs before shutdown
+echo &quot;$(date) : ssh to clean log files&quot; &gt;&gt; $logfile
+python2.7 cleanBeforeOva.py $vmip || (echo &quot;$(date) : Failed cleaning logs&quot; &gt;&gt; $logfile &amp;&amp; exit -1)
 sleep 30
 
-# Apply DVD-3
-cd EMS/VersionRelease
-python2.7 SanityInstall.py $TAG $vmip official_iso &gt;&amp;3
+# graceful shutdouwn this new full ovoc server VM
+echo &quot;$(date) : shutdown new VM&quot; &gt;&gt; $logfile
+ssh root@${hostIP} vim-cmd vmsvc/power.shutdown ${vmid} &gt;&gt; $logfile
+sleep 30
 
 
 ###################################################################################################
 # Create ova from full ovoc server and upload to artifactory server
 
-# clean logs before shutdown
-echo &quot;$(date) : ssh to clean log files&quot; &gt;&amp;3
-
-# graceful shutdouwn this new VM full ovoc server
-echo &quot;$(date) : shutdown new VM&quot; &gt;&amp;3
-ssh root@10.7.10.7 vim-cmd vmsvc/power.shutdown ${vmid} &gt;&amp;3
-sleep 30
-
 # export the new VM to an OVA file
-echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&amp;3
-mkdir -p $WORKSPACE/$TAG/ovoc_base_for_$TAG
-ovftool -o --noSSLVerify vi://root:$vipw@10.7.10.7/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG.ova &gt;&amp;3
+echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&gt; $logfile
+mkdir -p &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot;
+ovftool -o --noSSLVerify vi://root:$vipw@${hostIP}/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG.ova &gt;&gt; $logfile
+
+# Move output to Netapp
+mv -v $WORKSPACE/$TAG /home/centos/data/output/
 
 cd ~
 
 # what left is to upload new OVA to Artifactory
-echo &quot;$(date) : ********        FINISH      ***********&quot; &gt;&amp;3
-echo &quot;$(date) : what left is to upload new OVA to Artifactory&quot; &gt;&amp;3
-echo &quot;$(date) : ********    **************   ***********&quot; &gt;&amp;3
+echo &quot;$(date) : ********        FINISH      ***********&quot; &gt;&gt; $logfile
+echo &quot;$(date) : what left is to upload new OVA to Artifactory&quot; &gt;&gt; $logfile
+echo &quot;$(date) : ********    **************   ***********&quot; &gt;&gt; $logfile
+
+# Delete ovoc server vm
+echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
+[[ -f &quot;$WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG_$now.ova&quot; ]] &amp;&amp; ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
+
+
+
 
 </command>
     </hudson.tasks.Shell>
