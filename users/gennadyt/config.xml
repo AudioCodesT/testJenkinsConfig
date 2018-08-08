@@ -54,6 +54,7 @@
         <string># All Beer Sheva</string>
         <string># Gym</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># OVOC QOE</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
@@ -72,7 +73,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1528642575651</timestamp>
+      <timestamp>1533742506833</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Gennady.Tsiporkin@audiocodes.com</emailAddress>
