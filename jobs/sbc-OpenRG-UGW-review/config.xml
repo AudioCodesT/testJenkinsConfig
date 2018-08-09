@@ -33,6 +33,7 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -157,6 +158,7 @@ chmod 600 id_rsa_gerrit
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | \
    grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ID=Id5b9a1776aa95ca538e7c390f889c604ac381833
 rev=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
      --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
      grep -A30 acLinuxUGW | grep revision | cut -d: -f2 | sed &apos;s: ::g&apos; || echo ChangeId not found)
