@@ -58,12 +58,13 @@
         <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
+        <string># SBC OAM</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1532604283647</timestamp>
+      <timestamp>1533817490010</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Rita.Kaplinsky@audiocodes.com</emailAddress>
