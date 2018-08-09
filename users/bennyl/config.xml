@@ -32,28 +32,33 @@
       <roles>
         <string>Agile users</string>
         <string>authenticated</string>
-        <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
-        <string># All ISRAEL</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
+        <string># SBC version release</string>
+        <string># R&amp;D System Software</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>Password Manager Apply</string>
+        <string># Agile users</string>
+        <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string># R&amp;D Next Generation CPE</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
-        <string># R&amp;D System Software</string>
-        <string># All Lunch</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1527533776430</timestamp>
+      <timestamp>1533823609102</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Benny.Lavi@audiocodes.com</emailAddress>
