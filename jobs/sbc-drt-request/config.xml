@@ -167,11 +167,6 @@ echo Exit the while after some days
 curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 exit 1</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
-      <info>
-        <propertiesFilePath>generated_drt.properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
@@ -200,6 +195,9 @@ exit 1</command>
                   <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
                     <results>
                       <string>SUCCESS</string>
+                      <string>NOT_BUILT</string>
+                      <string>FAILURE</string>
+                      <string>UNSTABLE</string>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
@@ -272,6 +270,11 @@ done</command>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
+                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                        <info>
+                          <propertiesFilePath>generated_drt.properties</propertiesFilePath>
+                        </info>
+                      </EnvInjectBuilder>
                       <hudson.tasks.Shell>
                         <command>for rep in $CHANGES; do
 
