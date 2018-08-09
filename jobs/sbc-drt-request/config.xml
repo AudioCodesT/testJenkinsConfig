@@ -98,6 +98,7 @@ LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b
 
 echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
 echo batchID=${batchID} &gt;&gt; generated_drt.properties
+echo Output=${Output} &gt;&gt; generated_drt.properties
 echo url=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
 
 if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
@@ -276,6 +277,7 @@ done</command>
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
   --message &quot;&apos;DRT Failed - $BUILD_URL \
       CMP files: $url \
+      Error message: $Output \
       DRT results: $LinkToPage&apos;&quot; \
   --notify OWNER \
   --label DRT=-1 \
