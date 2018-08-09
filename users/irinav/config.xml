@@ -54,11 +54,12 @@
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
+        <string># SBC OAM</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1532514243335</timestamp>
+      <timestamp>1533820396192</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Irina.Veisas@audiocodes.com</emailAddress>
