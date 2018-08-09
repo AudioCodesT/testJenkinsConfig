@@ -346,7 +346,7 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>Need to wait for dependent artifact</regexpForRerun>
+      <regexpForRerun>.*(Need to wait for dependent artifact|JNLP4-connect connection).*</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
