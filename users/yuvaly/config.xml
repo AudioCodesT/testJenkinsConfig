@@ -6,7 +6,14 @@
       <apiToken>{AQAAABAAAAAwFZVy7feOHXYgHthBWXitpxo06exzFp8q05W1IQLNZ4lqoPr0kWPlnd9r8XE21YB9HjJx+H/J0ZbfsgCx5JFh0w==}</apiToken>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
-      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash">
+        <entry>
+          <com.cloudbees.plugins.credentials.domains.Domain>
+            <specifications/>
+          </com.cloudbees.plugins.credentials.domains.Domain>
+          <java.util.concurrent.CopyOnWriteArrayList/>
+        </entry>
+      </domainCredentialsMap>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
@@ -44,7 +51,6 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
-        <string>BackUpAlert</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
@@ -68,7 +74,7 @@
         <string># All Airport City</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1532931553297</timestamp>
+      <timestamp>1533799982574</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
