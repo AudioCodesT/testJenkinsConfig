@@ -175,6 +175,11 @@ echo &quot;changedFiles=$changedFiles&quot;</command>
     </EnvInjectBuilder>
   </builders>
   <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>benm</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>benm@audiocodes.com,Ron.Bensimon@audiocodes.com</recipientList>
       <configuredTriggers>
