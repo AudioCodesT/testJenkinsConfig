@@ -42,6 +42,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># SBC Infra System</string>
         <string># ClearCase R&amp;D</string>
         <string># AudioCodes Affiliate</string>
         <string># R&amp;D System Software</string>
@@ -63,7 +64,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1532538985868</timestamp>
+      <timestamp>1533862024307</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
