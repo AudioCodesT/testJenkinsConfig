@@ -160,7 +160,7 @@ else
 #	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
-    modifiedFiles=($changedFiles)
+    modifiedFiles=$(echo $changedFiles | tr &quot; &quot; &quot;\n&quot;)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 #	git push origin HEAD:refs/for/$GERRIT_BRANCH
