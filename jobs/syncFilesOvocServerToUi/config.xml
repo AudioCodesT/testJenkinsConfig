@@ -168,7 +168,7 @@ else
     # add reviewrs to the new change in Web-ui/ovoc
 #    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
-
+#,ron.bensimon@audiocodes.com
 echo &quot;changedFiles=${changedFiles}&quot; &gt;&gt; prop
 echo changedFiles=$changedFiles &gt;&gt; prop</command>
     </hudson.tasks.Shell>
@@ -185,23 +185,7 @@ echo changedFiles=$changedFiles &gt;&gt; prop</command>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>ben.magriso@audiocodes.com,ron.bensimon@audiocodes.com</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-          <email>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-      </configuredTriggers>
+      <recipientList>ben.magriso@audiocodes.com</recipientList>
       <contentType>default</contentType>
       <defaultSubject>Auto-Copy from Ovoc server: REST Schemas change</defaultSubject>
       <defaultContent>The Files that was Copied from ovoc server to ovoc ui are:
