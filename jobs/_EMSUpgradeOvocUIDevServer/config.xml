@@ -65,7 +65,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>vmIP=&quot;&quot;</command>
+      <command>vmIP=&quot;&quot;
+echo &quot;Triggered&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
