@@ -156,16 +156,16 @@ else
     #create a new commit with the modified files in REST Schemas files and push the changes to web-ui OVOC
 	cd ovoc/
     gitdir=$(git rev-parse --git-dir); scp -p -P 29418 jenkins@test-gerrit:hooks/commit-msg ${gitdir}/hooks/
-#	git add src/schema
-#	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
+	git add src/schema
+	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
     modifiedFiles=$(echo $changedFiles | tr &quot; &quot; &quot;\n&quot;)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
-#	git push origin HEAD:refs/for/$GERRIT_BRANCH
+	git push origin HEAD:refs/for/$GERRIT_BRANCH
     # add reviewrs to the new change in Web-ui/ovoc
-#    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
+    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
 cd ${WORKSPACE}  
 echo modifiedFiles=$modifiedFiles &gt; prop
@@ -185,7 +185,7 @@ echo modifiedFiles=$modifiedFiles &gt; prop
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>ben.magriso@audiocodes.com</recipientList>
+      <recipientList>ben.magriso@audiocodes.com,Ron.Bensimon@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -193,6 +193,7 @@ echo modifiedFiles=$modifiedFiles &gt; prop
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
             <attachmentsPattern></attachmentsPattern>
             <attachBuildLog>false</attachBuildLog>
