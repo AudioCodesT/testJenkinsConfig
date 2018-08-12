@@ -167,10 +167,12 @@ else
 #	git push origin HEAD:refs/for/$GERRIT_BRANCH
     # add reviewrs to the new change in Web-ui/ovoc
 #    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
+echo changedFiles=${changedFiles} &gt;&gt; prop
 fi
 #,ron.bensimon@audiocodes.com
 echo &quot;changedFiles=${changedFiles}&quot; &gt;&gt; prop
-echo changedFiles=$changedFiles &gt;&gt; prop</command>
+echo changedFiles=$changedFiles &gt;&gt; prop
+echo changedFiles=${changedFiles} &gt;&gt; prop</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
