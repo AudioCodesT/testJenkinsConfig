@@ -163,6 +163,7 @@ else
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
     echo changedFiles=${changedFiles} &gt;&gt; prop
+    echo &quot;changedFiles=$changedFiles&quot; &gt;&gt; prop
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 #	git push origin HEAD:refs/for/$GERRIT_BRANCH
