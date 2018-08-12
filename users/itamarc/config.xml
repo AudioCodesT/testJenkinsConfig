@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <user>
   <fullName>Itamar Cohen</fullName>
   <properties>
@@ -8,7 +8,7 @@
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
-    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.57.2">
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
     <hudson.model.MyViewsProperty>
@@ -34,11 +34,13 @@
         <string># All Dinner</string>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
+        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -47,6 +49,7 @@
         <string># Gym</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># ATCA forum</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -57,6 +60,7 @@
         <string>Linuxusers</string>
         <string>cc_api</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -64,12 +68,12 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1521455908719</timestamp>
+      <timestamp>1534051605811</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Itamar.Cohen@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
   </properties>
