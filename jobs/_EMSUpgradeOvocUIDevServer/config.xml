@@ -68,9 +68,9 @@
       <command>vmIpProtractor=&quot;172.17.118.91&quot;
 vmIPOvocUiOfficalServer=&quot;172.17.118.95&quot;
 #python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor offical_iso
-echo &quot;***********************************************&quot;
-echo &quot;*** Upgrade has been finished *****************&quot;
-echo &quot;***********************************************&quot;</command>
+echo &quot;*****************************************************************&quot;
+echo &quot;*** Protractor Server Upgrade has been finished *****************&quot;
+echo &quot;*****************************************************************&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
