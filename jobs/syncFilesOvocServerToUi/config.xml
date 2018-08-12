@@ -180,12 +180,12 @@ echo &quot;changedFiles=$changedFiles&quot;</command>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso@audiocodes.com</recipients>
+      <recipients>Ben.Magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>benm@audiocodes.com,Ron.Bensimon@audiocodes.com</recipientList>
+      <recipientList>Ben.Magriso@audiocodes.com,Ron.Bensimon@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
