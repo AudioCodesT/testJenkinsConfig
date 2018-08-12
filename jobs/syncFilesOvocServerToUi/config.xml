@@ -160,6 +160,7 @@ else
 #	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
+    modifiedFiles=($changedFiles)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 #	git push origin HEAD:refs/for/$GERRIT_BRANCH
@@ -167,7 +168,7 @@ else
 #    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
 cd ${WORKSPACE}  
-echo changedFiles=$changedFiles &gt; prop
+echo modifiedFiles=$modifiedFiles &gt; prop
 
 #,ron.bensimon@audiocodes.com</command>
     </hudson.tasks.Shell>
@@ -204,7 +205,7 @@ echo changedFiles=$changedFiles &gt; prop
       <contentType>default</contentType>
       <defaultSubject>Auto-Copy from Ovoc server: REST Schemas change</defaultSubject>
       <defaultContent>The Files that was Copied from ovoc server to ovoc ui are:
-$changedFiles</defaultContent>
+$modifiedFiles</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
