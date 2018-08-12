@@ -172,6 +172,9 @@ echo &quot;Test!!!!!&quot; &gt; prop1
 echo changedFiles=$changedFiles &gt;&gt; prop
 echo changedFiles=$changedFiles &gt; prop1
 echo &quot;changedFiles=$changedFiles&quot; | dd of=prop2
+cat &lt;&lt;-EOF &gt; prop3
+	changedFiles=$changedFiles
+	EOF
 #,ron.bensimon@audiocodes.com</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
