@@ -162,12 +162,13 @@ else
 #	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
+    echo changedFiles=${changedFiles} &gt;&gt; prop
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 #	git push origin HEAD:refs/for/$GERRIT_BRANCH
     # add reviewrs to the new change in Web-ui/ovoc
 #    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
-echo changedFiles=${changedFiles} &gt;&gt; prop
+
 fi
 #,ron.bensimon@audiocodes.com
 echo &quot;changedFiles=${changedFiles}&quot; &gt;&gt; prop
