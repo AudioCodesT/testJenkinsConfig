@@ -158,15 +158,15 @@ else
     #create a new commit with the modified files in REST Schemas files and push the changes to web-ui OVOC
 	cd ovoc/
     gitdir=$(git rev-parse --git-dir); scp -p -P 29418 jenkins@test-gerrit:hooks/commit-msg ${gitdir}/hooks/
-	#git add src/schema
-	#git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
+	git add src/schema
+	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
-	#git push origin HEAD:refs/for/$GERRIT_BRANCH
+	git push origin HEAD:refs/for/$GERRIT_BRANCH
     # add reviewrs to the new change in Web-ui/ovoc
-    #ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
+    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
 
 echo &quot;changedFiles=$changedFiles&quot; &gt;&gt; prop
@@ -180,12 +180,28 @@ echo &quot;changedFiles=$changedFiles&quot;</command>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>Ben.Magriso@audiocodes.com</recipients>
+      <recipients>ben.magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Ben.Magriso@audiocodes.com</recipientList>
+      <recipientList>ben.magriso@audiocodes.com,ron.bensimon@audiocodes.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Auto-Copy from Ovoc server: REST Schemas change</defaultSubject>
       <defaultContent>The Files that was Copied from ovoc server to ovoc ui are:
