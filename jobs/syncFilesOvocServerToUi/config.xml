@@ -126,8 +126,6 @@
     <hudson.tasks.Shell>
       <command>cd ${WORKSPACE}    
 changedFiles=&quot;&quot;
-test=&quot;False&quot;
-echo &quot;test=$test&quot; &gt; prop
 # if version is 7.4.* - not run the job
 if [[ &quot;$GERRIT_BRANCH&quot; == &quot;7.4&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
 then 
@@ -168,13 +166,8 @@ else
     # add reviewrs to the new change in Web-ui/ovoc
 #    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
-echo &quot;Test!!!!!&quot; &gt; prop1
-echo changedFiles=$changedFiles &gt;&gt; prop
-echo changedFiles=$changedFiles &gt; prop1
-echo &quot;changedFiles=$changedFiles&quot; | dd of=prop2
-cat &lt;&lt;-EOF &gt; prop3
-	changedFiles=$changedFiles
-	EOF
+echo changedFiles=$changedFiles &gt; prop
+
 #,ron.bensimon@audiocodes.com</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
