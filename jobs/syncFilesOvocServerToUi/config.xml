@@ -158,15 +158,15 @@ else
     #create a new commit with the modified files in REST Schemas files and push the changes to web-ui OVOC
 	cd ovoc/
     gitdir=$(git rev-parse --git-dir); scp -p -P 29418 jenkins@test-gerrit:hooks/commit-msg ${gitdir}/hooks/
-	git add src/schema
-	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
+#	git add src/schema
+#	git commit -m &quot;Auto-Copy from Ovoc server: REST Schemas change&quot; -m &quot;&quot; -m &quot;Issue: OVOC-1287&quot;
 	# get the commit modified files to send an email with these files.
     changedFiles=$(git diff --name-only HEAD~1 HEAD)
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
-	git push origin HEAD:refs/for/$GERRIT_BRANCH
+#	git push origin HEAD:refs/for/$GERRIT_BRANCH
     # add reviewrs to the new change in Web-ui/ovoc
-    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
+#    ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
 
 echo &quot;changedFiles=${changedFiles}&quot; &gt;&gt; prop
