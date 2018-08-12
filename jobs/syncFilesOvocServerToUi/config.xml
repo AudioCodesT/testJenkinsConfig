@@ -166,6 +166,7 @@ else
     # add reviewrs to the new change in Web-ui/ovoc
     ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
+cd ${WORKSPACE}  
 echo changedFiles=$changedFiles &gt; prop
 
 #,ron.bensimon@audiocodes.com</command>
