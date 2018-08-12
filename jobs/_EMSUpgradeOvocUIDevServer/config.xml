@@ -67,7 +67,8 @@
     <hudson.tasks.Shell>
       <command>vmIpProtractor=&quot;172.17.118.91&quot;
 vmIPOvocUiOfficalServer=&quot;172.17.118.95&quot;
-#python2.7 SanityInstall.py $NEW_TAG $vmIP1 offical_iso</command>
+#python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor offical_iso
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
