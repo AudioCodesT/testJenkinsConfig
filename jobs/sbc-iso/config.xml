@@ -22,7 +22,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Tag</name>
           <description></description>
-          <defaultValue>7.2.150</defaultValue>
+          <defaultValue>7.20A.203.524</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
