@@ -58,9 +58,6 @@
       <hudson.plugins.git.BranchSpec>
         <name>server_${TAG}</name>
       </hudson.plugins.git.BranchSpec>
-      <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
-      </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
@@ -202,6 +199,18 @@ echo &quot;$(date) : vm IP is $vmip&quot; &gt;&gt; $logfile
 ###################################################################################################
 # Install DVD 3 on basic vovoc server
 
+# if branch is 7.4 then we dont run this step
+# in branch is higher than 7.4 then we need to arrange the directory EMS/target
+# so it will contain only the 5 jar files we copied from build-ovoc job archive
+# and all executables
+cd ${WORKSPACE}/EMS
+[[ ! -f target ]] &amp;&amp; mkdir target
+chmod 0775 target
+cd target
+rm -rf *
+cp ${WORKSPACE}/ovaPreRequisites/* .
+chmod 0775 *
+
 # Set Network
 echo &quot;$(date) : Applying DVD 3&quot; &gt;&gt; $logfile
 cd EMS/VersionRelease
@@ -310,7 +319,7 @@ echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
         <filePath></filePath>
       </downloadSpec>
       <deployPattern></deployPattern>
-      <resolvePattern>repo-key:ems-release/com/ac/ems/ovoc_server/7.4.3000/Sanity_preReq/${TAG}/*=&gt;preRequisites</resolvePattern>
+      <resolvePattern>repo-key:ems-release/com/ac/ems/ovoc_server/7.4.3000/Sanity_preReq/${TAG}/*=&gt;ovaPreRequisites</resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
