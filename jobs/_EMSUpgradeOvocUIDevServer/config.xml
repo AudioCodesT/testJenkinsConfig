@@ -73,9 +73,9 @@ echo &quot;******** Protractor Server Upgrade has been finished ************&quo
 echo &quot;*****************************************************************&quot;
 
 #python2.7 SanityInstall.py $NEW_TAG $vmIPOvocUiOfficalServer offical_iso
-#echo &quot;*****************************************************************&quot;
+#echo &quot;**********************************************************************&quot;
 #echo &quot;******** OVOC UI Offical Server Upgrade has been finished ************&quot;
-#echo &quot;*****************************************************************&quot;</command>
+#echo &quot;**********************************************************************&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
