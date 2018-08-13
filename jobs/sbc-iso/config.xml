@@ -21,7 +21,7 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>Tag</name>
-          <description></description>
+          <description>Could be any desired TAG (without the &apos;F&apos;) or the branch name</description>
           <defaultValue>7.20A.203.524</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -122,6 +122,7 @@ echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
 BOARDNAME=&quot;${BOARDNAME}_SIP&quot;
 echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
 echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;` &gt;&gt; generated_sbc_version.properties
+
 
 </command>
     </hudson.tasks.Shell>
