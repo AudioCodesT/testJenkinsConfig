@@ -123,6 +123,15 @@ BOARDNAME=&quot;${BOARDNAME}_SIP&quot;
 echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
 echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;` &gt;&gt; generated_sbc_version.properties
 
+echo Check if need to change files for a specific customer
+PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/private-labels
+
+if [[ $Customer != &quot;&quot; ]]; then
+  for f in $(curl -ks &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; done
+  if [ -f ./copyFiles.sh ]; then ./copyFiles.sh; fi
+fi
+
+
 
 </command>
     </hudson.tasks.Shell>
