@@ -25,6 +25,13 @@
           <defaultValue>7.2.150</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>Customer</name>
+          <description>Search the customer name on the following path: https://test-artifactory/sbc-release/com/ac/sbc/private-labels
+If exist, the files under this customer will be copied before compilation (should changed the icon image etc...) </description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
