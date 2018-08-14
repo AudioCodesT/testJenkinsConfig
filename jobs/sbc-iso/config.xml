@@ -169,7 +169,7 @@ if [[ $Customer != &quot;&quot; ]]; then
 	if [ -f ./copyFiles.sh ]; then
 		chmod +x copyFiles.sh
 		./copyFiles.sh
-		echo &quot;$Customer files copy is done&quot;
+		echo &quot;$Customer files were copied to the right path&quot;
         echo &quot;*******    END PRIVATE LABALING    ***********&quot;
 	else
 		echo &quot;The file copyFiles.sh is missing, no files were copied&quot;
