@@ -100,12 +100,14 @@ sudo chown -R centos:centos .
 BOARDNAME=&quot;HostedTP&quot;
 cd TrunkPackRam
 
+# Get needed images for the HostedTP board
 if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
   ./GetImages.sh $BOARDNAME $artifactory_host $User
 fi
 
+# Prepare the BrdVersion.h
 Tag=`git describe --abbrev=0 --tags`
 Fix=`echo $Tag | cut -d. -f4 | sed -r &apos;s/^0*//&apos;`
 if [ -z $Fix ]; then Fix=0; fi
@@ -138,6 +140,7 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;
   rm -rf $WORKSPACE/CompilationResults
 fi
 
+# Bring the BuildTools repository - you must it to build the ISO
 (
 commit_sha1=`git ls-files --stage OpenSource/BuildTools | cut -f2 -d &apos; &apos;`
 cd OpenSource
@@ -173,6 +176,7 @@ fi
 
 cd TrunkPackRam
 
+# Execute the build
 ./buildAll.sh --board=HostedTP --sip=yes --iso=yes --fast=yes --user=no --server=localhost
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
