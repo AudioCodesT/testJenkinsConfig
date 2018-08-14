@@ -295,7 +295,10 @@ fi
 echo &quot;*** Finish Network Configuration ***&quot;
 
 #install the latest official
-python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso noOva
+if [[ &quot;$FROM&quot; == &quot;7.4.3000&quot; ]]
+then python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso noOva
+else python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+fi
 echo &quot;***********************************************&quot;
 echo &quot;*** Finish SanityInstall of the old version ***&quot;
 echo &quot;***********************************************&quot;
@@ -304,7 +307,10 @@ echo &quot;***********************************************&quot;
 #first, check out the tag of the latest that we want to upgrade to
 echo &quot;*** first, check out the tag of the latest that we want to upgrade to ***&quot;
 git checkout server_$NEW_TAG
-python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION noOva
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
+then python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso noOva
+else python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+fi
 echo &quot;***********************************************&quot;
 echo &quot;*** Upgrade has been finished *****************&quot;
 echo &quot;***********************************************&quot;
