@@ -159,7 +159,7 @@ echo EMAIL=${EMAIL} &gt;&gt; release.prop
 echo PROJECT=${GERRIT_PROJECT} &gt;&gt; release.prop
 echo DATE=${DATE} &gt;&gt; release.prop
 echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
-echo WTB=$WTB &gt;&gt; release.prop
+echo WTB=${WTB} &gt;&gt; release.prop
 
 echo &quot;**************************************************************&quot;
 echo &quot;******************** Exported Variables **********************&quot;
