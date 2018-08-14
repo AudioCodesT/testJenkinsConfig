@@ -82,7 +82,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>OVA=&quot;/home/centos/data/ovoc/ova/${OVA}.ova&quot;
+      <command>OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 
 # Set the following values to fit your need
 hostIP=&quot;10.7.10.7&quot;
