@@ -153,12 +153,12 @@ sudo chown -R centos:centos .
 )
 
 echo Check if need to change files for a specific customer
-PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/private-labels
+PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/private-labels/$Customer
 DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 
 if [[ $Customer != &quot;&quot; ]]; then
-  echo Find $PRIVATE/$Customer in Artifactory
-  for f in $(curl -ks &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+  echo Find $PRIVATE in Artifactory
+  for f in $(curl -ks &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
     curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
   done
   echo Check if copyFiles.sh exist
