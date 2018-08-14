@@ -154,11 +154,20 @@ sudo chown -R centos:centos .
 
 echo Check if need to change files for a specific customer
 PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/private-labels
-DOWNLOAD=$(echo $ARTIFACTORY | sed &apos;s|api/storage/||&apos;)
+DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 
 if [[ $Customer != &quot;&quot; ]]; then
-  for f in $(curl -ks &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; done
-  if [ -f ./copyFiles.sh ]; then ./copyFiles.sh; fi
+  echo Find $PRIVATE/$Customer in Artifactory
+  for f in $(curl -ks &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+    curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
+  done
+  echo Check if copyFiles.sh exist
+  if [ -f ./copyFiles.sh ]; then 
+     ./copyFiles.sh;
+     echo Copied files was done
+  else
+    echo File copyFiles.sh was not found, no files were copied
+  fi
 fi
 
 cd TrunkPackRam
