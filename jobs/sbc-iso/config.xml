@@ -153,7 +153,7 @@ sudo chown -R centos:centos .
 )
 
 echo Check if need to change files for a specific customer
-PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/private-labels/$Customer
+PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
 DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 
 if [[ $Customer != &quot;&quot; ]]; then
@@ -231,9 +231,9 @@ rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-F$NEWTAG.iso=&gt;com/ac/sbc/${GERRIT_BRANCH}/ISO/${NEWTAG}
-${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/${GERRIT_BRANCH}/ISO/${NEWTAG}
-${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/ISO/${NEWTAG}
+      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
