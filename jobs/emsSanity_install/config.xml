@@ -279,10 +279,12 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 echo &quot;Finish SetNetwork Configuration&quot;
 
-if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
-then python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION noOva
-else python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION noOva
+else
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 fi
+
 echo &quot;Finish SanityInstall&quot;
 
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
