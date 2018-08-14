@@ -163,8 +163,7 @@ if [[ $Customer != &quot;&quot; ]]; then
   done
   echo Check if copyFiles.sh exist
   if [ -f ./copyFiles.sh ]; then 
-  		chmod +x copyFiles.sh
-		./copyFiles.sh;
+		./copyFiles.sh
 		echo Copied files was done
   else
 		echo File copyFiles.sh was not found, no files were copied
