@@ -21,14 +21,15 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>Tag</name>
-          <description>Could be any desired TAG (without the &apos;F&apos;) or the branch name</description>
+          <description>Could be any desired TAG (without the &apos;F&apos; prefix) or branch name</description>
           <defaultValue>7.20A.203.524</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Customer</name>
-          <description>Search the customer name on the following path: https://test-artifactory/sbc-release/com/ac/sbc/private-labels
-If exist, the files under this customer will be copied before compilation (should changed the icon image etc...) </description>
+          <description>This param should be filled only for a private label ISO.
+Search the customer name on the following path: https://test-artifactory/sbc-release/com/ac/sbc/private-labels
+If exist, all files under this customer folder will be copied from artifactory to compilation workspace before compilation (should changed the icon image etc...)</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
