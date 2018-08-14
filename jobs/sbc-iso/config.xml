@@ -155,23 +155,29 @@ sudo chown -R centos:centos .
 
 )
 
-echo Check if need to change files for a specific customer
-PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
-DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
-
+# should we use private labeling in this ISO ?
+echo &quot;Check if need to change files for a specific customer&quot;
 if [[ $Customer != &quot;&quot; ]]; then
-  echo Find $PRIVATE in Artifactory
-  for f in $(curl -ks &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
-    curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
-  done
-  echo Check if copyFiles.sh exist
-  if [ -f ./copyFiles.sh ]; then
-  		chmod +x copyFiles.sh
+	echo &quot;*******    START PRIVATE LABALING    ************&quot;
+	PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
+	DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
+	echo &quot;download from artifactory all files under $Customer&quot;
+	for f in $(curl -ks &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+		curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
+	done
+	echo &quot;Check if copyFiles.sh exist&quot;
+	if [ -f ./copyFiles.sh ]; then
+		chmod +x copyFiles.sh
 		./copyFiles.sh
-		echo Copied files was done
-  else
-		echo File copyFiles.sh was not found, no files were copied
-  fi
+		echo &quot;$Customer files copy is done&quot;
+        echo &quot;*******    END PRIVATE LABALING    ***********&quot;
+	else
+		echo &quot;The file copyFiles.sh is missing, no files were copied&quot;
+        exit 1
+	fi
+else
+	echo &quot;No private labaling is needed in this ISO&quot;
+    echo &quot;Continuing to build&quot;
 fi
 
 cd TrunkPackRam
