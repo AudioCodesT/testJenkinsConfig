@@ -106,7 +106,7 @@ cd EMS/VersionRelease
 #change time out from 5 minits to 25 minits
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,1500.0/g&apos; SanityInstall.py
 
-python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor offical_iso
+python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor official_iso
 #python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor latest_iso
 echo &quot;*****************************************************************&quot;
 echo &quot;******** Protractor Server Upgrade has been finished ************&quot;
