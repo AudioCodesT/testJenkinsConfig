@@ -158,7 +158,7 @@ vms=`ssh root@${hostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot
 if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
     for vmid in $vms; do
         echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&gt; $logfile
-        ssh root@${hostIP} vim-cmd vmsvc/power.off ${vmid} &gt;&gt; $logfile
+        ( ssh root@${hostIP} vim-cmd vmsvc/power.off ${vmid} ) || true &gt;&gt; $logfile
         sleep 10
         ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
         sleep 10
