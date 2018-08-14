@@ -154,6 +154,7 @@ sudo chown -R centos:centos .
 
 echo Check if need to change files for a specific customer
 PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/private-labels
+DOWNLOAD=$(echo $ARTIFACTORY | sed &apos;s|api/storage/||&apos;)
 
 if [[ $Customer != &quot;&quot; ]]; then
   for f in $(curl -ks &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; done
