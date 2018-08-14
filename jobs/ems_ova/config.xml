@@ -319,7 +319,7 @@ echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
         <filePath></filePath>
       </downloadSpec>
       <deployPattern></deployPattern>
-      <resolvePattern>repo-key:ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*=&gt;${WORKSPACE}/ovaPreRequisites</resolvePattern>
+      <resolvePattern>repo-key:ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*=&gt;/home/centos/jenkinsslave/workspace/ovaPreRequisites</resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
