@@ -52,9 +52,11 @@
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
+        <string># SBC Infra</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string># R&amp;D MEM</string>
@@ -77,7 +79,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1533803081783</timestamp>
+      <timestamp>1534245366905</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amos.Bublil@audiocodes.com</emailAddress>
