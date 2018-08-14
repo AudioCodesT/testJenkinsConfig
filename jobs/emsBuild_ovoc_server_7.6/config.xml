@@ -340,7 +340,12 @@ fi</command>
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/EMS/target/DVD3*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/${ISO_DEPLOY_DESTINATION}
-
+${WORKSPACE}/EMS/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/common/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/database/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/EMS/FKGenerator.ini=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
