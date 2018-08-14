@@ -208,7 +208,7 @@ cd ${WORKSPACE}/EMS
 chmod 0775 target
 cd target
 rm -rf *
-cp ${WORKSPACE}/ovaPreRequisites/* .
+cp ${WORKSPACE}/../ovaPreRequisites/* .
 chmod 0775 *
 
 # Set Network
