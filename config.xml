@@ -364,28 +364,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-06c70c2d66c707da1</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-06c70c2d66c707da1</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2018-08-12 09:27:38.477 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0baeba070559c9300</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0baeba070559c9300</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2018-08-12 09:27:38.53 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -880,7 +859,6 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>_EMSUpgradeOvocUIDevServer</string>
         <string>clmBuild</string>
         <string>clmCreateTag</string>
         <string>ems_ova</string>
@@ -899,6 +877,7 @@
         <string>emsReview_ovocServer</string>
         <string>emsSanity_install</string>
         <string>emsSanity_upgrade</string>
+        <string>EMSUpgradeOvocUIDevServer</string>
       </jobNames>
       <jobFilters/>
       <columns>
