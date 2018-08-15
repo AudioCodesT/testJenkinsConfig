@@ -172,9 +172,11 @@ if [[ $Customer != &quot;&quot; ]]; then
 	done
 	echo &quot;Check if copyFiles.sh exist&quot;
 	if [ -f ./copyFiles.sh ]; then
-		chmod +x copyFiles.sh
-		./copyFiles.sh
-        cat copyFiles.sh
+        # Dos2unix
+    	tr -d &apos;\r&apos; &lt; copyFiles.sh &gt; copyFiles_unix.sh
+		chmod +x copyFiles_unix.sh
+		./copyFiles_unix.sh
+        cat copyFiles_unix.sh
 		echo &quot;$Customer files were copied to the right path&quot;
         echo &quot;*******    END PRIVATE LABALING    ***********&quot;
 	else
@@ -193,6 +195,7 @@ cd TrunkPackRam
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
+mv sbc*.iso sbc-F$NEWTAG.iso
 
 
 </command>
