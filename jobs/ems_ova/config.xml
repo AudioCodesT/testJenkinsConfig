@@ -68,7 +68,7 @@
         <noTags>false</noTags>
         <reference></reference>
         <timeout>30</timeout>
-        <depth>100</depth>
+        <depth>1</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
