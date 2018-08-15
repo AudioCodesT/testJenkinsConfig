@@ -108,7 +108,10 @@ if [ -e ../OpenSource/$BOARDNAME.deps ]; then
 fi
 
 # Prepare the BrdVersion.h
-Tag=`git describe --abbrev=0 --tags`
+# Check if $Tag exist - if not, take it from the git command
+if [[ $Tag != $(git tag -l $Tag) ]]; then
+	Tag=`git describe --abbrev=0 --tags`
+fi
 Fix=`echo $Tag | cut -d. -f4 | sed -r &apos;s/^0*//&apos;`
 if [ -z $Fix ]; then Fix=0; fi
 
