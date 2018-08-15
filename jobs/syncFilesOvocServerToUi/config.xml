@@ -180,7 +180,7 @@ echo modifiedFiles=$modifiedFiles &gt; prop
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso@audiocodes.com</recipients>
+      <recipients>ben.magriso@audiocodes.com,Shuky.Riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
