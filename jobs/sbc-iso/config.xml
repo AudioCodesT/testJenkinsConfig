@@ -250,6 +250,7 @@ rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
       <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
 ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
 ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
