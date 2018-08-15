@@ -275,11 +275,11 @@ cd EMS/VersionRelease
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 	# in old versions we send default gateway
 	then	python2.7 setNetwork.py $vmIP $DefaultGateway
-    # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
-    else	python2.7 setNetwork.py $vmIP $sanityOrAmi
-fi
-if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
+elif [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
+    # setNetwork.py was changed to fit vmware - subnet is a parameter
     then python2.7 setNetwork.py $vmIP 24 $DefaultGateway
+# from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
+else python2.7 setNetwork.py $vmIP $sanityOrAmi
 fi
 
 echo &quot;Finish SetNetwork Configuration&quot;
