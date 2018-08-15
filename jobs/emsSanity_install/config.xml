@@ -298,6 +298,21 @@ then
 else
 	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
     then
+    		#check if the ami already exists
+            #checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${NEW_TAG} --output text --query &quot;Images[0].State&quot;)
+            #if [[ &quot;$checkIfAmiExists&quot; == &quot;available&quot; ]]
+            #then
+            	#echo &quot;Deleting existing AMI of ovocAMI_${NEW_TAG}&quot;
+            	#get AmiId to delete it
+            	#AmiID=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${NEW_TAG} --output text --query &quot;Images[0].ImageId&quot;)
+                
+               	#get Snapshot id - delete the Snapshot
+           		#snapshotId=$(aws ec2 describe-images --image-ids $AmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
+                
+                #delete AMI and Snopshot ID
+                #aws ec2 deregister-image --image-id ${AmiID}
+                #aws ec2 delete-snapshot --snapshot-id ${snapshotId}
+            #fi
     		echo &quot;Creating New Ovoc Ami&quot;
             #create a new AMI After installation and keep ImageID value
             AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
