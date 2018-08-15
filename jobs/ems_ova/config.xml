@@ -208,7 +208,7 @@ cd ${WORKSPACE}/EMS
 chmod 0775 target
 cd target
 rm -rf *
-cp ${WORKSPACE}/../ovaPreRequisites/* .
+cp ${WORKSPACE}/ovaPreRequisites/* .
 chmod 0775 *
 cd ${WORKSPACE}
 
@@ -320,7 +320,7 @@ echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
         <filePath></filePath>
       </downloadSpec>
       <deployPattern></deployPattern>
-      <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;/home/centos/jenkinsslave/workspace/ovaPreRequisites</resolvePattern>
+      <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites</resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
