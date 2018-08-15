@@ -286,12 +286,16 @@ fi
 cd EMS/VersionRelease
 echo &quot;*** Start Network Configuration ***&quot;
 # $FROM = the branch we want to upgrade from
-if [[ &quot;$FROM&quot; == &quot;master&quot; || &quot;$FROM&quot; == &quot;7.4.1000&quot; || &quot;$FROM&quot; == &quot;7.4.2000&quot; || &quot;$FROM&quot; == &quot;7.4.3000&quot; ]]
+if [[ &quot;$FROM&quot; == &quot;master&quot; || &quot;$FROM&quot; == &quot;7.4.1000&quot; || &quot;$FROM&quot; == &quot;7.4.2000&quot; ]]
 	# in old versions we send default gateway
 	then	python2.7 setNetwork.py $vmIP $DefaultGateway
     # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
     else	python2.7 setNetwork.py $vmIP sanity
 fi
+if [[ &quot;$FROM&quot; == &quot;7.4.3000&quot; ]]
+    then python2.7 setNetwork.py $vmIP 24 $DefaultGateway
+fi
+
 echo &quot;*** Finish Network Configuration ***&quot;
 
 #install the latest official
