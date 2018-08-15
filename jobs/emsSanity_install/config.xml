@@ -312,6 +312,7 @@ else
                 #delete AMI and Snopshot ID
                 aws ec2 deregister-image --image-id ${AmiIDToDelete}
                 aws ec2 delete-snapshot --snapshot-id ${snapshotIdToDelete}
+                sleep 60
             fi
     		echo &quot;Creating New Ovoc Ami&quot;
             #create a new AMI After installation and keep ImageID value
