@@ -121,6 +121,8 @@ BrdFile=&quot;Bsps/Common/Include/BrdVersion.h&quot;
 sed &quot;9,12 s/%MINOR%/$Minor/;9,12 s/%FIX%/$Fix/&quot; BrdVersion.h.in &gt; $BrdFile
 
 NEWTAG=$Tag
+if [[ $Customer != &quot;&quot; ]]; then NEWTAG=${Tag}-$Customer; fi
+
 head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
 cd ..
