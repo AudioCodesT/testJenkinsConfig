@@ -120,8 +120,8 @@ BrdFile=&quot;Bsps/Common/Include/BrdVersion.h&quot;
 
 sed &quot;9,12 s/%MINOR%/$Minor/;9,12 s/%FIX%/$Fix/&quot; BrdVersion.h.in &gt; $BrdFile
 
-NEWTAG=$Tag
-if [[ $Customer != &quot;&quot; ]]; then NEWTAG=${Tag}-$Customer; fi
+# Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
+if [[ $Customer != &quot;&quot; ]]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
 
 head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
