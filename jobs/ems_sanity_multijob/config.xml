@@ -308,7 +308,7 @@ fi</command>
                   <configs>
                     <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
                   </configs>
-                  <projects>_EMSUpgradeOvocUIDevServer, </projects>
+                  <projects>EMSUpgradeOvocUIDevServer, </projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
