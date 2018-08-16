@@ -164,7 +164,7 @@ else
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 	git push origin HEAD:refs/for/$GERRIT_BRANCH
-    
+    #add to the mail the gerrit url of the new commit in OVOC UI
     # git push origin HEAD:refs/for/$GERRIT_BRANCH &gt; outputOfGitPush.txt 2&gt;&amp;1
     # gerritUrl=$(cat outputOfGitPush.txt | grep &quot;https://gerrit/#/c&quot;)  
     # cat outputOfGitPush.txt
