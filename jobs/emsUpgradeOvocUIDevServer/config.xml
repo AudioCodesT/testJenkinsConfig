@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>triggered by:  ems_sanity_multijob (branch = 7.6 ,ISO_deploy_destination = official_iso)&#xd;
+  <description>triggered by:  ems_sanity_multijob (only when branch = 7.6  &amp;&amp; ISO_deploy_destination = official_iso)&#xd;
 start parallel upgrade to both servers (172.17.118.91 - Protractor Server , 172.17.118.95 - Ovoc UI Server) &#xd;
 only when the ems_sanity_multijob succeeded </description>
   <keepDependencies>false</keepDependencies>
