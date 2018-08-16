@@ -165,7 +165,7 @@ echo &quot;*****************************************************************&quo
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <template>#${BUILD_NUMBER}__${NEW_TAG}__server-${serverToUpgrade}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
