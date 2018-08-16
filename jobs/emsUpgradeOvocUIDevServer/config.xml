@@ -27,7 +27,9 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>serverToUpgrade</name>
-          <description></description>
+          <description>choose which server to upgrade
+172.17.118.91 - Protractor Server
+172.17.118.95 - Ovoc UI Server</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>172.17.118.91</string>
