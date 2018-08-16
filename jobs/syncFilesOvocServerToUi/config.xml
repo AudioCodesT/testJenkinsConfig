@@ -164,13 +164,18 @@ else
   	changeId=$(git log -1 | grep Change-Id)
     changeId=$(echo $changeId | cut -f2 -d &apos; &apos;)
 	git push origin HEAD:refs/for/$GERRIT_BRANCH
+    
+    # git push origin HEAD:refs/for/$GERRIT_BRANCH &gt; outputOfGitPush.txt 2&gt;&amp;1
+    # gerritUrl=$(cat outputOfGitPush.txt | grep &quot;https://gerrit/#/c&quot;)  
+    # cat outputOfGitPush.txt
+    
     # add reviewrs to the new change in Web-ui/ovoc
     ssh -p 29418 jenkins@gerrit &quot;gerrit set-reviewers -a michael.lallouz@audiocodes.com -a ron.bensimon@audiocodes.com $changeId&quot;
 fi
 cd ${WORKSPACE}  
 echo modifiedFiles=$modifiedFiles &gt; prop
 
-#,ron.bensimon@audiocodes.com</command>
+#echo gerritUrl=$gerritUrl &gt;&gt; prop</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
