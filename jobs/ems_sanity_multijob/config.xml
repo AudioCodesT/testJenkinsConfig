@@ -305,6 +305,23 @@ fi</command>
                 <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
                   <configs>
                     <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+                    <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                      <properties>serverToUpgrade=172.17.118.91</properties>
+                      <textParamValueOnNewLine>false</textParamValueOnNewLine>
+                    </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                  </configs>
+                  <projects>EMSUpgradeOvocUIDevServer</projects>
+                  <condition>SUCCESS</condition>
+                  <triggerWithNoParameters>false</triggerWithNoParameters>
+                  <triggerFromChildProjects>false</triggerFromChildProjects>
+                </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+                <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+                  <configs>
+                    <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+                    <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                      <properties>serverToUpgrade=172.17.118.95</properties>
+                      <textParamValueOnNewLine>false</textParamValueOnNewLine>
+                    </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                   </configs>
                   <projects>EMSUpgradeOvocUIDevServer</projects>
                   <condition>SUCCESS</condition>
