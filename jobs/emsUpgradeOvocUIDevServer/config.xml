@@ -111,7 +111,7 @@ chmod 0775 *
       <command># run python scripts: install
 cd EMS/VersionRelease
 
-#change time out from 5 minits to 25 minits
+#change time out from 5 minits to 30 minits
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2000.0/g&apos; SanityInstall.py
 
 python2.7 SanityInstall.py $NEW_TAG $serverIP official_iso
