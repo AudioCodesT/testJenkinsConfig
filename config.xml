@@ -555,18 +555,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-c2878797</name>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-06cfe89d8fa5de95f</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-06cfe89d8fa5de95f</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
-            <createdAt>2018-08-16 09:01:38.312 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -616,18 +605,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-d72cb55a</name>
       <groupId>sig-d72cb55a</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-00459c195cf463f18</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-00459c195cf463f18</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>smt-codeanalysis</requestedLabel>
-            <createdAt>2018-08-16 09:01:38.734 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>smt-codeanalysis</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1006,6 +984,7 @@
         <string>smt-CodeAnalysis</string>
         <string>smt-CodeAnalysis-fullRepo</string>
         <string>smtBLD</string>
+        <string>smtBLD_ST4.2</string>
         <string>smtCRV</string>
       </jobNames>
       <jobFilters/>
