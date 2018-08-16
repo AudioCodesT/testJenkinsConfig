@@ -96,7 +96,7 @@ function createTag {
   LastTag=$NEWTAG
 }
 
-for GERRIT_BRANCH in master 4.4.5 4.4.6 4.4.6D 4.4.7
+for GERRIT_BRANCH in master 4.4.5 4.4.5B 4.4.6 4.4.6D 4.4.7
 do
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
