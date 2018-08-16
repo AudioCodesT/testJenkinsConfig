@@ -72,7 +72,7 @@
         <noTags>false</noTags>
         <reference></reference>
         <timeout>30</timeout>
-        <depth>1</depth>
+        <depth>10</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
