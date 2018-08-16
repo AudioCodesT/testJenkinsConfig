@@ -293,7 +293,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
 then
 exit 1
 else
-if [[ &quot;ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; &amp;&amp; &quot;$UpgradeUiDevServer&quot; == &quot;1&quot; ]]
+if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; &amp;&amp; &quot;$UpgradeUiDevServer&quot; == &quot;1&quot; ]]
 then 
 exit 0
 else
@@ -308,7 +308,7 @@ fi</command>
                   <configs>
                     <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
                   </configs>
-                  <projects>EMSUpgradeOvocUIDevServer, </projects>
+                  <projects>EMSUpgradeOvocUIDevServer</projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
