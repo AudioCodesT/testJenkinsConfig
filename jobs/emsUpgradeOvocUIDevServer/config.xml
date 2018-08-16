@@ -23,7 +23,7 @@ only when the ems_sanity_multijob succeeded </description>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
-          <description>if job is executed manually the tag must be official_iso</description>
+          <description>if job is executed manually the provided tag must be official_iso</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
