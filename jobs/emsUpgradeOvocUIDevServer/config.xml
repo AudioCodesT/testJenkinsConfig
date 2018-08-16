@@ -21,19 +21,29 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
-          <description></description>
+          <description>if job is executed manually the tag must be official_iso</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>serverIP</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>172.17.118.91</string>
+              <string>172.17.118.95</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
-      <throttleEnabled>false</throttleEnabled>
+      <throttleEnabled>true</throttleEnabled>
       <throttleOption>project</throttleOption>
-      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
@@ -62,7 +72,7 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.39">
       <project>emsBuild_ovoc_server_7.6</project>
@@ -98,24 +108,18 @@ chmod 0775 *
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>vmIpProtractor=&quot;172.17.118.91&quot;
-vmIPOvocUiOfficalServer=&quot;172.17.118.95&quot;
-# run python scripts: install
+      <command># run python scripts: install
 cd EMS/VersionRelease
 
 #change time out from 5 minits to 25 minits
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2000.0/g&apos; SanityInstall.py
 
-python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor official_iso
-#python2.7 SanityInstall.py $NEW_TAG $vmIpProtractor latest_iso
+python2.7 SanityInstall.py $NEW_TAG $serverIP official_iso
 echo &quot;*****************************************************************&quot;
-echo &quot;******** Protractor Server Upgrade has been finished ************&quot;
+echo &quot;*************** Server Upgrade has been finished ****************&quot;
 echo &quot;*****************************************************************&quot;
 
-#python2.7 SanityInstall.py $NEW_TAG $vmIPOvocUiOfficalServer offical_iso
-#echo &quot;**********************************************************************&quot;
-#echo &quot;******** OVOC UI Offical Server Upgrade has been finished ************&quot;
-#echo &quot;**********************************************************************&quot;</command>
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
