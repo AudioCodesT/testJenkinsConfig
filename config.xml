@@ -39,6 +39,7 @@
         </permissions>
         <assignedSIDs>
           <sid>CI_EMS_Developers</sid>
+          <sid># OVOC Web UI</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*)">
