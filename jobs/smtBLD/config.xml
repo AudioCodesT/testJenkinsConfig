@@ -422,7 +422,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
             </hudson.tasks.ArtifactArchiver>
             <hudson.tasks.ArtifactArchiver>
               <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\InstallShield\*.*</artifacts>
-              <allowEmptyArchive>false</allowEmptyArchive>
+              <allowEmptyArchive>true</allowEmptyArchive>
               <onlyIfSuccessful>false</onlyIfSuccessful>
               <fingerprint>false</fingerprint>
               <defaultExcludes>true</defaultExcludes>
