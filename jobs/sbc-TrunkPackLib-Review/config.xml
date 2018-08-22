@@ -152,7 +152,7 @@ IF NOT EXIST .git (&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/HA/Include/HAProtectedDef.h&#xd;
 @echo Checking out TrunkPackRam linked files&#xd;
 git -c http.sslverify=false fetch&#xd;
-@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/7.2.202 -- %TPFILES%&#xd;
+@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/7.2.204 -- %TPFILES%&#xd;
 cd %WORKSPACE%&#xd;
 &#xd;
 IF NOT exist &quot;CopyLinks.sh&quot; (&#xd;
