@@ -25,6 +25,16 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>TPRAM_BRANCH</name>
+          <description></description>
+          <defaultValue>7.2.204</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -152,7 +162,7 @@ IF NOT EXIST .git (&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/HA/Include/HAProtectedDef.h&#xd;
 @echo Checking out TrunkPackRam linked files&#xd;
 git -c http.sslverify=false fetch&#xd;
-@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/7.2.204 -- %TPFILES%&#xd;
+@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/$TPRAM_BRANCH -- %TPFILES%&#xd;
 cd %WORKSPACE%&#xd;
 &#xd;
 IF NOT exist &quot;CopyLinks.sh&quot; (&#xd;
