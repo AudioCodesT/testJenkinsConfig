@@ -88,7 +88,7 @@
     <hudson.tasks.Shell>
       <command>#############################################################################
 #############################################################################
-#############################################################################
+##### Fetching changes submitted to gerrit without waiting for a build ######
 ##### This is for testing ONLY!!!!!! Remove when going to production!! ######
 cd ${WORKSPACE}
 git fetch
