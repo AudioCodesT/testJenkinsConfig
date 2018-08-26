@@ -148,11 +148,11 @@ function sshUp {
     # Timeout after 60 seconds
 
     ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; &gt;&gt; $logfile &amp;&amp; exit)
-    local timeout=5s
+    local timeOut=5s
 
     for i in {1..10}; do
         echo &quot;$(date) : Testing ssh readiness on $ip&quot; &gt;&gt; $logfile
-        if timeout $timeout bash -c &quot;exec 5&gt;/dev/tcp/$ip/22&quot; 2&gt;/dev/null; then
+        if timeout $timeOut bash -c &quot;exec 5&gt;/dev/tcp/$ip/22&quot; 2&gt;/dev/null; then
             5&gt;&amp;-
             echo &quot;$(date) : SSH on $ip is up&quot; &gt;&gt; $logfile
             return 0
