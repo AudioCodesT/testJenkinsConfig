@@ -40,6 +40,7 @@
         <string># All Dinner</string>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string># Board ETAS</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -57,8 +58,8 @@
         <string># All Managers</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
-        <string># SBC ETAS</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -74,7 +75,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1534074920102</timestamp>
+      <timestamp>1535291333624</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
