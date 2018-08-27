@@ -51,13 +51,14 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
+        <string># SBC ETAS</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string># R&amp;D HDGW GROUP</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string># All Cellular</string>
-        <string># SBC Field Support</string>
         <string># All HotMobile</string>
         <string># BatchRunnerBlockStream</string>
         <string># R&amp;D HDGW SYSTEM QA</string>
@@ -70,7 +71,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1532615274869</timestamp>
+      <timestamp>1535358264352</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Haim.Hazan@audiocodes.com</emailAddress>
