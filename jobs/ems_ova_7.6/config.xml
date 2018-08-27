@@ -30,7 +30,7 @@
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>Deploy.7.4-rev18-rev3</string>
+              <string>Deploy.7.6-DVD1&amp;2</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -44,7 +44,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -96,7 +95,7 @@ git fetch
 git branch -a
 git branch -vv --no-color
 git log -3
-git checkout -f remotes/origin/7.4.3000
+git checkout -f remotes/origin/7.6
 #############################################################################
 #############################################################################
 #############################################################################
@@ -105,7 +104,7 @@ git checkout -f remotes/origin/7.4.3000
 OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 
 # Set the following values to fit your need
-hostIP=&quot;10.7.10.7&quot;
+vmHostIP=&quot;10.7.10.7&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 
@@ -132,7 +131,7 @@ function isUp {
     for i in {1..20}; do
         sleep 30
         echo &quot;$(date) : Getting VM $id power status&quot; &gt;&gt; $logfile
-        getState=$(ssh root@${hostIP} vim-cmd vmsvc/power.getstate $id | grep Powered | cut -d&apos; &apos; -f2)
+        getState=$(ssh root@${vmHostIP} vim-cmd vmsvc/power.getstate $id | grep Powered | cut -d&apos; &apos; -f2)
         if [[ &quot;$getState&quot; == &quot;on&quot; ]]; then
             echo &quot;$(date) : VM $id is up!&quot; &gt;&gt; $logfile
             return 0
@@ -174,41 +173,41 @@ echo &quot;$(date) : *****************  START  ******************&quot; &gt;&gt;
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc_base_for_ vm`s
-vms=`ssh root@${hostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
+vms=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
 if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
     for vmid in $vms; do
         echo &quot;$(date) : ovoc_base_for_$TAG already exist. Deleting vm&quot; &gt;&gt; $logfile
-        ( ssh root@${hostIP} vim-cmd vmsvc/power.off ${vmid} ) || true &gt;&gt; $logfile
+        ( ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} ) || true &gt;&gt; $logfile
         sleep 10
-        ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
+        ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
         sleep 10
     done
 fi
 
-ssh root@${hostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
+ssh root@${vmHostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; &gt;&gt; $logfile
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${hostIP} &gt;&gt; $logfile
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_$TAG&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} &gt;&gt; $logfile
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; &gt;&gt; $logfile
     exit
 fi
 
 # find new vm id
-vmid=`ssh root@${hostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
+vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_$TAG&quot; | gawk &apos;{print $1}&apos;`
 echo &quot;$(date) : vm id is $vmid&quot; &gt;&gt; $logfile
 
 # Wait for ovoc server power on
-#isUp $hostIP $vmid || exit
+#isUp $vmHostIP $vmid || exit
 echo &quot;$(date) : sleep 5 min.&quot; &gt;&gt; $logfile
 sleep 300
 
 # find new vm IP address
-vmip=`ssh root@${hostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
 ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; &gt;&gt; $logfile &amp;&amp; exit)
 echo &quot;$(date) : vm IP is $vmip&quot; &gt;&gt; $logfile
 
@@ -239,7 +238,7 @@ python2.7 setNetwork.py $vmip $netMask $DefaultGW || (echo &quot;$(date) : Faile
 
 # ovoc server was rebooted, so -
 # Wait for ovoc server power on
-#isUp ${hostIP} $vmid || exit -2
+#isUp ${vmHostIP} $vmid || exit -2
 echo &quot;$(date) : sleep 5 min.&quot; &gt;&gt; $logfile
 sleep 300
 
@@ -250,7 +249,7 @@ echo &quot;$(date) : Done applying DVD 3&quot; &gt;&gt; $logfile
 
 # ovoc server was rebooted during DVD 3 installation, so -
 # Wait for ovoc server power on
-#isUp ${hostIP} $vmid || exit -2
+#isUp ${vmHostIP} $vmid || exit -2
 echo &quot;$(date) : sleep 5 min.&quot; &gt;&gt; $logfile
 sleep 300
 
@@ -264,7 +263,7 @@ sleep 30
 
 # graceful shutdouwn this new full ovoc server VM
 echo &quot;$(date) : shutdown new VM&quot; &gt;&gt; $logfile
-ssh root@${hostIP} vim-cmd vmsvc/power.shutdown ${vmid} &gt;&gt; $logfile
+ssh root@${vmHostIP} vim-cmd vmsvc/power.shutdown ${vmid} &gt;&gt; $logfile
 sleep 30
 
 
@@ -274,7 +273,7 @@ sleep 30
 # export the new VM to an OVA file
 echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&gt; $logfile
 mkdir -p &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot;
-ovftool -o --noSSLVerify vi://root:$vipw@${hostIP}/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG.ova &gt;&gt; $logfile
+ovftool -o --noSSLVerify vi://root:$vipw@${vmHostIP}/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG.ova &gt;&gt; $logfile
 
 # Move output to Netapp
 mv -v $WORKSPACE/$TAG /home/centos/data/output/
@@ -288,7 +287,7 @@ echo &quot;$(date) : ********    **************   ***********&quot; &gt;&gt; $lo
 
 # Delete ovoc server vm
 echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
-[[ -f &quot;$WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG_$now.ova&quot; ]] &amp;&amp; ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
+[[ -f &quot;$WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG_$now.ova&quot; ]] &amp;&amp; ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
 
 
 
