@@ -47,6 +47,7 @@
         <string>Password Manager Apply</string>
         <string># Agile users</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -62,7 +63,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1534052478518</timestamp>
+      <timestamp>1535458331086</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Boaz.Sela@audiocodes.com</emailAddress>
