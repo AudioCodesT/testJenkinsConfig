@@ -272,8 +272,8 @@ sleep 30
 
 # export the new VM to an OVA file
 echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&gt; $logfile
-[[ -d &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot; ]] &amp;&amp; rm -rf &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot; || mkdir -p &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot;
-ovftool -o --noSSLVerify vi://root:$vipw@${hostIP}/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG.ova &gt;&gt; $logfile
+[[ -d &quot;$WORKSPACE/$TAG&quot; ]] &amp;&amp; rm -rf &quot;$WORKSPACE/$TAG&quot; || mkdir -p &quot;$WORKSPACE/$TAG&quot;
+ovftool -o --noSSLVerify vi://root:$vipw@${hostIP}/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG.ova &gt;&gt; $logfile
 echo &quot;$(date) : Done export new VM to an OVA file&quot; &gt;&gt; $logfile
 
 cd ~
