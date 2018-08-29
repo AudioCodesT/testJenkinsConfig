@@ -278,14 +278,9 @@ echo &quot;$(date) : Done export new VM to an OVA file&quot; &gt;&gt; $logfile
 
 cd ~
 
-# what left is to upload new OVA to Artifactory
-echo &quot;$(date) : ********        FINISH      ***********&quot; &gt;&gt; $logfile
-echo &quot;$(date) : what left is to upload new OVA to Artifactory&quot; &gt;&gt; $logfile
-echo &quot;$(date) : ********    **************   ***********&quot; &gt;&gt; $logfile
-
 # Delete ovoc server vm
 echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
-[[ -f &quot;$WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG_$now.ova&quot; ]] &amp;&amp; ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
+ssh root@${hostIP} vim-cmd vmsvc/destroy ${vmid} &gt;&gt; $logfile
 
 
 
