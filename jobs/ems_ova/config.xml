@@ -272,11 +272,9 @@ sleep 30
 
 # export the new VM to an OVA file
 echo &quot;$(date) : export new VM to an OVA file&quot; &gt;&gt; $logfile
-mkdir -p &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot;
+[[ -d &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot; ]] &amp;&amp; rm -rf &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot; || mkdir -p &quot;$WORKSPACE/$TAG/ovoc_server_$TAG&quot;
 ovftool -o --noSSLVerify vi://root:$vipw@${hostIP}/ovoc_base_for_$TAG $WORKSPACE/$TAG/ovoc_server_$TAG/ovoc_server_$TAG.ova &gt;&gt; $logfile
-
-# Move output to Netapp
-mv -v $WORKSPACE/$TAG /home/centos/data/output/
+echo &quot;$(date) : Done export new VM to an OVA file&quot; &gt;&gt; $logfile
 
 cd ~
 
@@ -295,7 +293,25 @@ echo &quot;$(date) : Delete ovoc server VM from host&quot; &gt;&gt; $logfile
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Done export new VM to an OVA file</logText>
+              <operator>AND</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>true</RunIfJobSuccessful>
+          <script># Move output to Netapp&#xd;
+[[ -d &quot;/home/centos/data/output/$TAG&quot; ]] &amp;&amp; rm -rf &quot;/home/centos/data/output/$TAG&quot;&#xd;
+mv -v $WORKSPACE/$TAG /home/centos/data/output/</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+  </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
