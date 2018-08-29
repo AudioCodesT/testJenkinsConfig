@@ -36,6 +36,7 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string># All 012 voip</string>
+        <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -43,11 +44,14 @@
         <string># All Friday</string>
         <string>Sp365-Devops-Read</string>
         <string># All R&amp;D</string>
+        <string># VoipLib</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
+        <string># QA SW</string>
         <string>QA Group</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -63,8 +67,10 @@
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
         <string># All Airport City</string>
+        <string># QA PSTN</string>
+        <string># SBC WireShark</string>
       </roles>
-      <timestamp>1530522155243</timestamp>
+      <timestamp>1535534966026</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Alex.Rodikov@audiocodes.com</emailAddress>
