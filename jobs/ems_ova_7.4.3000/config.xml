@@ -90,12 +90,12 @@
 #############################################################################
 ##### Fetching changes submitted to gerrit without waiting for a build ######
 ##### This is for testing ONLY!!!!!! Remove when going to production!! ######
-cd ${WORKSPACE}
-git fetch
-git branch -a
-git branch -vv --no-color
-git log -3
-git checkout -f remotes/origin/7.4.3000
+#cd ${WORKSPACE}
+#git fetch
+#git branch -a
+#git branch -vv --no-color
+#git log -3
+#git checkout -f remotes/origin/7.4.3000
 #############################################################################
 #############################################################################
 #############################################################################
