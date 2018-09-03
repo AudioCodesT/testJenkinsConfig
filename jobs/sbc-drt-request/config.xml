@@ -98,19 +98,23 @@ LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b
 
 echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
 echo batchID=${batchID} &gt;&gt; generated_drt.properties
-echo Output=${Output} &gt;&gt; generated_drt.properties
 echo url=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
 
 if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
   echo $Output | grep &apos;BatchRunner Is Down&apos;
   echo &quot;No Batch ID... exit with error&quot;
+  echo Output=&quot;No Batch ID&quot; &gt;&gt; generated_drt.properties
   exit 1;
 fi
 
 if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
   echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
+  echo Output=&quot;BatchRunner Is Down For Maintenance&quot; &gt;&gt; generated_drt.properties
   exit 1;
 fi
+
+echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
+
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
