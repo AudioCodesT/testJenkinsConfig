@@ -32,6 +32,7 @@
       <roles>
         <string>Agile users</string>
         <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -39,6 +40,7 @@
         <string># All Friday</string>
         <string>Sp365-Devops-Read</string>
         <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
         <string>Sp365-rdnetworking-modify</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -49,21 +51,25 @@
         <string>CMBU</string>
         <string># MP20x deliveries</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>Vopp</string>
         <string>Linuxusers</string>
+        <string># MSBR</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string># MSBR Hagay Halili Team</string>
       </roles>
-      <timestamp>1530703539592</timestamp>
+      <timestamp>1536046977572</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Hagay.Halili@audiocodes.com</emailAddress>
