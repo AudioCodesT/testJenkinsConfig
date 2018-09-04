@@ -413,7 +413,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
           <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
           <publisherList>
             <hudson.tasks.ArtifactArchiver>
-              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\*.*</artifacts>
+              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\**\*.*</artifacts>
               <allowEmptyArchive>false</allowEmptyArchive>
               <onlyIfSuccessful>false</onlyIfSuccessful>
               <fingerprint>false</fingerprint>
@@ -421,7 +421,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
               <caseSensitive>true</caseSensitive>
             </hudson.tasks.ArtifactArchiver>
             <hudson.tasks.ArtifactArchiver>
-              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\InstallShield\*.*</artifacts>
+              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\InstallShield\**\*.*</artifacts>
               <allowEmptyArchive>true</allowEmptyArchive>
               <onlyIfSuccessful>false</onlyIfSuccessful>
               <fingerprint>false</fingerprint>
