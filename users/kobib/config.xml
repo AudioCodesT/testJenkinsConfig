@@ -36,6 +36,7 @@
         <string>Agile users</string>
         <string>authenticated</string>
         <string># All 012 voip</string>
+        <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
         <string># All Orange</string>
         <string># All Cars</string>
@@ -49,6 +50,7 @@
         <string># All R&amp;D</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
+        <string># QA SW</string>
         <string># All Beer Sheva</string>
         <string># SQA_CORE</string>
         <string>QA Group</string>
@@ -72,7 +74,7 @@
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
       </roles>
-      <timestamp>1533216808443</timestamp>
+      <timestamp>1536082385448</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
       <providerId>default</providerId>
