@@ -191,7 +191,7 @@ $change,$ps
 export PATH=$HOME/Utils:$PATH
 rm -f build-error.log
 git gwinit
-scl enable devtoolset-4 &apos;git verify-gwapp&apos;
+scl enable devtoolset-7 &apos;git verify-gwapp&apos;
 res=$?
 cat build-error.log
 exit $res</command>
