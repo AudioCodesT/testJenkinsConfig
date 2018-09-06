@@ -53,6 +53,7 @@
         <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
       </matrixOptions>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -131,28 +132,13 @@ BOARDFINALNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
-Tag=$NEWTAG
-Fix=`echo &quot;$Tag&quot; | cut -d. -f4 | sed -r &apos;s/^0*//&apos;`
-if [ -z &quot;$Fix&quot; ]; then Fix=0; fi
-
-Minor=`echo &quot;$Tag&quot; | cut -d. -f3 | sed -r &apos;s/^0*//&apos;`
-if [ -z &quot;$Minor&quot; ]; then Minor=0; fi
-BrdFile=&quot;Bsps/Common/Include/BrdVersion.h&quot;
-
-sed &quot;9,12 s/%MINOR%/$Minor/;9,12 s/%FIX%/$Fix/&quot; BrdVersion.h.in &gt; $BrdFile.new
-if ! cmp -s $BrdFile.new $BrdFile; then
-  mv $BrdFile.new $BrdFile
-else
-  rm -f $BrdFile.new
+FindTAG=`./MakeBrdVersion.sh`
+head -12 Bsps/Common/Include/BrdVersion.h | tail -3
+if [ $FindTAG != $NEWTAG ]; then
+  echo Must be the same TAG name... abort
+  echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
+  exit 1;
 fi
-
-#FindTAG=`./MakeBrdVersion.sh`
-#head -12 Bsps/Common/Include/BrdVersion.h | tail -3
-#if [ $FindTAG != $NEWTAG ]; then
-#  echo Must be the same TAG name... abort
-#  echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
-#  exit 1;
-#fi
 
 echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; ../generated_sbc_version.properties
