@@ -112,7 +112,13 @@ chmod 0775 *
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command># run python scripts: install
+      <command>#We configured all $serverToUpgrade to resolve test-artifactory:
+  #cat /etc/resolv.conf
+  #search corp.audiocodes.com
+  #nameserver 10.1.1.11
+  #nameserver 10.1.1.10
+
+# run python scripts: install
 cd EMS/VersionRelease
 
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
