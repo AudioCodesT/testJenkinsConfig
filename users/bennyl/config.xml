@@ -47,6 +47,7 @@
         <string>Password Manager Apply</string>
         <string># Agile users</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -58,7 +59,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1533823609102</timestamp>
+      <timestamp>1536762180261</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Benny.Lavi@audiocodes.com</emailAddress>
