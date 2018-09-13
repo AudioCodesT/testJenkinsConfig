@@ -862,7 +862,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>clmBuild</string>
         <string>clmCreateTag</string>
-        <string>ems_ova_7.4.3000</string>
+        <string>ems_ova</string>
         <string>ems_ova_7.6</string>
         <string>ems_sanity_multijob</string>
         <string>emsBuild_AMI</string>
