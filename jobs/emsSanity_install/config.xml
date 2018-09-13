@@ -153,7 +153,15 @@ for f in common-7.4.3000-SNAPSHOT.jar \
          database-7.4.3000-SNAPSHOT.jar \
          FKGenerator.ini; \
          do curl -O -k --user jenkins: --key /home/centos/.ssh/jenkins_at_test-jenkins \
-         https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+         https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done
+         
+#give permissions:
+cd ..
+chmod 0775 target
+cp FKGenerator.ini target
+cd target
+chmod 0775 *
+</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -175,7 +183,15 @@ for f in common-7.6-SNAPSHOT.jar \
          database-7.6-SNAPSHOT.jar \
          FKGenerator.ini; \
          do curl -O -k --user jenkins: --key /home/centos/.ssh/jenkins_at_test-jenkins \
-         https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+         https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done
+         
+#give permissions:
+cd ..
+chmod 0775 target
+cp FKGenerator.ini target
+cd target
+chmod 0775 *
+</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
