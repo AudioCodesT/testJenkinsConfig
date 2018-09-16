@@ -233,7 +233,15 @@ if [[ &quot;$BRANCH&quot; == &quot;master&quot; ]]; then exit 0; else exit 1; fi
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
-      <command># define a default GW - we need it to configure network of tested machine in case version in 7.4.3000 or older
+      <command># Copy FKGenerator.ini &amp; Change prerequisite files permissions
+cd ${WORKSPACE}/EMS
+chmod 0755 target
+cp FKGenerator.ini target
+chmod -R 0755 target
+cd ${WORKSPACE}
+
+
+# define a default GW - we need it to configure network of tested machine in case version in 7.4.3000 or older
 DefaultGateway=&quot;172.16.132.1&quot;
 
 
