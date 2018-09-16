@@ -272,7 +272,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
               <defaultContent>&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;EMS ovoc server release to QA&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Tag: $NEW_TAG&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Download from:&amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;$LINK&quot;&gt;$NEW_TAG&lt;/a&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
-&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;What have we added or fixed? &amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;http://websrvqa/GITCompilationResults/EMS_ovoc_server/$BRANCH/All_baseline_reports.html&quot;&gt;VIs list&lt;/a&gt;&amp;nbsp;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;What have we added or fixed? &amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;http://websrvqa/GITCompilationResults/EMS_ovoc_server/$BRANCH/All_baseline_reports.html&quot;&gt;Jira issues list&lt;/a&gt;&amp;nbsp;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/h2&gt;</defaultContent>
               <attachmentsPattern></attachmentsPattern>
               <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
