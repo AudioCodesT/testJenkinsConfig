@@ -185,8 +185,7 @@ ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
 chmod 600 id_rsa_gerrit
 echo Calibrate Verified - $change,$ps
 ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
---notify NONE --label Verified=0 --message &apos;&quot;Removing the previous vote of Verified&quot;&apos; \
-$change,$ps
+--notify NONE --label Verified=0 $change,$ps
 
 export PATH=$HOME/Utils:$PATH
 rm -f build-error.log
