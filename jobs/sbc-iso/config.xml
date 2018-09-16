@@ -197,8 +197,10 @@ rm -f sbc-F$NEWTAG.iso
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
-# mv sbc*.iso sbc-F$NEWTAG.iso
-
+ls -l *.iso
+if [[ $Customer != &quot;&quot; ]]; then
+  mv sbc*.iso sbc-F$NEWTAG.iso
+fi
 
 </command>
     </hudson.tasks.Shell>
