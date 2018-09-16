@@ -70,7 +70,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -152,7 +151,7 @@ for f in common-7.4.3000-SNAPSHOT.jar \
          rest-core-7.4.3000-SNAPSHOT.jar \
          oracle_trigger-7.4.3000-SNAPSHOT.jar \
          database-7.4.3000-SNAPSHOT.jar; \
-         do curl -O -k --user jenkins: --key /home/centos/.ssh/jenkins_at_test-jenkins \
+         do curl -O -k --user admin:$artiPass \
          https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
@@ -173,7 +172,7 @@ for f in common-7.6-SNAPSHOT.jar \
          rest-core-7.6-SNAPSHOT.jar \
          oracle_trigger-7.6-SNAPSHOT.jar \
          database-7.6-SNAPSHOT.jar; \
-         do curl -O -k --user jenkins: --key /home/centos/.ssh/jenkins_at_test-jenkins \
+         do curl -O -k --user admin:$artiPass \
          https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
@@ -451,6 +450,16 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artiPass</name>
+          <value>{AQAAABAAAAAQT0A5kGH1euKydYIrJF5K0a/ovUyKPCPsOeyQ4h01qC0=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
       <runAtStart>true</runAtStart>
