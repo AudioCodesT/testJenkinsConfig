@@ -436,7 +436,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>admin</name>
-          <value>{AQAAABAAAAAQCQSlxpYV1NYyY3DrKGLVmYbUyKQJdr7zcvqtsdQj8Ew=}</value>
+          <value>{AQAAABAAAAAQ4h0Oj5ZzWehGwsuRtLUHpxVpPrfnxpTwcHf4Cbz3X80=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
