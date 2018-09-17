@@ -178,7 +178,7 @@ for f in common-7.6-SNAPSHOT.jar \
          server-7.6-SNAPSHOT.jar \
          rest-core-7.6-SNAPSHOT.jar \
          oracle_trigger-7.6-SNAPSHOT.jar \
-         database-7.6-SNAPSHOT.jari; \
+         database-7.6-SNAPSHOT.jar; \
      do curl -O -k --user admin:$artiPass \
          https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f
      done</command>
