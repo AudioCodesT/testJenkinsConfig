@@ -226,6 +226,9 @@ cd ${WORKSPACE}/EMS
 chmod 0755 target
 cp FKGenerator.ini target
 chmod -R 0755 target
+echo &quot;############################################&quot;
+ls -lr target
+echo &quot;############################################&quot;
 cd ${WORKSPACE}
 
 # define a default GW - we need it to configure network of tested machine in case version in 7.4.3000 or older
