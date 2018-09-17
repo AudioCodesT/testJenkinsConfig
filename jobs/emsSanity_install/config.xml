@@ -223,6 +223,7 @@ cd ${WORKSPACE}
 
 # define a default GW - we need it to configure network of tested machine in case version in 7.4.3000 or older
 DefaultGateway=&quot;172.16.132.1&quot;
+netMask=&quot;24&quot;
 
 
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
@@ -285,7 +286,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 	then	python2.7 setNetwork.py $vmIP $DefaultGateway
 elif [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]
     # setNetwork.py was changed to fit vmware - subnet is a parameter
-    then python2.7 setNetwork.py $vmIP 24 $DefaultGateway
+    then python2.7 setNetwork.py $vmIP $netMask $DefaultGateway
 # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
 else python2.7 setNetwork.py $vmIP $sanityOrAmi
 fi
