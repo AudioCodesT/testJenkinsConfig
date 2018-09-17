@@ -232,7 +232,7 @@ echo BOARDNAME=${BOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
 if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
   Fix=$(echo $BUILD_NAME | cut -d: -f2)
-  BUILD_NAME=$(echo $BUILD_NAME | cut -d: -f1)
+  BUILD_NAME=${BUILD_NAME/:*/}
   if echo $BUILD_NAME | grep -q /; then BUILD_NAME=AudioCodes; fi
   if [ -z &quot;$Fix&quot; ]; then
     Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
@@ -265,6 +265,7 @@ cd TrunkPackRam
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
+  BUILD_NAME=${BUILD_NAME/:*/}
   fullname=${BOARDNAME}_${NEWTAG}-u${BUILD_NUMBER}-${BUILD_NAME/\//-}
 else
   fullname=${BOARDNAME}_${NEWTAG}-u${BUILD_NUMBER}
@@ -373,7 +374,7 @@ variables = manager.build.buildVariableResolver
 if (variables.resolve(&quot;DEBUG_VERSION&quot;) == &quot;true&quot;) {
     artifacts.appendText(&quot;&lt;h2&gt;Customer Version&lt;/h2&gt;&lt;p /&gt;&quot;, false)
     manager.build.keepLog(true) // Keep this build forever
-    targetArtifactory=&quot;debug/&quot; + variables.resolve(&quot;BUILD_NAME&quot;) + &quot;/&quot; + manager.build.number
+    targetArtifactory=&quot;debug/&quot; + variables.resolve(&quot;BUILD_NAME&quot;).replace(/:.*$/, &quot;&quot;) + &quot;/&quot; + manager.build.number
 }
 artifacts.appendText(&quot;&lt;a href=\&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
 // For matrix build, collect artifacts from all child builds. For normal build collect from self
