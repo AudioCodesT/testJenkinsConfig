@@ -147,12 +147,11 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then exit 0; else exit 1; 
 mkdir target
 cd target
 for f in common-7.4.3000-SNAPSHOT.jar \
-         server-7.4.3000-SNAPSHOT.jar \
-         rest-core-7.4.3000-SNAPSHOT.jar \
-         oracle_trigger-7.4.3000-SNAPSHOT.jar \
-         database-7.4.3000-SNAPSHOT.jar; \
-         do curl -O -k --user admin:$artiPass \
-         https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+server-7.4.3000-SNAPSHOT.jar \
+rest-core-7.4.3000-SNAPSHOT.jar \
+oracle_trigger-7.4.3000-SNAPSHOT.jar \
+database-7.4.3000-SNAPSHOT.jar
+do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -168,12 +167,11 @@ if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
 mkdir target
 cd target
 for f in common-7.6-SNAPSHOT.jar \
-         server-7.6-SNAPSHOT.jar \
-         rest-core-7.6-SNAPSHOT.jar \
-         oracle_trigger-7.6-SNAPSHOT.jar \
-         database-7.6-SNAPSHOT.jar; \
-         do curl -O -k --user admin:$artiPass \
-         https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+server-7.6-SNAPSHOT.jar \
+rest-core-7.6-SNAPSHOT.jar \
+oracle_trigger-7.6-SNAPSHOT.jar \
+database-7.6-SNAPSHOT.jar
+do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
