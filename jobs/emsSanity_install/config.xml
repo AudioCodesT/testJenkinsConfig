@@ -294,7 +294,9 @@ fi
 echo &quot;Finish SetNetwork Configuration&quot;
 
 if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
-    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION noOva
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+    python2.7 SanityFK.py $vmIP $NEW_TAG
+    python2.7 SanityReboot.py $vmIP
 else
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 fi
