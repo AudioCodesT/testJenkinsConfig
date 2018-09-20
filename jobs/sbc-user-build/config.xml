@@ -232,11 +232,11 @@ echo BOARDNAME=${BOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
 if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
   Fix=$(echo ${BUILD_NAME}: | cut -d: -f2)
+  BUILD_NAME=${BUILD_NAME/:*/}
+  if echo $BUILD_NAME | grep -q /; then BUILD_NAME=AudioCodes; fi
   if [ -z &quot;$Fix&quot; ]; then
     Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
   fi
-  BUILD_NAME=${BUILD_NAME/:*/}
-  if echo $BUILD_NAME | grep -q /; then BUILD_NAME=AudioCodes; fi
   if [ -n &quot;$Fix&quot; ] &amp;&amp; [ &quot;$Fix&quot; -eq &quot;$Fix&quot; ] 2&gt;/dev/null; then
     # Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
     for i in {1..5}; do Fix=$(( $Fix + 100 )); if [ $Fix -gt 900 ]; then break; fi done
