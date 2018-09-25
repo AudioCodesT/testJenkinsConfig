@@ -44,6 +44,7 @@
         <string># All Beer Sheva</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -56,7 +57,7 @@
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1533565735820</timestamp>
+      <timestamp>1537884723585</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amit.Bashan@audiocodes.com</emailAddress>
