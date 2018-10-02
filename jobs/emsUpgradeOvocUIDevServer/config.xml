@@ -134,7 +134,7 @@ echo &quot;*****************************************************************&quo
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso,Shuky.Riechard</recipients>
+      <recipients>ben.magriso,Shuky.Riechard,Michael.Lallouz</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
