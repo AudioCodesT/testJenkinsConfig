@@ -32,6 +32,7 @@
       <roles>
         <string>authenticated</string>
         <string>AWS_Jira_Users</string>
+        <string># MSBR TsachiO Team</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -49,6 +50,7 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
+        <string># MSBR</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
@@ -57,7 +59,7 @@
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1534152404465</timestamp>
+      <timestamp>1538462640188</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Assaf.Recu@audiocodes.com</emailAddress>
