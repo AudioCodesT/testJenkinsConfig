@@ -293,7 +293,7 @@ fi
 
 echo &quot;Finish SetNetwork Configuration&quot;
 
-if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP
