@@ -98,7 +98,7 @@ upgrading the UI Dev server if this option is 1 and ISO_DEPLOY_DESTINATION is of
   </scm>
   <assignedNode>ems-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
