@@ -32,6 +32,8 @@
       <roles>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>AWS_Jira_Users</string>
+        <string># MSBR TsachiO Team</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>cc_users</string>
@@ -40,6 +42,8 @@
         <string>ActionBase Users</string>
         <string>Citrix_Allow_Visio</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
         <string>Sp365-rdnetworking-modify</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -52,7 +56,9 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
+        <string># MSBR</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -60,7 +66,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1524047423419</timestamp>
+      <timestamp>1538578479668</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Tsachi.Or@audiocodes.com</emailAddress>
