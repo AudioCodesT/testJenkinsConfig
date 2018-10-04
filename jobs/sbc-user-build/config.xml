@@ -233,13 +233,15 @@ echo BOARDNAME=${BOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
   Fix=$(echo ${BUILD_NAME}: | cut -d: -f2)
   BUILD_NAME=${BUILD_NAME/:*/}
+  # If Fix is not a number, clear it
+  [ &quot;$Fix&quot; -eq &quot;$Fix&quot; ] || Fix=
   if echo $BUILD_NAME | grep -q /; then BUILD_NAME=AudioCodes; fi
   if [ -z &quot;$Fix&quot; ]; then
     Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
-  fi
-  if [ -n &quot;$Fix&quot; ] &amp;&amp; [ &quot;$Fix&quot; -eq &quot;$Fix&quot; ] 2&gt;/dev/null; then
-    # Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
-    for i in {1..5}; do Fix=$(( $Fix + 100 )); if [ $Fix -gt 900 ]; then break; fi done
+    if [ -n &quot;$Fix&quot; ] &amp;&amp; [ &quot;$Fix&quot; -eq &quot;$Fix&quot; ] 2&gt;/dev/null; then
+      # Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
+      for i in {1..5}; do Fix=$(( $Fix + 100 )); if [ $Fix -gt 900 ]; then break; fi done
+    fi
   fi
   NEWTAG=$(echo $NEWTAG | cut -d. -f1-3).$Fix
   sed -i &quot;s/#define FIX_TRUNKPACK_SOFTWARE_VERSION.*$/#define FIX_TRUNKPACK_SOFTWARE_VERSION			$Fix/&quot; TrunkPackRam/Bsps/Common/Include/BrdVersion.h
