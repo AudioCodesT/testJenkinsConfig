@@ -35,9 +35,11 @@
         <string>System_Software</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
+        <string># SBC Networking</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># SBC HA</string>
         <string>Sp365-Devops-Read</string>
         <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
@@ -48,11 +50,13 @@
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string># R&amp;D MEM</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
+        <string># MSBR</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
@@ -62,7 +66,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1532595232171</timestamp>
+      <timestamp>1538986415017</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Eitan.Zisman@audiocodes.com</emailAddress>
