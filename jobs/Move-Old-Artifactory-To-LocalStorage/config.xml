@@ -91,13 +91,13 @@ function RemoveEachFolder() {
   do
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
     DestSize=0; ArtSize=0
-    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
         echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
         $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot;
         DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
         if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
-          echo $ArtSize--$DestSize: $file is differ - No delete and exit......
+          echo $ArtSize--$DestSize: $url is differ - No delete and exit......
           exit 1
         else
           echo Size equel - delete from Artifactory...
