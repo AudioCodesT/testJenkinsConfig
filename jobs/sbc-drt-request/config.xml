@@ -163,7 +163,7 @@ do
   [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
   [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; ] &amp;&amp; exit 1
   [ &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; count=$((count+1))
-  [ $count -eq 10 ] &amp;&amp; exit 1
+  [ $count -eq 50 ] &amp;&amp; exit 1
   sleep 300s
 done
 
