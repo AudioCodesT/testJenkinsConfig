@@ -51,6 +51,7 @@
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
+        <string># MSBR</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
@@ -59,8 +60,9 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string># MSBR ETAS</string>
       </roles>
-      <timestamp>1534307259826</timestamp>
+      <timestamp>1539169905210</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
       <providerId>default</providerId>
