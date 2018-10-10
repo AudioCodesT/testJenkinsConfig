@@ -127,8 +127,8 @@ NEW_TAG=${FULL_NEW_TAG:7}
 echo &quot;NEW_TAG=${NEW_TAG}&quot; &gt; ems_build.properties
 echo &quot;FULL_NEW_TAG=${FULL_NEW_TAG}&quot; &gt;&gt; ems_build.properties
 chmod 777 EMS/generate_iso.sh
-. EMS/generate_iso.sh  &amp;&gt; ${WORKSPACE}/mkiso.log
-tail -200 ${WORKSPACE}/mkiso.log
+. EMS/generate_iso.sh  #&amp;&gt; ${WORKSPACE}/mkiso.log
+#tail -200 ${WORKSPACE}/mkiso.log
 
 # For UpdateVI job
 cd ${WORKSPACE}
