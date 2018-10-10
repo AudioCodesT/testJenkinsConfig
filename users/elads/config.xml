@@ -41,6 +41,7 @@
         <string># All 012 voip</string>
         <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
+        <string># MSBR TsachiO Team</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -63,6 +64,7 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
+        <string># MSBR</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
@@ -71,7 +73,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1533580603252</timestamp>
+      <timestamp>1539166402277</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
