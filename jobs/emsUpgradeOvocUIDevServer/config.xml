@@ -138,7 +138,7 @@ cd EMS/VersionRelease
 #perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
 
 #python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
-python2.7 SanityFK.py $serverToUpgrade $NEW_TAG
+#python2.7 SanityFK.py $serverToUpgrade $NEW_TAG
 python2.7 SanityReboot.py $serverToUpgrade
 
 echo &quot;*****************************************************************&quot;
@@ -150,7 +150,7 @@ echo &quot;*****************************************************************&quo
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso,Shuky.Riechard,Michael.Lallouz</recipients>
+      <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
