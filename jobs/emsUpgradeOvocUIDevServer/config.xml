@@ -93,22 +93,35 @@ only when the ems_sanity_multijob succeeded </description>
 # in branch is higher than 7.4 then we need to arrange the directory EMS/target
 # so it will contain only the 5 jar files we copied from build-ovoc job archive
 # and all executables
-cd EMS
-chmod 0775 target
-cp FKGenerator.ini target
+#cd EMS
+#chmod 0775 target
+#cp FKGenerator.ini target
+#cd target
+#cp common/target/common-7.*-SNAPSHOT.jar  .
+#cp database/target/database-7.*-SNAPSHOT.jar .
+#cp EMS/target/server-7.*-SNAPSHOT.jar .
+#cp oracle_triggers/target/oracle_trigger-7.*-SNAPSHOT.jar .
+#cp rest-core/target/rest-core-7.*-SNAPSHOT.jar .
+#rm -rf common
+#rm -rf EMS
+#rm -rf rest-core
+#rm -rf oracle_triggers
+#rm -rf database
+#rm -rf target
+#chmod 0775 *
+
+cd ${WORKSPACE}/EMS
+[[ -d target ]] &amp;&amp; rm -rf target
+mkdir target
 cd target
-cp common/target/common-7.*-SNAPSHOT.jar  .
-cp database/target/database-7.*-SNAPSHOT.jar .
-cp EMS/target/server-7.*-SNAPSHOT.jar .
-cp oracle_triggers/target/oracle_trigger-7.*-SNAPSHOT.jar .
-cp rest-core/target/rest-core-7.*-SNAPSHOT.jar .
-rm -rf common
-rm -rf EMS
-rm -rf rest-core
-rm -rf oracle_triggers
-rm -rf database
-rm -rf target
-chmod 0775 *
+for f in common-7.6-SNAPSHOT.jar \
+server-7.6-SNAPSHOT.jar \
+rest-core-7.6-SNAPSHOT.jar \
+oracle_trigger-7.6-SNAPSHOT.jar \
+database-7.6-SNAPSHOT.jar
+do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done
+
+
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -125,6 +138,8 @@ cd EMS/VersionRelease
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
 
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
+python2.7 SanityFK.py $serverToUpgrade $NEW_TAG
+python2.7 SanityReboot.py $serverToUpgrade
 echo &quot;*****************************************************************&quot;
 echo &quot;*************** Server Upgrade has been finished ****************&quot;
 echo &quot;*****************************************************************&quot;
