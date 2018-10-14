@@ -146,7 +146,7 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/acLi
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-./buildKernel.sh --board=MP5XXNG
+./buildKernel.sh --board=MP5XXNG || exit 1
 
 cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/acLinuxUGW_external_version_data.h
 
