@@ -185,7 +185,7 @@ cd $CurrentPath
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-./build_acLinux --board=${BOARD}
+./build_acLinux --board=${BOARD} || exit 1
 
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/acLinux_external_version_data.h
 
