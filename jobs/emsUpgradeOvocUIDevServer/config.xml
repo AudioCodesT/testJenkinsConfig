@@ -133,7 +133,7 @@ do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac
 
 # run python scripts: install
 
-
+# Copy FKGenerator.ini &amp; Change prerequisite files permissions
 cd ${WORKSPACE}/EMS
 chmod 0755 target
 cp FKGenerator.ini target
