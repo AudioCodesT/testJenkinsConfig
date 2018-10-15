@@ -132,6 +132,17 @@ do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac
   #nameserver 10.1.1.10
 
 # run python scripts: install
+cd ${WORKSPACE}/EMS
+chmod 0755 target
+cp FKGenerator.ini target
+chmod -R 0755 target
+echo &quot;############################################&quot;
+ls -lr target
+echo &quot;############################################&quot;
+cd ${WORKSPACE}
+
+
+
 cd EMS/VersionRelease
 
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
