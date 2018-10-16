@@ -215,7 +215,7 @@ if [ $FixNum &gt; 1 ]; then
   #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$NEWTAG | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
   EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | sort -u`
   echo RN=${RN} &gt;&gt; ../generated_sbc_version.properties
-  echo VIS=${VIS} &gt;&gt; ../generated_sbc_version.properties
+  #echo VIS=${VIS} &gt;&gt; ../generated_sbc_version.properties
   echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
   echo PROJECT=${GERRIT_PROJECT} &gt;&gt; ../generated_sbc_version.properties
   DATE=`git for-each-ref --format &apos;%(taggerdate)&apos; refs/tags/$NEWTAG`
