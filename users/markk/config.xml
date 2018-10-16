@@ -33,10 +33,11 @@
         <string># All Beer Sheva</string>
         <string>authenticated</string>
         <string>Password Manager Apply</string>
+        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
-        <string>CI_EMS_Developers</string>
         <string># RnD Solutions SW group</string>
+        <string>CI_EMS_Developers</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -54,7 +55,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1527063388286</timestamp>
+      <timestamp>1539672684161</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Mark.Kemel@audiocodes.com</emailAddress>
