@@ -98,9 +98,6 @@
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 
 
-#git checkout $Tag OpenSource/pkgs/curl
-
-
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
  
