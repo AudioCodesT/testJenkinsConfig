@@ -473,8 +473,8 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>smt-release</keyFromSelect>
@@ -483,8 +483,8 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
@@ -512,7 +512,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\smtBLD_ST4.2\${NEWTAG}.7z=&gt;com/ac/smt-release/SmartTAP/${VERSION}/</deployPattern>
+      <deployPattern>C:\j\workspace\smtBLD_ST4.2\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
