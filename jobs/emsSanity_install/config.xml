@@ -70,6 +70,7 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -408,8 +409,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 
 #3. if tests pass then terminate the tested machine
-#gal asks not to kill for now
-#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 </command>
     </hudson.tasks.Shell>
@@ -435,6 +435,10 @@ fi
             <hudson.plugins.postbuildtask.LogProperties>
               <logText>Build was aborted</logText>
               <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>marked build as failure</logText>
+              <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
