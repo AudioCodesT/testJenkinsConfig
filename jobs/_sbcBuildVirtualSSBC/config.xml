@@ -80,12 +80,13 @@
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>path/to/script.sh</relativeTargetDir>
+        <relativeTargetDir>OpenSource/pkgs/curl</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
-  <canRoam>true</canRoam>
-  <disabled>true</disabled>
+  <assignedNode>sbc-buildVirtualSSBC</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
