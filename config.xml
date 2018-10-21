@@ -784,6 +784,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>_sbcBuildVirtualSSBC</string>
         <string>sbc-basic-review</string>
         <string>sbc-collab-compile_end-web-user</string>
         <string>sbc-compile</string>
