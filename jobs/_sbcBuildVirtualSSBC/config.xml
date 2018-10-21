@@ -97,8 +97,6 @@ artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc
 git checkout $Tag path/to/script.sh
 
 
-https://test-artifactory/sbc-release/com/ac/sbc/ISO/7.2.204/7.20A.204.015/sbc-F7.20A.204.015.iso
-
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
  
