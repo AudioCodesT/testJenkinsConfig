@@ -188,20 +188,17 @@ if [ ! -d .git ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
   mv GWApp/.git .
   rm -rf GWApp
-else
-  git fetch origin $GERRIT_BRANCH:refs/remotes/origin/$GERRIT_BRANCH
 fi
 
 if [ &quot;$tpChange&quot; != &quot;&quot; ]; then 
   ref=$(ssh -p 29418 -i $CurrentPath/id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set $tpChange | grep ref: | cut -d: -f2)
-  echo git fetch origin $ref
   git fetch origin $ref
-  git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA
-  git checkout -f FETCH_HEAD -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
 else
-  git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
-  git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
+  git fetch origin $GERRIT_BRANCH
 fi
+
+git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA
+git checkout -f FETCH_HEAD -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
 
 cd $CurrentPath
 
@@ -283,8 +280,7 @@ $WORKSPACE/OpenRG_external_version_data.h=&gt;com/ac/sbc/OpenRG/${BUILD_NUMBER}<
       <discardOldBuilds>true</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
-      <artifactoryCombinationFilter>label==&quot;sbc-linux-build&quot;</artifactoryCombinationFilter>
-      <multiConfProject>true</multiConfProject>
+      <multiConfProject>false</multiConfProject>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
