@@ -64,7 +64,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>**</name>
+        <name>refs/tags/${Tag}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -77,6 +77,9 @@
         <depth>1</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
+      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        <relativeTargetDir>path/to/script.sh</relativeTargetDir>
+      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
   <canRoam>true</canRoam>
