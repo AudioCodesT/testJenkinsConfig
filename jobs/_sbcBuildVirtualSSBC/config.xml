@@ -66,7 +66,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/tags/${Tag}</name>
+        <name>refs/tags/${Tag} OpenSource/pkgs/curl</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -80,9 +80,6 @@
         <depth>1</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
-      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>OpenSource/pkgs/curl</relativeTargetDir>
-      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
   <assignedNode>sbc-virtualSSBC</assignedNode>
