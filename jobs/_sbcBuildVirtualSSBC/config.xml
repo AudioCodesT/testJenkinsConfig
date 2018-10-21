@@ -109,7 +109,7 @@ curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso,Shuky.Riechard</recipients>
+      <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
