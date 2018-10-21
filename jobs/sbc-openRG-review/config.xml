@@ -189,7 +189,7 @@ if [ ! -d .git ]; then
   mv GWApp/.git .
   rm -rf GWApp
 else
-  git fetch origin $GERRIT_BRANCH
+  git fetch origin $GERRIT_BRANCH:refs/remotes/origin/$GERRIT_BRANCH
 fi
 
 if [ &quot;$tpChange&quot; != &quot;&quot; ]; then 
