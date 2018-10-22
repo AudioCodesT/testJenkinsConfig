@@ -147,7 +147,7 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed s:origin/::`
+GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed s:.*origin/::`
 #echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 cat ~/.netrc
 
@@ -173,6 +173,11 @@ else
 fi
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
+
++ rm -rf GWApp
++ git checkout -f origin/ collab/NextGenCPE -- TrunkPackRam/acInfrastructure/MCA
+fatal: only one reference expected, 2 given.
+
 
 cd $WORKSPACE
 
