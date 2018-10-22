@@ -149,7 +149,7 @@ sudo chown -R centos:centos .
 
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed s:origin/::`
 #echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
-rm -f ~/.netrc
+cat ~/.netrc
 
 #In case you don&apos;t find the revision from another commit, take it from the last submitted commit
 cd ..
