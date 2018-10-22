@@ -171,10 +171,13 @@ if [ ! -d .git ]; then
 else
   git fetch origin $GERRIT_BRANCH
 fi
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA-UGW
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
 
 cd $WORKSPACE
+
+echo &quot;ls MCA-UGW&quot;
+ls -l ../../TrunkPackRam/acInfrastructure/MCA-UGW
 
 #Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
 uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
