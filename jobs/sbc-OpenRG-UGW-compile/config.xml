@@ -172,6 +172,7 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA-UGW
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
 
 cd $WORKSPACE
