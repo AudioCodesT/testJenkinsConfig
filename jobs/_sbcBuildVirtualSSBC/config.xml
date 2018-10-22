@@ -81,7 +81,7 @@
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>OpenSource/pkgs/curl</relativeTargetDir>
+        <relativeTargetDir>OpenSource/M1000_MSBG.deps</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
