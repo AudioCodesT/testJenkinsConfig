@@ -125,7 +125,7 @@ do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>#We configured all $serverToUpgrade to resolve test-artifactory:
+      <command>#We configured all $serverToUpgrade to resolve artifactory:
   #cat /etc/resolv.conf
   #search corp.audiocodes.com
   #nameserver 10.1.1.11
