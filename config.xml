@@ -66,6 +66,7 @@
           <permission>hudson.model.Item.Workspace</permission>
           <permission>hudson.model.Item.Build</permission>
           <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Configure</permission>
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.Run.Update</permission>
