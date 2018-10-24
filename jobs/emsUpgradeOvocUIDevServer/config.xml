@@ -144,13 +144,19 @@ echo &quot;############################################&quot;
 cd ${WORKSPACE}
 
 
-
+artifactory_host=test-artifactory
+needToSendEmail=&quot;False&quot;
+artifactory_url=https://$artifactory_host/ems-externals/com/ac/ems/OvocUIServer
 cd EMS/VersionRelease
+
+#get the OLD Versions Remove Script
+curl -k --insecure -fO &quot;${artifactory_url}/RemoveOldVersions.py&quot;
 
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
 
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
+python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
 python2.7 SanityReboot.py $serverToUpgrade
 
 echo &quot;*****************************************************************&quot;
