@@ -81,7 +81,7 @@
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>OpenSource/M1000_MSBG.deps</relativeTargetDir>
+        <relativeTargetDir>TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
@@ -102,7 +102,13 @@ artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
  
 #run script
-#sh path/to/script.sh ${Environment}</command>
+sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=${Environment}
+
+#DEPLOY ARTIFACTS 
+
+# sbc-F${Tag}-${Environment}
+
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
