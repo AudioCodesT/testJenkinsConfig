@@ -149,7 +149,7 @@ needToSendEmail=&quot;False&quot;
 artifactory_url=https://$artifactory_host/ems-externals/com/ac/ems/OvocUIServer
 cd EMS/VersionRelease
 
-#get the OLD Versions Remove Script
+#get the OLD Versions Remove Script to delete them from the OVOC servers
 curl -k --insecure -fO &quot;${artifactory_url}/RemoveOldVersions.py&quot;
 
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
