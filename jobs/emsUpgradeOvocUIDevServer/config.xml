@@ -145,7 +145,6 @@ cd ${WORKSPACE}
 
 
 artifactory_host=test-artifactory
-needToSendEmail=&quot;False&quot;
 artifactory_url=https://$artifactory_host/ems-externals/com/ac/ems/OvocUIServer
 cd EMS/VersionRelease
 
