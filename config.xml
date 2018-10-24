@@ -72,7 +72,7 @@
           <permission>hudson.model.Run.Update</permission>
         </permissions>
         <assignedSIDs>
-          <sid># AUDC - NJ Engineering Team</sid>
+          <sid>briank</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
@@ -86,7 +86,9 @@
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.Run.Update</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># AUDC - NJ Engineering Team</sid>
+        </assignedSIDs>
       </role>
       <role name="adminJobs" pattern="UpdateVI">
         <permissions>
@@ -171,6 +173,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.6">
     <domains>
