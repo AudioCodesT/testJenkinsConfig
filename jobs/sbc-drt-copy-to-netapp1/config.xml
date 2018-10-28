@@ -108,13 +108,13 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
      if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
      echo Download $FileName to netapp1
      curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output &quot;$Target/$FileName&quot;
-     ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
-     DestSize=`wc -c &lt;$Target/$FileName`
-     if [ $ArtSize != $DestSize ]; then 
-       echo $ArtSize--$DestSize: $file is differ, copy again...
-       rm -f $Target/$FileName
-       exit 1
-     fi
+     #ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+     #DestSize=`wc -c &lt;$Target/$FileName`
+     #if [ $ArtSize != $DestSize ]; then 
+     #  echo $ArtSize--$DestSize: $file is differ, copy again...
+     #  rm -f $Target/$FileName
+     #  exit 1
+     #fi
    done &lt; &quot;$REFTARGET.list&quot;
 fi
 
