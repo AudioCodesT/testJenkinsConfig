@@ -128,7 +128,7 @@ for GERRIT_BRANCH in 7.2.150 7.2.152 7.2.154 7.2.156 7.2.158 \
 do
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
-  git checkout origin/$GERRIT_BRANCH
+  git checkout -f origin/$GERRIT_BRANCH
   echo Find the last TAG name...
   #LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
   LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
