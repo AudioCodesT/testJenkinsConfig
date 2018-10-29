@@ -6,7 +6,14 @@
       <apiToken>{AQAAABAAAAAweVrgd21LrRQzacKK3mJGNuzURNePrI6bH/WzQEPFNmz0Ykt5zU5Kr4VVHewKJVycxPJqBnB0zhNlT+OqBcEAcg==}</apiToken>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
-      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash">
+        <entry>
+          <com.cloudbees.plugins.credentials.domains.Domain>
+            <specifications/>
+          </com.cloudbees.plugins.credentials.domains.Domain>
+          <java.util.concurrent.CopyOnWriteArrayList/>
+        </entry>
+      </domainCredentialsMap>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
@@ -34,7 +41,6 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string>AWS_Jira_Users</string>
-        <string># SQA ALL</string>
         <string># All Cars</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -77,7 +83,7 @@
         <string>Sp365-DevOps-modify</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1532505217995</timestamp>
+      <timestamp>1540831003905</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yossi.Merzbach@audiocodes.com</emailAddress>
