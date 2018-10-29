@@ -139,7 +139,7 @@
       </managedFiles>
     </org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <template>#${BUILD_NUMBER}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
