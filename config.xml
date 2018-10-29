@@ -919,6 +919,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>_emsCheckSettingsXML</string>
         <string>clmBuild</string>
         <string>clmCreateTag</string>
         <string>ems_ova</string>
