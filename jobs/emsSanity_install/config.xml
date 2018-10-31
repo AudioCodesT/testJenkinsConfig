@@ -70,7 +70,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -260,6 +259,10 @@ emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market
 
 #keep instance ID
 INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+
+#wait for aws instance to get to `running` status
+aws ec2 wait instance-running --instance-ids ${INSTANCE_ID}
+
 #add tag to this instans:  &quot;emsSanity&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityInstall
 #add tag to this instans:  &quot;Spotinst&quot;
