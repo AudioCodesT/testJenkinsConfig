@@ -59,20 +59,6 @@
           <sid># R&amp;D System Software</sid>
         </assignedSIDs>
       </role>
-      <role name="CI_SmartTAP_Admins" pattern="(smt.*)">
-        <permissions>
-          <permission>hudson.model.Item.Cancel</permission>
-          <permission>hudson.model.Item.Read</permission>
-          <permission>hudson.model.Item.Workspace</permission>
-          <permission>hudson.model.Item.Build</permission>
-          <permission>jenkins.metrics.api.Metrics.View</permission>
-          <permission>hudson.model.Run.Replay</permission>
-          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
-          <permission>hudson.model.Item.Discover</permission>
-          <permission>hudson.model.Run.Update</permission>
-        </permissions>
-        <assignedSIDs/>
-      </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
@@ -172,7 +158,6 @@
         </assignedSIDs>
       </role>
     </roleMap>
-    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.6">
     <domains>
