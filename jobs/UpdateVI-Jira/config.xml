@@ -129,7 +129,7 @@ ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Benny.Lavi, cc:amos.bublil, cc:ilan.avner, cc:Tova.Shoham &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=IppSwReleases &amp; goto ProjectFound&#xd;
+if %errorlevel% equ 0 set SendTo=yossim &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;EMS&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz &amp; goto ProjectFound&#xd;
