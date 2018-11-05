@@ -5,7 +5,7 @@
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw4KgavfZ70tJ+nxjRP/1Sr9KXAS/QK3YEU1eKyhA8qLgbYpeUq0uJyKWocaxE9YMZg2qi8pfhJzRR0D4I9ZH8XA==}</apiToken>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -45,6 +45,7 @@
         <string># All Beer Sheva</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -57,9 +58,10 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>NewUser_Israel-BS</string>
+        <string># SBC Infra Core</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1532528410352</timestamp>
+      <timestamp>1541405506540</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yehiel.Zohar@audiocodes.com</emailAddress>
