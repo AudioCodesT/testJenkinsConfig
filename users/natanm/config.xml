@@ -5,7 +5,7 @@
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw08tH9enpqP65sfzXhlZ5TZx8I3WSeoUTrXVmBpCzIPtSZO3h2T05jmpq4bJmjHBv6v8TaJTBkbnVSABqPgb9IA==}</apiToken>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -41,6 +41,7 @@
         <string>Citrix_Allow_Visio</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
+        <string># R&amp;D Support Escalation</string>
         <string># All Lunch</string>
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
@@ -80,7 +81,7 @@
         <string>Citrix_Allow_Project</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1534081881838</timestamp>
+      <timestamp>1541408059459</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Natan.Merfish@audiocodes.com</emailAddress>
