@@ -5,7 +5,7 @@
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwEDw1joKAx9H9mA49OAp/G+06nysn1H9OmK6bB0RB7IL4yLG6E9aakzC4nPkIYZ/dNrTybTtCwVAJrkip/2Hgdg==}</apiToken>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -37,6 +37,7 @@
         <string># All 012 voip</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
+        <string># SBC Networking</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -61,6 +62,7 @@
         <string># All Cellular</string>
         <string># All HotMobile</string>
         <string>Linuxusers</string>
+        <string># MSBR</string>
         <string>cc_api</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
@@ -71,7 +73,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1535887260965</timestamp>
+      <timestamp>1541421187352</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Nava.Sherman@audiocodes.com</emailAddress>
