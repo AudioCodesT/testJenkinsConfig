@@ -171,7 +171,7 @@ cd ${WORKSPACE}/..
 cd tools
 
 git checkout -f origin/master -- sputnik/test-gerrit/smt-pmd.properties
-git checkout -f origin/master -- pmd/audc-ruleset.xml
+git checkout -f origin/master -- pmd/audc-ruleset-ext.xml
 
 cp sputnik/test-gerrit/smt-pmd.properties ${WORKSPACE}/
 cp pmd/audc-ruleset.xml ${WORKSPACE}/
