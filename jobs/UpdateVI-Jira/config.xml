@@ -128,7 +128,7 @@ echo SendTo=yossim &gt; SendTo.txt&#xd;
 ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Benny.Lavi, cc:amos.bublil, cc:ilan.avner, cc:Tova.Shoham &amp; goto ProjectFound&#xd;
 &#xd;
-ECHO.%PROJECT%| FIND /I &quot;IPPgg&quot;&gt;Nul&#xd;
+ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=IppSwReleases &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;EMS&quot;&gt;Nul&#xd;
