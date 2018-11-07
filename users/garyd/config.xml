@@ -5,7 +5,7 @@
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwNtJLDX00TMaP09O28pUdEPwoAt8sOHm+feApISL2fi6RYMqDJgIVnXJtjTK1PfcQ61nOg5O6m2mhKOtldK6Wcg==}</apiToken>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -35,6 +35,7 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string># All 012 voip</string>
+        <string># Board ETAS</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -53,8 +54,8 @@
         <string># Gym</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
-        <string># SBC ETAS</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -69,7 +70,7 @@
         <string># All Airport City</string>
         <string># PSTN</string>
       </roles>
-      <timestamp>1533476538457</timestamp>
+      <timestamp>1541596325553</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Gary.Dickman@audiocodes.com</emailAddress>
