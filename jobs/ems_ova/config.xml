@@ -249,7 +249,13 @@ cd ${WORKSPACE}
 # Set Network
 echo &quot;$(date) : Applying DVD 3&quot; | tee -a $logfile
 cd EMS/VersionRelease
-(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
+	# We need to pass the netmask of the EMS server
+	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+else
+	# setNetwork.py for version 7.6 and later calculate netmask by itself
+	(python2.7 setNetwork.py $vmip $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+fi
 cd ${WORKSPACE}
 
 # ovoc server was rebooted, so -
