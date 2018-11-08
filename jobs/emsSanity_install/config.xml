@@ -318,10 +318,10 @@ fi
 echo &quot;Finish SetNetwork Configuration&quot;
 
 if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; ]]; then
-    echo &quot;Running 3 scripts for install&quot;
+    echo &quot;Running 1 scripts for install&quot;
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
-    python2.7 SanityFK.py $vmIP $NEW_TAG
-    python2.7 SanityReboot.py $vmIP
+#    python2.7 SanityFK.py $vmIP $NEW_TAG
+#    python2.7 SanityReboot.py $vmIP
 else
     echo &quot;Running single script for install&quot;
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
@@ -403,7 +403,13 @@ else
     fi
 fi
 
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; ]]; then
+    echo &quot;Running 2 scripts SanityFK and SanityReboot&quot;
+ 
+    python2.7 SanityFK.py $vmIP $NEW_TAG
+    python2.7 SanityReboot.py $vmIP
 
+fi
 
 # run sanity tests and log collect
 echo &quot;Run sanity tests and log collect&quot;
