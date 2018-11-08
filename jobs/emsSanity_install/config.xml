@@ -386,6 +386,11 @@ else
             #give permissions to ovoc DEV Account
             aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
             
+            #
+            #aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $qaAccount
+            #
+            #aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $devAccount
+            
             #check if shared
            	#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
           	#ImagePermissionsInArray=($checkImagePermissions)
