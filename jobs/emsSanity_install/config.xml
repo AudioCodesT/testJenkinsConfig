@@ -381,15 +381,15 @@ else
             echo &quot;Sharing the new created AMI with Dev and QA teams:&quot;
             qaAccount=191324562914
             devAccount=952166219867
-            #give permissions to ovoc QA Account
+            #give permissions to ovoc QA Account to the AMI
             aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
-            #give permissions to ovoc DEV Account
+            #give permissions to ovoc DEV Account to the Ami
             aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
             
-            #
-            #aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $qaAccount
-            #
-            #aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $devAccount
+            #give permissions to ovoc QA Account to the SnapShot
+            aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $qaAccount
+            ##give permissions to ovoc DEV Account to the SnapShot
+            aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $devAccount
             
             #check if shared
            	#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
