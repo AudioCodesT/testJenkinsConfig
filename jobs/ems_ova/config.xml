@@ -101,8 +101,26 @@
 #############################################################################
 #############################################################################
 
+## Get current branch
+# Get the build from the TAG
+BLD=`echo $TAG | cut -d. -f3`
+# Calculate the branch
+if [[ ${#BLD} == 3 ]]; then
+	BRANCH=${TAG:0:3}
+else
+	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
+	MSD=${TAG:4:1}
+    BRANCH=&quot;${TAG:0:3}.${MSD}000&quot;
+fi
+
+## Check that TAG matches OVA version
+OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
+if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
+	exit -1
+fi
 
 OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
+
 FullTesting=&quot;1&quot;
 
 # Set the following values to fit your need
@@ -115,19 +133,6 @@ cd ~/.ssl
 vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
 
 cd ${WORKSPACE}
-
-## Get current branch
-# Get the build from the TAG
-BLD=`echo $TAG | cut -d. -f3`
-
-# Calculate the branch
-if [[ ${#BLD} == 3 ]]; then
-	BRANCH=${TAG:0:3}
-else
-	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
-	MSD=${TAG:4:1}
-    BRANCH=&quot;${TAG:0:3}.${MSD}000&quot;
-fi
 
 # Create a new log file
 now=`date +&quot;%Y%m%d-%H%M%S&quot;`
