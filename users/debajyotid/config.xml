@@ -5,7 +5,7 @@
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwW23MdnUtyCZYEWAZTlXqN7HZcsarsd4KJN6vn0Nuc6H725ieVX7ae3HDpGyYMQ0PhzNnIPvQa3dy3raC4t0fEg==}</apiToken>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -54,6 +54,7 @@
         <string>FTP_default</string>
         <string># NetTAP</string>
         <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NA Regions</string>
         <string># AUDC - NJ Engineering Team</string>
         <string># ACPortal - HR USA</string>
         <string>AI-QMS-RO</string>
@@ -65,7 +66,7 @@
         <string># Audiocodes USA-Development</string>
         <string>AI-ClearCase</string>
       </roles>
-      <timestamp>1518815086188</timestamp>
+      <timestamp>1541778006582</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Debajyoti.Dutta@audiocodes.com</emailAddress>
