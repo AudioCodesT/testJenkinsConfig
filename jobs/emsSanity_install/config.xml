@@ -378,8 +378,6 @@ else
             aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
             #give Branch name to the AMI 
             aws ec2 create-tags --resources $AmiId --tags Key=Branch,Value=$BRANCH
-            #give Branch name to the snapshot 
-            aws ec2 create-tags --resources $snapshotId --tags Key=Branch,Value=$BRANCH
             
             #share the new created AMI with dev and QA teams:
             echo &quot;Sharing the new created AMI with Dev and QA teams:&quot;
