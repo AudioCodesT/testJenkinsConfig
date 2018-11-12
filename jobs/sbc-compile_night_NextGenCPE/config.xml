@@ -76,7 +76,7 @@ PATH=/bin:$PATH</propertiesContent>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>collab/NextGenCPE</name>
+        <name>NextGenCPE</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
