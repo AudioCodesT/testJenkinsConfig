@@ -47,7 +47,22 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#list of other regions
+      <command>
+#cat &lt;&lt;-EOF &gt; ~/.aws/config
+#[profile ${profileName}]
+#region = eu-central-1
+#output = text
+#EOF
+#cat &lt;&lt;-EOF &gt; ~/.aws/credentials 
+#[${profileName}]
+#aws_access_key_id = ${awsAccessKeyId}
+#aws_secret_access_key = ${awsSecretAccessKey}
+#EOF
+#switch user
+#eb init --profile ${profileName}
+
+
+#list of other regions
 #OTHER_REGIONS=&quot;us-west-1 us-east-1 eu-west-1 us-west-2 ap-southeast-1&quot;
 OTHER_REGIONS=&quot;us-west-1 us-east-1&quot;
 OTHER_REGIONS=($OTHER_REGIONS)
