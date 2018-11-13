@@ -48,12 +48,12 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-#cat &lt;&lt;-EOF &gt; ~/.aws/config
+#cat &lt;&lt;-EOF &gt;&gt; ~/.aws/config
 #[profile ${profileName}]
 #region = eu-central-1
 #output = text
 #EOF
-#cat &lt;&lt;-EOF &gt; ~/.aws/credentials 
+#cat &lt;&lt;-EOF &gt;&gt; ~/.aws/credentials 
 #[${profileName}]
 #aws_access_key_id = ${awsAccessKeyId}
 #aws_secret_access_key = ${awsSecretAccessKey}
