@@ -47,7 +47,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>
+      <command>#profileName=&quot;devAccount&quot;
 #cat &lt;&lt;-EOF &gt;&gt; ~/.aws/config
 #[profile ${profileName}]
 #region = eu-central-1
