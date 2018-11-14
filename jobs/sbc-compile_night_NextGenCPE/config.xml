@@ -64,6 +64,7 @@ PATH=/bin:$PATH</propertiesContent>
       <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
+      <contributors/>
     </EnvInjectJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -87,7 +88,7 @@ PATH=/bin:$PATH</propertiesContent>
   </scm>
   <assignedNode>sbc-mc-fathers</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -103,6 +104,22 @@ PATH=/bin:$PATH</propertiesContent>
       <values>
         <string>boards2compile.yml</string>
       </values>
+      <computedValues>
+        <string>--board=MP5XXNG --sip=yes --lab=yes</string>
+        <string>--board=MP5XXNG --sip=yes --lab=no</string>
+        <string>--board=MP500_ESBC --sip=yes --lab=yes</string>
+        <string>--board=MP500_ESBC --sip=yes --lab=no</string>
+        <string>--board=MP500_MSBG --sip=yes --lab=yes</string>
+        <string>--board=MP500_MSBG --sip=yes --lab=no</string>
+        <string>--board=M1000_MSBG --sip=yes --lab=yes</string>
+        <string>--board=M1000_MSBG --sip=yes --lab=no</string>
+        <string>--board=MP1288 --sip=yes --lab=yes</string>
+        <string>--board=MP1288 --sip=yes --lab=no</string>
+        <string>--board=M4000 --sip=yes --lab=yes</string>
+        <string>--board=M4000 --sip=yes --lab=no</string>
+        <string>--board=HostedTP --sip=yes --lab=yes --server=localhost</string>
+        <string>--board=HostedTP --sip=yes --lab=no --server=localhost</string>
+      </computedValues>
     </org.jenkinsci.plugins.yamlaxis.YamlAxis>
     <hudson.matrix.LabelAxis>
       <name>label</name>
