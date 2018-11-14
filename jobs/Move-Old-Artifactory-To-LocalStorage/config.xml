@@ -172,6 +172,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmwa
 CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmware&quot;
+#CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
 
 ARTIFACTORY=artifactory
 deep=1
