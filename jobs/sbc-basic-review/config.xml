@@ -118,6 +118,7 @@ PATH=/bin:$PATH</propertiesContent>
 
 # git clean -dfx
 date
+touch .build_started
 
 artifactory_host=${ARTIFACTORY_HOST}
 output_folder=${DEPENDENCIES_FOLDER}
@@ -314,6 +315,7 @@ def errors
   res
 end
 
+exit 0 unless File.exist?(&apos;.build_started&apos;)
 if ENV[&apos;GERRIT_REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
   change=$1
   ps=$2
