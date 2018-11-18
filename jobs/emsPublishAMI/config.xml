@@ -47,10 +47,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;Region	ami-id&quot; &gt; RegionsNameAndIds.txt
+      <command>echo &quot;Region		ami-id&quot; &gt; RegionsNameAndIds.txt
 #echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 
-echo &quot;-----------------&quot; &gt;&gt; RegionsNameAndIds.txt
+echo &quot;---------------------&quot; &gt;&gt; RegionsNameAndIds.txt
 #echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #list of other regions
 OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 ap-southeast-1&quot;
@@ -62,7 +62,7 @@ ImageName=ovocAMI_${NEW_TAG}
 #Get Image Id
 ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query &apos;Images[*].ImageId&apos;)
 
-echo &quot;$currentRegion	$ImageId&quot; &gt;&gt; RegionsNameAndIds.txt
+echo &quot;$currentRegion		$ImageId&quot; &gt;&gt; RegionsNameAndIds.txt
 #echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #make The Image Public
 aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
@@ -93,8 +93,7 @@ do
         aws ec2 create-tags --region ${destRegionName} --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
         # add public permissions to the rest of the regions
         aws ec2 modify-image-attribute --region ${destRegionName} --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
-        echo &quot;$destRegionName	$newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
-      	echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
+        echo &quot;$destRegionName		$newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
     
 done
 
