@@ -58,6 +58,18 @@ upgrading the UI Dev server if this option is 1 and ISO_DEPLOY_DESTINATION is of
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>PublishAMI</name>
+          <description>0 = No (default)
+1 = Yes
+Copy AMI to all Regions and make him public</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>0</string>
+              <string>1</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -237,7 +249,8 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
               <properties>NEW_TAG=${NEW_TAG}
 BRANCH=7.6.1000
 FullTesting=$FullTesting
-UpgradeUiDevServer=$UpgradeUiDevServer</properties>
+UpgradeUiDevServer=$UpgradeUiDevServer
+PublishAMI=$PublishAMI</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
