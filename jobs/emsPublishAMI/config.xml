@@ -61,7 +61,10 @@
 #switch user
 #eb init --profile ${profileName}
 
-echo &quot;Regions And ids List&quot; &gt; RegionsNameAndIds.txt
+echo &quot;Region                    | ami-id&quot; &gt; RegionsNameAndIds.txt
+echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
+
+echo &quot;-------------------------------------------------&quot; &gt;&gt; RegionsNameAndIds.txt
 echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #list of other regions
 OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 ap-southeast-1&quot;
@@ -72,8 +75,8 @@ ImageName=ovocAMI_${NEW_TAG}
 #Get Image Id
 ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query &apos;Images[*].ImageId&apos;)
 
-echo &quot;Region Name: $currentRegion ,&quot; &gt;&gt; RegionsNameAndIds.txt
-echo &quot;Region id: $ImageId&quot; &gt;&gt; RegionsNameAndIds.txt
+echo &quot;$currentRegion                    |&quot; &gt;&gt; RegionsNameAndIds.txt
+echo &quot; $ImageId&quot; &gt;&gt; RegionsNameAndIds.txt
 echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #make The Image Public
 aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
@@ -104,8 +107,8 @@ do
         aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
         # add public permissions to the rest of the regions
         aws ec2 modify-image-attribute --region ${destRegionName} --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
-        echo &quot;Region Name: $destRegionName ,&quot; &gt;&gt; RegionsNameAndIds.txt
-        echo &quot;Region id: $newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
+        echo &quot;$destRegionName                    |&quot; &gt;&gt; RegionsNameAndIds.txt
+        echo &quot; $newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
       	echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
     
 done
