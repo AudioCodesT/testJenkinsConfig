@@ -47,21 +47,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#profileName=&quot;devAccount&quot;
-#cat &lt;&lt;-EOF &gt;&gt; ~/.aws/config
-#[profile ${profileName}]
-#region = eu-central-1
-#output = text
-#EOF
-#cat &lt;&lt;-EOF &gt;&gt; ~/.aws/credentials 
-#[${profileName}]
-#aws_access_key_id = ${awsAccessKeyId}
-#aws_secret_access_key = ${awsSecretAccessKey}
-#EOF
-#switch user
-#eb init --profile ${profileName}
-
-echo &quot;Region                    | ami-id&quot; &gt; RegionsNameAndIds.txt
+      <command>echo &quot;Region                    | ami-id&quot; &gt; RegionsNameAndIds.txt
 echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 
 echo &quot;-------------------------------------------------&quot; &gt;&gt; RegionsNameAndIds.txt
