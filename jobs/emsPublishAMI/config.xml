@@ -86,7 +86,7 @@ do
                 break
             fi
         done
-        
+        sleep 30
         #get Snapshot id    
         snapshotId=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
         #give name to the snapshot 
