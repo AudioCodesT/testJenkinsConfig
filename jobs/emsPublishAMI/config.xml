@@ -139,7 +139,7 @@ cat RegionsNameAndIds.txt
       <defaultContent>&lt;pre&gt;
 ${FILE,path=&quot;RegionsNameAndIds.txt&quot;}
 &lt;/pre&gt;
-Build Url: $BUILD_URL
+
 </defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
