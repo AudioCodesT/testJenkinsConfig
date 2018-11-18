@@ -65,6 +65,16 @@ output: if official &amp; all jobs succeeded then email to QA</description>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>PublishAMI</name>
+          <description>this param is inherited from ovoc build that triggered this sanity build. default is &apos;0&apos; (no)</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>0</string>
+              <string>1</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -367,6 +377,30 @@ fi</command>
                     </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                   </configs>
                   <projects>EMSUpgradeOvocUIDevServer</projects>
+                  <condition>SUCCESS</condition>
+                  <triggerWithNoParameters>false</triggerWithNoParameters>
+                  <triggerFromChildProjects>false</triggerFromChildProjects>
+                </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+              </configs>
+            </hudson.plugins.parameterizedtrigger.BuildTrigger>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+            <arg1>$PublishAMI</arg1>
+            <arg2>1</arg2>
+            <ignoreCase>false</ignoreCase>
+          </condition>
+          <publisherList>
+            <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+              <configs>
+                <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+                  <configs>
+                    <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+                  </configs>
+                  <projects>emsPublishAMI, </projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
