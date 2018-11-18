@@ -243,7 +243,7 @@ $PROJECT_DEFAULT_CONTENT
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
           <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-            <command>if [[ &quot;$GERRIT_REFNAME&quot; == &quot;refs/tags/7.20AN.&quot;* ]]; then exit 1; fi
+            <command>if [[ &quot;$NEWTAG&quot; == &quot;7.20AN.&quot;* ]]; then exit 1; fi
 </command>
           </condition>
           <publisherList>
