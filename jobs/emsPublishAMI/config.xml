@@ -68,6 +68,7 @@ echo &quot;-------------------------------------------------&quot; &gt;&gt; Regi
 echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #list of other regions
 OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 ap-southeast-1&quot;
+OTHER_REGIONS=&quot;eu-west-1&quot;
 OTHER_REGIONS=($OTHER_REGIONS) 
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
@@ -133,6 +134,40 @@ cat RegionsNameAndIds.txt
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>ben.magriso</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
+      <contentType>text/html</contentType>
+      <defaultSubject>OVOC_${NEW_TAG} AMIs</defaultSubject>
+      <defaultContent>&lt;pre&gt;
+${FILE,path=&quot;RegionsNameAndIds.txt&quot;}
+&lt;/pre&gt;
+Build Url: $BUILD_URL
+</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers/>
 </project>
