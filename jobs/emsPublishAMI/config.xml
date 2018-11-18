@@ -90,7 +90,7 @@ do
         #get Snapshot id    
         snapshotId=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
         #give name to the snapshot 
-        aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+        aws ec2 create-tags --region ${destRegionName} --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
         # add public permissions to the rest of the regions
         aws ec2 modify-image-attribute --region ${destRegionName} --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
         echo &quot;$destRegionName                    | $newRegionAmiId&quot; &gt;&gt; RegionsNameAndIds.txt
