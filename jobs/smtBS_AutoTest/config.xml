@@ -48,7 +48,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>c:\psexec.exe \\172.17.127.11 &quot;C:\Users\admin\AppData\Local\Programs\Python\Python37\python.exe&quot; &quot;C:\Users\admin\Documents\ArtifactoryAccess\ArtifactoryAccess.py&quot; &quot;4.3&quot;</command>
+      <command>c:\psexec.exe -u admin -p $admin_pass \\172.17.127.11 &quot;C:\Users\admin\AppData\Local\Programs\Python\Python37\python.exe&quot; &quot;C:\Users\admin\Documents\ArtifactoryAccess\ArtifactoryAccess.py&quot; &quot;4.3&quot;</command>
     </hudson.tasks.BatchFile>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
@@ -74,5 +74,16 @@ call C:\Users\admin.BRAZIL\Documents\STAF\Automation_Script\RunAutomationFramewo
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
   </builders>
   <publishers/>
-  <buildWrappers/>
+  <buildWrappers>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>admin_pass</name>
+          <value>{AQAAABAAAAAQYqWyd1A1uviWR8OnhYGPyltBqSYp7rdk3EQWKhct5GY=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+  </buildWrappers>
 </project>
