@@ -47,10 +47,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;Region		ami-id&quot; &gt; RegionsNameAndIds.txt
+      <command>echo &quot;Region			ami-id&quot; &gt; RegionsNameAndIds.txt
 #echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 
-echo &quot;---------------------&quot; &gt;&gt; RegionsNameAndIds.txt
+echo &quot;----------------------------------&quot; &gt;&gt; RegionsNameAndIds.txt
 #echo -e &quot;\r\n&quot; &gt;&gt; RegionsNameAndIds.txt
 #list of other regions
 OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 ap-southeast-1&quot;
