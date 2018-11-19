@@ -100,7 +100,7 @@ done
 echo &quot;Region Name &amp; Id&quot;
 cat RegionsNameAndIds.txt
 
- </command>
+#,Mark.Kemel,Marina.Risher </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -118,7 +118,7 @@ cat RegionsNameAndIds.txt
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>ben.magriso,Mark.Kemel</recipientList>
+      <recipientList>ben.magriso</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
