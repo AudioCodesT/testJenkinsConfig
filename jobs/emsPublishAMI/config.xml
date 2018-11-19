@@ -99,7 +99,7 @@ done
 echo &quot;Region Name &amp; Id&quot;
 cat RegionsNameAndIds.txt
 
-#</command>
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
