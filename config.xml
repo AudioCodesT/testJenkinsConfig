@@ -783,18 +783,14 @@
         <string>CheckVI</string>
         <string>Insert_new_customer_To_Jira</string>
         <string>Move-Old-Artifactory-To-LocalStorage</string>
-        <string>MoveArtifactoryToLocalStorage_File</string>
-        <string>MoveArtifactoryToLocalStorage_Zip</string>
         <string>sbc-simulator-2.15</string>
         <string>SmartTAP-UpdateVI</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-email</string>
         <string>test-job</string>
         <string>Update-VI_emsBuild_ovoc_server_7.6</string>
-        <string>UpdateVI</string>
         <string>UpdateVI-Jira</string>
         <string>UpdateVI-Jira_Manually</string>
-        <string>UpdateVi-old-version</string>
       </jobNames>
       <jobFilters/>
       <columns>
