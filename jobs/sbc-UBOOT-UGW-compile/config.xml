@@ -120,7 +120,7 @@ echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
 sudo chown -R centos:centos .
-~/Projects/UtilsRebaser/Utils/remote_bin/RemoteBuildUbootUGW.sh</command>
+./buildAll.sh</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
