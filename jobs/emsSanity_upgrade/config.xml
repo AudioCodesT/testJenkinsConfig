@@ -157,7 +157,7 @@ server-7.4.3000-SNAPSHOT.jar \
 rest-core-7.4.3000-SNAPSHOT.jar \
 oracle_trigger-7.4.3000-SNAPSHOT.jar \
 database-7.4.3000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -177,7 +177,7 @@ server-7.6-SNAPSHOT.jar \
 rest-core-7.6-SNAPSHOT.jar \
 oracle_trigger-7.6-SNAPSHOT.jar \
 database-7.6-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -196,7 +196,7 @@ server-7.6.1000-SNAPSHOT.jar \
 rest-core-7.6.1000-SNAPSHOT.jar \
 oracle_trigger-7.6.1000-SNAPSHOT.jar \
 database-7.6.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -293,7 +293,7 @@ sleep 100
 #find the latest official tag
 #if the current new ISO is official (ISO_DEPLOY_DESTINATION==official_iso) and (current branch == upgrade_from)
 #then we need to find not the latest official, but the one before latest.
-ARTIFACTORY=&quot;https://test-artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/$UPGRADE_FROM/official_iso&quot;
+ARTIFACTORY=&quot;https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/$UPGRADE_FROM/official_iso&quot;
 
 if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; &amp;&amp; &quot;$BRANCH&quot; == &quot;$UPGRADE_FROM&quot; ]]; then
 LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
