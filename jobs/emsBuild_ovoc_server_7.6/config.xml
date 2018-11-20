@@ -160,10 +160,10 @@ EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
 
 #for an official release to QA, we need to prepere a special email (besides the email from UpdateVI job)
 if [ $ISO_DEPLOY_DESTINATION == &quot;official_iso&quot; ]; then
-  ARTIFACTORY=https://test-artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.6/official_iso
+  ARTIFACTORY=https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.6/official_iso
   LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
   echo LAST_OFFICIAL=${LAST_OFFICIAL} &gt;&gt; ems_build.properties
-  LINK=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.6/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
+  LINK=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.6/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
   echo LINK=${LINK} &gt;&gt; ems_build.properties
 fi
 
@@ -312,8 +312,8 @@ fi</command>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>ems-release</keyFromSelect>
@@ -322,8 +322,8 @@ fi</command>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
