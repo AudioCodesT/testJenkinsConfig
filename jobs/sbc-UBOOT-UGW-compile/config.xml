@@ -122,6 +122,9 @@ echo COMP_VER=${BL} &gt; generated_version.properties
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
 
+SUBLEVEL=$(echo $BL | cut -d. -f1)
+EXTRAVERSION=$(echo $BL | cut -d. -f2)
+sed -i.bak -e &apos;s:\(SUBLEVEL = \)[0-9]*:\1&apos;$SUBLEVEL&apos;:; s:\(EXTRAVERSION = \)[0-9]*:\1&apos;$EXTRAVERSION&apos;:&apos; version.mk
 
 sudo chown -R centos:centos .
 ./buildAll.sh</command>
