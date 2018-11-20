@@ -119,6 +119,10 @@
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
+GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
+
+
 sudo chown -R centos:centos .
 ./buildAll.sh</command>
     </hudson.tasks.Shell>
