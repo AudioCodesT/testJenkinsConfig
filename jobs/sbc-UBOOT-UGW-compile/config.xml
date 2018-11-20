@@ -126,6 +126,8 @@ SUBLEVEL=$(echo $BL | cut -d. -f1)
 EXTRAVERSION=$(echo $BL | cut -d. -f2)
 sed -i.bak -e &apos;s:\(SUBLEVEL = \)[0-9]*:\1&apos;$SUBLEVEL&apos;:; s:\(EXTRAVERSION = \)[0-9]*:\1&apos;$EXTRAVERSION&apos;:&apos; version.mk
 
+cat version.mk
+
 sudo chown -R centos:centos .
 ./buildAll.sh</command>
     </hudson.tasks.Shell>
