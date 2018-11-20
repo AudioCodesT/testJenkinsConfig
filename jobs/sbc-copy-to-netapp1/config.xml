@@ -115,8 +115,10 @@ if [ -s &quot;$NEWTAG.list&quot; ]; then
        BOARD=`echo $FileName | sed -r s/.cmp//`
        if [ -e &quot;$Target/$BOARD.zip&quot; ]; then continue; fi
        # if [[ &quot;$BOARD&quot; =~ &quot;Hosted&quot; ]]; then continue; fi
-       echo Download $FileName into &quot;$Target/$FileName&quot;...
-       curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output &quot;$Target/$FileName&quot;
+       if [ ! -e &quot;$Target/$FileName&quot; ]; then
+         echo Download $FileName into &quot;$Target/$FileName&quot;...
+         curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output &quot;$Target/$FileName&quot;
+       fi
        echo Create Zip from $FileName...
        zip -b /tmp -mj &quot;$Target/$BOARD.zip&quot; &quot;$Target/$FileName&quot;
      elif [ $Extention == &quot;zip&quot; ] || [ $Extention == &quot;txt&quot; ] || [ $Extention == &quot;rms&quot; ]; then
