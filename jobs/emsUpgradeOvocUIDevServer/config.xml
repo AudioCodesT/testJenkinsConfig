@@ -119,7 +119,7 @@ server-7.6-SNAPSHOT.jar \
 rest-core-7.6-SNAPSHOT.jar \
 oracle_trigger-7.6-SNAPSHOT.jar \
 database-7.6-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://test-artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done
 
 
 </command>
@@ -144,7 +144,7 @@ echo &quot;############################################&quot;
 cd ${WORKSPACE}
 
 
-artifactory_host=test-artifactory
+artifactory_host=artifactory
 artifactory_url=https://$artifactory_host/ems-externals/com/ac/ems/OvocUIServer
 cd EMS/VersionRelease
 
