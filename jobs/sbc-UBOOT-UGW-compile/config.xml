@@ -186,8 +186,8 @@ sudo chown -R centos:centos .
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/u-boot-serial.asc=&gt;com/ac/sbc/u-bootUGW/${COMP_VER}
-${WORKSPACE}/u-boot-nand.bin=&gt;com/ac/sbc/u-bootUGW/${COMP_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/u-boot-serial.asc=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}
+${WORKSPACE}/u-boot-nand.bin=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
