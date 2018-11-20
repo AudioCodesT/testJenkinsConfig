@@ -781,7 +781,6 @@
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
         <string>CheckJira</string>
         <string>CheckVI</string>
-        <string>Insert_new_customer_To_Jira</string>
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>sbc-simulator-2.15</string>
         <string>SmartTAP-UpdateVI</string>
