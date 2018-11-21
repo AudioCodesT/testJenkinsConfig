@@ -389,8 +389,9 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
           <script># Move output to Netapp&#xd;
-[[ -d &quot;/home/centos/data/output/$TAG&quot; ]] &amp;&amp; rm -rf &quot;/home/centos/data/output/$TAG&quot;&#xd;
-mv -v $WORKSPACE/$TAG /home/centos/data/output/</script>
+sudo -i&#xd;
+[[ -d &quot;/home/centos/data/output/ovoc_ova/$TAG&quot; ]] &amp;&amp; rm -rf &quot;/home/centos/data/output/ovoc_ova/$TAG&quot;&#xd;
+mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
