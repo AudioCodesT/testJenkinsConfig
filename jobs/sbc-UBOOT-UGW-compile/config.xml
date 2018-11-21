@@ -128,6 +128,13 @@ sed -i.bak -e &apos;s:\(SUBLEVEL = \)[0-9]*:\1&apos;$SUBLEVEL&apos;:; s:\(EXTRAV
 
 cat version.mk
 
+PreTAG=$(git describe --tags HEAD^) || echo No TAG
+if [ -z $PreTAG ]; then 
+  git log &gt; ChangeLog.txt
+else 
+  git log $PreTAG..$BL &gt; ChangeLog.txt
+fi
+
 sudo chown -R centos:centos .
 ./buildAll.sh</command>
     </hudson.tasks.Shell>
@@ -187,7 +194,8 @@ sudo chown -R centos:centos .
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/u-boot-serial.asc=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}
-${WORKSPACE}/u-boot-nand.bin=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}</deployPattern>
+${WORKSPACE}/u-boot-nand.bin=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}
+${WORKSPACE}/ChangeLog.txt=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
