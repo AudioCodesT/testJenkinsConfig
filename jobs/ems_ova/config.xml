@@ -1,16 +1,468 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
+  <description>Create ova for ovoc server official release</description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class="hudson.scm.NullSCM"/>
-  <canRoam>true</canRoam>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>TAG</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>OVA</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Deploy.7.4-rev18-rev3</string>
+              <string>Deploy.7.6-rev18-rev3</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server.git</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>server_${TAG}</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
+      <url></url>
+      <projectName></projectName>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference></reference>
+        <timeout>30</timeout>
+        <depth>10</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+    </extensions>
+  </scm>
+  <assignedNode>ems_ova</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
-  <publishers/>
-  <buildWrappers/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#############################################################################
+#############################################################################
+##### Fetching changes submitted to gerrit without waiting for a build ######
+##### This is for testing ONLY!!!!!! Remove when going to production!! ######
+#cd ${WORKSPACE}
+#git fetch
+#git branch -a
+#git branch -vv --no-color
+#git log -3
+#git checkout -f remotes/origin/7.4.3000
+#############################################################################
+#############################################################################
+#############################################################################
+
+## Get current branch
+# Get the build from the TAG
+BLD=`echo $TAG | cut -d. -f3`
+# Calculate the branch
+if [[ ${#BLD} == 3 ]]; then
+	BRANCH=${TAG:0:3}
+else
+	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
+	MSD=${TAG:4:1}
+    BRANCH=&quot;${TAG:0:3}.${MSD}000&quot;
+fi
+
+## Check that TAG matches OVA version
+OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
+if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
+	exit -1
+fi
+
+OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
+
+FullTesting=&quot;1&quot;
+
+# Set the following values to fit your need
+vmHostIP=&quot;10.7.10.7&quot;
+netMask=&quot;16&quot;
+DefaultGW=&quot;10.7.0.1&quot;
+
+# Get ESXi password from encrypted file
+cd ~/.ssl
+vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
+
+cd ${WORKSPACE}
+
+# Create a new log file
+now=`date +&quot;%Y%m%d-%H%M%S&quot;`
+logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
+[[ -f $logfile  ]] &amp;&amp; rm $logfile
+touch $logfile
+
+## Function for checking VM power state
+#function isUp {
+#    # Function gets VMHostIP &amp; vmid
+#    # Timeout after 600 seconds
+#
+#    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; | tee -a $logfile &amp;&amp; exit)
+#    local id=$2
+#
+#    for i in {1..20}; do
+#        sleep 30
+#        echo &quot;$(date) : Getting VM $id power status&quot; | tee -a $logfile
+#        getState=$(ssh root@${vmHostIP} vim-cmd vmsvc/power.getstate $id | grep Powered | cut -d&apos; &apos; -f2)
+#        if [[ &quot;$getState&quot; == &quot;on&quot; ]]; then
+#            echo &quot;$(date) : VM $id is up!&quot; | tee -a $logfile
+#            return 0
+#        fi
+#    done
+#
+#    echo &quot;$(date) : ovoc VM did not start within 600 seconds.&quot; | tee -a $logfile
+#    return 1
+#}
+#
+## Function for checking VM guest SSH readiness
+#function sshUp {
+#    # Function gets serverIP
+#    # Timeout after 60 seconds
+#
+#    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; | tee -a $logfile &amp;&amp; exit)
+#    local timeOut=5s
+#
+#    for i in {1..10}; do
+#        echo &quot;$(date) : Testing ssh readiness on $ip&quot; | tee -a $logfile
+#        if timeout $timeOut bash -c &quot;exec 5&gt;/dev/tcp/$ip/22&quot; 2&gt;/dev/null; then
+#            5&gt;&amp;-
+#            echo &quot;$(date) : SSH on $ip is up&quot; | tee -a $logfile
+#            return 0
+#        else
+#            5&gt;&amp;-
+#            echo &quot;$(date) : Waiting for SSH on $ip&quot; | tee -a $logfile
+#        fi
+#    done
+#
+#    echo &quot;$(date) : SSH on $ip is not up within 60s&quot; | tee -a $logfile
+#    return 1
+#}
+
+echo &quot;$(date) : *****************  START  ******************&quot; | tee -a $logfile
+
+
+###################################################################################################
+# Check &amp; delete old ovoc servers
+
+# check and delete old ovoc_base_for_ vm`s
+vms=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
+if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
+    for vmid in $vms; do
+        echo &quot;$(date) : ovoc_base_for_${TAG} already exist. Deleting vm&quot; | tee -a $logfile
+        ( ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} ) || true | tee -a $logfile
+        sleep 10
+        ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
+        sleep 10
+    done
+fi
+
+ssh root@${vmHostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
+
+###################################################################################################
+# Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
+
+# create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
+echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; | tee -a $logfile
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_${TAG}&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
+if [ $? -ne 0 ]; then
+    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
+    exit
+fi
+
+# find new vm id
+vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_${TAG}&quot; | gawk &apos;{print $1}&apos;`
+echo &quot;$(date) : vm id is $vmid&quot; | tee -a $logfile
+
+# Wait for ovoc server power on
+#isUp $vmHostIP $vmid || exit
+echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+sleep 300
+
+# find new vm IP address
+vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
+echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
+
+# Check ssh readiness
+#sshUp $vmip || exit -2
+
+
+###################################################################################################
+# Install DVD 3 on basic vovoc server
+
+# if branch is 7.4 then we dont run this step
+# in branch is higher than 7.4 then we need to arrange the directory EMS/target
+# so it will contain only the 5 jar files we copied from build-ovoc job archive
+# and all executables
+cd ${WORKSPACE}/EMS
+[[ ! -f target ]] &amp;&amp; mkdir target
+chmod 0775 target
+cd target
+rm -rf *
+cp ${WORKSPACE}/ovaPreRequisites/* .
+chmod 0775 *
+cd ${WORKSPACE}
+
+# Set Network
+echo &quot;$(date) : Applying DVD 3&quot; | tee -a $logfile
+cd EMS/VersionRelease
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
+	# We need to pass the netmask of the EMS server
+	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+else
+	# setNetwork.py for version 7.6 and later calculate netmask by itself
+	(python2.7 setNetwork.py $vmip sanity | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+fi
+cd ${WORKSPACE}
+
+# ovoc server was rebooted, so -
+# Wait for ovoc server power on
+#isUp ${vmHostIP} $vmid || exit -2
+echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+sleep 300
+
+# Sanity Install DVD-3
+cd EMS/VersionRelease
+(python2.7 SanityInstall.py ${TAG} $vmip official_iso | tee -a $logfile) || (echo &quot;$(date) : Failed sanity install&quot; | tee -a $logfile &amp;&amp; exit -1)
+cd ${WORKSPACE}
+sleep 30
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;$(date) : Done applying DVD 3&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+
+# ovoc server was rebooted during DVD 3 installation, so -
+# Wait for ovoc server power on
+#isUp ${vmHostIP} $vmid || exit -2
+echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+sleep 300
+
+###################################################################################################
+# clean before export to OVA
+echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
+cd EMS/VersionRelease
+(python2.7 cleanBeforeOva.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed cleaning installation files&quot; | tee -a $logfile &amp;&amp; exit -1)
+cd ${WORKSPACE}
+sleep 30
+
+###################################################################################################
+# graceful shutdouwn this new full ovoc server VM
+echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
+ssh root@${vmHostIP} vim-cmd vmsvc/power.shutdown ${vmid} | tee -a $logfile
+sleep 30
+
+###################################################################################################
+# export the new VM to an OVA file
+echo &quot;$(date) : export new VM to an OVA file&quot; | tee -a $logfile
+cd ${WORKSPACE}
+[[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
+mkdir -p &quot;${TAG}&quot; | tee -a $logfile
+ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova | tee -a $logfile
+ovfResult=`tail -1 $logfile | grep &quot;Completed&quot;`
+[[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;$(date) : Done export new VM to an OVA file&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+
+###################################################################################################
+# Delete ovoc server vm
+echo &quot;$(date) : Delete ovoc server VM from host&quot; | tee -a $logfile
+ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
+
+###################################################################################################
+# Deploy ovoc server from newly created ova
+echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+sleep 300
+
+###################################################################################################
+# Generate and install FK
+echo &quot;$(date) : Generate FK&quot; | tee -a $logfile
+cd EMS/VersionRelease
+(python2.7 SanityFK.py $vmip $TAG | tee -a $logfile) || (echo &quot;$(date) : Failed FK&quot; | tee -a $logfile &amp;&amp; exit -1)
+cd ${WORKSPACE}
+
+###################################################################################################
+# Reboot &amp; Verify services on ovoc_server after FK installation
+echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot; | tee -a $logfile
+cd EMS/VersionRelease
+(python2.7 SanityReboot.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed reboot after FK installation&quot; | tee -a $logfile &amp;&amp; exit -1)
+cd ${WORKSPACE}
+
+###################################################################################################
+# Run sanity tests on ovoc server
+echo &quot;$(date) : Run sanity tests on ovoc server&quot; | tee -a $logfile
+cd EMS/VersionRelease
+FullTesting=&quot;1&quot;
+python2.7 SanityTest.py ${TAG} $vmip $FullTesting | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
+(python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile &amp;&amp; echo &quot;$(date) : Failed reboot after FK installation&quot; | tee -a $logfile &amp;&amp; exit -1)
+cd ${WORKSPACE}
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;${date} : Done Sanity Tests&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot; | tee -a $logfile
+
+###################################################################################################
+# Delete new ovoc server vm
+
+# find new ovoc vmid
+vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_server_${TAG}&quot; | gawk &apos;{print $1}&apos;`
+echo &quot;$(date) : vmid is $vmid&quot; | tee -a $logfile
+
+# Power off &amp; delete ovoc server vm
+echo &quot;$(date) : Delete new ovoc server VM from host&quot; | tee -a $logfile
+ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} | tee -a $logfile
+ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
+
+echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Done export new VM to an OVA file</logText>
+              <operator>AND</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>true</RunIfJobSuccessful>
+          <script># Move output to Netapp&#xd;
+[[ -d &quot;/home/centos/data/output/$TAG&quot; ]] &amp;&amp; rm -rf &quot;/home/centos/data/output/$TAG&quot;&#xd;
+mv -v $WORKSPACE/$TAG /home/centos/data/output/</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>yuval.yosha</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+      <deployerDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>ems-release</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>false</useSpecs>
+      <uploadSpec>
+        <spec></spec>
+      </uploadSpec>
+      <downloadSpec>
+        <filePath></filePath>
+      </downloadSpec>
+      <deployPattern></deployPattern>
+      <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites</resolvePattern>
+      <deploymentProperties></deploymentProperties>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <multiConfProject>false</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER}__${TAG}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
 </project>
