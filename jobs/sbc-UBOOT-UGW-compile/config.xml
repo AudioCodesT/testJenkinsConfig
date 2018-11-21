@@ -128,7 +128,7 @@ sed -i.bak -e &apos;s:\(SUBLEVEL = \)[0-9]*:\1&apos;$SUBLEVEL&apos;:; s:\(EXTRAV
 
 cat version.mk
 
-PreTAG=$(git describe --tags HEAD^) || echo No TAG
+PreTAG=$(git describe --tags HEAD^) || echo No previous TAG
 if [ -z $PreTAG ]; then 
   git log &gt; ChangeLog.txt
 else 
