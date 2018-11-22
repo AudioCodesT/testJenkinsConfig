@@ -117,6 +117,13 @@ if [ -s &quot;$NEWTAG.list&quot; ]; then
        #if [ ! -e &quot;$Target/$FileName&quot; ]; then
          echo Download $FileName into &quot;$Target/$FileName&quot;...
          curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output &quot;$Target/$FileName&quot;
+         ArtSize=`curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+         DestSize=`wc -c &lt;$Target/$FileName`
+         if [ $ArtSize != $DestSize ]; then 
+           echo $ArtSize--$DestSize: $file is differ, copy again in next execution...
+           rm -f $Target/$FileName
+           exit 1
+         fi
        #fi
        echo Create Zip from $FileName...
        zip -b /tmp -mj &quot;$Target/$BOARD.zip&quot; &quot;$Target/$FileName&quot;
@@ -138,7 +145,7 @@ fi
     </hudson.tasks.Mailer>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun></regexpForRerun>
-      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>false</checkRegexp>
       <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
