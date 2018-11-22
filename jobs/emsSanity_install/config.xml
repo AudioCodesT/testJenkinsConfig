@@ -91,7 +91,7 @@
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>ems-build</assignedNode>
+  <assignedNode>ems-build-slave-sanityInstall</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
