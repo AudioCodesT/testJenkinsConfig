@@ -296,9 +296,9 @@ sleep 100
 ARTIFACTORY=&quot;https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/$UPGRADE_FROM/official_iso&quot;
 
 if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; &amp;&amp; &quot;$BRANCH&quot; == &quot;$UPGRADE_FROM&quot; ]]; then
-LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
+LAST_OFFICIAL=&quot;$(curl --user admin:$artiPass -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
 else
-LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
+LAST_OFFICIAL=&quot;$(curl --user admin:$artiPass -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
 fi
 
 #first, check out the branch that we want to upgrade from
