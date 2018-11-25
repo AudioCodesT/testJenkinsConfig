@@ -122,12 +122,15 @@ echo COMP_VER=${BL} &gt; generated_version.properties
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
 
+# Set SUBLEVEL and EXTRAVERSION in version.mk
+# If BL is 0.11, SUBLEVEL=0 and EXTRAVERSION=11
 SUBLEVEL=$(echo $BL | cut -d. -f1)
 EXTRAVERSION=$(echo $BL | cut -d. -f2)
 sed -i.bak -e &apos;s:\(SUBLEVEL = \)[0-9]*:\1&apos;$SUBLEVEL&apos;:; s:\(EXTRAVERSION = \)[0-9]*:\1&apos;$EXTRAVERSION&apos;:&apos; version.mk
 
 cat version.mk
 
+# Check if a previous TAG exist - if not, take all the entire log
 PreTAG=$(git describe --tags HEAD^) || echo No previous TAG
 if [ -z $PreTAG ]; then 
   git log --decorate &gt; ChangeLog.txt
@@ -136,6 +139,7 @@ else
 fi
 
 sudo chown -R centos:centos .
+# Execute the build
 ./buildAll.sh</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
