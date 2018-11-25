@@ -130,9 +130,9 @@ cat version.mk
 
 PreTAG=$(git describe --tags HEAD^) || echo No previous TAG
 if [ -z $PreTAG ]; then 
-  git log &gt; ChangeLog.txt
+  git log --decorate &gt; ChangeLog.txt
 else 
-  git log $PreTAG..$BL &gt; ChangeLog.txt
+  git log --decorate $PreTAG..$BL &gt; ChangeLog.txt
 fi
 
 sudo chown -R centos:centos .
