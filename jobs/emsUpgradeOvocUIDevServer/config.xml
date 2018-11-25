@@ -203,6 +203,16 @@ echo &quot;*****************************************************************&quo
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artiPass</name>
+          <value>{AQAAABAAAAAQTfZvHjfWYx5ck2tYq44EB2vOrsgZLjdjptf8q9HDbg8=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEW_TAG}__server-${serverToUpgrade}</template>
       <runAtStart>true</runAtStart>
