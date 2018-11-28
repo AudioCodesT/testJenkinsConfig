@@ -154,11 +154,13 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
 # if the REFSPEC=&lt;Branch name&gt;
 # CHANGESNumbers = All the chnages that should be updated with DRT label
-CHANGESNumbers=&quot;&quot;
 if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
   REFSPEC=refs/changes/00/$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
+  CHANGESNumbers=&quot;&quot;
+  OnlySubModule=true
 else
   CHANGESNumbers=&quot;$(echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;) &quot;
+  OnlySubModule=false
 fi
 
 TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
@@ -201,6 +203,19 @@ echo CHANGESNumbers=${CHANGESNumbers} &gt;&gt; ../generated_sbc_version.properti
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
 ./GetImages.sh $BOARDNAME $artifactory_host $User
+
+#if [ &quot;$OnlySubModule&quot; == true ]; then
+  # Remove old external files before downloading from Artifactory
+  #rm -f TPApp/MPCBin/*external_version_data.h
+  # Try to find the rebased Image by bring external_version_data.h file
+  #./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release
+  #tagTocompile=$(grep EXTERNAL_VERSION TPApp/MPCBin/*external_version_data.h | cut -d&apos;&quot;&apos; -f2)
+  #if echo $tagTocompile | grep -q -; then
+  #  echo The rebased TAG was not found! Abort
+  #else
+  #  git checkout -f $tagTocompile
+  #fi
+#fi
 
 cd ..
 sudo chmod -R 755 .
