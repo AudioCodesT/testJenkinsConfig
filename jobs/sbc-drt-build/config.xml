@@ -207,13 +207,12 @@ if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh
 chmod +x GetImages.sh
 ./GetImages.sh $BOARDNAME $artifactory_host $User
 
+# Take the relevant TPGApp that corresponding to this Submodule change instead of using the branch
 if [ &quot;$OnlySubModule&quot; == true ]; then
+  # file *external_version_data.h was downloaded by the ./GetImages.sh
   tagTocompile=$(grep EXTERNAL_VERSION TPApp/MPCBin/*external_version_data.h | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1)
-  #if echo $tagTocompile | grep -q -; then
-  #  echo The rebased TAG was not found! Abort
-  #else
-  #  git checkout -f $tagTocompile
-  #fi
+  echo Change your compilation environment to $tagTocompile
+  git checkout -f $tagTocompile
 fi
 
 cd ..
