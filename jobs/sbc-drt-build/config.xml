@@ -209,10 +209,21 @@ chmod +x GetImages.sh
 
 # Take the relevant TPGApp that corresponding to this Submodule change instead of using the branch
 if [ &quot;$OnlySubModule&quot; == true ]; then
+  tagTocompile=&quot;&quot;
   # file *external_version_data.h was downloaded by the ./GetImages.sh
-  tagTocompile=$(grep EXTERNAL_VERSION TPApp/MPCBin/*external_version_data.h | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1)
-  echo Change your compilation environment to $tagTocompile
-  git checkout -f $tagTocompile
+  for f in TPApp/MPCBin/*external_version_data.h; do 
+    SubmoduleName=$(basename $f | cut -d_ -f1)
+    echo Check file $f -- $SubmoduleName
+    # Searce if the user changes this Submodule - remove the last char for acLinux20
+    if [[ &quot;$CHANGES&quot; =~ &quot;${SubmoduleName::-1}&quot; ]]; then
+      tagTocompile=$(grep EXTERNAL_VERSION $f | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1)
+      echo Checkout to TAG: $tagTocompile from Submodule $SubmoduleName   
+    fi
+  done
+  if [ ! -z &quot;$tagTocompile&quot; ]; then
+    echo Change your TPWApp compilation environment to $tagTocompile
+    git checkout -f $tagTocompile
+  fi
 fi
 
 cd ..
