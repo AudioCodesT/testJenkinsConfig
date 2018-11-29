@@ -198,24 +198,23 @@ if [[ $CHANGES != &quot;&quot; ]]; then
   done
 fi
 
+# Remove old external files before downloading from Artifactory
+rm -f TPApp/MPCBin/*external_version_data.h
+
 echo CHANGESNumbers=${CHANGESNumbers} &gt;&gt; ../generated_sbc_version.properties
 # Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
 ./GetImages.sh $BOARDNAME $artifactory_host $User
 
-#if [ &quot;$OnlySubModule&quot; == true ]; then
-  # Remove old external files before downloading from Artifactory
-  #rm -f TPApp/MPCBin/*external_version_data.h
-  # Try to find the rebased Image by bring external_version_data.h file
-  #./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release
-  #tagTocompile=$(grep EXTERNAL_VERSION TPApp/MPCBin/*external_version_data.h | cut -d&apos;&quot;&apos; -f2)
+if [ &quot;$OnlySubModule&quot; == true ]; then
+  tagTocompile=$(grep EXTERNAL_VERSION TPApp/MPCBin/*external_version_data.h | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1)
   #if echo $tagTocompile | grep -q -; then
   #  echo The rebased TAG was not found! Abort
   #else
   #  git checkout -f $tagTocompile
   #fi
-#fi
+fi
 
 cd ..
 sudo chmod -R 755 .
