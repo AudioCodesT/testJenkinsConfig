@@ -101,7 +101,7 @@ function RemoveEachFolder() {
           exit 1
         else
           echo Size equel - delete from Artifactory...
-          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+          #$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
          fi
     else
         echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
@@ -109,7 +109,7 @@ function RemoveEachFolder() {
         RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
         if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
-          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+          #$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
         fi
     fi
   done
@@ -134,7 +134,7 @@ function CheckFolder() {
     RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
-      $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
+      #$curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
     ((deep-=1))
     return 1
