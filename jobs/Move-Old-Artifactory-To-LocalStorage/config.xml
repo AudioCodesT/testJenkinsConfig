@@ -87,11 +87,11 @@ function RemoveEachFolder() {
   
   local RemoveFolder=$1
   local TargetPath=$2
-  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
+  $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
   do
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
     DestSize=0; ArtSize=0
-    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
         echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
         $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot;
@@ -107,7 +107,7 @@ function RemoveEachFolder() {
         echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
         mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
         RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
-        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+        if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
         fi
@@ -122,7 +122,7 @@ function CheckFolder() {
   local Folder=$1
   local Target=$2
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
-  lastModified=$($curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
+  lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
   if [ &quot;$lastModified&quot; == &quot;&quot; ]; then return 0; fi
   echo &quot;$lastModified -le $oldThan&quot;
@@ -132,7 +132,7 @@ function CheckFolder() {
     echo mkdir &quot;${DESTINATION}/$Target&quot;
     mkdir -p &quot;${DESTINATION}/$Target&quot;
     RemoveEachFolder $Folder &quot;$Target&quot;
-    if $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+    if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
@@ -140,7 +140,7 @@ function CheckFolder() {
     return 1
   else
     echo $Folder is not old - check its sub folders
-    $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
+    $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
       lastMovedone=$moveDone
