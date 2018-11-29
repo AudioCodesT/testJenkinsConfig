@@ -215,7 +215,7 @@ if [ &quot;$OnlySubModule&quot; == true ]; then
     SubmoduleName=$(basename $f | cut -d_ -f1)
     echo Check file $f -- $SubmoduleName
     # Searce if the user changes this Submodule - remove the last char for acLinux20
-    if [[ &quot;$CHANGES&quot; =~ &quot;${SubmoduleName::-1}&quot; ]]; then
+    if [[ &quot;$(echo $CHANGES | tr &apos;[A-Z]&apos; &apos;[a-z]&apos;)&quot; =~ &quot;$(echo ${SubmoduleName::-1} | tr &apos;[A-Z]&apos; &apos;[a-z]&apos;)&quot; ]]; then
       tagTocompile=$(grep EXTERNAL_VERSION $f | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1)
       echo Checkout to TAG: $tagTocompile from Submodule $SubmoduleName   
     fi
