@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwPonPgaC3RIi/L0M08y1Bw6p2MlocFJP6wmD9i8yyF0ULFiIH4+kau/mmi4+GwM5cma1ufuQwzZr+YTHPC/rHew==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>94c3e21c-2724-41dd-92af-1c3b35a39b89</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>5d5e3513d20348eef0e5b0df1d56edc4a6d502aaa312ee7bd07428089efde0aa</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -44,6 +56,7 @@
         <string>ActionBase Users</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
         <string>#All Breakfast</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -53,7 +66,7 @@
         <string>Logistics_maintenance</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1533476963275</timestamp>
+      <timestamp>1543479807597</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
