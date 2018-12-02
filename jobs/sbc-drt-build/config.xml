@@ -207,16 +207,20 @@ if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh
 chmod +x GetImages.sh
 ./GetImages.sh $BOARDNAME $artifactory_host $User
 
-# Take the relevant TPGApp that corresponding to this Submodule change instead of using the branch
+# Take the relevant TP/GWApp that corresponding to this Submodule change instead of using the branch
+# In case of no TP/GWApp change was added to this DRT
 if [ &quot;$OnlySubModule&quot; == true ]; then
   tagTocompile=&quot;&quot;
   for rep in $CHANGES; do 
     RepoName=$(echo $rep | cut -d: -f1 | sed &apos;s:.*/::&apos;) 
-    echo Check $RepoName............ 
+    echo Check $RepoName............ Search it $BOARDNAME.deps 
+    # $f will contain the the exact external_version_data.h name according the .deps file
     f=$(grep &quot;/$RepoName &quot; ../OpenSource/$BOARDNAME.deps | grep data.h | sed &apos;s:.* ::&apos; || echo Not found)
+    # the file exist?
     if [ -f TPApp/MPCBin/$f ]; then
       t1=$(grep EXTERNAL_VERSION TPApp/MPCBin/$f | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1 | cut -d_ -f1)
       echo Found TAG $t1 in file $f -- Check if this TAG is the most advanced TAG
+      # This if is relevant if OpenRG and acLinux or Hosted02 and Hostedbl were choosen
       if [ $(echo 0$t1 | sed &apos;s:.*\.::&apos;) -gt $(echo 0$tagTocompile | sed &apos;s:.*\.::&apos;) ]; then
         tagTocompile=$t1
         echo Change to TAG: $tagTocompile found in Submodule $RepoName
