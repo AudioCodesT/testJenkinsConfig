@@ -216,7 +216,7 @@ if [ &quot;$OnlySubModule&quot; == true ]; then
     echo Check $RepoName............ Search it $BOARDNAME.deps 
     # $f will contain the the exact external_version_data.h name according the .deps file
     f=$(grep &quot;/$RepoName &quot; ../OpenSource/$BOARDNAME.deps | grep data.h | sed &apos;s:.* ::&apos; || echo Not found)
-    # the file exist?
+    # The file exist?
     if [ -f TPApp/MPCBin/$f ]; then
       t1=$(grep EXTERNAL_VERSION TPApp/MPCBin/$f | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1 | cut -d_ -f1)
       echo Found TAG $t1 in file $f -- Check if this TAG is the most advanced TAG
