@@ -189,7 +189,7 @@ CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yossim,ben.magriso</recipients>
+      <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
