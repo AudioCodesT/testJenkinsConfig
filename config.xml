@@ -1086,7 +1086,6 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>Insert_new_customer_To_Jira</string>
         <string>MoveArtifactoryToLocalStorage_File</string>
         <string>MoveArtifactoryToLocalStorage_Zip</string>
         <string>UpdateVI</string>
