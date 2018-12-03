@@ -104,7 +104,7 @@ function RemoveEachFolder() {
          fi
     else
         echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
-        mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot; || true
         RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
         if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
           echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
@@ -129,7 +129,7 @@ function CheckFolder() {
     echo move $Folder
     echo ---------------------
     echo mkdir &quot;${DESTINATION}/$Target&quot;
-    mkdir -p &quot;${DESTINATION}/$Target&quot;
+    mkdir -p &quot;${DESTINATION}/$Target&quot; || true
     RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
