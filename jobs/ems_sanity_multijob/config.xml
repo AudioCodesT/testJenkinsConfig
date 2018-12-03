@@ -300,8 +300,8 @@ output: if official &amp; all jobs succeeded then email to QA</description>
                 </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
               </configuredTriggers>
               <contentType>text/html</contentType>
-              <defaultSubject>EMS new release to QA:  $NEW_TAG</defaultSubject>
-              <defaultContent>&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;EMS ovoc server release to QA&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+              <defaultSubject>OVOC new release to QA:  $NEW_TAG</defaultSubject>
+              <defaultContent>&lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt; Ovoc server release to QA&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Tag: $NEW_TAG&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;Download from:&amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;$LINK&quot;&gt;$NEW_TAG&lt;/a&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;h2 style=&quot;color: #2980B9;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #2980B9;&quot;&gt;What have we added or fixed? &amp;nbsp;&lt;a style=&quot;color: #333399;&quot; href=&quot;http://websrvqa/GITCompilationResults/EMS_ovoc_server/$BRANCH/All_baseline_reports.html&quot;&gt;Jira issues list&lt;/a&gt;&amp;nbsp;&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
