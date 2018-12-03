@@ -116,7 +116,6 @@ function RemoveEachFolder() {
 
 # this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
 function CheckFolder() {
-  set -e
   ((deep+=1))
   local Folder=$1
   local Target=$2
@@ -136,7 +135,6 @@ function CheckFolder() {
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
     ((deep-=1))
-    set +e
     return 1
   else
     echo $Folder is not old - check its sub folders
