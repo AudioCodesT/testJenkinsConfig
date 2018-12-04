@@ -4,6 +4,18 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwEDw1joKAx9H9mA49OAp/G+06nysn1H9OmK6bB0RB7IL4yLG6E9aakzC4nPkIYZ/dNrTybTtCwVAJrkip/2Hgdg==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>6a37295c-dbb9-415c-bf47-ec0089c566d3</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>563dfcbbb6631d59e7a28f19dea118521a670fc106e97072c763f2900f67acef</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
@@ -55,7 +67,6 @@
         <string>Password Manager Apply</string>
         <string># Agile users</string>
         <string># All ISRAEL</string>
-        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -73,7 +84,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1541421187352</timestamp>
+      <timestamp>1543925613316</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Nava.Sherman@audiocodes.com</emailAddress>
