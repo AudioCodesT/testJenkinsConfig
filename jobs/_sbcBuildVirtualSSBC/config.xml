@@ -41,6 +41,7 @@
               <string>AWS</string>
               <string>Hyperv</string>
               <string>VMWare</string>
+              <string>All</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -81,7 +82,7 @@
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh</relativeTargetDir>
+        <relativeTargetDir>TrunkPackRam\Utils\MediantVEBuild\</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
@@ -96,13 +97,28 @@
     <hudson.tasks.Shell>
       <command>artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
-
+curlHasFailed=&quot;False&quot;
 
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
- 
+if [[ &quot;curlHasFailed$&quot; == &quot;True&quot; ]]
+then 
+echo &quot;Failed to download &quot;
+exit 0
+fi
 #run script
+if [[ &quot;Environment$&quot; == &quot;All&quot; ]]
+then 
+#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=Kvm
+#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=Azure
+#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=AWS
+#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=Hyperv
+#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=VMWare
+else
 #sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=${Environment}
+fi
+
+
 
 #DEPLOY ARTIFACTS  sbc-F${Tag}-${Environment}
  
