@@ -86,7 +86,7 @@
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
-  <assignedNode>sbc-buildVirtualSSBC</assignedNode>
+  <assignedNode>sbc-VirtualSSBC</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -106,6 +106,7 @@ then
 echo &quot;Failed to download sbc-F${Tag}.iso&quot;
 exit 0
 fi
+echo ${WORKSPACE}
 #rm -rf ${WORKSPACE}/artifacts/*
 #run script
 #sh TrunkPackRam/Utils/MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE} --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts/
