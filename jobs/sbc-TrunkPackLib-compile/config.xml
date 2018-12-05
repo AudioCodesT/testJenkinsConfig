@@ -142,7 +142,7 @@ IF NOT EXIST .git (&#xd;
 )&#xd;
 &#xd;
 @set TPFILES=TrunkPackRam/PSTN/PSTN_Interface&#xd;
-@set TPFILES=%TPFILES% TrunkPackRam/Transmission/TransmInterface&#xd;
+@rem set TPFILES=%TPFILES% TrunkPackRam/Transmission/TransmInterface&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/Common/Include&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/Common/Source&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/PerformanceMonitoring/Include/PerformanceMonitoringDef.h&#xd;
