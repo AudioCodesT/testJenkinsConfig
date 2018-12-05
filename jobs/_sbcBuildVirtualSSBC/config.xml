@@ -36,12 +36,12 @@
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>Kvm</string>
-              <string>Azure</string>
-              <string>AWS</string>
-              <string>Hyperv</string>
-              <string>VMWare</string>
-              <string>All</string>
+              <string>kvm</string>
+              <string>azure</string>
+              <string>aws</string>
+              <string>hyperv</string>
+              <string>vmware</string>
+              <string>all</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -103,24 +103,17 @@ curlHasFailed=&quot;False&quot;
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 if [[ &quot;curlHasFailed$&quot; == &quot;True&quot; ]]
 then 
-echo &quot;Failed to download &quot;
+echo &quot;Failed to download sbc-F${Tag}.iso&quot;
 exit 0
 fi
+#rm -rf ${WORKSPACE}/artifacts/*
 #run script
-if [[ &quot;Environment$&quot; == &quot;All&quot; ]]
-then 
-#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=Kvm
-#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=Azure
-#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=AWS
-#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=Hyperv
-#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=VMWare
-else
-#sh TrunkPackRam\Utils\MediantVEBuild\build_sbc.sh --flavor=${Environment}
-fi
+#sh TrunkPackRam/Utils/MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE} --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts/
 
 
 
-#DEPLOY ARTIFACTS  sbc-F${Tag}-${Environment}
+
+#DEPLOY ARTIFACTS  sbc-F${Tag}-${Environment} 
  
 
 </command>
