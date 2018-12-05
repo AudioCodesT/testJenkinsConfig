@@ -22,7 +22,7 @@
         <hudson.model.StringParameterDefinition>
           <name>TPRAM_BRANCH</name>
           <description></description>
-          <defaultValue>7.2.204</defaultValue>
+          <defaultValue>7.2.252</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
