@@ -176,7 +176,7 @@ ARTIFACTORY=artifactory
 deep=1
 CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
 CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
-#CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 1
+CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 1
 
 
 
