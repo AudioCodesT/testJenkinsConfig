@@ -177,9 +177,18 @@ chmod 600 id_rsa_gerrit
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 #ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
 ID=${GERRIT_CHANGE_ID}
+ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep ^Issue: | sed &apos;s/Issue: //g; s/ .*//g&apos;)
 tpChange=&quot;&quot;
-tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
-     grep -A30 GWApp | grep -m1 url: | sed &apos;s^url:.*/\| ^^g&apos;) || echo ChangeId not found
+tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
+     --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open project:TP/GWApp | \
+     grep ref: | cut -d: -f2) || echo ChangeId not found
+echo tpChange: $tpChange
+if [ &quot;$tpChange&quot; == &quot;&quot; ]; then
+  echo Search this Issue $ISSUE...
+  tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
+     --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH status:open project:TP/GWApp | \
+     grep ref: | cut -d: -f2) || echo ChangeId not found
+fi
 echo tpChange: $tpChange
 
 CurrentPath=`pwd`
@@ -191,9 +200,8 @@ if [ ! -d .git ]; then
   rm -rf GWApp
 fi
 
-if [ &quot;$tpChange&quot; != &quot;&quot; ]; then 
-  ref=$(ssh -p 29418 -i $CurrentPath/id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set $tpChange | grep ref: | cut -d: -f2)
-  git fetch origin $ref
+if [ &quot;$tpChange&quot; != &quot;&quot; ]; then
+  git fetch origin $tpChange
 else
   git fetch origin $GERRIT_BRANCH
 fi
