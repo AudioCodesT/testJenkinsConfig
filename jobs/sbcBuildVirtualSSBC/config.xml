@@ -74,6 +74,9 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        <relativeTargetDir>MediantVEBuild</relativeTargetDir>
+      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
   <assignedNode>sbc-VirtualSSBC</assignedNode>
@@ -88,7 +91,7 @@
       <command>artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
-
+mkdir artifacts
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 if [[ &quot;curlHasFailed$&quot; == &quot;True&quot; ]]
@@ -96,8 +99,6 @@ then
 echo &quot;Failed to download sbc-F${Tag}.iso&quot;
 exit 0
 fi
-echo ${WORKSPACE}
-#rm -rf ${WORKSPACE}/artifacts/*
 #run script
 #sh MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE} --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts/
 
