@@ -114,7 +114,7 @@
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
       <dependencyJobsNames></dependencyJobsNames>
-      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <commitMessageParameterMode>PLAIN</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
       <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Started &lt;BUILDS_STATS&gt;&apos; --notify=NONE</buildStartMessage>
@@ -175,7 +175,8 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/$EXT
 # Find if this build should use another Opensorce Images with the same Commit change-ID
 chmod 600 id_rsa_gerrit
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
-ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+#ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ID=${GERRIT_CHANGE_ID}
 tpChange=&quot;&quot;
 tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
      grep -A30 GWApp | grep -m1 url: | sed &apos;s^url:.*/\| ^^g&apos;) || echo ChangeId not found
