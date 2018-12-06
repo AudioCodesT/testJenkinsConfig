@@ -82,7 +82,7 @@
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>TrunkPackRam\Utils\MediantVEBuild\</relativeTargetDir>
+        <relativeTargetDir>MediantVEBuild/</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
@@ -98,6 +98,10 @@
       <command>artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
+ls -l
+git clone --depth 1 --no-checkout https://rebaser/review/Utils/
+cd Utils
+git checkout master -- MediantVEBuild/
 
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
@@ -106,6 +110,7 @@ then
 echo &quot;Failed to download sbc-F${Tag}.iso&quot;
 exit 0
 fi
+ls -l
 echo ${WORKSPACE}
 #rm -rf ${WORKSPACE}/artifacts/*
 #run script
