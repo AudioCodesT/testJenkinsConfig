@@ -185,19 +185,21 @@ refs=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
 echo tpChange: $refs
 if [ -z &quot;$refs&quot; ]; then
   echo Search this Issue: $ISSUE...
-  tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
-     --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH status:open project:TP/GWApp | \
-     grep ref: | cut -d: -f2) || echo ChangeId not found
-  lastChange=0
-  for ref in $tpChange; do
-    change=$(echo $ref | cut -d/ -f4);
-    echo Check if it the oldest change, we need to use the oldest in case of some changes
-    if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
-      lastChange=$change
-      refs=$ref
-      echo Set to $refs
-    fi 
-  done
+  if [ -z &quot;$ISSUE&quot; ]; then
+    tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
+      --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH status:open project:TP/GWApp | \
+      grep ref: | cut -d: -f2) || echo ChangeId not found
+    lastChange=0
+    for ref in $tpChange; do
+      change=$(echo $ref | cut -d/ -f4);
+      echo Check if it the oldest change, we need to use the oldest in case of some changes
+      if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
+        lastChange=$change
+        refs=$ref
+        echo Set to $refs
+      fi 
+    done
+  fi
 fi
 echo tpChange: $refs
 
