@@ -811,13 +811,11 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>_sbcBuildVirtualSSBC</string>
         <string>sbc-basic-review</string>
         <string>sbc-collab-compile_end-web-user</string>
         <string>sbc-compile</string>
         <string>sbc-compile_night_NextGenCPE</string>
         <string>sbc-copy-to-netapp1</string>
-        <string>sbc-drt-branches</string>
         <string>sbc-drt-build</string>
         <string>sbc-drt-copy-to-netapp1</string>
         <string>sbc-drt-request</string>
@@ -827,6 +825,7 @@
         <string>sbc-StackMgr</string>
         <string>sbc-user-build</string>
         <string>sbc_misc_compile</string>
+        <string>sbcBuildVirtualSSBC</string>
       </jobNames>
       <jobFilters/>
       <columns>
