@@ -228,8 +228,9 @@ if [ &quot;$OnlySubModule&quot; == true ]; then
     fi
   done
   if [ ! -z &quot;$tagTocompile&quot; ]; then
-    echo Checkout TP/GWApp compilation environment to $tagTocompile
-    git checkout -f $tagTocompile
+    echo Do not nothing, need to involve the QA (Rekefet) if it is right to do it
+    #echo Checkout TP/GWApp compilation environment to $tagTocompile
+    #git checkout -f $tagTocompile
   fi   
 fi
 
