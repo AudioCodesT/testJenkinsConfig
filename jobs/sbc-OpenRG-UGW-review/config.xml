@@ -158,9 +158,29 @@ change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ID=${GERRIT_CHANGE_ID}
 ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed &apos;s/.*Issue: //g; s/ .*//g&apos;)
 rev=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
-     --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
-     grep -A30 acLinuxUGW | grep revision | cut -d: -f2 | sed &apos;s: ::g&apos; || echo ChangeId not found)
-
+     --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open \
+     project:TP/OpenSource/acLinuxUGW | \
+     grep revision: | head -1 | cut -d: -f2 | sed &apos;s: ::g&apos;) || echo ChangeId not found
+echo acLinuxChange: $rev
+# Find if this build should use another Opensorce Images with the same Issue
+if [[ -z &quot;$rev&quot; &amp;&amp; ! -z &quot;$ISSUE&quot; ]]; then 
+  echo Search this Issue: $ISSUE...
+  acLinuxChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
+    --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH status:open \
+    project:TP/OpenSource/acLinuxUGW | \
+    grep revision: | head -1 | cut -d: -f2 | sed &apos;s: ::g&apos;) || echo ChangeId not found
+  lastChange=0
+  for revision in $acLinuxChange; do
+    change=$(echo $revision | cut -d/ -f4);
+    echo Check if it the oldest change, we need to use the oldest in case of some changes
+    if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
+      lastChange=$change
+      rev=$revision
+      echo Set to $rev
+    fi 
+  done
+fi
+echo acLinuxChange: $rev
 #In case you don&apos;t find the revision from another commit, take it from the last submitted commit
 if [ -z &quot;$rev&quot; ]; then
   cd ..
