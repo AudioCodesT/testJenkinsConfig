@@ -55,7 +55,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -89,14 +88,14 @@
       <command>artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
-#mkdir artifacts
+mkdir artifacts
 #get the relevant ISO FILE
-#curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
-#if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
-#then 
-#echo &quot;Failed to download sbc-F${Tag}.iso&quot;
-#exit 0
-#fi
+curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
+then 
+echo &quot;Failed to download sbc-F${Tag}.iso&quot;
+exit 0
+fi
 #run script
 ./MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
 
