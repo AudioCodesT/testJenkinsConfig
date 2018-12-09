@@ -307,7 +307,7 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
     cd ${WORKSPACE}/EMS/VersionRelease
     python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.6 || echo &quot;**************** Download ISO 2 QA Failed ****************&quot;
 fi
-fi</command>
+</command>
               </hudson.tasks.Shell>
             </buildSteps>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
