@@ -354,9 +354,8 @@ Invoke-Elevated -ScriptBlock {
 }</command>
     </hudson.plugins.powershell.PowerShell>
     <hudson.tasks.BatchFile>
-      <command>cd ACU\NGP\Build&#xd;
-echo &quot;Running build batch with build number (%NEWBUILD%) and InstallShield NOT disabled (0)&quot;&#xd;
-LaunchOneTouchEx.bat %NEWBUILD% 0</command>
+      <command>echo &quot;Running build batch with build number (%NEWBUILD%)&quot;&#xd;
+Build\LaunchOneTouchEx.bat %NEWBUILD%</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>cd ACU\NGP\Build&#xd;
@@ -415,16 +414,8 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
           <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
           <publisherList>
             <hudson.tasks.ArtifactArchiver>
-              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\**\*.*</artifacts>
+              <artifacts>Deployment\Release\BuildLogs\**\*.*</artifacts>
               <allowEmptyArchive>false</allowEmptyArchive>
-              <onlyIfSuccessful>false</onlyIfSuccessful>
-              <fingerprint>false</fingerprint>
-              <defaultExcludes>true</defaultExcludes>
-              <caseSensitive>true</caseSensitive>
-            </hudson.tasks.ArtifactArchiver>
-            <hudson.tasks.ArtifactArchiver>
-              <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\InstallShield\**\*.*</artifacts>
-              <allowEmptyArchive>true</allowEmptyArchive>
               <onlyIfSuccessful>false</onlyIfSuccessful>
               <fingerprint>false</fingerprint>
               <defaultExcludes>true</defaultExcludes>
@@ -436,41 +427,6 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yuvaly shukyr briank</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
-    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-          <email>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-      </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
-      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>false</attachBuildLog>
-      <compressBuildLog>false</compressBuildLog>
-      <replyTo>$DEFAULT_REPLYTO</replyTo>
-      <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
-    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
