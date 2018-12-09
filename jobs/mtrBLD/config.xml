@@ -356,7 +356,8 @@ Invoke-Elevated -ScriptBlock {
     <hudson.tasks.BatchFile>
       <command>echo &quot;Running build batch with build number (%NEWBUILD%)&quot;&#xd;
 cd Build&#xd;
-build.bat %NEWBUILD%</command>
+build.bat %NEWBUILD%&#xd;
+cd ..</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>cd ACU\NGP\Build&#xd;
