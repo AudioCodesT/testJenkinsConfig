@@ -88,7 +88,7 @@ To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&
 
 cd $WORKSPACE
 #
-[[ &quot;$WhatToBuild&quot; =~ &quot;Master&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
+[[ &quot;$WhatToBuild&quot; =~ &quot;master&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
 echo &quot;**************************************************************&quot;
 echo &quot;Building $WTB&quot;
 echo &quot;**************************************************************&quot;
