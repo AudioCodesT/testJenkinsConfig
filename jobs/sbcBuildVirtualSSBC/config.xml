@@ -91,7 +91,7 @@ curlHasFailed=&quot;False&quot;
 mkdir artifacts
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
-if [[ &quot;curlHasFailed$&quot; == &quot;True&quot; ]]
+if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
 echo &quot;Failed to download sbc-F${Tag}.iso&quot;
 exit 0
