@@ -72,9 +72,7 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
-    </extensions>
+    <extensions/>
   </scm>
   <assignedNode>sbc-VirtualSSBC</assignedNode>
   <canRoam>false</canRoam>
