@@ -84,7 +84,7 @@ To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\Program Files\Git\git-bash.exe
+      <command>#!C:\Program Files\Git\bin\bash.exe
 
 cd $WORKSPACE
 #
