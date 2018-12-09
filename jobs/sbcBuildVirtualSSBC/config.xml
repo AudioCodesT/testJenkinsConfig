@@ -97,7 +97,7 @@ echo &quot;Failed to download sbc-F${Tag}.iso&quot;
 exit 0
 fi
 #run script
-sh MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE} --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts/
+sh MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts/
 
 
 
