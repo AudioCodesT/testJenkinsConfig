@@ -1,14 +1,14 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>SmartTAP Build static server - run nightly</description>
+  <description>MeetingRecorder build server - run nightly</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
-      <useBuildBlocker>true</useBuildBlocker>
+      <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs>smtBLD_ST4.2</blockingJobs>
+      <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -31,8 +31,8 @@
           <name>WhatToBuild</name>
           <description>Default build is Development branch.
 To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TAG_NAME&gt; is like 3.2.1.1234T
-e.g.: refs/tags/4.2.0.9145T</description>
-          <defaultValue>*/Development</defaultValue>
+</description>
+          <defaultValue>*/Master</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -45,14 +45,13 @@ e.g.: refs/tags/4.2.0.9145T</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/SmartTAP.git</url>
+        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/MeetingRecorder.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -64,14 +63,14 @@ e.g.: refs/tags/4.2.0.9145T</description>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
       <url>https://test-gerrit/plugins/gitblit/</url>
-      <projectName>SmartTAP/SmartTAP</projectName>
+      <projectName>SmartTAP/MeetingRecorder</projectName>
     </browser>
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>smt-Build</assignedNode>
+  <assignedNode>mtr-Build</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -89,7 +88,7 @@ e.g.: refs/tags/4.2.0.9145T</description>
 
 cd $WORKSPACE
 #
-[[ &quot;$WhatToBuild&quot; =~ &quot;Development&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
+[[ &quot;$WhatToBuild&quot; =~ &quot;Master&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
 echo &quot;**************************************************************&quot;
 echo &quot;Building $WTB&quot;
 echo &quot;**************************************************************&quot;
@@ -117,7 +116,8 @@ if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
     VERSION=$MAJOR.$MINOR.$POINT
     
-    sed -i &quot;s/^Sm sedartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
+    # Used in SmartTAP
+    #sed -i &quot;s/^Sm sedartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
     
     # Need these details for the UpdateVI job
     AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
@@ -146,7 +146,8 @@ else
     NEWTAG=${PARAM_TAG}    ## so we do not want to advance the build number
     VERSION=${MAJOR}.${MINOR}.${POINT}
     
-    sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
+    # Used in SmartTAP
+    #sed -i &quot;s/^SmartTAP=.*/SmartTAP=$NEWBUILD/g&quot; &quot;../Version.ini&quot;
 fi
 
 
@@ -478,7 +479,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect>smt-release</keyFromSelect>
+          <keyFromSelect>mtr-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
@@ -513,7 +514,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\smtBLD\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
+      <deployPattern>C:\j\workspace\mtrBLD\${NEWTAG}.7z=&gt;MeetingRecorder/${VERSION}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
