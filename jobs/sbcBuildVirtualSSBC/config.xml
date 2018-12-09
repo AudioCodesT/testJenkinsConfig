@@ -74,9 +74,6 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
-      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>Utils/MediantVEBuild</relativeTargetDir>
-      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
   <assignedNode>sbc-VirtualSSBC</assignedNode>
