@@ -357,11 +357,11 @@ Invoke-Elevated -ScriptBlock {
       <command>echo &quot;Running build batch with build number (%NEWBUILD%)&quot;&#xd;
 cd Build&#xd;
 build.bat %NEWBUILD%&#xd;
-cd ..</command>
+</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>cd ACU\NGP\Build&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\smtBLD\ACU\NGP\Build\Release\</command>
+      <command>cd %WORKSPACE%&#xd;
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\mtrBLD\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
