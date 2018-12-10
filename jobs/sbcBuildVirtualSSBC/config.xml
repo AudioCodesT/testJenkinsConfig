@@ -121,7 +121,7 @@ then
 	while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
 	do
 		sleep 5
-		queueJson=$(curl --insecure-X GET ${queueURL}api/json?pretty=true)
+		queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
 		inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
         echo $inQueue
 		ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
