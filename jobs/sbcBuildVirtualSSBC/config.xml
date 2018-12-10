@@ -88,13 +88,45 @@
       <command>artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
+JENKINS_URL=&apos;https://test-jenkins&apos;
+JOB_NAME=&apos;job/sbc-iso&apos;
+JOB_TOKEN=&apos;sbcCreateISO&apos;
+
 mkdir artifacts
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
-echo &quot;Failed to download sbc-F${Tag}.iso&quot;
-exit 0
+echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
+#trigger sbc-iso job to create ISO
+output=$(curl -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot;)
+#check if job is in queue
+queueERROR=$(echo $output | grep &quot;Error 404&quot;)
+#failed to start the build
+if [[ $queueERROR != &quot;&quot; ]]
+then
+echo &quot;Failed to start the build remotely Exiting the build&quot;
+exit 1
+fi
+queueURL=$(echo $output | grep Location | cut -d&apos;:&apos; -f2)
+inQueue=$(curl -X GET $queueURL/api/json | grep &quot;executable&quot;)
+ERROR=$(curl -X GET $queueURL/api/json | grep &quot;Error 404&quot;)
+queueJson=$(curl -X GET $queueURL/api/json?pretty=true)
+while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
+do
+sleep 5
+queueJson=$(curl -X GET $queueURL/api/json?pretty=true)
+inQueue=$(curl -X GET $queueURL/api/json | grep &quot;executable&quot;)
+ERROR=$(curl -X GET $queueURL/api/json | grep &quot;Error 404&quot;)
+done
+if [[ $ERROR != &quot;&quot; ]]
+then
+echo &quot;Failed to start the job after been in queue... Exit the build&quot;
+exit 1
+fi
+
+#check if job is running
+
 fi
 #run script
 ./MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
