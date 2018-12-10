@@ -137,7 +137,7 @@ then
 	# Poll every thirty seconds until the build is finished (if result is 0 its &quot;IN PROGRESS&quot; if result is 1 the job FINISHED running	
 	while [ $GREP_RETURN_CODE -eq 0 ]
 	do
-    	sleep 30
+    	sleep 240
     	# Grep will return 0 while the build is running:
     	curl --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
     	GREP_RETURN_CODE=$?
