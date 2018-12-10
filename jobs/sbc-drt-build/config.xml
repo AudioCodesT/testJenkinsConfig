@@ -230,10 +230,8 @@ if [ &quot;$OnlySubModule&quot; == true ]; then
   if [ ! -z &quot;$tagTocompile&quot; ]; then
     #echo Do not nothing, need to involve the QA (Rekefet) if it is right to do it
     echo Checkout TP/GWApp compilation environment to $tagTocompile
-    git checkout -f $tagTocompile
-    NEWTAG=`./MakeBrdVersion.sh`
-    git log -n5 --decorate --oneline
-    head -12 Bsps/Common/Include/BrdVersion.h | tail -3
+    #git checkout -f $tagTocompile
+    #NEWTAG=`./MakeBrdVersion.sh`
   fi   
 fi
 
