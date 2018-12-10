@@ -120,7 +120,8 @@ then
 	queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
 	while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
 	do
-		sleep 5
+    	echo &quot;BUILD STILL IN QUEUE&quot;
+		sleep 20
 		queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
 		inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
         echo $inQueue
