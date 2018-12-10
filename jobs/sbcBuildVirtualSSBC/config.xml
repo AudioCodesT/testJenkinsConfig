@@ -113,7 +113,7 @@ then
 		echo &quot;Failed to start the build remotely Exiting the build&quot;
 		exit 1
 	fi
-	inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
+	inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;) 
 	ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
 	queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
 	while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
