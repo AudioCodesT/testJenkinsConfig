@@ -101,8 +101,10 @@ then
     echo &quot;****************Create a new ISO*******************&quot;
 	#trigger sbc-iso job to create ISO
 	output=$(curl -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot;)
+    echo $output
 	#check if job is in queue
 	queueURL=$(echo $output | grep Location | cut -d&apos;:&apos; -f2)
+    echo $queueURL
 	#failed to start the build
 	if [[ $queueURL == &quot;&quot; ]]
 	then
@@ -117,7 +119,9 @@ then
 		sleep 5
 		queueJson=$(curl -X GET $queueURL/api/json?pretty=true)
 		inQueue=$(curl -X GET $queueURL/api/json | grep &quot;executable&quot;)
+        echo $inQueue
 		ERROR=$(curl -X GET $queueURL/api/json | grep &quot;Error 404&quot;)
+        echo $ERROR
 	done
 	if [[ $ERROR != &quot;&quot; ]]
 	then
@@ -125,6 +129,7 @@ then
 		exit 1
 	fi
 	buildNumber=$(echo $queueJson | grep number | cut -d&apos;:&apos; -f2) 
+    echo $buildNumber
 	#check if job is running
 	JOB_URL=$JENKINS_URL/$JOB_NAME/$buildNumber/api/json
 	curl --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
@@ -138,6 +143,7 @@ then
     	GREP_RETURN_CODE=$?
 	done
 	JOB_STATUS=$(curl -X GET $JENKINS_URL/$JOB_NAME/$buildNumber/api/json?pretty=true | grep result | cut -d&apos;:&apos; -f2 | sed &apos;s/[&quot;, ]//g&apos;)
+    echo $JOB_STATUS
 	if [[ &quot;$JOB_STATUS&quot; == &quot;FAULURE&quot; ]]
 	then
 		echo &quot;Failed to create ISO in job sbc-iso build number $buildNumber&quot;
