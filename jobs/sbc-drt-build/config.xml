@@ -232,6 +232,8 @@ if [ &quot;$OnlySubModule&quot; == true ]; then
     echo Checkout TP/GWApp compilation environment to $tagTocompile
     git checkout -f $tagTocompile
     NEWTAG=`./MakeBrdVersion.sh`
+    git log -n5 --decorate --oneline
+    head -12 Bsps/Common/Include/BrdVersion.h | tail -3
   fi   
 fi
 
