@@ -113,16 +113,16 @@ then
 		echo &quot;Failed to start the build remotely Exiting the build&quot;
 		exit 1
 	fi
-	inQueue=$(curl -X GET ${queueURL}api/json | grep &quot;executable&quot;)
-	ERROR=$(curl -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
-	queueJson=$(curl -X GET ${queueURL}api/json?pretty=true)
+	inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
+	ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
+	queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
 	while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
 	do
 		sleep 5
-		queueJson=$(curl -X GET ${queueURL}api/json?pretty=true)
-		inQueue=$(curl -X GET ${queueURL}api/json | grep &quot;executable&quot;)
+		queueJson=$(curl --insecure-X GET ${queueURL}api/json?pretty=true)
+		inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
         echo $inQueue
-		ERROR=$(curl -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
+		ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
         echo $ERROR
 	done
 	if [[ $ERROR != &quot;&quot; ]]
@@ -134,17 +134,17 @@ then
     echo $buildNumber
 	#check if job is running
 	JOB_URL=$JENKINS_URL/$JOB_NAME/$buildNumber/api/json
-	curl --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
+	curl --insecure --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
 	GREP_RETURN_CODE=$?
 	# Poll every thirty seconds until the build is finished (if result is 0 its &quot;IN PROGRESS&quot; if result is 1 the job FINISHED running	
 	while [ $GREP_RETURN_CODE -eq 0 ]
 	do
     	sleep 240
     	# Grep will return 0 while the build is running:
-    	curl --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
+    	curl --insecure --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
     	GREP_RETURN_CODE=$?
 	done
-	JOB_STATUS=$(curl -X GET $JENKINS_URL/$JOB_NAME/$buildNumber/api/json?pretty=true | grep result | cut -d&apos;:&apos; -f2 | sed &apos;s/[&quot;, ]//g&apos;)
+	JOB_STATUS=$(curl --insecure -X GET $JENKINS_URL/$JOB_NAME/$buildNumber/api/json?pretty=true | grep result | cut -d&apos;:&apos; -f2 | sed &apos;s/[&quot;, ]//g&apos;)
     echo $JOB_STATUS
 	if [[ &quot;$JOB_STATUS&quot; == &quot;FAULURE&quot; ]]
 	then
