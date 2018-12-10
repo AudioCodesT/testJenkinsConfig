@@ -20,7 +20,7 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>GERRIT_BRANCH</name>
+          <name>Tag</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
