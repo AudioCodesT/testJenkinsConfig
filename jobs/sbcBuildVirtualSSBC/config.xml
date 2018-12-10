@@ -113,6 +113,8 @@ then
 		echo &quot;Failed to start the build remotely Exiting the build&quot;
 		exit 1
 	fi
+    #if not find ERROR 404 or EXECUTABLE (BUILD NUMBER) DONT FAIL THE BUILD
+    set +e
 	inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;) 
 	ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
 	queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
@@ -125,6 +127,7 @@ then
 		ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
         echo $ERROR
 	done
+    set -e
 	if [[ $ERROR != &quot;&quot; ]]
 	then
 		echo &quot;Failed to start the job after been in queue... Exit the build&quot;
