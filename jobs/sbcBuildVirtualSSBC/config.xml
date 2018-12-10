@@ -143,7 +143,7 @@ then
 		echo &quot;Failed to create ISO in job sbc-iso build number $buildNumber&quot;
         exit 1
 	fi
-      echo &quot;****************Finish Creating a new ISO*******************&quot;
+    echo &quot;****************Finish Creating a new ISO*******************&quot;
 fi
 #run script
 ./MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
