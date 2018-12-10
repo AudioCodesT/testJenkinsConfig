@@ -89,7 +89,7 @@
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
 JENKINS_URL=&apos;https://test-jenkins&apos;
-JOB_NAME=&apos;job/sbc-iso&apos;
+JOB_NAME=&apos;job/test-job&apos;
 JOB_TOKEN=&apos;sbcCreateISO&apos;
 
 mkdir artifacts
