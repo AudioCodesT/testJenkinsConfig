@@ -100,7 +100,7 @@ then
 	echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
     echo &quot;****************Create a new ISO*******************&quot;
 	#trigger sbc-iso job to create ISO
-	output=$(curl -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot;)
+	output=$(curl --insecure -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot;)
     echo $output
 	#check if job is in queue
 	queueURL=$(echo $output | grep Location | cut -d&apos;:&apos; -f2)
