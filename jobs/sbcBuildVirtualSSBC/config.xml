@@ -98,6 +98,7 @@ curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
 	echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
+    echo &quot;****************Create a new ISO*******************&quot;
 	#trigger sbc-iso job to create ISO
 	output=$(curl -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot;)
 	#check if job is in queue
@@ -142,6 +143,7 @@ then
 		echo &quot;Failed to create ISO in job sbc-iso build number $buildNumber&quot;
         exit 1
 	fi
+      echo &quot;****************Finish Creating a new ISO*******************&quot;
 fi
 #run script
 ./MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
