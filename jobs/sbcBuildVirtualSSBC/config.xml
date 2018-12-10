@@ -105,6 +105,7 @@ then
     cat output
 	#check if job is in queue
 	queueURL=$(cat output | grep Location | cut -d&apos; &apos; -f3)
+    queueURL=$(echo $queueURL | tr -d &apos;\r\n&apos;)
     echo $queueURL
 	#failed to start the build
 	if [[ $queueURL == &quot;&quot; ]]
@@ -118,10 +119,10 @@ then
 	while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
 	do
 		sleep 5
-		queueJson=$(curl -X GET $queueURL/api/json?pretty=true)
-		inQueue=$(curl -X GET $queueURL/api/json | grep &quot;executable&quot;)
+		queueJson=$(curl -X GET ${queueURL}api/json?pretty=true)
+		inQueue=$(curl -X GET ${queueURL}api/json | grep &quot;executable&quot;)
         echo $inQueue
-		ERROR=$(curl -X GET $queueURL/api/json | grep &quot;Error 404&quot;)
+		ERROR=$(curl -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
         echo $ERROR
 	done
 	if [[ $ERROR != &quot;&quot; ]]
