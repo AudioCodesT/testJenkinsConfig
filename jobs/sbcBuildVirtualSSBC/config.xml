@@ -161,6 +161,7 @@ then
 	fi
     echo &quot;****************Finish Creating a new ISO*******************&quot;
     #get the relevant ISO FILE
+    curlHasFailed=&quot;False&quot;
 	curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 	if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 	then 
