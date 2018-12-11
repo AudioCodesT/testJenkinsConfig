@@ -122,7 +122,7 @@ then
 	do
     	echo &quot;************BUILD STILL IN QUEUE**************************&quot;
 		sleep 20
-		queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true | grep number)
+		buildNumber=$(curl --insecure -X GET ${queueURL}api/json?pretty=true | grep number)
 		inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
         echo $inQueue
 		ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
@@ -134,7 +134,7 @@ then
 		echo &quot;Failed to start the job after been in queue... Exit the build&quot;
 		exit 1
 	fi
-	buildNumber=$(echo $queueJson | cut -d&apos;:&apos; -f2 |sed s&apos;/[,&quot; ]//g&apos;)
+	buildNumber=$(echo $buildNumber | cut -d&apos;:&apos; -f2 |sed s&apos;/[,&quot; ]//g&apos;)
     echo $buildNumber
 	#check if job is running
 	JOB_URL=$JENKINS_URL/$JOB_NAME/$buildNumber/api/json
