@@ -134,7 +134,7 @@ then
 		echo &quot;Failed to start the job after been in queue... Exit the build&quot;
 		exit 1
 	fi
-	buildNumber=$(echo $queueJson | grep number | cut -d&apos;:&apos; -f2) 
+	buildNumber=$(echo $queueJson | sed s&apos;/[,&quot; ]//g&apos;)
     echo $buildNumber
 	#check if job is running
 	JOB_URL=$JENKINS_URL/$JOB_NAME/$buildNumber/api/json
