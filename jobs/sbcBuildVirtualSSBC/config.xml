@@ -160,6 +160,14 @@ then
         exit 1
 	fi
     echo &quot;****************Finish Creating a new ISO*******************&quot;
+    #get the relevant ISO FILE
+	curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+	if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
+	then 
+		echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
+        exit 1
+   fi
+    
 fi
 #run script
 ./MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
