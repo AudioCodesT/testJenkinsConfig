@@ -141,14 +141,17 @@ then
 	curl --insecure --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
 	GREP_RETURN_CODE=$?
 	# Poll every thirty seconds until the build is finished (if result is 0 its &quot;IN PROGRESS&quot; if result is 1 the job FINISHED running	
+    set +e
 	while [ $GREP_RETURN_CODE -eq 0 ]
 	do
     	echo &quot;************BUILD IS RUNNING**************************&quot;
     	sleep 240
-    	# Grep will return 0 while the build is running:
+    	# Grep will return 0 while the build is running
     	curl --insecure --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
     	GREP_RETURN_CODE=$?
 	done
+    set -e
+    #check JOB STATUS IF PASSED OR FAILED
 	JOB_STATUS=$(curl --insecure -X GET $JENKINS_URL/$JOB_NAME/$buildNumber/api/json?pretty=true | grep result | cut -d&apos;:&apos; -f2 | sed &apos;s/[&quot;, ]//g&apos;)
     echo $JOB_STATUS
 	if [[ &quot;$JOB_STATUS&quot; == &quot;FAULURE&quot; ]]
