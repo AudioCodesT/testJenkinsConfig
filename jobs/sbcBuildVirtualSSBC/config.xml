@@ -55,6 +55,7 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -74,7 +75,7 @@ JENKINS_URL=&apos;https://test-jenkins&apos;
 JOB_NAME=&apos;job/sbc-iso&apos;
 JOB_TOKEN=&apos;sbcCreateISO&apos;
 
-#mkdir artifacts
+mkdir artifacts
 #get the relevant ISO FILE
 #curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
