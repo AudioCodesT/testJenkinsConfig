@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>triggered by:  ems_sanity_multijob (only when branch = 7.6  &amp;&amp; ISO_deploy_destination = official_iso)&#xd;
-start parallel upgrade to both servers (172.17.118.91 - Protractor Server , 172.17.118.95 - Ovoc UI Server) &#xd;
+  <description>triggered by:  ems_sanity_multijob (only when branch = 7.6.1000  &amp;&amp; ISO_deploy_destination = official_iso)&#xd;
+start parallel upgrade to both servers (172.17.118.91 - UITests Server , 172.17.118.95 - Ovoc UI Server) &#xd;
 only when the ems_sanity_multijob succeeded </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -156,9 +156,17 @@ curl -k -u admin:$artiPass --insecure -fO &quot;${artifactory_url}/RemoveOldVers
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
 
+
+if [[ &quot;$serverToUpgrade&quot; == 172.17.118.92 ]]
+then
+python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade latest_iso
+python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
+python2.7 SanityReboot.py $serverToUpgrade
+else
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
 python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
 python2.7 SanityReboot.py $serverToUpgrade
+fi
 
 echo &quot;*****************************************************************&quot;
 echo &quot;*************** Server Upgrade has been finished ****************&quot;
