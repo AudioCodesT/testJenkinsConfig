@@ -30,12 +30,14 @@ only when the ems_sanity_multijob succeeded </description>
         <hudson.model.ChoiceParameterDefinition>
           <name>serverToUpgrade</name>
           <description>choose which server to upgrade
-172.17.118.91 - Protractor Server
-172.17.118.95 - Ovoc UI Server</description>
+172.17.118.91 - UITests Server
+172.17.118.95 - Ovoc UI Server
+172.17.118.92 - Protractor Server</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>172.17.118.91</string>
               <string>172.17.118.95</string>
+              <string>172.17.118.92</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
