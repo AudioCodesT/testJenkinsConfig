@@ -157,7 +157,7 @@ curl -k -u admin:$artiPass --insecure -fO &quot;${artifactory_url}/RemoveOldVers
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
 
 
-if [[ &quot;$serverToUpgrade&quot; == 172.17.118.92 ]]
+if [[ &quot;$serverToUpgrade&quot; == &quot;172.17.118.92&quot; ]]
 then
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade latest_iso
 python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
