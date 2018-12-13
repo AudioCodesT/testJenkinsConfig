@@ -79,13 +79,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#if [[ -e GWApp ]]
-#then
-#	rm -rf GWApp
-#fi
-#git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp
-
-#get Gerrit BRANCH
+      <command>#get Gerrit BRANCH
 cd ${WORKSPACE}/..
 cd GWApp
 git -c http.sslverify=false pull || true
