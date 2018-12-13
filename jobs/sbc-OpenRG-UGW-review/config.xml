@@ -160,6 +160,7 @@ function findOthersCommit() {
      branch:$GERRIT_BRANCH project:$project | \
      grep ref: | cut -d: -f2) || echo ChangeId not found
   echo foundChange: $refs
+  # If no commit was found with the same change-id:
   # Find if this build should use another commit with the same Issue
   if [[ -z &quot;$refs&quot; &amp;&amp; ! -z &quot;$ISSUE&quot; ]]; then 
     echo Search this Issue: $ISSUE...
@@ -167,10 +168,11 @@ function findOthersCommit() {
     --current-patch-set message:$ISSUE status:open \
     branch:$GERRIT_BRANCH project:$project | \
     grep ref: | cut -d: -f2) || echo ChangeId not found
+    # find the oldest commit with this issue
     lastChange=0
     for ref in $foundChanges; do
       change=$(echo $ref | cut -d/ -f4);
-      echo Check if it the oldest change, we need to use the oldest in case of some changes
+      echo Check if it the newer change, we need to use the newest in case of some changes
       if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
         lastChange=$change
         refs=$ref
@@ -217,6 +219,7 @@ if [ -z &quot;$rev&quot; ]; then
 fi
 
 # Bring the MCA files from TP/GWApp
+echo Search of exist commits in TP/GWApp and use the oldest
 findOthersCommit TP/GWApp
 echo tpChange: $refs
 
