@@ -363,7 +363,78 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0c3cddedd6ef46e68</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0c3cddedd6ef46e68</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:13:09.171 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0e50e422ae05f2cbc</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0e50e422ae05f2cbc</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:12:38.718 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0767ecb9cf3746aea</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0767ecb9cf3746aea</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:13:08.745 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0e56dc427420d4f9b</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0e56dc427420d4f9b</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:12:38.309 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-04d56f0f68352f41e</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-04d56f0f68352f41e</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:12:39.137 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0d0a319fb58884083</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0d0a319fb58884083</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:13:08.329 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-mhhrhwbq</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-mhhrhwbq</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2018-12-13 07:13:12.626 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -812,6 +883,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>sbc-basic-review</string>
+        <string>sbc-build-virtualSBC</string>
         <string>sbc-collab-compile_end-web-user</string>
         <string>sbc-compile</string>
         <string>sbc-compile_night_NextGenCPE</string>
@@ -825,7 +897,6 @@
         <string>sbc-StackMgr</string>
         <string>sbc-user-build</string>
         <string>sbc_misc_compile</string>
-        <string>sbcBuildVirtualSSBC</string>
       </jobNames>
       <jobFilters/>
       <columns>
