@@ -20,15 +20,9 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>Branch</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
           <name>Tag</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description>Could be any desired TAG (without the &apos;F&apos; prefix) or branch name</description>
+          <defaultValue>7.20A.203.524</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -91,7 +85,7 @@ curlHasFailed=&quot;False&quot;
 JENKINS_URL=&apos;https://test-jenkins&apos;
 JOB_NAME=&apos;job/sbc-iso&apos;
 JOB_TOKEN=&apos;sbcCreateISO&apos;
-
+#Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 mkdir artifacts
 #get the relevant ISO FILE
 curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
