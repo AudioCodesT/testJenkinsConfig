@@ -191,7 +191,7 @@ if [[ -z &quot;$refs&quot; &amp;&amp; ! -z &quot;$ISSUE&quot; ]]; then
   lastChange=0
   for ref in $tpChange; do
     change=$(echo $ref | cut -d/ -f4);
-    echo Check if it the oldest change, we need to use the oldest in case of some changes
+    echo Check if it the newest change, we need to use the newest in case of some changes
     if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
       lastChange=$change
       refs=$ref
