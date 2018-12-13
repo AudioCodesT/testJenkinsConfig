@@ -72,14 +72,28 @@
   </scm>
   <assignedNode>sbc-VirtualSSBC</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>artifactory_host=test-artifactory
+      <command>
+#get Gerrit BRANCH
+cd ${WORKSPACE}/..
+if [[ -e GWApp ]]
+then
+	rm -rf GWApp
+fi
+git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp
+cd GWApp
+git checkout ${Tag}
+Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+cd ${WORKSPACE}
+
+
+artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
 JENKINS_URL=&apos;https://test-jenkins&apos;
