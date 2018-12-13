@@ -88,8 +88,8 @@
 #get Gerrit BRANCH
 cd ${WORKSPACE}/..
 cd GWApp
-git pull
-git checkout ${Tag}
+git -c http.sslverify=false pull || true
+git checkout ${Tag} || true
 Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
 
