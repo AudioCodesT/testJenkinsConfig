@@ -235,7 +235,7 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/artifacts/*=&gt;com/ac/sbc/VSSBC/${BRANCH}/${TAG}</deployPattern>
+      <deployPattern>${WORKSPACE}/artifacts/*=&gt;com/ac/sbc/VSSBC/${Branch}/${TAG}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>false</deployBuildInfo>
