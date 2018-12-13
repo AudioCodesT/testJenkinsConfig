@@ -175,10 +175,15 @@ then
 fi
 #run script
 ./MediantVEBuild/build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-
+echo &quot;Branch=${Branch}&quot; &gt; properties
 
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
