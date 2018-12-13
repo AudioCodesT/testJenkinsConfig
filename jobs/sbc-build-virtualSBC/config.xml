@@ -79,15 +79,16 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>
+      <command>#if [[ -e GWApp ]]
+#then
+#	rm -rf GWApp
+#fi
+#git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp
+
 #get Gerrit BRANCH
 cd ${WORKSPACE}/..
-if [[ -e GWApp ]]
-then
-	rm -rf GWApp
-fi
-git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp
 cd GWApp
+git pull
 git checkout ${Tag}
 Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
