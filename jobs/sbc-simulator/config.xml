@@ -254,6 +254,8 @@ for job in \
   fi
 done
 
+exit 0
+
 echo Review job is not running and is not in the queue, give Verified +1 instead
 
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
