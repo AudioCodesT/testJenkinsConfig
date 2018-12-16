@@ -231,15 +231,15 @@ exit $res</command>
                       <hudson.tasks.Shell>
                         <command>#!/bin/sh -x
 
-# sbc-basic-review is running Already?
+# sbc-basic-review or sbc-review is running Already?
 allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-basic-review || echo Not found)
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep &apos;sbc-review\|sbc-basic-review&apos; || echo Not found)
 
 [ -z &quot;$allRunning&quot; ] &amp;&amp; exit 0
-for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-basic-review); do
+for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep review); do
   if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $GERRIT_REFSPEC; then
-    echo &quot;sbc-basic-review is running, job $job&quot;; 
+    echo &quot;sbc review is running, job $job&quot;; 
     exit 0
   fi
 done
@@ -247,14 +247,14 @@ done
 # Check if sbc-basic-review job is in the queue
 for job in \
   $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-basic-review || echo Not found); do
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep &apos;sbc-review\|sbc-basic-review&apos; || echo Not found); do
   if echo $job | grep -q $GERRIT_REFSPEC; then
-    echo &quot;sbc-basic-review is waiting in the queue&quot;; 
+    echo &quot;sbc review is waiting in the queue&quot;; 
     exit 0
   fi
 done
 
-echo Review job is not running nad not in the queue, give Verified +1 instead
+echo Review job is not running and is not in the queue, give Verified +1 instead
 
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
