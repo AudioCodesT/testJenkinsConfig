@@ -230,7 +230,7 @@ exit $res</command>
                         <command># sbc-basic-review is running Already?
 allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-basic-review)
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-basic-review || echo Not found)
 
 [ -z &quot;$allRunning&quot; ] &amp;&amp; exit 0
 for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-basic-review); do
@@ -243,7 +243,7 @@ done
 # Check if sbc-basic-review job is in the queue
 for job in \
   $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-basic-review); do
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-basic-review || echo Not found); do
   if echo $job | grep -q $GERRIT_REFSPEC; then
     echo &quot;sbc-basic-review is waiting in the queue&quot;; 
     exit 0
