@@ -87,6 +87,8 @@ git checkout ${Tag} || true
 Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
 
+#copy all scripts related files from  sub directory MediantVEBuild to WORKSPACE
+cp -R MediantVEBuild/* ${WORKSPACE}
 
 artifactory_host=test-artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
