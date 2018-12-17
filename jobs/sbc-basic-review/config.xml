@@ -246,7 +246,7 @@ allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
 sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-simulator || echo Not found)
 
-if [ -z &quot;$allRunning&quot; ]; then
+if [ &quot;$allRunning&quot; != &quot;Not found&quot; ]; then
   for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-simulator); do
     if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $GERRIT_REFSPEC; then
       echo &quot;sbc-simulator is running, job $job, exit without giving Verified=+1&quot;; 
