@@ -261,8 +261,30 @@ ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
 mv -f ../id_rsa_gerrit .
 chmod 600 id_rsa_gerrit
 
-score=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
-   $change | grep -A3 &apos;currentPatchSet:\|type: Verified&apos; | grep value | cut -d: -f2)
+currentPS=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
+  $change | grep -A3 &apos;currentPatchSet:\|type: Verified&apos; | grep &apos;number\|value&apos; | cut -d: -f2)
+
+#Check if they are not a new PS - if yes, check if the code was changed
+if [[ &quot;$(echo $currentPS | awk &apos;{print $1}&apos;)&quot; -gt &quot;$ps&quot; ]]; then 
+  RunPhases=1
+  checkPS=$ps
+  ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; $change.txt
+  # $field Could be: number or kind
+  # $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
+  while IFS=: read -r field value; do   
+    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
+    else
+      echo Check PS $checkPS if big from $ps and the PS kind: $value;
+      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; ! &quot;$value&quot; =~ NO_.*CHANGE ]]; then
+        RunPhases=0
+    fi; fi
+  done &lt; $change.txt
+
+  if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
+fi
+
+score=$(echo $currentPS | awk &apos;{print $2}&apos;)
+
 echo Found Verified=$score
 if [ -z &quot;$score&quot; ]; then
   echo &quot;************************* Give Verified +1 **************************&quot;
@@ -373,7 +395,7 @@ fi
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.3.1">
+    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
       <script plugin="script-security@1.42">
         <script>def time_pattern = ~/(?m)^--- (\d+:\d+:\d+:.*)$/
 def m = manager.build.logFile.text =~ time_pattern
