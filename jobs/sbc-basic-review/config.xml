@@ -239,7 +239,22 @@ mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
                     <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
-                        <command>
+                        <command>#!/bin/sh -x
+
+# sbc-basic-review or sbc-review is running Already?
+allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-simulator || echo Not found)
+
+if [ -z &quot;$allRunning&quot; ]; then
+  for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-simulator); do
+    if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $GERRIT_REFSPEC; then
+      echo &quot;sbc-simulator is running, job $job, exit without giving Verified=+1&quot;; 
+      exit 0
+    fi
+  done
+fi
+
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
 
