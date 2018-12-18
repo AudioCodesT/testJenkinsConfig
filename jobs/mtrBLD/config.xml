@@ -45,6 +45,7 @@ To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -355,6 +356,10 @@ Invoke-Elevated -ScriptBlock {
 cd Build&#xd;
 build.bat %NEWBUILD%&#xd;
 </command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>cd %WORKSPACE%&#xd;
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\%NEWTAG%.7z C:\j\workspace\mtrBLD\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
