@@ -356,10 +356,6 @@ cd Build&#xd;
 build.bat %NEWBUILD%&#xd;
 </command>
     </hudson.tasks.BatchFile>
-    <hudson.tasks.BatchFile>
-      <command>cd %WORKSPACE%&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\%NEWTAG%.7z C:\j\workspace\mtrBLD\Build\Release\</command>
-    </hudson.tasks.BatchFile>
   </builders>
   <publishers>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
