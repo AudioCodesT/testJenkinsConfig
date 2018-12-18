@@ -96,7 +96,7 @@ echo &quot;**************************************************************&quot;
 if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
-    BRANCH=`echo $fullBranch | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+    BRANCH=`echo ${fullBranch:2}`
     OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH`
     DATE=`date`
     
