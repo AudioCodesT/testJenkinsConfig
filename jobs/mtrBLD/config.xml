@@ -72,7 +72,7 @@ To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&
   </scm>
   <assignedNode>mtr-Build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -388,6 +388,8 @@ build.bat %NEWBUILD%&#xd;
                   <updateTag>true</updateTag>
                 </hudson.plugins.git.GitPublisher_-TagToPush>
               </tagsToPush>
+              <branchesToPush/>
+              <notesToPush/>
             </hudson.plugins.git.GitPublisher>
             <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
               <configs>
