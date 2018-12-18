@@ -357,8 +357,7 @@ build.bat %NEWBUILD%&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>cd %WORKSPACE%&#xd;
-if exist &quot;*.7z&quot; del &quot;*.7z&quot;&#xd;
+      <command>IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; /s&#xd;
 &quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\Installs\</command>
     </hudson.tasks.BatchFile>
   </builders>
