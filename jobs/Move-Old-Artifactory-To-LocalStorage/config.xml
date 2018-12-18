@@ -116,10 +116,10 @@ function RemoveEachFolder() {
 
 # this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
 function CheckFolder() {
+   set -e
   ((deep+=1))
   local Folder=$1
   local Target=$2
-  set -e
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
