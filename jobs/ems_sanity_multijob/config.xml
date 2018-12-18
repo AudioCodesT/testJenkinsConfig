@@ -267,7 +267,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
     </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
-        <propertiesContent>LINK=https://test-artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/${BRANCH}/official_iso/DVD3_EMS_${NEW_TAG}.iso</propertiesContent>
+        <propertiesContent>LINK=https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/${BRANCH}/official_iso/DVD3_EMS_${NEW_TAG}.iso</propertiesContent>
       </info>
     </EnvInjectBuilder>
   </builders>
