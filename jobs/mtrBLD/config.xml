@@ -75,12 +75,7 @@ To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <hudson.triggers.SCMTrigger>
-      <spec>H  1 * * *</spec>
-      <ignorePostCommitHooks>false</ignorePostCommitHooks>
-    </hudson.triggers.SCMTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -133,6 +128,7 @@ if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     
     EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
     GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
+    
 else
     ## Only build given tag and publish to Artifactory
     PARAM_TAG=$(echo $WhatToBuild | cut -d&apos;/&apos; -f3)
@@ -362,7 +358,7 @@ build.bat %NEWBUILD%&#xd;
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>cd %WORKSPACE%&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\mtrBLD\Build\Release\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\%NEWTAG%.7z C:\j\workspace\mtrBLD\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
