@@ -50,6 +50,7 @@ Executed periodically every night.</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -103,6 +104,12 @@ function RemoveEachFolder() {
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
          fi
     else
+    	#check if already exists file with the same name of the directory that we will create (mkdir ${DESTINATION}/${TargetPath}$uri) delete the file 
+    	if [[ -f &quot;${DESTINATION}/${TargetPath}$uri&quot; ]]
+        then
+        echo &quot;rm -rf ${DESTINATION}/${TargetPath}$uri&quot;
+        rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        fi
         echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
         mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot; || true
         RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
