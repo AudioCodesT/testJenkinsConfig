@@ -26,7 +26,7 @@
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>Base</name>
+          <name>BaseVM</name>
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -56,7 +56,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>server_${TAG}</name>
+        <name>refs/tags/server_${TAG}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -112,24 +112,26 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}000&quot;
 fi
 
-## Check that TAG matches OVA version
-OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
-if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
+## Check that TAG matches BaseVM version
+BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
+if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
 	exit -1
 fi
-
-OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 
 FullTesting=&quot;1&quot;
 
 # Set the following values to fit your need
-vmHostIP=&quot;10.7.10.7&quot;
+vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 
+#BaseVM=&quot;/home/centos/data/ovoc_base/ova/${BaseVM}.ova&quot;
+BaseVMCX=$(ssh -t centos@10.7.10.117 winpty -Xallow-non-tty powershell -c &apos;Get-ChildItem -Recurse &quot;V:\\base\\$BaseVM\\&quot; -filter &quot;*.vmcx&quot;&apos; 2&gt;/dev/null | grep vmcx | gawk &apos;{print $6}&apos;)
+echo $BaseVMCX | tee -a $logfile
+
 # Get ESXi password from encrypted file
-cd ~/.ssl
-vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
+#cd ~/.ssl
+#vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
 
 cd ${WORKSPACE}
 
@@ -139,51 +141,6 @@ logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
 [[ -f $logfile  ]] &amp;&amp; rm $logfile
 touch $logfile
 
-## Function for checking VM power state
-#function isUp {
-#    # Function gets VMHostIP &amp; vmid
-#    # Timeout after 600 seconds
-#
-#    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; | tee -a $logfile &amp;&amp; exit)
-#    local id=$2
-#
-#    for i in {1..20}; do
-#        sleep 30
-#        echo &quot;$(date) : Getting VM $id power status&quot; | tee -a $logfile
-#        getState=$(ssh root@${vmHostIP} vim-cmd vmsvc/power.getstate $id | grep Powered | cut -d&apos; &apos; -f2)
-#        if [[ &quot;$getState&quot; == &quot;on&quot; ]]; then
-#            echo &quot;$(date) : VM $id is up!&quot; | tee -a $logfile
-#            return 0
-#        fi
-#    done
-#
-#    echo &quot;$(date) : ovoc VM did not start within 600 seconds.&quot; | tee -a $logfile
-#    return 1
-#}
-#
-## Function for checking VM guest SSH readiness
-#function sshUp {
-#    # Function gets serverIP
-#    # Timeout after 60 seconds
-#
-#    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; | tee -a $logfile &amp;&amp; exit)
-#    local timeOut=5s
-#
-#    for i in {1..10}; do
-#        echo &quot;$(date) : Testing ssh readiness on $ip&quot; | tee -a $logfile
-#        if timeout $timeOut bash -c &quot;exec 5&gt;/dev/tcp/$ip/22&quot; 2&gt;/dev/null; then
-#            5&gt;&amp;-
-#            echo &quot;$(date) : SSH on $ip is up&quot; | tee -a $logfile
-#            return 0
-#        else
-#            5&gt;&amp;-
-#            echo &quot;$(date) : Waiting for SSH on $ip&quot; | tee -a $logfile
-#        fi
-#    done
-#
-#    echo &quot;$(date) : SSH on $ip is not up within 60s&quot; | tee -a $logfile
-#    return 1
-#}
 
 echo &quot;$(date) : *****************  START  ******************&quot; | tee -a $logfile
 
@@ -192,33 +149,26 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc_base_for_ vm`s
-vms=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
-if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
-    for vmid in $vms; do
-        echo &quot;$(date) : ovoc_base_for_${TAG} already exist. Deleting vm&quot; | tee -a $logfile
-        ( ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} ) || true | tee -a $logfile
-        sleep 10
-        ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
-        sleep 10
-    done
-fi
+ssh -t centos@vmHostIP winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&apos;
 
-ssh root@${vmHostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
+# Delete old remanents from hypervisor host
+#ssh root@${vmHostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
+ssh -t centos@vmHostIP rm -rf /cygdrive/v/base/$BaseVM
+
 
 ###################################################################################################
-# Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
+# Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
-# create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
-echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; | tee -a $logfile
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_${TAG}&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
+# create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
+echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
+# NOTE: It is impossible to pass local vars to the powershell command inside the ssh command.
+#       The solution is to create a variable that holds the full ssh command - REMCMD
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-childitem \&quot;V:\base\\$BaseVM\\\&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
+ssh -t centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
     exit
 fi
-
-# find new vm id
-vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_${TAG}&quot; | gawk &apos;{print $1}&apos;`
-echo &quot;$(date) : vm id is $vmid&quot; | tee -a $logfile
 
 # Wait for ovoc server power on
 #isUp $vmHostIP $vmid || exit
@@ -226,12 +176,10 @@ echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
 # find new vm IP address
-vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Get-VM -Name ovoc* | Select -ExpandProperty NetworkAdapters | fl&apos; | grep IPAddress | grep -v Dyn | gawk &apos;{print \$3}&apos; | (read h; echo \${h:1:\${#h}-2})&quot;
+vmip=`ssh centos@${vmHostIP} $REMCMD
 ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
 echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
-
-# Check ssh readiness
-#sshUp $vmip || exit -2
 
 
 ###################################################################################################
@@ -288,7 +236,7 @@ echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
 ###################################################################################################
-# clean before export to OVA
+# clean before export to BaseVM
 echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
 cd EMS/VersionRelease
 (python2.7 cleanBeforeOva.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed cleaning installation files&quot; | tee -a $logfile &amp;&amp; exit -1)
@@ -298,22 +246,25 @@ sleep 30
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
-ssh root@${vmHostIP} vim-cmd vmsvc/power.shutdown ${vmid} | tee -a $logfile
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm -Name $_.FullName}&apos;&quot;
+ssh root@${vmHostIP} $REMCMD | tee -a $logfile
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Rename-VM $BaseVM -NewName ovoc-${TAG}&apos;&quot;
 sleep 30
 
 ###################################################################################################
-# export the new VM to an OVA file
-echo &quot;$(date) : export new VM to an OVA file&quot; | tee -a $logfile
+# export the new VM
+echo &quot;$(date) : export new VM&quot; | tee -a $logfile
 cd ${WORKSPACE}
 [[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
 mkdir -p &quot;${TAG}&quot; | tee -a $logfile
-ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova | tee -a $logfile
-ovfResult=`tail -1 $logfile | grep &quot;Completed&quot;`
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Get-VM -Name ovoc* | Export-VM -Path ${TAG}&quot;
+ssh root@${vmHostIP} $REMCMD | tee -a $logfile
+Result=`tail -1 $logfile | grep &quot;Completed&quot;`
 [[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;$(date) : Done export new VM to an OVA file&quot; | tee -a $logfile
+echo &quot;$(date) : Done export new VM&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
@@ -321,6 +272,7 @@ echo &quot;#####################################################################
 ###################################################################################################
 # Delete ovoc server vm
 echo &quot;$(date) : Delete ovoc server VM from host&quot; | tee -a $logfile
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm \$_.FullName} | %{remove-vm -f \$_.FullName}&apos;&quot;
 ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 
 ###################################################################################################
@@ -381,7 +333,7 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
         <hudson.plugins.postbuildtask.TaskProperties>
           <logTexts>
             <hudson.plugins.postbuildtask.LogProperties>
-              <logText>Done export new VM to an OVA file</logText>
+              <logText>Done export new VM</logText>
               <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
