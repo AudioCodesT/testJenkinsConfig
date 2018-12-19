@@ -86,8 +86,10 @@ function RemoveEachFolder() {
   
   local RemoveFolder=$1
   local TargetPath=$2
+  #iretate on all files from artifactory inside folder 
   $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
   do
+  	#uri = file/folder name
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
     DestSize=0; ArtSize=0
     ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
