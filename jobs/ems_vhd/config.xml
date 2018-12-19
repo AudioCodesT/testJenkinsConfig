@@ -278,7 +278,8 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 ###################################################################################################
 # Deploy ovoc server from newly created ova
 echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-childitem \&quot;${WORKSPACE}\\${TAG}\&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
+ssh -t centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
 sleep 300
 
 ###################################################################################################
