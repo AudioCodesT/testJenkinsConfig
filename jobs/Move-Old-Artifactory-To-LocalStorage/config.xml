@@ -95,7 +95,7 @@ function RemoveEachFolder() {
     	#check if file already exists in the destination path, if he exists delete him
         if [[ -e ${DESTINATION}/${TargetPath}$uri ]]
         then
-        	echo &quot;rm -rf ${DESTINATION}/${TargetPath}$uri&quot;
+        	echo &quot;deleting ${DESTINATION}/${TargetPath}$uri before copy him from artifactory&quot;
         	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
         fi
         echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
