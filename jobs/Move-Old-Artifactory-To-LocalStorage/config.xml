@@ -91,6 +91,7 @@ function RemoveEachFolder() {
     uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
     DestSize=0; ArtSize=0
     ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    #check if there is size to the artifacts --- its a file to copy from artifactory to local storage
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
     	#check if file already exists in the destination path, if he exists delete him
         if [[ -e ${DESTINATION}/${TargetPath}$uri ]]
@@ -109,6 +110,7 @@ function RemoveEachFolder() {
           echo Size equel - delete from Artifactory...
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
          fi
+    # because there is no size = its a folder (its creating a new folder in the local storage)     
     else
     	#check if already exists file with the same name of the directory that we will create (mkdir ${DESTINATION}/${TargetPath}$uri) delete the file 
     	if [[ -f &quot;${DESTINATION}/${TargetPath}$uri&quot; ]]
