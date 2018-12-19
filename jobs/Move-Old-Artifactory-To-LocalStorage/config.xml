@@ -92,6 +92,12 @@ function RemoveEachFolder() {
     DestSize=0; ArtSize=0
     ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
     if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
+    	#check if file already exists in the destination path, if he exists delete him
+        if [[ -e ${DESTINATION}/${TargetPath}$uri ]]
+        then
+        	echo &quot;rm -rf ${DESTINATION}/${TargetPath}$uri&quot;
+        	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        fi
         echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
         $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot;
         DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
