@@ -182,7 +182,7 @@ build.bat %NEWBUILD%&#xd;
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jpass</name>
-          <value>{AQAAABAAAAAQ2BctbBSFtRjh3P6cRqdVlcmwEz0P8qehlWFQPwZMSEA=}</value>
+          <value>{AQAAABAAAAAQ597wVVRyzC4gWb9NR3U9BPyRk3TvrKVcLr2swt1+lXg=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
