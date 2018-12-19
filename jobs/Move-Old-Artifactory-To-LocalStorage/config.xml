@@ -134,7 +134,7 @@ function CheckFolder() {
   if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
     echo move $Folder
     echo ---------------------
-    echo mkdir &quot;${DESTINATION}/$Target&quot;
+    echo &quot;mkdir -p ${DESTINATION}/$Target&quot;
     mkdir -p &quot;${DESTINATION}/$Target&quot; || true
     RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
