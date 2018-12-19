@@ -33,6 +33,7 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -181,21 +182,6 @@ LaunchOneTouchEx.bat 0000 1</command>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
-    <hudson.plugins.gerrit.GerritNotifier plugin="gerrit@0.7">
-      <git__home>.git</git__home>
-      <gerrit__host>test-gerrit</gerrit__host>
-      <gerrit__port>29418</gerrit__port>
-      <gerrit__username>jenkins</gerrit__username>
-      <approve__value>+1</approve__value>
-      <unstable__value>-1</unstable__value>
-      <reject__value>-1</reject__value>
-      <review__approve__value>0</review__approve__value>
-      <review__unstable__value>0</review__unstable__value>
-      <review__reject__value>0</review__reject__value>
-      <gerrit__approve__command>gerrit approve --verified=%s --code-review=%s --message=&quot;%s&quot; %s</gerrit__approve__command>
-      <private__key__file__path>/var/lib/jenkins/.ssh/id_rsa</private__key__file__path>
-      <passPhrase></passPhrase>
-    </hudson.plugins.gerrit.GerritNotifier>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>.*(Need to wait for dependent artifact|JNLP4-connect connection|ClosedChannelException).*</regexpForRerun>
       <rerunIfUnstable>false</rerunIfUnstable>
