@@ -248,7 +248,7 @@ sleep 30
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
 REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm -Name $_.FullName}&apos;&quot;
 ssh root@${vmHostIP} $REMCMD | tee -a $logfile
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Rename-VM $BaseVM -NewName ovoc-${TAG}&apos;&quot;
+REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Get-VM $BaseVM | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
 sleep 30
 
 ###################################################################################################
