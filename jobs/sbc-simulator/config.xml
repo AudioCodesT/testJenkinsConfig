@@ -112,7 +112,7 @@
       </gerritProjects>
       <dynamicGerritProjects class="empty-list"/>
       <skipVote>
-        <onSuccessful>true</onSuccessful>
+        <onSuccessful>false</onSuccessful>
         <onFailed>false</onFailed>
         <onUnstable>false</onUnstable>
         <onNotBuilt>false</onNotBuilt>
@@ -149,32 +149,6 @@
   </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
-        <expression>^(?!NextGenCPE).*</expression>
-        <label>$GERRIT_BRANCH</label>
-      </condition>
-      <buildStep class="hudson.plugins.parameterizedtrigger.TriggerBuilder" plugin="parameterized-trigger@2.35.2">
-        <configs>
-          <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-            <configs>
-              <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-                <properties>GERRIT_REFSPEC=${GERRIT_REFSPEC}
-GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}
-GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}</properties>
-                <textParamValueOnNewLine>false</textParamValueOnNewLine>
-              </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            </configs>
-            <projects>sbc-basic-review</projects>
-            <condition>ALWAYS</condition>
-            <triggerWithNoParameters>false</triggerWithNoParameters>
-            <triggerFromChildProjects>false</triggerFromChildProjects>
-            <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
-          </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
-        </configs>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>#!/bin/sh -x
 
@@ -199,113 +173,6 @@ exit $res</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
-      <publishers>
-        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
-            <worstResult>
-              <name>SUCCESS</name>
-              <ordinal>0</ordinal>
-              <color>BLUE</color>
-              <completeBuild>true</completeBuild>
-            </worstResult>
-            <bestResult>
-              <name>SUCCESS</name>
-              <ordinal>0</ordinal>
-              <color>BLUE</color>
-              <completeBuild>true</completeBuild>
-            </bestResult>
-          </condition>
-          <publisherList>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
-                <buildSteps>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>SUCCESS</string>
-                    </results>
-                    <role>BOTH</role>
-                    <buildSteps>
-                      <hudson.tasks.Shell>
-                        <command>#!/bin/sh -x
-
-# sbc-basic-review or sbc-review is running Already?
-allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
-oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep &apos;sbc-review\|sbc-basic-review&apos; || echo Not found)
-
-[ -z &quot;$allRunning&quot; ] &amp;&amp; exit 0
-for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep review); do
-  if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $GERRIT_REFSPEC; then
-    echo &quot;sbc review is running, job $job&quot;; 
-    exit 0
-  fi
-done
-
-# Check if sbc-basic-review job is in the queue
-for job in \
-  $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep &apos;sbc-review\|sbc-basic-review&apos;); do
-  if echo $job | grep -q $GERRIT_REFSPEC; then
-    echo &quot;sbc review is waiting in the queue&quot;; 
-    exit 0
-  fi
-done
-
-echo Review job is not running and is not in the queue, check the Verified score
-
-change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
-ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
-mv -f ../id_rsa_gerrit .
-chmod 600 id_rsa_gerrit
-
-currentPS=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
-  $change | grep -A3 &apos;currentPatchSet:\|type: Verified&apos; | grep &apos;number\|value&apos; | cut -d: -f2)
-
-#Check if they are not a new PS - if yes, check if the code was changed
-if [[ &quot;$(echo $currentPS | awk &apos;{print $1}&apos;)&quot; -gt &quot;$ps&quot; ]]; then 
-  RunPhases=1
-  checkPS=$ps
-  ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; $change.txt
-  # $field Could be: number or kind
-  # $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
-  while IFS=: read -r field value; do   
-    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
-    else
-      echo Check PS $checkPS if big from $ps and the PS kind: $value;
-      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; ! &quot;$value&quot; =~ NO_.*CHANGE ]]; then
-        RunPhases=0
-    fi; fi
-  done &lt; $change.txt
-
-  if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
-fi
-
-score=$(echo $currentPS | awk &apos;{print $2}&apos;)
-
-echo Found Verified=$score
-if [ -z &quot;$score&quot; ]; then
-  echo &quot;************************* Give Verified +1 **************************&quot;
-  ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
-    --notify NONE --label Verified=+1 --tag autogenerated:Jenkins $change,$ps
-fi
-
-</command>
-                      </hudson.tasks.Shell>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                </buildSteps>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-          </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
-        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-      </publishers>
-    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <hudson.plugins.warnings.WarningsPublisher plugin="warnings@4.66">
       <healthy></healthy>
       <unHealthy></unHealthy>
@@ -441,7 +308,7 @@ if (m.count &gt; 0) {
       <ignoreMissing>false</ignoreMissing>
     </com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}: ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
+      <template>#${BUILD_NUMBER}: ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}_${GERRIT_BRANCH}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>false</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
