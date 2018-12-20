@@ -51,7 +51,9 @@
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.Run.Update</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># AUDC - NJ Engineering Team</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*)">
         <permissions>
@@ -169,6 +171,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.6">
     <domains>
