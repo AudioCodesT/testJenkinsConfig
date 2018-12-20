@@ -110,7 +110,58 @@ PATH=/bin:$PATH</propertiesContent>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
+      <spec></spec>
+      <gerritProjects>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+          <compareType>PLAIN</compareType>
+          <pattern>TP/GWApp</pattern>
+          <branches>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>REG_EXP</compareType>
+              <pattern>^(?!NextGenCPE$).*$</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+          </branches>
+          <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+      </gerritProjects>
+      <dynamicGerritProjects class="empty-list"/>
+      <skipVote>
+        <onSuccessful>false</onSuccessful>
+        <onFailed>false</onFailed>
+        <onUnstable>false</onUnstable>
+        <onNotBuilt>false</onNotBuilt>
+      </skipVote>
+      <silentMode>false</silentMode>
+      <notificationLevel></notificationLevel>
+      <silentStartMode>false</silentStartMode>
+      <escapeQuotes>true</escapeQuotes>
+      <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
+      <dependencyJobsNames></dependencyJobsNames>
+      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
+      <commentTextParameterMode>BASE64</commentTextParameterMode>
+      <buildStartMessage></buildStartMessage>
+      <buildFailureMessage></buildFailureMessage>
+      <buildSuccessfulMessage></buildSuccessfulMessage>
+      <buildUnstableMessage></buildUnstableMessage>
+      <buildNotBuiltMessage></buildNotBuiltMessage>
+      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
+      <customUrl></customUrl>
+      <serverName>test-gerrit</serverName>
+      <triggerOnEvents>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
+          <excludeDrafts>false</excludeDrafts>
+          <excludeTrivialRebase>false</excludeTrivialRebase>
+          <excludeNoCodeChange>true</excludeNoCodeChange>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
+      </triggerOnEvents>
+      <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
+      <triggerConfigURL></triggerConfigURL>
+      <triggerInformationAction/>
+    </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
+  </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -209,159 +260,6 @@ mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
-      <publishers>
-        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
-            <worstResult>
-              <name>FAILURE</name>
-              <ordinal>2</ordinal>
-              <color>RED</color>
-              <completeBuild>true</completeBuild>
-            </worstResult>
-            <bestResult>
-              <name>SUCCESS</name>
-              <ordinal>0</ordinal>
-              <color>BLUE</color>
-              <completeBuild>true</completeBuild>
-            </bestResult>
-          </condition>
-          <publisherList>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
-                <buildSteps>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>SUCCESS</string>
-                    </results>
-                    <role>BOTH</role>
-                    <buildSteps>
-                      <hudson.tasks.Shell>
-                        <command>#!/bin/sh -x
-
-# sbc-basic-review or sbc-review is running Already?
-allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
-oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-simulator || echo Not found)
-
-if [ &quot;$allRunning&quot; != &quot;Not found&quot; ]; then
-  for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-simulator); do
-    if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $GERRIT_REFSPEC; then
-      echo &quot;sbc-simulator is running, job $job, exit without giving Verified=+1&quot;; 
-      exit 0
-    fi
-  done
-fi
-
-change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
-ps=`echo $GERRIT_REFSPEC | cut -d/ -f5`
-
-chmod 600 id_rsa_gerrit
-currentPS=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set $change | grep -A3 &apos;currentPatchSet:\|type: Verified&apos; | grep &apos;number\|value&apos; | cut -d: -f2)
-
-#Check if they are not a new PS - if yes, check if the code was changed
-if [[ &quot;$(echo $currentPS | awk &apos;{print $1}&apos;)&quot; -gt &quot;$ps&quot; ]]; then 
-  RunPhases=1
-  checkPS=$ps
-  ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; $change.txt
-  # $field Could be: number or kind
-  # $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
-  while IFS=: read -r field value; do   
-    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
-    else
-      echo Check PS $checkPS if big from $ps and the PS kind: $value;
-      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; ! &quot;$value&quot; =~ NO_.*CHANGE ]]; then
-        RunPhases=0
-    fi; fi
-  done &lt; $change.txt
-
-  if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
-fi
-
-score=$(echo $currentPS | awk &apos;{print $2}&apos;)
-grade=&quot;&quot;
-if [ &quot;$score&quot; == &quot;&quot; ]; then 
-  grade=&quot;--label Verified=1&quot;
-  echo give grade verified +1
-fi
-
-echo Send OK message to Gerrit - $change,$ps
-ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
---message &quot;&apos;Built successfully - $BUILD_URL&apos;&quot; \
---notify NONE $grade \
---tag autogenerated:build:sbc-basic-review \
-$change,$ps
-</command>
-                      </hudson.tasks.Shell>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                </buildSteps>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
-                <buildSteps>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>FAILURE</string>
-                    </results>
-                    <role>BOTH</role>
-                    <buildSteps>
-                      <hudson.tasks.Shell>
-                        <command>#!/usr/bin/env ruby
-
-require &apos;json&apos;
-
-def errors
-  res = &quot; &lt;&lt;&lt;\n &quot;
-  begin
-    lines = File.readlines(&apos;build-error.log&apos;)
-    lines.reject! { |l| l.include?(&apos;Makefile&apos;) || l.include?(&apos;--sip is&apos;) || l.include?(&apos;tput: &apos;) }
-    res += lines.last(20).join
-    res += &quot;&gt;&gt;&gt;&quot;
-  rescue
-    res = &apos;&apos;
-  end
-  res
-end
-
-exit 0 unless File.exist?(&apos;.build_started&apos;)
-if ENV[&apos;GERRIT_REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
-  change=$1
-  ps=$2
-else
-  puts &apos;Invalid refspec&apos;
-  exit 1
-end
-
-data = {
-  labels: { Verified: &apos;-1&apos; },
-  message: &apos;Build failed - &apos; + ENV[&apos;BUILD_URL&apos;] + errors,
-  notify: &apos;OWNER&apos;,
-  tag: &apos;autogenerated:build:sbc-basic-review&apos;,
-}
-File.open(&apos;review.json&apos;, &apos;wt&apos;) { |io| io.write(data.to_json) }
-system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
-       &quot;-d @review.json -H &apos;Content-Type: application/json&apos;&quot;)
-</command>
-                      </hudson.tasks.Shell>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                </buildSteps>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-          </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
-          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
-        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-      </publishers>
-    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>.*(Need to wait for dependent artifact|JNLP4-connect connection).*</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
@@ -461,7 +359,7 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
+      <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}_${GERRIT_BRANCH}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
