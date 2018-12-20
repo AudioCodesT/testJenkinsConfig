@@ -77,7 +77,7 @@
     <extensions>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
-        <noTags>false</noTags>
+        <noTags>true</noTags>
         <reference></reference>
         <depth>30</depth>
         <honorRefspec>false</honorRefspec>
