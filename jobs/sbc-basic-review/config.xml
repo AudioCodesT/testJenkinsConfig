@@ -359,7 +359,7 @@ mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}_${GERRIT_BRANCH}</template>
+      <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}_branch-${GERRIT_BRANCH}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
