@@ -413,7 +413,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-8a99c992</name>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>sir-p32ij16m</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-p32ij16m</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>ems-build</requestedLabel>
+            <createdAt>2018-12-20 12:55:29.204 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1013,7 +1024,6 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>mtr-CodeAnalysis</string>
         <string>mtrBLD</string>
         <string>mtrCRV</string>
         <string>smt-CodeAnalysis</string>
