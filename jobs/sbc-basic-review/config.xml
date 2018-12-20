@@ -104,7 +104,7 @@ PATH=/bin:$PATH</propertiesContent>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.CloneOption>
-        <shallow>true</shallow>
+        <shallow>false</shallow>
         <noTags>false</noTags>
         <reference></reference>
         <depth>30</depth>
