@@ -84,7 +84,7 @@
       </hudson.plugins.git.extensions.impl.CheckoutOption>
     </extensions>
   </scm>
-  <assignedNode>mtr-build</assignedNode>
+  <assignedNode>mtr-Build-Slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
