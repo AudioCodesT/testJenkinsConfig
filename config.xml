@@ -1013,6 +1013,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>mtr-CodeAnalysis</string>
         <string>mtrBLD</string>
         <string>mtrCRV</string>
         <string>smt-CodeAnalysis</string>
