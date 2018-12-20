@@ -70,7 +70,7 @@ To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>mtr-Build</assignedNode>
+  <assignedNode>mtr-Build-Slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
