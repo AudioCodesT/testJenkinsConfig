@@ -33,7 +33,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -54,7 +53,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFSPEC</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/SmartTAP</url>
+        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/MeetingRecorder</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -84,7 +83,7 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
-          <pattern>SmartTAP/SmartTAP</pattern>
+          <pattern>SmartTAP/MeetingRecorder</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -165,31 +164,6 @@ cd ${WORKSPACE}
 
 
 cd ${WORKSPACE}</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>## Get sputnik/pdm tools
-cd ${WORKSPACE}/..
-cd tools
-
-git checkout -f origin/master -- sputnik/test-gerrit/smt-pmd.properties
-git checkout -f origin/master -- pmd/audc-ruleset-ext.xml
-
-cp sputnik/test-gerrit/smt-pmd.properties ${WORKSPACE}/
-cp pmd/audc-ruleset-ext.xml ${WORKSPACE}/
-
-cd ${WORKSPACE}
-
-## Run Sputnik
-#sed -i &apos;s/pmd\.enabled\=true/pmd\.enabled\=false/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
-#cat /home/centos/jenkinsslave/test-gerrit.properties
-#sed -i &apos;s/^pmd\.ruleSets.*$/pmd\.ruleSets\=\/home\/centos\/jenkinsslave\/basic\.xml/g&apos; /home/centos/jenkinsslave/test-gerrit.properties
-cat smt-pmd.properties
-
-/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/smt-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
-
-
-cd ${WORKSPACE}
-</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
