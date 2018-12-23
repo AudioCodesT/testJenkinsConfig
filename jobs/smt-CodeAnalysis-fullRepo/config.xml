@@ -88,11 +88,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>## Run cppcheck on entire repository java files
-/usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 . 2&gt; cppcheck.xml
-
-
-## Run pmd on entire repository java files
+      <command># Get files from Artifactory
 cat &lt;&lt;-EOF &gt; ~/.netrc
 machine test-gerrit login jenkins password $jpass
 machine gerrit login jenkins password $jpass
@@ -103,6 +99,7 @@ cd ${WORKSPACE}/..
 rm -rf tools
 git -c http.sslverify=false clone -n https://gerrit/devops/tools
 
+## Run pmd on entire repository java files
 cd tools
 
 git checkout -f origin/master -- pmd/audc-ruleset.xml
@@ -116,7 +113,10 @@ cd ${WORKSPACE}
 
 
 ## Run FindBugs on entire repository java files
-/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .</command>
+/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
+
+## Run cppcheck on entire repository java files
+/usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 . 2&gt; cppcheck.xml</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
