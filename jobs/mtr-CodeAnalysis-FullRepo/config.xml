@@ -89,15 +89,17 @@
   <builders>
     <hudson.tasks.Shell>
       <command># Get files from Artifactory
-#cat &lt;&lt;-EOF &gt; ~/.netrc
-#machine test-gerrit login jenkins password $jpass
-#machine gerrit login jenkins password $jpass
-#EOF
-#
-#cd ${WORKSPACE}/..
-#
-#rm -rf tools
-#git -c http.sslverify=false clone -n https://gerrit/devops/tools
+cat &lt;&lt;-EOF &gt; ~/.netrc
+machine test-gerrit login jenkins password $jpass
+machine gerrit login jenkins password $jpass
+EOF
+
+cd ${WORKSPACE}/..
+
+rm -rf tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
+
+cd ${WORKSPACE}
 
 ## Run pmd on entire repository java files
 ################################################################
@@ -119,7 +121,13 @@
 
 ## Run cppcheck on entire repository java files
 ################################################################
-/usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 . 2&gt; cppcheck.xml</command>
+find . -name &quot;*.cs&quot; &gt; file.list
+find . -name &quot;*.h&quot; &gt;&gt; file.list
+
+#/usr/bin/cppcheck --quiet --template=&quot;{file}||{line}||{severity}||{id}||{message}&quot; --enable=style,warning --suppressions-list=suppressions.txt --inconclusive --language=c++ --file-list=&quot;$chFiles&quot; 2&gt;
+/usr/bin/cppcheck --quiet --enable=all --inconclusive --language=c++ --file-list=file.list --xml-version=2 2&gt; cppcheck.xml
+
+#/usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 . 2&gt; cppcheck.xml</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
