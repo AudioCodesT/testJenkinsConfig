@@ -193,7 +193,7 @@ if [[ $CHANGES != &quot;&quot; ]]; then
     echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
     CHANGESNumbers=&quot;$CHANGESNumbers$(echo $rep | cut -d: -f3) &quot;
-    TARGET=${TARGET}_$(echo $path | awk -F/ &apos;{print $NF}&apos; | sed &apos;s/.//2g&apos;)$(echo ${rep: -1})
+    TARGET=${TARGET}_$(echo $path | awk -F/ &apos;{print $NF}&apos; | sed &apos;s/.//2g&apos;)$(echo ${path: -1})$(echo ${rep: -1})
   done
 fi
 
