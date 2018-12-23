@@ -190,7 +190,7 @@ find . -name &quot;*.h&quot; &gt;&gt; file.list
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>Weekly Code Analysis for SmartTAP</defaultSubject>
+      <defaultSubject>Weekly Code Analysis for MeetingRecorder</defaultSubject>
       <defaultContent>Please review Code analysis reports from the last weekly run:
 $JOB_URL
 
@@ -203,7 +203,7 @@ DevOps Team</defaultContent>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
