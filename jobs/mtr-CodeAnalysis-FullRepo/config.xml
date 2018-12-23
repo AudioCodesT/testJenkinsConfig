@@ -100,22 +100,25 @@ rm -rf tools
 git -c http.sslverify=false clone -n https://gerrit/devops/tools
 
 ## Run pmd on entire repository java files
-cd tools
-
-git checkout -f origin/master -- pmd/audc-ruleset.xml
-cp pmd/audc-ruleset.xml ${WORKSPACE}/
-
-cd ${WORKSPACE}
-
-/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R audc-ruleset.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
-
-/usr/bin/sed -i -n &apos;/xml/,$p&apos; pmd.xml
+################################################################
+#cd tools
+#
+#git checkout -f origin/master -- pmd/audc-ruleset.xml
+#cp pmd/audc-ruleset.xml ${WORKSPACE}/
+#
+#cd ${WORKSPACE}
+#
+#/opt/pmd/bin/run.sh pmd -d . -f xml -language java -R audc-ruleset.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
+#
+#/usr/bin/sed -i -n &apos;/xml/,$p&apos; pmd.xml
 
 
 ## Run FindBugs on entire repository java files
-/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
+################################################################
+#/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
 
 ## Run cppcheck on entire repository java files
+################################################################
 /usr/bin/cppcheck --enable=all --inconclusive --xml-version=2 . 2&gt; cppcheck.xml</command>
     </hudson.tasks.Shell>
   </builders>
