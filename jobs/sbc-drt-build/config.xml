@@ -193,10 +193,13 @@ if [[ $CHANGES != &quot;&quot; ]]; then
     echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
     CHANGESNumbers=&quot;$CHANGESNumbers$(echo $rep | cut -d: -f3) &quot;
+    # Add to the Target name directory the first and last chars of each submodule and PS
+    # Example, for OpenRG: _OG&lt;PatchSet number&gt;
     TARGET=${TARGET}_$(echo $path | awk -F/ &apos;{print $NF}&apos; | sed &apos;s/.//2g&apos;)$(echo ${path: -1})$(echo ${rep: -1})
   done
 fi
 
+echo Tatget directory is: $TARGET
 echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
 echo REFSPEC=${REFSPEC} &gt;&gt; ../generated_sbc_version.properties
 
