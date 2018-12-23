@@ -158,14 +158,12 @@ if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
   REFSPEC=refs/changes/00/$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
   CHANGESNumbers=&quot;&quot;
   OnlySubModule=true
+  TARGET=${NEWTAG}
 else
   CHANGESNumbers=&quot;$(echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;) &quot;
   OnlySubModule=false
+  TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 fi
-
-TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
-echo REFSPEC=${REFSPEC} &gt;&gt; ../generated_sbc_version.properties
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
 chmod 600 ../id_rsa_gerrit
@@ -195,8 +193,12 @@ if [[ $CHANGES != &quot;&quot; ]]; then
     echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
     CHANGESNumbers=&quot;$CHANGESNumbers$(echo $rep | cut -d: -f3) &quot;
+    TARGET=${TARGET}_$(echo $path | awk -F/ &apos;{print $NF}&apos; | sed &apos;s/.//2g&apos;)$(echo ${rep: -1})
   done
 fi
+
+echo TARGET=${TARGET} &gt;&gt; ../generated_sbc_version.properties
+echo REFSPEC=${REFSPEC} &gt;&gt; ../generated_sbc_version.properties
 
 # Remove old external files before downloading from Artifactory
 rm -f TPApp/MPCBin/*external_version_data.h
@@ -287,6 +289,7 @@ mv ram${BOARDNAME}_SIP.cmp ${BOARDNAME}_SIP.cmp
 GERRIT_BRANCH=${GERRIT_BRANCH}
 EMAIL=${EMAIL}
 BOARD=${BOARDNAME}_SIP.cmp
+REFTARGET=${TARGET}
 CHANGES=${CHANGESNumbers}</properties>
                 <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
