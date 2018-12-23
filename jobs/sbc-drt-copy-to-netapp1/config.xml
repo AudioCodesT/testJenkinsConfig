@@ -52,6 +52,12 @@
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
+          <name>REFTARGET</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>CHANGES</name>
           <description></description>
           <defaultValue></defaultValue>
@@ -82,7 +88,7 @@
       <command>User=&quot;$artifactory_user:$artifactory_password&quot;
 Artifactory=&quot;https://test-artifactory/api/storage/sbc-review/com/ac/sbc&quot;
 DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
-REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+#REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
 
 # Create the folder in netapp1, in case it wasn&apos;t done already
