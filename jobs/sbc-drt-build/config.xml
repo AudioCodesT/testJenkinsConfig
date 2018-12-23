@@ -155,10 +155,11 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 # if the REFSPEC=&lt;Branch name&gt;
 # CHANGESNumbers = All the chnages that should be updated with DRT label
 if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
-  REFSPEC=refs/changes/00/$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
+  FirstRefs=$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
+  REFSPEC=refs/changes/00/$FirstRefs
   CHANGESNumbers=&quot;&quot;
   OnlySubModule=true
-  TARGET=${NEWTAG}
+  TARGET=${NEWTAG}-$(echo $FirstRefs | cut -d/ -f1)
 else
   CHANGESNumbers=&quot;$(echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;) &quot;
   OnlySubModule=false
