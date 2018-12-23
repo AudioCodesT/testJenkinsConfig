@@ -54,6 +54,12 @@ actions:&#xd;
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
+          <name>REFTARGET</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>CHANGES</name>
           <description></description>
           <defaultValue></defaultValue>
@@ -83,7 +89,7 @@ actions:&#xd;
     <hudson.tasks.Shell>
       <command># send DRT request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
-REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+#REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Change=`echo $REFTARGET | sed &apos;s:-:_:&apos;`
 echo -n &quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
 
