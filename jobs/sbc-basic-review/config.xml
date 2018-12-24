@@ -375,6 +375,22 @@ $change,$ps
                       </hudson.tasks.Shell>
                     </buildSteps>
                   </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                    <results>
+                      <string>SUCCESS</string>
+                      <string>FAILURE</string>
+                    </results>
+                    <role>BOTH</role>
+                    <buildSteps>
+                      <org.jenkinsci.plugins.buildnameupdater.BuildNameUpdater plugin="build-name-setter@1.6.9">
+                        <buildName>properties.txt</buildName>
+                        <macroTemplate>#${BUILD_NUMBER}</macroTemplate>
+                        <fromFile>true</fromFile>
+                        <fromMacro>false</fromMacro>
+                        <macroFirst>false</macroFirst>
+                      </org.jenkinsci.plugins.buildnameupdater.BuildNameUpdater>
+                    </buildSteps>
+                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
                 </buildSteps>
                 <markBuildUnstable>false</markBuildUnstable>
               </config>
