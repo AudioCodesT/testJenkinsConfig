@@ -110,7 +110,18 @@ ps=$checkPS</command>
                     <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
-                        <command></command>
+                        <command>echo 123</command>
+                      </hudson.tasks.Shell>
+                    </buildSteps>
+                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                    <results>
+                      <string>FAILURE</string>
+                    </results>
+                    <role>BOTH</role>
+                    <buildSteps>
+                      <hudson.tasks.Shell>
+                        <command>echo 456</command>
                       </hudson.tasks.Shell>
                     </buildSteps>
                   </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
