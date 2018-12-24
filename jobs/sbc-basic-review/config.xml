@@ -305,6 +305,8 @@ fi
 if [[ $RunPhases -eq 0 ]]; then exit 1; fi
 echo change=$change &gt; properties.txt
 echo ps=$checkPS &gt;&gt; properties.txt
+
+echo &quot;#${BUILD_NUMBER} ${GERRIT_BRANCH}: ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}--$checkPS&quot; &gt; buildName.txt
 </command>
           </condition>
           <publisherList>
@@ -383,7 +385,7 @@ $change,$ps
                     <role>BOTH</role>
                     <buildSteps>
                       <org.jenkinsci.plugins.buildnameupdater.BuildNameUpdater plugin="build-name-setter@1.6.9">
-                        <buildName>properties.txt</buildName>
+                        <buildName>buildName.txt</buildName>
                         <macroTemplate>#${BUILD_NUMBER}</macroTemplate>
                         <fromFile>true</fromFile>
                         <fromMacro>false</fromMacro>
