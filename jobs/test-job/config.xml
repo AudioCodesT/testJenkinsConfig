@@ -55,7 +55,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>sleep 1</command>
+      <command>sleep 1
+exit 1</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -73,7 +74,7 @@ chmod 600 id_rsa_gerrit
 currentPS=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set $change | grep -A3 &apos;currentPatchSet:\|type: Verified&apos; | grep &apos;number\|value&apos; | cut -d: -f2)
 
 score=$(echo $currentPS | awk &apos;{print $2}&apos;)
-if [ $score  == -1 ]; then exit 1; fi
+if [ &quot;$score&quot;  == -1 ]; then exit 1; fi
 
 #Check if they are not a new PS - if yes, check if the code was changed
 
