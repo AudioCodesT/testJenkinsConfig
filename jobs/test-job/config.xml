@@ -130,6 +130,11 @@ echo Send OK message to Gerrit - $change,$ps</command>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
+                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                        <info>
+                          <propertiesFilePath>properties.txt</propertiesFilePath>
+                        </info>
+                      </EnvInjectBuilder>
                       <hudson.tasks.Shell>
                         <command>echo give grade verified +1
 
