@@ -96,7 +96,9 @@ if [[ $(echo $currentPS | awk &apos;{print $1}&apos;) -gt $ps ]]; then
 fi
 
 if [[ $RunPhases -eq 0 ]]; then exit 1; fi
-ps=$checkPS</command>
+echo change=$change &gt; properties.txt
+echo ps=$checkPS &gt;&gt; properties.txt
+</command>
           </condition>
           <publisherList>
             <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
@@ -106,12 +108,17 @@ ps=$checkPS</command>
                 <buildSteps>
                   <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
                     <results>
-                      <string>SUCCESS</string>
+                      <string>FAILURE</string>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
+                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                        <info>
+                          <propertiesFilePath>properties.txt</propertiesFilePath>
+                        </info>
+                      </EnvInjectBuilder>
                       <hudson.tasks.Shell>
-                        <command>echo give grade verified +1
+                        <command>echo give grade verified -1
 
 echo Send OK message to Gerrit - $change,$ps</command>
                       </hudson.tasks.Shell>
@@ -119,12 +126,12 @@ echo Send OK message to Gerrit - $change,$ps</command>
                   </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
                   <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
                     <results>
-                      <string>FAILURE</string>
+                      <string>SUCCESS</string>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
                       <hudson.tasks.Shell>
-                        <command>echo give grade verified -1
+                        <command>echo give grade verified +1
 
 echo Send OK message to Gerrit - $change,$ps</command>
                       </hudson.tasks.Shell>
