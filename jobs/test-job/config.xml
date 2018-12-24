@@ -56,7 +56,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>sleep 1
-exit 1</command>
+exit 0</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
