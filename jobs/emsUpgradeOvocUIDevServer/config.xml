@@ -157,7 +157,7 @@ curl -k -u admin:$artiPass --insecure -fO &quot;${artifactory_url}/RemoveOldVers
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
 line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;)&quot;
 replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1,30.0\&quot;)&quot;
-sed -i &quot;s/${line}/${replace_line}/g&quot; EMS/VersionRelease/SanityInstall.py
+sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
 
 
 if [[ &quot;$serverToUpgrade&quot; == &quot;172.17.118.92&quot; ]]
