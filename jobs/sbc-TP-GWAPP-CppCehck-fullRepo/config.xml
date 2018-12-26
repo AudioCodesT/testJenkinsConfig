@@ -121,7 +121,7 @@ cp cppcheck/* ${WORKSPACE}/
 
 cd ${WORKSPACE}
 
-while read line; do [[ ! -z &quot;$line&quot; ]] &amp;&amp; printf &quot;%s-i&quot;$line&quot;%s &quot; ; done &lt; exclude.txt &gt; onestring
+while read line; do [[ ! -z &quot;$line&quot; ]] &amp;&amp; printf &quot;%s-i &quot;$line&quot;%s &quot; ; done &lt; exclude.txt &gt; onestring
 _exclude=`cat onestring`
 echo _exclude
 
