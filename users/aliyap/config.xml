@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw3EltrDZ8ebXezm5/O9UJGirOtSFWkfGZDovEwbzHCIbPn0nIC1fFHhhO41/rOE+UYpAhOn74LhjIPZyGACGptg==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>1710bed2-5577-429c-bba3-d17c75b0f1f7</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>6a166c08100e527787783063de1c5a45fe7fa4afc8beb48b6feba14601506eff</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -47,6 +59,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -63,7 +76,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1529823718294</timestamp>
+      <timestamp>1545836117678</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Aliya.Peretz@audiocodes.com</emailAddress>
