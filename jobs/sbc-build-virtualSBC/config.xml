@@ -175,7 +175,30 @@ then
     
 fi
 #run script
+if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
+then
+cd ${WORKSPACE}
+Environment=kvm
 ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+cd ${WORKSPACE}
+Environment=azure
+./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+cd ${WORKSPACE}
+Environment=aws
+./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+cd ${WORKSPACE}
+Environment=hyperv
+./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+cd ${WORKSPACE}
+Environment=vmware
+./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+else
+./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+fi
+
+
+
+
 echo &quot;Branch=${Branch}&quot; &gt; properties
 
 </command>
