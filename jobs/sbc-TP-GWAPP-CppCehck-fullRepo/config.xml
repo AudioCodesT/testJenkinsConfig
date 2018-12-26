@@ -87,7 +87,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cat &lt;&lt;-EOF &gt; ~/.netrc
+      <command>rm -f ~/.netrc
+cat &lt;&lt;-EOF &gt; ~/.netrc
 machine gerrit login jenkins password $jpass
 machine test-gerrit login jenkins password $jpass
 EOF
