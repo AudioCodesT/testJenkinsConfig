@@ -88,8 +88,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>cat &lt;&lt;-EOF &gt; ~/.netrc
-machine test-gerrit login jenkins password $jpass
 machine gerrit login jenkins password $jpass
+machine test-gerrit login jenkins password $jpass
 EOF
 
 cd ${WORKSPACE}/..
