@@ -130,31 +130,6 @@ cppcheck --enable=all $_exclude --suppressions-list=suppressions.txt --inconclus
 
 </command>
     </hudson.tasks.Shell>
-    <hudson.plugins.sonar.SonarRunnerBuilder plugin="sonar@2.6.1">
-      <installationName>test-AC_Sonar</installationName>
-      <project></project>
-      <properties># Required metadata
-sonar.projectKey=com.ac.sbc
-sonar.projectName=sbc
-sonar.projectVersion=1.0
-
-# Comma-separated paths to directories with sources (required)
-sonar.sources=TrunkPackRam
-sonar.sources=OpenSource
-sonar.sources=Modules
-# The value of the property must be the key of the language.
-sonar.language=c++
-
-sonar.analysis.mode=preview
-
-sonar.cxx.cppcheck.reportPath=cppcheck.xml
-sonar.report.export.path=sonar-report.json</properties>
-      <javaOpts></javaOpts>
-      <additionalArguments></additionalArguments>
-      <jdk>(Inherit From Job)</jdk>
-      <sonarScannerName>sonar_runner_261</sonarScannerName>
-      <task></task>
-    </hudson.plugins.sonar.SonarRunnerBuilder>
   </builders>
   <publishers>
     <org.jenkinsci.plugins.cppcheck.CppcheckPublisher plugin="cppcheck@1.21">
