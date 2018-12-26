@@ -174,7 +174,7 @@ then
    fi
     
 fi
-#run script
+# if Environment = all then run all environments
 if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
 then
 cd ${WORKSPACE}
@@ -193,6 +193,7 @@ cd ${WORKSPACE}
 Environment=vmware
 ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
 else
+# run the Environment that the user choosed
 ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
 fi
 
