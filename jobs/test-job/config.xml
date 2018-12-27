@@ -63,7 +63,7 @@
     <hudson.tasks.Shell>
       <command>BatchID=1234
 
-echo BatchID=${BatchID} &gt; properties.txt
+echo BatchIDDD=${BatchID} &gt; properties.txt
 exit 0</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
@@ -73,7 +73,7 @@ exit 0</command>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-echo $BatchID</command>
+echo $BatchIDDD</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
