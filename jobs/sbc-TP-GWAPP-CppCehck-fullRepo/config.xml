@@ -155,7 +155,7 @@ cppcheck --enable=all $_exclude --suppressions-list=suppressions.txt --inconclus
         <configGraph>
           <xSize>1000</xSize>
           <ySize>400</ySize>
-          <numBuildsInGraph>0</numBuildsInGraph>
+          <numBuildsInGraph>30</numBuildsInGraph>
           <displayAllErrors>false</displayAllErrors>
           <displayErrorSeverity>true</displayErrorSeverity>
           <displayWarningSeverity>true</displayWarningSeverity>
