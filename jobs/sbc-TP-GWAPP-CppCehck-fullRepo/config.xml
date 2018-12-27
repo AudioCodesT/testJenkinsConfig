@@ -146,11 +146,11 @@ cppcheck --enable=all $_exclude --suppressions-list=suppressions.txt --inconclus
           <unHealthy></unHealthy>
           <severityError>true</severityError>
           <severityWarning>true</severityWarning>
-          <severityStyle>false</severityStyle>
-          <severityPerformance>false</severityPerformance>
-          <severityInformation>false</severityInformation>
-          <severityNoCategory>false</severityNoCategory>
-          <severityPortability>false</severityPortability>
+          <severityStyle>true</severityStyle>
+          <severityPerformance>true</severityPerformance>
+          <severityInformation>true</severityInformation>
+          <severityNoCategory>true</severityNoCategory>
+          <severityPortability>true</severityPortability>
         </configSeverityEvaluation>
         <configGraph>
           <xSize>1000</xSize>
