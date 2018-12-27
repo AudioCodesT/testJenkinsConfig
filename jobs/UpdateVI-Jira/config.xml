@@ -119,6 +119,8 @@ if ERRORLEVEL 1 (&#xd;
     exit /b&#xd;
 )&#xd;
 &#xd;
+exit 0&#xd;
+&#xd;
 rem ccperl update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
 update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
 &#xd;
