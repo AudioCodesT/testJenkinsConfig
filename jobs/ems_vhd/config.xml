@@ -68,7 +68,7 @@
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.CloneOption>
-        <shallow>false</shallow>
+        <shallow>true</shallow>
         <noTags>false</noTags>
         <reference></reference>
         <timeout>30</timeout>
