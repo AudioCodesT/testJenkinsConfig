@@ -65,6 +65,12 @@ actions:&#xd;
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CurrentBatchID</name>
+          <description>In case you execute manually a DRT that are running now, give to this job the batchID - you can find it in the Environment variable of this running</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -96,6 +102,10 @@ echo -n &quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sb
 # Can run with major version only: 7.2.150, 7.2.170
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
+
+if [ ! -z $CurrentBatchID ]; then
+  exit 0
+fi
 
 #batchID=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&quot; --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed &apos;s/.*Black.&gt;//&apos; | sed &apos;s/&lt;.font&gt;.*//&apos;)&quot;
 Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
@@ -134,6 +144,11 @@ echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
 require &apos;json&apos;
 require &apos;uri&apos;
 
+if ENV[&apos;CurrentBatchID&apos;] != &apos;&apos;
+  puts &quot;Executed manually, no need a new message in the Gerrit&quot;
+  exit 0
+end
+
 if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
   change=$1
   ps=$2
@@ -162,6 +177,10 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
 #    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
 #    6) Running. 7) Pending. 8) WaitingForStop. 9) Stopped.
 count=0
+
+if [ ! -z $CurrentBatchID ]; then
+  batchID=$CurrentBatchID
+fi
 
 for i in {1..5000}
 do
