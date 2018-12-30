@@ -104,6 +104,9 @@ GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
 
 if [ ! -z $CurrentBatchID ]; then
+  echo LinkToPage=&quot;---&quot; &gt; generated_drt.properties
+  echo batchID=${CurrentBatchID} &gt;&gt; generated_drt.properties
+  echo url=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
   exit 0
 fi
 
@@ -177,10 +180,6 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
 #    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
 #    6) Running. 7) Pending. 8) WaitingForStop. 9) Stopped.
 count=0
-
-if [ ! -z $CurrentBatchID ]; then
-  batchID=$CurrentBatchID
-fi
 
 for i in {1..5000}
 do
