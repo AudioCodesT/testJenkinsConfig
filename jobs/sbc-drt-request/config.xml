@@ -67,7 +67,7 @@ actions:&#xd;
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CurrentBatchID</name>
-          <description>In case you execute manually a DRT that are running now, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this running</description>
+          <description>In case you execute manually a DRT that was run and didn&apos;t finished, give to this job the the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
