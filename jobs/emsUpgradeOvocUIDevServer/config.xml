@@ -155,11 +155,17 @@ curl -k -u admin:$artiPass --insecure -fO &quot;${artifactory_url}/RemoveOldVers
 
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
 perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
+#change md5sum command to timout only after 30 seconds instead of 20 seconds
 line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;)&quot;
 replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;,30.0)&quot;
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
 
+# increase time waiting to all features to up after reboot to 450 second instead of 300 seconds
+line=&quot;time.sleep(300)&quot;
+replace_line=&quot;time.sleep(450)&quot;
+sed -i &quot;s/${line}/${replace_line}/g&quot; SanityReboot.py
 
+#start upgrade
 if [[ &quot;$serverToUpgrade&quot; == &quot;172.17.118.92&quot; ]]
 then
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade latest_iso
