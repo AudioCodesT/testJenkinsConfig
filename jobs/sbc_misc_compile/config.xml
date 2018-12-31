@@ -53,7 +53,7 @@
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
         <propertiesContent>BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
-ARTIFACTORY_HOST=test-artifactory</propertiesContent>
+ARTIFACTORY_HOST=artifactory</propertiesContent>
         <secureGroovyScript plugin="script-security@1.42">
           <script></script>
           <sandbox>false</sandbox>
@@ -227,7 +227,7 @@ if [ $FixNum &gt; 1 ]; then
   echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ../generated_sbc_version.properties
 fi
 
-artifactory_host=test-artifactory
+artifactory_host=artifactory
 git submodule--helper list | cut -d&apos; &apos; -f2 | \
 while read -r sha1
 do 
@@ -339,8 +339,8 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>sbc-release</keyFromSelect>
@@ -349,8 +349,8 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
