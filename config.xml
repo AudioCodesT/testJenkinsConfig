@@ -172,6 +172,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.6">
     <domains>
@@ -879,7 +880,6 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>sbc-basic-review</string>
         <string>sbc-build-virtualSBC</string>
-        <string>sbc-collab-compile_end-web-user</string>
         <string>sbc-compile</string>
         <string>sbc-compile_night_NextGenCPE</string>
         <string>sbc-copy-to-netapp1</string>
