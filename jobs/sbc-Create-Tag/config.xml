@@ -140,6 +140,11 @@ do
   LastUser=&quot;&quot;
   if [[ $GERRIT_BRANCH =~ &quot;feature&quot; ]]; then
     IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ &apos;{print $NF}&apos; | cut -c1-2)
+    if [[ ! &quot;$LastTag&quot; =~ &quot;$IDs&quot; ]]; then
+      PreLastTag=$(echo $LastTag | cut -c1-4)$IDs.$(echo $LastTag | cut -d. -f3)
+      LastTag=$PreLastTag.0
+      if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then echo error; fi
+    fi
   fi
   # Check every new commit - if the user was changed, create a new TAG by executing &apos;createTag&apos;
   while IFS=_ read -r Sha1 User When
