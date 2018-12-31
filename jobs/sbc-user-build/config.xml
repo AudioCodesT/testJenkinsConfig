@@ -100,7 +100,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
-        <propertiesContent>ARTIFACTORY_HOST=test-artifactory
+        <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:$PATH</propertiesContent>
@@ -341,7 +341,7 @@ git jenkins-report 1
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
-    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.3.1">
+    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
       <script plugin="script-security@1.42">
         <script>artfcty_pat = ~/Deploying artifact: (.+\/)([^\/\s]+\b)/
 
@@ -382,7 +382,7 @@ if (variables.resolve(&quot;DEBUG_VERSION&quot;) == &quot;true&quot;) {
     manager.build.keepLog(true) // Keep this build forever
     targetArtifactory=&quot;debug/&quot; + variables.resolve(&quot;BUILD_NAME&quot;).replace(/:.*$/, &quot;&quot;) + &quot;/&quot; + manager.build.number
 }
-artifacts.appendText(&quot;&lt;a href=\&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
+artifacts.appendText(&quot;&lt;a href=\&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
 // For matrix build, collect artifacts from all child builds. For normal build collect from self
 if (isMatrix) {
     manager.build.exactRuns.each { run -&gt; add_artifacts(artifacts, run) }
@@ -466,8 +466,8 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>sbc-review</keyFromSelect>
@@ -476,8 +476,8 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
