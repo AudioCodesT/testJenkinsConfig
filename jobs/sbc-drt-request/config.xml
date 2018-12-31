@@ -97,7 +97,7 @@ actions:&#xd;
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
 #REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
-echo -n &quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
+echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
 
 # Can run with major version only: 7.2.150, 7.2.170
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
@@ -106,7 +106,7 @@ GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
 if [ ! -z $CurrentBatchID ]; then
   echo LinkToPage=&quot;---&quot; &gt; generated_drt.properties
   echo batchID=${CurrentBatchID} &gt;&gt; generated_drt.properties
-  echo url=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
   exit 0
 fi
 
@@ -117,7 +117,7 @@ LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b
 
 echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
 echo batchID=${batchID} &gt;&gt; generated_drt.properties
-echo url=&quot;https://test-artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
 
 if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
   echo $Output | grep &apos;BatchRunner Is Down&apos;
