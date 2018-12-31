@@ -64,7 +64,6 @@ PATH=/bin:$PATH</propertiesContent>
       <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
-      <contributors/>
     </EnvInjectJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -104,22 +103,6 @@ PATH=/bin:$PATH</propertiesContent>
       <values>
         <string>boards2compile.yml</string>
       </values>
-      <computedValues>
-        <string>--board=MP5XXNG --sip=yes --lab=yes</string>
-        <string>--board=MP5XXNG --sip=yes --lab=no</string>
-        <string>--board=MP500_ESBC --sip=yes --lab=yes</string>
-        <string>--board=MP500_ESBC --sip=yes --lab=no</string>
-        <string>--board=MP500_MSBG --sip=yes --lab=yes</string>
-        <string>--board=MP500_MSBG --sip=yes --lab=no</string>
-        <string>--board=M1000_MSBG --sip=yes --lab=yes</string>
-        <string>--board=M1000_MSBG --sip=yes --lab=no</string>
-        <string>--board=MP1288 --sip=yes --lab=yes</string>
-        <string>--board=MP1288 --sip=yes --lab=no</string>
-        <string>--board=M4000 --sip=yes --lab=yes</string>
-        <string>--board=M4000 --sip=yes --lab=no</string>
-        <string>--board=HostedTP --sip=yes --lab=yes --server=localhost</string>
-        <string>--board=HostedTP --sip=yes --lab=no --server=localhost</string>
-      </computedValues>
     </org.jenkinsci.plugins.yamlaxis.YamlAxis>
     <hudson.matrix.LabelAxis>
       <name>label</name>
@@ -273,11 +256,11 @@ NEWTAG=`git describe --tags --first-parent | cut -d- -f1,2`</script>
     </com.lookout.jenkins.EnvironmentScript>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect>sbc-release</keyFromSelect>
+          <keyFromSelect></keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
