@@ -305,7 +305,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect></keyFromSelect>
+          <keyFromSelect>sbc-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
