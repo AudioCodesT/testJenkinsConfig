@@ -33,7 +33,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -182,7 +181,7 @@ echo &quot;ls MCA-UGW&quot;
 ls -l ../../TrunkPackRam/acInfrastructure/MCA-UGW
 
 #Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
-uri=$(curl -ks &quot;https://test-artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
+uri=$(curl -ks &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
 downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f MP5XXNG.kernel-headers.gz
 curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
@@ -224,8 +223,8 @@ fi
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>sbc-release</keyFromSelect>
@@ -234,8 +233,8 @@ fi
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
