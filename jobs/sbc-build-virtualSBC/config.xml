@@ -86,11 +86,12 @@ git -c http.sslverify=false pull || true
 git checkout ${Tag} || true
 Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
-
+arti_user=admin
+user=${arti_user}:${arti_password}
 #copy all scripts related files from  sub directory MediantVEBuild to WORKSPACE
 cp -R MediantVEBuild/* ${WORKSPACE}
 
-artifactory_host=test-artifactory
+artifactory_host=artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
 JENKINS_URL=&apos;https://test-jenkins&apos;
@@ -98,7 +99,7 @@ JOB_NAME=&apos;job/sbc-iso&apos;
 JOB_TOKEN=&apos;sbcCreateISO&apos;
 mkdir artifacts
 #get the relevant ISO FILE
-curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
 	echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
@@ -166,7 +167,7 @@ then
     echo &quot;****************Finish Creating a new ISO*******************&quot;
     #get the relevant ISO FILE
     curlHasFailed=&quot;False&quot;
-	curl -k --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+	curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 	if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 	then 
 		echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
@@ -275,5 +276,15 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>arti_password</name>
+          <value>{AQAAABAAAAAQeMv4U/cPV4jF6FABj5eH6Fz+9tUmIzxOzUViiIouaTs=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
   </buildWrappers>
 </project>
