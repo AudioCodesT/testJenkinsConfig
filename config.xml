@@ -1158,6 +1158,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>MoveArtifactoryToLocalStorage_File</string>
         <string>MoveArtifactoryToLocalStorage_Zip</string>
+        <string>sbc-collab-compile_end-web-user</string>
         <string>UpdateVI</string>
         <string>UpdateVi-old-version</string>
       </jobNames>
