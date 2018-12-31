@@ -68,7 +68,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-artifactory=&quot;https://test-artifactory&quot;
+artifactory=&quot;https://artifactory&quot;
 User=&quot;$artifactory_user:$artifactory_password&quot;
 Branch=$GERRIT_BRANCH
 
