@@ -301,11 +301,11 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
     </com.lookout.jenkins.EnvironmentScript>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
-          <keyFromSelect>sbc-release</keyFromSelect>
+          <keyFromSelect></keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
         <stagingPlugin/>
