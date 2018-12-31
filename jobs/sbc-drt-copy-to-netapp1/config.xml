@@ -86,7 +86,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>User=&quot;$artifactory_user:$artifactory_password&quot;
-Artifactory=&quot;https://test-artifactory/api/storage/sbc-review/com/ac/sbc&quot;
+Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
 DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
 #REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
