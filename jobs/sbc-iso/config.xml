@@ -28,7 +28,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Customer</name>
           <description>This param should be filled only for a private label ISO.
-Search the customer name on the following path: https://test-artifactory/sbc-release/com/ac/sbc/private-labels
+Search the customer name on the following path: https://artifactory/sbc-release/com/ac/sbc/private-labels
 If exist, all files under this customer folder will be copied from artifactory to compilation workspace before compilation (should changed the icon image etc...)</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -46,7 +46,7 @@ If exist, all files under this customer folder will be copied from artifactory t
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
-        <propertiesContent>ARTIFACTORY_HOST=test-artifactory
+        <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:/sbin:/usr/sbin:$PATH</propertiesContent>
@@ -165,7 +165,7 @@ sudo chown -R centos:centos .
 echo &quot;Check if need to change files for a specific customer&quot;
 if [[ $Customer != &quot;&quot; ]]; then
 	echo &quot;*******    START PRIVATE LABALING    ************&quot;
-	PRIVATE=https://test-artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
+	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
 	DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 	echo &quot;download from artifactory all files under $Customer&quot;
 	for f in $(curl -ks &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
@@ -247,8 +247,8 @@ fi
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>sbc-release</keyFromSelect>
@@ -257,8 +257,8 @@ fi
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
