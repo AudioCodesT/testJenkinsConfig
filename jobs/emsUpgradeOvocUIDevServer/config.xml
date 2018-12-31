@@ -160,11 +160,6 @@ line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&ap
 replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;,30.0)&quot;
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
 
-# increase time waiting to all features to up after reboot to 450 second instead of 300 seconds
-line=&quot;time.sleep(300)&quot;
-replace_line=&quot;time.sleep(450)&quot;
-sed -i &quot;s/${line}/${replace_line}/g&quot; SanityReboot.py
-
 #start upgrade
 if [[ &quot;$serverToUpgrade&quot; == &quot;172.17.118.92&quot; ]]
 then
