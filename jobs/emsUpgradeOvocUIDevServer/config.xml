@@ -175,13 +175,13 @@ echo &quot;*****************************************************************&quo
 echo &quot;*************** Server Upgrade has been finished ****************&quot;
 echo &quot;*****************************************************************&quot;
 
-#,Shuky.Riechard,Michael.Lallouz
+#
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso</recipients>
+      <recipients>ben.magriso,Shuky.Riechard,Michael.Lallouz</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
