@@ -154,7 +154,7 @@ do
   while IFS=_ read -r Sha1 User When
   do
     LastSubmitter=$(git show refs/notes/review:${Sha1:0:2}/${Sha1:2} | sed -nE &apos;s/^Submitted-by: (.*) &lt;.*$/\1/p&apos;)
-    if [ &quot;$LastSubmitter&quot; != &quot;$User&quot; ]; then echo ----------------- $LastSubmitter &lt;&gt; $User -----------------------; fi
+    if [ &quot;$LastSubmitter&quot; != &quot;$User&quot; ]; then echo ----------------- $LastSubmitter not equel $User -----------------------; fi
     if [ &quot;$LastSubmitter&quot; != &quot;&quot; ]; then User=$LastSubmitter; fi
     if [ &quot;$LastUser&quot; != &quot;&quot; ] &amp;&amp; [ &quot;$LastUser&quot; != &quot;$User&quot; ]; then createTag; fi
     LastUser=$User
