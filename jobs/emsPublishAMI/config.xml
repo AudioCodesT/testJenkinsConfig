@@ -117,7 +117,7 @@ cat RegionsNameAndIds.txt
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>ben.magriso,Mark.Kemel,Marina.Risher </recipientList>
+      <recipientList>ben.magriso,Mark.Kemel,Marina.Risher,Shuky.Riechard</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
