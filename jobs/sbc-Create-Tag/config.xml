@@ -138,8 +138,11 @@ do
   LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
   LastUser=&quot;&quot;
   if [[ $GERRIT_BRANCH =~ &quot;feature&quot; ]]; then
+    # Find the first 2 characters of the feature name - change them to uppercase
     IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ &apos;{print $NF}&apos; | cut -c1-2)
     if [[ ! &quot;$LastTag&quot; =~ &quot;$IDs&quot; ]]; then
+      # If is the first TAG in this feature branch
+      # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
       PreLastTag=$(echo $LastTag | cut -c1-4)$IDs.$(echo $LastTag | cut -d. -f3)
       LastTag=$PreLastTag.0
       if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
