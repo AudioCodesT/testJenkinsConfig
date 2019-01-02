@@ -75,15 +75,15 @@ Branch=$GERRIT_BRANCH
 if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/sbc/$Branch/Firmware&quot;
   
-  # Remove the _ trailer in case of fix branches such as 7.2.204_jio
+  # Remove the _ suffix in case of fix branches such as 7.2.204_jio
   Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)  
   BaseName=$Branch
   BaseFirmware=Firmware
   # Feature branches should be copied to &quot;&lt;Main branch&gt; Release/Features/&lt;Sub main branch&gt;&quot;
-  if [[ $GERRIT_BRANCH =~ &quot;feature&quot; ]]; then
+  if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; ]]; then
     # Find parent branch of this feature branch
     Branch=$(git show-branch | grep &apos;*&apos; | \
-      grep -v `git rev-parse --abbrev-ref HEAD` | \
+      grep &quot;\[[0-9]\.[0-9]\.[0-9]*&quot; | \
       head -n1 | sed &apos;s/.*\[\(.*\)\].*/\1/; s/[\^~].*//&apos;)
     BaseName=Features/$(echo $Branch | cut -d. -f3)
     BaseFirmware=$BaseName
