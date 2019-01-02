@@ -68,7 +68,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
-        <propertiesContent>ARTIFACTORY_HOST=test-artifactory
+        <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:$PATH</propertiesContent>
