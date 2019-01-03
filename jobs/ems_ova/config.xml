@@ -409,7 +409,7 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>gal.erez, Gennady.Tsiporkin, marina.Risher, shuky.reichard, yuval.yosha</recipientList>
+      <recipientList>gal.erez, Gennady.Tsiporkin, marina.Risher, liran.badiri, eran.feldman, shuky.reichard, yuval.yosha</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
