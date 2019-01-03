@@ -114,6 +114,7 @@ function createTag {
     return
   fi
   
+  RealLastTag=$LastTag
   # If this is a first TAG in Feature branch
   if [[ ! -z PreLastTag ]]; then LastTag=$PreLastTag; fi
 
@@ -125,7 +126,7 @@ function createTag {
   git tag -a -m &quot;Jenkins auto tag after $LastUser commit&quot; $NEWTAG $LastSha1
   git push origin $NEWTAG
   curl -k &quot;https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG&quot; || echo Access Rebaser failed
-  SubModules=`git diff --name-only $LastTag $LastSha1 -- OpenSource | sed &apos;s:OpenSource/::; s:/.*::&apos; | sort -u`
+  SubModules=`git diff --name-only $RealLastTag $LastSha1 -- OpenSource | sed &apos;s:OpenSource/::; s:/.*::&apos; | sort -u`
   LastTag=$NEWTAG
   for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
 }
