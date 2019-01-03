@@ -293,7 +293,7 @@ REPOSITORY=sbc-release</properties>
   </publishers>
   <buildWrappers>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
-      <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+      <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed &apos;s:.*origin/::&apos;`
 echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
       <scriptType>unixScript</scriptType>
       <runOnlyOnParent>false</runOnlyOnParent>
