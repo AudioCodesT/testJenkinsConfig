@@ -173,7 +173,7 @@ head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 
 # Ignore 7.2.170 until is will be deleted.
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | grep -v 7.2.170 | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | grep -v 7.2.170 | head -1 | sed &apos;s:.*origin/::&apos;`
 #GERRIT_BRANCH=&quot;7.2.150&quot;
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
