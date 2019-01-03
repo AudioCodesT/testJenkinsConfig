@@ -116,7 +116,7 @@ function createTag {
   
   RealLastTag=$LastTag
   # If this is a first TAG in Feature branch
-  if [[ ! -z PreLastTag ]]; then LastTag=$PreLastTag; PreLastTag=&quot;&quot;; fi
+  if [ ! -z $PreLastTag ]; then LastTag=$PreLastTag; PreLastTag=&quot;&quot;; fi
 
   FixNum=`echo $LastTag | cut -d. -f4`
   if [ -z $FixNum ]; then FixNum=0; fi
