@@ -264,8 +264,8 @@ echo User=${User}</script>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
