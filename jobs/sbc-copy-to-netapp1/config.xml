@@ -76,25 +76,19 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/sbc/$Branch/Firmware&quot;
   
   # Remove the _ suffix in case of fix branches such as 7.2.204_jio
-  Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)  
-  BaseName=$Branch
+  Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
   BaseFirmware=Firmware
   # Feature branches should be copied to &quot;&lt;Main branch&gt; Release/Features/&lt;Sub main branch&gt;&quot;
   if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; ]]; then
     # Find parent branch of this feature branch
-    Branch=$(git show-branch | grep &apos;*&apos;.*&apos;\[[0-9]\.[0-9]\.[0-9]*&apos; | \
-           head -n1 | sed &apos;s/.*\[\(.*\)\].*/\1/; s/[\^~].*//&apos;)
-    if [ -z $Branch ]; then
-      echo &quot;Error, can&apos;t find parent branch for branch $GERRIT_BRANCH&quot;
-      exit 1
-    fi
-    BaseName=Features/$(echo $Branch | cut -d. -f3)
-    BaseFirmware=$BaseName
+    Branch=7.2.250
+    if [[ $GERRIT_BRANCH =~ &quot;/fips/&quot; ]]; then Branch=7.2.250; fi
+    BaseFirmware=Features/$(echo $Branch | cut -d. -f3)
   fi
 
   Firmware=&quot;$Branch Release/$BaseFirmware&quot;
   if (( $(echo $Branch | cut -d. -f3) % 10 != 0 )); then
-    Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:\.160:\.150:&apos;) Release/$BaseName&quot;
+    Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:\.160:\.150:&apos;) Release/$Branch&quot;
   fi
   if [ &quot;$Branch&quot; == &quot;NextGenCPE&quot; ]; then
     Firmware=&quot;$Branch Release/Next_Firmware&quot;
