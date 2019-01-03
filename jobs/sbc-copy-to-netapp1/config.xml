@@ -82,7 +82,7 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; ]]; then
     # Find parent branch of this feature branch
     Branch=7.2.250
-    if [[ $GERRIT_BRANCH =~ &quot;/fips/&quot; ]]; then Branch=7.2.250; fi
+    if [[ $GERRIT_BRANCH =~ &quot;/fips&quot; ]]; then Branch=7.2.250; fi
     BaseFirmware=Features/$(echo $Branch | cut -d. -f3)
   fi
 
