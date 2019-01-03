@@ -198,8 +198,8 @@ WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>sbc-review</keyFromSelect>
@@ -208,8 +208,8 @@ WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
