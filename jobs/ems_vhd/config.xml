@@ -125,10 +125,6 @@ vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 
-#BaseVM=&quot;/home/centos/data/ovoc_base/ova/${BaseVM}.ova&quot;
-BaseVMCX=$(ssh -t centos@10.7.10.117 winpty -Xallow-non-tty powershell -c &apos;Get-ChildItem -Recurse &quot;V:\\base\\$BaseVM\\&quot; -filter &quot;*.vmcx&quot;&apos; 2&gt;/dev/null | grep vmcx | gawk &apos;{print $6}&apos;)
-echo $BaseVMCX | tee -a $logfile
-
 # Get ESXi password from encrypted file
 #cd ~/.ssl
 #vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
@@ -149,15 +145,22 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc_base_for_ vm`s
-ssh -t centos@vmHostIP winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&apos;
+SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&apos;
+ssh centos@$vmHostIP $SSHCMD
 
 # Delete old remanents from hypervisor host
-#ssh root@${vmHostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
-ssh -t centos@vmHostIP rm -rf /cygdrive/v/base/$BaseVM
+SSHCMD=&quot;powershell -c &apos;Remove-Item V:\base\*&apos;
+ssh centos@$vmHostIP $SSHCMD
 
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
+
+# Get Hyper-V VMCX file path
+# ssh command
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse &quot;V:\\Hyper-v\\$TAG&quot; -Filter &quot;*.vmcx&quot; | select -ExpandProperty FullName&apos;&quot;
+VMCX_PATH=$(ssh centos@10.7.10.117 $SSHCMD 2&gt;/dev/null | sed &apos;s/[[:cntrl:]]//g&apos;)
+echo $BaseVMCX | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
