@@ -181,8 +181,8 @@ echo &quot;ls MCA-UGW&quot;
 ls -l ../../TrunkPackRam/acInfrastructure/MCA-UGW
 
 #Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
-uri=$(curl -ks &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
-downloadUri=$(curl -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
+uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
+downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f MP5XXNG.kernel-headers.gz
 curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
 
