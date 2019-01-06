@@ -150,11 +150,11 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 
 # check and delete old ovoc_base_for_ vm`s
 SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&apos;
-ssh centos@$vmHostIP $SSHCMD
+ssh centos@${vmHostIP} $SSHCMD
 
 # Delete old remanents from hypervisor host
-SSHCMD=&quot;powershell -c &apos;Remove-Item V:\base\*&apos;
-ssh centos@$vmHostIP $SSHCMD
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\base\\*&apos;
+ssh centos@${vmHostIP} $SSHCMD
 
 
 ###################################################################################################
@@ -163,14 +163,17 @@ ssh centos@$vmHostIP $SSHCMD
 # Get Hyper-V VMCX file path
 # ssh command
 SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse &quot;V:\\Hyper-v\\$TAG&quot; -Filter &quot;*.vmcx&quot; | select -ExpandProperty FullName&apos;&quot;
-VMCX_PATH=$(ssh centos@$vmHostIP $SSHCMD 2&gt;/dev/null | sed &apos;s/[[:cntrl:]]//g&apos;)
-echo $BaseVMCX | tee -a $logfile
+VMCX_PATH=$(ssh centos@${vmHostIP} $SSHCMD 2&gt;/dev/null | sed &apos;s/[[:cntrl:]]//g&apos;)
+echo $VMCX_PATH | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
 
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-childitem \&quot;V:\base\\$BaseVM\\\&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
-ssh -t centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
+# UnZip archived base vm
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\utils\\$BaseVM -TargetPath V:\\base\\&apos;&quot;
+
+SSHCMD=&quot;powershell -c &apos;import-vm $VMCX_PATH -Register}&apos;&quot;
+ssh centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
     exit
