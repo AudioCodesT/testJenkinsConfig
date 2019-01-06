@@ -157,6 +157,17 @@ SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\base\\*&apos;
 ssh centos@${vmHostIP} $SSHCMD
 
 
+
+
+
+
+
+
+
+
+
+
+
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
