@@ -100,6 +100,10 @@
 #############################################################################
 #############################################################################
 
+# NOTE: It is impossible to pass local vars to the powershell command inside the ssh command.
+#       The solution is to create a variable that holds the full ssh command - SSHCMD
+#       ssh centos@$vmHostIP $SSHCMD
+
 ## Get current branch
 # Get the build from the TAG
 BLD=`echo $TAG | cut -d. -f3`
@@ -159,13 +163,12 @@ ssh centos@$vmHostIP $SSHCMD
 # Get Hyper-V VMCX file path
 # ssh command
 SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse &quot;V:\\Hyper-v\\$TAG&quot; -Filter &quot;*.vmcx&quot; | select -ExpandProperty FullName&apos;&quot;
-VMCX_PATH=$(ssh centos@10.7.10.117 $SSHCMD 2&gt;/dev/null | sed &apos;s/[[:cntrl:]]//g&apos;)
+VMCX_PATH=$(ssh centos@$vmHostIP $SSHCMD 2&gt;/dev/null | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $BaseVMCX | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
-# NOTE: It is impossible to pass local vars to the powershell command inside the ssh command.
-#       The solution is to create a variable that holds the full ssh command - REMCMD
+
 REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-childitem \&quot;V:\base\\$BaseVM\\\&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
 ssh -t centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
 if [ $? -ne 0 ]; then
