@@ -86,7 +86,6 @@
     <hudson.tasks.Shell>
       <command>git config --global user.name &quot;Jenkins&quot;
 git config --global user.email devops@audiocodes.com
-#Artifact=test-artifactory
 Artifact=artifactory
 Repo=sbc-release
 
