@@ -92,8 +92,9 @@ Repo=sbc-release
 function createSubModuleTag() {
   echo create a new TAG for the $SubModule submodule too
   SubModule=$1
-  NEWTAG=$2
+  NEWTAGsub=$2
   if [ `git submodule status OpenSource/$SubModule | wc -l` == 1 ]; then
+    NEWTAG=$NEWTAGsub
     commit_sha1=`git ls-files --stage OpenSource/$SubModule | cut -f2 -d &apos; &apos;`
     echo Check if this Images existing in the Artifactory already - if not, create a TAG
     if ! curl -ks &quot;https://$Artifact/api/search/prop?vcs.revision=$commit_sha1&amp;repos=$Repo&quot; | grep -q uri; then
