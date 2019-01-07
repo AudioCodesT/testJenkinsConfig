@@ -186,7 +186,7 @@ echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
 # find new vm IP address
-SSHCMD=&quot;powershell -c &apos;Get-VM -Name ovoc* | Select -ExpandProperty NetworkAdapters | fl&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | Select -ExpandProperty NetworkAdapters | fl&apos;&quot;
 vmip=$(ssh centos@${vmHostIP} $SSHCMD | grep IPAddress | grep -v Dyn | gawk &apos;{print $3}&apos; | (read h; echo ${h:1:${#h}-2}))
 ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
 echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
@@ -256,9 +256,9 @@ sleep 30
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm -Name $_.FullName}&apos;&quot;
-ssh root@${vmHostIP} $REMCMD | tee -a $logfile
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Get-VM $BaseVM | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm -Name $_.FullName}&apos;&quot;
+ssh root@${vmHostIP} $SSHCMD | tee -a $logfile
+SSHCMD=&quot;powershell -c &apos;Get-VM $BaseVM | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
 sleep 30
 
 ###################################################################################################
