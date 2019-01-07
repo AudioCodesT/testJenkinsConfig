@@ -35,6 +35,7 @@
               <string>aws</string>
               <string>hyperv</string>
               <string>vmware</string>
+              <string>google</string>
               <string>all</string>
             </a>
           </choices>
@@ -192,6 +193,9 @@ Environment=hyperv
 ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
 cd ${WORKSPACE}
 Environment=vmware
+./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+cd ${WORKSPACE}
+Environment=google
 ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
 else
 # run the Environment that the user choosed
