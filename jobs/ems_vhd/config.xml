@@ -44,7 +44,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -265,10 +264,7 @@ sleep 30
 ###################################################################################################
 # export the new VM
 echo &quot;$(date) : export new VM&quot; | tee -a $logfile
-cd ${WORKSPACE}
-[[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
-mkdir -p &quot;${TAG}&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;Get-VM -Name ovoc* | Export-VM -Path ${WORKSPACE}\\${TAG}&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | Export-VM -Path &quot;V:\\base\\${TAG}&quot;
 ssh root@${vmHostIP} $SSHCMD | tee -a $logfile
 
 Result=`tail -1 $logfile | grep &quot;Completed&quot;`
