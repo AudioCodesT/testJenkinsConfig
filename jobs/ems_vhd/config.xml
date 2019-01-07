@@ -267,10 +267,12 @@ echo &quot;$(date) : export new VM&quot; | tee -a $logfile
 cd ${WORKSPACE}
 [[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
 mkdir -p &quot;${TAG}&quot; | tee -a $logfile
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;Get-VM -Name ovoc* | Export-VM -Path ${TAG}&quot;
-ssh root@${vmHostIP} $REMCMD | tee -a $logfile
+SSHCMD=&quot;powershell -c &apos;Get-VM -Name ovoc* | Export-VM -Path ${WORKSPACE}\\${TAG}&quot;
+ssh root@${vmHostIP} $SSHCMD | tee -a $logfile
+
 Result=`tail -1 $logfile | grep &quot;Completed&quot;`
 [[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
+
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
@@ -282,13 +284,13 @@ echo &quot;#####################################################################
 ###################################################################################################
 # Delete ovoc server vm
 echo &quot;$(date) : Delete ovoc server VM from host&quot; | tee -a $logfile
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-vm *base* | %{stop-vm \$_.FullName} | %{remove-vm -f \$_.FullName}&apos;&quot;
-ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
+SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm \$_.FullName} | %{remove-vm -f \$_.FullName}&apos;&quot;
+ssh root@${vmHostIP} $SSGCMD | tee -a $logfile
 
 ###################################################################################################
 # Deploy ovoc server from newly created ova
 echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-REMCMD=&quot;winpty -Xallow-non-tty powershell -c &apos;get-childitem \&quot;${WORKSPACE}\\${TAG}\&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
+REMCMD=&quot;powershell -c &apos;get-childitem &quot;V:\\base&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
 ssh -t centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
 sleep 300
 
