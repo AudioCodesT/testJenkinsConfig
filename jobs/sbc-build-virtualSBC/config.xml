@@ -176,27 +176,15 @@ then
    fi
     
 fi
+EnvironmentList=(&quot;kvm&quot; &quot;azure&quot; &quot;aws&quot; &quot;hyperv&quot; &quot;vmware&quot; &quot;google&quot;)
 # if Environment = all then run all environments
 if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
 then
-cd ${WORKSPACE}
-Environment=kvm
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-cd ${WORKSPACE}
-Environment=azure
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-cd ${WORKSPACE}
-Environment=aws
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-cd ${WORKSPACE}
-Environment=hyperv
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-cd ${WORKSPACE}
-Environment=vmware
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-cd ${WORKSPACE}
-Environment=google
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+	for FLAVOR in ${EnvironmentList[@]}
+	do
+  		cd ${WORKSPACE}
+		./build_sbc.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+	done
 else
 # run the Environment that the user choosed
 ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
