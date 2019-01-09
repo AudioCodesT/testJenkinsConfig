@@ -250,9 +250,8 @@ sleep 30
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm -Name $_.FullName}&apos;&quot;
-ssh root@${vmHostIP} $SSHCMD | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;Get-VM $BaseVM | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
+powershell -c &quot;Get-VM *ovoc* | %{stop-vm -Name $_.FullName}&quot; | tee -a $logfil
+powershell -c &quot;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&quot;
 sleep 30
 
 ###################################################################################################
