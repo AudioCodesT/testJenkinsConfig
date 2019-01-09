@@ -102,7 +102,7 @@
 
 # NOTE: It is impossible to pass local vars to the powershell command inside the ssh command.
 #       The solution is to create a variable that holds the full ssh command - SSHCMD
-#       ssh centos@$vmHostIP $SSHCMD
+#       ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 ## Get current branch
 # Get the build from the TAG
@@ -146,28 +146,28 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 
 # check and delete old ovoc server vm`s
 SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | %{Stop-VM $_.FullName} | %{Remove-VM -f $_.FullName}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 # Delete old remanents from hypervisor host
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
 SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 # Get Hyper-V VMCX file path
 SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\ -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
-VMCX_PATH=$((ssh centos@${vmHostIP} $SSHCMD) | sed &apos;s/[[:cntrl:]]//g&apos;)
+VMCX_PATH=$((ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;) | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $VMCX_PATH | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
 SSHCMD=&quot;powershell -c &apos;import-vm $VMCX_PATH -Register&apos;&quot; | tee -a $logfile
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
@@ -250,18 +250,18 @@ sleep 30
 # graceful shutdouwn this new full ovoc server VM and rename with TAG
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
 SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | %{stop-vm -Name $_.FullName}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 sleep 30
 
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot; | tee -a $logfile
 SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\${TAG}.7z -Path V:\\HVWORKSPACE\\${TAG}\\ovoc-${TAG}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 [[ ! -f /cygdrive/v/HVWORKSPACE/${TAG}.7z ]] &amp;&amp; exit
 
@@ -278,7 +278,7 @@ echo &quot;#####################################################################
 # Restart ovoc-server
 echo &quot;$(date) : Starting ovoc server&quot; | tee -a $logfile
 SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 sleep 300
 
 ###################################################################################################
@@ -315,9 +315,9 @@ echo &quot;#####################################################################
 ###################################################################################################
 # Stop and Delete new ovoc server vm
 SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | %{Stop-VM $_.FullName} | %{Remove-VM -f $_.FullName}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
