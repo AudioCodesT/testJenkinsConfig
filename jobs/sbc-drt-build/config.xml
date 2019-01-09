@@ -211,7 +211,7 @@ echo CHANGESNumbers=${CHANGESNumbers} &gt;&gt; ../generated_sbc_version.properti
 # Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
-./GetImages.sh $BOARDNAME $artifactory_host $User
+./GetImages.sh $BOARDNAME $artifactory_host $User &quot;&quot; &quot;-i ../id_rsa_gerrit jenkins@test-gerrit&quot;
 
 # Take the relevant TP/GWApp that corresponding to this Submodule change instead of using the branch
 # In case of no TP/GWApp change was added to this DRT
