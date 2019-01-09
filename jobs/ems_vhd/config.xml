@@ -145,26 +145,29 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc server vm`s
-powershell -c &quot;Get-VM *ovoc* | %{Stop-VM $_.FullName} | %{Remove-VM -f $_.FullName}&quot; | tee -a $logfile
+SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | %{Stop-VM $_.FullName} | %{Remove-VM -f $_.FullName}&apos;&quot;
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 
 # Delete old remanents from hypervisor host
-powershell -c &quot;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&quot; | tee -a $logfile
-
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\&apos;&quot;
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-powershell -c &quot;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\&quot; | tee -a $logfile
-
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\&apos;&quot;
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 
 # Get Hyper-V VMCX file path
-VMCX_PATH=$(powershell -c &quot;Get-ChildItem -Recurse V:\\HVWORKSPACE\\ -Filter *.vmcx | select -ExpandProperty FullName&quot; | sed &apos;s/[[:cntrl:]]//g&apos;)
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\ -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
+VMCX_PATH=$(ssh centos@${vnHostIP} $SSHCMD | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $VMCX_PATH | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
 powershell -c &quot;import-vm $VMCX_PATH -Register&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
@@ -247,14 +250,18 @@ sleep 30
 # graceful shutdouwn this new full ovoc server VM and rename with TAG
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
 powershell -c &quot;Get-VM *ovoc* | %{stop-vm -Name $_.FullName}&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 powershell -c &quot;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 sleep 30
 
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot; | tee -a $logfile
 powershell -c &quot;Get-VM -Name *ovoc* | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 powershell -c &quot;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\${TAG}.7z -Path V:\\HVWORKSPACE\\${TAG}\ovoc-${TAG}&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 
 [[ ! -f /cygdrive/v/HVWORKSPACE/${TAG}.7z ]] &amp;&amp; exit
 
@@ -271,6 +278,7 @@ echo &quot;#####################################################################
 # Restart ovoc-server
 echo &quot;$(date) : Starting ovoc server&quot; | tee -a $logfile
 powershell -c &quot;Start-VM -Name ovoc-${TAG}&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 sleep 300
 
 ###################################################################################################
@@ -307,7 +315,9 @@ echo &quot;#####################################################################
 ###################################################################################################
 # Stop and Delete new ovoc server vm
 powershell -c &quot;Get-VM *ovoc* | %{Stop-VM $_.FullName} | %{Remove-VM -f $_.FullName}&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 powershell -c &quot;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&quot; | tee -a $logfile
+ssh centos@${vnHostIP} $SSHCMD | tee -a $logfile
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
