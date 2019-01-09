@@ -181,7 +181,6 @@ echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
 # find new vm IP address
-
 vmip=$(powershell -c &quot;Get-VM -Name *ovoc* | Select -ExpandProperty NetworkAdapters | fl&quot; | grep IPAddress | grep -v Dyn | gawk &apos;{print $3}&apos; | (read h; echo ${h:1:${#h}-2}))
 ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
 echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
