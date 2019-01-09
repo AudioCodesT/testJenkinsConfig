@@ -152,18 +152,18 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 powershell -c &quot;get-vm *ovoc* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&quot; | tee -a $logfile
 
 # Delete old remanents from hypervisor host
-powershell -c &quot;Remove-Item -Force -Recurse V:\\base\\*&quot; | tee -a $logfile
+powershell -c &quot;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&quot; | tee -a $logfile
 
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-powershell -c &quot;Expand-7zip -ArchiveFileName V:\\utils\\$BaseVM.7z -TargetPath V:\\base\\&quot; | tee -a $logfile
+powershell -c &quot;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\&quot; | tee -a $logfile
 
 
 # Get Hyper-V VMCX file path
-VMCX_PATH=$(powershell -c &quot;Get-ChildItem -Recurse V:\\base\\ -Filter *.vmcx | select -ExpandProperty FullName&quot; | sed &apos;s/[[:cntrl:]]//g&apos;)
+VMCX_PATH=$(powershell -c &quot;Get-ChildItem -Recurse V:\\HVWORKSPACE\\ -Filter *.vmcx | select -ExpandProperty FullName&quot; | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $VMCX_PATH | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
@@ -248,16 +248,16 @@ cd ${WORKSPACE}
 sleep 30
 
 ###################################################################################################
-# graceful shutdouwn this new full ovoc server VM
+# graceful shutdouwn this new full ovoc server VM and rename with TAG
 echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
-powershell -c &quot;Get-VM *ovoc* | %{stop-vm -Name $_.FullName}&quot; | tee -a $logfil
-powershell -c &quot;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&quot;
+powershell -c &quot;Get-VM *ovoc* | %{stop-vm -Name $_.FullName}&quot; | tee -a $logfile
+powershell -c &quot;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&quot; | tee -a $logfile
 sleep 30
 
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot; | tee -a $logfile
-powershell -c &quot;Get-VM -Name *ovoc* | Export-VM -Path V:\\base\\${TAG}&quot; | tee -a $logfile
+powershell -c &quot;Get-VM -Name *ovoc* | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&quot; | tee -a $logfile
 powershell -c &quot;Compress-7Zip -ArchiveFileName V:\\base\\${TAG}.7z -Path V:\\base\\${TAG}\ovoc-${TAG}&quot; | tee -a $logfile
 
 echo &quot;###################################################################################################&quot; | tee -a $logfile
