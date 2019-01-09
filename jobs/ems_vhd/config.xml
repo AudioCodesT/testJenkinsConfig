@@ -258,7 +258,9 @@ sleep 30
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot; | tee -a $logfile
 powershell -c &quot;Get-VM -Name *ovoc* | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&quot; | tee -a $logfile
-powershell -c &quot;Compress-7Zip -ArchiveFileName V:\\base\\${TAG}.7z -Path V:\\base\\${TAG}\ovoc-${TAG}&quot; | tee -a $logfile
+powershell -c &quot;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\${TAG}.7z -Path V:\\HVWORKSPACE\\${TAG}\ovoc-${TAG}&quot; | tee -a $logfile
+
+[[ ! -f /cygdrive/v/HVWORKSPACE/${TAG}.7z ]] &amp;&amp; exit
 
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
@@ -268,11 +270,6 @@ echo &quot;#####################################################################
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 
-###################################################################################################
-# Delete ovoc server vm
-echo &quot;$(date) : Delete ovoc server VM from host&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm \$_.FullName} | %{remove-vm -f \$_.FullName}&apos;&quot;
-ssh root@${vmHostIP} $SSGCMD | tee -a $logfile
 
 ###################################################################################################
 # Deploy ovoc server from newly created ova
