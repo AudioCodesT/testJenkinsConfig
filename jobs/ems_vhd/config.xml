@@ -129,10 +129,6 @@ vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 
-# Get ESXi password from encrypted file
-#cd ~/.ssl
-#vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
-
 cd ${WORKSPACE}
 
 # Create a new log file
