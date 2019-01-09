@@ -86,8 +86,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin64\bin\bash --login -i
-#############################################################################
+      <command>#############################################################################
 #############################################################################
 ##### Fetching changes submitted to gerrit without waiting for a build ######
 ##### This is for testing ONLY!!!!!! Remove when going to production!! ######
