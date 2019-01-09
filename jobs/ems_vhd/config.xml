@@ -310,9 +310,8 @@ echo &quot;#####################################################################
 
 ###################################################################################################
 # Stop and Delete new ovoc server vm
-
-powershell -c &quot;Stop-VM -Name ovoc-${TAG}&quot; | tee -a $logfile
-
+powershell -c &quot;Get-VM *ovoc* | %{Stop-VM $_.FullName} | %{Remove-VM -f $_.FullName}&quot; | tee -a $logfile
+powershell -c &quot;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&quot; | tee -a $logfile
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
