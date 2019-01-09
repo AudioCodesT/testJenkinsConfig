@@ -77,7 +77,7 @@
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <assignedNode>ovoc-hyper-v</assignedNode>
+  <assignedNode>ems_ova</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
