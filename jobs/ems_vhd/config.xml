@@ -272,10 +272,9 @@ echo &quot;#####################################################################
 
 
 ###################################################################################################
-# Deploy ovoc server from newly created ova
-echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-REMCMD=&quot;powershell -c &apos;get-childitem &quot;V:\\base&quot; -Recurse -Filter \&quot;Virtual Machines\&quot; | %{Get-ChildItem \$_.FullName -Filter *.vmcx} | %{import-vm \$_.FullName -Register}&apos;&quot;
-ssh -t centos@${vmHostIP} $REMCMD 2&gt;/dev/null | tee -a $logfile
+# Restart ovoc-server
+echo &quot;$(date) : Starting ovoc server&quot; | tee -a $logfile
+powershell -c &quot;Start-VM -Name ovoc-${TAG}&quot; | tee -a $logfile
 sleep 300
 
 ###################################################################################################
