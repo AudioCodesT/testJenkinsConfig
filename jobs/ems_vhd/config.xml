@@ -117,7 +117,7 @@ else
 fi
 
 ## Check that TAG matches BaseVM version
-BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
+BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
 if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
 	exit -1
 fi
@@ -149,31 +149,26 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc_base_for_ vm`s
-SSHCMD=&quot;powershell -c &apos;get-vm *ovoc* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&apos;
-ssh centos@${vmHostIP} $SSHCMD
+powershell -c &quot;get-vm *ovoc* | %{stop-vm $_.FullName} | %{remove-vm -f $_.FullName}&quot; | tee -a $logfile
 
 # Delete old remanents from hypervisor host
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\base\\*&apos;
-ssh centos@${vmHostIP} $SSHCMD
+powershell -c &quot;Remove-Item -Force -Recurse V:\\base\\*&quot; | tee -a $logfile
 
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName &quot;V:\\utils\\$BaseVM&quot; -TargetPath &quot;V:\\base\\&quot;&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD
+powershell -c &quot;Expand-7zip -ArchiveFileName V:\\utils\\$BaseVM.7z -TargetPath V:\\base\\&quot; | tee -a $logfile
 
 
 # Get Hyper-V VMCX file path
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse &quot;V:\\base\\&quot; -Filter &quot;*.vmcx&quot; | select -ExpandProperty FullName&apos;&quot;
-VMCX_PATH=$(ssh centos@${vmHostIP} $SSHCMD 2&gt;/dev/null | sed &apos;s/[[:cntrl:]]//g&apos;)
+VMCX_PATH=$(powershell -c &quot;Get-ChildItem -Recurse V:\\base\\ -Filter *.vmcx | select -ExpandProperty FullName&quot; | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $VMCX_PATH | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;import-vm $VMCX_PATH -Register}&apos;&quot;
-ssh centos@${vmHostIP} $SSHCMD 2&gt;/dev/null | tee -a $logfile
+powershell -c &quot;import-vm $VMCX_PATH -Register&quot; | tee -a $logfile
 
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
@@ -186,8 +181,8 @@ echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
 # find new vm IP address
-SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | Select -ExpandProperty NetworkAdapters | fl&apos;&quot;
-vmip=$(ssh centos@${vmHostIP} $SSHCMD | grep IPAddress | grep -v Dyn | gawk &apos;{print $3}&apos; | (read h; echo ${h:1:${#h}-2}))
+
+vmip=$(powershell -c &quot;Get-VM -Name *ovoc* | Select -ExpandProperty NetworkAdapters | fl&quot; | grep IPAddress | grep -v Dyn | gawk &apos;{print $3}&apos; | (read h; echo ${h:1:${#h}-2}))
 ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
 echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
 
