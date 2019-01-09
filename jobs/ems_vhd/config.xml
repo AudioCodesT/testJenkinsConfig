@@ -255,10 +255,10 @@ powershell -c &quot;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&quot;
 sleep 30
 
 ###################################################################################################
-# export the new VM
+# export the new VM and compress
 echo &quot;$(date) : export new VM&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | Export-VM -Path &quot;V:\\base\\${TAG}&quot;
-ssh root@${vmHostIP} $SSHCMD | tee -a $logfile
+powershell -c &quot;Get-VM -Name *ovoc* | Export-VM -Path V:\\base\\${TAG}&quot; | tee -a $logfile
+powershell -c &quot;Compress-7Zip -ArchiveFileName V:\\base\\${TAG}.7z -Path V:\\base\\${TAG}\ovoc-${TAG}&quot;
 
 Result=`tail -1 $logfile | grep &quot;Completed&quot;`
 [[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
