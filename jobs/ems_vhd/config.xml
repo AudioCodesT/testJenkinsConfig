@@ -167,7 +167,7 @@ echo $VMCX_PATH
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | import-vm \$_.FullName -Register&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | import-vm -Register&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 if [ $? -ne 0 ]; then
