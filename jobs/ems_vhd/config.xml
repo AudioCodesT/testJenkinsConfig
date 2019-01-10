@@ -149,7 +149,7 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Delete old remanents from hypervisor host
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 ###################################################################################################
