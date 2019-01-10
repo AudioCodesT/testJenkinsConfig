@@ -159,16 +159,13 @@ echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
-
-# Get Hyper-V VMCX file path
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
-VMCX_PATH=$((echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -) | sed &apos;s/[[:cntrl:]]//g&apos;)
-echo $VMCX_PATH
-
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | import-vm -Register&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Start-VM&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+
 
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot;
