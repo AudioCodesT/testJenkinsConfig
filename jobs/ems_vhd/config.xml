@@ -149,14 +149,14 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Delete old remanents from hypervisor host
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\*&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Get Hyper-V VMCX file path
