@@ -156,11 +156,11 @@ echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Get Hyper-V VMCX file path
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
 VMCX_PATH=$((echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -) | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $VMCX_PATH
 
@@ -258,12 +258,12 @@ sleep 30
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\HVWORKSPACE\\Exports\\${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\${TAG}.7z -Path V:\\HVWORKSPACE\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\Exports\\${TAG}.7z -Path V:\\HVWORKSPACE\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
-[[ ! -f /cygdrive/v/HVWORKSPACE/${TAG}.7z ]] &amp;&amp; exit
+[[ ! -f /cygdrive/v/HVWORKSPACE/Exports/${TAG}.7z ]] &amp;&amp; exit
 
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
