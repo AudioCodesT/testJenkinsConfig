@@ -145,7 +145,7 @@ echo &quot;$(date) : *****************  START  ******************&quot; | tee -a
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc server vm`s
-SSHCMD=&quot;powershell -c &apos;Get-VM | Where {(\$_.Name -like \&quot;*ovoc*\&quot;) | %{Stop-VM \$_.FullName} | %{Remove-VM -f \$_.FullName}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM | Where {\$_.Name -like \&quot;*ovoc*\&quot;} | %{Stop-VM \$_.FullName} | %{Remove-VM -f \$_.FullName}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Delete old remanents from hypervisor host
@@ -314,7 +314,7 @@ echo &quot;#####################################################################
 
 ###################################################################################################
 # Stop and Delete new ovoc server vm
-SSHCMD=&quot;powershell -c &apos;Get-VM | Where {(\$_.Name -like \&quot;*ovoc*\&quot;) | %{Stop-VM \$_.FullName} | %{Remove-VM -f \$_.FullName}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM | Where {\$_.Name -like \&quot;*ovoc*\&quot;} | %{Stop-VM \$_.FullName} | %{Remove-VM -f \$_.FullName}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
