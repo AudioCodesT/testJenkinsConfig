@@ -156,7 +156,7 @@ echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\*&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Get Hyper-V VMCX file path
