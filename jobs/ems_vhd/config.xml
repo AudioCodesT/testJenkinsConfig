@@ -146,7 +146,7 @@ echo &quot;$(date) : *****************  START  ******************&quot;
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc server vm`s
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;
+SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Remove-VM -f \$_}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
