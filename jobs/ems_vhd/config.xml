@@ -128,6 +128,7 @@ FullTesting=&quot;1&quot;
 vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
+vmip=&quot;10.7.10.171&quot;
 
 cd ${WORKSPACE}
 
@@ -176,11 +177,6 @@ fi
 #isUp $vmHostIP $vmid || exit
 echo &quot;$(date) : sleep 5 min.&quot;
 sleep 300
-
-# find new vm IP address
-vmip=$(powershell -c &quot;Get-VM -Name *ovoc* | Select -ExpandProperty NetworkAdapters | fl&quot; | grep IPAddress | grep -v Dyn | gawk &apos;{print $3}&apos; | (read h; echo ${h:1:${#h}-2}))
-ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; &amp;&amp; exit)
-echo &quot;$(date) : vm IP is $vmip&quot;
 
 
 ###################################################################################################
@@ -247,9 +243,9 @@ sleep 30
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM and rename with TAG
 echo &quot;$(date) : shutdown new VM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | %{stop-vm -Name \$_.FullName}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{stop-vm -Name \$_.FullName}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 sleep 30
 
