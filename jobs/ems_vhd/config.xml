@@ -138,7 +138,7 @@ logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
 touch $logfile
 
 
-echo &quot;$(date) : *****************  START  ******************&quot; | tee -a $logfile
+echo &quot;$(date) : *****************  START  ******************&quot;
 
 
 ###################################################################################################
@@ -156,33 +156,33 @@ echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 # Get Hyper-V VMCX file path
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\ -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE -Filter *.vmcx | select -ExpandProperty FullName&apos;&quot;
 VMCX_PATH=$((echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -) | sed &apos;s/[[:cntrl:]]//g&apos;)
 echo $VMCX_PATH | tee -a $logfile
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
-echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;import-vm $VMCX_PATH -Register&apos;&quot; | tee -a $logfile
+echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
+SSHCMD=&quot;powershell -c &apos;import-vm $VMCX_PATH -Register&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 if [ $? -ne 0 ]; then
-    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
+    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot;
     exit
 fi
 
 # Wait for ovoc server power on
 #isUp $vmHostIP $vmid || exit
-echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+echo &quot;$(date) : sleep 5 min.&quot;
 sleep 300
 
 # find new vm IP address
 vmip=$(powershell -c &quot;Get-VM -Name *ovoc* | Select -ExpandProperty NetworkAdapters | fl&quot; | grep IPAddress | grep -v Dyn | gawk &apos;{print $3}&apos; | (read h; echo ${h:1:${#h}-2}))
-ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
-echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
+ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; &amp;&amp; exit)
+echo &quot;$(date) : vm IP is $vmip&quot;
 
 
 ###################################################################################################
@@ -202,53 +202,53 @@ chmod 0775 *
 cd ${WORKSPACE}
 
 # Set Network
-echo &quot;$(date) : Applying DVD 3&quot; | tee -a $logfile
+echo &quot;$(date) : Applying DVD 3&quot;
 cd EMS/VersionRelease
 if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
 	# We need to pass the netmask of the EMS server
-	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; &amp;&amp; exit -1)
 else
 	# setNetwork.py for version 7.6 and later calculate netmask by itself
-	(python2.7 setNetwork.py $vmip sanity | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+	(python2.7 setNetwork.py $vmip sanity | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; &amp;&amp; exit -1)
 fi
 cd ${WORKSPACE}
 
 # ovoc server was rebooted, so -
 # Wait for ovoc server power on
 #isUp ${vmHostIP} $vmid || exit -2
-echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+echo &quot;$(date) : sleep 5 min.&quot;
 sleep 300
 
 # Sanity Install DVD-3
 cd EMS/VersionRelease
-(python2.7 SanityInstall.py ${TAG} $vmip official_iso | tee -a $logfile) || (echo &quot;$(date) : Failed sanity install&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 SanityInstall.py ${TAG} $vmip official_iso) || (echo &quot;$(date) : Failed sanity install&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;$(date) : Done applying DVD 3&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;$(date) : Done applying DVD 3&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
 
 # ovoc server was rebooted during DVD 3 installation, so -
 # Wait for ovoc server power on
 #isUp ${vmHostIP} $vmid || exit -2
-echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+echo &quot;$(date) : sleep 5 min.&quot;
 sleep 300
 
 ###################################################################################################
 # clean before export to BaseVM
-echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
+echo &quot;$(date) : ssh to clean installetion files&quot;
 cd EMS/VersionRelease
-(python2.7 cleanBeforeOva.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed cleaning installation files&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 cleanBeforeOva.py $vmip) || (echo &quot;$(date) : Failed cleaning installation files&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
 
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM and rename with TAG
-echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
+echo &quot;$(date) : shutdown new VM&quot;
 SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | %{stop-vm -Name \$_.FullName}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 SSHCMD=&quot;powershell -c &apos;Get-VM *ovoc* | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
@@ -257,60 +257,60 @@ sleep 30
 
 ###################################################################################################
 # export the new VM and compress
-echo &quot;$(date) : export new VM&quot; | tee -a $logfile
-SSHCMD=&quot;powershell -c &apos;Get-VM -Name *ovoc* | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&apos;&quot;
+echo &quot;$(date) : export new VM&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\HVWORKSPACE\\${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\${TAG}.7z -Path V:\\HVWORKSPACE\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
 [[ ! -f /cygdrive/v/HVWORKSPACE/${TAG}.7z ]] &amp;&amp; exit
 
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;$(date) : Done export new VM&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;$(date) : Done export new VM&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
 
 
 ###################################################################################################
 # Restart ovoc-server
-echo &quot;$(date) : Starting ovoc server&quot; | tee -a $logfile
+echo &quot;$(date) : Starting ovoc server&quot;
 SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 sleep 300
 
 ###################################################################################################
 # Generate and install FK
-echo &quot;$(date) : Generate FK&quot; | tee -a $logfile
+echo &quot;$(date) : Generate FK&quot;
 cd EMS/VersionRelease
-(python2.7 SanityFK.py $vmip $TAG | tee -a $logfile) || (echo &quot;$(date) : Failed FK&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 SanityFK.py $vmip $TAG) || (echo &quot;$(date) : Failed FK&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
 
 ###################################################################################################
 # Reboot &amp; Verify services on ovoc_server after FK installation
-echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot; | tee -a $logfile
+echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot;
 cd EMS/VersionRelease
-(python2.7 SanityReboot.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed reboot after FK installation&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 SanityReboot.py $vmip) || (echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
 
 ###################################################################################################
 # Run sanity tests on ovoc server
-echo &quot;$(date) : Run sanity tests on ovoc server&quot; | tee -a $logfile
+echo &quot;$(date) : Run sanity tests on ovoc server&quot;
 cd EMS/VersionRelease
 FullTesting=&quot;1&quot;
-python2.7 SanityTest.py ${TAG} $vmip $FullTesting | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
-(python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile &amp;&amp; echo &quot;$(date) : Failed reboot after FK installation&quot; | tee -a $logfile &amp;&amp; exit -1)
+python2.7 SanityTest.py ${TAG} $vmip $FullTesting &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip || \
+(python2.7 SanityCopyLogs.py $NEW_TAG $vmip &amp;&amp; echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
 
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;${date} : Done Sanity Tests&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;${date} : Done Sanity Tests&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
+echo &quot;###################################################################################################&quot;
 
 ###################################################################################################
 # Stop and Delete new ovoc server vm
@@ -319,7 +319,7 @@ echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
 
-echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
+echo &quot;$(date) : FINISH!!!&quot;
 </command>
     </hudson.tasks.Shell>
   </builders>
