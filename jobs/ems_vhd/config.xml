@@ -178,6 +178,11 @@ fi
 echo &quot;$(date) : sleep 5 min.&quot;
 sleep 300
 
+# Update ovoc server /etc/hosts file with DevOps servers
+sshpass -p &quot;acems&quot; ssh -o StrictHostKeyChecking=no acems@10.7.10.171 su - &lt;&lt; EOF
+$su_pass
+echo -e &quot;172.16.133.170\tartifactory\n172.16.143.99\ttest-artifactory\n172.16.146.146\tjenkins\n172.16.143.181\ttest-jenkins&quot; &gt;&gt; /etc/hosts
+EOF
 
 ###################################################################################################
 # Install DVD 3 on basic vovoc server
@@ -382,6 +387,16 @@ echo &quot;$(date) : FINISH!!!&quot;
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>su_pass</name>
+          <value>{AQAAABAAAAAQLg0rHurHSBy8FQslFUHrXAI/3mHiod3DExIp9eCeQmc=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${TAG}</template>
       <runAtStart>true</runAtStart>
