@@ -146,28 +146,28 @@ echo &quot;$(date) : *****************  START  ******************&quot;
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc server vm`s
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Remove-VM -f \$_}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Remove-VM -f \$_}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Delete old remanents from hypervisor host
-SSHCMD=&quot;&apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP} 
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;&apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\${TAG}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\${TAG}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
-SSHCMD=&quot;&apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Start-VM&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Start-VM&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 
 if [ $? -ne 0 ]; then
@@ -250,19 +250,19 @@ sleep 30
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM and rename with TAG
 echo &quot;$(date) : shutdown new VM&quot;
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 sleep 30
 
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot;
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\HVWORKSPACE\\Exports\\${TAG}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;&apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\Exports\\${TAG}.7z -Path V:\\HVWORKSPACE\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\HVWORKSPACE\\Exports\\${TAG}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\Exports\\${TAG}.7z -Path V:\\HVWORKSPACE\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 [[ ! -f /cygdrive/v/HVWORKSPACE/Exports/${TAG}.7z ]] &amp;&amp; exit
 
@@ -278,8 +278,8 @@ echo &quot;#####################################################################
 ###################################################################################################
 # Restart ovoc-server
 echo &quot;$(date) : Starting ovoc server&quot;
-SSHCMD=&quot;&apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 sleep 300
 
 ###################################################################################################
@@ -315,10 +315,10 @@ echo &quot;#####################################################################
 
 ###################################################################################################
 # Stop and Delete new ovoc server vm
-SSHCMD=&quot;&apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM | Remove-VM -f&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
-SSHCMD=&quot;&apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} powershell -c -
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM | Remove-VM -f&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
