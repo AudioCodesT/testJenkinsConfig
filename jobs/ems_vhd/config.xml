@@ -264,7 +264,7 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Exports\\${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
-[[ ! -f /cygdrive/v/Exports/${TAG}.7z ]] &amp;&amp; exit
+#[[ ! -f /cygdrive/v/Exports/${TAG}.7z ]] &amp;&amp; exit
 
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
