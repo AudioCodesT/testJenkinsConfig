@@ -259,9 +259,9 @@ sleep 30
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : export new VM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\HVWORKSPACE\\Exports\\${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\Exports\\${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\HVWORKSPACE\\Exports\\${TAG}.7z -Path V:\\HVWORKSPACE\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Exports\\${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 [[ ! -f /cygdrive/v/HVWORKSPACE/Exports/${TAG}.7z ]] &amp;&amp; exit
