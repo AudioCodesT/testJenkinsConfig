@@ -261,6 +261,7 @@ sleep 30
 echo &quot;$(date) : export new VM&quot;
 SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\Exports\\${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
+echo &quot;$(date) : Compress exported VM&quot;
 SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Exports\\${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
