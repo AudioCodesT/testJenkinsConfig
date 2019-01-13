@@ -315,7 +315,7 @@ echo ps=$checkPS &gt;&gt; properties.txt
                     <results>
                       <string>SUCCESS</string>
                     </results>
-                    <role>MASTER</role>
+                    <role>SLAVE</role>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.5">
                         <info>
