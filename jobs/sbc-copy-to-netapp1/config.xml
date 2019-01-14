@@ -76,8 +76,12 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/sbc/$Branch/Firmware&quot;
   
   # Remove the _ suffix in case of fix branches such as 7.2.204_jio
-  Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
-  BaseFirmware=Firmware
+  if echo $Branch | grep -q _; then
+    BaseFirmware=$Branch
+    Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
+  else
+    BaseFirmware=Firmware
+  fi
   # Feature branches should be copied to &quot;&lt;Main branch&gt; Release/Features/&lt;Sub main branch&gt;&quot;
   if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; ]]; then
     # Find parent branch of this feature branch
