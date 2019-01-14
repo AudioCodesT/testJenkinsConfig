@@ -227,7 +227,6 @@ if [ $FixNum &gt; 1 ]; then
   echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ../generated_sbc_version.properties
 fi
 
-artifactory_host=artifactory
 git submodule--helper list | cut -d&apos; &apos; -f2 | \
 while read -r sha1
 do 
