@@ -69,6 +69,7 @@
         <assignedSIDs>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
+          <sid># SBC</sid>
           <sid># R&amp;D Application Group</sid>
           <sid># R&amp;D System Software</sid>
         </assignedSIDs>
@@ -380,7 +381,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0a1ab946437bd1897</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0a1ab946437bd1897</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2019-01-14 16:14:28.99 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
