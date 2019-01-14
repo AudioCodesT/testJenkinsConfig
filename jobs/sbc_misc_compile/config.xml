@@ -53,7 +53,7 @@
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
         <propertiesContent>BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
-ARTIFACTORY_HOST=artifactory</propertiesContent>
+ARTIFACTORY=artifactory</propertiesContent>
         <secureGroovyScript plugin="script-security@1.42">
           <script></script>
           <sandbox>false</sandbox>
@@ -159,7 +159,7 @@ ARTIFACTORY_HOST=artifactory</propertiesContent>
     <hudson.tasks.Shell>
       <command>#!/bin/bash -x
 
-artifactory_host=${ARTIFACTORY_HOST}
+artifactory_host=${ARTIFACTORY}
 cd TrunkPackRam
 
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
