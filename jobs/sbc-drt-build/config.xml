@@ -163,7 +163,7 @@ if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
 else
   CHANGESNumbers=&quot;$(echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;) &quot;
   OnlySubModule=false
-  TARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+  TARGET=${NEWTAG}-$(echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;)
 fi
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
