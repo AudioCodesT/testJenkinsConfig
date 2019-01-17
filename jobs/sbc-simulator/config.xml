@@ -429,7 +429,7 @@ $change,$ps
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
             <attachmentsPattern>jest.log</attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
+            <attachBuildLog>true</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
             <contentType>project</contentType>
