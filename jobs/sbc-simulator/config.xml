@@ -423,8 +423,9 @@ $change,$ps
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
             <recipientList>shukyr, yossim</recipientList>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <subject>$PROJECT_DEFAULT_SUBJECT $GERRIT_REFSPEC</subject>
+            <body>$PROJECT_DEFAULT_CONTENT
+</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
