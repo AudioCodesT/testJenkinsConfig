@@ -310,7 +310,7 @@ echo &quot;$(date) : Run sanity tests on ovoc server&quot;
 cd EMS/VersionRelease
 FullTesting=&quot;1&quot;
 python2.7 SanityTest.py ${TAG} $vmip $FullTesting &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip || \
-(python2.7 SanityCopyLogs.py $NEW_TAG $vmip &amp;&amp; echo &quot;$(date) : Failed to copy logs&quot; &amp;&amp; exit -1)
+(python2.7 SanityCopyLogs.py ${TAG} $vmip &amp;&amp; echo &quot;$(date) : Failed to copy logs&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
 
 echo &quot;###################################################################################################&quot;
