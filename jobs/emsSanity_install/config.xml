@@ -253,6 +253,8 @@ then
 else
 	AMI_ID=ami-09fa7e24939b99be4
 fi
+#temporary until official_iso ami will be created again
+AMI_ID=ami-09fa7e24939b99be4
 
 emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 
