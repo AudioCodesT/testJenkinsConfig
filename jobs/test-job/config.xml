@@ -130,7 +130,7 @@ echo $BatchIDDD</command>
         <spec></spec>
       </downloadSpec>
       <deployPattern>**/*.zip</deployPattern>
-      <resolvePattern>TEST/jfrog-artifactory-pro-6.6.5.zip=&gt;${WORKSPACE}</resolvePattern>
+      <resolvePattern>TEST:jfrog-artifactory-pro-6.6.5.zip=&gt;${WORKSPACE}</resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
