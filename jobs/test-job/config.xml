@@ -61,10 +61,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>BatchID=1234
+      <command>mv ${WORKSPACE}/jfrog-artifactory-pro-6.6.5.zip  ${WORKSPACE}/test_file.zip
 
-echo BatchIDDD=${BatchID} &gt; properties.txt
-exit 0</command>
+#BatchID=1234
+#
+#echo BatchIDDD=${BatchID} &gt; properties.txt
+#exit</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
@@ -127,8 +129,8 @@ echo $BatchIDDD</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern></deployPattern>
-      <resolvePattern></resolvePattern>
+      <deployPattern>**/*.zip</deployPattern>
+      <resolvePattern>TEST/jfrog-artifactory-pro-6.6.5.zip</resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
