@@ -86,23 +86,24 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#############################################################################
-#############################################################################
-##### Fetching changes submitted to gerrit without waiting for a build ######
-##### This is for testing ONLY!!!!!! Remove when going to production!! ######
-#cd ${WORKSPACE}
-#git fetch
-#git branch -a
-#git branch -vv --no-color
-#git log -3
-#git checkout -f remotes/origin/7.4.3000
-#############################################################################
-#############################################################################
-#############################################################################
+      <command>##################### Fixing Sanity scripts to fit Hyper-V build ######################
+cd ${WORKSPACE}
 
-# NOTE: It is impossible to pass local vars to the powershell command inside the ssh command.
-#       The solution is to create a variable that holds the full ssh command - SSHCMD
-#       ssh centos@${vmHostIP} bash -c &quot;$SSHCMD&quot;
+sed -i &apos;s/Waiting 300/Waiting 500/g&apos; EMS/VersionRelease/SanityReboot.py
+sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/SanityReboot.py
+#######################################################################################
+
+
+#######################################################################################
+#######################################################################################
+# NOTE: It is impossible to pass local vars to the powershell command inside
+# the ssh command.
+#    The solution is to create a variable that holds the full ssh command -
+#    (When using Windows path, the back-slashes must be escaped with a back-slash
+#    SSHCMD=&quot;powershell -c &apos;Some-PScommand ${local_var} C:\\windows\\path\\${local_var}&quot;
+#    echo $SSHCMD | ssh centos@${HostIP}
+#######################################################################################
+#######################################################################################
 
 ## Get current branch
 # Get the build from the TAG
