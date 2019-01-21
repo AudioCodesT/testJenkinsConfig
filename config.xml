@@ -383,13 +383,23 @@
       <groupId>sig-e20df392</groupId>
       <pendingInstances>
         <entry>
-          <string>i-0da14e60e0177f6ff</string>
+          <string>i-03fde0450c5e6bc1d</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0da14e60e0177f6ff</id>
+            <id>i-03fde0450c5e6bc1d</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2019-01-21 12:42:01.527 UTC</createdAt>
+            <createdAt>2019-01-21 12:43:01.662 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>sir-zznig5rq</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>sir-zznig5rq</id>
+            <status>SPOT_PENDING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2019-01-21 12:43:21.714 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
@@ -1165,7 +1175,12 @@
         <string>MoveArtifactoryToLocalStorage_File</string>
         <string>MoveArtifactoryToLocalStorage_Zip</string>
         <string>sbc-collab-compile_end-web-user</string>
+        <string>sbc-simulator-2.15</string>
+        <string>SmartTAP-UpdateVI</string>
+        <string>test-email</string>
+        <string>Update-VI_emsBuild_ovoc_server_7.6</string>
         <string>UpdateVI</string>
+        <string>UpdateVI-Jira_Manually</string>
         <string>UpdateVi-old-version</string>
       </jobNames>
       <jobFilters/>
