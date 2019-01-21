@@ -249,9 +249,9 @@ netMask=&quot;24&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
 if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
 then
-	AMI_ID=ami-00aeb6d12de80041a
+	AMI_ID=ami-03b07cb67f9a8730b
 else
-	AMI_ID=ami-09fa7e24939b99be4
+	AMI_ID=ami-097a30155f82688fb
 fi
 
 emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
