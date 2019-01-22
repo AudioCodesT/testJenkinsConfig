@@ -382,7 +382,7 @@ if (variables.resolve(&quot;DEBUG_VERSION&quot;) == &quot;true&quot;) {
     manager.build.keepLog(true) // Keep this build forever
     targetArtifactory=&quot;debug/&quot; + variables.resolve(&quot;BUILD_NAME&quot;).replace(/:.*$/, &quot;&quot;) + &quot;/&quot; + manager.build.number
 }
-artifacts.appendText(&quot;&lt;a href=\&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
+artifacts.appendText(&quot;&lt;a href=\&quot;https://sbc-read:sbc-read@artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
 // For matrix build, collect artifacts from all child builds. For normal build collect from self
 if (isMatrix) {
     manager.build.exactRuns.each { run -&gt; add_artifacts(artifacts, run) }
