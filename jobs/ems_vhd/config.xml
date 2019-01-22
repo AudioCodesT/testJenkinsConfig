@@ -324,9 +324,13 @@ echo &quot;#####################################################################
 echo &quot;###################################################################################################&quot;
 
 ###################################################################################################
-# Stop and Delete new ovoc server vm
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM | Remove-VM -f&apos;&quot;
+# Stop and Delete ovoc server vm
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Remove-VM -f \$_}&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+
+# Delete old remanents from hypervisor host
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
