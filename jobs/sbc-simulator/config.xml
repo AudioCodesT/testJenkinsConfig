@@ -422,11 +422,12 @@ $change,$ps
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
+            <recipientList>$GERRIT_CHANGE_OWNER_EMAIL</recipientList>
             <subject>$PROJECT_DEFAULT_SUBJECT $GERRIT_REFSPEC</subject>
             <body>$PROJECT_DEFAULT_CONTENT
 </body>
             <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
             <attachmentsPattern>jest.log</attachmentsPattern>
             <attachBuildLog>true</attachBuildLog>
