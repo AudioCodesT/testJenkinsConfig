@@ -279,7 +279,7 @@ REPOSITORY=sbc-release</properties>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|wait for dependent artifact|UnknownHostException).*</regexpForRerun>
+      <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|wait for dependent artifact|UnknownHostException|JNLP4-connect connection).*</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>true</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
