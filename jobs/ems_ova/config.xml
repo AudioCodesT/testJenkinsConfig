@@ -110,8 +110,10 @@ if [[ ${#BLD} == 3 ]]; then
 else
 	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
 	MSD=${TAG:4:1}
-    BRANCH=&quot;${TAG:0:3}.${MSD}000&quot;
+    BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
+
+export BRANCH=$BRANCH
 
 ## Check that TAG matches OVA version
 OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
@@ -254,7 +256,7 @@ cd ${WORKSPACE}
 # Set Network
 echo &quot;$(date) : Applying DVD 3&quot; | tee -a $logfile
 cd EMS/VersionRelease
-if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3XXX&quot; ]]; then
 	# We need to pass the netmask of the EMS server
 	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
 else
@@ -440,7 +442,7 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
