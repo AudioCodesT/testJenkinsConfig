@@ -154,7 +154,7 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/exte
     <hudson.tasks.Shell>
       <command>CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed &apos;s:.*origin/::&apos;`
 cd ../..
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp
