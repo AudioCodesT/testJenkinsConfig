@@ -114,8 +114,10 @@ if [[ ${#BLD} == 3 ]]; then
 else
 	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
 	MSD=${TAG:4:1}
-    BRANCH=&quot;${TAG:0:3}.${MSD}000&quot;
+    BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
+
+export BRANCH=$BRANCH
 
 ## Check that TAG matches BaseVM version
 BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
@@ -206,13 +208,10 @@ cd ${WORKSPACE}
 # Set Network
 echo &quot;$(date) : Applying DVD 3&quot;
 cd EMS/VersionRelease
-if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then
-	# We need to pass the netmask of the EMS server
-	(python2.7 setNetwork.py $vmip $netMask $DefaultGW) || (echo &quot;$(date) : Failed network setting&quot; &amp;&amp; exit -1)
-else
-	# setNetwork.py for version 7.6 and later calculate netmask by itself
-	(python2.7 setNetwork.py $vmip sanity) || (echo &quot;$(date) : Failed network setting&quot; &amp;&amp; exit -1)
-fi
+
+# setNetwork.py for version 7.6 and later calculate netmask by itself
+(python2.7 setNetwork.py $vmip sanity) || (echo &quot;$(date) : Failed network setting&quot; &amp;&amp; exit -1)
+
 cd ${WORKSPACE}
 
 # ovoc server was rebooted, so -
@@ -352,17 +351,15 @@ echo &quot;$(date) : FINISH!!!&quot;
         <hudson.plugins.postbuildtask.TaskProperties>
           <logTexts>
             <hudson.plugins.postbuildtask.LogProperties>
-              <logText>Build was aborted</logText>
-              <operator>OR</operator>
-            </hudson.plugins.postbuildtask.LogProperties>
-            <hudson.plugins.postbuildtask.LogProperties>
-              <logText>marked build as failure</logText>
+              <logText>Done export new VM</logText>
               <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;</script>
+          <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
+SSHCMD=&quot;powershell -c &apos;Copy-Item V:\\Versions\\${TAG}.7z N:\\&apos;&quot;&#xd;
+echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -373,7 +370,7 @@ echo &quot;$(date) : FINISH!!!&quot;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
