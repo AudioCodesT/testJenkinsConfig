@@ -230,7 +230,8 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Build Virtual SBC for ${TAG} was created successfully</defaultSubject>
-      <defaultContent>https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultContent>
+      <defaultContent>${TAG} virtual SBC artifacts:
+https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
