@@ -208,11 +208,13 @@ if [ $FixNum &gt; 1 ]; then
   git log --decorate --no-color $OLDTAG..$NEWTAG &gt; ${User}_ReleaseNote.txt
   echo User=${User} &gt;&gt; ../generated_sbc_version.properties
   AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$NEWTAG | sort -u | sed s/$/\;/g`
+  # Commits in first parent should be in the commits list only
   firstParent=$(git log --oneline --first-parent --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)
   RN=&quot;&quot;
   VI=&quot;&quot;
   while read -r hash; do
     VI+=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g; s/ .*//g&apos;)
+    # Add all issues to the commit in the first parent, includes issues in all others commits
     if [[ $firstParent =~ $hash ]]; then
       subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
       RN+=---$subject::$hash::$VI
@@ -222,6 +224,7 @@ if [ $FixNum &gt; 1 ]; then
     fi
   done &lt;&lt;&lt; &quot;$(git log --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)&quot;
   
+  # Add to the last commit all issues that not in first parent
   if [ ! -z &quot;$VI&quot; ]; then RN+=&quot; $VI&quot;; fi
   
   echo GERRIT_HOST=${GERRIT_NAME} &gt;&gt; ../generated_sbc_version.properties
