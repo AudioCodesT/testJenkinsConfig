@@ -222,7 +222,7 @@ if [ $FixNum &gt; 1 ]; then
     fi
   done &lt;&lt;&lt; &quot;$(git log --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)&quot;
   
-  if [ -z $VI ]; then RN+=&quot; &quot; . $VI; fi
+  if [ ! -z &quot;$VI&quot; ]; then RN+=&quot; $VI&quot;; fi
   
   echo GERRIT_HOST=${GERRIT_NAME} &gt;&gt; ../generated_sbc_version.properties
 
