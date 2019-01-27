@@ -4,6 +4,18 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwNtJLDX00TMaP09O28pUdEPwoAt8sOHm+feApISL2fi6RYMqDJgIVnXJtjTK1PfcQ61nOg5O6m2mhKOtldK6Wcg==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>bd6fffdb-a377-4aac-a68c-e4773e19e289</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>d0ced028ec4a5b2a5b84886725b5b7785c060818fa576cd4dad9772e2e66c285</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
@@ -44,7 +56,6 @@
         <string># All Friday</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -53,7 +64,6 @@
         <string>mapper_project@audiocodes.com</string>
         <string># Gym</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -61,7 +71,6 @@
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -70,7 +79,7 @@
         <string># All Airport City</string>
         <string># PSTN</string>
       </roles>
-      <timestamp>1541596325553</timestamp>
+      <timestamp>1548594121363</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Gary.Dickman@audiocodes.com</emailAddress>
