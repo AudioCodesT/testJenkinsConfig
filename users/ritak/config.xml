@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwoWcZO23ppynN+6TmHHMy+3JfukA5AYgdfFfbVGWSax1FaKB1WopKlQIhBPk3GyXyJweuH8LMpddS6W1Py8/QOw==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>04667b30-fe91-40db-846d-3b3fcb56fb8b</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>d98c292427a554b7b3b37c591c2bb428264a21556ad2ef8092507fdb3ffcf2c7</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -39,14 +51,12 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -55,7 +65,6 @@
         <string>Linuxusers</string>
         <string>cc_api</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -65,7 +74,7 @@
         <string># All Airport City</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1534263371683</timestamp>
+      <timestamp>1548582362064</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Rita.Kaplinsky@audiocodes.com</emailAddress>
