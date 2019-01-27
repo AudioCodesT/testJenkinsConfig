@@ -208,12 +208,22 @@ if [ $FixNum &gt; 1 ]; then
   git log --decorate --no-color $OLDTAG..$NEWTAG &gt; ${User}_ReleaseNote.txt
   echo User=${User} &gt;&gt; ../generated_sbc_version.properties
   AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$NEWTAG | sort -u | sed s/$/\;/g`
+  firstParent=$(git log --oneline --first-parent --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)
   RN=&quot;&quot;
-  while read -r hash; do 
-    subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
-    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g; s/ .*//g&apos;)
-    RN+=---$subject::$hash::$VI
+  VI=&quot;&quot;
+  while read -r hash; do
+    VI+=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g; s/ .*//g&apos;)
+    if [[ $firstParent =~ $hash ]]; then
+      subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+      RN+=---$subject::$hash::$VI
+      VI=&quot;&quot;
+    else
+      VI+=&quot; &quot;
+    fi
   done &lt;&lt;&lt; &quot;$(git log --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)&quot;
+  
+  if [ -z $VI ]; then RN+=&quot; &quot; . $VI; fi
+  
   echo GERRIT_HOST=${GERRIT_NAME} &gt;&gt; ../generated_sbc_version.properties
 
   #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$NEWTAG | sed s/\&quot;/\&apos;/g`
