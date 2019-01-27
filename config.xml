@@ -2,6 +2,7 @@
 <hudson>
   <disabledAdministrativeMonitors>
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
+    <string>jenkins.security.csrf.CSRFAdministrativeMonitor</string>
   </disabledAdministrativeMonitors>
   <version>2.138.3</version>
   <installStateName>RESTART</installStateName>
@@ -380,28 +381,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>sir-zznig5rq</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>sir-zznig5rq</id>
-            <status>SPOT_PENDING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2019-01-21 12:43:21.714 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-03fde0450c5e6bc1d</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-03fde0450c5e6bc1d</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2019-01-21 12:43:01.662 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
