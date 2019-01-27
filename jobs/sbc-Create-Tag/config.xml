@@ -135,7 +135,7 @@ git fetch
 git fetch origin +refs/notes/review:refs/notes/review
 
 # Check every branch if they are a new commit after the last created TAG
-for GERRIT_BRANCH in 7.2.202 7.2.162 7.2.204 7.2.204_chrome 7.2.250 7.2.250_MSBR 7.2.252 NextGenCPE \
+for GERRIT_BRANCH in 7.2.202 7.2.162 7.2.204 7.2.250 7.2.250_MSBR 7.2.252 NextGenCPE \
   $(git branch --list -a */feature/* | sed &apos;s:.*/origin/::&apos;)
 do
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
