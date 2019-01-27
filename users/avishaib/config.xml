@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwe4XcySF+t9it2OVSUk1qm7x3eHznWcKpN2UXlQ+vCmw+PtBBIP8GjZ2jz7ll1t6axg/5Ub7GlGsznuNW7Uj5rg==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>3f90d242-026e-4c51-965e-3401def2f3d8</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>2a85f246b7184b0d9625d1d68fdb2c2ea0acf0735cce48c8cf483806979c0e2d</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -36,7 +48,6 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Allow Office365 Groups</string>
-        <string># ClearCase R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
@@ -50,7 +61,6 @@
         <string># SBC Infra App</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>NewUser_Israel-Lod</string>
@@ -59,7 +69,7 @@
         <string># All Airport City</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1535292597927</timestamp>
+      <timestamp>1548591054249</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Avishai.Brandeis@audiocodes.com</emailAddress>
