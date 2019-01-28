@@ -213,7 +213,7 @@ if [ $FixNum &gt; 1 ]; then
   RN=&quot;&quot;
   VI=&quot;&quot;
   while read -r hash; do
-    VI+=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g; s/ .*//g&apos;)
+    VI+=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g&apos;)
     # Add all issues to the commit in the first parent, includes issues in all others commits
     if [[ $firstParent =~ $hash ]]; then
       subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
