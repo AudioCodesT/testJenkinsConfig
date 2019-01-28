@@ -230,6 +230,7 @@ sleep 300
 cd EMS/VersionRelease
 (python2.7 SanityInstall.py ${TAG} $vmip official_iso) || (echo &quot;$(date) : Failed sanity install&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
+echo &quot;$(date) : Sleep 30&quot;
 sleep 30
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
@@ -257,6 +258,7 @@ EOF
 cd EMS/VersionRelease
 (python2.7 cleanBeforeOva.py $vmip) || (echo &quot;$(date) : Failed cleaning installation files&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
+echo &quot;$(date) : Sleep 30&quot;
 sleep 30
 
 ###################################################################################################
@@ -266,6 +268,7 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM&a
 echo $SSHCMD | ssh centos@${vmHostIP}
 SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
+echo &quot;$(date) : Sleep 30&quot;
 sleep 30
 
 ###################################################################################################
@@ -300,6 +303,7 @@ echo &quot;#####################################################################
 echo &quot;$(date) : Starting ovoc server&quot;
 SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
+echo &quot;$(date) : Sleep 300&quot;
 sleep 300
 
 ###################################################################################################
@@ -315,6 +319,7 @@ echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK instal
 cd EMS/VersionRelease
 (python2.7 SanityReboot.py $vmip) || (echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
+echo &quot;$(date) : Sleep 300&quot;
 sleep 300
 
 ###################################################################################################
