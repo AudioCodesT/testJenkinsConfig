@@ -315,6 +315,7 @@ echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK instal
 cd EMS/VersionRelease
 (python2.7 SanityReboot.py $vmip) || (echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
 cd ${WORKSPACE}
+sleep 300
 
 ###################################################################################################
 # Run sanity tests on ovoc server
