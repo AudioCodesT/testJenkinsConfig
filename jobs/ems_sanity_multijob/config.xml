@@ -228,7 +228,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <enableRetryStrategy>false</enableRetryStrategy>
           <enableCondition>true</enableCondition>
           <abortAllJob>true</abortAllJob>
-          <condition>&quot;${BRANCH}&quot;.startsWith(&quot;7.6&quot;)</condition>
+          <condition>&quot;${BRANCH}&quot;.equalsIgnoreCase(&quot;7.6&quot;) || &quot;${BRANCH}&quot;.equalsIgnoreCase(&quot;7.6.1000&quot;)</condition>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.6</properties>
