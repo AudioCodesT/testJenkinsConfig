@@ -125,7 +125,7 @@ update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;
 cd /d %WORKSPACE%&#xd;
 echo SendTo=yossim &gt; SendTo.txt&#xd;
 &#xd;
-ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
+ECHO.%PROJECT%| FIND /I &quot;GW1App&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Benny.Lavi, cc:amos.bublil, cc:ilan.avner, cc:Tova.Shoham &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
