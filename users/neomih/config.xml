@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw2dQmEieLSotXS7X8/EYKyqi9QdbQj2w4bQf+KwvZT2mRXsM/0aKs0ys6r/wPz2lR93J4L55gvxDXhsSTNTPh4Q==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>86f7aec7-3e30-46cc-b27c-7127e4c16cb3</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>dc8021be13a9663bfacea98b1b2b71e81b5b0e5fc25fc2717a330735765042a4</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -40,7 +52,6 @@
         <string>ActionBase Users</string>
         <string>Citrix_Allow_Visio</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -48,7 +59,6 @@
         <string>Logistics_maintenance</string>
         <string># Gym</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -57,14 +67,13 @@
         <string># SBC Infra App</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1535377986664</timestamp>
+      <timestamp>1548746995529</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Neomi.Hiddai@audiocodes.com</emailAddress>
