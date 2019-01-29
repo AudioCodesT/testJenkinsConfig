@@ -168,8 +168,8 @@ function CheckFolder() {
       if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]
       then 
       	#check if the 2 next folders is older too before break
-      	((countExtraFolderCheck+=1)
-        if [[ &quot;$countExtraFolderCheck&quot; == &quot;3&quot; ]]
+      	countExtraFolderCheck=$countExtraFolderCheck+1
+        if [[ $countExtraFolderCheck == 3 ]]
         then
         	echo ---------- Probably all next folder are not older... break from this folder check ------------
         	countExtraFolderCheck=0
