@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwC23E4elyhstnxNjEDVFIz1cJFzfwEbmMDfdgnADbm2EYcsLK51Z7sA8NscqRTe7Zx2ICZBMoT1vhRbAcox7z0A==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>0f3f4f65-6c56-420f-8dd3-23174cc2dfbf</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>2316426d685c39b23076393c0ac03b3d8ef5f0a571519033d54a292ac9952ce2</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -37,12 +49,10 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
-        <string># ClearCase R&amp;D</string>
         <string>Travel EMEA</string>
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
         <string>Password Manager Apply</string>
-        <string># All NUERA_UK</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -53,14 +63,13 @@
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1534857423906</timestamp>
+      <timestamp>1548780758372</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amrita.Garg@audiocodes.com</emailAddress>
