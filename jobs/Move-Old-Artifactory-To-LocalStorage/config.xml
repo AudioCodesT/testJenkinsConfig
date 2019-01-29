@@ -165,10 +165,11 @@ function CheckFolder() {
       CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
       moveDone=$?
       echo Deep: $deep *******
-      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]; then 
+      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]
+      then 
       	#check if the 2 next folders is older too before break
       	((countExtraFolderCheck+=1)
-        if [[ $countExtraFolderCheck == 3 ]]
+        if [[ &quot;$countExtraFolderCheck&quot; == &quot;3&quot; ]]
         then
         	echo ---------- Probably all next folder are not older... break from this folder check ------------
         	countExtraFolderCheck=0
