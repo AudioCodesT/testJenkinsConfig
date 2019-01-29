@@ -288,7 +288,8 @@ SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OV
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Calculate md5&quot;
-ssh centos@${vmHostIP} md5sum /cygdrive/v/Versions/OVOC_HyperV_${TAG}.7z &gt; 
+SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV_${TAG}.7z &gt; V:\\Versions\\OVOC_HyperV_${TAG}.md5&apos;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit
 
