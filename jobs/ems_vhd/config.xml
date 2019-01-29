@@ -287,6 +287,9 @@ echo &quot;$(date) : Compress exported VM&quot;
 SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
+echo &quot;$(date) : Calculate md5&quot;
+ssh centos@${vmHostIP} md5sum /cygdrive/v/Versions/OVOC_HyperV_${TAG}.7z &gt; 
+
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit
 
 echo &quot;###################################################################################################&quot;
@@ -387,7 +390,7 @@ echo &quot;$(date) : FINISH!!!&quot;
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
-SSHCMD=&quot;powershell -c &apos;Copy-Item V:\\Versions\\OVOC_HyperV_${TAG}.7z N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5-Virtual\\${TAG}\\&apos;&quot;&#xd;
+SSHCMD=&quot;powershell -c &apos;Copy-Item V:\\Versions\\OVOC_HyperV_${TAG}.* N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5-Virtual\\${TAG}\\&apos;&quot;&#xd;
 echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
