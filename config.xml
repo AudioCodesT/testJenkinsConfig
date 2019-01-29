@@ -73,6 +73,7 @@
           <sid># SBC</sid>
           <sid># R&amp;D Application Group</sid>
           <sid># R&amp;D System Software</sid>
+          <sid>John Vituli</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
