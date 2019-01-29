@@ -156,7 +156,6 @@ function CheckFolder() {
     ((deep-=1))
     return 1
   else
-  	countExtraFolderCheck=0
     echo $Folder is not old - check its sub folders
     $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
     do
@@ -168,12 +167,13 @@ function CheckFolder() {
       if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]
       then 
       	#check if the 2 next folders is older too before break
-      	countExtraFolderCheck=$countExtraFolderCheck+1
-        if [[ $countExtraFolderCheck -gt 3 ]]
-        then
-        	echo ---------- Probably all next folder are not older... break from this folder check ------------
-            break
-        fi
+      	#countExtraFolderCheck=$countExtraFolderCheck+1
+        echo ---------- Probably all next folder are not older... break from this folder check ------------
+        break
+#        if [[ $countExtraFolderCheck -gt 3 ]]
+#        then
+
+#        fi
       fi
     done
     ((deep-=1))
@@ -181,7 +181,7 @@ function CheckFolder() {
   fi
 }
 
-
+countExtraFolderCheck=0
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 deep=2
 
