@@ -69,7 +69,6 @@
         </permissions>
         <assignedSIDs>
           <sid>System_Software</sid>
-          <sid>johnv</sid>
           <sid>cc_sys_users</sid>
           <sid># SBC</sid>
           <sid># R&amp;D Application Group</sid>
