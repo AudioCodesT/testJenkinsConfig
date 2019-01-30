@@ -167,13 +167,13 @@ function CheckFolder() {
       if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]
       then 
       	#check if the 2 next folders is older too before break
-      	#countExtraFolderCheck=$countExtraFolderCheck+1
-        echo ---------- Probably all next folder are not older... break from this folder check ------------
-        break
-#        if [[ $countExtraFolderCheck -gt 3 ]]
-#        then
-
-#        fi
+      	countExtraFolderCheck[$deep]=${countExtraFolderCheck[$deep]}+1
+        if [[ $countExtraFolderCheck -gt 3 ]]
+        then
+        	echo ---------- Probably all next folder are not older... break from this folder check ------------
+            countExtraFolderCheck[$deep]=0
+        	break
+        fi
       fi
     done
     ((deep-=1))
@@ -181,7 +181,7 @@ function CheckFolder() {
   fi
 }
 
-countExtraFolderCheck=0
+countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 deep=2
 
