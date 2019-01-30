@@ -391,7 +391,7 @@ echo &quot;$(date) : FINISH!!!&quot;
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
-SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; Copy-Item V:\\Versions\\ -Recurse -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5-Virtual\\${TAG}\\&apos;&quot;&#xd;
+SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; Copy-Item V:\\Versions\\ -Recurse -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\&apos;&quot;&#xd;
 echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
