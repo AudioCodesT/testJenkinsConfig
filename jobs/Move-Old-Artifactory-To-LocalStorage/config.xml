@@ -169,7 +169,7 @@ function CheckFolder() {
       	#check if the 2 next folders is older too before break
       	((countExtraFolderCheck[$deep]+=1))
         echo counter: ${countExtraFolderCheck[$deep]} ******
-        if [[ $countExtraFolderCheck -gt 3 ]]
+        if [[ ${countExtraFolderCheck[$deep]} -gt 3 ]]
         then
         	echo ---------- Probably all next folder are not older... break from this folder check ------------
             countExtraFolderCheck[$deep]=0
