@@ -276,7 +276,7 @@ sleep 30
 echo &quot;$(date) : Verify no version ${TAG} exists&quot;
 SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\OVOC_HyperV_${TAG}.7z) {Remove-Item V:\\Versions\\OVOC_HyperV_${TAG}.7z}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z) {Remove-Item V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : export new VM&quot;
@@ -284,11 +284,11 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Compress exported VM&quot;
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Calculate md5&quot;
-SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV_${TAG}.md5&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.md5&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit
@@ -391,7 +391,7 @@ echo &quot;$(date) : FINISH!!!&quot;
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
-SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; Copy-Item V:\\Versions\\ -Recurse -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\&apos;&quot;&#xd;
+SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; Copy-Item V:\\Versions\\Hyper-V -Recurse -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\&apos;&quot;&#xd;
 echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
