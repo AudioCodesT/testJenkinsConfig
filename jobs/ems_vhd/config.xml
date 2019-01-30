@@ -409,7 +409,9 @@ echo $SSHCMD | ssh centos@${vmHostIP}</script>
 
 $RESULT</defaultContent>
       <attachmentsPattern></attachmentsPattern>
-      <presendScript>cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log.txt
+      <presendScript>$DEFAULT_PRESEND_SCRIPT
+
+cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log.txt
 RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
