@@ -4,6 +4,18 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwVH5fkY9FW0CdcZ5iWuwpPLFLOKcJPd0S3M0ir/XN55TZS1DmQGOl70AVs7n7olLGptDJ3wMNthMwqG6CJSHtOQ==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>c14f6853-dcee-4241-87db-9b824009b6d3</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>dcc9ce28fa4e750639f6c4072797f95eed00c6d89c314f763caa63590faa765a</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
@@ -49,7 +61,6 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -69,7 +80,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1541399216654</timestamp>
+      <timestamp>1548880280225</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Doron.Nimrod@audiocodes.com</emailAddress>
