@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwRusOwQ6Gs2JGXBTSu8PTMy0TORnfoim7YlSaNKtXIcPpHI29PdEOo/8D4L+BrM6q/5h3gpNKPaaoL0/OJqrHiw==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>d4abeb6a-8ade-48bd-ac6b-30735b3f2af9</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>eba4ae08b1089e8e3da638c8fcb82abb6d3f05d0eaabc6f0640cf5250dd9eb51</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -47,7 +59,6 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string>Sp365-rdnetworking-modify</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -58,7 +69,6 @@
         <string># SQA_CORE</string>
         <string>QA Group</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -66,14 +76,13 @@
         <string>Linuxusers</string>
         <string># MSBR</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1539166402277</timestamp>
+      <timestamp>1548933982579</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
