@@ -147,7 +147,10 @@ echo &quot;$(date) : *****************  START  ******************&quot;
 echo
 echo
 echo &quot;$(date) : Check if this version exists on NetApp&quot;
-[[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/Hyper-V/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit -1
+if [[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/Hyper-V/OVOC_HyperV_${TAG}.7z ]]; then
+	echo &quot;$(date) : Archived Hyper-V VM already exists on NetApp&quot;
+    exit -1
+fi
 
 ###################################################################################################
 # Check &amp; delete old ovoc servers
