@@ -147,7 +147,7 @@ echo &quot;$(date) : *****************  START  ******************&quot;
 echo
 echo
 echo &quot;$(date) : Check if this version exists on NetApp&quot;
-[[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit -1
+[[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/Hyper-V/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit -1
 
 ###################################################################################################
 # Check &amp; delete old ovoc servers
