@@ -147,7 +147,7 @@ echo &quot;$(date) : *****************  START  ******************&quot;
 echo
 echo
 echo &quot;$(date) : Check if this version exists on NetApp&quot;
-if [[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/Hyper-V/OVOC_HyperV_${TAG}.7z ]]; then
+if [[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/OVOC_HyperV_${TAG}.7z ]]; then
 	echo &quot;$(date) : Archived Hyper-V VM already exists on NetApp&quot;
     exit -1
 fi
@@ -279,7 +279,7 @@ sleep 30
 echo &quot;$(date) : Verify no version ${TAG} exists&quot;
 SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z) {Remove-Item V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\OVOC_HyperV_${TAG}.7z) {Remove-Item V:\\Versions\\OVOC_HyperV_${TAG}.7z}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : export new VM&quot;
@@ -287,11 +287,11 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Compress exported VM&quot;
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Calculate md5&quot;
-SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\Hyper-V\\OVOC_HyperV_${TAG}.md5&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV_${TAG}.md5&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit
@@ -394,16 +394,11 @@ echo &quot;$(date) : FINISH!!!&quot;
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
-SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; Copy-Item V:\\Versions\\Hyper-V -Recurse -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\&apos;&quot;&#xd;
+SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; Copy-Item V:\\Versions\\OVOC_HyperV_${TAG}.7z  V:\\Versions\\OVOC_HyperV_${TAG}.md5 -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\&apos;&quot;&#xd;
 echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipientList>
       <contentType>default</contentType>
@@ -421,7 +416,7 @@ RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
