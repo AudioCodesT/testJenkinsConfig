@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwHhSJNY6lGperCQJO886OGUDpAVKk7UdbYJnKA1h8ykuP5g21T/pWseox0Adwzke8+C32d1YtTsQlv/q9s5+OQQ==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>025acff1-e1ff-4f33-b018-4e3d4a391477</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>ea13593f89da5da67bc17d2cf2cd7eb2bc475b0061d819e9c40e8a11567d97d8</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -54,11 +66,10 @@
         <string># All Beer Sheva</string>
         <string># SQA_CORE</string>
         <string>QA Group</string>
-        <string># MP20x deliveries</string>
         <string># QA MSBR</string>
+        <string># MP20x deliveries</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -74,7 +85,7 @@
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
       </roles>
-      <timestamp>1536082385448</timestamp>
+      <timestamp>1548915388636</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
       <providerId>default</providerId>
