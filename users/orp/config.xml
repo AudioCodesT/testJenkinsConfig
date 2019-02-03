@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw4hoEwZn1U1uoTlUv2R1eoKFI4X818w0qhFrWTinPuN9Udvh7HBuXOUv+asMepLPF7weR7P0XRUzMbkA/tiz2gQ==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>0726d7cf-53f9-40f1-bb22-40ef30cbed30</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>d0c4c1e4848b4ad860b3ddb4e425c0e26a4e060b92743858683cf2ac4f3ebac4</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -44,7 +56,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
-        <string>AI-ENG_RO</string>
+        <string>AI-ENG</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>AI-QA</string>
@@ -64,7 +76,7 @@
         <string>NewUser_Israel-BS</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1529318161888</timestamp>
+      <timestamp>1549195512806</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
