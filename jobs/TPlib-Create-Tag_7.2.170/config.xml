@@ -30,7 +30,7 @@
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
           <description></description>
-          <defaultValue>7.2.170</defaultValue>
+          <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
