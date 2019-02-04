@@ -92,7 +92,7 @@ PATH=/bin:$PATH</propertiesContent>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference>/home/centos/jenkinsslave/workspace/sbc-simulator/.git</reference>
         <depth>30</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -299,7 +299,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}</script>
       <runOnlyOnParent>false</runOnlyOnParent>
       <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
     </com.lookout.jenkins.EnvironmentScript>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
