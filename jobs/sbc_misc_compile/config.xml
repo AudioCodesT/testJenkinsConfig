@@ -174,7 +174,7 @@ echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 
 GERRIT_BRANCH=$(git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | sed &apos;s:.*origin/::&apos;)
 if [ $(echo $GERRIT_BRANCH | wc -w) -gt 1 ]; then
-    GERRIT_BRANCH=$(git branch --no-color --contains HEAD | grep -v detached | sed &apos;s:\*::; s: ::g&apos;)
+    GERRIT_BRANCH=$(git branch --no-color --contains HEAD | grep -v detached | head -1 | sed &apos;s:\*::; s: ::g&apos;)
 fi
 if [ -z $GERRIT_BRANCH ]; then
   echo Branch does not found, exit with error
