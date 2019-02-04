@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwhrPpfbNShBCWsni/vh7cfuyBxrre7oYlNMpYlPCXioTPYm+XQyPyrNpgw/4EFK0UlPvrci0bchGsUltINHR1vQ==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>de593700-58f1-4098-817f-8c460d78220c</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>debdcdcddb19005aaf249cc4915a3b0c12579a2b737cb15944dd1262cf88e6b6</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -42,14 +54,12 @@
         <string>ActionBase Users</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -60,7 +70,6 @@
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -70,7 +79,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1536234236233</timestamp>
+      <timestamp>1549292933623</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Ira.Kadin@audiocodes.com</emailAddress>
