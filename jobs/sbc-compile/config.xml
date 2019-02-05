@@ -390,5 +390,4 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWT
   <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
     <runSequentially>false</runSequentially>
   </executionStrategy>
-  <childCustomWorkspace>${SHORT_COMBINATION}</childCustomWorkspace>
 </matrix-project>
