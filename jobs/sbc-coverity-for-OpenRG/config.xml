@@ -84,7 +84,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>c:\plink\plink.exe -t yair@10.31.192.160 -pw yair USERNAME=%GERRIT_CHANGE_OWNER_NAME%;export USERNAME;cd /home/yair;./coverity-git.sh</command>
+      <command>c:\plink\plink.exe -t yair@10.31.192.160 -pw yair USERNAME=%GERRIT_CHANGE_OWNER_EMAIL%;export USERNAME;cd /home/yair;./coverity-git.sh</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
