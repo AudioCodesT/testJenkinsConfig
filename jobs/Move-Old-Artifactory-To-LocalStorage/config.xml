@@ -188,9 +188,6 @@ deep=2
 
 ARTIFACTORY=artifactory
 deep=1
-CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
-CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
-CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 1
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware &quot;7.2.150 Release/7.2.154&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.156/Firmware &quot;7.2.150 Release/7.2.156&quot;
@@ -203,7 +200,12 @@ CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.20
 CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
 
-
+# Calculate the date we are going to delete for IPPPhone (only 30 days)
+OLD=30
+oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
+CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
+CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
+CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 1
 
 </command>
     </hudson.tasks.Shell>
