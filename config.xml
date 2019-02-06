@@ -847,7 +847,6 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
-        <string>Backup AMIs</string>
         <string>CheckJira</string>
         <string>CheckVI</string>
         <string>Move-Old-Artifactory-To-LocalStorage</string>
