@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw9n9RvRCwog3kelQIncWxbRTgXx+9Zud+zfisBvkxddaI9tb1R4IpE3B+xDRLoWQYb6EB6C2G0tbFZOrTueE7/Q==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>0e3c423c-a2d1-496d-8c18-b70a6c590a3c</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>699cc4e706d6da4a56c78e8020fca2a55489f97c195081e6071fdb44fc7b982b</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -30,34 +42,32 @@
     </hudson.search.UserSearchProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string>authenticated</string>
-        <string>AWS_Jira_Users</string>
-        <string># All__Beer_Sheva</string>
-        <string>Allowed RODC Password Replication Group</string>
-        <string>Users</string>
-        <string>ActionBase Users</string>
-        <string>Citrix_Allow_Visio</string>
-        <string># SBC Infra System</string>
-        <string># ClearCase R&amp;D</string>
-        <string># R&amp;D System Software</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
+        <string>authenticated</string>
         <string># MP20x deliveries</string>
         <string>Password Manager Apply</string>
+        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
+        <string># All__Beer_Sheva</string>
+        <string>Allowed RODC Password Replication Group</string>
         <string># SBC</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
+        <string>Citrix_Allow_Visio</string>
+        <string># SBC Infra System</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1535876794784</timestamp>
+      <timestamp>1549441988532</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Ran.Greenberg@audiocodes.com</emailAddress>
