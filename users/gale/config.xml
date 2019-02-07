@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwJC/Zs4+7gHSCnsB6+fK50Uea6o5S7m7Gn7RcfjF06pEDG9Ucc12PY4RQafGw8lUnl+3YNEquwFZiTH9e28a3Sg==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>c7c53f84-7b99-4001-adc4-947eceba4e9d</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>0d99f1f15e6ac61cfe98b8aa3254f4543738e884e7ef2bf62685a390dd2b24c4</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -52,7 +64,6 @@
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -71,7 +82,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1532531063207</timestamp>
+      <timestamp>1549533807416</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Gal.Erez@audiocodes.com</emailAddress>
