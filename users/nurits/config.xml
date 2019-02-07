@@ -4,6 +4,18 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAw987Xkybi54MAAXGk9LK7cAqGNHVNKSO4/T9YFXvQGlCSLGEAJAdcFIi9iHWSlOTj63ZXmsuXii2vXGUVF76zqQ==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>39320802-382e-4309-bf82-de9e9c30bce3</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>a892bdc26084b4c059d45053559fe1b3df4b0fae9f54dfa2926fb991308bc983</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
@@ -41,7 +53,6 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D Sys SW Group Leaders</string>
         <string># R&amp;D System Software</string>
@@ -50,7 +61,6 @@
         <string>Logistics_maintenance</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -62,7 +72,6 @@
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string># Senior Forum</string>
@@ -72,7 +81,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1541341167668</timestamp>
+      <timestamp>1549555691339</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Nurit.Shenhar@audiocodes.com</emailAddress>
