@@ -246,6 +246,11 @@ cd $WORKSPACE
 
 #Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
 uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
+if [ &quot;$uri&quot; == &quot;&quot; ]; then
+  echo Need waiting to kernel package...
+  exit 2
+fi
+
 downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f MP5XXNG.kernel-headers.gz
 curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
@@ -264,9 +269,22 @@ if (( `du MP5XXNG.OpenRG.img.gz | cut -f1` &lt; 1500 )); then
   exit -1
 fi
 </command>
+      <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>Need waiting to kernel package</regexpForRerun>
+      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>600</delay>
+      </delay>
+      <maxSchedule>2</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
   <buildWrappers>
     <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
       <includes>id_rsa_gerrit</includes>
@@ -276,7 +294,7 @@ fi
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
