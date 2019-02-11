@@ -174,9 +174,9 @@ echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 
 GERRIT_BRANCH=$(git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | sed &apos;s:.*origin/::&apos;)
 if [ $(echo $GERRIT_BRANCH | wc -w) -gt 1 ]; then
-    header=$(git log -1 --oneline --decorate)
+    header=$(git log -1 --pretty=format:%d)
     if echo $header | grep -q origin/; then
-      GERRIT_BRANCH=$(echo $header | sed &apos;s:.* origin/::; s:\()\|,\).*::&apos; | head -1 | cut -d&quot; &quot; -f1)
+      GERRIT_BRANCH=$(echo $header | sed &apos;s:.* origin/::; s:\()\|,\).*::&apos; | cut -d&quot; &quot; -f1)
     else
       GERRIT_BRANCH=$(echo $GERRIT_BRANCH | cut -d&quot; &quot; -f1)
     fi
