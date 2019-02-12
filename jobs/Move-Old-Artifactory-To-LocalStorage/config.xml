@@ -106,7 +106,7 @@ function RemoveEachFolder() {
         if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;SFB&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;non_lync&quot;* ]]
         then
         	echo &quot;The project is SFB or non_lync&quot;
-        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;release&quot;* ]]
+        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;SFB/release&quot;* || &quot;${RemoveFolder}$uri&quot; != *&quot;non_lync/release&quot;* ]]
             then
             	echo &quot;The branch is not release&quot;
             	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* ]]
