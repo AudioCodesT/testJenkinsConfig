@@ -140,6 +140,7 @@ function CheckFolder() {
   local Folder=$1
   local Target=$2
   local delete_only_spesific_files=$3
+  echo &quot;delete_only_spesific_files:${delete_only_spesific_files}&quot;
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
