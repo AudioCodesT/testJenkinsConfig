@@ -86,8 +86,7 @@ function RemoveEachFolder() {
   
   local RemoveFolder=$1
   local TargetPath=$2
-  local delete_only_spesific_files=$3
-  echo &quot;delete only .csv and .img files: ${delete_only_spesific_files}&quot;
+  local copy_to_local_storage=True
   #iretate on all files from artifactory inside folder 
   $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
   do
@@ -102,6 +101,26 @@ function RemoveEachFolder() {
         then
         	echo &quot;deleting ${DESTINATION}/${TargetPath}$uri before copy him from artifactory&quot;
         	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        fi
+        #check if its from SFB or Non-lync and not from &quot;release&quot; branch then copy only .csv and .img files to local storage
+        if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;SFB&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;non_lync&quot;* ]]
+        then
+        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;release&quot;* ]]
+            then
+            	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* ]]
+                then
+                	echo &quot;download to local storage only .csv and .img files&quot;
+                else
+                	copy_to_local_storage=False
+                	echo &quot;do not download to local storage&quot;
+                fi
+            fi
+        fi
+        if [[ &quot;$copy_to_local_storage&quot; == &quot;True&quot; ]]
+        then
+        	echo &quot;can copy to local storage&quot;
+        else
+        	echo &quot;can not copy to local storage&quot;
         fi
         #copy file from artifactory to aclnas03
         echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
@@ -139,8 +158,6 @@ function CheckFolder() {
   ((deep+=1))
   local Folder=$1
   local Target=$2
-  local delete_only_spesific_files=$3
-  echo &quot;delete_only_spesific_files:${delete_only_spesific_files}&quot;
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
@@ -151,7 +168,7 @@ function CheckFolder() {
     echo ---------------------
     echo &quot;mkdir -p ${DESTINATION}/$Target&quot;
     mkdir -p &quot;${DESTINATION}/$Target&quot; || true
-    RemoveEachFolder $Folder &quot;$Target&quot; $delete_only_spesific_files
+    RemoveEachFolder $Folder &quot;$Target&quot;
     if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
@@ -210,8 +227,8 @@ countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
 deep=1
 OLD=30
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
-CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
-CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
+CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 
+CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 
 CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 
 </command>
     </hudson.tasks.Shell>
