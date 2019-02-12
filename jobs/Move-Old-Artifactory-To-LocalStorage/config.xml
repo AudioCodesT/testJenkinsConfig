@@ -105,8 +105,10 @@ function RemoveEachFolder() {
         #check if its from SFB or Non-lync and not from &quot;release&quot; branch then copy only .csv and .img files to local storage
         if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;SFB&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;non_lync&quot;* ]]
         then
+        	echo &quot;The project is SFB or non_lync&quot;
         	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;release&quot;* ]]
             then
+            	echo &quot;The branch is not release&quot;
             	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* ]]
                 then
                 	echo &quot;download to local storage only .csv and .img files&quot;
