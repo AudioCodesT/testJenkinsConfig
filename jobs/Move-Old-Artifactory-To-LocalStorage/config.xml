@@ -137,6 +137,7 @@ function CheckFolder() {
   ((deep+=1))
   local Folder=$1
   local Target=$2
+  
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
@@ -206,10 +207,9 @@ countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
 deep=1
 OLD=30
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
-CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
 CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 1
-CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 1
-
+CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 1
+CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 
 </command>
     </hudson.tasks.Shell>
   </builders>
