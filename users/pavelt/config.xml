@@ -57,6 +57,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>AI-QA_RO</string>
+        <string>Palo_Remote_desktop_access_support</string>
         <string>AI-ENG</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
@@ -79,7 +80,7 @@
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1549958340558</timestamp>
+      <timestamp>1549964497482</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
