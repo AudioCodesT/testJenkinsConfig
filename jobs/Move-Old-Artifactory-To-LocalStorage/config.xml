@@ -86,6 +86,8 @@ function RemoveEachFolder() {
   
   local RemoveFolder=$1
   local TargetPath=$2
+  local delete_only_spesific_files=$3
+  echo &quot;delete only .csv and .img files: ${delete_only_spesific_files}&quot;
   #iretate on all files from artifactory inside folder 
   $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
   do
@@ -137,7 +139,7 @@ function CheckFolder() {
   ((deep+=1))
   local Folder=$1
   local Target=$2
-  
+  local delete_only_spesific_files=$3
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
   lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
 
@@ -148,7 +150,7 @@ function CheckFolder() {
     echo ---------------------
     echo &quot;mkdir -p ${DESTINATION}/$Target&quot;
     mkdir -p &quot;${DESTINATION}/$Target&quot; || true
-    RemoveEachFolder $Folder &quot;$Target&quot;
+    RemoveEachFolder $Folder &quot;$Target&quot; $delete_only_spesific_files
     if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
