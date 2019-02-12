@@ -105,7 +105,7 @@ function RemoveEachFolder() {
         #check if its from SFB or Non-lync and not from &quot;release&quot; branch then copy only .csv and .img files to local storage
         if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;SFB&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;non_lync&quot;* ]]
         then
-        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;SFB/release&quot;* || &quot;${RemoveFolder}$uri&quot; != *&quot;non_lync/release&quot;* ]]
+        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;SFB/release&quot;* &amp;&amp; &quot;${RemoveFolder}$uri&quot; != *&quot;non_lync/release&quot;* ]]
             then
             	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* ]]
                 then
