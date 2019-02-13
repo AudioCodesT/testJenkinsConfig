@@ -114,26 +114,23 @@ function RemoveEachFolder() {
                 else
                 	copy_to_local_storage=False
                 	echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory&quot;
-          			#$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+          			$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
                 fi
             fi
         fi
         if [[ &quot;$copy_to_local_storage&quot; == &quot;True&quot; ]]
-        then
-        	echo &quot;can copy to local storage&quot;
-        else
-        	echo &quot;cannot copy to local storage&quot;
-        fi
-        #copy file from artifactory to aclnas03
-        echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
-        $curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot;
-        DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
-        if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
-          echo $ArtSize--$DestSize: $url is differ - No delete and exit......
-          exit 1
-        else
-          echo Size equel - delete from Artifactory...
-          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+        then       
+          	#copy file from artifactory to aclnas03
+      		echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
+        	$curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot;
+          	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
+          	if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
+            	echo $ArtSize--$DestSize: $url is differ - No delete and exit......
+            	exit 1
+          	else
+            	echo Size equel - delete from Artifactory...
+            	$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+           	fi
          fi
     # because there is no size = its a folder (its creating a new folder in the local storage)     
     else
