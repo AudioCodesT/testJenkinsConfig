@@ -45,6 +45,7 @@
         <string>Agile users</string>
         <string># R&amp;D HDGW SYSTEM</string>
         <string>authenticated</string>
+        <string>Palo_AWS-RND-BKP_NTWS</string>
         <string># All 012 voip</string>
         <string>TG1000</string>
         <string>AWS_Jira_Users</string>
@@ -82,10 +83,11 @@
         <string># All Airport City</string>
         <string>Sp365-DevOps-modify</string>
         <string>ARM-FC</string>
+        <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string>CI_ARM_developers</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1548749193318</timestamp>
+      <timestamp>1550053106667</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Shuky.Riechard@audiocodes.com</emailAddress>
