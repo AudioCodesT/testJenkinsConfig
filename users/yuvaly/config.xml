@@ -57,6 +57,7 @@
       <roles>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>Palo_AWS-RND-BKP_NTWS</string>
         <string>AI-Engineering</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -82,9 +83,10 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1548593918216</timestamp>
+      <timestamp>1550049617763</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
