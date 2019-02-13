@@ -113,7 +113,7 @@ function RemoveEachFolder() {
                 	echo &quot;The file is From SFB or non_lync and with .csv or .img type&quot;
                 else
                 	copy_to_local_storage=False
-                	echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory&quot;
+                	echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri...&quot;
           			$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
                 fi
             fi
