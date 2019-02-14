@@ -343,7 +343,7 @@ git jenkins-report 1
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
       <script plugin="script-security@1.42">
-        <script>artfcty_pat = ~/Deploying artifact: (.+\/)([^\/\s]+\b)/
+        <script>artfcty_pat = ~/Deploying artifact: https:\/\/(.+\/)([^\/\s]+\b)/
 
 // Adds artifacts from child build
 def add_artifacts(artifacts, build) {
@@ -351,7 +351,7 @@ def add_artifacts(artifacts, build) {
     def matches = build.logFile.text =~ artfcty_pat
     matches.each {
         if (!it[2].endsWith(&apos;.h&apos;)) // Ignore header files
-            artifacts.appendText(&quot;&lt;li&gt;&lt;a href=\&quot;${it[1]}${it[2]}\&quot;&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;&quot;, false)
+            artifacts.appendText(&quot;&lt;li&gt;&lt;a href=\&quot;https://sbc-read:sbc-read@${it[1]}${it[2]}\&quot;&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;&quot;, false)
     }
 }
 
@@ -464,7 +464,7 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
