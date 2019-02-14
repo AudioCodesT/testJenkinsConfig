@@ -52,6 +52,7 @@
         <string>Agile users</string>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>Palo_AWS-RND-BKP_NTWS</string>
         <string># All Cars</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -89,9 +90,10 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>Sp365-DevOps-modify</string>
+        <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1548939607611</timestamp>
+      <timestamp>1550151843737</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yossi.Merzbach@audiocodes.com</emailAddress>
