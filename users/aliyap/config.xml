@@ -52,6 +52,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
@@ -59,7 +60,6 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -76,7 +76,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1545836117678</timestamp>
+      <timestamp>1550403191802</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Aliya.Peretz@audiocodes.com</emailAddress>
