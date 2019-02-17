@@ -363,7 +363,7 @@ build.bat %NEWBUILD%&#xd;
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; /s&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\Installs\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
@@ -433,7 +433,7 @@ build.bat %NEWBUILD%&#xd;
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
