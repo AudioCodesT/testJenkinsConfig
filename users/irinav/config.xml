@@ -4,8 +4,20 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <apiToken>{AQAAABAAAAAwG5e1Tk5Ci0/u+t2nFf+EAQaggs8I/Xx9SyWHxNANyWj6C+ZJqVEbJyGTFUyasxd8f9P03494N5Cz+VHrwQsDfg==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>5480d560-ceeb-4485-8613-472f5a37f596</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>26220ccd5b1e08b70c3d553779baa1b99b5b0059165d14184d06087ade9429f1</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -37,12 +49,12 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Palo_Access_Aws_Azure-ssh</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
-        <string># Al Volunteers</string>
         <string># All Lunch</string>
+        <string># Al Volunteers</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
@@ -52,7 +64,6 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string># SBC OAM</string>
@@ -60,7 +71,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1538031427681</timestamp>
+      <timestamp>1550419832107</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Irina.Veisas@audiocodes.com</emailAddress>
