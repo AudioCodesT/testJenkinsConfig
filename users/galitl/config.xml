@@ -49,8 +49,11 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Palo_Access_Aws_Azure-ssh</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
         <string># All R&amp;D</string>
+        <string>Palo_Remote_desktop_access_support</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
@@ -73,7 +76,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1548703860561</timestamp>
+      <timestamp>1550404953112</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Galit.Levi@audiocodes.com</emailAddress>
