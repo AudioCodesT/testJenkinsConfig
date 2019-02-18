@@ -55,7 +55,6 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string># SBC Infra System</string>
-        <string># ClearCase R&amp;D</string>
         <string># AudioCodes Affiliate</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -70,14 +69,13 @@
         <string>Linuxusers</string>
         <string>cc_api</string>
         <string>AudioCodes_VPN</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1544652300052</timestamp>
+      <timestamp>1550468739958</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
