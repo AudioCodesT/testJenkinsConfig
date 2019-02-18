@@ -51,6 +51,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
         <string>Sp365-rdnetworking-modify</string>
         <string># All R&amp;D</string>
@@ -71,7 +72,7 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
       </roles>
-      <timestamp>1548942817436</timestamp>
+      <timestamp>1550491091279</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yaniv.Klinger@audiocodes.com</emailAddress>
