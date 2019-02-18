@@ -112,7 +112,7 @@ if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
     TAGBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
     OLDBUILD=`echo $TAGBUILD | sed &apos;{s/[^0-9]//g}&apos;`
-    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4}`
+    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
     NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
     VERSION=$MAJOR.$MINOR.$POINT
@@ -142,7 +142,7 @@ else
     POINT=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
     TAGBUILD=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
     OLDBUILD=`echo ${PARAM_TAG} | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
-    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4}`
+    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
     NEWBUILD=${OLDBUILD}   ## We re-build a tagged build,
     NEWTAG=${PARAM_TAG}    ## so we do not want to advance the build number
     VERSION=${MAJOR}.${MINOR}.${POINT}
