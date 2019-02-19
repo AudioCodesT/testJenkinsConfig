@@ -554,5 +554,5 @@ ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${TargetArtif
   <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
     <runSequentially>false</runSequentially>
   </executionStrategy>
-  <childCustomWorkspace>${SHORT_COMBINATION}</childCustomWorkspace>
+  <childCustomWorkspace>.</childCustomWorkspace>
 </matrix-project>
