@@ -217,11 +217,12 @@ CheckFolder sbc-release/com/ac/sbc/7.2.170/Firmware &quot;7.2.170 Release/7.2.17
 CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.204_4jio/Firmware &quot;7.2.200 Release/7.2.204_4jio&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmware&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7.2.250_MSBR&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware &quot;NextGenCPE Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7.2.250_MSBR&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.204_4jio/Firmware &quot;7.2.200 Release/7.2.204_4jio&quot;
+
 # Calculate the date we are going to delete for IPPPhone (only 30 days)
 
 countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
