@@ -1,0 +1,89 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <version>10</version>
+  <id>elenae</id>
+  <fullName>Elena Elkin</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAwXIEtxOe+zsVihf1OtsZS5QfCN5bD9iKfJpOFx/R1M/LTRYFWMRvlccmaIkt/SRe7o2kkKkBRXbtAcKxIVhEugw==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>9284c071-5bef-4325-b05f-68b81b605280</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>e047d44c2cb0a171e0efe8aadabdddb2fba018ebf5b7c6a36fe67d7f2201b615</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Elena.Elkin@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>authenticated</string>
+        <string># SmartTAP Dev</string>
+        <string>AWS_Jira_Users</string>
+        <string>AI-Engineering</string>
+        <string># All__Beer_Sheva</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_Remote_desktop_access_support</string>
+        <string>AI-ENG</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>AI-QA</string>
+        <string># All Beer Sheva</string>
+        <string># All WeWork</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string>AI-QMS-RO</string>
+        <string>AudioCodes_VPN</string>
+        <string># SmartTAP</string>
+        <string># SmartTap-BS</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>sp365-smarttap-modify</string>
+      </roles>
+      <timestamp>1551040401881</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <jenkins.security.seed.UserSeedProperty>
+      <seed>a38985b4b561821b</seed>
+    </jenkins.security.seed.UserSeedProperty>
+  </properties>
+</user>
