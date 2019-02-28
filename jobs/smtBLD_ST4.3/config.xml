@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>SmartTAP Build static server - run nightly for branch ST4.2</description>
+  <description>SmartTAP Build static server - run nightly for branch ST4.3</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -29,10 +29,10 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>WhatToBuild</name>
-          <description>Default build is ST4.2 branch.
+          <description>Default build is ST4.3 branch.
 To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TAG_NAME&gt; is like 3.2.1.1234T
-e.g.: refs/tags/4.2.0.9145T</description>
-          <defaultValue>*/ST4.2</defaultValue>
+e.g.: refs/tags/4.3.0.9345T</description>
+          <defaultValue>*/ST4.3</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -45,7 +45,6 @@ e.g.: refs/tags/4.2.0.9145T</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -89,7 +88,7 @@ e.g.: refs/tags/4.2.0.9145T</description>
 
 cd $WORKSPACE
 #
-[[ &quot;$WhatToBuild&quot; =~ &quot;ST4.2&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
+[[ &quot;$WhatToBuild&quot; =~ &quot;ST4.3&quot; ]] &amp;&amp; WTB=&quot;ByBranch&quot; || WTB=&quot;ByTag&quot;
 echo &quot;**************************************************************&quot;
 echo &quot;Building $WTB&quot;
 echo &quot;**************************************************************&quot;
@@ -359,7 +358,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>cd ACU\NGP\Build&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD_ST4.2\%NEWTAG%.7z C:\j\workspace\smtBLD_ST4.2\ACU\NGP\Build\Release\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD_ST4.3\%NEWTAG%.7z C:\j\workspace\smtBLD_ST4.3\ACU\NGP\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
@@ -513,7 +512,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\smtBLD_ST4.2\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
+      <deployPattern>C:\j\workspace\smtBLD_ST4.3\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
