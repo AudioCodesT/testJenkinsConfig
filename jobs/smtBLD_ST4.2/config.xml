@@ -110,8 +110,9 @@ if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
     POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-    OLDBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos; | sed &apos;{s/[^0-9]//g}&apos;`
-    SUFFIX=`echo $OLDTAG | gawk &apos;{print substr($0,length($0),1)}&apos;`
+    TAGBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
+    OLDBUILD=`echo $TAGBUILD | sed &apos;{s/[^0-9]//g}&apos;`
+    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
     NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
     VERSION=$MAJOR.$MINOR.$POINT
@@ -471,7 +472,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
