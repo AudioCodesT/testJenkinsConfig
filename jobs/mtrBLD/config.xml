@@ -98,7 +98,7 @@ if [[ &quot;$WTB&quot; == &quot;ByBranch&quot; ]]; then
     # Build HEAD
     fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
     BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
-    OLDTAG=`git describe --abbrev=0 --first-parent --tags $fullBranch`
+    OLDTAG=`git describe --abbrev=0 --tags $fullBranch`
     DATE=`date`
     
     #calculate new tag
