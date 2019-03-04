@@ -359,7 +359,8 @@ echo &quot;Running build batch with build number (%NEWBUILD%) and InstallShield 
 LaunchOneTouchEx.bat %NEWBUILD% 0</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>cd ACU\NGP\Build&#xd;
+      <command>del C:\j\workspace\smtBLD\*.7z&#xd;
+cd ACU\NGP\Build&#xd;
 &quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\smtBLD\ACU\NGP\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
