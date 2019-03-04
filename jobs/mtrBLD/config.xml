@@ -32,7 +32,7 @@
           <description>Default build is Development branch. Any valid branch can be used.
 To build a tag that was created in the past, enter &quot;refs/tags/&lt;TAG_NAME&gt;&quot; where &lt;TAG_NAME&gt; is like 3.2.1.1234T
 </description>
-          <defaultValue>*/collab/Sprint11</defaultValue>
+          <defaultValue>*/Sprint/12</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
