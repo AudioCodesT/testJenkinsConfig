@@ -52,7 +52,58 @@
       <seed>a6eca966a2559dd6</seed>
     </jenkins.security.seed.UserSeedProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string>TECHSUPPORTSAMBA</string>
+        <string># SmartTAP Dev</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>BACKPRINTGROUP</string>
+        <string>BBL.ENGINEERING</string>
+        <string>AI-TECHSUPP</string>
+        <string>AI-LOGIXALL</string>
+        <string># AUDC - NJ office</string>
+        <string># ACPortal - Finance_USA</string>
+        <string>AI-SmartLock</string>
+        <string>NewUser_USA-NewJersey</string>
+        <string>AI-ENG</string>
+        <string># AUDC - HR - All USA</string>
+        <string>Password Manager Apply</string>
+        <string>MUSIC Telecom SDevel</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
+        <string># SmartTAP</string>
+        <string># Oracle USA</string>
+        <string>Software Configuration Management</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Agile users</string>
+        <string>AWS_Jira_Users</string>
+        <string>RDP-AISMARKLOCK</string>
+        <string>AI-Engineering</string>
+        <string>BBL.Quality</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>AI-Tech Support</string>
+        <string>CatalogApps_Everyone</string>
+        <string>AI-QA</string>
+        <string>allusers</string>
+        <string># All ACI - USA</string>
+        <string># Oracle</string>
+        <string>AI-OPT</string>
+        <string>FTP_default</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string>AI-SmartTAP_Log</string>
+        <string># ACPortal - HR USA</string>
+        <string>AI-QMS-RO</string>
+        <string># MeetingRecorderAdmins</string>
+        <string># AUDC - SmartWORKS</string>
+        <string>Domain Users</string>
+        <string># Audiocodes USA-Development</string>
+        <string>AI-ClearCase</string>
+        <string>sp365-smarttap-modify</string>
+      </roles>
+      <timestamp>1551806822928</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
