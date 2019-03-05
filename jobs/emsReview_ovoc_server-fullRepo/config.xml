@@ -47,7 +47,7 @@ java --&gt; pmd, findbugs&#xd;
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>7.6.1000</name>
+        <name>7.6.2000</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
