@@ -487,7 +487,7 @@ build.bat %NEWBUILD%&#xd;
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEWTAG}.7z=&gt;MeetingRecorder/${VERNUM}/</deployPattern>
+      <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEWTAG}.7z=&gt;MeetingRecorder/${GERRIT_BRANCH}/${VERNUM}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
