@@ -166,7 +166,7 @@ fi
 
 echo NEWBUILD=${NEWBUILD} &gt; release.prop
 echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
-echo GERRIT_BRANCH=${BRANCH} &gt;&gt; release.prop
+echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; release.prop
 echo VERNUM=${VERNUM} &gt;&gt; release.prop
 echo RN=${RN} &gt;&gt; release.prop
 echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.prop
