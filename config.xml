@@ -1184,6 +1184,10 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>mtr-CodeAnalysis</string>
+        <string>mtr-CodeAnalysis-FullRepo</string>
+        <string>mtrBLD</string>
+        <string>mtrCRV</string>
       </jobNames>
       <jobFilters/>
       <columns>
