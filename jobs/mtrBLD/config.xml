@@ -120,18 +120,19 @@ cd $WORKSPACE
 #
 
 # we build only if jenkins checked out on the last commit in branch, else exit 0
-LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
+LastGerritCommitHash=$( git ls-remote  | grep refs/heads/${GERRIT_BRANCH}  | cut -f 1 | head -n 1 )
 echo $LastGerritCommitHash
-echo $GERRIT_PATCHSET_REVISION
+echo ${GERRIT_PATCHSET_REVISION}
 if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]; then
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
     exit 0
 fi
 
 # Build HEAD
-fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
-BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
-OLDTAG=`git describe --abbrev=0 --tags $fullBranch`
+#fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
+#BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
+BRANCH=${GERRIT_BRANCH}
+OLDTAG=`git describe --abbrev=0 --tags ${GERRIT_BRANCH}`
 DATE=`date`
 
 #calculate new tag
@@ -152,7 +153,7 @@ NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
 VERNUM=$MAJOR.$MINOR.$POINT
 
 # Need these details for the UpdateVI job
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
 #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$fullBranch | sed s/\&quot;/\&apos;/g`
 #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$fullBranch | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
 RN=&quot;&quot;
@@ -160,9 +161,9 @@ while read -r hash; do
     subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
     VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/^Issue: //g; s/[^0-9] .*//g&apos;)
     RN+=---$subject::$hash::$VI
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$fullBranch)&quot;
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..${GERRIT_BRANCH})&quot;
 
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..${GERRIT_BRANCH} | sort -u`
 GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
 
 # Prepare job`s envirinment variables
