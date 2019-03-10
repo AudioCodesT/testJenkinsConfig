@@ -123,47 +123,49 @@ cd $WORKSPACE
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 echo $LastGerritCommitHash
 echo $GERRIT_PATCHSET_REVISION
-if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]; then
-    # Build HEAD
-    fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
-    BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
-    OLDTAG=`git describe --abbrev=0 --tags $fullBranch`
-    DATE=`date`
-    
-    #calculate new tag
-    # Tag structure is X.X.X.XXXXY
-    # where X is a digit Y is a letter
-    # If vesion number is to be handled by Jenkins,
-    # parse it from OLDTAG here.
-    #
-    # Define new build number
-    MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
-    MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
-    POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-    TAGBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
-    OLDBUILD=`echo $TAGBUILD | sed &apos;{s/[^0-9]//g}&apos;`
-    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
-    NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
-    NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
-    VERNUM=$MAJOR.$MINOR.$POINT
-    
-    # Need these details for the UpdateVI job
-    AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
-    #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$fullBranch | sed s/\&quot;/\&apos;/g`
-    #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$fullBranch | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
-    RN=&quot;&quot;
-    while read -r hash; do 
-        subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
-        VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/^Issue: //g; s/[^0-9] .*//g&apos;)
-        RN+=---$subject::$hash::$VI
-    done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$fullBranch)&quot;
-    
-    EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
-    GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
-else
+if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]; then
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
+    exit 0
 fi
 
+# Build HEAD
+fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
+BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
+OLDTAG=`git describe --abbrev=0 --tags $fullBranch`
+DATE=`date`
+
+#calculate new tag
+# Tag structure is X.X.X.XXXXY
+# where X is a digit Y is a letter
+# If vesion number is to be handled by Jenkins,
+# parse it from OLDTAG here.
+#
+# Define new build number
+MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
+MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
+POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
+TAGBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
+OLDBUILD=`echo $TAGBUILD | sed &apos;{s/[^0-9]//g}&apos;`
+SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
+NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
+NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
+VERNUM=$MAJOR.$MINOR.$POINT
+
+# Need these details for the UpdateVI job
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$fullBranch | grep -v Jenkins | sort -u | sed s/$/\;/g`
+#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$fullBranch | sed s/\&quot;/\&apos;/g`
+#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$fullBranch | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
+RN=&quot;&quot;
+while read -r hash; do 
+    subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/^Issue: //g; s/[^0-9] .*//g&apos;)
+    RN+=---$subject::$hash::$VI
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$fullBranch)&quot;
+
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$fullBranch | sort -u`
+GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
+
+# Prepare job`s envirinment variables
 echo NEWBUILD=${NEWBUILD} &gt; release.prop
 echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; release.prop
