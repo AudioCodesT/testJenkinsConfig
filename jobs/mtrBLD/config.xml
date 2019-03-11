@@ -132,7 +132,7 @@ fi
 #fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
 #BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
 BRANCH=${GERRIT_BRANCH}
-OLDTAG=`git describe --abbrev=0 --tags --first-father ${GERRIT_BRANCH}`
+OLDTAG=`git describe --abbrev=0 --tags --first-parent ${GERRIT_BRANCH}`
 DATE=`date`
 
 #calculate new tag
