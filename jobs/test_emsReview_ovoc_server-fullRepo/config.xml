@@ -104,7 +104,6 @@ cd ${WORKSPACE}
 
 ## Run FindBugs on entire repository java files
 /opt/findbugs/bin/findbugs -textui -medium -xml -output findbugs.xml \
-${WORKSPACE}/clm/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/EMS/target/*-SNAPSHOT.jar \
