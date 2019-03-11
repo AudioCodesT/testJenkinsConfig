@@ -76,6 +76,17 @@ java --&gt; pmd, findbugs&#xd;
   </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
+    <hudson.tasks.Maven>
+      <targets>clean install -U</targets>
+      <mavenName>maven-for-ems</mavenName>
+      <pom>pom.xml</pom>
+      <usePrivateRepository>false</usePrivateRepository>
+      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@2.18">
+        <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
+      </settings>
+      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+      <injectBuildVariables>false</injectBuildVariables>
+    </hudson.tasks.Maven>
     <hudson.tasks.Shell>
       <command>## Run pmd on entire repository java files
 cat &lt;&lt;-EOF &gt; ~/.netrc
@@ -100,8 +111,12 @@ cd ${WORKSPACE}
 
 
 ## Run FindBugs on entire repository java files
-/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
-</command>
+/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .\
+-auxclasspath ${WORKSPACE}/EMS/target/*-SNAPSHOT.jar\
+-auxclasspath ${WORKSPACE}/common/target/*-SNAPSHOT.jar\
+-auxclasspath ${WORKSPACE}/database/target/*-SNAPSHOT.jar\
+-auxclasspath ${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar\
+-auxclasspath ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar\</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -176,6 +191,15 @@ cd ${WORKSPACE}
     </hudson.plugins.findbugs.FindBugsPublisher>
   </publishers>
   <buildWrappers>
+    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@2.18">
+      <managedFiles>
+        <org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
+          <fileId>d857ddc2-8a40-475d-9641-da74b243c754</fileId>
+          <targetLocation>${WORKSPACE}</targetLocation>
+          <replaceTokens>false</replaceTokens>
+        </org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
+      </managedFiles>
+    </org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
         <timeoutMinutes>30</timeoutMinutes>
