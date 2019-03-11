@@ -114,7 +114,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\Program Files\Git\bin\bash.exe
+      <command>## #!C:\Program Files\Git\bin\bash.exe
+#!C:\Program Files\Git\git-bash.exe
 
 cd $WORKSPACE
 #
