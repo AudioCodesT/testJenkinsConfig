@@ -112,9 +112,10 @@ cd ${WORKSPACE}
 
 ## Run FindBugs on entire repository java files
 /opt/findbugs/bin/findbugs -textui -medium -xml -output findbugs.xml \
-${WORKSPACE}/EMS/target/*-SNAPSHOT.jar \
+${WORKSPACE}/clm/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar \
+${WORKSPACE}/EMS/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \</command>
     </hudson.tasks.Shell>
