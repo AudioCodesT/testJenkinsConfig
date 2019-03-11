@@ -114,11 +114,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin64\bin\bash64.exe --login -i
+      <command>#!c:\cygwin64\bin\bash.exe --login -i
 
 set -e
-
-## #!C:\Program Files\Git\bin\bash.exe --login -i
 
 cd $WORKSPACE
 #
