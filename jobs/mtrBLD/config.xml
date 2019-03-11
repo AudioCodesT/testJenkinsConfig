@@ -72,7 +72,7 @@
           <pattern>SmartTAP/MeetingRecorder</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>PLAIN</compareType>
+              <compareType>ANT</compareType>
               <pattern>**</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
