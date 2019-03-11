@@ -115,7 +115,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>## #!C:\Program Files\Git\bin\bash.exe
-#!C:\Program Files\Git\git-bash.exe
+#!C:\Program Files\Git\git-bash.exe --login -i
 
 cd $WORKSPACE
 #
