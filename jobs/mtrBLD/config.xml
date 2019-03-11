@@ -120,9 +120,9 @@ cd $WORKSPACE
 #
 
 # we build only if jenkins checked out on the last commit in branch, else exit 0
-LastGerritCommitHash=$( git ls-remote  | grep refs/heads/${GERRIT_BRANCH}  | cut -f 1 | head -n 1 )
-echo $LastGerritCommitHash
-echo ${GERRIT_PATCHSET_REVISION}
+LastGerritCommitHash=$(git ls-remote | grep refs/heads/${GERRIT_BRANCH} | cut -f 1 | head -n 1 )
+echo &quot;Last commit on Gerrit: ${LastGerritCommitHash}&quot;
+echo &quot;Current commit: ${GERRIT_PATCHSET_REVISION}&quot;
 if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]; then
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
     exit 0
