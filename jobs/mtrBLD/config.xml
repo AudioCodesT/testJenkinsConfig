@@ -114,7 +114,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\Program Files\Git\git-bash.exe
+      <command>#!C:\Program Files\Git\git-bash.exe -i
 
 set -e
 
