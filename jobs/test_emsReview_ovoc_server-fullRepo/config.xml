@@ -100,7 +100,7 @@ cd ${WORKSPACE}
 
 
 ## Run FindBugs on entire repository java files
-/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
+#/opt/findbugs/bin/findbugs -medium -xml -output findbugs.xml -textui .
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
