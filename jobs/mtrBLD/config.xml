@@ -114,7 +114,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\Program Files\Git\git-bash.exe --login -i
+      <command>#!C:\Program Files\Git\git-bash.exe
 
 ## #!C:\Program Files\Git\bin\bash.exe --login -i
 
