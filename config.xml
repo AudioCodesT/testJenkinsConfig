@@ -849,6 +849,7 @@
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
+        <string>test_emsReview_ovoc_server-fullRepo</string>
         <string>test_emsReview_ovoc_server-fullRepo_old</string>
         <string>UpdateVI-Jira</string>
       </jobNames>
