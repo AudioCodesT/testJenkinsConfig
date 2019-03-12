@@ -149,39 +149,6 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \</command>
       <excludePattern></excludePattern>
       <includePattern></includePattern>
     </hudson.plugins.findbugs.FindBugsPublisher>
-    <hudson.plugins.pmd.PmdPublisher plugin="pmd@3.50">
-      <healthy></healthy>
-      <unHealthy></unHealthy>
-      <thresholdLimit>low</thresholdLimit>
-      <pluginName>[PMD] </pluginName>
-      <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
-      <usePreviousBuildAsReference>false</usePreviousBuildAsReference>
-      <useStableBuildAsReference>false</useStableBuildAsReference>
-      <useDeltaValues>false</useDeltaValues>
-      <thresholds plugin="analysis-core@1.95">
-        <unstableTotalAll></unstableTotalAll>
-        <unstableTotalHigh></unstableTotalHigh>
-        <unstableTotalNormal></unstableTotalNormal>
-        <unstableTotalLow></unstableTotalLow>
-        <unstableNewAll></unstableNewAll>
-        <unstableNewHigh></unstableNewHigh>
-        <unstableNewNormal></unstableNewNormal>
-        <unstableNewLow></unstableNewLow>
-        <failedTotalAll></failedTotalAll>
-        <failedTotalHigh></failedTotalHigh>
-        <failedTotalNormal></failedTotalNormal>
-        <failedTotalLow></failedTotalLow>
-        <failedNewAll></failedNewAll>
-        <failedNewHigh></failedNewHigh>
-        <failedNewNormal></failedNewNormal>
-        <failedNewLow></failedNewLow>
-      </thresholds>
-      <shouldDetectModules>false</shouldDetectModules>
-      <dontComputeNew>true</dontComputeNew>
-      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
-      <pattern>**/pmd.xml</pattern>
-    </hudson.plugins.pmd.PmdPublisher>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@2.18">
