@@ -161,16 +161,10 @@ replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | c
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
 
 #start upgrade
-if [[ &quot;$serverToUpgrade&quot; == &quot;172.17.118.92&quot; ]]
-then
-python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade latest_iso
-python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
-python2.7 SanityReboot.py $serverToUpgrade
-else
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
 python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
 python2.7 SanityReboot.py $serverToUpgrade
-fi
+
 
 echo &quot;*****************************************************************&quot;
 echo &quot;*************** Server Upgrade has been finished ****************&quot;
