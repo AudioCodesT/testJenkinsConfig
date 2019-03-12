@@ -166,14 +166,14 @@ done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot
 
 EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..${GERRIT_BRANCH} | sort -u`
 GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
-User=`git log --first-parent --pretty=format:&quot;%cN&quot; $OLDTAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
+#User=`git log --first-parent --pretty=format:&quot;%cN&quot; $OLDTAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
 
 # Prepare job`s envirinment variables
 echo NEWBUILD=${NEWBUILD} &gt; release.prop
 echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; release.prop
 echo VERNUM=${VERNUM} &gt;&gt; release.prop
-echo User=${User} &gt;&gt; release.prop
+#echo User=${User} &gt;&gt; release.prop
 echo RN=${RN} &gt;&gt; release.prop
 echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1)  &gt;&gt; release.prop
 echo EMAIL=${EMAIL} &gt;&gt; release.prop
