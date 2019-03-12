@@ -160,7 +160,7 @@ AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OL
 RN=&quot;&quot;
 while read -r hash; do 
     subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
-    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/^Issue: //g; s/[^0-9] .*//g&apos;)
+    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/Issue: //g&apos;)
     RN+=---$subject::$hash::$VI
 done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..${GERRIT_BRANCH})&quot;
 
