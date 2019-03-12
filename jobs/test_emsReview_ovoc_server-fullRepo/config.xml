@@ -94,6 +94,14 @@ machine test-gerrit login jenkins password $jpass
 machine gerrit login jenkins password $jpass
 EOF
 
+cd ${WORKSPACE}/..
+
+rm -rf tools
+git -c http.sslverify=false clone -n https://gerrit/devops/tools
+
+cd tools
+git checkout -f origin/master -- pmd/audc-ruleset.xml
+cp pmd/audc-ruleset.xml ${WORKSPACE}/
 
 cd ${WORKSPACE}
 
