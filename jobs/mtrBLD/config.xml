@@ -157,8 +157,6 @@ VERNUM=$MAJOR.$MINOR.$POINT
 
 # Need these details for the UpdateVI job
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
-#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$fullBranch | sed s/\&quot;/\&apos;/g`
-#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$fullBranch | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
 RN=&quot;&quot;
 while read -r hash; do 
     subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
