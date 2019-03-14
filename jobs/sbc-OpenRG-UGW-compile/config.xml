@@ -161,6 +161,8 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
+# from acLinuxUGW bring the file that is specified in the link in OpenRG-UGW: &apos;tunnels/gre/mgt/if_tunnel.h&apos;
+git checkout -f origin/$GERRIT_BRANCH -- kernel/linux/include/uapi/linux/if_tunnel.h
 rev=$(git log -1 --pretty=format:%H)
 
 cd ..
