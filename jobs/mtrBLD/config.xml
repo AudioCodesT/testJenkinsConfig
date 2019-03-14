@@ -134,7 +134,8 @@ fi
 #fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
 #BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
 #BRANCH=${GERRIT_BRANCH}
-OLDTAG=$(git describe --abbrev=0 --tags --first-parent ${GERRIT_BRANCH})
+#OLDTAG=$(git describe --abbrev=0 --tags --first-parent ${GERRIT_BRANCH})
+OLDTAG=$(git tag -l |  grep -E -o &quot;^([0-9]{1,3}\.){3}[0-9]{1,3}$&quot; | sort | tail -1)
 echo &quot;Old tag: ${OLDTAG}&quot;
 DATE=`date`
 
