@@ -203,20 +203,21 @@ if [ ! -z &quot;$refs&quot; ]; then
   echo acLinuxChange: $rev
 fi
 
-#In case you don&apos;t find the revision from another commit, take it from the last submitted commit
-if [ -z &quot;$rev&quot; ]; then
-  cd ..
-  if [ ! -d .git ]; then
-    git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
-    mv acLinuxUGW/.git .
-    rm -rf acLinuxUGW
-  else
-    git fetch origin $GERRIT_BRANCH
-  fi
 
-  rev=$(git log -1 --pretty=format:%H)
-  cd $WORKSPACE
+cd ..
+if [ ! -d acLinuxUGW ]; then
+  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
 fi
+  
+# from acLinuxUGW bring the file that is specified in the link in OpenRG-UGW: &apos;tunnels/gre/mgt/if_tunnel.h&apos;
+cd acLinuxUGW
+git fetch origin $GERRIT_BRANCH
+git checkout -f origin/$GERRIT_BRANCH -- kernel/linux/include/uapi/linux/if_tunnel.h
+
+#In case you don&apos;t find the revision from another commit, take it from the last submitted commit
+if [ -z &quot;$rev&quot; ]; then rev=$(git log -1 --pretty=format:%H); fi
+ 
+cd $WORKSPACE
 
 # Bring the MCA files from TP/GWApp
 echo Search of exist commits in TP/GWApp and use the oldest
