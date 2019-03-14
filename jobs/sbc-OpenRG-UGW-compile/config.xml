@@ -153,19 +153,23 @@ cat ~/.netrc
 
 #In case you don&apos;t find the revision from another commit, take it from the last submitted commit
 cd ..
-if [ ! -d .git ]; then
+if [ ! -d acLinuxUGW ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
-  mv acLinuxUGW/.git .
-  rm -rf acLinuxUGW
-else
-  git fetch origin $GERRIT_BRANCH
+  #mv acLinuxUGW/.git .
+  #rm -rf acLinuxUGW
+#else
+#  git fetch origin $GERRIT_BRANCH
 fi
 
 # from acLinuxUGW bring the file that is specified in the link in OpenRG-UGW: &apos;tunnels/gre/mgt/if_tunnel.h&apos;
+cd acLinuxUGW
+git fetch origin $GERRIT_BRANCH
 git checkout -f origin/$GERRIT_BRANCH -- kernel/linux/include/uapi/linux/if_tunnel.h
+ls -l kernel/linux/include/uapi/linux/if_tunnel.h
+ls -l $WORKSPACE/tunnels/gre/mgt/if_tunnel.h
 rev=$(git log -1 --pretty=format:%H)
 
-cd ..
+cd ../..
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
   mv GWApp/.git .
