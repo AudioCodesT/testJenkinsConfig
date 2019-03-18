@@ -424,7 +424,7 @@ build.bat %NEW_BUILD%&#xd;
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; /s&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEW_TAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
@@ -445,7 +445,7 @@ build.bat %NEW_BUILD%&#xd;
               <tagsToPush>
                 <hudson.plugins.git.GitPublisher_-TagToPush>
                   <targetRepoName>origin</targetRepoName>
-                  <tagName>${NEWTAG}</tagName>
+                  <tagName>${NEW_TAG}</tagName>
                   <tagMessage>Jenkins auto tagging</tagMessage>
                   <createTag>true</createTag>
                   <updateTag>true</updateTag>
@@ -570,7 +570,7 @@ build.bat %NEW_BUILD%&#xd;
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEWTAG}.7z=&gt;MeetingRecorder/${GERRIT_BRANCH}/${VERNUM}/</deployPattern>
+      <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEW_TAG}.7z=&gt;MeetingRecorder/${GERRIT_BRANCH}/${VERNUM}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
@@ -587,7 +587,7 @@ build.bat %NEW_BUILD%&#xd;
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
+      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
