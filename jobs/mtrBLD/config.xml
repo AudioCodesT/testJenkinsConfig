@@ -157,7 +157,7 @@ if [ $CURRENT_BRANCH != &quot;master&quot; &amp;&amp; $LAST_TAG != *_* ]; then
     # on the branch (No branch tag yet).
     # The new tag is the master tag with a tail consists of
     # the current branch name dot build number 1 (first build on this branch)
-    NEW_TAG=&quot;$LAST_TAG_$CURRENT_BRANCH.1&quot;
+    NEW_TAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BRANCH&quot;.1
 elif [ $LAST_TAG == *_* ]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (Last tag is a branch tag).
