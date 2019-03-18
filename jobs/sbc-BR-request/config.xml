@@ -41,14 +41,15 @@ In the compilation folder please make sure that it contains the following cmps:&
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>GERRIT_BRANCH</name>
-          <description></description>
+          <name>MajorVersion</name>
+          <description>Right to now, it should be 7.2.250 only</description>
           <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>MODE</name>
-          <description></description>
+          <description>Full for SBC tests.
+Others are N/A</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>Full</string>
@@ -99,7 +100,7 @@ echo BUILD_USER: $BUILD_USER
 echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
 
 # Find the full path of this TAG in the netapp1 
-FullPath=$(find &quot;/netapp1/CompilationResults/$GERRIT_BRANCH Release/&quot; -type d -name &quot;F$TAG&quot;)
+FullPath=$(find &quot;/netapp1/CompilationResults/$MajorVersion Release/&quot; -type d -name &quot;F$TAG&quot;)
 
 if [ ! -d &quot;$FullPath&quot; ]; then echo Directory of $TAG was not found,  exit; exit 1; fi
 echo Following directory was found: $FullPath
@@ -130,7 +131,7 @@ if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing 
 cd $WORKSPACE
 
 BatchTAG=$(echo $TAG |  sed &apos;s:\.:_:g&apos;)
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
@@ -195,7 +196,7 @@ exit 1</command>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} ${TAG} $GERRIT_BRANCH</template>
+      <template>#${BUILD_NUMBER} ${TAG} $MajorVersion</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
