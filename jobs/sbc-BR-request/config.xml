@@ -98,6 +98,10 @@ fi
 echo BUILD_USER: $BUILD_USER
 echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
 
+# Find the full path of this TAG in the netapp1 
+FullPath=$(find &quot;/netapp1/CompilationResults/$GERRIT_BRANCH Release/&quot; -type d -name &quot;F$TAG&quot;)
+
+
 Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
