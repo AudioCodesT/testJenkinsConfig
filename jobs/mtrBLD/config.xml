@@ -417,9 +417,9 @@ Invoke-Elevated -ScriptBlock {
 }</command>
     </hudson.plugins.powershell.PowerShell>
     <hudson.tasks.BatchFile>
-      <command>echo &quot;Running build batch with build number (%NEWBUILD%)&quot;&#xd;
+      <command>echo &quot;Running build batch with build number (%NEW_BUILD%)&quot;&#xd;
 cd Build&#xd;
-build.bat %NEWBUILD%&#xd;
+build.bat %NEW_BUILD%&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
