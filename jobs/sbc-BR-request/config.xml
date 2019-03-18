@@ -114,13 +114,13 @@ cd &quot;$copyTo&quot;
 CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
 for eachImage in $CmpList; do
   echo Copy file $eachImage...
-  if [ ! -f $CmpList*.cmp ]; then
+  if [ ! -f $eachImage*.cmp ]; then
     copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
     cp &quot;$copyZIP&quot; .
     unzip *$CmpList*.zip
     rm -f *$CmpList*.zip
   else
-    echo File was copied already
+    echo File $eachImage exist already
   fi
 done
 
