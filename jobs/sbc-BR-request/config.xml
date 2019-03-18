@@ -127,7 +127,9 @@ done
 # Check if all was copied successfully
 if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing cmp files, exiting job&quot;; exit 2; fi
 
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+cd $WORKSPACE
+
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
