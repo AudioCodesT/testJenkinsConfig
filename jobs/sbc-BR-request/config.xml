@@ -117,8 +117,8 @@ for eachImage in $CmpList; do
   if [ ! -f $eachImage*.cmp ]; then
     copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
     cp &quot;$copyZIP&quot; .
-    unzip *$CmpList*.zip
-    rm -f *$CmpList*.zip
+    unzip *$eachImage*.zip
+    rm -f *$eachImage*.zip
   else
     echo File $eachImage exist already
   fi
