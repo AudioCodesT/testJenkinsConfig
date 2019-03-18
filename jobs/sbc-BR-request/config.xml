@@ -109,20 +109,22 @@ copyTo=&quot;/netapp1/CompilationResults/BR_Feature/F$TAG&quot;
 # Create the directory if it doesn&apos;t exist
 if [ ! -d &quot;$copyTo&quot; ]; then mkdir &quot;$copyTo&quot;; fi
 
-# Copy the ZIP files
-echo cd to &quot;$copyTo&quot; and copy the files
+# Copy the ZIP files to &quot;$copyTo&quot; and unzip them
 cd &quot;$copyTo&quot;
 CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
 for eachImage in $CmpList; do
-  echo File $eachImage...
-  copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
-  cp &quot;$copyZIP&quot; &quot;$copyTo&quot;
+  echo Copy file $eachImage...
+  if [ ! -f $CmpList*.cmp ]; then
+    copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
+    cp &quot;$copyZIP&quot; .
+    unzip *$CmpList*.zip
+    rm -f *$CmpList*.zip
+  else
+    echo File was copied already
+  fi
 done
 
-echo Unzip the files and delete the ZIP files
-unzip *
-rm -f *.zip
-
+# Check if all was copied successfully
 if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing cmp files, exiting job&quot;; exit 2; fi
 
 exit 1;
