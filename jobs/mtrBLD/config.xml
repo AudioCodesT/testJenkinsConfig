@@ -155,7 +155,8 @@ GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
 # remove trailing `/`
 GERRIT_PATH=${GERRIT_PATH::-1}
 
-if [[ ( $GERRIT_PATH =~ &quot;collab&quot; || $GERRIT_PATH =~ &quot;feature&quot; || $GERRIT_PATH =~ &quot;sprint&quot; ) &amp;&amp; $LAST_TAG != *_* ]]; then
+array=(&quot;collab&quot; &quot;feature&quot; &quot;sprint&quot;)
+if [[ ${array[@]} =~ $GERRIT_PATH ]] &amp;&amp; [[ $LAST_TAG != *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (No branch tag yet).
     # The new tag is the master tag with a tail consists of
@@ -180,7 +181,7 @@ elif [[ $LAST_TAG == *_* ]]; then
     
     NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
     NEW_TAG=&quot;$MASTER_TAG&quot;_&quot;$NEW_TAG_TAIL&quot;
-else
+elif [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
     # We are building a submit on branch `master`
     MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
@@ -192,6 +193,8 @@ else
     #NEW_TAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD$SUFFIX
     NEW_TAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD
     VERNUM=$MAJOR.$MINOR.$POINT
+else
+    exit -1
 fi
 
 
