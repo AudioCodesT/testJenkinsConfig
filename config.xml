@@ -873,6 +873,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>sbc-basic-review</string>
+        <string>sbc-BR-request</string>
         <string>sbc-build-virtualSBC</string>
         <string>sbc-compile</string>
         <string>sbc-compile_night_NextGenCPE</string>
