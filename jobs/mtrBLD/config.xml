@@ -153,8 +153,16 @@ DATE=`date`
 CURRENT_BRANCH=${GERRIT_BRANCH#*/}
 
 if [ (&quot;$CURRENT_BRANCH&quot; != &quot;master&quot;) &amp;&amp; ($LAST_TAG != *_*) ]; then
-    
+    # We are on a branch that is NOT master and this is the first build
+    # on the branch (No branch tag yet).
+    # The new tag is the master tag with a tail consists of
+    # the current branch name dot build number 1 (first build on this branch)
+    NEW_TAG=&quot;$LAST_TAG_$CURRENT_BRANCH.1&quot;
 elif [ $LAST_TAG == *_* ]; then
+    # We are on a branch that is NOT master and this is the first build
+    # on the branch (Last tag is a branch tag).
+    # Tha build number from the (last) branch tag is incremented.
+    #
     # TAG_TAIL is everything after the first `_`
     TAG_TAIL=${LAST_TAG#*_}
     LAST_BR_TAG=$(echo $TAG_TAIL | gawk -F&apos;_&apos; &apos;{print $NF}&apos;)
@@ -176,6 +184,7 @@ elif [ $LAST_TAG == *_* ]; then
     NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${NEW_BR_NAME}\.${NEW_BUILD}/g}&quot;)
     NEW_TAG=&quot;$MASTER_TAG_$NEW_TAG_TAIL&quot;
 else
+    # We are building a submit on branch `master`
     MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
     POINT=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
