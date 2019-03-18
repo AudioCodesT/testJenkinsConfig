@@ -93,7 +93,7 @@ cat &lt;&lt;-EOF &gt; ~/.netrc
 machine test-gerrit login jenkins password $jpass
 machine gerrit login jenkins password $jpass
 EOF
-
+set +x
 cd ${WORKSPACE}/..
 
 rm -rf tools
@@ -126,7 +126,7 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \</command>
       <unHealthy></unHealthy>
       <thresholdLimit>low</thresholdLimit>
       <pluginName>[FINDBUGS] </pluginName>
-      <defaultEncoding></defaultEncoding>
+      <defaultEncoding>UTF-8</defaultEncoding>
       <canRunOnFailed>true</canRunOnFailed>
       <usePreviousBuildAsReference>false</usePreviousBuildAsReference>
       <useStableBuildAsReference>false</useStableBuildAsReference>
