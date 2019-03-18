@@ -144,9 +144,9 @@
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>echo &quot;Running build batch with build number (%NEWBUILD%)&quot;&#xd;
+      <command>echo &quot;Running build batch with build number (0000)&quot;&#xd;
 cd Build&#xd;
-build.bat %NEWBUILD%&#xd;
+build.bat 0000&#xd;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
