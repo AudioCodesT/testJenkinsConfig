@@ -176,7 +176,7 @@ elif [[ $LAST_TAG == *_* ]]; then
     NEW_BUILD=`echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;`
     
     NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-    NEW_TAG=&quot;$MASTER_TAG_$NEW_TAG_TAIL&quot;
+    NEW_TAG=&quot;$MASTER_TAG&quot;_&quot;$NEW_TAG_TAIL&quot;
 else
     # We are building a submit on branch `master`
     MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
