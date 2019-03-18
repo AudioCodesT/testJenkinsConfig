@@ -41,6 +41,24 @@ In the compilation folder please make sure that it contains the following cmps:&
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue>7.2.250</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>MODE</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Full</string>
+              <string>Web_IE</string>
+              <string>Web_CHROME</string>
+              <string>Web_FIREFOX </string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>CurrentBatchID</name>
           <description>In case you execute manually a BR that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
           <defaultValue></defaultValue>
@@ -68,86 +86,44 @@ In the compilation folder please make sure that it contains the following cmps:&
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># send DRT request and keep the serial number from the response:
+      <command># send Batch Runner request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
-#REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
-echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
-
-# Can run with major version only: 7.2.150, 7.2.170
-GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
-GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
 
 if [ ! -z $CurrentBatchID ]; then
-  echo LinkToPage=&quot;---&quot; &gt; generated_drt.properties
-  echo batchID=${CurrentBatchID} &gt;&gt; generated_drt.properties
-  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+  echo LinkToPage=&quot;---&quot; &gt; generated_BR.properties
+  echo batchID=${CurrentBatchID} &gt;&gt; generated_BR.properties
+  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_BR.properties
   exit 0
 fi
 
-#batchID=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&quot; --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed &apos;s/.*Black.&gt;//&apos; | sed &apos;s/&lt;.font&gt;.*//&apos;)&quot;
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR\\Firmware\\$TAG&amp;RunByUserEmail=xxx.xxx@audiocdes.com&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
-echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
-echo batchID=${batchID} &gt;&gt; generated_drt.properties
-echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+echo LinkToPage=${LinkToPage} &gt; generated_BR.properties
+echo batchID=${batchID} &gt;&gt; generated_BR.properties
+echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_BR.properties
 
 if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
   echo $Output | grep &apos;BatchRunner Is Down&apos;
   echo &quot;No Batch ID... exit with error&quot;
-  echo Output=&quot;No Batch ID&quot; &gt;&gt; generated_drt.properties
   exit 1;
 fi
 
 if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
   echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
-  echo Output=&quot;BatchRunner Is Down For Maintenance&quot; &gt;&gt; generated_drt.properties
   exit 1;
 fi
 
-echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
+echo Output=&quot;Execution error&quot; &gt;&gt; generated_BR.properties
 
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
-        <propertiesFilePath>generated_drt.properties</propertiesFilePath>
+        <propertiesFilePath>generated_BR.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
-    <hudson.tasks.Shell>
-      <command>#!/usr/bin/env ruby
-
-require &apos;json&apos;
-require &apos;uri&apos;
-
-unless ENV[&apos;CurrentBatchID&apos;].to_s.empty?
-  puts &quot;Executed manually, no need a new message in the Gerrit&quot;
-  exit 0
-end
-
-if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
-  change=$1
-  ps=$2
-else
-  puts &apos;Invalid refspec&apos;
-  exit 0
-end
-
-data = {
-  message: &apos;DRT request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &quot;\n\nDRT status: &quot; + ENV[&apos;LinkToPage&apos;],
-  notify: &apos;NONE&apos;,
-  tag: &apos;autogenerated:drt&apos;,
-}
-
-require &apos;pp&apos;
-pp data
-
-system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
-       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)
-</command>
-    </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command># check DRT status
 # &quot;BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed&quot;
