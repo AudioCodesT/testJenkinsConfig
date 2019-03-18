@@ -141,7 +141,7 @@ DATE=`date`
 #calculate new tag
 # MASTERTAG structure is X.X.X.XXXXY
 # where X is a digit Y is a letter.
-# Branch tag is MASTERTAG_BRANCHNAME.XX[_BRANCHNAME.XX]
+# Branch tag is MASTERTAG_BRANCHNAME.XX[_BRANCHNAME.XX[..]]
 # where BN is taken from the branch name and X is a digit.
 # If vesion number is to be handled by Jenkins,
 # parse it from LAST_TAG here.
