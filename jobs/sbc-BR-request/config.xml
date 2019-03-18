@@ -100,6 +100,8 @@ echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
 
 # Find the full path of this TAG in the netapp1 
 FullPath=$(find &quot;/netapp1/CompilationResults/$GERRIT_BRANCH Release/&quot; -type d -name &quot;F$TAG&quot;)
+CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
+for eachImage in $ImagesList; do 
 
 
 Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
