@@ -92,20 +92,18 @@ In the compilation folder please make sure that it contains the following cmps:&
 if [ ! -z $CurrentBatchID ]; then
   echo LinkToPage=&quot;---&quot; &gt; generated_BR.properties
   echo batchID=${CurrentBatchID} &gt;&gt; generated_BR.properties
-  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_BR.properties
   exit 0
 fi
 
 echo BUILD_USER: $BUILD_USER
 echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
 
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR\\Firmware\\$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
 echo LinkToPage=${LinkToPage} &gt; generated_BR.properties
 echo batchID=${batchID} &gt;&gt; generated_BR.properties
-echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_BR.properties
 
 if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
   echo $Output | grep &apos;BatchRunner Is Down&apos;
