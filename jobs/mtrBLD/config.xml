@@ -176,7 +176,7 @@ elif [[ $LAST_TAG == *_* ]]; then
     # But need to drop the trailing `_`
     MASTER_TAG=${MASTER_TAG::-1}
     
-    NEW_BUILD=`echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;`
+    NEW_BUILD=$(echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;)
     
     NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
     NEW_TAG=&quot;$MASTER_TAG&quot;_&quot;$NEW_TAG_TAIL&quot;
