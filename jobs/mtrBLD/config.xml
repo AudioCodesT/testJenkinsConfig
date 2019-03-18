@@ -152,7 +152,9 @@ DATE=`date`
 # Extract the branch name from the branch path on Gerrit
 CURRENT_BRANCH=${GERRIT_BRANCH#*/}
 
-if [ $LAST_TAG == *_* ]; then
+if [ (&quot;$CURRENT_BRANCH&quot; != &quot;master&quot;) &amp;&amp; ($LAST_TAG != *_*) ]; then
+    
+elif [ $LAST_TAG == *_* ]; then
     # TAG_TAIL is everything after the first `_`
     TAG_TAIL=${LAST_TAG#*_}
     LAST_BR_TAG=$(echo $TAG_TAIL | gawk -F&apos;_&apos; &apos;{print $NF}&apos;)
@@ -172,7 +174,7 @@ if [ $LAST_TAG == *_* ]; then
     fi
     
     NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${NEW_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-    
+    NEW_TAG=&quot;$MASTER_TAG_$NEW_TAG_TAIL&quot;
 else
     MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
