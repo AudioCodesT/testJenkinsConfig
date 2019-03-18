@@ -125,7 +125,7 @@ cd $WORKSPACE
 LastGerritCommitHash=$(git ls-remote | grep refs/heads/${GERRIT_BRANCH} | cut -f 1 | head -n 1 )
 echo &quot;Last commit on Gerrit: ${LastGerritCommitHash}&quot;
 echo &quot;Current commit: ${GERRIT_PATCHSET_REVISION}&quot;
-if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]; then
+if [[ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]]; then
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
     exit 0
 fi
@@ -158,7 +158,7 @@ if [[ $CURRENT_BRANCH != &quot;master&quot; &amp;&amp; $LAST_TAG != *_* ]]; then
     # The new tag is the master tag with a tail consists of
     # the current branch name dot build number 1 (first build on this branch)
     NEW_TAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BRANCH&quot;.1
-elif [ $LAST_TAG == *_* ]; then
+elif [[ $LAST_TAG == *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (Last tag is a branch tag).
     # Tha build number from the (last) branch tag is incremented.
@@ -173,7 +173,7 @@ elif [ $LAST_TAG == *_* ]; then
     # But need to drop the trailing `_`
     MASTER_TAG=${MASTER_TAG::-1}
     
-    if [ $LAST_BR_NAME != $CURRENT_BRANCH ]; then
+    if [[ $LAST_BR_NAME != $CURRENT_BRANCH ]]; then
         NEW_BUILD=1
         NEW_BR_NAME=${CURRENT_BRANCH}
     else
