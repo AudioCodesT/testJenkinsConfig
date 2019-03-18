@@ -155,7 +155,7 @@ GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
 # remove trailing `/`
 GERRIT_PATH=${GERRIT_PATH::-1}
 
-if [[ ( $CURRENT_BR_NAME == &quot;collab&quot; || $CURRENT_BR_NAME == &quot;feature&quot; ) &amp;&amp; $LAST_TAG != *_* ]]; then
+if [[ ( $GERRIT_PATH == &quot;collab&quot; || $GERRIT_PATH == &quot;feature&quot; ) &amp;&amp; $LAST_TAG != *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (No branch tag yet).
     # The new tag is the master tag with a tail consists of
