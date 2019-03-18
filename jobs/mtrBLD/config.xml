@@ -151,6 +151,9 @@ DATE=`date`
 
 # Extract the branch name from the branch path on Gerrit
 CURRENT_BRANCH=${GERRIT_BRANCH#*/}
+GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BRANCH*}
+# remove trailing `/`
+GERRIT_BRANCH=${GERRIT_BRANCH::-1}
 
 if [[ $CURRENT_BRANCH != &quot;master&quot; &amp;&amp; $LAST_TAG != *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
