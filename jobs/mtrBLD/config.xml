@@ -153,7 +153,7 @@ DATE=`date`
 CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
 GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
 # remove trailing `/`
-GERRIT_BRANCH=${GERRIT_BRANCH::-1}
+GERRIT_PATH=${GERRIT_PATH::-1}
 
 if [[ ( $CURRENT_BR_NAME == &quot;collab&quot; || $CURRENT_BR_NAME == &quot;feature&quot; ) &amp;&amp; $LAST_TAG != *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
