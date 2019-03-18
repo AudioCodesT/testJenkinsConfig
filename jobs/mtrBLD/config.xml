@@ -134,39 +134,71 @@ fi
 #fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
 #BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
 #BRANCH=${GERRIT_BRANCH}
-OLDTAG=$(git describe --abbrev=0 --tags --first-parent origin/${GERRIT_BRANCH})
-echo &quot;Old tag: ${OLDTAG}&quot;
+LAST_TAG=$(git describe --abbrev=0 --tags --first-parent origin/${GERRIT_BRANCH})
+echo &quot;Old tag: ${LAST_TAG}&quot;
 DATE=`date`
 
 #calculate new tag
-# Tag structure is X.X.X.XXXXY
-# where X is a digit Y is a letter
+# MASTERTAG structure is X.X.X.XXXXY
+# where X is a digit Y is a letter.
+# Branch tag is MASTERTAG_BRANCHNAME.XX[_BRANCHNAME.XX]
+# where BN is taken from the branch name and X is a digit.
 # If vesion number is to be handled by Jenkins,
-# parse it from OLDTAG here.
+# parse it from LAST_TAG here.
+# 
 #
-# Define new build number
-MAJOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
-MINOR=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
-POINT=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-TAGBUILD=`echo $OLDTAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
-OLDBUILD=`echo $TAGBUILD | sed &apos;{s/[^0-9]//g}&apos;`
-SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
-NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
-NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
-VERNUM=$MAJOR.$MINOR.$POINT
+# Define new tag
+
+# Extract the branch name from the branch path on Gerrit
+CURRENT_BRANCH=${GERRIT_BRANCH#*/}
+
+if [ $LAST_TAG == *_* ]; then
+    # TAGTAIL is everything after the first `_`
+    TAG_TAIL=${LAST_TAG#*_}
+    LAST_BR_TAG=$(echo $TAG_TAIL | gawk -F&apos;_&apos; &apos;{print $NF}&apos;)
+    LAST_BR_NAME=$(echo $LAST_BR_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;)
+    LAST_BR_BUILD=$(echo $LAST_BR_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;)
+    # MASTER_TAG is LAST_TAG without TAG_TAIL
+    MASTER_TAG=${LAST_TAG%&quot;$TAG_TAIL&quot;}
+    # But need to drop the trailing `_`
+    MASTER_TAG=${MASTER_TAG::-1}
+    
+    if [ $LAST_BR_NAME != $CURRENT_BRANCH ]; then
+        NEW_BUILD=1
+        NEW_BR_NAME=${CURRENT_BRANCH}
+    else
+        NEW_BUILD=`echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;`
+        NEW_BR_NAME=${LAST_BR_NAME}
+    fi
+    
+    
+    
+else
+    MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
+    MINOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
+    POINT=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
+    TAGBUILD=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
+    OLDBUILD=`echo $TAGBUILD | sed &apos;{s/[^0-9]//g}&apos;`
+    SUFFIX=`[[ ${#TAGBUILD} &gt; 4 ]] &amp;&amp; echo ${TAGBUILD:4} || echo &quot;&quot;`
+    NEWBUILD=`echo $OLDBUILD | gawk &apos;{print $1+1}&apos;`
+    NEWTAG=$MAJOR.$MINOR.$POINT.$NEWBUILD$SUFFIX
+    VERNUM=$MAJOR.$MINOR.$POINT
+fi
+
+
 
 # Need these details for the UpdateVI job
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $LAST_TAG..${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
 RN=&quot;&quot;
 while read -r hash; do 
     subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
     VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/Issue: //g&apos;)
     RN+=---$subject::$hash::$VI
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..${GERRIT_BRANCH})&quot;
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $LAST_TAG..${GERRIT_BRANCH})&quot;
 
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..${GERRIT_BRANCH} | sort -u`
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $LAST_TAG..${GERRIT_BRANCH} | sort -u`
 GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
-#User=`git log --first-parent --pretty=format:&quot;%cN&quot; $OLDTAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
+#User=`git log --first-parent --pretty=format:&quot;%cN&quot; $LAST_TAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
 
 # Prepare job`s envirinment variables
 echo NEWBUILD=${NEWBUILD} &gt; release.prop
