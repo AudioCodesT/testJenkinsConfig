@@ -1,14 +1,13 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>trigger:&#xd;
-developer clicks gerrit UI button &quot;DRT&quot;&#xd;
-actions:&#xd;
-1. build all boards in &quot;boards2DRT.yml&quot;&#xd;
-2. deploy results to artifactory/sbc-review&#xd;
-2. download and share all results to \\netapp1 folder&#xd;
-3. send DRT request with major version and folder location&#xd;
-4. return the vote to gerrit label &quot;QA&quot;&#xd;
+  <description>Support only SBC feature batchץ&#xd;
+&#xd;
+To run SBC batch please send ModeType=Full in Run command.&#xd;
+In the compilation folder please make sure that it contains the following cmps:&#xd;
+•	MP500_ESBC&#xd;
+•	M1000_MSBG&#xd;
+•	HostedTP&#xd;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -36,38 +35,14 @@ actions:&#xd;
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>REFSPEC</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>EMAIL</name>
-          <description></description>
-          <defaultValue>yossim@audiocodes.com</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>REFTARGET</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>CHANGES</name>
+          <name>TAG</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CurrentBatchID</name>
-          <description>In case you execute manually a DRT that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
+          <description>In case you execute manually a BR that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -80,12 +55,11 @@ actions:&#xd;
       <throttleEnabled>true</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit>TAG</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>test-Sanjer</assignedNode>
+  <assignedNode>copy2netapp</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -198,208 +172,6 @@ exit 1</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
-      <publishers>
-        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
-            <worstResult>
-              <name>FAILURE</name>
-              <ordinal>2</ordinal>
-              <color>RED</color>
-              <completeBuild>true</completeBuild>
-            </worstResult>
-            <bestResult>
-              <name>SUCCESS</name>
-              <ordinal>0</ordinal>
-              <color>BLUE</color>
-              <completeBuild>true</completeBuild>
-            </bestResult>
-          </condition>
-          <publisherList>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
-                <buildSteps>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>SUCCESS</string>
-                      <string>NOT_BUILT</string>
-                      <string>FAILURE</string>
-                      <string>UNSTABLE</string>
-                    </results>
-                    <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
-                    <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
-                        <info>
-                          <propertiesFilePath>generated_drt.properties</propertiesFilePath>
-                        </info>
-                      </EnvInjectBuilder>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>SUCCESS</string>
-                    </results>
-                    <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
-                    <buildSteps>
-                      <hudson.tasks.Shell>
-                        <command>for rep in $CHANGES; do
-
-  change=`echo $rep | cut -d/ -f1`
-  ps=`echo $rep | cut -d/ -f2`
-
-  #change=`echo $REFSPEC | cut -d/ -f4`
-  #ps=`echo $REFSPEC | cut -d/ -f5`
-  RunPhases=1
-  checkPS=$ps
-
-#Check if they are not a new PS - if yes, check if the code was changed
-#In case the code was not changed, give the score to the last PS - should be store in the checkPS variable. 
-  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; /tmp/$change.txt
-# $field Could be: number or kind
-# $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
-  while IFS=: read -r field value; do   
-    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
-    else
-      echo Check PS $checkPS: $value;
-      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; &quot;$value&quot; == &quot;REWORK&quot; ]]; then
-        RunPhases=0
-    fi; fi
-  done &lt; /tmp/$change.txt
-
-  if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
-
-  echo Send OK message to Gerrit - $change,$ps
-  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT Passed successfully - $BUILD_URL \
-      CMP files: $url \
-      DRT results: $LinkToPage&apos;&quot; \
-  --notify OWNER \
-  --label DRT=1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
-  $change,$ps
-
-done</command>
-                      </hudson.tasks.Shell>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                </buildSteps>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
-                <buildSteps>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>FAILURE</string>
-                    </results>
-                    <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
-                    <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
-                        <info>
-                          <propertiesFilePath>generated_drt.properties</propertiesFilePath>
-                        </info>
-                      </EnvInjectBuilder>
-                      <hudson.tasks.Shell>
-                        <command>for rep in $CHANGES; do
-
-  change=`echo $rep | cut -d/ -f1`
-  ps=`echo $rep | cut -d/ -f2`
-
-  echo Send failed message to Gerrit - $change,$ps
-  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT Failed - $BUILD_URL \
-      CMP files: $url \
-      Error message: $Output \
-      DRT results: $LinkToPage&apos;&quot; \
-  --notify OWNER \
-  --label DRT=-1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
-  $change,$ps
-
-done      
-</command>
-                      </hudson.tasks.Shell>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                </buildSteps>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-          </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
-        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
-            <worstResult>
-              <name>ABORTED</name>
-              <ordinal>4</ordinal>
-              <color>ABORTED</color>
-              <completeBuild>false</completeBuild>
-            </worstResult>
-            <bestResult>
-              <name>ABORTED</name>
-              <ordinal>4</ordinal>
-              <color>ABORTED</color>
-              <completeBuild>false</completeBuild>
-            </bestResult>
-          </condition>
-          <publisherList>
-            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-              <config>
-                <scriptFiles/>
-                <groovyScripts/>
-                <buildSteps>
-                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                    <results>
-                      <string>SUCCESS</string>
-                      <string>NOT_BUILT</string>
-                      <string>ABORTED</string>
-                      <string>FAILURE</string>
-                      <string>UNSTABLE</string>
-                    </results>
-                    <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
-                    <buildSteps>
-                      <hudson.tasks.Shell>
-                        <command>echo ----------------- Stop it after it was aborted --------------------
-curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
-echo ----------------- Done ------------------------
-
-for rep in $CHANGES; do
-
-  change=`echo $rep | cut -d/ -f1`
-  ps=`echo $rep | cut -d/ -f2`
-
-  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT was aborted&apos;&quot; \
-  --notify OWNER \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
-  $change,$ps
-
-done
-</command>
-                      </hudson.tasks.Shell>
-                    </buildSteps>
-                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-                </buildSteps>
-                <markBuildUnstable>false</markBuildUnstable>
-              </config>
-            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
-          </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
-        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-      </publishers>
-    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>BatchRunner Is Down For Maintenance</regexpForRerun>
       <rerunIfUnstable>false</rerunIfUnstable>
@@ -414,7 +186,7 @@ done
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} ${REFSPEC}</template>
+      <template>#${BUILD_NUMBER} ${TAG}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
