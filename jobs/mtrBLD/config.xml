@@ -150,17 +150,17 @@ DATE=`date`
 # Define new tag
 
 # Extract the branch name from the branch path on Gerrit
-CURRENT_BRANCH=${GERRIT_BRANCH#*/}
-GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BRANCH*}
+CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
+GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
 # remove trailing `/`
 GERRIT_BRANCH=${GERRIT_BRANCH::-1}
 
-if [[ $CURRENT_BRANCH != &quot;master&quot; &amp;&amp; $LAST_TAG != *_* ]]; then
+if [[ $CURRENT_BR_NAME != &quot;master&quot; &amp;&amp; $LAST_TAG != *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (No branch tag yet).
     # The new tag is the master tag with a tail consists of
     # the current branch name dot build number 1 (first build on this branch)
-    NEW_TAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BRANCH&quot;.1
+    NEW_TAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BR_NAME&quot;.1
 elif [[ $LAST_TAG == *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (Last tag is a branch tag).
