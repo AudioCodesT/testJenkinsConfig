@@ -152,7 +152,7 @@ DATE=`date`
 # Extract the branch name from the branch path on Gerrit
 CURRENT_BRANCH=${GERRIT_BRANCH#*/}
 
-if [ (&quot;$CURRENT_BRANCH&quot; != &quot;master&quot;) &amp;&amp; ($LAST_TAG != *_*) ]; then
+if [ ( &quot;$CURRENT_BRANCH&quot; != &quot;master&quot; ) &amp;&amp; ( $LAST_TAG != *_* ) ]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (No branch tag yet).
     # The new tag is the master tag with a tail consists of
