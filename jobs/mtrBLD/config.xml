@@ -173,15 +173,9 @@ elif [[ $LAST_TAG == *_* ]]; then
     # But need to drop the trailing `_`
     MASTER_TAG=${MASTER_TAG::-1}
     
-    if [[ $LAST_BR_NAME != $CURRENT_BRANCH ]]; then
-        NEW_BUILD=1
-        NEW_BR_NAME=${CURRENT_BRANCH}
-    else
-        NEW_BUILD=`echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;`
-        NEW_BR_NAME=${LAST_BR_NAME}
-    fi
+    NEW_BUILD=`echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;`
     
-    NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${NEW_BR_NAME}\.${NEW_BUILD}/g}&quot;)
+    NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
     NEW_TAG=&quot;$MASTER_TAG_$NEW_TAG_TAIL&quot;
 else
     # We are building a submit on branch `master`
