@@ -199,15 +199,15 @@ fi
 
 
 # Need these details for the UpdateVI job
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $LAST_TAG..${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $LAST_TAG..origin/${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
 RN=&quot;&quot;
 while read -r hash; do 
     subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
     VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue | sed &apos;s/Issue: //g&apos;)
     RN+=---$subject::$hash::$VI
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $LAST_TAG..${GERRIT_BRANCH})&quot;
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $LAST_TAG..origin/${GERRIT_BRANCH})&quot;
 
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $LAST_TAG..${GERRIT_BRANCH} | sort -u`
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $LAST_TAG..origin/${GERRIT_BRANCH} | sort -u`
 GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
 #User=`git log --first-parent --pretty=format:&quot;%cN&quot; $LAST_TAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
 
