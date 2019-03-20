@@ -36,7 +36,7 @@ In the compilation folder please make sure that it contains the following cmps:&
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TAG</name>
-          <description></description>
+          <description>Example: 7.20A.251.512</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
