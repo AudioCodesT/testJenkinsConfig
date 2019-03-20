@@ -161,7 +161,7 @@ if [[ ${array[@]} =~ $GERRIT_PATH ]] &amp;&amp; [[ $LAST_TAG != *_* ]]; then
     # on the branch (No branch tag yet).
     # The new tag is the master tag with a tail consists of
     # the current branch name dot build number 1 (first build on this branch)
-    NEW_TAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BR_NAME&quot;.1
+    NEWTAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BR_NAME&quot;.1
 elif [[ $LAST_TAG == *_* ]]; then
     # We are on a branch that is NOT master and this is the first build
     # on the branch (Last tag is a branch tag).
@@ -179,8 +179,8 @@ elif [[ $LAST_TAG == *_* ]]; then
     
     NEW_BUILD=$(echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;)
     
-    NEW_TAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-    NEW_TAG=&quot;$MASTER_TAG&quot;_&quot;$NEW_TAG_TAIL&quot;
+    NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
+    NEWTAG=&quot;$MASTER_TAG&quot;_&quot;$NEWTAG_TAIL&quot;
 elif [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
     # We are building a submit on branch `master`
     MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
@@ -190,8 +190,8 @@ elif [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
     OLD_BUILD=`echo $TAG_BUILD | sed &apos;{s/[^0-9]//g}&apos;`
     #SUFFIX=`[[ ${#TAG_BUILD} &gt; 4 ]] &amp;&amp; echo ${TAG_BUILD:4} || echo &quot;&quot;`
     NEW_BUILD=`echo $OLD_BUILD | gawk &apos;{print $1+1}&apos;`
-    #NEW_TAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD$SUFFIX
-    NEW_TAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD
+    #NEWTAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD$SUFFIX
+    NEWTAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD
     VERNUM=$MAJOR.$MINOR.$POINT
 else
     exit -1
@@ -213,7 +213,7 @@ GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
 
 # Prepare job`s envirinment variables
 echo NEW_BUILD=${NEW_BUILD} &gt; release.prop
-echo NEW_TAG=${NEW_TAG} &gt;&gt; release.prop
+echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; release.prop
 echo VERNUM=${VERNUM} &gt;&gt; release.prop
 #echo User=${User} &gt;&gt; release.prop
@@ -423,7 +423,7 @@ build.bat %NEW_BUILD%&#xd;
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; /s&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEW_TAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
@@ -444,7 +444,7 @@ build.bat %NEW_BUILD%&#xd;
               <tagsToPush>
                 <hudson.plugins.git.GitPublisher_-TagToPush>
                   <targetRepoName>origin</targetRepoName>
-                  <tagName>${NEW_TAG}</tagName>
+                  <tagName>${NEWTAG}</tagName>
                   <tagMessage>Jenkins auto tagging</tagMessage>
                   <createTag>true</createTag>
                   <updateTag>true</updateTag>
@@ -564,7 +564,7 @@ build.bat %NEW_BUILD%&#xd;
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEW_TAG}.7z=&gt;MeetingRecorder/${GERRIT_BRANCH}/${VERNUM}/</deployPattern>
+      <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEWTAG}.7z=&gt;MeetingRecorder/${GERRIT_BRANCH}/${VERNUM}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
@@ -581,7 +581,7 @@ build.bat %NEW_BUILD%&#xd;
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
