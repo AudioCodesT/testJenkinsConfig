@@ -113,6 +113,8 @@ set PASS=%VIpass%&#xd;
 &#xd;
 update_after_new_tag.pl &quot;%NEWTAG%&quot; &quot;%RN%&quot; &quot;%GERRIT_HOST%&quot; &quot;%PROJECT%&quot; &quot;%DATE%&quot; &quot;%GERRIT_BRANCH%&quot; &quot;%VIpass%&quot; &quot;%Jirapass%&quot; &quot;%AuthorCommitter%&quot; &quot;%Destination%&quot;&#xd;
 &#xd;
+update_after_new_tag_test.pl &quot;%NEWTAG%&quot; &quot;%RN%&quot; &quot;%GERRIT_HOST%&quot; &quot;%PROJECT%&quot; &quot;%DATE%&quot; &quot;%GERRIT_BRANCH%&quot; &quot;%VIpass%&quot; &quot;%Jirapass%&quot; &quot;%AuthorCommitter%&quot; &quot;%Destination%&quot;&#xd;
+&#xd;
 copy log\%NewTag%.html %WORKSPACE%\index.html&#xd;
 if ERRORLEVEL 1 (&#xd;
     echo No log\%NewTag%.html file.. Abort&#xd;
