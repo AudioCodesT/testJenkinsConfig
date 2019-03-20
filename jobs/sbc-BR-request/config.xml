@@ -38,7 +38,7 @@ In the compilation folder please make sure that it contains the following cmps:&
           <name>TAG</name>
           <description>Example: 7.20A.251.512
 Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</description>
-          <defaultValue></defaultValue>
+          <defaultValue> 7.20A.</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -49,8 +49,7 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>MODE</name>
-          <description>Full for SBC tests.
-Others are N/A</description>
+          <description>For now, the only available option is: Full</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>Full</string>
