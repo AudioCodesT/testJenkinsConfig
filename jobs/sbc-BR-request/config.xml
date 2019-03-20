@@ -60,12 +60,6 @@ Others are N/A</description>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>CurrentBatchID</name>
-          <description>In case you execute manually a BR that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -90,12 +84,6 @@ Others are N/A</description>
     <hudson.tasks.Shell>
       <command># send Batch Runner request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
-
-if [ ! -z $CurrentBatchID ]; then
-  echo LinkToPage=&quot;---&quot; &gt; generated_BR.properties
-  echo batchID=${CurrentBatchID} &gt;&gt; generated_BR.properties
-  exit 0
-fi
 
 echo BUILD_USER: $BUILD_USER
 echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
