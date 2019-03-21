@@ -194,7 +194,7 @@ elif [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD
     VERNUM=$MAJOR.$MINOR.$POINT
 else
-    exit -1
+    exit 1
 fi
 
 
