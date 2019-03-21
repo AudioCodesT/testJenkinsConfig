@@ -80,6 +80,7 @@ Copy AMI to all Regions and make him public</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -110,7 +111,7 @@ Copy AMI to all Regions and make him public</description>
   </scm>
   <assignedNode>ems-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -245,6 +246,8 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
           <updateTag>true</updateTag>
         </hudson.plugins.git.GitPublisher_-TagToPush>
       </tagsToPush>
+      <branchesToPush/>
+      <notesToPush/>
     </hudson.plugins.git.GitPublisher>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
@@ -301,6 +304,7 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
               <string>SUCCESS</string>
             </results>
             <role>BOTH</role>
+            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
