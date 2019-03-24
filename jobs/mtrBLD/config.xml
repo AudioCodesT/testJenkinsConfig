@@ -120,6 +120,7 @@ set -e
 
 cd $WORKSPACE
 #
+rm release.prop
 
 # we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$(git ls-remote | grep refs/heads/${GERRIT_BRANCH} | cut -f 1 | head -n 1 )
@@ -127,7 +128,6 @@ echo &quot;Last commit on Gerrit: ${LastGerritCommitHash}&quot;
 echo &quot;Current commit: ${GERRIT_PATCHSET_REVISION}&quot;
 if [[ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]]; then
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
-    echo ABORT_BUILD=TRUE &gt; release.prop
     exit 0
 fi
 
@@ -210,7 +210,6 @@ else
         NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
         NEWTAG=&quot;$MASTER_TAG_$NEWTAG_TAIL&quot;
     else
-        echo ABORT_BUILD=TRUE &gt; release.prop
         exit 0
     fi
 fi
