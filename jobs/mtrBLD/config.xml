@@ -171,7 +171,6 @@ else
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;CURRENT_BR_NAME: $CURRENT_BR_NAME&quot;
     echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
-    echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
 
@@ -179,9 +178,14 @@ else
     if [[ ${array[@]} =~ $GERRIT_PATH ]] &amp;&amp; [[ $LAST_TAG != *_* ]]; then
         # We are on a branch that is NOT master and this is the first build
         # on the branch (No branch tag yet).
+        # We mark the tag with the first letter of the branch family:
+        # c --&gt; collab
+        # f --&gt; feature
+        # s --&gt; sprint
+        FAMILY=${GERRIT_PATH:0:1}
         # The new tag is the master tag with a tail consists of
         # the current branch name dot build number 1 (first build on this branch)
-        NEWTAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BR_NAME&quot;.1
+        NEWTAG=&quot;$LAST_TAG_$FAMILY-$CURRENT_BR_NAME&quot;.1
     elif [[ $LAST_TAG == *_* ]]; then
         # We are on a branch that is NOT master and this is the first build
         # on the branch (Last tag is a branch tag).
