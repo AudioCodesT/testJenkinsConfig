@@ -251,7 +251,6 @@ echo &quot;**************************************************************&quot;
 echo &quot;**************************************************************&quot;
 echo &quot;**************************************************************&quot;
 </command>
-      <unstableReturn>1</unstableReturn>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.core.FileExistsCondition" plugin="run-condition@1.0">
