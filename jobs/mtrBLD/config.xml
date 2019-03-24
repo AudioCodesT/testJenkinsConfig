@@ -154,6 +154,13 @@ CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
 GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
 # remove trailing `/`
 GERRIT_PATH=${GERRIT_PATH::-1}
+echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+echo &quot;CURRENT_BR_NAME: $CURRENT_BR_NAME&quot;
+echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
+echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
+echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
 
 array=(&quot;collab&quot; &quot;feature&quot; &quot;sprint&quot;)
 if [[ ${array[@]} =~ $GERRIT_PATH ]] &amp;&amp; [[ $LAST_TAG != *_* ]]; then
