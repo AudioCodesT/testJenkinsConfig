@@ -120,7 +120,7 @@ set -e
 
 cd $WORKSPACE
 #
-rm release.prop
+[[ -f release.prop ]] &amp;&amp; rm release.prop
 
 # we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$(git ls-remote | grep refs/heads/${GERRIT_BRANCH} | cut -f 1 | head -n 1 )
