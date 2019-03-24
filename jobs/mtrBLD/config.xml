@@ -127,9 +127,15 @@ LastGerritCommitHash=$(git ls-remote | grep refs/heads/${GERRIT_BRANCH} | cut -f
 echo &quot;Last commit on Gerrit: ${LastGerritCommitHash}&quot;
 echo &quot;Current commit: ${GERRIT_PATCHSET_REVISION}&quot;
 if [[ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]]; then
-	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
+    echo &quot;*******************************************************************&quot;
+    echo &quot;*******************************************************************&quot;
+    echo &quot;*******************************************************************&quot;
+    echo &quot;******   This is not the last commit. Exit without building  ******&quot;
     echo ABORT_BUILD=TRUE &gt; release.prop
     echo NEWTAG=ABORTED &gt;&gt; release.prop
+    echo &quot;*******************************************************************&quot;
+    echo &quot;*******************************************************************&quot;
+    echo &quot;*******************************************************************&quot;
     exit 0
 fi
 
@@ -212,9 +218,15 @@ else
         NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
         NEWTAG=&quot;$MASTER_TAG_$NEWTAG_TAIL&quot;
     else
+        echo &quot;**************************************************************&quot;
+        echo &quot;**************************************************************&quot;
+        echo &quot;**************************************************************&quot;
         echo &quot;Branch not in list for build. Aborting job!!!&quot;
         echo ABORT_BUILD=TRUE &gt; release.prop
         echo NEWTAG=ABORTED &gt;&gt; release.prop
+        echo &quot;**************************************************************&quot;
+        echo &quot;**************************************************************&quot;
+        echo &quot;**************************************************************&quot;        
         exit 0
     fi
 fi
