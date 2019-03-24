@@ -160,6 +160,7 @@ ARTIFACTORY=artifactory</propertiesContent>
       <command>#!/bin/bash -x
 
 artifactory_host=${ARTIFACTORY}
+ArtUser=&quot;admin:$artifactory_password&quot;
 cd TrunkPackRam
 
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
@@ -190,7 +191,7 @@ fi
 
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
-if [ `curl -k -s $User https://$artifactory_host/api/storage/sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/Mibs.zip | grep uri | wc -l` == 1 ]
+if [ `curl -u $ArtUser -ks https://$artifactory_host/api/storage/sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/Mibs.zip | grep uri | wc -l` == 1 ]
 then 
 	echo ${NEWTAG}/Mibs.zip exist already!... Abort with error;
     exit 1
@@ -256,29 +257,29 @@ fi
 git submodule--helper list | cut -d&apos; &apos; -f2 | \
 while read -r sha1
 do 
-  SubComps=$(curl -k -s &quot;https://$artifactory_host/api/search/prop?vcs.revision=$sha1&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4)
+  SubComps=$(curl -u $ArtUser -ks &quot;https://$artifactory_host/api/search/prop?vcs.revision=$sha1&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4)
   if [[ $SubComps =~ .*/.* ]]; then 
     HttpsSubLoc=`echo $SubComps | cut -d&apos; &apos; -f1`
     HttpsSubLoc=`dirname $HttpsSubLoc`
     SubLoc=`echo $HttpsSubLoc | sed s/.*\\\/sbc\\\///`
     mkdir -p OpensourceVersions/$SubLoc
-    downloadUri=`curl -k -s $HttpsSubLoc/Versions.txt | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`
+    downloadUri=`curl -u $ArtUser -ks $HttpsSubLoc/Versions.txt | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`
     if [[ $downloadUri =~ https.* ]]; then
-       curl -k -s $downloadUri --output OpensourceVersions/$SubLoc/Versions.txt
+       curl -u $ArtUser -ks $downloadUri --output OpensourceVersions/$SubLoc/Versions.txt
     fi
     echo -e &quot;$NEWTAG\n&quot; &gt;&gt; OpensourceVersions/$SubLoc/Versions.txt
   fi
 done
 
 commit_sha1=`git ls-files --stage ../OpenSource/VRX | cut -f2 -d &apos; &apos;`
-curl -k -s &quot;https://$artifactory_host/api/search/prop?vcs.revision=$commit_sha1&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 &gt; files.list
+curl -u $ArtUser -ks &quot;https://$artifactory_host/api/search/prop?vcs.revision=$commit_sha1&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 &gt; files.list
 while read -r uri
 do
-   downloadUri=`curl -k -s $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`
+   downloadUri=`curl -u $ArtUser -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`
    outputFile=${downloadUri##*/}
           
-   if [[ &quot;fullimage_A.img&quot; == &quot;$outputFile&quot; ]]; then curl -k -s $downloadUri --output ADSL_A_F${NEWTAG}.img; fi
-   if [[ &quot;fullimage_B.img&quot; == &quot;$outputFile&quot; ]]; then curl -k -s $downloadUri --output ADSL_B_F${NEWTAG}.img; fi
+   if [[ &quot;fullimage_A.img&quot; == &quot;$outputFile&quot; ]]; then curl -u $ArtUser -ks $downloadUri --output ADSL_A_F${NEWTAG}.img; fi
+   if [[ &quot;fullimage_B.img&quot; == &quot;$outputFile&quot; ]]; then curl -u $ArtUser -ks $downloadUri --output ADSL_B_F${NEWTAG}.img; fi
 done &lt; &quot;files.list&quot;
 
 #replace backslash with space, because it is not a valid properties file if it includes a backslash char
@@ -424,6 +425,16 @@ $WORKSPACE/TrunkPackRam/OpensourceVersions/**/Versions.txt=&gt;com/ac/sbc</deplo
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artifactory_password</name>
+          <value>{AQAAABAAAAAQ9zUB2mgw/vtKGfIGIciCrPZwqcBz6y3PHlZn799R6Jc=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER} - ${NEWTAG}</template>
       <runAtStart>true</runAtStart>
