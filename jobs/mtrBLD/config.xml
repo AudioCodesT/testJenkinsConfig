@@ -127,6 +127,7 @@ echo &quot;Last commit on Gerrit: ${LastGerritCommitHash}&quot;
 echo &quot;Current commit: ${GERRIT_PATCHSET_REVISION}&quot;
 if [[ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]]; then
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
+    echo ABORT_BUILD=TRUE &gt; release.prop
     exit 0
 fi
 
@@ -209,7 +210,8 @@ else
         NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
         NEWTAG=&quot;$MASTER_TAG_$NEWTAG_TAIL&quot;
     else
-        exit 1
+        echo ABORT_BUILD=TRUE &gt; release.prop
+        exit 0
     fi
 fi
 
@@ -228,6 +230,7 @@ GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
 #User=`git log --first-parent --pretty=format:&quot;%cN&quot; $LAST_TAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
 
 # Prepare job`s envirinment variables
+echo ABORT_BUILD=FALSE &gt; release.prop
 echo NEW_BUILD=${NEW_BUILD} &gt; release.prop
 echo NEWTAG=${NEWTAG} &gt;&gt; release.prop
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; release.prop
@@ -252,29 +255,21 @@ echo &quot;**************************************************************&quot;
       <unstableReturn>1</unstableReturn>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
-        <worstResult>
-          <name>ABORTED</name>
-          <ordinal>4</ordinal>
-          <color>ABORTED</color>
-          <completeBuild>false</completeBuild>
-        </worstResult>
-        <bestResult>
-          <name>UNSTABLE</name>
-          <ordinal>1</ordinal>
-          <color>YELLOW</color>
-          <completeBuild>true</completeBuild>
-        </bestResult>
+      <condition class="org.jenkins_ci.plugins.run_condition.core.FileExistsCondition" plugin="run-condition@1.0">
+        <file>release.prop</file>
+        <baseDir class="org.jenkins_ci.plugins.run_condition.common.BaseDirectory$Workspace"/>
       </condition>
-      <buildStep class="hudson.plugins.powershell.PowerShell" plugin="powershell@1.3">
-        <command>Write-Host &quot;******************************************************&quot;
-Write-Host &quot;******************************************************&quot;
-Write-Host &quot;***  Build step was not successful. Aborting job!  ***&quot;
-Write-Host &quot;******************************************************&quot;
-Write-Host &quot;******************************************************&quot;
-exit -1</command>
+      <buildStep class="hudson.tasks.BatchFile">
+        <command>echo &quot;===============================================================================================&quot;&#xd;
+echo &quot;===============================================================================================&quot;&#xd;
+echo &quot;===============================================================================================&quot;&#xd;
+echo &quot;====================== Build conditions not satisfying! Aborting! =============================&quot;&#xd;
+echo &quot;===============================================================================================&quot;&#xd;
+echo &quot;===============================================================================================&quot;&#xd;
+echo &quot;===============================================================================================&quot;&#xd;
+exit 0</command>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
@@ -472,10 +467,9 @@ build.bat %NEW_BUILD%&#xd;
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
-            <arg1>$WTB</arg1>
-            <arg2>ByBranch</arg2>
-            <ignoreCase>true</ignoreCase>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.FileExistsCondition" plugin="run-condition@1.0">
+            <file>release.prop</file>
+            <baseDir class="org.jenkins_ci.plugins.run_condition.common.BaseDirectory$Workspace"/>
           </condition>
           <publisherList>
             <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
