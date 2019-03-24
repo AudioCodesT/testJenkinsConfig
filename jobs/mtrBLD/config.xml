@@ -499,13 +499,6 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
                 </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
               </configs>
             </hudson.plugins.parameterizedtrigger.BuildTrigger>
-          </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
-          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
-        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
-          <publisherList>
             <hudson.tasks.ArtifactArchiver>
               <artifacts>Deployment\Release\BuildLogs\**\*.*</artifacts>
               <allowEmptyArchive>false</allowEmptyArchive>
