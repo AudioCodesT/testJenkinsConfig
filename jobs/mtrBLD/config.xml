@@ -207,7 +207,7 @@ else
         NEW_BUILD=$(echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;)
     
         NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-        NEWTAG=&quot;$MASTER_TAG&quot;_&quot;$NEWTAG_TAIL&quot;
+        NEWTAG=&quot;$MASTER_TAG_$FAMILY-$NEWTAG_TAIL&quot;
     else
         exit 1
     fi
