@@ -149,46 +149,7 @@ DATE=`date`
 #
 # Define new tag
 
-# Extract the branch name from the branch path on Gerrit
-CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
-GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
-# remove trailing `/`
-GERRIT_PATH=${GERRIT_PATH::-1}
-echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-echo &quot;CURRENT_BR_NAME: $CURRENT_BR_NAME&quot;
-echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
-echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
-echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-
-array=(&quot;collab&quot; &quot;feature&quot; &quot;sprint&quot;)
-if [[ ${array[@]} =~ $GERRIT_PATH ]] &amp;&amp; [[ $LAST_TAG != *_* ]]; then
-    # We are on a branch that is NOT master and this is the first build
-    # on the branch (No branch tag yet).
-    # The new tag is the master tag with a tail consists of
-    # the current branch name dot build number 1 (first build on this branch)
-    NEWTAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BR_NAME&quot;.1
-elif [[ $LAST_TAG == *_* ]]; then
-    # We are on a branch that is NOT master and this is the first build
-    # on the branch (Last tag is a branch tag).
-    # Tha build number from the (last) branch tag is incremented.
-    #
-    # TAG_TAIL is everything after the first `_`
-    TAG_TAIL=${LAST_TAG#*_}
-    LAST_BR_TAG=$(echo $TAG_TAIL | gawk -F&apos;_&apos; &apos;{print $NF}&apos;)
-    LAST_BR_NAME=$(echo $LAST_BR_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;)
-    LAST_BR_BUILD=$(echo $LAST_BR_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;)
-    # MASTER_TAG is LAST_TAG without TAG_TAIL
-    MASTER_TAG=${LAST_TAG%&quot;$TAG_TAIL&quot;}
-    # But need to drop the trailing `_`
-    MASTER_TAG=${MASTER_TAG::-1}
-    
-    NEW_BUILD=$(echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;)
-    
-    NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-    NEWTAG=&quot;$MASTER_TAG&quot;_&quot;$NEWTAG_TAIL&quot;
-elif [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
+if [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
     # We are building a submit on branch `master`
     MAJOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo $LAST_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
@@ -201,7 +162,48 @@ elif [[ $GERRIT_BRANCH == &quot;master&quot; ]]; then
     NEWTAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD
     VERNUM=$MAJOR.$MINOR.$POINT
 else
-    exit 1
+    # Extract the branch name from the branch path on Gerrit
+    CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
+    GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
+    # remove trailing `/`
+    GERRIT_PATH=${GERRIT_PATH::-1}
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;CURRENT_BR_NAME: $CURRENT_BR_NAME&quot;
+    echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
+    echo &quot;GERRIT_PATH:     $GERRIT_PATH&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+
+    array=(&quot;collab&quot; &quot;feature&quot; &quot;sprint&quot;)
+    if [[ ${array[@]} =~ $GERRIT_PATH ]] &amp;&amp; [[ $LAST_TAG != *_* ]]; then
+        # We are on a branch that is NOT master and this is the first build
+        # on the branch (No branch tag yet).
+        # The new tag is the master tag with a tail consists of
+        # the current branch name dot build number 1 (first build on this branch)
+        NEWTAG=&quot;$LAST_TAG&quot;_&quot;$CURRENT_BR_NAME&quot;.1
+    elif [[ $LAST_TAG == *_* ]]; then
+        # We are on a branch that is NOT master and this is the first build
+        # on the branch (Last tag is a branch tag).
+        # Tha build number from the (last) branch tag is incremented.
+        #
+        # TAG_TAIL is everything after the first `_`
+        TAG_TAIL=${LAST_TAG#*_}
+        LAST_BR_TAG=$(echo $TAG_TAIL | gawk -F&apos;_&apos; &apos;{print $NF}&apos;)
+        LAST_BR_NAME=$(echo $LAST_BR_TAG | gawk -F&apos;.&apos; &apos;{print $1}&apos;)
+        LAST_BR_BUILD=$(echo $LAST_BR_TAG | gawk -F&apos;.&apos; &apos;{print $2}&apos;)
+        # MASTER_TAG is LAST_TAG without TAG_TAIL
+        MASTER_TAG=${LAST_TAG%&quot;$TAG_TAIL&quot;}
+        # But need to drop the trailing `_`
+        MASTER_TAG=${MASTER_TAG::-1}
+
+        NEW_BUILD=$(echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;)
+    
+        NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
+        NEWTAG=&quot;$MASTER_TAG&quot;_&quot;$NEWTAG_TAIL&quot;
+    else
+        exit 1
+    fi
 fi
 
 
