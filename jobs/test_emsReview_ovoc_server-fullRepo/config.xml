@@ -111,7 +111,7 @@ cd ${WORKSPACE}
 
 
 ## Run FindBugs on entire repository java files
-/opt/findbugs/bin/findbugs -textui -maxHeap 1024 -medium -xml -output findbugs.xml \
+/opt/findbugs/bin/findbugs -textui -maxHeap 2048 -medium -xml -output findbugs.xml \
 ${WORKSPACE}/clm/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar \
