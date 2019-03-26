@@ -172,9 +172,9 @@ if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
     VERNUM=${MAJOR}.${MINOR}.${POINT}
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;TAG_BUILD:           ${TAG_BUILD}&quot;
-    echo &quot;NEW_BUILD:           ${NEW_BUILD}&quot;
-    echo &quot;NEWTAG:                 ${NEWTAG}&quot;
+    echo &quot;TAG_BUILD:        ${TAG_BUILD}&quot;
+    echo &quot;NEW_BUILD:        ${NEW_BUILD}&quot;
+    echo &quot;NEWTAG:           ${NEWTAG}&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
 else
@@ -191,13 +191,13 @@ else
     # s --&gt; sprint
     FAMILY=${GERRIT_PATH:0:1}
     
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;CURRENT_BR_NAME: ${CURRENT_BR_NAME}&quot;
     echo &quot;GERRIT_PATH:     ${GERRIT_PATH}&quot;
     echo &quot;FAMILY:          ${FAMILY}&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     
     if [[ ${array[@]} =~ ${GERRIT_PATH} ]] &amp;&amp; [[ ${LAST_TAG} != *_* ]]; then
         # We are on a branch that is NOT master and this is the first build
