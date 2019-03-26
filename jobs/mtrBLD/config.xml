@@ -158,7 +158,7 @@ DATE=`date`
 #
 # Define new tag
 
-if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
+if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]] || [[ -z &quot;${GERRIT_BRANCH}&quot; ]]; then
     # We are building a submit on branch `master`
     MAJOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
