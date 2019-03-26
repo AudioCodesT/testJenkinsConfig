@@ -170,6 +170,13 @@ if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
     #NEWTAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD$SUFFIX
     NEWTAG=${MAJOR}.${MINOR}.${POINT}.${NEW_BUILD}
     VERNUM=${MAJOR}.${MINOR}.${POINT}
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;TAG_BUILD=${TAG_BUILD}&quot;
+    echo &quot;NEW_BUILD=${NEW_BUILD}&quot;
+    echo &quot;NEWTAG=${NEWTAG}&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
 else
     # Extract the branch name from the branch path on Gerrit
     CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
