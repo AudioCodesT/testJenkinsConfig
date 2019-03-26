@@ -459,9 +459,10 @@ Invoke-Elevated -ScriptBlock {
       <buildStep class="hudson.tasks.BatchFile">
         <command>echo &quot;Running build batch with build number (%NEW_BUILD%)&quot;&#xd;
 cd Build&#xd;
-build.bat %NEW_BUILD%&#xd;
+call build.bat %NEW_BUILD%&#xd;
 &#xd;
 IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; /s&#xd;
+&#xd;
 &quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\&#xd;
 &#xd;
 </command>
