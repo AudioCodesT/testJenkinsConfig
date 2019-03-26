@@ -172,9 +172,9 @@ if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
     VERNUM=${MAJOR}.${MINOR}.${POINT}
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;TAG_BUILD=${TAG_BUILD}&quot;
-    echo &quot;NEW_BUILD=${NEW_BUILD}&quot;
-    echo &quot;NEWTAG=${NEWTAG}&quot;
+    echo &quot;TAG_BUILD:           ${TAG_BUILD}&quot;
+    echo &quot;NEW_BUILD:           ${NEW_BUILD}&quot;
+    echo &quot;NEWTAG:                 ${NEWTAG}&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
     echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
 else
