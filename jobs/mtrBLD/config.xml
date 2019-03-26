@@ -33,7 +33,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
@@ -198,7 +197,7 @@ else
         # on the branch (No branch tag yet).
         # The new tag is the master tag with a tail consists of
         # the current branch name dot build number 1 (first build on this branch)
-        NEWTAG=&quot;$LAST_TAG_$FAMILY-$CURRENT_BR_NAME&quot;.1
+        NEWTAG=&quot;$LAST_TAG&quot;_&quot;$FAMILY-&quot;$CURRENT_BR_NAME&quot;.1
     elif [[ $LAST_TAG == *_* ]]; then
         # We are on a branch that is NOT master and this is the first build
         # on the branch (Last tag is a branch tag).
@@ -217,7 +216,7 @@ else
         NEW_BUILD=$(echo $LAST_BR_BUILD | gawk &apos;{print $1+1}&apos;)
     
         NEWTAG_TAIL=$(echo $TAG_TAIL | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-        NEWTAG=&quot;$MASTER_TAG_$NEWTAG_TAIL&quot;
+        NEWTAG=&quot;$MASTER_TAG&quot;_&quot;$NEWTAG_TAIL&quot;
     else
         echo &quot;**************************************************************&quot;
         echo &quot;**************************************************************&quot;
