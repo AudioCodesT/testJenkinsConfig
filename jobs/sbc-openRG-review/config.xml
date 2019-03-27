@@ -203,6 +203,7 @@ echo tpChange: $refs
 
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+cat ~/.netrc
 cd ../..
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
@@ -245,7 +246,7 @@ fi
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
