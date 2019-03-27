@@ -203,7 +203,6 @@ echo tpChange: $refs
 
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
-cat ~/.netrc
 cd ../..
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
