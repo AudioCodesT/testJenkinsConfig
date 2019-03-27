@@ -196,6 +196,11 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>yossim shuky.richad</recipients>
+      <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>Try again later after 300 seconds</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
