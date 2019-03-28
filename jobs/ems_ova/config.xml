@@ -88,61 +88,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>cd ${WORKSPACE}/EMS/VersionRelease
-echo &lt;&lt; EOF &gt; cnlsender.py
-import paramiko
-import select
-import time
-import re
-import sys
-import traceback
 
-def sendWait(channel, command, timeout=20.0, waitfor=&quot;#&quot;):
-        channel.send(command + &quot;\n&quot;)
-        return justWait(channel, timeout, waitfor)
-def sendWithoutWait(channel, command, timeout=15.0, waitfor=&quot;#&quot;):
-        channel.send(command + &quot;\n&quot;)
-        return &quot;&quot;
-
-def manualFlush(channel):
-        for x in range(5):
-                rl, wl, xl = select.select([channel],[],[],1.0)
-                if len(rl) &gt; 0:
-                        line = channel.recv(1024)
-                        print line
-
-def justWait(channel, timeout=5.0, waitfor=&quot;#&quot;,root_password=&quot;root&quot;,acems_password=&quot;acems&quot;):
-        t=time.time()
-        received=&quot;&quot;
-        while True:
-                rl, wl, xl = select.select([channel],[],[],1.0)
-                if len(rl) &gt; 0:
-                        line = channel.recv(1024)
-                        print line,
-                        received+=line
-                        if re.search(&quot;Press Enter to continue&quot;,line):
-                                channel.send(&quot;\n&quot;)
-                        if re.search(&quot;Press Enter to reboot...&quot;,line):
-                                channel.send(&quot;\n&quot;)
-                                time.sleep(200)
-                                return &apos;reboot&apos;
-                        if re.search(&quot;FATAL ERROR:&quot;,line):
-                                return &apos;fatalerror&apos;
-                        if re.search(&quot;patch installation may take up to&quot;,line):
-                                timeout=timeout+1800.0 # patch installation -- enlarge the timeout by 30 minutes
-                        expression = r&quot;%s&quot; % waitfor
-                        if re.search(expression, line):
-                                line_list=received.split(&apos;\n&apos;);
-                                line_list.pop(0)
-                                if len(line_list)&gt;0:
-                                        line_list.pop()
-                                return &apos;\n&apos;.join(line_list)
-                if time.time()&gt;t+timeout:
-                        print &quot;\n\nTime out. Call stack:&quot;
-                        traceback.print_stack(file=sys.stdout)
-                        sys.exit(1);
-EOF
-
-echo python2.7 &lt;&lt; EOF
+echo python2.7 &lt;&lt; EOF &gt; hwFlag.py
 import paramiko
 import select
 import time
@@ -426,63 +373,7 @@ sleep 300
 ## Clean ovoc hardware minimal requirements workaround
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
-python2.7 &lt;&lt; EOF
-import paramiko
-import select
-import time
-import re
-import sys
-import traceback
-import cnlsender
-import re
-import os
-from collections import namedtuple
-
-
-root_username=&apos;root&apos;
-root_password=&apos;root&apos;
-acems_username=&apos;acems&apos;
-acems_password=&apos;acems&apos;
-
-ems_server_ip=&apos;10.7.10.77&apos;
-
-# IP Address validation
-if (not re.match(&quot;(^(\d|[01]?\d\d|2[0-4]\d|25[0-5])\.(\d|[01]?\d\d|2[0-4]\d|25[0-5])\.(\d|[01]?\d\d|2[0-4]\d|25[0-5])\.(\d|[01]?\d\d|2[0-4]\d|25[0-5])$)&quot;, ems_server_ip)):
-        print &quot;Invalid target IP address format. Exiting...&quot;
-        sys.exit(-1)
-
-def sendWait(command, timeout=5.0, waitfor=&quot;#&quot;):
-        return cnlsender.sendWait(channel, command, timeout, waitfor)
-
-def sendWithoutWait(command):
-        return cnlsender.sendWithoutWait(channel, command)
-
-def justWait(timeout=5.0, waitfor=&quot;#&quot;):
-        return cnlsender.justWait(channel, timeout, waitfor)
-
-try:
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect(ems_server_ip, port=22, username=acems_username, password=acems_password)
-        transport = client.get_transport()
-        channel = transport.open_session()
-        channel.get_pty(term=&apos;xterm&apos;, width=80, height=24)
-        channel.invoke_shell()
-except paramiko.AuthenticationException:
-        print &quot;We had an authentication exception!&quot;
-        shell = None
-
-# switching user to a root user
-justWait(10.0,&quot;\$&quot;)
-sendWait(&quot;su -&quot;,5.0,&quot;Password:&quot;)
-sendWait(root_password)
-
-sendWait(&quot;rm -f /ACEMS/acllab&quot;)
-
-channel.close
-client.close
-sys.exit(0);
-EOF
+python2.7 hwFlag.py &apos;off&apos; | tee -a $logfile
 
 echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
 cd EMS/VersionRelease
@@ -568,6 +459,9 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>cd ${WORKSPACE}/EMS/VersionRelease</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
