@@ -129,6 +129,7 @@ FullTesting=&quot;1&quot;
 vmHostIP=&quot;10.7.10.7&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
+ovocIP=&quot;10.7.10.77&quot;
 
 # Get ESXi password from encrypted file
 cd ~/.ssl
