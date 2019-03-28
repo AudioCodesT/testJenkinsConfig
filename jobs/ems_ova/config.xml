@@ -87,9 +87,6 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command></command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command>#############################################################################
 #############################################################################
 ##### Fetching changes submitted to gerrit without waiting for a build ######
