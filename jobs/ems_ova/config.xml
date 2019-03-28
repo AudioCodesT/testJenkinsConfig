@@ -496,7 +496,8 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
         <filePath></filePath>
       </downloadSpec>
       <deployPattern></deployPattern>
-      <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites</resolvePattern>
+      <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites
+ems-release:com/ac/ems/ovoc_server/Sanity_preReq/scripts/*.*=&gt;${workspace}/ovaPreRequisites/scripts</resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
