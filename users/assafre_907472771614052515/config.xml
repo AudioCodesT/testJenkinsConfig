@@ -66,13 +66,14 @@
         <string>Linuxusers</string>
         <string># MSBR</string>
         <string>AudioCodes_VPN</string>
+        <string># Tsachi Or Team</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1552995386572</timestamp>
+      <timestamp>1553762301638</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Assaf.Recu@audiocodes.com</emailAddress>
