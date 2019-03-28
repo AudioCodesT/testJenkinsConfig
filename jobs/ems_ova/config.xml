@@ -87,76 +87,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd ${WORKSPACE}/EMS/VersionRelease
-
-echo &quot; \
-import paramiko \
-import select \
-import time \
-import re \
-import sys \
-import traceback \
-import cnlsender \
-import re \
-import os \
-from collections import namedtuple \
- \
-if len(sys.argv)!=2: \
-    print &quot;usage python hwFlag.py &lt; on | off &gt;&quot; \
-    sys.exit(-1) \
- \
-action=sys.argv[1] \
-     \
-root_username=&apos;root&apos; \
-root_password=&apos;root&apos; \
-acems_username=&apos;acems&apos; \
-acems_password=&apos;acems&apos; \
- \
-ems_server_ip=&apos;10.7.10.77&apos; \
- \
-# IP Address validation \
-if (not re.match(&quot;(^(\d|[01]?\d\d|2[0-4]\d|25[0-5])\.(\d|[01]?\d\d|2[0-4]\d|25[0-5])\.(\d|[01]?\d\d|2[0-4]\d|25[0-5])\.(\d|[01]?\d\d|2[0-4]\d|25[0-5])$)&quot;, ems_server_ip)): \
-        print &quot;Invalid target IP address format. Exiting...&quot; \
-        sys.exit(-1) \
- \
-def sendWait(command, timeout=5.0, waitfor=&quot;#&quot;): \
-        return cnlsender.sendWait(channel, command, timeout, waitfor) \
- \
-def sendWithoutWait(command): \
-        return cnlsender.sendWithoutWait(channel, command) \
- \
-def justWait(timeout=5.0, waitfor=&quot;#&quot;): \
-        return cnlsender.justWait(channel, timeout, waitfor) \
- \
-try: \
-        client = paramiko.SSHClient() \
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) \
-        client.connect(ems_server_ip, port=22, username=acems_username, password=acems_password) \
-        transport = client.get_transport() \
-        channel = transport.open_session() \
-        channel.get_pty(term=&apos;xterm&apos;, width=80, height=24) \
-        channel.invoke_shell() \
-except paramiko.AuthenticationException: \
-        print &quot;We had an authentication exception!&quot; \
-        shell = None \
- \
-# switching user to a root user \
-justWait(10.0,&quot;\$&quot;) \
-sendWait(&quot;su -&quot;,5.0,&quot;Password:&quot;) \
-sendWait(root_password) \
- \
-if action is &apos;set&apos;: \
-        sendWait(&quot;touch /ACEMS/acllab&quot;) \
-if action is &apos;del&apos;: \
-        sendWait(&quot;rm -f /ACEMS/acllab&quot;) \
- \
-channel.close \
-client.close \
-sys.exit(0); \
-&quot; &gt; hwFlag.py
-
-
-</command>
+      <command></command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>#############################################################################
