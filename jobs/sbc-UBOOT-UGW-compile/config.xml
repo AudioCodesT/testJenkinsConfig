@@ -131,7 +131,7 @@ sed -i.bak -e &apos;s:\(SUBLEVEL = \)[0-9]*:\1&apos;$SUBLEVEL&apos;:; s:\(EXTRAV
 cat version.mk
 
 # Check if a previous TAG exist - if not, take all the entire log
-PreTAG=$(git describe --tags HEAD^) || echo No previous TAG
+PreTAG=$(git describe --tags --abbrev=0 HEAD^) || echo No previous TAG
 if [ -z $PreTAG ]; then 
   git log --decorate &gt; ChangeLog.txt
 else 
@@ -156,7 +156,7 @@ sudo chown -R centos:centos .
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
