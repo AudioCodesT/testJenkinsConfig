@@ -240,6 +240,11 @@ echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
 ###################################################################################################
 # Install DVD 3 on basic vovoc server
 
+## Create ovoc hardware minimal requirements workaround
+echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+echo &quot;@@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot;
+sshpass -p &apos;acems&apos; ssh -o StrictHostKeyChecking=no acems@${ovocIP} touch /ACEMS/acllab
+
 # if branch is 7.4 then we dont run this step
 # in branch is higher than 7.4 then we need to arrange the directory EMS/target
 # so it will contain only the 5 jar files we copied from build-ovoc job archive
