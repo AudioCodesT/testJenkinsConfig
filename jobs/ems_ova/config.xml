@@ -244,6 +244,7 @@ echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
 ## Create ovoc hardware minimal requirements workaround
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
+cd ${WORKSPACE}/EMS/VersionRelease
 python2.7 hwFlag.py &apos;on&apos; | tee -a $logfile
 
 # if branch is 7.4 then we dont run this step
