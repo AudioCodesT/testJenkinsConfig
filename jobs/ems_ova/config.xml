@@ -462,7 +462,8 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cd ${WORKSPACE}/EMS/VersionRelease</command>
+      <command>cd ${WORKSPACE}/EMS/VersionRelease
+rm -f hwFlag.py</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
