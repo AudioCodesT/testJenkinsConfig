@@ -301,6 +301,7 @@ sleep 300
 # clean before export to OVA
 
 ## Clean ovoc hardware minimal requirements workaround
+cd EMS/VersionRelease
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 python2.7 hwFlag.py ${vmip} &apos;off&apos; | tee -a $logfile
