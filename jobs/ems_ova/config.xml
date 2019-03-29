@@ -245,7 +245,7 @@ echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 cd ${WORKSPACE}/EMS/VersionRelease
-python2.7 hwFlag.py &apos;on&apos; | tee -a $logfile
+python2.7 hwFlag.py ${vmip} &apos;on&apos; | tee -a $logfile
 
 # if branch is 7.4 then we dont run this step
 # in branch is higher than 7.4 then we need to arrange the directory EMS/target
@@ -303,7 +303,7 @@ sleep 300
 ## Clean ovoc hardware minimal requirements workaround
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
-python2.7 hwFlag.py &apos;off&apos; | tee -a $logfile
+python2.7 hwFlag.py ${vmip} &apos;off&apos; | tee -a $logfile
 
 echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
 cd EMS/VersionRelease
