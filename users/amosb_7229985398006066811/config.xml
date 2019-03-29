@@ -1,0 +1,105 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <version>10</version>
+  <id>amosb</id>
+  <fullName>Amos Bublil</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAw0/SKoAizJ177pVjxAdY9aLqDVYMQiHCv9q8QUyAmKDPsd9WTaWWEXSs6grm3LM26YnkOyfqXX8UqrxksPyJoYA==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>2e330302-c893-472c-8eb4-36985761885e</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>480f70a1a7d8cb2c7ab05a311ac0238156fae6203cb8e49a6050e52748436492</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>All</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>false</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string>Agile users</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string>System_Software</string>
+        <string>AWS_Jira_Users</string>
+        <string># All Cars</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
+        <string>WirelessUsers</string>
+        <string>Sp365-Devops-Read</string>
+        <string># SBC Infra System</string>
+        <string># SBC BSP</string>
+        <string>Allow Office365 Groups</string>
+        <string># All R&amp;D</string>
+        <string># SBC version release</string>
+        <string># R&amp;D System Software</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string># SBC</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string># R&amp;D MEM</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># All Cellular</string>
+        <string># All HotMobile</string>
+        <string># SBC Infra App</string>
+        <string>Linuxusers</string>
+        <string># BatchRunnerBlockStream</string>
+        <string>AudioCodes_VPN</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string># SBC OAM</string>
+        <string># R&amp;D Next Generation CPE</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string># SBC Infra Core</string>
+        <string># R&amp;D Sys SW Team Leaders</string>
+        <string># R&amp;D Application Group</string>
+      </roles>
+      <timestamp>1553855188163</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Amos.Bublil@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <jenkins.security.seed.UserSeedProperty>
+      <seed>f70d7578f21b0719</seed>
+    </jenkins.security.seed.UserSeedProperty>
+  </properties>
+</user>
