@@ -53,7 +53,7 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>TestMode</name>
-          <description>DRT: 
+          <description>DRT: Developers Regression Test
 FS: Full Sanity
 WS: Web Sanity
 FS-WS: Execute FS and WS</description>
