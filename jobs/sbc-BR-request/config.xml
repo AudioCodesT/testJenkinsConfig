@@ -38,7 +38,7 @@ In the compilation folder please make sure that it contains the following cmps:&
           <name>TAG</name>
           <description>Example: 7.20A.251.512
 Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</description>
-          <defaultValue> 7.20A.</defaultValue>
+          <defaultValue>7.20A.</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
