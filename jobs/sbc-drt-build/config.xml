@@ -309,7 +309,8 @@ GERRIT_BRANCH=${GERRIT_BRANCH}
 EMAIL=${EMAIL}
 BOARD=${BOARDNAME}_SIP.cmp
 REFTARGET=${TARGET}
-CHANGES=${CHANGESNumbers}</properties>
+CHANGES=${CHANGESNumbers}
+TestMode=${TestMode}</properties>
                 <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             </configs>
