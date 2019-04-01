@@ -46,7 +46,6 @@
       <roles>
         <string>authenticated</string>
         <string>AWS_Jira_Users</string>
-        <string># MSBR TsachiO Team</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -73,7 +72,7 @@
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1553762301638</timestamp>
+      <timestamp>1554143006040</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Assaf.Recu@audiocodes.com</emailAddress>
