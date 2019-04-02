@@ -2,13 +2,7 @@
 <project>
   <actions/>
   <description>trigger:&#xd;
-developer clicks gerrit UI button &quot;DRT&quot;&#xd;
-actions:&#xd;
-1. build all boards in &quot;boards2DRT.yml&quot;&#xd;
-2. deploy results to artifactory/sbc-review&#xd;
-2. download and share all results to \\netapp1 folder&#xd;
-3. send DRT request with major version and folder location&#xd;
-4. return the vote to gerrit label &quot;QA&quot;&#xd;
+developer clicks gerrit UI button &quot;Sanity&quot;&#xd;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -67,7 +61,7 @@ actions:&#xd;
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CurrentBatchID</name>
-          <description>In case you execute manually a DRT that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
+          <description>In case you execute manually a SANITY that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -99,7 +93,7 @@ actions:&#xd;
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># send DRT request and keep the serial number from the response:
+      <command># send SANITY request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
 #REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
 Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
@@ -110,9 +104,9 @@ GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
 
 if [ ! -z $CurrentBatchID ]; then
-  echo LinkToPage=&quot;---&quot; &gt; generated_drt.properties
-  echo batchID=${CurrentBatchID} &gt;&gt; generated_drt.properties
-  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+  echo LinkToPage=&quot;---&quot; &gt; generated_sanity.properties
+  echo batchID=${CurrentBatchID} &gt;&gt; generated_sanity.properties
+  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_sanity.properties
   exit 0
 fi
 
@@ -122,30 +116,30 @@ Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?Mod
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
-echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
-echo batchID=${batchID} &gt;&gt; generated_drt.properties
-echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+echo LinkToPage=${LinkToPage} &gt; generated_sanity.properties
+echo batchID=${batchID} &gt;&gt; generated_sanity.properties
+echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_sanity.properties
 
 if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
   echo $Output | grep &apos;BatchRunner Is Down&apos;
   echo &quot;No Batch ID... exit with error&quot;
-  echo Output=&quot;No Batch ID&quot; &gt;&gt; generated_drt.properties
+  echo Output=&quot;No Batch ID&quot; &gt;&gt; generated_sanity.properties
   exit 1;
 fi
 
 if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
   echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
-  echo Output=&quot;BatchRunner Is Down For Maintenance&quot; &gt;&gt; generated_drt.properties
+  echo Output=&quot;BatchRunner Is Down For Maintenance&quot; &gt;&gt; generated_sanity.properties
   exit 1;
 fi
 
-echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
+echo Output=&quot;Execution error&quot; &gt;&gt; generated_sanity.properties
 
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
-        <propertiesFilePath>generated_drt.properties</propertiesFilePath>
+        <propertiesFilePath>generated_sanity.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
@@ -168,9 +162,9 @@ else
 end
 
 data = {
-  message: &apos;DRT request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &quot;\n\nDRT status: &quot; + ENV[&apos;LinkToPage&apos;],
+  message: &apos;SANITY request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &quot;\n\nSANITY status: &quot; + ENV[&apos;LinkToPage&apos;],
   notify: &apos;NONE&apos;,
-  tag: &apos;autogenerated:drt&apos;,
+  tag: &apos;autogenerated:sanity&apos;,
 }
 
 require &apos;pp&apos;
@@ -181,7 +175,7 @@ system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command># check DRT status
+      <command># check SANITY status
 # &quot;BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed&quot;
 # Status options: 
 #    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
@@ -238,7 +232,7 @@ exit 1</command>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.5">
                         <info>
-                          <propertiesFilePath>generated_drt.properties</propertiesFilePath>
+                          <propertiesFilePath>generated_sanity.properties</propertiesFilePath>
                         </info>
                       </EnvInjectBuilder>
                     </buildSteps>
@@ -278,12 +272,12 @@ exit 1</command>
 
   echo Send OK message to Gerrit - $change,$ps
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT Passed successfully - $BUILD_URL \
+  --message &quot;&apos;SANITY Passed successfully - $BUILD_URL \
       CMP files: $url \
-      DRT results: $LinkToPage&apos;&quot; \
+      SANITY results: $LinkToPage&apos;&quot; \
   --notify OWNER \
-  --label DRT=1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --label SIP-Sanity=1 \
+  --tag &quot;&apos;autogenerated:sanity&apos;&quot; \
   $change,$ps
 
 done</command>
@@ -307,7 +301,7 @@ done</command>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.5">
                         <info>
-                          <propertiesFilePath>generated_drt.properties</propertiesFilePath>
+                          <propertiesFilePath>generated_sanity.properties</propertiesFilePath>
                         </info>
                       </EnvInjectBuilder>
                       <hudson.tasks.Shell>
@@ -318,13 +312,13 @@ done</command>
 
   echo Send failed message to Gerrit - $change,$ps
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT Failed - $BUILD_URL \
+  --message &quot;&apos;SANITY Failed - $BUILD_URL \
       CMP files: $url \
       Error message: $Output \
-      DRT results: $LinkToPage&apos;&quot; \
+      SANITY results: $LinkToPage&apos;&quot; \
   --notify OWNER \
-  --label DRT=-1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --label SIP-Sanity=-1 \
+  --tag &quot;&apos;autogenerated:sanity&apos;&quot; \
   $change,$ps
 
 done      
@@ -373,7 +367,7 @@ done
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>echo ----------------- Stop it after it was aborted --------------------
-curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+curl -s &quot;http://BatchRunner/AnonymousUser/StopFeatureBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 echo ----------------- Done ------------------------
 
 for rep in $CHANGES; do
@@ -382,9 +376,9 @@ for rep in $CHANGES; do
   ps=`echo $rep | cut -d/ -f2`
 
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT was aborted&apos;&quot; \
+  --message &quot;&apos;SANITY was aborted&apos;&quot; \
   --notify OWNER \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --tag &quot;&apos;autogenerated:sanity&apos;&quot; \
   $change,$ps
 
 done
