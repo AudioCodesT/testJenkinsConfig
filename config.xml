@@ -849,7 +849,6 @@
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
-        <string>test_emsReview_ovoc_server-fullRepo</string>
         <string>UpdateVI-Jira</string>
       </jobNames>
       <jobFilters/>
@@ -883,6 +882,7 @@
         <string>sbc-drt-request</string>
         <string>sbc-iso</string>
         <string>sbc-review</string>
+        <string>sbc-sanity-build</string>
         <string>sbc-simulator</string>
         <string>sbc-StackMgr</string>
         <string>sbc-user-build</string>
