@@ -120,53 +120,46 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
      if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
      echo Download $FileName to netapp1
      curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output &quot;$Target/$FileName&quot;
-     #ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
-     #DestSize=`wc -c &lt;$Target/$FileName`
-     #if [ $ArtSize != $DestSize ]; then 
-     #  echo $ArtSize--$DestSize: $file is differ, copy again...
-     #  rm -f $Target/$FileName
-     #  exit 1
-     #fi
    done &lt; &quot;$REFTARGET.list&quot;
 fi
 
 # Don&apos;t execute the next job in case you don&apos;t found 3 files
 if [ `ls $Target/*.cmp | wc -l` != 3 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
-# Check if sbc-drt-request job is in the queue or already running
-# to avoid more than one sbc-drt-request execution 
+# Check if sbc-sanity-request job is in the queue or already running
+# to avoid more than one sbc-sanity-request execution 
 for job in \
   $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt-request); do
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-sanity-request); do
   if echo $job | grep -q $REFSPEC; then
-    echo &quot;DRT was executed and waiting in the queue&quot;; 
+    echo &quot;Sanity was executed and waiting in the queue&quot;; 
     exit 2
   fi
 done
 
-# sbc-drt-request is running Already?
+# sbc-sanity-request is running Already?
 allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep drt)
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sanity)
 
-for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-drt-request); do
+for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-sanity-request); do
   if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-    echo &quot;DRT was executed already, job $job&quot;; 
+    echo &quot;SANITY was executed already, job $job&quot;; 
     exit 2
   fi
 done
 
-# Check the checksum of the 3 cmp files before executing the DRT itself
+# Check the checksum of the 3 cmp files before executing the SANITY itself
 for f in $Target/*.cmp; do
   checkSum1=$(curl -ks -u $User -X GET \
             $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
             grep md5 | head -1 | cut -d\&quot; -f4)
   checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
   if [ $checkSum1 != $checkSum2 ]; then
-    # sbc-drt-build is running now?
-    for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-drt-build); do
+    # sbc-sanity-build is running now?
+    for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-sanity-build); do
       if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-        echo &quot;sbc-drt-build is running now, job $job, the files are not ready yet&quot;; 
+        echo &quot;sbc-sanity-build is running now, job $job, the files are not ready yet&quot;; 
         exit 2
       fi
     done
@@ -201,7 +194,7 @@ done
 exit 0
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;DRT Compilation was complete, Sent to DRT system https://test-jenkins/view/SBC-GWApp/job/sbc-drt-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
+-d &quot;{\&quot;message\&quot;: \&quot;SANITY Compilation was complete, Sent to SANITY system https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
 -H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
         </hudson.tasks.Shell>
       </conditionalbuilders>
@@ -241,22 +234,22 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>
-# They are sbc-drt-build that running now?
-echo &quot;Check if they are sbc-drt-build that running now&quot;
+# They are sbc-sanity-build that running now?
+echo &quot;Check if they are sbc-sanity-build that running now&quot;
 for job in $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt-build); do
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-sanity-build); do
    if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
     echo &quot;Not the last execution, $job is in build processing - exit without message&quot;
     exit 1
    fi
 done
 
-# Or sbc-drt-copy-to-netapp1 in the queue?
-echo &quot;Check if they are sbc-drt-copy-to-netapp1 in the queue&quot;
+# Or sbc-sanity-copy-to-netapp1 in the queue?
+echo &quot;Check if they are sbc-sanity-copy-to-netapp1 in the queue&quot;
 for job in \
   $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt); do
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-sanity); do
   if echo $job | grep -q $REFSPEC; then
     echo &quot;Not the last execution, $job is in the queue - exit without message&quot;; 
     exit 1
@@ -266,7 +259,7 @@ done
 echo &quot;It is the last copy job, send a message to the user&quot;
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press DRT again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
+-d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press SANITY again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
 -H &apos;Content-Type: application/json&apos; &gt; /dev/null
 </command>
                       </hudson.tasks.Shell>
@@ -291,11 +284,12 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
 GERRIT_BRANCH=${GERRIT_BRANCH}
 EMAIL=${EMAIL}
 REFTARGET=${REFTARGET}
-CHANGES=${CHANGES}</properties>
+CHANGES=${CHANGES}
+TestMode=${TestMode}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>sbc-drt-request</projects>
+          <projects>sbc-sanity-request</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
