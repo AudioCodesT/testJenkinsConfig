@@ -561,7 +561,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-c2878797</name>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0cf55cf099df6ecee</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0cf55cf099df6ecee</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
+            <createdAt>2019-04-02 09:17:31.954 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -884,6 +895,7 @@
         <string>sbc-review</string>
         <string>sbc-sanity-build</string>
         <string>sbc-sanity-copy-to-netapp1</string>
+        <string>sbc-sanity-request</string>
         <string>sbc-simulator</string>
         <string>sbc-StackMgr</string>
         <string>sbc-user-build</string>
