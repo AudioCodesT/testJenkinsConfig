@@ -53,14 +53,14 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>TestMode</name>
-          <description>FS: Full Sanity
-WS: Web Sanity
-FS-WS: Execute FS and WS</description>
+          <description>SIP: SIP Sanity
+WEB: Web Sanity
+SIPWEB: Execute SIP and WEB</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>FS</string>
-              <string>WS</string>
-              <string>FS-WS</string>
+              <string>SIP</string>
+              <string>WEB</string>
+              <string>SIPWEB</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
