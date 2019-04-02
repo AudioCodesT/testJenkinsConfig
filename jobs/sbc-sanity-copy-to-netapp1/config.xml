@@ -66,7 +66,7 @@
         <hudson.model.StringParameterDefinition>
           <name>TestMode</name>
           <description></description>
-          <defaultValue>DRT</defaultValue>
+          <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -79,7 +79,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -131,8 +130,8 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
    done &lt; &quot;$REFTARGET.list&quot;
 fi
 
-# Don&apos;t execute the next job in case you don&apos;t found 5 files
-if [ `ls $Target/*.cmp | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
+# Don&apos;t execute the next job in case you don&apos;t found 3 files
+if [ `ls $Target/*.cmp | wc -l` != 3 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
 # Check if sbc-drt-request job is in the queue or already running
 # to avoid more than one sbc-drt-request execution 
@@ -157,7 +156,7 @@ for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-drt-request)
   fi
 done
 
-# Check the checksum of the 5 cmp files before executing the DRT itself
+# Check the checksum of the 3 cmp files before executing the DRT itself
 for f in $Target/*.cmp; do
   checkSum1=$(curl -ks -u $User -X GET \
             $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
@@ -239,7 +238,6 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
                       <string>FAILURE</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>
