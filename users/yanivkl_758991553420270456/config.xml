@@ -47,7 +47,6 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string>AWS_Jira_Users</string>
-        <string># MSBR TsachiO Team</string>
         <string># All__Beer_Sheva</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -75,7 +74,7 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
       </roles>
-      <timestamp>1553790083949</timestamp>
+      <timestamp>1554191639322</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Yaniv.Klinger@audiocodes.com</emailAddress>
