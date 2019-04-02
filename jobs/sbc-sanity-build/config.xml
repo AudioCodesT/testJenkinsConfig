@@ -53,13 +53,11 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>TestMode</name>
-          <description>DRT: Developers Regression Test
-FS: Full Sanity
+          <description>FS: Full Sanity
 WS: Web Sanity
 FS-WS: Execute FS and WS</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>DRT</string>
               <string>FS</string>
               <string>WS</string>
               <string>FS-WS</string>
@@ -80,7 +78,6 @@ FS-WS: Execute FS and WS</description>
         <throttleMatrixConfigurations>false</throttleMatrixConfigurations>
       </matrixOptions>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
@@ -367,7 +364,6 @@ TestMode=${TestMode}</properties>
                       <string>FAILURE</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.5">
                         <info>
