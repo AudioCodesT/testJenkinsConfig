@@ -116,8 +116,9 @@ if [ ! -z $CurrentBatchID ]; then
   exit 0
 fi
 
-#batchID=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&quot; --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed &apos;s/.*Black.&gt;//&apos; | sed &apos;s/&lt;.font&gt;.*//&apos;)&quot;
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+#Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
@@ -189,7 +190,7 @@ count=0
 
 for i in {1..5000}
 do
-  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetDrtBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
+  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetFeatureBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
   [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
   [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; ] &amp;&amp; exit 1
   [ &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; count=$((count+1))
@@ -198,7 +199,7 @@ do
 done
 
 echo Exit the while after some days
-curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+curl -s &quot;http://BatchRunner/AnonymousUser/StopFeatureBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 exit 1</command>
     </hudson.tasks.Shell>
   </builders>
