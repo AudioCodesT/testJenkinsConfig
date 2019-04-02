@@ -883,6 +883,7 @@
         <string>sbc-iso</string>
         <string>sbc-review</string>
         <string>sbc-sanity-build</string>
+        <string>sbc-sanity-copy-to-netapp1</string>
         <string>sbc-simulator</string>
         <string>sbc-StackMgr</string>
         <string>sbc-user-build</string>

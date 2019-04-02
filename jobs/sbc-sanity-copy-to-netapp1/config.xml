@@ -1,0 +1,382 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>5</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>REFSPEC</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>EMAIL</name>
+          <description></description>
+          <defaultValue>yossim@audiocodes.com</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>BOARD</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REFTARGET</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CHANGES</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TestMode</name>
+          <description></description>
+          <defaultValue>DRT</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>true</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>copy2netapp</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>User=&quot;$artifactory_user:$artifactory_password&quot;
+Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
+DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
+#REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
+
+# Create the folder in netapp1, in case it wasn&apos;t done already
+if ! [ -d &quot;$Target&quot; ]; then
+  mkdir &quot;$Target&quot;
+fi
+
+# if file was compiled successfully but not yet deployed to artifactory, then wait 30 sec
+if ! curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep -q $BOARD; then
+  sleep 30
+  echo Wait 30 seconds to $BOARD deploy is complete 
+  if ! curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep -q $BOARD; then
+    echo $BOARD is differ, copy again...
+    exit 1
+  fi
+fi
+
+# Go over all cmp files in the Artifactory and copy them to netapp1 ($Target)
+curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep uri | grep cmp | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $REFTARGET.list
+if [ -s &quot;$REFTARGET.list&quot; ]; then
+   while read -r FileName
+   do
+     if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
+     echo Download $FileName to netapp1
+     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output &quot;$Target/$FileName&quot;
+     #ArtSize=`curl -ks -X GET $Artifactory/DRT/Firmware/$REFTARGET/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+     #DestSize=`wc -c &lt;$Target/$FileName`
+     #if [ $ArtSize != $DestSize ]; then 
+     #  echo $ArtSize--$DestSize: $file is differ, copy again...
+     #  rm -f $Target/$FileName
+     #  exit 1
+     #fi
+   done &lt; &quot;$REFTARGET.list&quot;
+fi
+
+# Don&apos;t execute the next job in case you don&apos;t found 5 files
+if [ `ls $Target/*.cmp | wc -l` != 5 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
+
+# Check if sbc-drt-request job is in the queue or already running
+# to avoid more than one sbc-drt-request execution 
+for job in \
+  $(curl -ks https://test-jenkins/queue/api/json | \
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt-request); do
+  if echo $job | grep -q $REFSPEC; then
+    echo &quot;DRT was executed and waiting in the queue&quot;; 
+    exit 2
+  fi
+done
+
+# sbc-drt-request is running Already?
+allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep drt)
+
+for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-drt-request); do
+  if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
+    echo &quot;DRT was executed already, job $job&quot;; 
+    exit 2
+  fi
+done
+
+# Check the checksum of the 5 cmp files before executing the DRT itself
+for f in $Target/*.cmp; do
+  checkSum1=$(curl -ks -u $User -X GET \
+            $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
+            grep md5 | head -1 | cut -d\&quot; -f4)
+  checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
+  if [ $checkSum1 != $checkSum2 ]; then
+    # sbc-drt-build is running now?
+    for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-drt-build); do
+      if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
+        echo &quot;sbc-drt-build is running now, job $job, the files are not ready yet&quot;; 
+        exit 2
+      fi
+    done
+
+    echo Abort - the CheckSum of $(basename $f) is differ, copy again
+    rm -f $f
+    exit 1
+  fi
+done
+</command>
+      <unstableReturn>2</unstableReturn>
+    </hudson.tasks.Shell>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+        <worstResult>
+          <name>SUCCESS</name>
+          <ordinal>0</ordinal>
+          <color>BLUE</color>
+          <completeBuild>true</completeBuild>
+        </worstResult>
+        <bestResult>
+          <name>SUCCESS</name>
+          <ordinal>0</ordinal>
+          <color>BLUE</color>
+          <completeBuild>true</completeBuild>
+        </bestResult>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>echo &quot;Send a message regarding the compilation was comlete&quot;
+exit 0
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
+-d &quot;{\&quot;message\&quot;: \&quot;DRT Compilation was complete, Sent to DRT system https://test-jenkins/view/SBC-GWApp/job/sbc-drt-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
+-H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+  </builders>
+  <publishers>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+            <worstResult>
+              <name>ABORTED</name>
+              <ordinal>4</ordinal>
+              <color>ABORTED</color>
+              <completeBuild>false</completeBuild>
+            </worstResult>
+            <bestResult>
+              <name>FAILURE</name>
+              <ordinal>2</ordinal>
+              <color>RED</color>
+              <completeBuild>true</completeBuild>
+            </bestResult>
+          </condition>
+          <publisherList>
+            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
+              <config>
+                <scriptFiles/>
+                <groovyScripts/>
+                <buildSteps>
+                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                    <results>
+                      <string>NOT_BUILT</string>
+                      <string>ABORTED</string>
+                      <string>FAILURE</string>
+                    </results>
+                    <role>BOTH</role>
+                    <executeOn>BOTH</executeOn>
+                    <buildSteps>
+                      <hudson.tasks.Shell>
+                        <command>
+# They are sbc-drt-build that running now?
+echo &quot;Check if they are sbc-drt-build that running now&quot;
+for job in $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
+sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-drt-build); do
+   if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
+    echo &quot;Not the last execution, $job is in build processing - exit without message&quot;
+    exit 1
+   fi
+done
+
+# Or sbc-drt-copy-to-netapp1 in the queue?
+echo &quot;Check if they are sbc-drt-copy-to-netapp1 in the queue&quot;
+for job in \
+  $(curl -ks https://test-jenkins/queue/api/json | \
+  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-drt); do
+  if echo $job | grep -q $REFSPEC; then
+    echo &quot;Not the last execution, $job is in the queue - exit without message&quot;; 
+    exit 1
+  fi
+done
+
+echo &quot;It is the last copy job, send a message to the user&quot;
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
+-d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press DRT again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;DRT\&quot;}&quot; \
+-H &apos;Content-Type: application/json&apos; &gt; /dev/null
+</command>
+                      </hudson.tasks.Shell>
+                    </buildSteps>
+                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                </buildSteps>
+                <markBuildUnstable>false</markBuildUnstable>
+              </config>
+            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>REFSPEC=${REFSPEC}
+GERRIT_BRANCH=${GERRIT_BRANCH}
+EMAIL=${EMAIL}
+REFTARGET=${REFTARGET}
+CHANGES=${CHANGES}</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>sbc-drt-request</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>yossim Shuky.Riechard</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders/>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>is differ, copy again</regexpForRerun>
+      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>5</delay>
+      </delay>
+      <maxSchedule>1</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1200</timeoutSecondsString>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.AbortOperation/>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+      <info>
+        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.55">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artifactory_password</name>
+          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER}__${REFSPEC}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
