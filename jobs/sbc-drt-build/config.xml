@@ -51,21 +51,6 @@
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>TestMode</name>
-          <description>DRT: Developers Regression Test
-FS: Full Sanity
-WS: Web Sanity
-FS-WS: Execute FS and WS</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>DRT</string>
-              <string>FS</string>
-              <string>WS</string>
-              <string>FS-WS</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -309,8 +294,7 @@ GERRIT_BRANCH=${GERRIT_BRANCH}
 EMAIL=${EMAIL}
 BOARD=${BOARDNAME}_SIP.cmp
 REFTARGET=${TARGET}
-CHANGES=${CHANGESNumbers}
-TestMode=${TestMode}</properties>
+CHANGES=${CHANGESNumbers}</properties>
                 <textParamValueOnNewLine>false</textParamValueOnNewLine>
               </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             </configs>
