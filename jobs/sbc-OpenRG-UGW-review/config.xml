@@ -245,6 +245,8 @@ git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA \
     Shared \
     OpenSource/pkgs
 
+ls -l
+
 cd $WORKSPACE
 
 #Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
