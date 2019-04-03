@@ -113,7 +113,7 @@ fi
 
 #Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=Full&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=Full&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;BatchTag=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
