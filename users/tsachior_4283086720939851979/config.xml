@@ -47,7 +47,6 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string>AWS_Jira_Users</string>
-        <string># MSBR TsachiO Team</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>cc_users</string>
@@ -72,6 +71,7 @@
         <string>Linuxusers</string>
         <string># MSBR</string>
         <string>AudioCodes_VPN</string>
+        <string># Tsachi Or Team</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -79,7 +79,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1551945849129</timestamp>
+      <timestamp>1554295655953</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Tsachi.Or@audiocodes.com</emailAddress>
