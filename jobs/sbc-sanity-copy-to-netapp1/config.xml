@@ -1,7 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Started by job &quot;sbc-sanity-build&quot; for each successful compiled board.&#xd;
+If the 3 requested boards were compiled, this job will trigger the job &quot;sbc-sanity-request&quot; </description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -194,7 +195,7 @@ done
 exit 0
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;SANITY Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
+-d &quot;{\&quot;message\&quot;: \&quot;$TestMode Sanity Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
 -H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
         </hudson.tasks.Shell>
       </conditionalbuilders>
@@ -259,7 +260,7 @@ done
 echo &quot;It is the last copy job, send a message to the user&quot;
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press SANITY again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
+-d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press Sanity again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
 -H &apos;Content-Type: application/json&apos; &gt; /dev/null
 </command>
                       </hudson.tasks.Shell>
