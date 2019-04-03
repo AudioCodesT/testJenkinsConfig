@@ -190,11 +190,11 @@ done
       </runCondition>
       <conditionalbuilders>
         <hudson.tasks.Shell>
-          <command>echo &quot;Send a message regarding the compilation was comlete&quot;
+          <command>echo &quot;Send a message regarding the compilation was completed&quot;
 exit 0
 revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;SANITY Compilation was complete, Sent to SANITY system https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
+-d &quot;{\&quot;message\&quot;: \&quot;SANITY Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
 -H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
         </hudson.tasks.Shell>
       </conditionalbuilders>
