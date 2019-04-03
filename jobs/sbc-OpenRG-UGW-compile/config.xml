@@ -192,9 +192,10 @@ if [ ! -d .git ]; then
 else
   git fetch origin $GERRIT_BRANCH
 fi
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA-UGW
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA \
+    TrunkPackRam/acInfrastructure/MCA-UGW \
+    TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
+    OpenSource/pkgs
 
 cd $WORKSPACE
 
