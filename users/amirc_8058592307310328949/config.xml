@@ -46,7 +46,7 @@
       <roles>
         <string>authenticated</string>
         <string>AWS_Jira_Users</string>
-        <string># SBC Networking</string>
+        <string># Guy Amit Team</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -70,7 +70,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1550646767720</timestamp>
+      <timestamp>1554288593169</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amir.Catran@audiocodes.com</emailAddress>
