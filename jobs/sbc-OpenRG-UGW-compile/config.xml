@@ -36,7 +36,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -48,7 +48,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -147,7 +147,22 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed s:.*origin/::`
+GERRIT_BRANCH=$(git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | sed &apos;s:.*origin/::&apos;)
+if [ $(echo $GERRIT_BRANCH | wc -w) -gt 1 ]; then
+    header=$(git log -1 --pretty=format:%d)
+    if echo $header | grep -q origin/; then
+      GERRIT_BRANCH=$(echo $header | sed &apos;s:.* origin/::; s:\()\|,\).*::&apos; | cut -d&quot; &quot; -f1)
+    else
+      GERRIT_BRANCH=$(echo $GERRIT_BRANCH | cut -d&quot; &quot; -f1)
+    fi
+fi
+if [ -z $GERRIT_BRANCH ]; then
+  echo Branch does not found, exit with error
+  exit 1
+fi
+
+
+
 #echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 cat ~/.netrc
 
