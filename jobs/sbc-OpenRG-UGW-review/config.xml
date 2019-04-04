@@ -132,6 +132,7 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>workspace/sbc-OpenRG-UGW-review/OpenSource/OpenRG-UGW</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>BL=`git describe --tags --first-parent | sed s/-/_/g`
@@ -244,8 +245,6 @@ git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
     OpenSource/pkgs
 
-ls -l
-
 cd $WORKSPACE
 
 #Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
@@ -339,7 +338,7 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/MP5XXNG.OpenRG*.gz=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}
+      <deployPattern>${WORKSPACE}/MP5XXNG.OpenRG.img.gz=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}
 $WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
