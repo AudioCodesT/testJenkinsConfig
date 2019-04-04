@@ -59,6 +59,7 @@
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
+        <string># Hagay Halili Team</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string># MP20x Support</string>
@@ -69,9 +70,8 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>Sp365-rdipp-modify</string>
-        <string># MSBR Hagay Halili Team</string>
       </roles>
-      <timestamp>1551703811799</timestamp>
+      <timestamp>1554383105991</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Ariel.Yurman@audiocodes.com</emailAddress>
