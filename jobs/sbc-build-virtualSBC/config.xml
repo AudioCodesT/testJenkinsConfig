@@ -21,8 +21,9 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>Tag</name>
-          <description>Could be any desired TAG (without the &apos;F&apos; prefix) or branch name</description>
-          <defaultValue>7.20A.203.524</defaultValue>
+          <description>Could be any desired TAG (without the &apos;F&apos; prefix) or branch name
+e.g.:7.20A.252.001</description>
+          <defaultValue>7.20A.</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
