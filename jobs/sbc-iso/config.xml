@@ -50,7 +50,7 @@ If exist, all files under this customer folder will be copied from artifactory t
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:/sbin:/usr/sbin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -62,7 +62,7 @@ PATH=/bin:/sbin:/usr/sbin:$PATH</propertiesContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -117,9 +117,10 @@ Fix=`echo $Tag | cut -d. -f4 | sed -r &apos;s/^0*//&apos;`
 if [ -z $Fix ]; then Fix=0; fi
 
 Minor=`echo $Tag | cut -d. -f3 | sed -r &apos;s/^0*//&apos;`
+Name=`echo &quot;$Tag&quot; | sed &apos;s/^.\.[[:digit:]]*//; s/\..*$//&apos;`
 BrdFile=&quot;Bsps/Common/Include/BrdVersion.h&quot;
 
-sed &quot;9,12 s/%MINOR%/$Minor/;9,12 s/%FIX%/$Fix/&quot; BrdVersion.h.in &gt; $BrdFile
+sed &quot;9,12 s/%MINOR%/$Minor/;9,12 s/%FIX%/$Fix/;15 s/%NAME%/$Name/&quot; BrdVersion.h.in &gt; $BrdFile
 
 # Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
 if [[ $Customer != &quot;&quot; ]]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
@@ -245,7 +246,7 @@ fi
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -309,7 +310,7 @@ ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
     <EnvInjectBuildWrapper plugin="envinject@2.1.5">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
