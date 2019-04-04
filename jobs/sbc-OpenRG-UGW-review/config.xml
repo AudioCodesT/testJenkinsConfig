@@ -242,7 +242,6 @@ fi
 git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/acInfrastructure/MCA-UGW \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
-    Shared \
     OpenSource/pkgs
 
 ls -l
