@@ -125,7 +125,7 @@ if [ -s &quot;$REFTARGET.list&quot; ]; then
 fi
 
 # Don&apos;t execute the next job in case you don&apos;t found 3 files
-if [ `ls $Target/*.cmp | wc -l` != 3 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
+if [ `ls $Target/*.cmp | wc -l` &lt; 3 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
 
 # Check if sbc-sanity-request job is in the queue or already running
 # to avoid more than one sbc-sanity-request execution 
