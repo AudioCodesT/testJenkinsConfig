@@ -132,7 +132,7 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>workspace/sbc-OpenRG-UGW-review/OpenSource/OpenRG-UGW</customWorkspace>
+  <customWorkspace>workspace/sbc-basic-review/OpenSource/OpenRG-UGW</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>BL=`git describe --tags --first-parent | sed s/-/_/g`
