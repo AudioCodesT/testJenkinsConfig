@@ -379,7 +379,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0fb3b3c41056dfe16</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0fb3b3c41056dfe16</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2019-04-11 08:28:31.953 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -561,18 +572,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-c2878797</name>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0cf55cf099df6ecee</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0cf55cf099df6ecee</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
-            <createdAt>2019-04-02 09:17:31.954 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -977,6 +977,7 @@
         <string>emsBuild_ovoc_server_7.6</string>
         <string>emsBuild_ovoc_server_7.6.1000</string>
         <string>emsBuild_ovoc_server_7.6.2000</string>
+        <string>emsBuild_ovoc_server_7.8</string>
         <string>emsPublishAMI</string>
         <string>emsReview_oracle_triggers</string>
         <string>emsReview_ovoc_server-fullRepo</string>
