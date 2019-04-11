@@ -175,6 +175,7 @@ fi
 
 #tag also the web-ui/ovoc repository:
 cd ${WORKSPACE}
+# not tagging ovoc-ui until they create branch &quot;7.8&quot;
 if [[ &quot;False&quot; == &quot;True&quot; ]]
 then
     cd ..
