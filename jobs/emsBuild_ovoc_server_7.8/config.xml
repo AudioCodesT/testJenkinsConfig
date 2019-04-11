@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>1.       Get latest code from branch 7.6.2000&#xd;
+  <description>1.       Get latest code from branch 7.8&#xd;
 2.       Run maven clean install&#xd;
 3.       find last tag and increment&#xd;
 3.       Run generate_iso script&#xd;
@@ -80,7 +80,6 @@ Copy AMI to all Regions and make him public</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -93,7 +92,7 @@ Copy AMI to all Regions and make him public</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/heads/7.6.2000</name>
+        <name>refs/heads/7.8</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -105,7 +104,7 @@ Copy AMI to all Regions and make him public</description>
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.LocalBranch>
-        <localBranch>refs/heads/7.6.2000</localBranch>
+        <localBranch>refs/heads/7.8</localBranch>
       </hudson.plugins.git.extensions.impl.LocalBranch>
     </extensions>
   </scm>
@@ -167,10 +166,10 @@ EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
 
 #for an official release to QA, we need to prepere a special email (besides the email from UpdateVI job)
 if [ $ISO_DEPLOY_DESTINATION == &quot;official_iso&quot; ]; then
-  ARTIFACTORY=https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.6.2000/official_iso
+  ARTIFACTORY=https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.8/official_iso
   LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
   echo LAST_OFFICIAL=${LAST_OFFICIAL} &gt;&gt; ems_build.properties
-  LINK=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.6.2000/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
+  LINK=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.8/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
   echo LINK=${LINK} &gt;&gt; ems_build.properties
 fi
 
@@ -181,7 +180,7 @@ if [ -d &quot;ovoc-ui&quot; ]; then rm -rf ovoc-ui; fi
 echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 git -c http.sslVerify=false clone -n https://gerrit/web-ui/ovoc ovoc-ui
 cd ovoc-ui
-git checkout 7.6.2000
+git checkout 7.8
 head=$(git rev-parse HEAD)
 curl -k -u jenkins:$jpass --basic -X PUT --header &apos;Content-Type: application/json;charset=UTF-8&apos; https://gerrit/a/projects/web-ui%2fovoc/tags/$FULL_NEW_TAG -d &apos; { &quot;message&quot;: &quot;Automatic tag&quot;, &quot;revision&quot;: &quot;&apos;$head&apos;&quot;  }&apos;
 git -c http.sslVerify=false fetch
@@ -246,8 +245,6 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
           <updateTag>true</updateTag>
         </hudson.plugins.git.GitPublisher_-TagToPush>
       </tagsToPush>
-      <branchesToPush/>
-      <notesToPush/>
     </hudson.plugins.git.GitPublisher>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
@@ -256,7 +253,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
             <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
               <properties>NEW_TAG=${NEW_TAG}
-BRANCH=7.6.2000
+BRANCH=7.8
 FullTesting=$FullTesting
 UpgradeUiDevServer=$UpgradeUiDevServer
 PublishAMI=$PublishAMI</properties>
@@ -304,13 +301,12 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
               <string>SUCCESS</string>
             </results>
             <role>BOTH</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
 	qaServerIP=10.3.180.50
     cd ${WORKSPACE}/EMS/VersionRelease
-    python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.6.2000 || echo &quot;**************** Download ISO 2 QA Failed ****************&quot;
+    python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.8 || echo &quot;**************** Download ISO 2 QA Failed ****************&quot;
 fi</command>
               </hudson.tasks.Shell>
             </buildSteps>
