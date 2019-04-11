@@ -30,7 +30,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Branches</name>
           <description></description>
-          <defaultValue>7.2.202 7.2.162 NextGenCPE 7.2.204 7.2.250_MSBR 7.2.250 7.2.252 7.2.254</defaultValue>
+          <defaultValue>7.2.202 7.2.162 NextGenCPE 7.2.204 7.2.250_MSBR 7.2.250 7.2.252 7.2.252_1 7.2.254</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
