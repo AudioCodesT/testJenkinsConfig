@@ -160,7 +160,7 @@ echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 echo BOARD=${BOARD} &gt;&gt; generated_version.properties
 
-shortBL=&apos;git describe --abbrev=0 --tags&apos;
+shortBL=$(git describe --abbrev=0 --tags | sed &apos;s:[0-9]\+$:000:&apos;)
 echo &quot;#define EXTERNAL_VERSION \&quot;$shortBL\&quot;&quot; &gt; $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h
 </command>
     </hudson.tasks.Shell>
