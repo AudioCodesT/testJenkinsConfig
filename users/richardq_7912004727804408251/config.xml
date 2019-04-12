@@ -46,6 +46,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># Kevin Zhu Team</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
         <string># SZ Office</string>
         <string># R&amp;D System Software</string>
@@ -64,9 +65,8 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
-        <string># MSBR Kevin Zhu Team</string>
       </roles>
-      <timestamp>1551838200946</timestamp>
+      <timestamp>1555035992533</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Richard.Qian@audiocodes.com</emailAddress>
