@@ -77,8 +77,12 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   
   # Remove the _ suffix in case of fix branches such as 7.2.204_jio
   if echo $Branch | grep -q _; then
-    BaseFirmware=$Branch
-    Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
+    if echo $Branch | grep -q _MSBR; then 
+      BaseFirmware=$Branch
+    else 
+      BaseFirmware=$(echo $Branch | sed &apos;s/_.*//&apos;)
+    fi
+    Branch=$(echo $Branch | sed &apos;s/_.*//; s/.$/0/&apos;)
   else
     BaseFirmware=Firmware
   fi
@@ -187,7 +191,7 @@ fi
     <EnvInjectBuildWrapper plugin="envinject@2.1.5">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
