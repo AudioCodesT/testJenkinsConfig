@@ -152,6 +152,9 @@ do
   git checkout -f origin/$GERRIT_BRANCH
   echo Find the last TAG name...
   #LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
+  LastMergedTag=`git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1`
+  LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
+  echo Last merged TAG is $LastMergedTag, use this MINOR for the next TAG $LastMergedMINOR
   LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
   LastUser=&quot;&quot;
   PreLastTag=&quot;&quot;
@@ -162,7 +165,7 @@ do
       # If is the first TAG in this feature branch
       # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
       if [[ &quot;$LastTag&quot; =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
-        PreLastTag=$(echo $LastTag | cut -c1-4)$IDs.$(echo $LastTag | cut -d. -f3)
+        PreLastTag=$(echo $LastTag | cut -c1-4)$IDs.$LastMergedMINOR
         if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
           NEWTAG=\!$PreLastTag.001
           echo TAG $PreLastTag.001 already exist, skip this branch 
