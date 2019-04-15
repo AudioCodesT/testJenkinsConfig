@@ -55,7 +55,6 @@
         <string># All 012 voip</string>
         <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
-        <string># MSBR TsachiO Team</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -85,7 +84,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1553783162211</timestamp>
+      <timestamp>1555318581628</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>fe3b3b04fcbb852d</seed>
