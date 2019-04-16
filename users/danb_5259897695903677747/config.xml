@@ -58,6 +58,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Offer Remote Assistance Helpers</string>
+        <string># Ziv Zviran Team</string>
         <string>Mailvision Branch Office Users</string>
         <string># MSBR</string>
         <string>AudioCodes_VPN</string>
@@ -66,13 +67,12 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
-        <string># MSBR Ziv Zviran Team</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1552573857104</timestamp>
+      <timestamp>1555416548726</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>b1c1bfdf232fcba6</seed>
