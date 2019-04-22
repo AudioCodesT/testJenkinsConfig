@@ -303,7 +303,7 @@ sleep 30
 echo &quot;$(date) : Verify no version ${TAG} exists&quot;
 SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\OVOC_HyperV_${TAG}.7z) {Remove-Item V:\\Versions\\OVOC_HyperV_${TAG}.7z}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z) {Remove-Item V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : export new VM&quot;
@@ -311,14 +311,14 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Compress exported VM&quot;
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Calculate md5&quot;
-SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV_${TAG}.md5&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.md5&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
-#[[ ! -f /cygdrive/v/Exports/OVOC_HyperV-${Hyper-V}_${TAG}.7z ]] &amp;&amp; exit
+#[[ ! -f /cygdrive/v/Exports/OVOC_HyperV-${HyperV}_${TAG}.7z ]] &amp;&amp; exit
 
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
