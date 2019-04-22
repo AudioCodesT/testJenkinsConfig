@@ -34,16 +34,6 @@
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>HyperV</name>
-          <description>Which version of Hyper V to run</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>2012</string>
-              <string>2016</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -54,7 +44,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -116,25 +105,11 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 #######################################################################################
 #######################################################################################
 
-# Set the following values to fit your need
-echo -E &quot;$(date) : Hyper-V version is ${HyperV}&quot;
-case ${HyperV} in
-    2012)
-        vmHostIP=&quot;10.7.10.177&quot;
-        ;;
-    2016)
-        vmHostIP=&quot;10.7.10.117&quot;
-        ;;
-    *)
-        echo -E &quot;$(date) : ERROR!!! \nIllegal Hyper-V version ${HyperV}&quot;
-        exit -1
-        ;;
-esac
-
-#[[ ${HyperV} == 2016 ]] &amp;&amp; vmHostIP=&quot;10.7.10.117&quot; || vmHostIP=&quot;10.7.10.177&quot;
+vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 vmip=&quot;10.7.10.171&quot;
+HyperV=&quot;2016&quot;
 
 ## Get current branch
 # Get the build from the TAG
