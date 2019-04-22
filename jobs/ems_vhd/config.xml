@@ -116,6 +116,7 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 #######################################################################################
 
 # Set the following values to fit your need
+echo -E &quot;$(date) : Hyper-V version is ${Hyper-V}&quot;
 case ${Hyper-V} in
     2012)
         vmHostIP=&quot;10.7.10.177&quot;
