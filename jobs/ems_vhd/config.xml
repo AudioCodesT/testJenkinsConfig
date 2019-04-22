@@ -36,7 +36,7 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>Hyper-V</name>
-          <description></description>
+          <description>Which version of Hyper V to run</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>2012</string>
@@ -128,7 +128,8 @@ case ${Hyper-V} in
         exit -1
         ;;
 esac
-[[ ${Hyper-V} == 2016 ]] &amp;&amp; vmHostIP=&quot;10.7.10.117&quot; || vmHostIP=&quot;10.7.10.177&quot;
+
+#[[ ${Hyper-V} == 2016 ]] &amp;&amp; vmHostIP=&quot;10.7.10.117&quot; || vmHostIP=&quot;10.7.10.177&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 vmip=&quot;10.7.10.171&quot;
