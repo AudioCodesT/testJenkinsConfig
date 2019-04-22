@@ -317,7 +317,7 @@ echo &quot;$(date) : Calculate md5&quot;
 SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV_${TAG}.md5&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
-#[[ ! -f /cygdrive/v/Exports/OVOC_HyperV_${TAG}.7z ]] &amp;&amp; exit
+#[[ ! -f /cygdrive/v/Exports/OVOC_HyperV-${Hyper-V}_${TAG}.7z ]] &amp;&amp; exit
 
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
