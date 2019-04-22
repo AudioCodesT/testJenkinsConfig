@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Create Hyper-V VM for ovoc server official release</description>
+  <description>Create Hyper-V 2012 VM for ovoc server official release</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -44,7 +44,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -110,7 +109,7 @@ vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 vmip=&quot;10.7.10.171&quot;
-HyperV=&quot;2016&quot;
+HyperV=&quot;2012&quot;
 
 ## Get current branch
 # Get the build from the TAG
@@ -175,7 +174,7 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.XML | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Start-VM&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
