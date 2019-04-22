@@ -379,18 +379,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0fb3b3c41056dfe16</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0fb3b3c41056dfe16</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2019-04-11 08:28:31.953 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -968,6 +957,7 @@
         <string>ems_ova</string>
         <string>ems_sanity_multijob</string>
         <string>ems_vhd</string>
+        <string>ems_vhd_2016</string>
         <string>emsBuild_AMI</string>
         <string>emsBuild_oracle_triggers</string>
         <string>emsBuild_ovoc_server_7.4</string>
