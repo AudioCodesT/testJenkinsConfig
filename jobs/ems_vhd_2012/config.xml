@@ -187,8 +187,11 @@ fi
 
 # Wait for ovoc server power on
 #isUp $vmHostIP $vmid || exit
-echo &quot;$(date) : sleep 5 min.&quot;
-sleep 300
+echo &quot;$(date) : sleep 2 min.&quot;
+sleep 120
+
+# Delete `StrictHostKeyChecking=no` entries from known_hosts
+grep -v &quot;ecdsa-sha2-nistp256&quot; .ssh/known_hosts &gt; /tmp/known_hosts &amp;&amp; cat /tmp/known_hosts &gt; .ssh/known_hosts
 
 # Update ovoc server /etc/hosts file with DevOps servers
 sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
