@@ -286,7 +286,8 @@ SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\OVOC_HyperV-${Hyper
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : export new VM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\Exports\\${TAG}&apos;&quot;
+#SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\Exports\\${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Copy-Item -Recurse V:\\HVWORKSPACE\\${TAG} V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Compress exported VM&quot;
