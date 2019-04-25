@@ -89,7 +89,7 @@
   </scm>
   <assignedNode>ems_ova</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
@@ -425,6 +425,7 @@ echo $SSHCMD | ssh centos@${vmHostIP}</script>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipientList>
+      <configuredTriggers/>
       <contentType>default</contentType>
       <defaultSubject>OVOC Hyper-V Jenkins Job</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT
