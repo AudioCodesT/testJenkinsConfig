@@ -413,6 +413,22 @@ echo $SSHCMD | ssh centos@${vmHostIP}</script>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>OVOC Hyper-V Jenkins Job</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT
