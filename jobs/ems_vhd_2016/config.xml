@@ -105,7 +105,8 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 #######################################################################################
 #######################################################################################
 
-vmHostIP=&quot;10.7.10.117&quot;
+# Set the following values to fit your need
+vmHostIP=&quot;10.7.10.117&quot;vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 vmip=&quot;10.7.10.171&quot;
