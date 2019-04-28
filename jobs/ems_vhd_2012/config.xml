@@ -406,6 +406,11 @@ echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>Shuky.Riechard@audiocodes.com yuvaly@audiocodes.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipientList>
       <contentType>default</contentType>
