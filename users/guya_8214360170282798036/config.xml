@@ -53,9 +53,9 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string>AWS_Jira_Users</string>
+        <string># Guy Amit Team</string>
         <string># All Cars</string>
         <string>cc_users</string>
-        <string># SBC Networking</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -86,7 +86,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1550591490013</timestamp>
+      <timestamp>1556449594364</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Guy.Amit@audiocodes.com</emailAddress>
