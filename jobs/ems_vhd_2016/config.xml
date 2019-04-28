@@ -402,7 +402,7 @@ echo &quot;$(date) : FINISH!!!&quot;
               <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
-          <EscalateStatus>false</EscalateStatus>
+          <EscalateStatus>true</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
 SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1; get-childitem -path V:\\Versions\\ -Filter OVOC_HyperV-${HyperV}_${TAG}.*  | %{Copy-Item $_ -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\}&apos;&quot;&#xd;
