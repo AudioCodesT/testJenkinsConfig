@@ -34,16 +34,6 @@
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>HyperV</name>
-          <description>Which version of Hyper V to run</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>2012</string>
-              <string>2016</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
