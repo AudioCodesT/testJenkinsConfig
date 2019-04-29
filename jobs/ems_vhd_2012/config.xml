@@ -376,6 +376,16 @@ echo &quot;$(date) : FINISH!!!&quot;
         <propertiesFilePath>/tmp/properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
+    <EnvInjectBuilder plugin="envinject@2.1.5">
+      <info>
+        <propertiesFilePath>properties.txt</propertiesFilePath>
+        <propertiesContent>vmHostIP=&quot;10.7.10.117&quot;
+netMask=&quot;16&quot;
+DefaultGW=&quot;10.7.0.1&quot;
+vmip=&quot;10.7.10.171&quot;
+HyperV=&quot;2016&quot;</propertiesContent>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
