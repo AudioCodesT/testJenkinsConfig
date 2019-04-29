@@ -139,8 +139,8 @@ BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
 
-if [ -d ../Shared/Versioning/Utils ]; then
-  [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; sh ../Shared/Versioning/Utils/MakeBrdVersion.sh ../ &gt; /dev/null
+if [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ]; then
+  sh ../Shared/Versioning/Utils/MakeBrdVersion.sh ../ &gt; /dev/null
 else
   [ -f MakeBrdVersion.sh ] &amp;&amp; sh ./MakeBrdVersion.sh &gt; /dev/null
 fi
