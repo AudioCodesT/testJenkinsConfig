@@ -415,7 +415,7 @@ SSHCMD=&quot;powershell -c &apos;Get-PSDrive -Name \&quot;N\&quot; &apos; &quot;
 echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
 RESULT=$?&#xd;
 &#xd;
-if [[ $RESULT == 0 ]]; then&#xd;
+if [[ $RESULT == 1 ]]; then&#xd;
     SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1&apos; &quot;&#xd;
     echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
 fi&#xd;
