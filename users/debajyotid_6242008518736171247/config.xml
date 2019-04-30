@@ -55,6 +55,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>BBL.ENGINEERING</string>
+        <string>AI-TECHSUPP</string>
         <string># AUDC - NJ office</string>
         <string># ACPortal - Finance_USA</string>
         <string>AI-ENG</string>
@@ -81,7 +82,7 @@
         <string># Audiocodes USA-Development</string>
         <string>AI-ClearCase</string>
       </roles>
-      <timestamp>1550598386000</timestamp>
+      <timestamp>1556590210756</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Debajyoti.Dutta@audiocodes.com</emailAddress>
