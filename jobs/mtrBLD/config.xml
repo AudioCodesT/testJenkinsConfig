@@ -35,7 +35,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -159,6 +159,10 @@ DATE=`date`
 # Define new tag
 
 if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
+    # Overcome GiT error when getting commit tag from non master branch
+    # If LAST_TAG does not match patern x.x.x.x then exit job with -1
+    [[ -z $(echo $OLD_TAG | grep -E &apos;([0-9]*\.){3}[0-9]*$&apos;) ]] &amp;&amp; exit -1
+    
     # We are building a submit on branch `master`
     MAJOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
     MINOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
@@ -487,7 +491,7 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
             </condition>
           </condition>
           <publisherList>
-            <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
+            <hudson.plugins.git.GitPublisher plugin="git@3.9.3">
               <configVersion>2</configVersion>
               <pushMerge>false</pushMerge>
               <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
