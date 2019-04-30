@@ -161,7 +161,7 @@ DATE=`date`
 if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
     # Overcome GiT error when getting commit tag from non-master branch.
     # If LAST_TAG does not match pattern x.x.x.x then exit job with -1
-    [[ -z $(echo $OLD_TAG | grep -E &apos;([0-9]*\.){3}[0-9]*$&apos;) ]] &amp;&amp; exit -1
+    [[ -z $(echo $OLD_TAG | grep -E &apos;^([0-9]*\.){3}[0-9]*$&apos;) ]] &amp;&amp; exit -1
     
     # We are building a submit on branch `master`
     MAJOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
