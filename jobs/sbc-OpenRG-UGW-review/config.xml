@@ -98,7 +98,7 @@
       <skipVote>
         <onSuccessful>false</onSuccessful>
         <onFailed>false</onFailed>
-        <onUnstable>false</onUnstable>
+        <onUnstable>true</onUnstable>
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
@@ -254,7 +254,13 @@ cd $WORKSPACE
 uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
 if [ &quot;$uri&quot; == &quot;&quot; ]; then
   echo Need waiting to kernel package...
-  exit 2
+  if [ &quot;$NAGINATOR_COUNT&quot; == 2 ]; then
+    echo Give vote to Gerrit
+    exit 1
+  else
+    echo Skip vote and try again by the Naginator
+    exit 2
+  fi
 fi
 
 downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
