@@ -346,6 +346,8 @@ python2.7 SanityCopyLogs.py ${TAG} $vmip || (echo &quot;$(date) : Failed to copy
 
 cd ${WORKSPACE}
 
+RESULT=${grep -A9 &quot;Sanity Test Result&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}
+
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
@@ -371,6 +373,7 @@ echo &quot;netMask=16&quot; &gt;&gt; /tmp/envvars
 echo &quot;DefaultGW=10.7.0.1&quot; &gt;&gt; /tmp/envvars
 echo &quot;vmip=10.7.10.171&quot; &gt;&gt; /tmp/envvars
 echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/envvars
+echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/envvars
 
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
@@ -453,7 +456,7 @@ $RESULT</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
-RESULT=${grep -A9 &quot;Sanity Test Result&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}</presendScript>
+$RESULT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
