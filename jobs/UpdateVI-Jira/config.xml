@@ -126,7 +126,7 @@ cd /d %WORKSPACE%&#xd;
 echo SendTo=yossim &gt; SendTo.txt&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Benny.Lavi, cc:amos.bublil, cc:ilan.avner, cc:Tova.Shoham &amp; goto ProjectFound&#xd;
+if %errorlevel% equ 0 set SendTo=Benny.Lavi, amos.bublil, ilan.avner, Tova.Shoham &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=IppSwReleases &amp; goto ProjectFound&#xd;
@@ -150,7 +150,7 @@ if %errorlevel% equ 0 set SendTo=Brian.Kling, Alex.Shlachter &amp; goto ProjectF
 &#xd;
 echo SendTo=%SendTo% &gt; SendTo.txt&#xd;
 &#xd;
-rem D:\tools\update-vi\Send_Email.pl %WORKSPACE%\index.html %SendTo% yossim,Shuky.Riechard&#xd;
+D:\tools\update-vi\Send_Email.pl %WORKSPACE%\index.html &quot;%SendTo%&quot; &quot;yossim,Shuky.Riechard&quot;&#xd;
 &#xd;
 set errorlevel=0&#xd;
 &#xd;
@@ -221,7 +221,7 @@ $BUILD_URL</body>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>yossim@audiocodes.com</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>JNLP4-connect connection</regexpForRerun>
