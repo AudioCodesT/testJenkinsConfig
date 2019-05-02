@@ -28,7 +28,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Customer</name>
           <description>This param should be filled only for a private label ISO.
-Search the customer name on the following path: https://artifactory/sbc-release/com/ac/sbc/private-labels
+Search the customer name on the following path: https://artifactory/sbc-release/com/ac/sbc/ISO/private-labels
 If exist, all files under this customer folder will be copied from artifactory to compilation workspace before compilation (should changed the icon image etc...)</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -103,7 +103,7 @@ cd TrunkPackRam
 
 # Get needed images for the HostedTP board
 if [ -e ../OpenSource/$BOARDNAME.deps ]; then
-  if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
+  if [ ! -e GetImages.sh ]; then  curl -u $User -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
   ./GetImages.sh $BOARDNAME $artifactory_host $User
 fi
@@ -165,12 +165,15 @@ sudo chown -R centos:centos .
 # should we use private labeling in this ISO ?
 echo &quot;Check if need to change files for a specific customer&quot;
 if [[ $Customer != &quot;&quot; ]]; then
+    artifactory_host=${ARTIFACTORY_HOST}
+    User=&quot;$artifactory_user:$artifactory_password&quot;
+
 	echo &quot;*******    START PRIVATE LABALING    ************&quot;
 	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
 	DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 	echo &quot;download from artifactory all files under $Customer&quot;
-	for f in $(curl -ks &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
-		curl -ks -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
+	for f in $(curl -ks -u $User &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+		curl -ks -u $User -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
 	done
 	echo &quot;Check if copyFiles.sh exist&quot;
 	if [ -f ./copyFiles.sh ]; then
