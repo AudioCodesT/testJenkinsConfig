@@ -262,7 +262,7 @@ cd ${WORKSPACE}
 
 # Set Network
 echo &quot;$(date) : Applying DVD 3&quot; | tee -a $logfile
-cd EMS/VersionRelease
+cd EMS/Version/Release
 if [[ &quot;$BRANCH&quot; == &quot;7.4.3XXX&quot; ]]; then
 	# We need to pass the netmask of the EMS server
 	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
@@ -279,7 +279,7 @@ echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
 # Sanity Install DVD-3
-cd EMS/VersionRelease
+cd EMS/Version/Release
 (python2.7 SanityInstall.py ${TAG} $vmip official_iso | tee -a $logfile) || (echo &quot;$(date) : Failed sanity install&quot; | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
@@ -301,13 +301,13 @@ sleep 300
 # clean before export to OVA
 
 ## Clean ovoc hardware minimal requirements workaround
-cd EMS/VersionRelease
+cd EMS/Version/Release
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 python2.7 hwFlag.py ${vmip} &apos;off&apos; | tee -a $logfile
 
 echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
-cd EMS/VersionRelease
+cd EMS/Version/Release
 (python2.7 cleanBeforeOva.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed cleaning installation files&quot; | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
@@ -350,21 +350,21 @@ sleep 300
 ###################################################################################################
 # Generate and install FK
 echo &quot;$(date) : Generate FK&quot; | tee -a $logfile
-cd EMS/VersionRelease
+cd EMS/Version/Release
 (python2.7 SanityFK.py $vmip $TAG | tee -a $logfile) || (echo &quot;$(date) : Failed FK&quot; | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 
 ###################################################################################################
 # Reboot &amp; Verify services on ovoc_server after FK installation
 echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot; | tee -a $logfile
-cd EMS/VersionRelease
+cd EMS/Version/Release
 (python2.7 SanityReboot.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed reboot after FK installation&quot; | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 
 ###################################################################################################
 # Run sanity tests on ovoc server
 echo &quot;$(date) : Run sanity tests on ovoc server&quot; | tee -a $logfile
-cd EMS/VersionRelease
+cd EMS/Version/Release
 FullTesting=&quot;1&quot;
 python2.7 SanityTest.py ${TAG} $vmip $FullTesting | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
 (python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile || echo &quot;$(date) : Failed to download logs&quot; | tee -a $logfile &amp;&amp; exit -1)
