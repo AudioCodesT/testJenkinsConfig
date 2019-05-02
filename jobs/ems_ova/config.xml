@@ -126,7 +126,7 @@ OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 FullTesting=&quot;1&quot;
 
 # Set the following values to fit your need
-vmHostIP=&quot;10.7.10.7&quot;
+vmHostIP=&quot;10.7.10.107&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 ovocIP=&quot;10.7.10.77&quot;
