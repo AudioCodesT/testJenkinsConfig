@@ -207,14 +207,14 @@ if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
     done
 fi
 
-ssh root@${vmHostIP} rm -rf /vmfs/volumes/dsData/ovoc_base_for_*
+ssh root@${vmHostIP} rm -rf /vmfs/volumes/DataStore01/ovoc_base_for_*
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; | tee -a $logfile
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_${TAG}&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_${TAG}&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
 if [ $? -ne 0 ]; then
     echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
     exit
@@ -344,7 +344,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 ###################################################################################################
 # Deploy ovoc server from newly created ova
 echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}&quot; --datastore=dsData --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
 sleep 300
 
 ###################################################################################################
