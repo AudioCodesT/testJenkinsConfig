@@ -150,7 +150,7 @@ if %errorlevel% equ 0 set SendTo=Brian.Kling, Alex.Shlachter &amp; goto ProjectF
 &#xd;
 echo SendTo=%SendTo% &gt; SendTo.txt&#xd;
 &#xd;
-Send_Email.pl %WORKSPACE%\index.html %SendTo% yossim,Shuky.Riechard&#xd;
+D:\tools\update-vi\Send_Email.pl %WORKSPACE%\index.html %SendTo% yossim,Shuky.Riechard&#xd;
 &#xd;
 set errorlevel=0&#xd;
 &#xd;
