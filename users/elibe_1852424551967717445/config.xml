@@ -2,7 +2,7 @@
 <user>
   <version>10</version>
   <id>elibe</id>
-  <fullName>Eli Berkover</fullName>
+  <fullName>elibe</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
@@ -12,6 +12,7 @@
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20"/>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
@@ -33,13 +34,44 @@
       <collapsed/>
     </hudson.model.PaneStatusProperties>
     <jenkins.security.seed.UserSeedProperty>
-      <seed>a6abbc1f344518c8</seed>
+      <seed>a2d6aa7dd2b46890</seed>
     </jenkins.security.seed.UserSeedProperty>
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
-      <emailAddress>Eli.Berkover@audiocodes.com</emailAddress>
-    </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
+        <string># All Cars</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
+        <string># R&amp;D System Software</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>CMBU</string>
+        <string># MP20x deliveries</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string># Hagay Halili Team</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>Vopp</string>
+        <string># MSBR</string>
+        <string>AudioCodes_VPN</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+      </roles>
+      <timestamp>1557132813764</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
