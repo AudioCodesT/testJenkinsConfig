@@ -305,6 +305,7 @@ cd EMS/VersionRelease
 echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
 python2.7 hwFlag.py ${vmip} &apos;off&apos; | tee -a $logfile
+cd ${WORKSPACE}
 
 echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
 cd EMS/VersionRelease
