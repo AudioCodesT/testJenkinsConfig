@@ -329,6 +329,9 @@ mkdir -p &quot;${TAG}&quot; | tee -a $logfile
 ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova | tee -a $logfile
 ovfResult=`tail -1 $logfile | grep &quot;Completed&quot;`
 [[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
+cd ${WORKSPACE}/${TAG}
+md5sum ovoc_server_${TAG}.ova &gt; ovoc_server_${TAG}.ova.md5
+cd ${WORKSPACE}
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
