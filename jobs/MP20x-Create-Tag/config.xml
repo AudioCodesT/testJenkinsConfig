@@ -45,7 +45,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -96,7 +96,7 @@ function createTag {
   LastTag=$NEWTAG
 }
 
-for GERRIT_BRANCH in master 4.4.5 4.4.6 4.4.6D 4.4.7 4.4.8
+for GERRIT_BRANCH in master 4.4.5 4.4.6 4.4.6D 4.4.7 4.4.8 4.4.9
 do
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
