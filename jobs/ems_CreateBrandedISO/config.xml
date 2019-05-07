@@ -86,10 +86,41 @@
     <hudson.tasks.Shell>
       <command>#/bin/sh
 #run script make iso branded
-cd ${WORKSPACE}/EMS/VersionRelease
-. branding_iso.sh
+#cd ${WORKSPACE}/EMS/VersionRelease
+#. branding_iso.sh
 
-#sh brandedscript.sh DVD3_EMS_${TAG} ${COMPANY}</command>
+#sh brandedscript.sh DVD3_EMS_${TAG} ${COMPANY}
+
+
+#/bin/sh
+
+version=${TAG}
+dvd3_iso=DVD3_EMS_$version.iso
+major=${BRANCH}
+company=${COMPANY}
+#curl -k -u ems-build:emspass -X GET https://artifactory/ems-release/com/ac/ems/ovoc_server/&quot;$major&quot;/official_iso/&quot;$dvd3_iso&quot;?archiveType=iso &gt;&quot;$dvd3_iso&quot;
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/about_logo.png&gt;about_logo.png
+
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/logo_login.png&gt;logo_login.png
+
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/logo.png&gt;logo.png
+
+chmod 777 about_logo.png
+chmod 777 logo_login.png
+chmod 777 logo.png
+
+
+mkdir original_iso
+
+mount  -o rw,loop -t iso9660 &quot;$dvd3_iso&quot; /home/acems/original_iso
+cp -avr /home/acems/original_iso/ /home/acems/copy_original_iso/
+
+cp -f /home/acems/logo.png /home/acems/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo.png
+cp -f /home/acems/about_logo.png /home/acems/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/about_logo.png
+cp -f /home/acems/logo_login.png /home/acems/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo_login.png
+rm -rf DVD3_EMS_&quot;$version&quot;.iso
+mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy_original_iso
+touch  branded_&quot;$company&quot;.txt</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
