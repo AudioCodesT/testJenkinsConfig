@@ -173,7 +173,7 @@ touch  branded_&quot;$company&quot;.txt</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/branded_iso</deployPattern>
+      <deployPattern>/home/centos/*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/branded_iso</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
