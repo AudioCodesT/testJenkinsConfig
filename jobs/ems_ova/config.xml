@@ -425,7 +425,7 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yuval.yosha</recipients>
+      <recipients>yuval.yosha shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
@@ -457,7 +457,7 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
