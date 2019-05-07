@@ -119,9 +119,10 @@ cp -avr /home/centos/original_iso/ /home/centos/copy_original_iso/
 cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo.png
 cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/about_logo.png
 cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo_login.png
+echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/branding.txt
 rm -rf DVD3_EMS_&quot;$version&quot;.iso
 mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy_original_iso
-touch  branded_&quot;$company&quot;.txt</command>
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
