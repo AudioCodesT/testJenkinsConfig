@@ -112,12 +112,12 @@ chmod 777 logo.png
 
 mkdir original_iso
 
-sudo mount  -o rw,loop -t iso9660 &quot;$dvd3_iso&quot; /home/acems/original_iso
-cp -avr /home/acems/original_iso/ /home/acems/copy_original_iso/
+sudo mount  -o rw,loop -t iso9660 &quot;$dvd3_iso&quot; /home/centos/original_iso
+cp -avr /home/centos/original_iso/ /home/centos/copy_original_iso/
 
-cp -f /home/acems/logo.png /home/acems/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo.png
-cp -f /home/acems/about_logo.png /home/acems/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/about_logo.png
-cp -f /home/acems/logo_login.png /home/acems/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo_login.png
+cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo.png
+cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/about_logo.png
+cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo_login.png
 rm -rf DVD3_EMS_&quot;$version&quot;.iso
 mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy_original_iso
 touch  branded_&quot;$company&quot;.txt</command>
