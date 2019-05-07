@@ -457,7 +457,7 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ovoc_ova/</script>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>true</disabled>
+      <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
