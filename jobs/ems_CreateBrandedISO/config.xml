@@ -86,7 +86,8 @@
     <hudson.tasks.Shell>
       <command>#/bin/sh
 #run script make iso branded
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-release/com/ac/ems/ovoc_server/&quot;$BRANCH&quot;/official_iso/&quot;$TAG&quot;?archiveType=iso &gt;DVD3_EMS_&quot;$TAG&quot;
+cd ${WORKSPACE}/EMS/VersionRelease
+. branding_iso.sh
 
 #sh brandedscript.sh DVD3_EMS_${TAG} ${COMPANY}</command>
     </hudson.tasks.Shell>
