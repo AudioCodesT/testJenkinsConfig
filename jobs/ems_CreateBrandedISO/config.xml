@@ -98,7 +98,7 @@ version=${TAG}
 dvd3_iso=DVD3_EMS_$version.iso
 major=${BRANCH}
 company=${COMPANY}
-#curl -k -u ems-build:emspass -X GET https://artifactory/ems-release/com/ac/ems/ovoc_server/&quot;$major&quot;/official_iso/&quot;$dvd3_iso&quot;?archiveType=iso &gt;&quot;$dvd3_iso&quot;
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-release/com/ac/ems/ovoc_server/&quot;$major&quot;/official_iso/&quot;$dvd3_iso&quot;?archiveType=iso &gt;&quot;$dvd3_iso&quot;
 curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/about_logo.png&gt;about_logo.png
 
 curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/logo_login.png&gt;logo_login.png
