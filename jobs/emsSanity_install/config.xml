@@ -465,9 +465,10 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
-
+#export &quot;$(cat sanity.properties)&quot;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.5">
@@ -500,8 +501,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</script>
+          <script></script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
