@@ -44,7 +44,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -375,6 +374,8 @@ echo &quot;DefaultGW=10.7.0.1&quot; &gt;&gt; /tmp/envvars
 echo &quot;vmip=10.7.10.171&quot; &gt;&gt; /tmp/envvars
 echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/envvars
 echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/envvars
+
+[[ `grep &quot;vmHostIP&quot; ~/.bashrc` ]] &amp;&amp; sed -i &apos;/vmHostIP/c vmHostIP=10.7.10.117&apos; ~/.bashrc || echo &quot;export vmHostIP=10.7.10.117&quot; &gt;&gt; ~/.bashrc
 
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
