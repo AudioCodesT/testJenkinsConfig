@@ -422,7 +422,7 @@ if [[ $RESULT == 1 ]]; then&#xd;
     echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
 fi&#xd;
 &#xd;
-SSHCMD=&quot;powershell -c &apos;get-childitem -path V:\\Versions\\ -Filter OVOC_HyperV-${HyperV}_${TAG}.* | %{Copy-Item -Path \$_.FullName -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\}&apos; &quot;&#xd;
+SSHCMD=&quot;powershell -c &apos;get-childitem -path V:\\Versions\\${TAG}\\ -Filter OVOC_HyperV-${HyperV}_${TAG}.* | %{Copy-Item -Path \$_.FullName -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\}&apos; &quot;&#xd;
 echo $SSHCMD | ssh centos@${vmHostIP}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
