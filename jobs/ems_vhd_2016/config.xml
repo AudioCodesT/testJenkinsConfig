@@ -278,9 +278,9 @@ sleep 30
 ###################################################################################################
 # export the new VM and compress
 echo &quot;$(date) : Verify no version ${TAG} exists&quot;
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}} else {New-Item -ItemType Directory V:\\Exports\\${TAG}}&apos; &quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\${TAG}) {Remove-Item -Recurse V:\\Versions\\${TAG}}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\${TAG}) {Remove-Item -Recurse V:\\Versions\\${TAG}} else {New-Item -ItemType Directory V:\\Versions\\${TAG}}&apos; &quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : export new VM&quot;
@@ -288,11 +288,11 @@ SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Compress exported VM&quot;
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\${TAG}\\OVOC_HyperV-${HyperV}_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Calculate md5&quot;
-SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.md5&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\${TAG}\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\${TAG}\\OVOC_HyperV-${HyperV}_${TAG}.md5&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV-${HyperV}_${TAG}.7z ]] &amp;&amp; exit
