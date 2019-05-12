@@ -124,9 +124,6 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
-echo BRANCH=${BRANCH} &gt; /tmp/properties
-echo vmHostIP=${vmHostIP} &gt;&gt; /tmp/properties
-
 ## Check that TAG matches BaseVM version
 BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
 if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
@@ -368,12 +365,11 @@ SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Prepare variables for export
-echo &quot;vmHostIP=10.7.10.117&quot; &gt; /tmp/envvars
-echo &quot;netMask=16&quot; &gt;&gt; /tmp/envvars
-echo &quot;DefaultGW=10.7.0.1&quot; &gt;&gt; /tmp/envvars
-echo &quot;vmip=10.7.10.171&quot; &gt;&gt; /tmp/envvars
-echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/envvars
-echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/envvars
+echo &quot;vmHostIP=${vmHostIP}&quot; &gt; /tmp/properties
+echo &quot;HyperV=${HyperV}&quot; &gt;&gt; /tmp/properties
+echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; /tmp/properties
+
 
 [[ `grep &quot;vmHostIP&quot; ~/.bashrc` ]] &amp;&amp; sed -i &apos;/vmHostIP/c vmHostIP=10.7.10.117&apos; ~/.bashrc || echo &quot;export vmHostIP=10.7.10.117&quot; &gt;&gt; ~/.bashrc
 . ~/.bashrc
@@ -384,11 +380,6 @@ echo &quot;$(date) : FINISH!!!&quot;
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
         <propertiesFilePath>/tmp/properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
-      <info>
-        <propertiesFilePath>/tmp/envvars</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
