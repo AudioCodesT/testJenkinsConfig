@@ -376,6 +376,7 @@ echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/envvars
 echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/envvars
 
 [[ `grep &quot;vmHostIP&quot; ~/.bashrc` ]] &amp;&amp; sed -i &apos;/vmHostIP/c vmHostIP=10.7.10.117&apos; ~/.bashrc || echo &quot;export vmHostIP=10.7.10.117&quot; &gt;&gt; ~/.bashrc
+. ~/.bashrc
 
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
