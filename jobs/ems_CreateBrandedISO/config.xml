@@ -181,7 +181,7 @@ mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>/home/centos/*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/branded_iso</deployPattern>
+      <deployPattern>/home/centos/*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/branded_iso/${COMPANY}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
@@ -198,7 +198,7 @@ mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${TAG}</template>
+      <template>#${BUILD_NUMBER}__${TAG}__${COMPANY}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
