@@ -152,7 +152,7 @@ echo SendTo=%SendTo% &gt; SendTo.txt&#xd;
 &#xd;
 D:\tools\update-vi\Send_Email.pl %WORKSPACE%\index.html &quot;%EMAIL%&quot; &quot;%SendTo%,yossim,Shuky.Riechard&quot;&#xd;
 &#xd;
-set errorlevel=0&#xd;
+rem set errorlevel=0&#xd;
 &#xd;
 </command>
     </hudson.tasks.BatchFile>
