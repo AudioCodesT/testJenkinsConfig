@@ -98,10 +98,9 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
   if (( $(echo $Branch | cut -d. -f3) % 10 != 0 )); then
     Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:\.160:\.150:&apos;) Release/$Branch&quot;
   fi
-  if [ &quot;$Branch&quot; == &quot;NextGenCPE&quot; ]; then
-    echo NextGenCPE: $Firmware
-    Firmware=&quot;$Branch Release/Firmware&quot;
-  fi  
+  #if [ &quot;$Branch&quot; == &quot;NextGenCPE&quot; ]; then
+  #  Firmware=&quot;$Branch Release/Next_Firmware&quot;
+  #fi  
 elif [ &quot;$REPOSITORY&quot; == &quot;MP20x&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/MP/$Branch&quot;
 else
