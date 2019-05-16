@@ -86,7 +86,6 @@ done</command>
         {
             &quot;pattern&quot;: &quot;/tmp/*.file&quot;,
             &quot;target&quot;: &quot;Test-YY/Files/&quot;,
-            &quot;flat&quot; : &quot;true&quot;,
         }
     ]
 }</spec>
