@@ -85,7 +85,7 @@ done</command>
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;/tmp/*.file&quot;,
-            &quot;target&quot;: &quot;Test-YY/Files/&quot;,
+            &quot;target&quot;: &quot;Test-YY/Files/&quot;
         }
     ]
 }</spec>
