@@ -37,7 +37,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;Hello World&quot;</command>
+      <command>echo &quot;Hello World&quot;
+for i in {1..3}; do
+    dd if=/dev/zero of=${WORKSPACE}/${i}.file bs=1M count=10
+done</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
@@ -73,7 +76,15 @@
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;${workspace}/*.file&quot;,
+            &quot;target&quot;: &quot;Test-YY/Files/&quot;,
+            &quot;flat&quot; : &quot;true&quot;,
+        }
+    ]
+}</spec>
       </uploadSpec>
       <downloadSpec>
         <spec>{
