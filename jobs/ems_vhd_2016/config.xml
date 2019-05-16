@@ -465,11 +465,6 @@ $RESULT</presendScript>
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>ems-release</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -495,12 +490,20 @@ $RESULT</presendScript>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>false</useSpecs>
+      <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec></spec>
       </uploadSpec>
       <downloadSpec>
-        <filePath></filePath>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*&quot;,
+            &quot;target&quot;: &quot;${workspace}/ovaPreRequisites/&quot;,
+            &quot;flat&quot;: &quot;true&quot;
+        }
+    ]
+}</spec>
       </downloadSpec>
       <deployPattern></deployPattern>
       <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites</resolvePattern>
