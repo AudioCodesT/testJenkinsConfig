@@ -47,7 +47,7 @@
     <EnvInjectJobProperty plugin="envinject@2.1.5">
       <info>
         <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -59,7 +59,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -185,6 +185,26 @@ echo ./Build_Host_Compilation %BL% 722 &gt;&gt; c:\temp\ToExecInBash.sh&#xd;
 C:\cygwin\bin\dos2unix c:\temp\ToExecInBash.sh&#xd;
 C:\cygwin\bin\bash --login -i -c c:/temp/ToExecInBash.sh || exit 1&#xd;
 &#xd;
+rem ------------ build tpncp.dat ---------------&#xd;
+echo cd %WORKSPACE:\=/%/voplibtcl/voplibext/wireShark &gt; c:\temp\ExecTpncp.sh&#xd;
+echo cp -fp C:/cygwin/usr/local/bin/new/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\ExecTpncp.sh&#xd;
+echo ./wireShark.tcl Release &gt;&gt; c:\temp\ExecTpncp.sh&#xd;
+echo cp -fp C:/cygwin/usr/local/bin/old/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\ExecTpncp.sh&#xd;
+C:\cygwin\bin\bash --login -i -c c:/temp/ExecTpncp.sh || exit 1&#xd;
+&#xd;
+cd voplibtcl\voplibext\wireShark&#xd;
+set maxbytesize=300000&#xd;
+FOR /F &quot;usebackq&quot; %%A IN (&apos;tpncp.dat&apos;) DO set size=%%~zA&#xd;
+if %size% LSS %maxbytesize% (&#xd;
+  echo &quot;Error: WireShark TPNTP dat PlugIn was failed, Image too small.. exit with error&quot;&#xd;
+  set errorlevel=1&#xd;
+) ELSE (&#xd;
+  mkdir c:\temp\%BL%\Utilities\WiresharkPlugins\shared&#xd;
+  copy tpncp.dat c:\temp\%BL%\Utilities\WiresharkPlugins\shared&#xd;
+  WZZIP -rp ..\..\..\tpncp_dat.zip tpncp.dat 2&gt; NUL&#xd;
+)&#xd;
+&#xd;
+cd ..\..\..&#xd;
 WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
 </command>
     </hudson.tasks.BatchFile>
@@ -196,7 +216,7 @@ WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
   </builders>
   <publishers/>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
