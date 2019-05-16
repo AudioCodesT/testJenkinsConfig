@@ -80,7 +80,8 @@
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;ems-release/com/ac/ems/ovoc_server/Sanity_preReq/7.6.1116/*.*&quot;,
-            &quot;target&quot;: &quot;${workspace}/ovaPreRequisites&quot;
+            &quot;target&quot;: &quot;${workspace}/ovaPreRequisites&quot;,
+            &quot;flat&quot;: &quot;true&quot;
         }
     ]
 }</spec>
