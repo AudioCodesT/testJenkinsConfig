@@ -258,7 +258,8 @@ WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/voplibtcl/voplibext/voplibcon/*=&gt;com/ac/sbc/TCL/${COMP_VER}
-${WORKSPACE}/lib.zip=&gt;com/ac/sbc/Lib/${COMP_VER}</deployPattern>
+${WORKSPACE}/lib.zip=&gt;com/ac/sbc/Lib/${COMP_VER}
+${WORKSPACE}/tpncp_dat.zip=&gt;com/ac/sbc/WireShark/TPNCP_dat/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
