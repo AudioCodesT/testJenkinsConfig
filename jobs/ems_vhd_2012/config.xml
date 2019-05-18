@@ -123,8 +123,8 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
-echo BRANCH=${BRANCH} &gt; /tmp/properties
-echo vmHostIP=${vmHostIP} &gt;&gt; /tmp/properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt; /tmp/properties
+echo &quot;vmHostIP=${vmHostIP}&quot; &gt;&gt; /tmp/properties
 
 ## Check that TAG matches BaseVM version
 BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
@@ -371,10 +371,11 @@ SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Prepare variables for export
-echo &quot;vmHostIP=${vmHostIP}&quot; &gt; /tmp/envvars
-echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/envvars
-echo &quot;vmip=10.7.10.171&quot; &gt;&gt; /tmp/envvars
-echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/envvars
+echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/properties
+echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/properties
+
+echo &quot;Injected nvironment variables:&quot;
+cat /tmp/properties
 
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
@@ -382,11 +383,6 @@ echo &quot;$(date) : FINISH!!!&quot;
     <EnvInjectBuilder plugin="envinject@2.1.5">
       <info>
         <propertiesFilePath>/tmp/properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
-      <info>
-        <propertiesFilePath>/tmp/envvars</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -413,14 +409,14 @@ echo &quot;$(date) : FINISH!!!&quot;
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
 &#xd;
 SSHCMD=&quot;powershell -c &apos;Get-PSDrive -Name \&quot;N\&quot; &apos; &quot;&#xd;
-echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
+echo $SSHCMD | ssh centos@${vmHostIP:-10.7.10.177}&#xd;
 if [[ $? == 1 ]]; then&#xd;
     SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1&apos; &quot;&#xd;
     echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
 fi&#xd;
 &#xd;
 SSHCMD=&quot;powershell -c &apos;get-childitem -path V:\\Versions\\ -Filter OVOC_HyperV-${HyperV}_${TAG}.* | %{Copy-Item -Path \$_.FullName -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\}&apos; &quot;&#xd;
-echo $SSHCMD | ssh centos@${vmHostIP}</script>
+echo $SSHCMD | ssh centos@${vmHostIP:-10.7.10.177}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
