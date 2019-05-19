@@ -313,7 +313,7 @@ echo &quot;#####################################################################
 
 ###################################################################################################
 # Run Sanity Tests
-if [[ ${runSanity} -eq &quot;true&quot; ]]; then
+if [[ &quot;${runSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Running sanity on ovoc server&quot;
     ###################################################################################################
     # Restart ovoc-server
