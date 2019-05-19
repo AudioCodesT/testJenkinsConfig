@@ -373,6 +373,8 @@ echo &quot;HyperV=${HyperV}&quot; &gt;&gt; /tmp/properties
 echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/properties
 echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; /tmp/properties
 
+[[ `grep &quot;vmHostIP&quot; ~/.bashrc` ]] &amp;&amp; sed -i &apos;/vmHostIP/c vmHostIP=10.7.10.177&apos; ~/.bashrc || echo &quot;export vmHostIP=10.7.10.177&quot; &gt;&gt; ~/.bashrc
+. ~/.bashrc
 
 echo &quot;Injected nvironment variables:&quot;
 cat /tmp/properties
