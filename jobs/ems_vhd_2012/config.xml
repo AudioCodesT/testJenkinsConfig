@@ -323,11 +323,11 @@ if [[ &quot;${runSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Sleep 300&quot;
     sleep 300
     
-    # Update ovoc server /etc/hosts file with DevOps servers
-    sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
-    $su_pass
-    echo -e &quot;search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6&quot; &gt; /etc/resolv.conf
-    EOF
+    # Update ovoc server /etc/hosts file with DevOps servers (Here document must not be indented)
+sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
+$su_pass
+echo -e &quot;search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6&quot; &gt; /etc/resolv.conf
+EOF
     
     ###################################################################################################
     # Generate and install FK
