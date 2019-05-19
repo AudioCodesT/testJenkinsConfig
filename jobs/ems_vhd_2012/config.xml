@@ -123,9 +123,6 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
-echo &quot;BRANCH=${BRANCH}&quot; &gt; /tmp/properties
-echo &quot;vmHostIP=${vmHostIP}&quot; &gt;&gt; /tmp/properties
-
 ## Check that TAG matches BaseVM version
 BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
 if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
@@ -371,8 +368,11 @@ SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Prepare variables for export
+echo &quot;vmHostIP=${vmHostIP}&quot; &gt; /tmp/properties
+echo &quot;HyperV=${HyperV}&quot; &gt;&gt; /tmp/properties
 echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/properties
-echo &quot;HyperV=2016&quot; &gt;&gt; /tmp/properties
+echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; /tmp/properties
+
 
 echo &quot;Injected nvironment variables:&quot;
 cat /tmp/properties
