@@ -34,6 +34,11 @@
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>runSanity</name>
+          <description></description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -305,56 +310,60 @@ echo &quot;#####################################################################
 echo &quot;###################################################################################################&quot;
 echo &quot;###################################################################################################&quot;
 
-
-###################################################################################################
-# Restart ovoc-server
-echo &quot;$(date) : Starting ovoc server&quot;
-SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP}
-echo &quot;$(date) : Sleep 300&quot;
-sleep 300
-
-# Update ovoc server /etc/hosts file with DevOps servers
-sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
-$su_pass
-echo -e &quot;search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6&quot; &gt; /etc/resolv.conf
-EOF
-
-###################################################################################################
-# Generate and install FK
-echo &quot;$(date) : Generate FK&quot;
-cd EMS/VersionRelease
-(python2.7 SanityFK.py $vmip $TAG) || (echo &quot;$(date) : Failed FK&quot; &amp;&amp; exit -1)
-cd ${WORKSPACE}
-
-###################################################################################################
-# Reboot &amp; Verify services on ovoc_server after FK installation
-echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot;
-cd EMS/VersionRelease
-(python2.7 SanityReboot.py $vmip) || (echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
-cd ${WORKSPACE}
-echo &quot;$(date) : Sleep 300&quot;
-sleep 300
-
-###################################################################################################
-# Run sanity tests on ovoc server
-echo &quot;$(date) : Run sanity tests on ovoc server&quot;
-cd EMS/VersionRelease
-FullTesting=&quot;1&quot;
-python2.7 SanityTest.py ${TAG} $vmip $FullTesting || echo &quot;$(date) : Failed to execute SanityTest&quot;
-python2.7 SanityCopyLogs.py ${TAG} $vmip || (echo &quot;$(date) : Failed to copy logs&quot; &amp;&amp; exit -1)
-
-cd ${WORKSPACE}
-
-RESULT=${grep -A9 &quot;Sanity Test Result&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}
-
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;${date} : Done Sanity Tests&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
+if ; then
+    echo &quot;$(date) : Running sanity on ovoc server&quot;
+    ###################################################################################################
+    # Restart ovoc-server
+    echo &quot;$(date) : Starting ovoc server&quot;
+    SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
+    echo $SSHCMD | ssh centos@${vmHostIP}
+    echo &quot;$(date) : Sleep 300&quot;
+    sleep 300
+    
+    # Update ovoc server /etc/hosts file with DevOps servers
+    sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
+    $su_pass
+    echo -e &quot;search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6&quot; &gt; /etc/resolv.conf
+    EOF
+    
+    ###################################################################################################
+    # Generate and install FK
+    echo &quot;$(date) : Generate FK&quot;
+    cd EMS/VersionRelease
+    (python2.7 SanityFK.py $vmip $TAG) || (echo &quot;$(date) : Failed FK&quot; &amp;&amp; exit -1)
+    cd ${WORKSPACE}
+    
+    ###################################################################################################
+    # Reboot &amp; Verify services on ovoc_server after FK installation
+    echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot;
+    cd EMS/VersionRelease
+    (python2.7 SanityReboot.py $vmip) || (echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
+    cd ${WORKSPACE}
+    echo &quot;$(date) : Sleep 300&quot;
+    sleep 300
+    
+    ###################################################################################################
+    # Run sanity tests on ovoc server
+    echo &quot;$(date) : Run sanity tests on ovoc server&quot;
+    cd EMS/VersionRelease
+    FullTesting=&quot;1&quot;
+    python2.7 SanityTest.py ${TAG} $vmip $FullTesting || echo &quot;$(date) : Failed to execute SanityTest&quot;
+    python2.7 SanityCopyLogs.py ${TAG} $vmip || (echo &quot;$(date) : Failed to copy logs&quot; &amp;&amp; exit -1)
+    
+    cd ${WORKSPACE}
+    
+    RESULT=${grep -A9 &quot;Sanity Test Result&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}
+    
+    echo &quot;###################################################################################################&quot;
+    echo &quot;###################################################################################################&quot;
+    echo &quot;###################################################################################################&quot;
+    echo &quot;${date} : Done Sanity Tests&quot;
+    echo &quot;###################################################################################################&quot;
+    echo &quot;###################################################################################################&quot;
+    echo &quot;###################################################################################################&quot;
+else
+    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
+fi
 
 ###################################################################################################
 # Stop and Delete ovoc server vm
