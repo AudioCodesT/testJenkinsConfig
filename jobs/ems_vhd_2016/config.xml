@@ -417,18 +417,7 @@ echo &quot;$(date) : FINISH!!!&quot;
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
 &#xd;
-SSHCMD=&quot;powershell -c &apos;Get-PSDrive -Name \&quot;N\&quot; &apos; &quot;&#xd;
-echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
-IsN=$?&#xd;
-&#xd;
-if [[ $IsN == 1 ]]; then&#xd;
-    SSHCMD=&quot;powershell -f C:\\Windows\\System32\\Scripts\\MapDrives.ps1 &quot;&#xd;
-    echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
-fi&#xd;
-&#xd;
-#SSHCMD=&quot;powershell -c &apos;get-childitem -path V:\\Versions\\${TAG}\\ -Filter OVOC_HyperV-${HyperV}_${TAG}.* | %{Copy-Item -Path \$_.FullName -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\${TAG}\\}&apos; &quot;&#xd;
-SSHCMD=&quot;powershell -c &apos;Copy-Item -Path V:\\Versions\\${TAG} -Destination N:\\ISO_Files\\OVOC_${BRANCH}\\DVD5_Virtual\\ -Recurse&apos; &quot;&#xd;
-echo $SSHCMD | ssh centos@${vmHostIP}</script>
+scp -r centos@${vmHostIP:-10.7.10.117}:/cygdrive/v/Versions/${TAG} /home/centos/data/output/ovoc_ova/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
