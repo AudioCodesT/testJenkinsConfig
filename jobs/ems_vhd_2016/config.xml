@@ -422,7 +422,7 @@ echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
 IsN=$?&#xd;
 &#xd;
 if [[ $IsN == 1 ]]; then&#xd;
-    SSHCMD=&quot;powershell -c &apos;C:\\Windows\\System32\\Scripts\\MapDrives.ps1&apos; &quot;&#xd;
+    SSHCMD=&quot;powershell -f C:\\Windows\\System32\\Scripts\\MapDrives.ps1 &quot;&#xd;
     echo $SSHCMD | ssh centos@${vmHostIP}&#xd;
 fi&#xd;
 &#xd;
