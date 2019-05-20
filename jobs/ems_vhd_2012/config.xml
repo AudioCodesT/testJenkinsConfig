@@ -528,6 +528,17 @@ RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+      <info>
+        <propertiesContent>vmHostIP=&quot;10.7.10.177&quot;
+HyperV=&quot;2012&quot;</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.55">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
