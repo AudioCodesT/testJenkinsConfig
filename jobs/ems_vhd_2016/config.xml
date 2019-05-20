@@ -377,9 +377,7 @@ SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Prepare variables for export
-echo &quot;vmHostIP=${vmHostIP}&quot; &gt; /tmp/properties
-echo &quot;HyperV=${HyperV}&quot; &gt;&gt; /tmp/properties
-echo &quot;RESULT=${RESULT}&quot; &gt;&gt; /tmp/properties
+echo &quot;RESULT=${RESULT}&quot; &gt; /tmp/properties
 echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; /tmp/properties
 
 
@@ -522,6 +520,17 @@ $RESULT</presendScript>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+      <info>
+        <propertiesContent>vmHostIP=&quot;10.7.10.117&quot;
+HyperV=&quot;2016&quot;</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.55">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
