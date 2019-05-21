@@ -113,7 +113,6 @@ echo $GERRIT_PATCHSET_REVISION
 if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
 then
 	LastTag=$(git describe --tags --abbrev=0 --first-parent)
-	NEWTAG=${LastTag}
 	commits=($(git log --reverse ${LastTag}..HEAD --pretty=format:&quot;%H&quot;))
  	#get first commit hash + user name of that commit
   	array_index=0
@@ -133,8 +132,10 @@ then
         fi
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
      	then
-        	NEWTAG=`echo $NEWTAG | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $NEWTAG | awk -F. &apos;{print $NF+1}&apos;`
+        	NEWTAG=`echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $LastTag | awk -F. &apos;{print $NF+1}&apos;`
      		git tag -a -m &quot;Jenkins auto tag after ${User} commit&quot; ${NEWTAG} ${commit_id}
+            git push origin ${NEWTAG}
+            LastTag=${NEWTAG}
      	fi
   		
   	done
