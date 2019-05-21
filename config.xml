@@ -1223,6 +1223,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>VoiceAI-build</string>
         <string>VoiceAI-create-tag</string>
       </jobNames>
       <jobFilters/>
