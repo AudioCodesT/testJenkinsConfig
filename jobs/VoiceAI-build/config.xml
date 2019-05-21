@@ -23,7 +23,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
+          <name>GERRIT_REFNAME</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -50,7 +50,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${GERRIT_BRANCH}</name>
+        <name>${GERRIT_REFNAME}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -79,7 +79,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>**</pattern>
+              <pattern>refs/tags/**</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
@@ -125,9 +125,9 @@ eslint -c config.eslintrc -f checkstyle &quot;session-manager/**&quot; -o eslint
 #change in some files some parameters to build number
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
+NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 
-
-git archive --format=tar.gz -o /d/Projects/test/repo_manifests/VoiceAI${TAG}.tar.gz ${TAG}    
+git archive --format=tar.gz -o /d/Projects/test/repo_manifests/VoiceAI${TAG}.tar.gz ${NEWTAG}    
 #git archive --format=tar -o file.tar ${GERRIT_PATCHSET_REVISION} ${WORKSPACE}
 </command>
     </hudson.tasks.Shell>
