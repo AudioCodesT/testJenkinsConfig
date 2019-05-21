@@ -199,7 +199,7 @@ git archive --format=tar.gz -o ${WORKSPACE}/VoiceAI${NEWTAG}.tar.gz ${NEWTAG}
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAI${TAG}.tar.gz&quot;,
+            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAI*.tar.gz&quot;,
             &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/$TAG/&quot;,
             &quot;props&quot;: &quot;type=tar;status=ready&quot;,
              &quot;recursive&quot;: &quot;false&quot;
