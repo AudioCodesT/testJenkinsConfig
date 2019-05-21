@@ -121,7 +121,7 @@ then
   	do
 		commit_id=${commits[$array_index]}
      	Subject=$(git log --pretty=format:&quot;%s&quot; -n 1 ${commit_id})	
-     	User=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${commit_id})
+     	User=$(git log --pretty=format:&quot;%an&quot; -n 1 ${commit_id})
         #get next commit user name
         ((array_index+=1))
         next_commit_id=${commits[$array_index]}
@@ -129,7 +129,7 @@ then
         then
         	next_commit_user=&quot;&quot;
         else
-        	next_commit_user=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${next_commit_id})
+        	next_commit_user=$(git log --pretty=format:&quot;%an&quot; -n 1 ${next_commit_id})
         fi
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
      	then
