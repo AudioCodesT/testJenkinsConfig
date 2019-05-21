@@ -412,9 +412,9 @@ echo &quot;$(date) : FINISH!!!&quot;
           </logTexts>
           <EscalateStatus>true</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>echo &quot;$(date) : Copy VM to NetApp (Drive N: on Hyper-V server)&quot;&#xd;
+          <script>echo &quot;$(date) : Copy VM to NetApp mount on slave&quot;&#xd;
 &#xd;
-scp -r centos@${vmHostIP:-10.7.10.177}:/cygdrive/v/Versions/${TAG} /home/centos/data/output/ovoc_ova/</script>
+scp -r centos@10.7.10.177:/cygdrive/v/Versions/${TAG} /home/centos/data/output/ovoc_ova/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
