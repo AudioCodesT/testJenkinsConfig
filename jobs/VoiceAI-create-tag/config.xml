@@ -124,7 +124,13 @@ then
      	User=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${commit_id})
         #get next commit user name
         ((array_index+=1))
-        next_commit_user=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${commits[$array_index]})
+        next_commit_id=${commits[$array_index]}
+        if [[ ${next_commit_id} == &quot;&quot; ]]
+        then
+        	next_commit_user=&quot;&quot;
+        else
+        	next_commit_user=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${next_commit_id})
+        fi
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
      	then
         	NEWTAG=`echo $NEWTAG | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $NEWTAG | awk -F. &apos;{print $NF+1}&apos;`
