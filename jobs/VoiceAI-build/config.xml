@@ -127,7 +127,7 @@ eslint &quot;session-manager/**&quot; -o eslint_report.xml || echo &quot;eslint 
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 
-git archive --format=tar.gz -o ${WORKSPACE}/VoiceAI${TAG}.tar.gz ${NEWTAG}    
+git archive --format=tar.gz -o ${WORKSPACE}/VoiceAI${NEWTAG}.tar.gz ${NEWTAG}    
 #git archive --format=tar -o file.tar ${GERRIT_PATCHSET_REVISION} ${WORKSPACE}
 </command>
     </hudson.tasks.Shell>
