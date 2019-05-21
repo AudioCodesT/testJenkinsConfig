@@ -1,7 +1,10 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>trigger by new tag&#xd;
+run and publish eslint&#xd;
+add version number to UI and to Session-manager (and to MongoDB)&#xd;
+git archive 3 folders and upload to artifactory under tag folder</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -17,7 +20,19 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>TAG</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
@@ -108,9 +123,12 @@
       <command>#run eslint
 eslint -c config.eslintrc -f checkstyle &quot;session-manager/**&quot; -o eslint_report.xml
 #change in some files some parameters to build number
-sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
-sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
+#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
+#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
 
+
+git archive --format=tar.gz -o /d/Projects/test/repo_manifests/VoiceAI${TAG}.tar.gz ${TAG}    
+#git archive --format=tar -o file.tar ${GERRIT_PATCHSET_REVISION} ${WORKSPACE}
 </command>
     </hudson.tasks.Shell>
   </builders>
@@ -128,7 +146,7 @@ sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
       <sourceCodeEncoding></sourceCodeEncoding>
       <ignoreQualityGate>false</ignoreQualityGate>
       <ignoreFailedBuilds>true</ignoreFailedBuilds>
-      <referenceJobName></referenceJobName>
+      <referenceJobName>-</referenceJobName>
       <healthy>0</healthy>
       <unhealthy>0</unhealthy>
       <minimumSeverity plugin="analysis-model-api@4.0.0">
@@ -178,7 +196,16 @@ sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAI${TAG}.tar.gz&quot;,
+            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/$TAG/&quot;,
+            &quot;props&quot;: &quot;type=tar;status=ready&quot;,
+             &quot;recursive&quot;: &quot;false&quot;
+        }
+    ]
+}</spec>
       </uploadSpec>
       <downloadSpec>
         <spec></spec>
