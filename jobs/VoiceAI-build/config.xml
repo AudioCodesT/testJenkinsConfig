@@ -106,7 +106,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#run eslint
-eslint &quot;session-manager/**&quot; -o eslint_report.xml
+eslint -c config.eslintrc -f checkstyle &quot;session-manager/**&quot; -o eslint_report.xml
 #change in some files some parameters to build number
 sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
