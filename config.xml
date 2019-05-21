@@ -755,13 +755,13 @@
       <groupId>sig-c751f889</groupId>
       <pendingInstances>
         <entry>
-          <string>i-0dc3bb1939aba6a4a</string>
+          <string>sir-f45rgm3p</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0dc3bb1939aba6a4a</id>
-            <status>INSTANCE_INITIATING</status>
+            <id>sir-f45rgm3p</id>
+            <status>SPOT_PENDING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2019-05-21 07:06:31.950 UTC</createdAt>
+            <createdAt>2019-05-21 07:17:06.984 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
@@ -1218,8 +1218,8 @@
     <listView>
       <owner class="hudson" reference="../../.."/>
       <name>VoiceAIGW</name>
-      <filterExecutors>false</filterExecutors>
-      <filterQueue>false</filterQueue>
+      <filterExecutors>true</filterExecutors>
+      <filterQueue>true</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
@@ -1233,15 +1233,6 @@
         <hudson.views.LastFailureColumn/>
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
-        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-        <io.jenkins.plugins.analysis.core.columns.IssuesTotalColumn plugin="warnings-ng@4.0.0">
-          <selectTools>false</selectTools>
-          <tools/>
-          <name># Issues</name>
-          <labelProviderFactory>
-            <jenkins/>
-          </labelProviderFactory>
-        </io.jenkins.plugins.analysis.core.columns.IssuesTotalColumn>
       </columns>
       <recurse>false</recurse>
     </listView>
