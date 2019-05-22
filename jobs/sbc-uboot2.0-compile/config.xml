@@ -34,7 +34,13 @@
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
+          <name>GERRIT_REFNAME</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -68,13 +74,14 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <refspec>${GERRIT_REFNAME}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/u-boot2.0</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>$GERRIT_BRANCH</name>
+        <name>${GERRIT_REFNAME}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -103,7 +110,7 @@
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>uboot-2.0</pattern>
+              <pattern>refs/tags/*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
