@@ -35,7 +35,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -197,9 +197,9 @@ sudo chown -R centos:centos .
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/u-boot-serial.asc=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}
-${WORKSPACE}/u-boot-nand.bin=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}
-${WORKSPACE}/ChangeLog.txt=&gt;com/ac/sbc/uboot-UGW/${COMP_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/u-boot-serial.asc=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}
+${WORKSPACE}/u-boot-nand.bin=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}
+${WORKSPACE}/ChangeLog.txt=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
