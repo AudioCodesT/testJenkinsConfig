@@ -115,16 +115,17 @@ echo $LastGerritCommitHash
 echo $GERRIT_PATCHSET_REVISION
 if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
 then
+	#get Last Tag and all the commits since the last tag in reverse list
 	LastTag=$(git describe --tags --abbrev=0 --first-parent)
 	commits=($(git log --reverse ${LastTag}..HEAD --pretty=format:&quot;%H&quot;))
- 	#get first commit hash + user name of that commit
+ 	#iterate on all the commits list
   	array_index=0
   	while [[ &quot;${array_index}&quot; != &quot;${#commits[@]}&quot; ]]
   	do
-		commit_id=${commits[$array_index]}
-     	Subject=$(git log --pretty=format:&quot;%s&quot; -n 1 ${commit_id})	
+    	#get commit hash and The User Name of that commit
+		commit_id=${commits[$array_index]}	
      	User=$(git log --pretty=format:&quot;%an&quot; -n 1 ${commit_id})
-        #get next commit user name
+        #get next commit user name (if there is not commit in the list then leave it empty)
         ((array_index+=1))
         next_commit_id=${commits[$array_index]}
         if [[ ${next_commit_id} == &quot;&quot; ]]
@@ -133,14 +134,14 @@ then
         else
         	next_commit_user=$(git log --pretty=format:&quot;%an&quot; -n 1 ${next_commit_id})
         fi
+        #if the current user name  diffrent from the next commit user name then tag current commit
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
      	then
         	NEWTAG=`echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $LastTag | awk -F. &apos;{print $NF+1}&apos;`
      		git tag -a -m &quot;Jenkins auto tag after ${User} commit&quot; ${NEWTAG} ${commit_id}
             git push origin ${NEWTAG}
             LastTag=${NEWTAG}
-     	fi
-  		
+     	fi	
   	done
 
 else
