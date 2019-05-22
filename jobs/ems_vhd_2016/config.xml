@@ -179,7 +179,7 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
 SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.vmcx | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Set-VMMemory DynamicMemoryEnabled False&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Set-VMMemory DynamicMemoryEnabled $false&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Start-VM&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
