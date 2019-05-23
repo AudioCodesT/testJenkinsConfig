@@ -155,7 +155,7 @@ DATE=`date`
 # If vesion number is to be handled by Jenkins,
 # parse it from LAST_TAG here.
 # 
-#
+
 # Define new tag
 
 if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
