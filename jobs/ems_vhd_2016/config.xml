@@ -426,7 +426,7 @@ else&#xd;
     mkdir ${TAG}&#xd;
 fi&#xd;
 &#xd;
-scp -r centos@10.7.10.177:/cygdrive/v/Versions/* ${TAG}</script>
+scp -r centos@10.7.10.177:/cygdrive/v/Exports/* ${TAG}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
