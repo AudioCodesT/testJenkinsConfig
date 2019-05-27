@@ -121,11 +121,9 @@ chmod 777 about_logo.png
 chmod 777 logo_login.png
 chmod 777 logo.png
 
-if [[ -e original_iso ]]
-then
-rm -rf original_iso
-fi
-mkdir original_iso
+rm -rf /home/centos/original_iso
+
+mkdir /home/centos/original_iso
 
 sudo mount  -o rw,loop -t iso9660 &quot;$dvd3_iso&quot; /home/centos/original_iso
 cp -avr /home/centos/original_iso/ /home/centos/copy_original_iso/
