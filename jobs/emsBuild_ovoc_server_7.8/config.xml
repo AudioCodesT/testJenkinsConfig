@@ -202,8 +202,9 @@ then
     done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$FULL_NEW_TAG)&quot;
     
     EMAIL+=&quot; &quot;`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$FULL_NEW_TAG`
-    EMAIL=`echo $EMAIL |tr &quot; &quot; &quot;\n&quot; | sort -u`
 fi
+
+EMAIL=`echo $EMAIL |tr &quot; &quot; &quot;\n&quot; | sort -u`
 cd ${WORKSPACE}
 
 echo RN=${RN} &gt;&gt; ems_build.properties
@@ -219,7 +220,7 @@ echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ems_build.properties
 sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>ems_build.properties</propertiesFilePath>
       </info>
@@ -393,7 +394,7 @@ ${WORKSPACE}/EMS/FKGenerator.ini=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
