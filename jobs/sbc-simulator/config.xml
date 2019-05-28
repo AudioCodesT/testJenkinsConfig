@@ -164,7 +164,8 @@ date
 
 mv -f id_rsa_gerrit ..
 
-export PATH=$HOME/Utils:$PATH
+export PATH=$HOME/Utils:/usr/local/sbin:/usr/sbin:$PATH
+#
 rm -f build-error.log
 git gwinit
 git verify-gwapp
