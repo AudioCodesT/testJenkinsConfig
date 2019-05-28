@@ -141,13 +141,20 @@ then
      		git tag -a -m &quot;Jenkins auto tag after ${User} commit&quot; ${NEWTAG} ${commit_id}
             git push origin ${NEWTAG}
             LastTag=${NEWTAG}
+            ALLTAGS=${ALLTAGS}_${NEWTAG}
      	fi	
   	done
 
 else
 	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
-fi</command>
+fi
+echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>prop</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.20">
@@ -156,5 +163,11 @@ fi</command>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER}_${ALLTAGS}</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
 </project>
