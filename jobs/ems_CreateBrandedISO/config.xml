@@ -140,7 +140,7 @@ echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deplo
 if [ $COMPANY == Nuera ]; then
 mkdir Documentation
 curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-090-550 One Voice Operations Center Release Notes Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-090-550 One Voice Operations Center Release Notes Ver. 7.6.pdf&apos;
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-091-046 One Voice Operations Center Users Manual Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-091-046 One Voice Operations Center Users Manual Ver. 7.6.pdf&apos;
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-091-046 One Voice Operations Center User Manual Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-091-046 One Voice Operations Center User Manual Ver. 7.6.pdf&apos;
 curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-094-168 One Voice Operations Center IOM Manual Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-094-168 One Voice Operations Center IOM Manual Ver. 7.6.pdf&apos;
 chmod -R 755 Documentation
 rm -rf /home/centos/copy_original_iso/Documentation
