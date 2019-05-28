@@ -84,7 +84,7 @@ e.g.:7.20A.252.001</description>
       <command>#get Gerrit BRANCH
 cd ${WORKSPACE}/..
 cd GWApp
-git -c http.sslverify=false pull || true
+git -c http.sslverify=false fetch || true
 git checkout ${Tag} || true
 Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
@@ -198,7 +198,7 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>properties</propertiesFilePath>
       </info>
@@ -306,7 +306,7 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultConten
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
