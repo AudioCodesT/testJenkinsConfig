@@ -34,9 +34,9 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <scriptContent>export PATH=$HOME/Utils:$PATH
+        <scriptContent>export PATH=$HOME/Utils:/usr/sbin:$PATH
 (
   flock 200
   if ! [ -d $HOME/Utils ]; then
@@ -46,7 +46,7 @@
   fi
 ) 200&gt;/tmp/update-utils
 </scriptContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -58,7 +58,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -264,7 +264,7 @@ exit $res</command>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
     <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
-      <script plugin="script-security@1.42">
+      <script plugin="script-security@1.55">
         <script>def time_pattern = ~/(?m)^--- (\d+:\d+:\d+:.*)$/
 def m = manager.build.logFile.text =~ time_pattern
 if (m.count &gt; 0) {
@@ -335,7 +335,7 @@ echo &quot;#${BUILD_NUMBER} ${GERRIT_BRANCH}: ${GERRIT_CHANGE_NUMBER},${GERRIT_P
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>properties.txt</propertiesFilePath>
                         </info>
@@ -373,7 +373,7 @@ $change,$ps
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>properties.txt</propertiesFilePath>
                         </info>
