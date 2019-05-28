@@ -42,7 +42,30 @@
       <emailAddress>Yaakov.Bivas@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
+        <string># All ISRAEL</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string># SBC</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>Linuxusers</string>
+        <string># SBC SIP Infra</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string># R&amp;D Application Group</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+      </roles>
+      <timestamp>1559051640425</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
