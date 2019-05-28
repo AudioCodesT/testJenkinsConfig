@@ -36,7 +36,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <scriptContent>export PATH=$HOME/Utils:/usr/sbin:$PATH
+        <scriptContent>export PATH=$HOME/Utils:/usr/local/sbin:/usr/sbin:$PATH
 (
   flock 200
   if ! [ -d $HOME/Utils ]; then
@@ -164,8 +164,9 @@ date
 
 mv -f id_rsa_gerrit ..
 
+# When the instance is not from Spotinst, the PATH doesn&apos;t include /usr/sbin and the Simulator failed due to the ifconfig don&apos;t found
 export PATH=$HOME/Utils:/usr/local/sbin:/usr/sbin:$PATH
-#
+
 rm -f build-error.log
 git gwinit
 git verify-gwapp
