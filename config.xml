@@ -199,6 +199,8 @@
     <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.43">
       <name>ec2-AC_CLOUD</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
+      <roleArn></roleArn>
+      <roleSessionName></roleSessionName>
       <credentialsId>ac_cloud</credentialsId>
       <privateKey>
         <privateKey>{AQAAABAAAAaQrPQTZMIN/D01M6wB+zrUelqqmRunFoljK8ByIMkPAdBT5/DtMrhl/EDO8nPH8+K+ddfcsp/lNZAetekmzchmHno6q60QU8ZdUQUX5aCwwkU6AcZ80KSMFX+lAkWfpVgBY4VhYAuPgMk3lqIeUmCmEebjCnDA5PaRrLJvv4DRhQidYcwzrHdon3zqz/Zc4Mw9eBXhcG1TVwmDhYsSB6upeEvTbGR3HkLLHcYK035w246o36Ox5rZ8D/OxtPi7ogTwoXDJweRECH4mNcDvIL5UIavii6BLb8QLfr33qXmyvW6i11YgG5OQij+xEHgTWqYa8AFnQ/XPa2+5pTPQWipCErZNYA80QvHqnvE4UHiOtxM+jVSrOjPMyFLs0u9CIUXcWlXszdtAmXYIYo45LDEQvUEWBlc5LdEkrChNRm5qzreIvDtETihlR+9TM3bIazaMmzIAiixYQwFJqy4XwFRmZU+apcHcW9lSqkTXSjsOaBP9zJKpmiIMdphq5A8KNRy9wspBlDZooYq8EwXGIol3z5uKmdKhDwanaeIvqgmquSQcCrvU4yrDaSP4UG/tWcLhwrIKPLJPaS5aP4Kn8RaNGZNhuspRDjjkXefCepSmFdn9fcMVoDtAADLHy5p6zLCQj6bvLW8EyDgRO6aOsoxFESG3XUNzE8O20mAiZPRMLS/GzR/yaRqCPp3zFGhrf8dPmGrpjFHO0Wgb2UGEyJYzQTtjIiqEnF5eBLxL9HoMm2cWFGZFPPbkI1bP5jPZLJZZMJoBJ5NXA4q/c90SRTRxq/UZBcZNA5AvM83fONj2drgYZfmBUKWm0BNBE3qYsYO3Dfba7FvlOK29mBIRypBD8ibnFj2Ux/LtVw+zAtrKCdiSTx3jhzzcWhIe3Hua+E8PEk4xS8/JEq265PXrR+iW1lHKW5mLRBRFfhdTgqfLJaz9J7e35IOBwbsKec5R2YiylA3HK02cfCs1gcZuKAmc9PgR5itPc6pkEJ+ba49E7q0AvpdUSXPLVVmIsZKlx8KYvbDGOqAZYXmQFkJi6OISkvJa9YEKl7e+kgqwdXoWp/vZD61VOJRO8n8A8sjqnL7ze7TNBq1o+Q9Nj1zfXNYWZ6wLO7X2cZnub7sfT7PyOUm22HkpfMwmu5YX2nXOk/exfVNLWKOjFtVg0cmcWFpRxQvy3uqSBDT/pas3n2Z4UxABHUrMY6oOiVAd669d3Wp+VcJIbb5dndy9Lk4OY24kNMsSANSlmYT59mT12uYzPtO+neh3SIj28AwrsLJpuGWZn9JkzRiVNW0Ms7cX0486LuUy3MAyCP+sjeG89f7bKjxGfc1UyWYrR26hqux/3HAQOB8ERj2bG1TTUlDnBCHlNLojJfHrbuGXBM/rfeHxLSXEYxMKNm/7Rxjnz+PUe7Gjvcpf00nYp91gXS0uskJ0zllmW8coEuxK1EU1Ct7MRcmdZNVbzIoii0S3B3YpCMjvrKhujoTBTRYM+GmIG2/vCW7v/KgjJrVtnWVDexshp5pLeWq8fcEzcmLTGKhggRkCE2sRhB2g7iV63phItjeelhFjeMUiaXzpb2OBRLQlzr+5aRBe5vAwkqmAcL90xdamlzZHnzeFLHm+XdhA3Af+N6vvdTyx0JF2t4aOeYwI/bveoKn8iqQ0nkWDKHjdjd5PiXQO3jPq893VdcBoLbcwdwmxlmtq7r/oo3NDK/MJrTVtlRfuxKkLlswVYR5sb+qG5wtClPFYGMKPs4afV0rSOsCy5JyIB7lqA/Ah0bJEHLO2HvcW4OWn7/n9Ktjk59bdoOZcgQDd/nvBTEgNzbQpUeg4gH1243hG1Hrs0iemyQrKdThmp+/ThnpR4Td896+xPyzC7gke80pgYHC3jyUiD/umDAI1KhosZVjcr/2ebbti7VrOXuvePR8Q8kpm32hdjKDhubV3dFRkS2BLTVtegu5hw4IL+1sDFiD/PQhrx6irza0HaXZMw+vZhLYNTOhXKJcZwYAekp8/7wdHVgySk7aROEzkvnueQMa1OeJ+lHSsIrcn2DyJRmRYDeFJ49p17jfNS2wYkxD/VMEusfQFxNswHyo5DMIcMdmhOqb5nHaziLXEuUPGw9I9ns6rT8jpxBGiRr4hJOPFvavWyKuJSNCP4s7l+MvZR4DQ7WwUJjH0tfhhO8eywX/JYGUd8a0vObE03pwvy+uqZdwNblPJPv6Ki4juCUe01EwAeHy7qwGODERMHjEJsMlgnvkfqY5T09AkiSeBTsfQxmCWapo7cg==}</privateKey>
@@ -243,6 +245,7 @@
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
+            <slaveCommandSuffix></slaveCommandSuffix>
             <sshPort>22</sshPort>
           </amiType>
           <launchTimeout>2147483647</launchTimeout>
@@ -251,16 +254,21 @@
           <nextSubnet>0</nextSubnet>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-d56bcdba</ami>
+          <ami>ami-02ef42ec04fbb7b0b</ami>
           <description>build slave for SBC Linux</description>
-          <zone>eu-central-1a</zone>
+          <zone>eu-central-1b</zone>
+          <spotConfig>
+            <useBidPrice>false</useBidPrice>
+            <spotMaxBidPrice></spotMaxBidPrice>
+            <fallbackToOndemand>true</fallbackToOndemand>
+          </spotConfig>
           <securityGroups>Apps-Basic-SG</securityGroups>
           <remoteFS>/home/centos/jenkinsslave</remoteFS>
           <type>C42xlarge</type>
           <ebsOptimized>false</ebsOptimized>
           <monitoring>false</monitoring>
           <t2Unlimited>false</t2Unlimited>
-          <labels></labels>
+          <labels>sbc-linux-build</labels>
           <mode>EXCLUSIVE</mode>
           <initScript></initScript>
           <tmpDir></tmpDir>
@@ -268,18 +276,18 @@
           <numExecutors>1</numExecutors>
           <remoteAdmin>centos</remoteAdmin>
           <jvmopts></jvmopts>
-          <subnetId>subnet-6d285b04</subnetId>
-          <idleTerminationMinutes>-3</idleTerminationMinutes>
+          <subnetId>subnet-7ae57301</subnetId>
+          <idleTerminationMinutes>2</idleTerminationMinutes>
           <iamInstanceProfile></iamInstanceProfile>
           <deleteRootOnTermination>false</deleteRootOnTermination>
           <useEphemeralDevices>false</useEphemeralDevices>
           <customDeviceMapping></customDeviceMapping>
-          <instanceCap>40</instanceCap>
+          <instanceCap>80</instanceCap>
           <stopOnTerminate>false</stopOnTerminate>
           <tags>
             <hudson.plugins.ec2.EC2Tag>
               <name>Name</name>
-              <value>sbc-linux-build-dynamic-slave</value>
+              <value>sbc-build-slave-EC2</value>
             </hudson.plugins.ec2.EC2Tag>
           </tags>
           <connectionStrategy>PRIVATE_IP</connectionStrategy>
@@ -288,6 +296,7 @@
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
+            <slaveCommandSuffix></slaveCommandSuffix>
             <sshPort>22</sshPort>
           </amiType>
           <launchTimeout>180</launchTimeout>
@@ -333,6 +342,7 @@
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
+            <slaveCommandSuffix></slaveCommandSuffix>
             <sshPort>22</sshPort>
           </amiType>
           <launchTimeout>180</launchTimeout>
@@ -378,6 +388,7 @@
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
+            <slaveCommandSuffix></slaveCommandSuffix>
             <sshPort>22</sshPort>
           </amiType>
           <launchTimeout>180</launchTimeout>
@@ -393,12 +404,10 @@
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
       <pendingInstances/>
-      <labelString>sbc-linux-build</labelString>
+      <labelString></labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
-      <labelSet class="sorted-set">
-        <hudson.model.labels.LabelAtom>sbc-linux-build</hudson.model.labels.LabelAtom>
-      </labelSet>
+      <labelSet class="sorted-set"/>
       <usage>EXCLUSIVE</usage>
       <tunnel></tunnel>
       <vmargs></vmargs>
@@ -766,18 +775,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-c751f889</name>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-074168004ac6704e1</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-074168004ac6704e1</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2019-05-21 07:17:32.1 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1262,7 +1260,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/listView[13]/jobNames/comparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
           <int>1</int>
           <string>PATH</string>
