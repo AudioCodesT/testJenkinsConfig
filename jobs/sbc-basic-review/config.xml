@@ -62,13 +62,13 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -80,7 +80,7 @@ PATH=/bin:$PATH</propertiesContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -244,7 +244,7 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -321,7 +321,7 @@ echo &quot;#${BUILD_NUMBER} ${GERRIT_BRANCH}: ${GERRIT_CHANGE_NUMBER},${GERRIT_P
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>properties.txt</propertiesFilePath>
                         </info>
@@ -359,7 +359,7 @@ $change,$ps
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>properties.txt</propertiesFilePath>
                         </info>
@@ -404,7 +404,7 @@ $change,$ps
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>.*(Need to wait for dependent artifact|JNLP4-connect connection).*</regexpForRerun>
+      <regexpForRerun>.*(Need to wait for dependent artifact|JNLP4-connect connection|ERROR: Error fetching).*</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
@@ -424,7 +424,7 @@ $change,$ps
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -481,17 +481,17 @@ $change,$ps
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
