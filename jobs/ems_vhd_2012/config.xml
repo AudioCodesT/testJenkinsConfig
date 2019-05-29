@@ -255,7 +255,7 @@ echo &quot;$(date) : sleep 5 min.&quot;
 sleep 300
 
 ###################################################################################################
-# clean before export to BaseVM
+# clean before export
 echo &quot;$(date) : ssh to clean installetion files&quot;
 
 sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
@@ -297,7 +297,7 @@ SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OV
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 echo &quot;$(date) : Calculate md5&quot;
-SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.md5&apos;&quot;
+SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z.md5&apos;&quot;
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV-${HyperV}_${TAG}.7z ]] &amp;&amp; exit
@@ -386,7 +386,7 @@ echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; /tmp/properties
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>/tmp/properties</propertiesFilePath>
       </info>
@@ -529,7 +529,7 @@ RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>vmHostIP=&quot;10.7.10.177&quot;
 HyperV=&quot;2012&quot;</propertiesContent>
@@ -540,7 +540,7 @@ HyperV=&quot;2012&quot;</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
