@@ -121,16 +121,19 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <builders>
     <hudson.tasks.Shell>
       <command>#run eslint
-eslint -f checkstyle &quot;session-manager/**&quot; -o eslint_report.xml || echo &quot;eslint failed, continue with the build&quot;
+git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml
 #change in some files some parameters to build number
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
-
-git archive --format=tar.gz -o ${WORKSPACE}/VoiceAI${NEWTAG}.tar.gz ${NEWTAG}    
-#git archive --format=tar -o file.tar ${GERRIT_PATCHSET_REVISION} ${WORKSPACE}
-</command>
+echo &quot;NEWTAG=${NEWTAG}&quot; &gt; prop
+tar -cvzf VoiceAIGW.tgz *</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>prop</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
@@ -138,7 +141,7 @@ git archive --format=tar.gz -o ${WORKSPACE}/VoiceAI${NEWTAG}.tar.gz ${NEWTAG}
         <io.jenkins.plugins.analysis.warnings.EsLint>
           <id></id>
           <name></name>
-          <pattern>eslint_report.xml</pattern>
+          <pattern>eslint.xml</pattern>
           <reportEncoding></reportEncoding>
           <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.EsLint>
@@ -199,8 +202,8 @@ git archive --format=tar.gz -o ${WORKSPACE}/VoiceAI${NEWTAG}.tar.gz ${NEWTAG}
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAI*.tar.gz&quot;,
-            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/$TAG/&quot;,
+            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAIGW.tgz&quot;,
+            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/$NEWTAG/&quot;,
             &quot;props&quot;: &quot;type=tar;status=ready&quot;,
              &quot;recursive&quot;: &quot;false&quot;
         }
