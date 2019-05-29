@@ -30,8 +30,8 @@
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>Deploy.7.4-rev18-rev3</string>
               <string>Deploy.7.6-rev18-rev3</string>
+              <string>Deploy.7.4-rev18-rev3</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
