@@ -16,6 +16,14 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>30</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -80,10 +88,9 @@ Copy AMI to all Regions and make him public</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -217,7 +224,7 @@ echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ems_build.properties
 sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>ems_build.properties</propertiesFilePath>
       </info>
@@ -232,7 +239,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
+    <hudson.plugins.git.GitPublisher plugin="git@3.9.3">
       <configVersion>2</configVersion>
       <pushMerge>false</pushMerge>
       <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
@@ -246,8 +253,6 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
           <updateTag>true</updateTag>
         </hudson.plugins.git.GitPublisher_-TagToPush>
       </tagsToPush>
-      <branchesToPush/>
-      <notesToPush/>
     </hudson.plugins.git.GitPublisher>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
@@ -283,7 +288,7 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
 </properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@3.8.0">
+            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@3.9.3">
               <combineQueuedCommits>false</combineQueuedCommits>
             </hudson.plugins.git.GitRevisionBuildParameters>
           </configs>
@@ -304,7 +309,6 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
               <string>SUCCESS</string>
             </results>
             <role>BOTH</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
@@ -394,7 +398,7 @@ ${WORKSPACE}/EMS/FKGenerator.ini=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
