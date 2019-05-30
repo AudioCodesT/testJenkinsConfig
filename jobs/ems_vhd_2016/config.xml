@@ -422,13 +422,13 @@ echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
 cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 &#xd;
 if [[ ! -d ${TAG} ]]; then&#xd;
-    mkdir ${TAG}&#xd;
+    JOB_DIR=${TAG}&#xd;
 else&#xd;
-    mv ${TAG} ${TAG}.`date +%Y-%m-%d`&#xd;
-    mkdir ${TAG}&#xd;
+    JOB_DIR=${TAG}.`date +%Y-%m-%d`&#xd;
 fi&#xd;
+mkdir ${JOB_DIR}&#xd;
 &#xd;
-scp -r centos@10.7.10.177:/cygdrive/v/Versions/* ${TAG}</script>
+scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${JOB_DIR}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
