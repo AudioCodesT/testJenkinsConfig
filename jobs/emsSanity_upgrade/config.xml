@@ -418,12 +418,35 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
         <propertiesFilePath>sanity.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
-    <hudson.tasks.Shell>
-      <command>cd ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest
-tar zcfv PMTemplateTest.tgz PMTemplateTest &amp;&amp; rm -rf PMTemplateTest</command>
-    </hudson.tasks.Shell>
   </builders>
   <publishers>
+    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
+      <config>
+        <scriptFiles/>
+        <groovyScripts/>
+        <buildSteps>
+          <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+            <results>
+              <string>SUCCESS</string>
+              <string>NOT_BUILT</string>
+              <string>ABORTED</string>
+              <string>FAILURE</string>
+              <string>UNSTABLE</string>
+            </results>
+            <role>BOTH</role>
+            <buildSteps>
+              <hudson.tasks.Shell>
+                <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
+    cd ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest
+    tar zcfv PMTemplateTest.tgz PMTemplateTest &amp;&amp; rm -rf PMTemplateTest
+fi</command>
+              </hudson.tasks.Shell>
+            </buildSteps>
+          </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+        </buildSteps>
+        <markBuildUnstable>false</markBuildUnstable>
+      </config>
+    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
     <hudson.tasks.ArtifactArchiver>
       <artifacts>EMS/VersionRelease/logs/**/*</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
