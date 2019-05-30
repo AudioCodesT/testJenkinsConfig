@@ -431,10 +431,18 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
           <script># Move output to Netapp&#xd;
-DIR=&quot;OVOC_${TAG%???}XXX&quot;&#xd;
-echo &quot;Manipulated $TAG to directory name $DIR&quot;&#xd;
+BR_DIR=&quot;OVOC_${TAG%???}XXX&quot;&#xd;
+echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
 &#xd;
-[[ -d &quot;/home/centos/data/output/ISO_Files/$DIR/DVD5_Virtual/$TAG&quot; ]] &amp;&amp; rm -rf &quot;/home/centos/data/output/ISO_Files/$DIR/DVD5_Virtual/$TAG&quot;&#xd;
+cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
+&#xd;
+if [[ ! -d ${TAG} ]]; then&#xd;
+    mkdir ${TAG}&#xd;
+else&#xd;
+    mv ${TAG} ${TAG}.`date +%Y-%m-%d`&#xd;
+    mkdir ${TAG}&#xd;
+fi&#xd;
+&#xd;
 mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$DIR/DVD5_Virtual/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
