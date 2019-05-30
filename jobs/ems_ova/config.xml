@@ -438,13 +438,12 @@ cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 &#xd;
 if [[ ! -d ${TAG} ]]; then&#xd;
     JOB_DIR=${TAG}&#xd;
-    mkdir ${JOB_DIR}&#xd;
 else&#xd;
-    mv ${TAG} ${TAG}.`date +%Y-%m-%d`&#xd;
-    mkdir ${TAG}/&#xd;
+    JOB_DIR=${TAG}.`date +%Y-%m-%d`&#xd;
 fi&#xd;
+mkdir ${JOB_DIR}&#xd;
 &#xd;
-mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
+mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${JOB_DIR}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
