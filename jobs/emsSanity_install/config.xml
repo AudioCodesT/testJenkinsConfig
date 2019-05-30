@@ -493,8 +493,10 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
             <role>BOTH</role>
             <buildSteps>
               <hudson.tasks.Shell>
-                <command>cd ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest
-tar zcfv PMTemplateTest.tgz PMTemplateTest &amp;&amp; rm -rf PMTemplateTest</command>
+                <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
+    cd ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest
+    tar zcfv PMTemplateTest.tgz PMTemplateTest &amp;&amp; rm -rf PMTemplateTest
+fi</command>
               </hudson.tasks.Shell>
             </buildSteps>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
