@@ -470,11 +470,15 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>sanity.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
+    <hudson.tasks.Shell>
+      <command>cd ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest
+tar zcfv PMTemplateTest.tgz PMTemplateTest &amp;&amp; rm -rf PMTemplateTest</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
@@ -513,7 +517,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
