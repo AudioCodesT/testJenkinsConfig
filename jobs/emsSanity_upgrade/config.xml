@@ -433,7 +433,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
               <string>FAILURE</string>
               <string>UNSTABLE</string>
             </results>
-            <role>BOTH</role>
+            <role>SLAVE</role>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
