@@ -121,7 +121,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <builders>
     <hudson.tasks.Shell>
       <command>#run eslintca
-git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo failed
+git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
 #change in some files some parameters to build number
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
