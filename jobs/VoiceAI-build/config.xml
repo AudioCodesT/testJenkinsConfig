@@ -130,8 +130,8 @@ NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 tar -cvzf VoiceAIGW.tgz *
 # For UpdateVI job
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH`
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$BRANCH | sort -u | sed s/$/\;/g`
+OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$GIT_BRANCH | sort -u | sed s/$/\;/g`
 DATE=`date`
 RN=&quot;&quot;
 while read -r hash; do
@@ -140,8 +140,8 @@ while read -r hash; do
     VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;)
     RN+=---$subject::$hash::$VI
   fi
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$BRANCH)&quot;
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$GIT_BRANCH)&quot;
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH | sort -u`
 echo NEWTAG=${NEWTAG} &gt; voiceAI.properties
 echo RN=${RN} &gt;&gt; voiceAI.properties
 echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; voiceAI.properties
