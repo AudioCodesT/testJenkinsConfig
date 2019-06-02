@@ -20,16 +20,6 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>GERRIT_REFNAME</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -38,7 +28,6 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -51,7 +40,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${GERRIT_REFNAME}</name>
+        <name>${GERRIT_BRANCH}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -80,7 +69,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/**</pattern>
+              <pattern>**</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
@@ -111,7 +100,11 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <customUrl></customUrl>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginRefUpdatedEvent/>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
+          <excludeDrafts>false</excludeDrafts>
+          <excludeTrivialRebase>false</excludeTrivialRebase>
+          <excludeNoCodeChange>true</excludeNoCodeChange>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
       <triggerConfigURL></triggerConfigURL>
@@ -121,47 +114,12 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#run eslintca
-git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo failed
-#change in some files some parameters to build number
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
-NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
-echo &quot;NEWTAG=${NEWTAG}&quot; &gt; prop
-tar -cvzf VoiceAIGW.tgz *</command>
+      <command>#enter the location to run the script
+cd ui
+sh build.sh</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>prop</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
-    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
-      <analysisTools>
-        <io.jenkins.plugins.analysis.warnings.EsLint>
-          <id></id>
-          <name></name>
-          <pattern>eslint.xml</pattern>
-          <reportEncoding></reportEncoding>
-          <skipSymbolicLinks>false</skipSymbolicLinks>
-        </io.jenkins.plugins.analysis.warnings.EsLint>
-      </analysisTools>
-      <sourceCodeEncoding></sourceCodeEncoding>
-      <ignoreQualityGate>false</ignoreQualityGate>
-      <ignoreFailedBuilds>true</ignoreFailedBuilds>
-      <referenceJobName>-</referenceJobName>
-      <healthy>0</healthy>
-      <unhealthy>0</unhealthy>
-      <minimumSeverity plugin="analysis-model-api@4.0.0">
-        <name>LOW</name>
-      </minimumSeverity>
-      <filters/>
-      <isEnabledForFailure>false</isEnabledForFailure>
-      <isAggregatingResults>false</isAggregatingResults>
-      <isBlameDisabled>false</isBlameDisabled>
-      <qualityGates/>
-    </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
     <hudson.tasks.Mailer plugin="mailer@1.20">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
@@ -169,67 +127,6 @@ tar -cvzf VoiceAIGW.tgz *</command>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
-      <deployerDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <stagingPlugin/>
-      </deployerDetails>
-      <resolverDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <stagingPlugin/>
-      </resolverDetails>
-      <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </deployerCredentialsConfig>
-      <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
-      <uploadSpec>
-        <spec>{
-    &quot;files&quot;: [
-        {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAIGW.tgz&quot;,
-            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/$NEWTAG/&quot;,
-            &quot;props&quot;: &quot;type=tar;status=ready&quot;,
-             &quot;recursive&quot;: &quot;false&quot;
-        }
-    ]
-}</spec>
-      </uploadSpec>
-      <downloadSpec>
-        <spec></spec>
-      </downloadSpec>
-      <deployPattern></deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
-      <deployBuildInfo>true</deployBuildInfo>
-      <includeEnvVars>false</includeEnvVars>
-      <envVarsPatterns>
-        <includePatterns></includePatterns>
-        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
-      </envVarsPatterns>
-      <discardOldBuilds>false</discardOldBuilds>
-      <discardBuildArtifacts>true</discardBuildArtifacts>
-      <asyncBuildRetention>false</asyncBuildRetention>
-      <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
-      <overrideBuildName>false</overrideBuildName>
-    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEWTAG}</template>
       <runAtStart>true</runAtStart>
