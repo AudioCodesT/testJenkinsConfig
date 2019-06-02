@@ -217,7 +217,7 @@ ssh root@${vmHostIP} rm -rf /vmfs/volumes/DataStore01/ovoc_base_for_*
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
 
-# create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc/ova/)
+# create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc_base/ova/)
 echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; | tee -a $logfile
 ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_${TAG}&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
 if [ $? -ne 0 ]; then
