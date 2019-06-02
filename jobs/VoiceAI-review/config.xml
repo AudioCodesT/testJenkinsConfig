@@ -115,7 +115,8 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#enter the location to run the script
+      <command>set -ex
+#enter the location to run the script
 cd ui
 sh build.sh</command>
     </hudson.tasks.Shell>
