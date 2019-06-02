@@ -303,6 +303,7 @@
           <connectBySSHProcess>true</connectBySSHProcess>
           <maxTotalUses>-1</maxTotalUses>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-7ae57301</currentSubnetId>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
           <ami>ami-4d885922</ami>
@@ -1236,6 +1237,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>VoiceAI-build</string>
         <string>VoiceAI-create-tag</string>
+        <string>VoiceAI-review</string>
       </jobNames>
       <jobFilters/>
       <columns>
