@@ -37,7 +37,7 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>Brand</name>
-          <description></description>
+          <description>Branded ISO</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string></string>
