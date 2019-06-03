@@ -40,7 +40,7 @@
           <description>Branded ISO</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string></string>
+              <string>AudioCodes</string>
               <string>Nuera</string>
               <string>NEC</string>
             </a>
@@ -158,52 +158,6 @@ now=`date +&quot;%Y%m%d-%H%M%S&quot;`
 logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
 [[ -f $logfile  ]] &amp;&amp; rm $logfile
 touch $logfile
-
-## Function for checking VM power state
-#function isUp {
-#    # Function gets VMHostIP &amp; vmid
-#    # Timeout after 600 seconds
-#
-#    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; | tee -a $logfile &amp;&amp; exit)
-#    local id=$2
-#
-#    for i in {1..20}; do
-#        sleep 30
-#        echo &quot;$(date) : Getting VM $id power status&quot; | tee -a $logfile
-#        getState=$(ssh root@${vmHostIP} vim-cmd vmsvc/power.getstate $id | grep Powered | cut -d&apos; &apos; -f2)
-#        if [[ &quot;$getState&quot; == &quot;on&quot; ]]; then
-#            echo &quot;$(date) : VM $id is up!&quot; | tee -a $logfile
-#            return 0
-#        fi
-#    done
-#
-#    echo &quot;$(date) : ovoc VM did not start within 600 seconds.&quot; | tee -a $logfile
-#    return 1
-#}
-#
-## Function for checking VM guest SSH readiness
-#function sshUp {
-#    # Function gets serverIP
-#    # Timeout after 60 seconds
-#
-#    ipcalc -cs $1 &amp;&amp; local ip=$1 || ( echo &quot;$(date) : Invalid IP&quot; | tee -a $logfile &amp;&amp; exit)
-#    local timeOut=5s
-#
-#    for i in {1..10}; do
-#        echo &quot;$(date) : Testing ssh readiness on $ip&quot; | tee -a $logfile
-#        if timeout $timeOut bash -c &quot;exec 5&gt;/dev/tcp/$ip/22&quot; 2&gt;/dev/null; then
-#            5&gt;&amp;-
-#            echo &quot;$(date) : SSH on $ip is up&quot; | tee -a $logfile
-#            return 0
-#        else
-#            5&gt;&amp;-
-#            echo &quot;$(date) : Waiting for SSH on $ip&quot; | tee -a $logfile
-#        fi
-#    done
-#
-#    echo &quot;$(date) : SSH on $ip is not up within 60s&quot; | tee -a $logfile
-#    return 1
-#}
 
 echo &quot;$(date) : *****************  START  ******************&quot; | tee -a $logfile
 
