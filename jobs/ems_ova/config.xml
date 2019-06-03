@@ -27,11 +27,22 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>OVA</name>
-          <description></description>
+          <description>Base ova version (DVD1 + DVD2)</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>Deploy.7.6-rev18-rev3</string>
               <string>Deploy.7.4-rev18-rev3</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Brand</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string></string>
+              <string>Nuera</string>
+              <string>NEC</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
