@@ -120,12 +120,14 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#run eslintca
+      <command>NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+#run eslint
 git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
 #change in some files some parameters to build number
+echo &quot;version=${NEWTAG}&quot; &gt; version.txt
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
-NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+
 
 tar -cvzf VoiceAIGW.tgz *
 # For UpdateVI job
