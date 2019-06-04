@@ -268,7 +268,7 @@
           <ebsOptimized>false</ebsOptimized>
           <monitoring>false</monitoring>
           <t2Unlimited>false</t2Unlimited>
-          <labels></labels>
+          <labels>sbc-linux-build</labels>
           <mode>EXCLUSIVE</mode>
           <initScript></initScript>
           <tmpDir></tmpDir>
@@ -404,12 +404,10 @@
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
       <pendingInstances/>
-      <labelString>sbc-linux-build</labelString>
+      <labelString></labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
-      <labelSet class="sorted-set">
-        <hudson.model.labels.LabelAtom>sbc-linux-build</hudson.model.labels.LabelAtom>
-      </labelSet>
+      <labelSet class="sorted-set"/>
       <usage>EXCLUSIVE</usage>
       <tunnel></tunnel>
       <vmargs></vmargs>
