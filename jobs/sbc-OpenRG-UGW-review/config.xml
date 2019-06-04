@@ -243,7 +243,7 @@ fi
 git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/acInfrastructure/MCA-UGW \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
-    OpenSource/pkgs Shared
+    OpenSource/pkgs Shared | true
 
 #In case you don&apos;t find the revision from another commit, take it from the last submitted commit
 if [ -z &quot;$rev&quot; ]; then rev=$(git ls-tree FETCH_HEAD -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;); fi
