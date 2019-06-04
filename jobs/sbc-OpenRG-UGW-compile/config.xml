@@ -178,7 +178,7 @@ fi
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/acInfrastructure/MCA-UGW \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
-    OpenSource/pkgs Shared
+    OpenSource/pkgs
 
 rev=$(git ls-tree origin/$GERRIT_BRANCH -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;)
 cd $WORKSPACE
