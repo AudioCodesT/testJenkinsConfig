@@ -34,7 +34,7 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <secureGroovyScript plugin="script-security@1.55">
           <script></script>
@@ -137,7 +137,7 @@ echo COMP_VER=${BL} &gt; generated_version.properties
 echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/include/external_version_data.h
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
@@ -178,7 +178,7 @@ fi
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/acInfrastructure/MCA-UGW \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
-    OpenSource/pkgs
+    OpenSource/pkgs Shared
 
 rev=$(git ls-tree origin/$GERRIT_BRANCH -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;)
 cd $WORKSPACE
@@ -285,7 +285,7 @@ $WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_V
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
