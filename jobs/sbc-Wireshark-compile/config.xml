@@ -153,16 +153,23 @@ cp -f README.VERSION.txt z:/plugins_x64
 cp -f Release_Win32/*.dll z:/plugins
 cp -f Release_x64/*.dll z:/plugins_x64
 
-mkdir c:/temp/$GERRIT_REFNAME
-mkdir c:/temp/$GERRIT_REFNAME/plugins
-mkdir c:/temp/$GERRIT_REFNAME/plugins_x64
-cp -f Release_Win32/*.dll c:/temp/$GERRIT_REFNAME/plugins
-cp -f Release_x64/*.dll c:/temp/$GERRIT_REFNAME/plugins_x64
-cd c:/temp/$GERRIT_REFNAME
-zip -r Plugin.zip . &gt; /dev/null
+TAG=$(echo $GERRIT_REFNAME | awk -F &quot;/&quot; &apos;{print $NF}&apos;)
 
+mkdir c:/temp/$TAG
+mkdir c:/temp/$TAG/plugins
+mkdir c:/temp/$TAG/plugins_x64
+cp -f Release_Win32/*.dll c:/temp/$TAG/plugins
+cp -f Release_x64/*.dll c:/temp/$TAG/plugins_x64
+cd c:/temp/$TAG
+zip -r Plugin.zip . &gt; /dev/null
+echo TAG=$TAG &gt; $WORKSPACE/Wireshark.properties
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>Wireshark.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
     <hudson.tasks.BatchFile>
       <command>z:&#xd;
 del /F acWireShark.zip&#xd;
@@ -212,7 +219,7 @@ WZZIP -rpu acWireShark.zip</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>c:/temp/$GERRIT_REFNAME/Plugin.zip=&gt;com/ac/sbc/WireShark/${GERRIT_REFNAME}
+      <deployPattern>c:/temp/$TAG/Plugin.zip=&gt;com/ac/sbc/WireShark/${TAG}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
