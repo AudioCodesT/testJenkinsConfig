@@ -36,10 +36,10 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -51,7 +51,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -91,7 +91,7 @@
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/heads/*</pattern>
+              <pattern>refs/tags/*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
