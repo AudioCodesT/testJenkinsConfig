@@ -179,9 +179,22 @@ git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/acInfrastructure/MCA-UGW \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
     OpenSource/pkgs
+    
+git checkout -f FETCH_HEAD -- Shared | true    
 
 rev=$(git ls-tree origin/$GERRIT_BRANCH -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;)
 cd $WORKSPACE
+
+if [ -d ../../Shared ]; then
+  sudo chmod -R 755 ../../Shared
+  sudo chown -R centos:centos ../../Shared
+  [ -f ../../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; sh ../../Shared/Versioning/Utils/MakeBrdVersion.sh ../../ &gt; /dev/null
+  if [ $? != 0 ]; then
+    echo &quot;MakeBrdVersion failed !!!&quot;
+    exit 1
+  fi
+  echo &quot;MakeBrdVersion Succeesful&quot;
+fi
 
 echo &quot;ls MCA-UGW&quot;
 ls -l ../../TrunkPackRam/acInfrastructure/MCA-UGW
