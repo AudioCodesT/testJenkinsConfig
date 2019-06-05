@@ -126,7 +126,12 @@
 ret_value=0
 sh common/build_all.sh || ret_value=$?
 
-echo &quot;script Return Value: $ret_value&quot;</command>
+echo &quot;script Return Value: $ret_value&quot;
+
+if [[ &quot;$ret_value&quot; -ne &quot;0&quot; ]]
+then
+	exit 1
+fi</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
