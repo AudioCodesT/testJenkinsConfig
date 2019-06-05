@@ -89,7 +89,7 @@ for eachImage in $CmpList; do
     cp &quot;$copyZIP&quot; .
     unzip *$eachImage*.zip
     rm -f *$eachImage*.zip
-    
+    mv *$eachImage*.cmp $(ls *$eachImage*.cmp | sed &apos;s:_F.*.cmp:.cmp:&apos;)
   else
     echo File $eachImage exist already
   fi
