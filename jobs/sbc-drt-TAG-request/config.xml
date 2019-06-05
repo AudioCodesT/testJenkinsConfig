@@ -48,13 +48,7 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>DUMMY2</name>
-          <description></description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>ggg</name>
-          <description></description>
+          <description>The drt Javascipt would see 4 parameters</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -165,7 +159,7 @@ do
 done
 
 echo Exit the while after some days
-#curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 exit 1</command>
     </hudson.tasks.Shell>
   </builders>
