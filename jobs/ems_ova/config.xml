@@ -248,9 +248,23 @@ cd ${WORKSPACE}
 echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
-# Sanity Install DVD-3
+## Sanity Install DVD-3
+#fetch DVD3 iso
+case &quot;$Brand&quot; in
+    AudioCodes)
+        iso_dir=&quot;official_iso&quot;
+        ;;
+    Nuera|NEC)
+        iso_dir=&quot;branded_iso/$brand&quot;
+        ;;
+    *)
+        echo &quot;Unknown iso brand $Brand!&quot;
+        exit 1
+esac
+
+# Run install script
 cd EMS/VersionRelease
-(python2.7 SanityInstall.py ${TAG} $vmip official_iso | tee -a $logfile) || (echo &quot;$(date) : Failed sanity install&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 SanityInstall.py ${TAG} ${vmip} ${iso_dir} | tee -a $logfile) || (echo &quot;$(date) : Failed sanity install&quot; | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
 echo &quot;###################################################################################################&quot; | tee -a $logfile
