@@ -38,7 +38,7 @@
       </matrixOptions>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
@@ -192,13 +192,26 @@ rm -f build-error.log
 cd TrunkPackRam
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
-chmod 600 ../id_rsa_gerrit
-change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
-ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+#chmod 600 ../id_rsa_gerrit
+#change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+#ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+
+ID=${GERRIT_CHANGE_ID}
+ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed &apos;s/.*Issue: //g; s/ .*//g&apos;)
+
 ls -l ../id_rsa_gerrit
 chmod 600 ../id_rsa_gerrit
-ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
+     change:$ID branch:$GERRIT_BRANCH status:open | \
      grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
+
+# Find if this build should use another commit with the same Issue
+if [ ! -z &quot;$ISSUE&quot; ]; then 
+    echo Search this Issue: $ISSUE...
+    ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
+     message:$ISSUE branch:$GERRIT_BRANCH status:open | \
+     grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt;&gt; othersCommits.txt || echo ChangeId not found
+fi
 
 while IFS= read -r line; do
    if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
@@ -245,7 +258,7 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -323,7 +336,7 @@ echo ps=$checkPS &gt;&gt; properties.txt
                     </results>
                     <role>SLAVE</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>properties.txt</propertiesFilePath>
                         </info>
@@ -361,7 +374,7 @@ $change,$ps
                     </results>
                     <role>MASTER</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>properties.txt</propertiesFilePath>
                         </info>
@@ -469,7 +482,7 @@ $change,$ps
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
@@ -479,7 +492,7 @@ $change,$ps
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
