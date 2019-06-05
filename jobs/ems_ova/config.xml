@@ -129,8 +129,6 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
-export BRANCH=$BRANCH
-
 ## Check that TAG matches OVA version
 OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
 if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
@@ -387,6 +385,10 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 #    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
 #fi
 
+cd ${WORKSPACE}
+echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
+echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
+
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
     </hudson.tasks.Shell>
@@ -411,8 +413,9 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
-          <script># Move output to Netapp&#xd;
-BR_DIR=&quot;OVOC_${TAG%???}XXX&quot;&#xd;
+          <script>. ${WORKSPACE}/buildVars&#xd;
+&#xd;
+# Move output to Netapp&#xd;
 echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
 &#xd;
 cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
