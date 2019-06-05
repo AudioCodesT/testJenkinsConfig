@@ -54,7 +54,7 @@
       </matrixOptions>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
@@ -139,12 +139,12 @@ BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
 
-if [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ]; then
-  sh ../Shared/Versioning/Utils/MakeBrdVersion.sh ../ &gt; /dev/null
+if [ -f MakeBrdVersion.sh ]; then
+  FindTAG=`./MakeBrdVersion.sh`
 else
-  [ -f MakeBrdVersion.sh ] &amp;&amp; sh ./MakeBrdVersion.sh &gt; /dev/null
+  [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; FindTAG=`../Shared/Versioning/Utils/MakeBrdVersion.sh ../`
 fi
-
+echo TAG Found $FindTAG
 #FindTAG=`./MakeBrdVersion.sh`
 #head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 #if [ $FindTAG != $NEWTAG ]; then
@@ -187,7 +187,7 @@ echo EXITFLAG=0 &gt;&gt; ../generated_sbc_version.properties
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -368,7 +368,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWT
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
@@ -378,7 +378,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWT
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
