@@ -1,0 +1,194 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Support only SBC feature batchץ&#xd;
+&#xd;
+To run SBC batch please send ModeType=Full in Run command.&#xd;
+In the compilation folder please make sure that it contains the following cmps:&#xd;
+•	MP500_ESBC&#xd;
+•	M1000_MSBG&#xd;
+•	HostedTP&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>50</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>TAG</name>
+          <description>Example: 7.20A.251.512
+Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</description>
+          <defaultValue>7.20A.</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MajorVersion</name>
+          <description>Right to now, it should be 7.2.250 only</description>
+          <defaultValue>7.2.250</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>MODE</name>
+          <description>For now, the only available option is: Full</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Full</string>
+              <string>Web_IE</string>
+              <string>Web_CHROME</string>
+              <string>Web_FIREFOX </string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>18</maxConcurrentPerNode>
+      <maxConcurrentTotal>18</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>true</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit>TAG</paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>copy2netapp</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># send Batch Runner request and keep the serial number from the response:
+#&quot;BatchId: batchName_636159240296404766_BTR&quot;
+
+echo BUILD_USER: $BUILD_USER
+echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
+
+# Find the full path of this TAG in the netapp1 
+FullPath=$(find &quot;/netapp1/CompilationResults/$MajorVersion Release/&quot; -type d -name &quot;F$TAG&quot;)
+
+if [ ! -d &quot;$FullPath&quot; ]; then echo Directory of $TAG was not found,  exit; exit 1; fi
+echo Following directory was found: $FullPath
+
+copyTo=&quot;/netapp1/CompilationResults/BR_Feature/F$TAG&quot;
+
+# Create the directory if it doesn&apos;t exist
+if [ ! -d &quot;$copyTo&quot; ]; then mkdir &quot;$copyTo&quot;; fi
+
+# Copy the ZIP files to &quot;$copyTo&quot; and unzip them
+cd &quot;$copyTo&quot;
+CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
+for eachImage in $CmpList; do
+  echo Copy file $eachImage...
+  if [ ! -f $eachImage*.cmp ]; then
+    copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
+    cp &quot;$copyZIP&quot; .
+    unzip *$eachImage*.zip
+    rm -f *$eachImage*.zip
+  else
+    echo File $eachImage exist already
+  fi
+done
+
+# Check if all was copied successfully
+if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing cmp files, exiting job&quot;; exit 2; fi
+
+cd $WORKSPACE
+
+BatchTAG=$(echo $TAG |  sed &apos;s:\.:_:g&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
+LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
+
+echo LinkToPage=${LinkToPage} &gt; generated_BR.properties
+echo batchID=${batchID} &gt;&gt; generated_BR.properties
+
+if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
+  echo $Output | grep &apos;BatchRunner Is Down&apos;
+  echo &quot;No Batch ID... exit with error&quot;
+  exit 1;
+fi
+
+if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
+  echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
+  exit 1;
+fi
+
+echo Output=&quot;Execution error&quot; &gt;&gt; generated_BR.properties
+
+</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>generated_BR.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+    <hudson.tasks.Shell>
+      <command># check DRT status
+# &quot;BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed&quot;
+# Status options: 
+#    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
+#    6) Running. 7) Pending. 8) WaitingForStop. 9) Stopped.
+count=0
+
+for i in {1..5000}
+do
+  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetFeatureBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
+  [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
+  [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; ] &amp;&amp; exit 1
+  [ &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; count=$((count+1))
+  [ $count -eq 50 ] &amp;&amp; exit 1
+  sleep 300s
+done
+
+echo Exit the while after some days
+curl -s &quot;http://BatchRunner/AnonymousUser/StopFeatureBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+exit 1</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>BatchRunner Is Down For Maintenance</regexpForRerun>
+      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>1800</delay>
+      </delay>
+      <maxSchedule>1</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
+  <buildWrappers>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+      <template>#${BUILD_NUMBER} ${TAG} $MajorVersion</template>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.5"/>
+  </buildWrappers>
+</project>

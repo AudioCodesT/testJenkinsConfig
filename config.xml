@@ -303,6 +303,7 @@
           <connectBySSHProcess>true</connectBySSHProcess>
           <maxTotalUses>-1</maxTotalUses>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-7ae57301</currentSubnetId>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
           <ami>ami-4d885922</ami>
@@ -902,6 +903,7 @@
         <string>sbc-drt-build</string>
         <string>sbc-drt-copy-to-netapp1</string>
         <string>sbc-drt-request</string>
+        <string>sbc-drt-TAG-request</string>
         <string>sbc-iso</string>
         <string>sbc-review</string>
         <string>sbc-sanity-build</string>
