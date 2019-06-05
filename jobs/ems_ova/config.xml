@@ -309,12 +309,13 @@ echo &quot;$(date) : export new VM to an OVA file&quot; | tee -a $logfile
 cd ${WORKSPACE}
 [[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
 mkdir -p &quot;${TAG}&quot; | tee -a $logfile
-#ovftool -o --shaAlgorithm=SHA1 --compress=9 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova | tee -a $logfile
-ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova | tee -a $logfile
+#ovftool -o --shaAlgorithm=SHA1 --compress=9 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${Brand}_${TAG}.ova | tee -a $logfile
+#ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${Brand}_${TAG}.ova | tee -a $logfile
+ovftool -o --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/ovoc_server_${Brand}_${TAG}.ova | tee -a $logfile
 ovfResult=`tail -1 $logfile | grep &quot;Completed&quot;`
 [[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
 cd ${WORKSPACE}/${TAG}
-md5sum ovoc_server_${TAG}.ova &gt; ovoc_server_${TAG}.ova.md5
+md5sum ovoc_server_${Brand}_${TAG}.ova &gt; ovoc_server_${Brand}_${TAG}.ova.md5
 cd ${WORKSPACE}
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
@@ -337,7 +338,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
     ###################################################################################################
     # Deploy ovoc server from newly created ova
     echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}_Sanity&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${Brand}_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
     sleep 300
     
     ###################################################################################################
@@ -374,7 +375,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
     # Delete new ovoc server vm
     
     # find new ovoc vmid
-    vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_server_${TAG}&quot; | gawk &apos;{print $1}&apos;`
+    vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_server_${TAG}_Sanity&quot; | gawk &apos;{print $1}&apos;`
     echo &quot;$(date) : vmid is $vmid&quot; | tee -a $logfile
     
     # Power off &amp; delete ovoc server vm
