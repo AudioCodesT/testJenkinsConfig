@@ -234,10 +234,10 @@ if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   fi
 fi
 
-if [ -d ../Shared ]; then
-  [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; sh ../Shared/Versioning/Utils/MakeBrdVersion.sh ../ &gt; /dev/null
+if [ -f MakeBrdVersion.sh ]; then
+  NEWTAG=`./MakeBrdVersion.sh`
 else
-  [ -f MakeBrdVersion.sh ] &amp;&amp; sh ./MakeBrdVersion.sh &gt; /dev/null
+  [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; NEWTAG=`../Shared/Versioning/Utils/MakeBrdVersion.sh ../`
 fi
 
 #chmod +x MakeBrdVersion.sh
