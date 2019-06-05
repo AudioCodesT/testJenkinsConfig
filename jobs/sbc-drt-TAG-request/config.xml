@@ -1,14 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Support only SBC feature batchץ&#xd;
-&#xd;
-To run SBC batch please send ModeType=Full in Run command.&#xd;
-In the compilation folder please make sure that it contains the following cmps:&#xd;
-•	MP500_ESBC&#xd;
-•	M1000_MSBG&#xd;
-•	HostedTP&#xd;
-</description>
+  <description>Execute manually the DRT for a specific TAG</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
@@ -19,7 +12,7 @@ In the compilation folder please make sure that it contains the following cmps:&
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>50</daysToKeep>
+        <daysToKeep>10</daysToKeep>
         <numToKeep>-1</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
@@ -47,18 +40,6 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
           <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>MODE</name>
-          <description>For now, the only available option is: Full</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>Full</string>
-              <string>Web_IE</string>
-              <string>Web_CHROME</string>
-              <string>Web_FIREFOX </string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -69,7 +50,6 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>TAG</paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -94,14 +74,14 @@ FullPath=$(find &quot;/netapp1/CompilationResults/$MajorVersion Release/&quot; -
 if [ ! -d &quot;$FullPath&quot; ]; then echo Directory of $TAG was not found,  exit; exit 1; fi
 echo Following directory was found: $FullPath
 
-copyTo=&quot;/netapp1/CompilationResults/BR_Feature/F$TAG&quot;
+copyTo=&quot;/netapp1/CompilationResults/DRT/Firmware/$TAG&quot;
 
 # Create the directory if it doesn&apos;t exist
 if [ ! -d &quot;$copyTo&quot; ]; then mkdir &quot;$copyTo&quot;; fi
 
 # Copy the ZIP files to &quot;$copyTo&quot; and unzip them
 cd &quot;$copyTo&quot;
-CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
+CmpList=(&quot;MP500_ESBC MP500_MSBG M1000_MSBG M4000 HostedTP&quot;)
 for eachImage in $CmpList; do
   echo Copy file $eachImage...
   if [ ! -f $eachImage*.cmp ]; then
@@ -119,8 +99,7 @@ if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing 
 
 cd $WORKSPACE
 
-BatchTAG=$(echo $TAG |  sed &apos;s:\.:_:g&apos;)
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;GerritChange=$TAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
@@ -157,7 +136,7 @@ count=0
 
 for i in {1..5000}
 do
-  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetFeatureBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
+  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetDrtBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
   [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
   [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; ] &amp;&amp; exit 1
   [ &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; count=$((count+1))
@@ -166,7 +145,7 @@ do
 done
 
 echo Exit the while after some days
-curl -s &quot;http://BatchRunner/AnonymousUser/StopFeatureBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 exit 1</command>
     </hudson.tasks.Shell>
   </builders>
