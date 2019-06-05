@@ -47,8 +47,8 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>runSanity</name>
-          <description></description>
+          <name>FullTesting</name>
+          <description>Run full sanity test</description>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -139,7 +139,7 @@ fi
 
 OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 
-FullTesting=&quot;1&quot;
+[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || FullTesting=&quot;0&quot;
 
 # Set the following values to fit your need
 vmHostIP=&quot;10.7.10.107&quot;
