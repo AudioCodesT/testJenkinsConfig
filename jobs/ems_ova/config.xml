@@ -452,7 +452,10 @@ mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <defaultContent>$DEFAULT_CONTENT
+
+Files can be found on Netapp:
+\\netapp01\ems\Versions\ISO_Files</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
