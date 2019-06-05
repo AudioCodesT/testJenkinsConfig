@@ -89,6 +89,7 @@ for eachImage in $CmpList; do
     cp &quot;$copyZIP&quot; .
     unzip *$eachImage*.zip
     rm -f *$eachImage*.zip
+    
   else
     echo File $eachImage exist already
   fi
