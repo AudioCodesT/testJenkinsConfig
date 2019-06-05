@@ -255,6 +255,7 @@ case &quot;$Brand&quot; in
         ;;
     Nuera|NEC)
         iso_dir=&quot;branded_iso/$Brand&quot;
+        Brand=&quot;$Brand_&quot;
         ;;
     *)
         echo &quot;Unknown iso brand $Brand!&quot;
@@ -308,13 +309,13 @@ echo &quot;$(date) : export new VM to an OVA file&quot; | tee -a $logfile
 cd ${WORKSPACE}
 [[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
 mkdir -p &quot;${TAG}&quot; | tee -a $logfile
-#ovftool -o --shaAlgorithm=SHA1 --compress=9 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}_${TAG}.ova | tee -a $logfile
-#ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}_${TAG}.ova | tee -a $logfile
-ovftool -o --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}_${TAG}.ova | tee -a $logfile
+#ovftool -o --shaAlgorithm=SHA1 --compress=9 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova | tee -a $logfile
+#ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova | tee -a $logfile
+ovftool -o --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova | tee -a $logfile
 ovfResult=`tail -1 $logfile | grep &quot;Completed&quot;`
 [[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
 cd ${WORKSPACE}/${TAG}
-md5sum OVOC_VMware_${Brand}_${TAG}.ova &gt; OVOC_VMware_${Brand}_${TAG}.ova.md5
+md5sum OVOC_VMware_${Brand}${TAG}.ova &gt; OVOC_VMware_${Brand}${TAG}.ova.md5
 cd ${WORKSPACE}
 echo &quot;###################################################################################################&quot; | tee -a $logfile
 echo &quot;###################################################################################################&quot; | tee -a $logfile
@@ -337,7 +338,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
     ###################################################################################################
     # Deploy ovoc server from newly created ova
     echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}_Sanity&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}_Sanity&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
     sleep 300
     
     ###################################################################################################
@@ -388,6 +389,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 cd ${WORKSPACE}
 echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
 echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
+echo &quot;export OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
@@ -423,7 +425,8 @@ cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 #if [[ ! -d ${TAG} ]]; then&#xd;
 #    JOB_DIR=${TAG}&#xd;
 #else&#xd;
-#    JOB_DIR=${TAG}.`date +%Y-%m-%d`&#xd;
+#    `date +%Y-%m-%d`&#xd;
+#    find . -name &quot;${OVA_NAME}.*&quot; -exec mv &#xd;
 #fi&#xd;
 #mkdir ${JOB_DIR}&#xd;
 &#xd;
