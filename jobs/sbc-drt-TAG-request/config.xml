@@ -165,7 +165,7 @@ do
 done
 
 echo Exit the while after some days
-curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+#curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
 exit 1</command>
     </hudson.tasks.Shell>
   </builders>
