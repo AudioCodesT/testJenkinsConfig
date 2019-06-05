@@ -339,7 +339,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
     ###################################################################################################
     # Deploy ovoc server from newly created ova
     echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}_Sanity&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/ovoc_server_${Brand}_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}_Sanity&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}_${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
     sleep 300
     
     ###################################################################################################
