@@ -101,7 +101,7 @@ JOB_NAME=&apos;job/sbc-iso&apos;
 JOB_TOKEN=&apos;sbcCreateISO&apos;
 mkdir artifacts
 #get the relevant ISO FILE
-#curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
 	echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
