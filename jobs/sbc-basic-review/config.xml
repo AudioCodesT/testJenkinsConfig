@@ -146,9 +146,9 @@ PATH=/bin:$PATH</propertiesContent>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
       <dependencyJobsNames></dependencyJobsNames>
-      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <commitMessageParameterMode>PLAIN</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
-      <commentTextParameterMode>BASE64</commentTextParameterMode>
+      <commentTextParameterMode>PLAIN</commentTextParameterMode>
       <buildStartMessage></buildStartMessage>
       <buildFailureMessage></buildFailureMessage>
       <buildSuccessfulMessage></buildSuccessfulMessage>
@@ -195,13 +195,26 @@ rm -f build-error.log
 cd TrunkPackRam
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
-chmod 600 ../id_rsa_gerrit
-change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
-ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+#chmod 600 ../id_rsa_gerrit
+#change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+#ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+
+ID=${GERRIT_CHANGE_ID}
+ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed &apos;s/.*Issue: //g; s/ .*//g&apos;)
+
 ls -l ../id_rsa_gerrit
 chmod 600 ../id_rsa_gerrit
-ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
+ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
+     change:$ID branch:$GERRIT_BRANCH status:open | \
      grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
+
+# Find if this build should use another commit with the same Issue
+if [ ! -z &quot;$ISSUE&quot; ]; then 
+    echo Search this Issue: $ISSUE...
+    ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set \
+     message:$ISSUE branch:$GERRIT_BRANCH status:open | \
+     grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt;&gt; othersCommits.txt || echo ChangeId not found
+fi
 
 while IFS= read -r line; do
    if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
