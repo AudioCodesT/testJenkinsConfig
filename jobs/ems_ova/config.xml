@@ -255,7 +255,7 @@ case &quot;$Brand&quot; in
         ;;
     Nuera|NEC)
         iso_dir=&quot;branded_iso/$Brand&quot;
-        Brand=&quot;$Brand_&quot;
+        Brand=&quot;$Brand&quot;_
         ;;
     *)
         echo &quot;Unknown iso brand $Brand!&quot;
