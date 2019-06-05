@@ -96,11 +96,8 @@ actions:&#xd;
       <command># send DRT request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
 #REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-Change=&quot;000&quot;
-if [ ! -z &quot;$REFTARGET&quot; ]; then
-  Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
-  echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
-fi
+Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
+echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
 
 # Can run with major version only: 7.2.150, 7.2.170
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
