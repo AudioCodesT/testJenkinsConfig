@@ -424,9 +424,11 @@ cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 &#xd;
 if [[ -d ${TAG} ]]; then&#xd;
     find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.`date +%Y-%m-%d` \;&#xd;
+else&#xd;
+    mkdir ${TAG}&#xd;
 fi&#xd;
 &#xd;
-mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
+mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
