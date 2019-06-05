@@ -303,7 +303,6 @@
           <connectBySSHProcess>true</connectBySSHProcess>
           <maxTotalUses>-1</maxTotalUses>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-7ae57301</currentSubnetId>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
           <ami>ami-4d885922</ami>
@@ -819,6 +818,56 @@
         </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
         <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
           <awsInstanceType>C42xlarge</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+      </executorsForTypes>
+    </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
+    <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
+      <name>sig-a252d010</name>
+      <groupId>sig-a252d010</groupId>
+      <pendingInstances/>
+      <labelString>VoiceAI-build</labelString>
+      <idleTerminationMinutes>5</idleTerminationMinutes>
+      <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
+      <labelSet class="sorted-set">
+        <hudson.model.labels.LabelAtom>VoiceAI-build</hudson.model.labels.LabelAtom>
+      </labelSet>
+      <usage>EXCLUSIVE</usage>
+      <tunnel></tunnel>
+      <vmargs></vmargs>
+      <executorsForInstanceType>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+      </executorsForInstanceType>
+      <executorsForTypes>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>M3Large</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>M4Large</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>C3Large</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>C4Large</awsInstanceType>
           <executors>1</executors>
         </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
       </executorsForTypes>
