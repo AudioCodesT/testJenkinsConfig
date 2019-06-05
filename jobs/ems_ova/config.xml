@@ -424,7 +424,7 @@ cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 #fi&#xd;
 #mkdir ${JOB_DIR}&#xd;
 &#xd;
-mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}</script>
+mv -v $WORKSPACE/$TAG /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
