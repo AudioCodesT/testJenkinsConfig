@@ -124,7 +124,9 @@
       <command>set -ex
 #enter the location to run the script
 ret_value=0
-sh common/build_all.sh || exit 1</command>
+sh common/build_all.sh || ret_value=$?
+
+echo &quot;script Return Value: $ret_value&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
