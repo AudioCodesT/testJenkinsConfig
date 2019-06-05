@@ -312,7 +312,7 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultConten
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>arti_password</name>
-          <value>{AQAAABAAAAAQeMv4U/cPV4jF6FABj5eH6Fz+9tUmIzxOzUViiIouaTs=}</value>
+          <value>{AQAAABAAAAAQdM/vO50Iix/WCB62sm15uBlgZZ6ecaFzaeaeNkdwOck=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
