@@ -96,8 +96,11 @@ actions:&#xd;
       <command># send DRT request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
 #REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
-echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
+Change=&quot;000&quot;
+if [ ! -z &quot;$REFTARGET&quot; ]; then
+  Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
+  echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
+fi
 
 # Can run with major version only: 7.2.150, 7.2.170
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
@@ -136,7 +139,7 @@ echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_drt.properties</propertiesFilePath>
       </info>
@@ -147,7 +150,7 @@ echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
 require &apos;json&apos;
 require &apos;uri&apos;
 
-if ENV[&apos;CurrentBatchID&apos;] != &apos;&apos;
+unless ENV[&apos;CurrentBatchID&apos;].to_s.empty?
   puts &quot;Executed manually, no need a new message in the Gerrit&quot;
   exit 0
 end
@@ -229,7 +232,7 @@ exit 1</command>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>generated_drt.properties</propertiesFilePath>
                         </info>
@@ -298,7 +301,7 @@ done</command>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>generated_drt.properties</propertiesFilePath>
                         </info>
