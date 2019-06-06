@@ -72,7 +72,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
     </extensions>
   </scm>
-  <assignedNode>VoiceAI-build</assignedNode>
+  <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
