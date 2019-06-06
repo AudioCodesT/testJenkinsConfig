@@ -204,7 +204,7 @@ cat voiceAI.properties</command>
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>NEWTAG=$NEW_TAG
+              <properties>NEWTAG=$NEWTAG
 RN=$RN
 GERRIT_HOST=$GERRIT_HOST
 EMAIL=$EMAIL
