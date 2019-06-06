@@ -129,7 +129,7 @@ ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Benny.Lavi, amos.bublil, ilan.avner, Tova.Shoham &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;VoiceAIConnector&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Benny.Lavi, amos.bublil &amp; goto ProjectFound&#xd;
+if %errorlevel% equ 0 set SendTo=Ben.Magriso, Benny.Lavi, amos.bublil &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;IPP&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=IppSwReleases &amp; goto ProjectFound&#xd;
