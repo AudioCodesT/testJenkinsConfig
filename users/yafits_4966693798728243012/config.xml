@@ -1,0 +1,96 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <version>10</version>
+  <id>yafits</id>
+  <fullName>Yafit Shalom</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAw9wKoS1PCLguZzKSa6x60/LvtxYsy4/fHxsPTl4eu15iYc/qvd/m6TV0gTH+e4jW53R4B+YX1Yg40PuGFi7Sbiw==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>408344ad-6605-40a9-9271-5141c13eee2b</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>4022e7226a599932ea3474cdfb8e454af38592998608f728437b0003b4f2479a</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>All</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>false</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>Agile users</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string># All 012 voip</string>
+        <string>AWS_Jira_Users</string>
+        <string>cc_users</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
+        <string># All R&amp;D</string>
+        <string># R&amp;D System Software</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string># SBC</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>Linuxusers</string>
+        <string># BatchRunnerBlockStream</string>
+        <string>AudioCodes_VPN</string>
+        <string># SBC SIP Infra</string>
+        <string># RnD Israel</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string>CPE</string>
+        <string># R&amp;D Sys SW Team Leaders</string>
+        <string># R&amp;D Application Group</string>
+      </roles>
+      <timestamp>1559800105689</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Yafit.Shalom@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <jenkins.security.seed.UserSeedProperty>
+      <seed>ea40dd0e4655d0c3</seed>
+    </jenkins.security.seed.UserSeedProperty>
+  </properties>
+</user>
