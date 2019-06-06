@@ -180,7 +180,7 @@ git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA \
     TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
     OpenSource/pkgs
     
-git checkout -f FETCH_HEAD -- Shared | true    
+git checkout -f FETCH_HEAD -- Shared || true    
 
 rev=$(git ls-tree origin/$GERRIT_BRANCH -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;)
 cd $WORKSPACE
