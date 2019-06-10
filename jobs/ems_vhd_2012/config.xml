@@ -441,7 +441,7 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipientList>
+      <recipientList>cc:shuky.riechard, gal.erez, Gennady.Tsiporkin, marina.Risher, cc:yuval.yosha , cc:ben.magriso</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -459,7 +459,7 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>OVOC Hyper-V Jenkins Job</defaultSubject>
+      <defaultSubject>OVOC Hyper-V 2012 image is ready</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT
 
 OVOC for Hyper-V 2012 completed.
