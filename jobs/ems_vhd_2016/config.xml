@@ -37,7 +37,7 @@
         <hudson.model.BooleanParameterDefinition>
           <name>FullTesting</name>
           <description>Run full sanity test</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -136,8 +136,6 @@ BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print 
 if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
 	exit -1
 fi
-
-FullTesting=&quot;1&quot;
 
 cd ${WORKSPACE}
 
