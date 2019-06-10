@@ -80,10 +80,9 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>CPE</string>
-        <string># SBC SIP GROUP</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1558878208344</timestamp>
+      <timestamp>1560148602344</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Doron.Nimrod@audiocodes.com</emailAddress>
