@@ -464,8 +464,14 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>OVOC Hyper-V Jenkins Job</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT
+      <defaultSubject>*** TEST TEST TEST ***   OVOC Hyper-V Jenkins Job</defaultSubject>
+      <defaultContent>***************************************************************************************************************************
+***************                                                                                                                    ***************
+***************                                              TEST TEST TEST                                         ***************
+***************                                                                                                                    ***************
+***************************************************************************************************************************
+
+$DEFAULT_CONTENT
 
 OVOC for Hyper-V 2016 completed.
 
