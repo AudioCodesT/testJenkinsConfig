@@ -137,8 +137,6 @@ if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
 	exit -1
 fi
 
-FullTesting=&quot;1&quot;
-
 cd ${WORKSPACE}
 
 # Create a new log file
