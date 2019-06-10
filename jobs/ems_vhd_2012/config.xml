@@ -35,8 +35,8 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>runSanity</name>
-          <description></description>
+          <name>FullTesting</name>
+          <description>Run full sanity test</description>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -110,6 +110,9 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 #######################################################################################
 #######################################################################################
 
+[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || FullTesting=&quot;0&quot;
+
+# Set the following values to fit your need
 vmHostIP=&quot;10.7.10.177&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
