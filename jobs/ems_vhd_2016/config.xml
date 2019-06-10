@@ -424,7 +424,7 @@ cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 &#xd;
 if [[ -d ${TAG} ]]; then&#xd;
     last_mod=`date -r +%Y-%m-%d--%H-%M`&#xd;
-    find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
+    find . -name OVOC_HyperV-2016_&quot;${TAG}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
 else&#xd;
     mkdir ${TAG}&#xd;
 fi&#xd;
