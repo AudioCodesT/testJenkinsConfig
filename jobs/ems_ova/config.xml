@@ -49,7 +49,7 @@
         <hudson.model.BooleanParameterDefinition>
           <name>FullTesting</name>
           <description>Run full sanity test</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
