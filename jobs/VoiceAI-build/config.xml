@@ -260,7 +260,7 @@ AuthorCommitter=$AuthorCommitter
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAIGW.tgz&quot;,
-            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/$NEWTAG/&quot;,
+            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/${BRANCH}/$NEWTAG/&quot;,
             &quot;props&quot;: &quot;type=tar;status=ready&quot;,
              &quot;recursive&quot;: &quot;false&quot;
         }
