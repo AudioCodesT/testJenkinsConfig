@@ -415,18 +415,19 @@ echo &quot;$(date) : FINISH!!!&quot;
           </logTexts>
           <EscalateStatus>true</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>echo &quot;$(date) : Copy VM to NetApp mount on slave&quot;&#xd;
-BR_DIR=&quot;OVOC_${TAG%???}XXX&quot;&#xd;
+          <script>. ${WORKSPACE}/buildVars&#xd;
+&#xd;
+# Move output to Netapp&#xd;
 echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
 &#xd;
 cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 &#xd;
-if [[ ! -d ${TAG} ]]; then&#xd;
-    JOB_DIR=${TAG}&#xd;
+if [[ -d ${TAG} ]]; then&#xd;
+    last_mod=`date -r +%Y-%m-%d--%H-%M`&#xd;
+    find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
 else&#xd;
-    JOB_DIR=${TAG}.`date +%Y-%m-%d`&#xd;
+    mkdir ${TAG}&#xd;
 fi&#xd;
-mkdir ${JOB_DIR}&#xd;
 &#xd;
 scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${JOB_DIR}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
