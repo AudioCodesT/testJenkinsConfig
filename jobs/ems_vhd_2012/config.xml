@@ -35,8 +35,8 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>RunTesting</name>
-          <description>Run full sanity test</description>
+          <name>RunSanity</name>
+          <description>Run sanity tests</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
