@@ -386,9 +386,6 @@ echo &quot;export RESULT=${RESULT}&quot; &gt;&gt; buildVars
 echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
 
 
-[[ `grep &quot;vmHostIP&quot; ~/.bashrc` ]] &amp;&amp; sed -i &apos;/vmHostIP/c vmHostIP=10.7.10.117&apos; ~/.bashrc || echo &quot;export vmHostIP=10.7.10.117&quot; &gt;&gt; ~/.bashrc
-. ~/.bashrc
-
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
     </hudson.tasks.Shell>
@@ -528,7 +525,7 @@ RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*&quot;,
-            &quot;target&quot;: &quot;${workspace}/ovaPreRequisites/&quot;,
+            &quot;target&quot;: &quot;${WORKSPACE}/ovaPreRequisites/&quot;,
             &quot;flat&quot;: &quot;true&quot;
         }
     ]
