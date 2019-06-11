@@ -453,7 +453,18 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-8a99c992</name>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0d020f0277a941acb</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0d020f0277a941acb</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>ems-build</requestedLabel>
+            <createdAt>2019-06-11 07:17:59.897 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1281,7 +1292,7 @@
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>VoiceAIGW</name>
+      <name>VoiceAI</name>
       <filterExecutors>true</filterExecutors>
       <filterQueue>true</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
