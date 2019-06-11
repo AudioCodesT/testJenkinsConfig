@@ -425,11 +425,14 @@ cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
 &#xd;
 if [[ -d ${TAG} ]]; then&#xd;
     cd ${TAG}&#xd;
-    last_mod=`date -r ${OVA_NAME}.ova +%Y-%m-%d--%H-%M`&#xd;
-    find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
+    if [[ -f &quot;${HVM_NAME}&quot;.7z ]]; then&#xd;
+        last_mod=`date -r ${OVA_NAME}.ova +%Y-%m-%d--%H-%M`&#xd;
+        find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
+    fi&#xd;
 else&#xd;
     mkdir ${TAG}&#xd;
 fi&#xd;
+&#xd;
 &#xd;
 mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
