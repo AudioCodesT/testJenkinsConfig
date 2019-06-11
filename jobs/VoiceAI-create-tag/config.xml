@@ -119,7 +119,7 @@
     <hudson.tasks.Shell>
       <command># wait 2 minutes to check if another submit happend
 sleep 120
-git pull
+git pull origin ${GERRIT_BRANCH}
 # we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 echo $LastGerritCommitHash
