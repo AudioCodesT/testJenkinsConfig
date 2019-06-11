@@ -35,9 +35,9 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
-          <description>Run full sanity test</description>
-          <defaultValue>false</defaultValue>
+          <name>RunSanity</name>
+          <description>Run sanity test</description>
+          <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -110,14 +110,13 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 #######################################################################################
 #######################################################################################
 
-[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || FullTesting=&quot;0&quot;
-
 # Set the following values to fit your need
 vmHostIP=&quot;10.7.10.117&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 vmip=&quot;10.7.10.171&quot;
 HyperV=&quot;2016&quot;
+FullTesting=&quot;0&quot;
 
 ## Get current branch
 # Get the build from the TAG
@@ -311,7 +310,7 @@ echo &quot;#####################################################################
 
 ###################################################################################################
 # Run Sanity Tests
-#if [[ &quot;${runSanity}&quot; == &quot;true&quot; ]]; then
+if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Running sanity tests on ovoc server&quot;
     ###################################################################################################
     # Restart ovoc-server
@@ -362,9 +361,9 @@ EOF
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
-#else
-#    echo &quot;$(date) : NOT running sanity tests on ovoc server&quot;
-#fi
+else
+    echo &quot;$(date) : NOT running sanity tests on ovoc server&quot;
+fi
 
 
 ###################################################################################################
