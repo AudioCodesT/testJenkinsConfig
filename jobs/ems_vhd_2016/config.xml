@@ -379,8 +379,8 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Prepare variables for export
 cd ${WORKSPACE}
-echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
-echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
+echo &quot;export BR_DIR=&apos;OVOC_${TAG%???}XXX&apos;&quot; &gt; buildVars
+echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
 echo &quot;export HVM_NAME=OVOC_HyperV-2016-${TAG}&quot; &gt;&gt; buildVars
 echo &quot;export RESULT=${RESULT}&quot; &gt;&gt; buildVars
 echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
