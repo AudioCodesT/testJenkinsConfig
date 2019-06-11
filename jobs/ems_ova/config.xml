@@ -47,8 +47,8 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
-          <description>Run full sanity test</description>
+          <name>RunSanity</name>
+          <description>Run sanity tests</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -137,13 +137,14 @@ fi
 
 OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 
-[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || FullTesting=&quot;0&quot;
+[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || 
 
 # Set the following values to fit your need
 vmHostIP=&quot;10.7.10.107&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 ovocIP=&quot;10.7.10.77&quot;
+FullTesting=&quot;0&quot;
 
 # Get ESXi password from encrypted file
 cd ~/.ssl
@@ -333,7 +334,7 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 
 ###################################################################################################
 # Run Sanity Tests
-#if [[ &quot;${FullTesting}&quot; == &quot;true&quot; ]]; then
+if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Running sanity on ovoc server&quot;
     ###################################################################################################
     # Deploy ovoc server from newly created ova
@@ -382,9 +383,9 @@ ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
     echo &quot;$(date) : Delete new ovoc server VM from host&quot; | tee -a $logfile
     ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} | tee -a $logfile
     ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
-#else
-#    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
-#fi
+else
+    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
+fi
 
 cd ${WORKSPACE}
 echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
