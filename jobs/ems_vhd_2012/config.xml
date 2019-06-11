@@ -35,7 +35,7 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
+          <name>RunTesting</name>
           <description>Run full sanity test</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
@@ -110,14 +110,13 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 #######################################################################################
 #######################################################################################
 
-[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || FullTesting=&quot;0&quot;
-
 # Set the following values to fit your need
 vmHostIP=&quot;10.7.10.177&quot;
 netMask=&quot;16&quot;
 DefaultGW=&quot;10.7.0.1&quot;
 vmip=&quot;10.7.10.77&quot;
 HyperV=&quot;2012&quot;
+FullTesting=&quot;0&quot;
 
 ## Get current branch
 # Get the build from the TAG
@@ -314,7 +313,7 @@ echo &quot;#####################################################################
 
 ###################################################################################################
 # Run Sanity Tests
-#if [[ &quot;${runSanity}&quot; == &quot;true&quot; ]]; then
+if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Running sanity on ovoc server&quot;
     ###################################################################################################
     # Restart ovoc-server
@@ -365,9 +364,9 @@ EOF
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
-#else
-#    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
-#fi
+else
+    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
+fi
 
 ###################################################################################################
 # Stop and Delete ovoc server vm
