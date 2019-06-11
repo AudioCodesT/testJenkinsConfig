@@ -117,7 +117,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># we build only if jenkins checked out on the last commit in branch, else exit 0
+      <command># wait 2 minutes to check if another submit happend
+sleep 120
+git pull
+# we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 echo $LastGerritCommitHash
 echo $GERRIT_PATCHSET_REVISION
