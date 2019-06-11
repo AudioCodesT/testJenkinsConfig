@@ -434,7 +434,7 @@ else&#xd;
 fi&#xd;
 &#xd;
 &#xd;
-scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${JOB_DIR}</script>
+scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
