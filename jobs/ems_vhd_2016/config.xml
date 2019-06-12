@@ -471,10 +471,7 @@ Files can be found on Netapp:
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
-. ${WORKSPACE}/buildVars
-
-cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log.txt
-RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
+. ${WORKSPACE}/buildVars</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
