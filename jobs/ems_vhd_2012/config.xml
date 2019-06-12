@@ -390,11 +390,6 @@ echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
 echo &quot;$(date) : FINISH!!!&quot;
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>/tmp/properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
@@ -432,7 +427,6 @@ if [[ -d ${TAG} ]]; then&#xd;
 else&#xd;
     mkdir ${TAG}&#xd;
 fi&#xd;
-&#xd;
 &#xd;
 scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
