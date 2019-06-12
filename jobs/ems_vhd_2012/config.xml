@@ -355,7 +355,7 @@ EOF
     
     cd ${WORKSPACE}
     
-    RESULT=${grep -A9 &quot;Sanity Test Result&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}
+    RESULT=${grep -A9 &quot;Test&apos;s Result Summary&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}
     
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
