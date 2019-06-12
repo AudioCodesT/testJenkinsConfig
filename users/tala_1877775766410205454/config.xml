@@ -53,16 +53,18 @@
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
         <string># SBC SIP</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
-        <string># R&amp;D Application Group</string>
         <string># R&amp;D System Software</string>
+        <string># R&amp;D Application Group</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1555940311313</timestamp>
+      <timestamp>1560341838655</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Tal.Aviad@audiocodes.com</emailAddress>
