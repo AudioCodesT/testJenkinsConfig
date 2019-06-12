@@ -355,8 +355,6 @@ EOF
     
     cd ${WORKSPACE}
     
-    RESULT=${grep -A9 &quot;Test&apos;s Result Summary&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log}
-    
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
     echo &quot;###################################################################################################&quot;
@@ -471,8 +469,7 @@ ${RESULTS}</defaultContent>
 
 . ${WORKSPACE}/buildVars
 
-cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log.txt
-RESULT=${grep -A9 &quot;Sanity Test Result&quot; /tmp/log.txt}</presendScript>
+RESULT=${grep -A9 &quot;Sanity Test Result:&quot; ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log/*.log}</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
