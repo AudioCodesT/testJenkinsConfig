@@ -150,7 +150,7 @@ then
 fi
 
 
-tar --exclude=&apos;ui&apos; -cvf VoiceAICo.tar *
+tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; -cvf VoiceAICo.tar *
 tar -rvf VoiceAICo.tar ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json
 gzip VoiceAICo.tar
 # For UpdateVI job
