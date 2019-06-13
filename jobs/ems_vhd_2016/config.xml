@@ -462,6 +462,8 @@ scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
 
 $DEFAULT_CONTENT
 
+$RESULT
+
 OVOC for Hyper-V 2016 completed.
 
 Files can be found on Netapp:
