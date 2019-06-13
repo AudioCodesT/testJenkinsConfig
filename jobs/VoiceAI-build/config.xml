@@ -137,7 +137,7 @@ echo &quot;version=${NEWTAG}&quot; &gt; version.txt
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
 
 
-tar -cvzf VoiceAIGW.tgz *
+tar -cvzf VoiceAICo.tgz *
 # For UpdateVI job
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
@@ -259,8 +259,8 @@ AuthorCommitter=$AuthorCommitter
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAIGW.tgz&quot;,
-            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiGW/${BRANCH}/$NEWTAG/&quot;,
+            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAICo.tgz&quot;,
+            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiConnector/${BRANCH}/$NEWTAG/&quot;,
             &quot;props&quot;: &quot;type=tar;status=ready&quot;,
              &quot;recursive&quot;: &quot;false&quot;
         }
