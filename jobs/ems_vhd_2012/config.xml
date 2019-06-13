@@ -460,7 +460,8 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
 OVOC for Hyper-V 2012 completed.
 
 Files can be found on Netapp:
-\\netapp01\ems\Versions\ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/
+\\netapp01\ems\Versions\ISO_Files
+
 
 Tests results:
 ${RESULTS}</defaultContent>
