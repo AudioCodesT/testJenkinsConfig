@@ -58,11 +58,11 @@
         <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
-        <string>FTP_2G</string>
         <string># SBC</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
         <string># All AudioCodes</string>
@@ -74,7 +74,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1554192918288</timestamp>
+      <timestamp>1560405867075</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>3b653c8ba29df822</seed>
