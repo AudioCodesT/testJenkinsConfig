@@ -430,12 +430,12 @@ scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yuvaly@audiocodes.com</recipients>
+      <recipients>Shuky.Riechard@audiocodes.com yuvaly@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>yuval.yosha</recipientList>
+      <recipientList>cc:shuky.riechard, gal.erez, Gennady.Tsiporkin, marina.Risher, cc:yuval.yosha , cc:ben.magriso</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -453,21 +453,17 @@ scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>*** TEST TEST TEST ***   OVOC Hyper-V Jenkins Job</defaultSubject>
-      <defaultContent>***************************************************************************************************************************
-***************                                                                                                                    ***************
-***************                                              TEST TEST TEST                                         ***************
-***************                                                                                                                    ***************
-***************************************************************************************************************************
-
-$DEFAULT_CONTENT
-
-$RESULT
+      <defaultSubject>OVOC Hyper-V 2016 image is ready</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT
 
 OVOC for Hyper-V 2016 completed.
 
 Files can be found on Netapp:
-\\netapp01\ems\Versions\ISO_Files</defaultContent>
+\\netapp01\ems\Versions\ISO_Files
+
+
+Tests results:
+${RESULTS}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
