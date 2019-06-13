@@ -128,7 +128,20 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+      <command>#compile the project
+ret_value=0
+sh common/build_all.sh || ret_value=$?
+
+echo &quot;script Return Value: $ret_value&quot;
+
+if [[ &quot;$ret_value&quot; -ne &quot;0&quot; ]]
+then
+	exit 1
+fi
+
+
+
+NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 #run eslint
 git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
 #change in some files some parameters to build number
