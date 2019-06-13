@@ -150,7 +150,7 @@ then
 fi
 
 
-tar -cvzf VoiceAICo.tgz *
+tar --exclude=&apos;ui/client/node_modules&apos; --exclude=&apos;ui/server/node_modules&apos; -cvzf VoiceAICo.tgz *
 # For UpdateVI job
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
