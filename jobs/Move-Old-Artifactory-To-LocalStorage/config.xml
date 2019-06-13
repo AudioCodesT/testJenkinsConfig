@@ -233,7 +233,10 @@ CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmwa
 CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7.2.250_MSBR&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware &quot;NextGenCPE Release/Firmware&quot;
-
+CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector &quot;VoiceAiConnector&quot;
+CheckFolder dsp-release/com/ac/dsp/Gen5/710 &quot;Gen5/710&quot;
+CheckFolder dsp-release/com/ac/dsp/Gen5/710 &quot;Gen5/722&quot;
+CheckFolder dsp-release/com/ac/dsp/Gen5/710 &quot;Gen5/740&quot;
 # Calculate the date we are going to delete for IPPPhone (only 30 days)
 
 countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
@@ -254,7 +257,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
@@ -264,7 +267,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
