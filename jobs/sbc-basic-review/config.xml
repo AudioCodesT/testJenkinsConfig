@@ -237,9 +237,16 @@ if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   fi
 fi
 
-chmod +x MakeBrdVersion.sh
-NEWTAG=`./MakeBrdVersion.sh`
-head -12 Bsps/Common/Include/BrdVersion.h | tail -3
+if [ -f MakeBrdVersion.sh ]; then
+  NEWTAG=`./MakeBrdVersion.sh`
+else
+  [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; NEWTAG=`../Shared/Versioning/Utils/MakeBrdVersion.sh ../`
+fi
+echo TAG Found $NEWTAG
+
+#chmod +x MakeBrdVersion.sh
+#NEWTAG=`./MakeBrdVersion.sh`
+#head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
 cd ..
 echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
