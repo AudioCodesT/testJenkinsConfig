@@ -34,7 +34,7 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <secureGroovyScript plugin="script-security@1.55">
           <script></script>
@@ -170,9 +170,20 @@ build.bat 0000&#xd;
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>JNLP4-connect connection</regexpForRerun>
+      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>180</delay>
+      </delay>
+      <maxSchedule>3</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
