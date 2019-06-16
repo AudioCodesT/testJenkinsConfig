@@ -157,7 +157,7 @@ replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | c
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
 
 #start upgrade
-python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
+python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade latest_iso
 python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
 python2.7 SanityReboot.py $serverToUpgrade
 
