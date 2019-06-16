@@ -76,7 +76,6 @@
         <string>Mailvision Branch Office Users</string>
         <string># AUDC - NJ Engineering Team</string>
         <string>AI-QMS-RO</string>
-        <string># MeetingRecorderAdmins</string>
         <string>AudioCodes_VPN</string>
         <string># SmartTAP</string>
         <string># SmartTap-BS</string>
@@ -87,7 +86,7 @@
         <string>NewUser_Israel-BS</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1551721213507</timestamp>
+      <timestamp>1560681599082</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>7a614888f17fba7b</seed>
