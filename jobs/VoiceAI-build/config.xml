@@ -152,7 +152,15 @@ fi
 
 tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; -cvf VoiceAICo.tar *
 tar -rvf VoiceAICo.tar ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json
-gzip VoiceAICo.tar
+folder_name=VoiceAICo-$(git describe --tags)
+if [[ -e ${folder_name ]]
+then
+	rm -rf ${folder_name}
+fi
+mkdir ${folder_name}
+tar -xvf VoiceAICo.tar -C ${folder_name}
+tar -cvzf ${folder_name}.tgz ${folder_name}/
+
 # For UpdateVI job
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
