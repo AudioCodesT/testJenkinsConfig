@@ -226,7 +226,7 @@ if [ -f MakeBrdVersion.sh ]; then
 else
   [ -f ../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; NEWTAG=`../Shared/Versioning/Utils/MakeBrdVersion.sh ../`
 fi
-echo TAG Found $FindTAG
+echo TAG Found $NEWTAG
 
 #chmod +x MakeBrdVersion.sh
 #NEWTAG=`./MakeBrdVersion.sh`
