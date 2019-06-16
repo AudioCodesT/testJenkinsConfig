@@ -183,6 +183,7 @@ echo BRANCH=$BRANCH&gt;&gt; voiceAI.properties
 echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;` &gt;&gt; voiceAI.properties
 echo DATE=${DATE} &gt;&gt; voiceAI.properties
 echo AuthorCommitter=${AuthorCommitter} &gt;&gt; voiceAI.properties
+echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
 cat voiceAI.properties</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
@@ -282,7 +283,7 @@ AuthorCommitter=$AuthorCommitter
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/VoiceAICo.tar.gz&quot;,
+            &quot;pattern&quot;: &quot;${WORKSPACE}/${folder_name}.tgz&quot;,
             &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VoiceAiConnector/${BRANCH}/$NEWTAG/&quot;,
             &quot;props&quot;: &quot;type=tar;status=ready&quot;,
              &quot;recursive&quot;: &quot;false&quot;
