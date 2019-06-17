@@ -49,7 +49,7 @@
         <hudson.model.BooleanParameterDefinition>
           <name>RunSanity</name>
           <description>Run sanity tests</description>
-          <defaultValue>false</defaultValue>
+          <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -136,8 +136,6 @@ if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
 fi
 
 OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
-
-[[ &quot;$FullTesting&quot; == &quot;true&quot; ]] &amp;&amp; FullTesting=&quot;1&quot; || 
 
 # Set the following values to fit your need
 vmHostIP=&quot;10.7.10.107&quot;
@@ -361,7 +359,7 @@ if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Run sanity tests on ovoc server&quot; | tee -a $logfile
     cd EMS/VersionRelease
 
-    python2.7 SanityTest.py ${TAG} $vmip $FullTesting | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
+    python2.7 SanityTest.py ${TAG} $vmip 0 | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
     (python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile || echo &quot;$(date) : Failed to download logs&quot; | tee -a $logfile &amp;&amp; exit -1)
     cd ${WORKSPACE}
     echo &quot;###################################################################################################&quot; | tee -a $logfile
