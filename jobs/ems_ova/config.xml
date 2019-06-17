@@ -359,7 +359,7 @@ if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
     echo &quot;$(date) : Run sanity tests on ovoc server&quot; | tee -a $logfile
     cd EMS/VersionRelease
 
-    python2.7 SanityTest.py ${TAG} $vmip 0 | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
+    python2.7 SanityTest.py ${TAG} $vmip $FullTesting | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
     (python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile || echo &quot;$(date) : Failed to download logs&quot; | tee -a $logfile &amp;&amp; exit -1)
     cd ${WORKSPACE}
     echo &quot;###################################################################################################&quot; | tee -a $logfile
