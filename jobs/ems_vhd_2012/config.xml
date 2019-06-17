@@ -165,7 +165,12 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Delete old remnants from hypervisor host
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} 
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\Exports\\*&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\Versions\\*&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
