@@ -37,7 +37,7 @@
         <hudson.model.BooleanParameterDefinition>
           <name>RunSanity</name>
           <description>Run sanity tests</description>
-          <defaultValue>false</defaultValue>
+          <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
