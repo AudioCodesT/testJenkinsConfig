@@ -165,7 +165,11 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Delete old remnants from hypervisor host
 SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP} 
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\Exports\\*&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
+SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\Versions\\*&apos;&quot;
+echo $SSHCMD | ssh centos@${vmHostIP}
 
 ###################################################################################################
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
@@ -425,7 +429,7 @@ else&#xd;
     mkdir ${TAG}&#xd;
 fi&#xd;
 &#xd;
-scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
+scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
