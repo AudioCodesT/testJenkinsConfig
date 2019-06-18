@@ -460,16 +460,11 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>OVOC Hyper-V 2012 image is ready</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT
-
-OVOC for Hyper-V 2012 completed.
+      <defaultContent>OVOC for Hyper-V 2012 completed.
 
 Files can be found on Netapp:
 \\netapp01\ems\Versions\ISO_Files
-
-
-Tests results:
-${RESULTS}</defaultContent>
+</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
