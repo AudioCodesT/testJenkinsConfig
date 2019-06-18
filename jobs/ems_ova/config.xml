@@ -442,7 +442,7 @@ mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>gal.erez, Gennady.Tsiporkin, marina.Risher, liran.badiri, eran.feldman, shuky.riechard, yuval.yosha</recipientList>
+      <recipientList>gal.erez, Gennady.Tsiporkin, marina.Risher, liran.badiri, shuky.riechard, yuval.yosha</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -460,23 +460,12 @@ mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT
-
-OVOC ova completed.
-
-Files can be found on Netapp:
+      <defaultSubject>OVOC OVA is ready </defaultSubject>
+      <defaultContent>Files can be found on Netapp:
 \\netapp01\ems\Versions\ISO_Files
-
-Tests results:
-${RESULT}</defaultContent>
+</defaultContent>
       <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT
-
-. ${WORKSPACE}/buildVars
-
-cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log.txt
-RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log.txt}</presendScript>
+      <presendScript></presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
