@@ -123,7 +123,7 @@ rem ccperl update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PRO
 update_report_tags.pl %NEWTAG% &quot;%GERRIT_BRANCH%&quot; &quot;%PROJECT%&quot;&#xd;
 &#xd;
 cd /d %WORKSPACE%&#xd;
-SendTo=yossim&#xd;
+set SendTo=yossim&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;GWApp&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham &amp; goto ProjectFound&#xd;
