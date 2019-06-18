@@ -1,0 +1,96 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <version>10</version>
+  <id>ramn</id>
+  <fullName>Ram Nizani</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAwzqRZF4l3qjiZ9QH82ue8vq7Uioo0kKebW/tZCKUvifQ4GmLhw/L/tjqncwamZF5qGDLRlMIcZePCObSy3kxLGQ==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>0ea21275-0c1b-4b97-aa1d-e0a7f251f4b7</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>2f43358901e609854fce355c2d17d8355eaab045812103f60abafc14b2d38e6d</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Ram.Nizani@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string>Agile users</string>
+        <string>authenticated</string>
+        <string>TG1000</string>
+        <string>AWS_Jira_Users</string>
+        <string># All Cars</string>
+        <string>cc_users</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_ARM_access_BS_Internal_Users</string>
+        <string>Palo_Access_Aws_Azure-ssh</string>
+        <string># RnD REDIRECT SRV</string>
+        <string># ClearCase R&amp;D</string>
+        <string>#All Breakfast</string>
+        <string>Jira leaders</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string># SBC</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
+        <string># SBC SIP Infra</string>
+        <string># RnD Israel</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string>ARM-FC</string>
+        <string># R&amp;D Application Group</string>
+        <string>CI_ARM_developers</string>
+      </roles>
+      <timestamp>1560872519881</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <jenkins.security.seed.UserSeedProperty>
+      <seed>927cdbf4ce2fc958</seed>
+    </jenkins.security.seed.UserSeedProperty>
+  </properties>
+</user>
