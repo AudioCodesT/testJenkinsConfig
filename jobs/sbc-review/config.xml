@@ -274,6 +274,10 @@ cd TrunkPackRam
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
+if [ ! -f ram${BOARDNAME}.map ]; then
+  echo map file does not found, exit with error
+  exit 1
+fi
 #rename ram${BOARDNAME} ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER} ram${BOARDNAME}.*
 #zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map
 #zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf
