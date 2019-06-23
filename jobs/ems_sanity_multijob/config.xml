@@ -326,7 +326,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           </condition>
           <publisherList>
             <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-              <recipientList>Marina.Risher@audiocodes.com, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz@audiocodes.com, Natan.Merfish@audiocodes.com, Kairat.Ziman@audiocodes.com, Yacov.Alster@audiocodes.com, cc:Aliya.Peretz@audiocodes.com, cc:Hadas.Attal@audiocodes.com, cc:Mark.Kemel@audiocodes.com, cc:Itamar.Suissa@audiocodes.com, cc:Liran.Badiri@audiocodes.com, cc:Leonid.Fayngold@audiocodes.com, cc:Erez.NejatHaim@audiocodes.com, cc:Kfir.Gershon@audiocodes.com, cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com, cc:Natali.Elashvili@audiocodes.com</recipientList>
+              <recipientList>OVOC@audiocodes.com; cc:Kairat.Ziman@audiocodes.com, cc:Yacov.Alster@audiocodes.com,cc:Shuky.Riechard, cc:Yossi.Merzbach, cc:Shay.Harel@audiocodes.com</recipientList>
               <configuredTriggers>
                 <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
                   <email>
