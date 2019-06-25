@@ -453,18 +453,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-8a99c992</name>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0d020f0277a941acb</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0d020f0277a941acb</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>ems-build</requestedLabel>
-            <createdAt>2019-06-11 07:17:59.897 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
