@@ -149,10 +149,14 @@ then
 	exit 1
 fi
 
+version=$(git describe --tags)
+for file in $(git ls-files \*package.json); do
+  npm -C $(dirname $file) version --allow-same-version $version &gt; /dev/null
+done
 
 tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/config/node_modules&apos; --exclude=&apos;common/logger/node_modules&apos; -cvf VoiceAICo.tar *
 tar -rvf VoiceAICo.tar ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
-folder_name=VoiceAICo-$(git describe --tags)
+folder_name=VoiceAICo-$version
 if [[ -e ${folder_name} ]]
 then
 	rm -rf ${folder_name}
