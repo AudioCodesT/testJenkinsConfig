@@ -49,9 +49,8 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 ARTIFACTORY=artifactory</propertiesContent>
@@ -65,7 +64,6 @@ ARTIFACTORY=artifactory</propertiesContent>
       <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
-      <contributors/>
     </EnvInjectJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -102,19 +100,11 @@ ARTIFACTORY=artifactory</propertiesContent>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/7.20A.15*</pattern>
+              <pattern>refs/tags/7.40A.*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/7.20A.16*</pattern>
-            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>ANT</compareType>
-              <pattern>refs/tags/7.20A.19*</pattern>
-            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>ANT</compareType>
-              <pattern>refs/tags/7.20A.2*</pattern>
+              <pattern>refs/tags/7.20A.*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -290,7 +280,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ../generated_sbc_version.properties
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -427,7 +417,7 @@ $WORKSPACE/TrunkPackRam/OpensourceVersions/**/Versions.txt=&gt;com/ac/sbc</deplo
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
