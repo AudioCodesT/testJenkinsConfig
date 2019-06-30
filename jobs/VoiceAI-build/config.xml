@@ -155,7 +155,7 @@ for file in $(git ls-files \*package.json); do
 done
 
 tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/config/node_modules&apos; --exclude=&apos;common/logger/node_modules&apos; -cvf VoiceAICo.tar *
-tar -rvf VoiceAICo.tar ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
+tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
 folder_name=VoiceAICo-$version
 if [[ -e ${folder_name} ]]
 then
