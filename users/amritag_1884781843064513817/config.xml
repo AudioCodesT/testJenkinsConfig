@@ -47,17 +47,11 @@
         <string># ROW employees</string>
         <string>authenticated</string>
         <string>System_Software</string>
-        <string>AWS_Jira_Users</string>
+        <string>Password Manager Apply</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
-        <string>ActionBase Users</string>
-        <string># ClearCase R&amp;D</string>
-        <string>Travel EMEA</string>
-        <string># R&amp;D System Software</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Password Manager Apply</string>
-        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
+        <string>ActionBase Users</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudiocodesUK</string>
@@ -66,14 +60,16 @@
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
-        <string># RnD Israel</string>
+        <string>Travel EMEA</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># R&amp;D Application Group</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1559641338483</timestamp>
+      <timestamp>1561928178893</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Amrita.Garg@audiocodes.com</emailAddress>
