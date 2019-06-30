@@ -150,7 +150,7 @@ ECHO.%PROJECT%| FIND /I &quot;Smart&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=Brian.Kling, Alex.Shlachter &amp; goto ProjectFound&#xd;
 &#xd;
 ECHO.%PROJECT%| FIND /I &quot;WebRTC/Android&quot;&gt;Nul&#xd;
-if %errorlevel% equ 0 set SendTo=Ben.Magriso &amp; goto ProjectFound&#xd;
+if %errorlevel% equ 0 set SendTo=MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso &amp; goto ProjectFound&#xd;
 &#xd;
 :ProjectFound&#xd;
 &#xd;
