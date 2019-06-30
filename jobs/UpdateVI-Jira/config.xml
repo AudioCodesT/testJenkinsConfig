@@ -184,7 +184,7 @@ rem set errorlevel=0&#xd;
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>yossim Shuky.Riechard</recipients>
+      <recipients>yossim Shuky.Riechard,ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
