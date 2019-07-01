@@ -135,7 +135,7 @@ NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 #run eslint
 git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
 #change in some files some parameters to build number
-echo &quot;version=${NEWTAG}&quot; &gt; version.txt
+echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
 #compile the project
