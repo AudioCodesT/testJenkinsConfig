@@ -154,7 +154,7 @@ for file in $(git ls-files \*package.json); do
   npm -C $(dirname $file) version --allow-same-version $version &gt; /dev/null
 done
 
-tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/config/node_modules&apos; --exclude=&apos;common/logger/node_modules&apos; -cvf VoiceAICo.tar *
+tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; -cvf VoiceAICo.tar *
 tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
 folder_name=VoiceAICo-$version
 if [[ -e ${folder_name} ]]
@@ -327,7 +327,7 @@ AuthorCommitter=$AuthorCommitter
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEWTAG}</template>
-      <runAtStart>true</runAtStart>
+      <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
