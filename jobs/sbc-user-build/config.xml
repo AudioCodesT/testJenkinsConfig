@@ -139,6 +139,13 @@ PATH=/bin:$PATH</propertiesContent>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference>/gerrit_mnt/TP/GWApp.git</reference>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
   <assignedNode>sbc-mc-fathers</assignedNode>
@@ -561,5 +568,5 @@ ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${TargetArtif
   <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
     <runSequentially>false</runSequentially>
   </executionStrategy>
-  <childCustomWorkspace>.</childCustomWorkspace>
+  <childCustomWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</childCustomWorkspace>
 </matrix-project>
