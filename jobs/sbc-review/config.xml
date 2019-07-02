@@ -82,7 +82,7 @@ PATH=/bin:$PATH</propertiesContent>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference>/gerrit_mnt/TP/GWApp.git</reference>
+        <reference></reference>
         <depth>30</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -515,5 +515,4 @@ $change,$ps
   <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
     <runSequentially>false</runSequentially>
   </executionStrategy>
-  <childCustomWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</childCustomWorkspace>
 </matrix-project>
