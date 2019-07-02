@@ -56,7 +56,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>+refs/heads/7.2.254:refs/remotes/origin/7.2.254</refspec>
-        <url>ssh://jenkins@172.16.133.27:29418/TP/GWApp</url>
+        <url>ssh://jenkins@test-jenkins:29418/TP/GWApp</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -71,7 +71,7 @@
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
         <noTags>false</noTags>
-        <reference>/home/centos/mnt/TP/GWApp.git</reference>
+        <reference>/gerrit_mnt/TP/GWApp.git</reference>
         <depth>0</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
