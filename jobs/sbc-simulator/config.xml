@@ -78,7 +78,7 @@
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>true</noTags>
-        <reference></reference>
+        <reference>/gerrit_mnt/TP/GWApp.git</reference>
         <depth>30</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -148,6 +148,7 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>true</concurrentBuild>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>#!/bin/sh -x
