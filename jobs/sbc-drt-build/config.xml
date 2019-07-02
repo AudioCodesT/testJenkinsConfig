@@ -66,7 +66,7 @@
       </matrixOptions>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
@@ -107,6 +107,13 @@ PATH=/bin:$PATH</propertiesContent>
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference>/gerrit_mnt/TP/GWApp.git</reference>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
   <assignedNode>sbc-mc-fathers</assignedNode>
@@ -248,7 +255,7 @@ cd TrunkPackRam
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -351,7 +358,7 @@ CHANGES=${CHANGESNumbers}</properties>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.5">
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
                           <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
                         </info>
@@ -488,7 +495,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
@@ -498,7 +505,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -517,5 +524,5 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
   <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
     <runSequentially>false</runSequentially>
   </executionStrategy>
-  <childCustomWorkspace>.</childCustomWorkspace>
+  <childCustomWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</childCustomWorkspace>
 </matrix-project>
