@@ -92,7 +92,7 @@ PATH=/bin:$PATH</propertiesContent>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference>/home/centos/jenkinsslave/workspace/sbc-simulator/.git</reference>
+        <reference>/gerrit_mnt/TP/GWApp.git</reference>
         <depth>30</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -397,5 +397,5 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWT
   <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
     <runSequentially>false</runSequentially>
   </executionStrategy>
-  <childCustomWorkspace>.</childCustomWorkspace>
+  <childCustomWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</childCustomWorkspace>
 </matrix-project>
