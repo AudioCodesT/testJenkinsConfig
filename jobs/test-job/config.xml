@@ -78,14 +78,13 @@
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>sbc-test-slave</assignedNode>
+  <assignedNode>sbc-linux-build</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>echo &quot;123456&quot;</command>
