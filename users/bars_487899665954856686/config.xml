@@ -41,7 +41,6 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
-        <string>System_Software</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -56,7 +55,7 @@
         <string>Domain Users</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1554397142020</timestamp>
+      <timestamp>1562142518462</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Bar.Shwartz@audiocodes.com</emailAddress>
