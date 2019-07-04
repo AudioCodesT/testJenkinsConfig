@@ -45,20 +45,17 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
-        <string>AWS_Jira_Users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Palo_Access_Aws_Azure-ssh</string>
         <string>Sp365-Devops-Read</string>
-        <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string># All ISRAEL</string>
-        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -66,7 +63,6 @@
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP</string>
-        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
@@ -75,7 +71,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1560756469167</timestamp>
+      <timestamp>1562241353293</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Dorit.Mari@audiocodes.com</emailAddress>
