@@ -1,0 +1,89 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <version>10</version>
+  <id>yechielc</id>
+  <fullName>Yechiel Corn</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAw8frBmRts1qn616QrrPNsA511+LbaKRv1dBUrm0I9BbWnSAIsbEG314ROaNG+GFXSx61Fjl19nQDD47gWUa3ARA==}</apiToken>
+      <tokenStore>
+        <tokenList>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>d07f2c84-122c-4b0f-bced-f2425632325d</uuid>
+            <name>Legacy Token</name>
+            <value>
+              <version>10</version>
+              <hash>d66202461f8a3a3382dcd7294d07805a764513c18216d2eab5018f37d6953ee8</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+        </tokenList>
+      </tokenStore>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>All</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>false</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>authenticated</string>
+        <string># All Cars</string>
+        <string># All__Beer_Sheva</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Citrix_Allow_Visio</string>
+        <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
+        <string># R&amp;D System Software</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string># All Beer Sheva</string>
+        <string>Password Manager Apply</string>
+        <string># All ISRAEL</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
+        <string># SBC SIP</string>
+        <string># RnD Israel</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string>NewUser_Israel-BS</string>
+        <string># R&amp;D Application Group</string>
+      </roles>
+      <timestamp>1562563150214</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Yechiel.Corn@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <jenkins.security.seed.UserSeedProperty>
+      <seed>7b03f0fcb0e6c694</seed>
+    </jenkins.security.seed.UserSeedProperty>
+  </properties>
+</user>
