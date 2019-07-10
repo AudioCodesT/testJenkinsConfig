@@ -211,7 +211,7 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>cc:ben.magriso@audiocodes.com,cc:shuky.riechard@audiocodes.com,Alex.Agranov@audiocodes.com</recipientList>
+      <recipientList>cc:ben.magriso@audiocodes.com,cc:shuky.riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
