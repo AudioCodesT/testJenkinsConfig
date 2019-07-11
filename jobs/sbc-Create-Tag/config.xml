@@ -162,7 +162,6 @@ do
     # Find the first 2 characters of the feature name - change them to uppercase
     IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ &apos;{print $NF}&apos; | cut -c1-2)
     if [[ ! &quot;$LastTag&quot; =~  \.[0-9]+$IDs\.$LastMergedMINOR ]]; then
-      continue
       # If is the first TAG in this feature branch
       # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
       if [[ &quot;$LastTag&quot; =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
