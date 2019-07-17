@@ -49,29 +49,25 @@
       <roles>
         <string>authenticated</string>
         <string>Password Manager Apply</string>
-        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
         <string>Allowed RODC Password Replication Group</string>
-        <string># SBC</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP</string>
-        <string># ClearCase R&amp;D</string>
-        <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>NewUser_Israel-Lod</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
-        <string># R&amp;D System Software</string>
         <string># R&amp;D Application Group</string>
+        <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1560257076009</timestamp>
+      <timestamp>1563380517083</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Nadir.Cohen@audiocodes.com</emailAddress>
