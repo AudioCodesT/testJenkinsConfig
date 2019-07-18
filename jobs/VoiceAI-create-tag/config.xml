@@ -119,6 +119,16 @@
     <hudson.tasks.Shell>
       <command># wait 2 minutes to check if another submit happend
 sleep 120
+#get premissions from id_rsa_gerrit to do git pull
+cat &lt;&lt; EOF &gt; ~/.ssh/config
+Host test-gerrit
+    Port 29418
+    User jenkins 
+    IdentityFile ${WORKSPACE}/id_rsa_gerrit
+    StrictHostKeyChecking no
+EOF
+chmod 600 ~/.ssh/config
+chmod 600 id_rsa_gerrit
 git pull origin ${GERRIT_BRANCH}
 # we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
@@ -175,6 +185,14 @@ echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}_${ALLTAGS}</template>
       <runAtStart>true</runAtStart>
