@@ -130,6 +130,7 @@ EOF
 chmod 600 ~/.ssh/config
 chmod 600 id_rsa_gerrit
 git pull origin ${GERRIT_BRANCH}
+exit 1
 # we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
 echo $LastGerritCommitHash
