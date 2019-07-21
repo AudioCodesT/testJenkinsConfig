@@ -193,7 +193,8 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
-git checkout -f FETCH_HEAD -- TrunkPackRam Modules OpenSource Shared
+git checkout -f FETCH_HEAD -- TrunkPackRam OpenSource
+git checkout -f FETCH_HEAD -- Shared || true
 
 cd $CurrentPath
 
