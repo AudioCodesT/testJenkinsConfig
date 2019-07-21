@@ -159,6 +159,7 @@ if [ ! -d .git ]; then
   rm -rf GWApp
 fi
 
+git fetch origin $GERRIT_BRANCH
 git checkout -f FETCH_HEAD -- TrunkPackRam Modules OpenSource Shared
 
 cd $CurrentPath
@@ -243,7 +244,7 @@ ${WORKSPACE}/hostedbl_external_version_data.h=&gt;com/ac/sbc/HostedBL/${COMP_VER
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jpass</name>
-          <value>{AQAAABAAAAAQThjXiWUXZZJYqeBsa/dDZ5/BzQc+zK2CIz4uJcVtR+8=}</value>
+          <value>{AQAAABAAAAAQqCpJsIC6qjbwdm5fRGRrDzrhhq6g3kVvGXjwnv7BWdk=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
