@@ -395,6 +395,37 @@ done
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
+      <script plugin="script-security@1.55">
+        <script>artfcty_pat = ~/Deploying artifact: https:\/\/(.+\/)([^\/\s]+\b)/
+
+// Adds artifacts from child build
+def add_artifacts(artifacts, build) {
+    // match &quot;Deploying artifact: (.+)&quot;
+    def matches = build.logFile.text =~ artfcty_pat
+    matches.each {
+        if (!it[2].endsWith(&apos;.h&apos;)) // Ignore header files
+            artifacts.appendText(&quot;&lt;li&gt;&lt;a href=\&quot;https://sbc-read:sbc-read@${it[1]}${it[2]}\&quot;&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;&quot;, false)
+    }
+}
+
+def isMatrix = manager.buildIsA(hudson.matrix.MatrixBuild.class)
+artifacts = manager.createSummary(&quot;package.png&quot;)
+targetArtifactory=&quot;user/Firmware/&quot; + manager.build.number
+artifacts.appendText(&quot;&lt;a href=\&quot;https://sbc-read:sbc-read@artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
+// For matrix build, collect artifacts from all child builds. For normal build collect from self
+if (isMatrix) {
+    manager.build.exactRuns.each { run -&gt; add_artifacts(artifacts, run) }
+} else {
+    add_artifacts(artifacts, manager.build);
+}
+artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
+</script>
+        <sandbox>false</sandbox>
+      </script>
+      <behavior>0</behavior>
+      <runForMatrixParent>true</runForMatrixParent>
+    </org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
