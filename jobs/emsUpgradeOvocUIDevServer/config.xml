@@ -155,6 +155,10 @@ perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; Sanit
 line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;)&quot;
 replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;,30.0)&quot;
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
+#change in sanity reboot sleeping time from 500 to 750
+line=&quot;time.sleep(500)&quot;
+replace_line=&quot;time.sleep(800)&quot;
+sed -i &quot;s/${line}/${replace_line}/g&quot; SanityReboot.py
 
 #start upgrade
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
