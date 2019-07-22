@@ -152,6 +152,9 @@ if %errorlevel% equ 0 set SendTo=Brian.Kling, Alex.Shlachter &amp; goto ProjectF
 ECHO.%PROJECT%| FIND /I &quot;WebRTC/Android&quot;&gt;Nul&#xd;
 if %errorlevel% equ 0 set SendTo=MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso &amp; goto ProjectFound&#xd;
 &#xd;
+ECHO.%PROJECT%| FIND /I &quot;DSP/Gen5&quot;&gt;Nul&#xd;
+if %errorlevel% equ 0 set SendTo=DSP2, Ben.Magriso &amp; goto ProjectFound&#xd;
+&#xd;
 :ProjectFound&#xd;
 &#xd;
 echo SendTo=%SendTo% &gt; SendTo.txt&#xd;
