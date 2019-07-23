@@ -34,7 +34,7 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <secureGroovyScript plugin="script-security@1.55">
           <script></script>
@@ -139,7 +139,7 @@ echo OPEN_RG_VER=${BL} &gt; generated_openRG_version.properties
 
 echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/pkg/version</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_openRG_version.properties</propertiesFilePath>
       </info>
@@ -150,6 +150,21 @@ if [ ! -d &quot;$WORKSPACE/CompilationResults&quot; ]; then
   rm -rf $WORKSPACE/CompilationResults
 fi
 
+#echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+cat ~/.netrc
+
+cd ../..
+if [ ! -d .git ]; then
+  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
+  mv GWApp/.git .
+  rm -rf GWApp
+else
+  git fetch origin $GERRIT_BRANCH
+fi
+
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam OpenSource 
+git checkout -f origin/$GERRIT_BRANCH -- Shared || true    
+cd $WORKSPACE
 
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
