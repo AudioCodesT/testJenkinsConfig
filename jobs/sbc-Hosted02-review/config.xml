@@ -34,9 +34,9 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -48,7 +48,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -141,13 +141,61 @@ echo COMP_VER=${BL} &gt; generated_version.properties
 echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/external_version_data.h
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>
+      <command># Find if this build should use another Opensorce Images with the same Commit change-ID
+chmod 600 id_rsa_gerrit
+change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
+#ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ID=${GERRIT_CHANGE_ID}
+ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed &apos;s/.*Issue: //g; s/ .*//g&apos;)
+refs=&quot;&quot;
+refs=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
+     --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open project:TP/GWApp | \
+     grep ref: | cut -d: -f2) || echo ChangeId not found
+echo tpChange: $refs
+if [[ -z &quot;$refs&quot; &amp;&amp; ! -z &quot;$ISSUE&quot; ]]; then 
+  echo Search this Issue: $ISSUE...
+  tpChange=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
+    --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH status:open project:TP/GWApp | \
+    grep ref: | cut -d: -f2) || echo ChangeId not found
+  lastChange=0
+  for ref in $tpChange; do
+    change=$(echo $ref | cut -d/ -f4);
+    echo Check if it the newest change, we need to use the newest in case of some changes
+    if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
+      lastChange=$change
+      refs=$ref
+      echo Set to $refs
+    fi 
+  done
+fi
+echo tpChange: $refs
+
+CurrentPath=`pwd`
+#echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+cd ../..
+if [ ! -d .git ]; then
+  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
+  mv GWApp/.git .
+  rm -rf GWApp
+fi
+
+if [ ! -z &quot;$refs&quot; ]; then
+  git fetch origin $refs
+else
+  git fetch origin $GERRIT_BRANCH
+fi
+
+git checkout -f FETCH_HEAD -- TrunkPackRam OpenSource
+git checkout -f FETCH_HEAD -- Shared || true
+
+cd $CurrentPath
+
 rm -f ssbc.vmlinux.tar.gz
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
@@ -175,7 +223,15 @@ fi</command>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
