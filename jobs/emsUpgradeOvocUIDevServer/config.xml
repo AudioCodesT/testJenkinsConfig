@@ -157,7 +157,7 @@ replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | c
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
 #change in sanity reboot sleeping time from 500 to 750
 line=&quot;time.sleep(500)&quot;
-replace_line=&quot;time.sleep(800)&quot;
+replace_line=&quot;time.sleep(1000)&quot;
 sed -i &quot;s/${line}/${replace_line}/g&quot; SanityReboot.py
 
 #start upgrade
