@@ -218,7 +218,7 @@ DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 deep=2
 
 ARTIFACTORY=artifactory
-
+# SBC 
 CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware &quot;7.2.150 Release/7.2.154&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.156/Firmware &quot;7.2.150 Release/7.2.156&quot;
@@ -232,12 +232,44 @@ CheckFolder sbc-release/com/ac/sbc/7.2.204_4jio/Firmware &quot;7.2.200 Release/7
 CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmware&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7.2.250_MSBR&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.252_MSBR/Firmware &quot;7.2.250 Release/7.2.252_MSBR&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.254/Firmware &quot;7.2.250 Release/7.2.254&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.256/Firmware &quot;7.2.250 Release/7.2.256&quot;
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware &quot;NextGenCPE Release/Firmware&quot;
+#All Feature branches
+CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware &quot;feature/centos7/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/fips/Firmware &quot;feature/fips/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/PM/Firmware &quot;feature/PM/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/voice-ai/Firmware &quot;feature/voice-ai/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/websocket/Firmware &quot;feature/websocket/Firmware&quot; 
+#All ISO
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.150 &quot;7.2.150 Release/ISO&quot;
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.152 &quot;7.2.150 Release/7.2.152/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.154 &quot;7.2.150 Release/7.2.154/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.156 &quot;7.2.150 Release/7.2.156/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.158 &quot;7.2.150 Release/7.2.158/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.162 &quot;7.2.150 Release/7.2.162/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.170 &quot;7.2.170 Release/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.200 &quot;7.2.200 Release/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.202 &quot;7.2.200 Release/7.2.202/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.250 &quot;7.2.250 Release/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_1 &quot;7.2.250 Release/7.2.252_1/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_AWS &quot;7.2.250 Release/7.2.252_AWS/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252 &quot;7.2.250 Release/7.2.252/ISO&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.254 &quot;7.2.250 Release/7.2.254/ISO&quot;
+#All VSSBC
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.156 &quot;7.2.150 Release/7.2.156/VSSBC&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.204 &quot;7.2.200 Release/7.2.204/VSSBC&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.250 &quot;7.2.250 Release/VSSBC&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_1 &quot;7.2.250 Release/7.2.252_1/VSSBC&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_AWS &quot;7.2.250 Release/7.2.252_AWS/VSSBC&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252 &quot;7.2.250 Release/7.2.252/VSSBC&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 &quot;7.2.250 Release/7.2.254/VSSBC&quot;
+# Other Projects
 CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector &quot;VoiceAiConnector&quot;
 CheckFolder dsp-release/com/ac/dsp/Gen5 &quot;DSP/Gen5&quot;
 
 # Calculate the date we are going to delete for IPPPhone (only 30 days)
-
 countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
 deep=1
 OLD=30
