@@ -75,7 +75,7 @@
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -196,15 +196,13 @@ git checkout -f FETCH_HEAD -- Shared || true
 
 cd $CurrentPath
 
-rm -f ssbc.vmlinux.tar.gz
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
 ifconfig -a  | grep inet
 id
 
-sudo /dce/scripts/dce.sh -a chroot -e SSBC2 -c &quot;rm -f /var/lib/rpm/__db* &amp;&amp; rpm --rebuilddb&quot;
-./buildKernel.sh --server=localhost
+./buildKernel.sh --board=SSBC7 --threads=$(nproc)
 
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos7_external_version_data.h
 
