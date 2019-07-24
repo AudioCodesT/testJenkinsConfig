@@ -170,7 +170,6 @@ PATH=/bin:$PATH</propertiesContent>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>true</concurrentBuild>
-  <customWorkspace>/home/centos/jenkinsslave/workspace/TP_GWApp</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>#!/bin/sh -x
