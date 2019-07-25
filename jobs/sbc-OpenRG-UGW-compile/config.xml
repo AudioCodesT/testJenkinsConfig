@@ -175,14 +175,12 @@ if [ ! -d .git ]; then
 else
   git fetch origin $GERRIT_BRANCH
 fi
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/acInfrastructure/MCA \
-    TrunkPackRam/acInfrastructure/MCA-UGW \
-    TrunkPackRam/Bsps/BspOcteon/Include/bspWanPortDef.h \
-    OpenSource/pkgs
-    
-git checkout -f origin/$GERRIT_BRANCH -- Shared || true    
 
-rev=$(git ls-tree origin/$GERRIT_BRANCH -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;)
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam OpenSource   
+git checkout -f origin/$GERRIT_BRANCH -- Shared || true    
+git reset --hard $GERRIT_REFNAME
+
+rev=$(git ls-tree $GERRIT_REFNAME -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;)
 cd $WORKSPACE
 
 if [ -d ../../Shared ]; then
