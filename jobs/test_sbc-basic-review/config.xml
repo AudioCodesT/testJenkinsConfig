@@ -112,7 +112,7 @@ PATH=/bin:$PATH</propertiesContent>
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <assignedNode>sbc-linux-build</assignedNode>
+  <assignedNode>test_sbc_linux</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
