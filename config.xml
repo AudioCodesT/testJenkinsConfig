@@ -403,18 +403,7 @@
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.4">
       <name>sig-e20df392</name>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0eb38b2786df7fcec</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0eb38b2786df7fcec</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2019-07-25 10:49:29.793 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -934,7 +923,6 @@
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
-        <string>test_sbc-basic-review</string>
         <string>UpdateVI-Jira</string>
       </jobNames>
       <jobFilters/>
