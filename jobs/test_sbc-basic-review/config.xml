@@ -115,7 +115,7 @@ PATH=/bin:$PATH</propertiesContent>
   </scm>
   <assignedNode>test_sbc_linux</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
