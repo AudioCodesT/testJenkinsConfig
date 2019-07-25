@@ -405,13 +405,13 @@
       <groupId>sig-e20df392</groupId>
       <pendingInstances>
         <entry>
-          <string>sir-18irj2am</string>
+          <string>i-0eb38b2786df7fcec</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>sir-18irj2am</id>
-            <status>SPOT_PENDING</status>
+            <id>i-0eb38b2786df7fcec</id>
+            <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2019-07-23 09:40:39.498 UTC</createdAt>
+            <createdAt>2019-07-25 10:49:29.793 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
@@ -934,6 +934,7 @@
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
+        <string>test_sbc-basic-review</string>
         <string>UpdateVI-Jira</string>
       </jobNames>
       <jobFilters/>
