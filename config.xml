@@ -415,7 +415,7 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C34xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -423,11 +423,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C34xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -465,7 +465,7 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -473,7 +473,7 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -519,23 +519,15 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R4large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -544,6 +536,14 @@
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R4large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -651,15 +651,15 @@
           <int>1</int>
         </entry>
         <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -705,15 +705,15 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Small</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Micro</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -839,10 +839,6 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
@@ -852,6 +848,10 @@
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -874,6 +874,70 @@
         </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
       </executorsForTypes>
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
+    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@1.1.1">
+      <name>azure_VM</name>
+      <cloudName>azure_VM</cloudName>
+      <credentialsId>TestJenkinsCredsForAzure</credentialsId>
+      <maxVirtualMachinesLimit>10</maxVirtualMachinesLimit>
+      <resourceGroupReferenceType>existing</resourceGroupReferenceType>
+      <newResourceGroupName></newResourceGroupName>
+      <existingResourceGroupName>CI_Resource_Group</existingResourceGroupName>
+      <vmTemplates>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>azure-ovoc-vm</templateName>
+          <templateDesc>Azure Ovoc AMI Creation</templateDesc>
+          <labels>azure_ovoc_image</labels>
+          <location>West Europe</location>
+          <availabilityType/>
+          <virtualMachineSize>Standard_B1s</virtualMachineSize>
+          <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <osDiskSize>0</osDiskSize>
+          <newStorageAccountName></newStorageAccountName>
+          <existingStorageAccountName>ciresourcegroupdiag</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReference>
+            <uri></uri>
+            <type>REFERENCE</type>
+          </imageReference>
+          <builtInImage>Windows Server 2016</builtInImage>
+          <installGit>false</installGit>
+          <installMaven>false</installMaven>
+          <installDocker>false</installDocker>
+          <osType>Linux</osType>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>true</preInstallSsh>
+          <initScript></initScript>
+          <credentialsId>3ad3a5f4-7333-452c-82f7-288b51c282e8</credentialsId>
+          <agentWorkspace>/home/centos/jenkinsslave</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName>CI_Resource_Group</virtualNetworkName>
+          <virtualNetworkResourceGroupName>CI_Resource_Group</virtualNetworkResourceGroupName>
+          <subnetName>Net_172.16.100.0</subnetName>
+          <usePrivateIP>true</usePrivateIP>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <enableMSI>false</enableMSI>
+          <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudRetensionStrategy">
+            <idleTerminationMillis>300000</idleTerminationMillis>
+            <idleTerminationMinutes>5</idleTerminationMinutes>
+          </retentionStrategy>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+      </vmTemplates>
+      <deploymentTimeout>1200</deploymentTimeout>
+      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
+    </com.microsoft.azure.vmagent.AzureVMCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>
   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
@@ -1237,6 +1301,7 @@
         <string>SmartTAP-UpdateVI</string>
         <string>Test Artifactory</string>
         <string>test-email</string>
+        <string>test_createOvocImageAzure</string>
         <string>Update-VI_emsBuild_ovoc_server_7.6</string>
         <string>UpdateVI</string>
         <string>UpdateVI-Jira_Manually</string>
