@@ -170,7 +170,8 @@ PATH=/bin:$PATH</propertiesContent>
 
 sudo yum install -y epel-release python36 python36-setuptools python36-devel python36-libs
 sudo easy_install-3.6 pip
-sudo /usr/local/bin/pip3 install platform argparse requests psutil
+/usr/local/bin/pip3 install --upgrade pip
+sudo /usr/local/bin/pip3 install argparse requests psutil
 
 echo -e &quot;\
 ***********************************************************************************************\n \
