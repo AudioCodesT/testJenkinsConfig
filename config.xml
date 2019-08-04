@@ -900,7 +900,7 @@
           <shutdownOnIdle>false</shutdownOnIdle>
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
-            <id>base_centos_image</id>
+            <id>/subscriptions/039c0ed7-885b-425d-8129-6a05eaa601fa/resourceGroups/CI_Resource_Group/providers/Microsoft.Compute/images/base_centos_image</id>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
