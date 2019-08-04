@@ -268,7 +268,39 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 #************************** Probe system status *****************************
 #****************************************************************************
 
-curl -kO -u admin:$artifactory_password https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
+cat &gt; sysprobe.sh &lt;&lt; EOF
+today=$(date +&quot;%Y/%m/%d&quot;)
+
+outFile=&quot;sysprobe.csv&quot;
+[ -f $outFile ] &amp;&amp; rm $outFile
+
+instType=$(curl -s http://169.254.169.254/latest/meta-data/instance-type)
+hostName=$(curl -s http://169.254.169.254/latest/meta-data/hostname)
+memrTotl=$(free -h | gawk &apos;/Mem/ {print $2}&apos;)
+diskTotl=$(df -h | grep -e /$ | gawk &apos;{print $2}&apos;)
+procType=$(sudo cat /proc/cpuinfo | grep -m 1 &quot;model name&quot; | cut -d&apos;:&apos; -f2)
+procType=$(echo ${procType/ //})
+#procType=$(sudo dmidecode | gawk &apos;/Processor Information/ {seen = 1} seen {print}&apos; | grep Version | gawk &apos;{for( i=2; i&lt;=NF; i++) printf(&quot;%s &quot;), $i; printf(&quot;\n&quot;)}&apos;)
+# dmidecode --&gt; gets dmi info from system
+# gawk &apos;/Processor Information/ {seen = 1} seen {print}&apos; --&gt; get everything that comes after &quot;Processor Information&quot;
+# grep Version --&gt; get only &quot;versin&quot; line
+# gawk &apos;{for( i=2; i&lt;=NF; i++) printf(&quot;%s &quot;), $i; printf(&quot;\n&quot;)}&apos;) --&gt; Print all words without the word &quot;Version&quot;
+
+echo &quot;$today&quot; &gt; $outFile
+echo &quot;Host Name,Instance Type,Processor Type,Total RAM,Total Disk&quot; &gt;&gt; $outFile
+echo &quot;$hostName,$instType,$procType,$memrTotl,$diskTotl&quot; &gt;&gt; $outFile
+
+
+echo &quot;Memory %,Disk %,Up Time&quot; &gt;&gt; $outFile
+
+while true; do
+        memrPcnt=$(free -w | gawk &apos;/Mem/ {printf(&quot;%.2f&quot;), $3/$2*100}&apos;)
+        diskPcnt=$(df | grep -e \/$ | gawk &apos;{print $5}&apos; | cut -d&apos;%&apos; -f1)
+        echo &quot;$memrPcnt,$diskPcnt,\&quot;$(uptime -p)\&quot;&quot; &gt;&gt; $outFile
+        sleep 5
+done
+EOF
+
 chmod +x sysprobe.sh
 bash sysprobe.sh &amp;
 #syslog.py --interval 5 --outfile ${WORKSPACE}/syslog.csv
