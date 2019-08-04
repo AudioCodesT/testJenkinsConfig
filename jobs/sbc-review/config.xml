@@ -291,9 +291,9 @@ echo &quot;\$hostName,\$instType,\$procType,\$memrTotl,\$diskTotl&quot; &gt;&gt;
 echo &quot;Memory %,Disk %,Up Time&quot; &gt;&gt; \$outFile
 #
 while true; do
-        memrPcnt=`free -w | gawk &apos;/Mem/ {printf(&quot;%.2f&quot;), \$3/\$2*100}&apos;`
-        diskPcnt=`df | grep -e \/$ | gawk &apos;{print \$5}&apos; | cut -d&apos;%&apos; -f1`
-        echo &quot;$memrPcnt,$diskPcnt,\&quot;\$(uptime -p)\&quot;&quot; &gt;&gt; \$outFile
+        memrPcnt=\$(free -w | gawk &apos;/Mem/ {printf(&quot;%.2f&quot;), \$3/\$2*100}&apos;)
+        diskPcnt=\$(df | grep -e /\$ | gawk &apos;{print \$5}&apos; | cut -d&apos;%&apos; -f1)
+        echo &quot;\$memrPcnt,\$diskPcnt,\&quot;\$(uptime -p)\&quot;&quot; &gt;&gt; \$outFile
         sleep 5
 done
 EOF
