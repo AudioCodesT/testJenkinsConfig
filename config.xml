@@ -527,11 +527,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -705,11 +705,11 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Small</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Micro</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Micro</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Small</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -888,7 +888,6 @@
           <templateDesc>Azure Ovoc AMI Creation</templateDesc>
           <labels>azure_ovoc_image</labels>
           <location>West Europe</location>
-          <availabilityType/>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
           <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
           <diskType>managed</diskType>
@@ -901,8 +900,8 @@
           <shutdownOnIdle>false</shutdownOnIdle>
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
-            <uri></uri>
-            <type>REFERENCE</type>
+            <id>/subscriptions/039c0ed7-885b-425d-8129-6a05eaa601fa/resourceGroups/CI_Resource_Group/providers/Microsoft.Compute/images/base_centos_image</id>
+            <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
           <installGit>false</installGit>
@@ -910,9 +909,9 @@
           <installDocker>false</installDocker>
           <osType>Linux</osType>
           <agentLaunchMethod>SSH</agentLaunchMethod>
-          <preInstallSsh>true</preInstallSsh>
+          <preInstallSsh>false</preInstallSsh>
           <initScript></initScript>
-          <credentialsId>3ad3a5f4-7333-452c-82f7-288b51c282e8</credentialsId>
+          <credentialsId>centos</credentialsId>
           <agentWorkspace>/home/centos/jenkinsslave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
           <virtualNetworkName>CI_Resource_Group</virtualNetworkName>
