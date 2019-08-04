@@ -172,7 +172,11 @@ sudo yum install epel-release python36 python36-setuptools python36-devel python
 sudo easy_install-3.6 pip
 sudo /usr/local/bin/pip3 install platform argparse requests psutil
 
-
+echo &quot;\
+*********************************************************************************************** \
+***********************************  Install System Probe script ****************************** \
+***********************************************************************************************
+&quot;
 curl -o syslog.py &amp;&amp; chmod +x syslog.py
 sudo cp syslog.py /usr/local/bin/syslog.py</command>
     </hudson.tasks.Shell>
