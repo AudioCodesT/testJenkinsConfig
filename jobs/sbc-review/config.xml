@@ -162,22 +162,22 @@ PATH=/bin:$PATH</propertiesContent>
   </axes>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;\
-*********************************************************************************************** \
-******************************  Install tools for System Probe script ************************* \
-***********************************************************************************************
+      <command>echo -e &quot;\
+***********************************************************************************************\n \
+******************************  Install tools for System Probe script *************************\n \
+***********************************************************************************************\n
 &quot;
 
-sudo yum install epel-release python36 python36-setuptools python36-devel python36-libs
+sudo yum install -y epel-release python36 python36-setuptools python36-devel python36-libs
 sudo easy_install-3.6 pip
 sudo /usr/local/bin/pip3 install platform argparse requests psutil
 
-echo &quot;\
-*********************************************************************************************** \
-***********************************  Install System Probe script ****************************** \
-***********************************************************************************************
+echo -e &quot;\
+***********************************************************************************************\n \
+***********************************  Install System Probe script ******************************\n \
+***********************************************************************************************\n
 &quot;
-curl -o syslog.py &amp;&amp; chmod +x syslog.py
+curl -o https://artifactory:443/Devops/Tools/AWS/Linux/syslog.py &amp;&amp; chmod +x syslog.py
 sudo cp syslog.py /usr/local/bin/syslog.py</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
