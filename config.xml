@@ -885,7 +885,7 @@
       <vmTemplates>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>azure-ovoc-vm</templateName>
-          <templateDesc>Azure Ovoc AMI Creation</templateDesc>
+          <templateDesc>Azure Ovoco Image Creation</templateDesc>
           <labels>azure_ovoc_image</labels>
           <location>West Europe</location>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
@@ -910,7 +910,7 @@
           <osType>Linux</osType>
           <agentLaunchMethod>SSH</agentLaunchMethod>
           <preInstallSsh>false</preInstallSsh>
-          <initScript></initScript>
+          <initScript>echo &quot;test&quot;</initScript>
           <credentialsId>centos</credentialsId>
           <agentWorkspace>/home/centos/jenkinsslave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
