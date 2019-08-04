@@ -268,7 +268,7 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 #************************** Probe system status *****************************
 #****************************************************************************
 
-curl -o https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
+curl -kO -u admin:$artifactory_password https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
 chmod +x sysprobe.sh
 ./sysprobe.sh &amp;
 #syslog.py --interval 5 --outfile ${WORKSPACE}/syslog.csv
