@@ -268,7 +268,7 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 #************************** Probe system status *****************************
 #****************************************************************************
 
-cat &gt; probe.sh &lt;&lt; EOF
+cat &gt; sysprobe.sh &lt;&lt; EOF
 today=\$(date +&quot;%Y/%m/%d&quot;)
 echo \$today
 #
