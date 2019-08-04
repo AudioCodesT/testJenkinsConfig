@@ -115,12 +115,12 @@ az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Creator=Spotinst
 
 cd EMS/VersionRelease
 #run script &quot;ovoc-Azure-image-update.py&quot; before installation to run  update-hosts-file script
-python ovoc_azure_image_update.py before_install
+python ovoc_azure_image_update.py $NEW_TAG $vmIP before_install
 #run SanityInstall
 python SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
 #run script &quot;ovoc-Azure-image-update.py&quot; before installation to run  update-hosts-file script
-python ovoc_azure_image_update.py after_install
+python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 #stop VM
 az vm stop --resource-group ${ResourceGroupName} --name ${VmName}
