@@ -20,11 +20,21 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
+          <name>NEW_TAG</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>ISO_DEPLOY_DESTINATION</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -39,13 +49,13 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server</url>
+        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${TAG}</name>
+        <name>server_${NEW_TAG}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -72,6 +82,7 @@
     <hudson.tasks.Shell>
       <command>base_image=&quot;&quot;
 VmName=&quot;&quot;
+ResourceGroupName=&quot;CI_Resource_Group&quot;
 VmSize=&quot;D4s_v3&quot;
 az vm create \
     --resource-group ${ResourceGroupName} \
@@ -87,22 +98,50 @@ az vm create \
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
 #get new VM IP
-VmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
+vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
 
-</command>
+#open ports 22,443,80 (temporary)
+az vm open-port -g ${ResourceGroupName} -n ${VmName} --port &apos;22&apos; --port &apos;80&apos; --port &apos;443&apos;
+
+#add tag to this vm:  &quot;emsSanity&quot;
+az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Name=emsSanityInstall
+#add tag to this vm:  &quot;Spotinst&quot;
+az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Creator=Spotinst
+
+#wait for the vm to start
+
+
+cd EMS/VersionRelease
+#run script &quot;ovoc-Azure-image-update.py&quot; before installation to run  update-hosts-file script
+python ovoc-Azure-image-update.py before_install
+#run SanityInstall
+python SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+
+#run script &quot;ovoc-Azure-image-update.py&quot; before installation to run  update-hosts-file script
+python ovoc-Azure-image-update.py after_install
+
+#stop VM
+az vm stop --resource-group ${ResourceGroupName} --name ${VmName}
+
+#create Image
+az image create --resource-group ${ResourceGroupName} --name ovoc_${NEW_TAG} --source ${VmName}
+
+
+#delete VM
+az vm delete -g ${ResourceGroupName} -n ${VmName}</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
@@ -128,7 +167,15 @@ VmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
         <spec></spec>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;Devops/Tools/Ovoc/ovoc-Azure-image-update.py&quot;,
+            &quot;target&quot;: &quot;${workspace}/EMS/VersionRelease/&quot;,
+            &quot;flat&quot;: &quot;true&quot;
+        }
+    ]
+}</spec>
       </downloadSpec>
       <deployPattern></deployPattern>
       <resolvePattern></resolvePattern>
@@ -149,7 +196,7 @@ VmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
     <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>admin_username=acovoc
-ResourceGroupName=CI_Resource_Group</propertiesContent>
+</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
@@ -163,7 +210,7 @@ ResourceGroupName=CI_Resource_Group</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>admin_password</name>
-          <value>{AQAAABAAAAAQ12rSJQzSVhmn8qDsie7AOwb0/5+tC+oF2Z5MjQkqm2w=}</value>
+          <value>{AQAAABAAAAAQofhnjB3Zz0pzciacF1ol8NCW/XK1eQsZWGj61evL1E0=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
