@@ -73,7 +73,7 @@
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <assignedNode>test-Sanjer</assignedNode>
+  <assignedNode>azure_ovoc_image</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -130,7 +130,7 @@ az image create --resource-group ${ResourceGroupName} --name ovoc_${NEW_TAG} --s
 
 
 #delete VM
-az vm delete -g ${ResourceGroupName} -n ${VmName}</command>
+az vm delete -g ${ResourceGroupName} -n ${VmName} --yes</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
