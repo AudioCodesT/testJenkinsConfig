@@ -101,7 +101,7 @@ az vm create \
     --admin-username ${admin_username} \
     --admin-password ${admin_password} \
     --size ${VmSize} \
-	--public-ip-address &apos;&quot;&quot;&apos; \
+	--public-ip-address &quot;&quot; \
     --use-unmanaged-disk \
 	--storage-account &quot;${vhd_storage_account}&quot; \
     --subnet ${subnet} \
