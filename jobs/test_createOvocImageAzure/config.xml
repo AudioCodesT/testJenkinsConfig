@@ -107,7 +107,7 @@ az vm create \
     --subnet ${subnet} \
     --vnet-name ${vnet_name} \
     --nsg ${security_group} \
-    --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
+    --tags &quot;&apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;&quot;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
