@@ -97,7 +97,8 @@ az vm create \
     --admin-username ${admin_username} \
     --admin-password ${admin_username} \
     --size ${VmSize} \
-	--public-ip-address &quot;&quot;
+	--public-ip-address &quot;&quot; \
+    --use-unmanaged-disk
 
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
