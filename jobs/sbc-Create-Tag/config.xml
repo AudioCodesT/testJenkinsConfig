@@ -115,6 +115,14 @@ function createSubModuleTag() {
           \&quot;message\&quot;: \&quot;Jenkins auto tag after $LastUser commit\&quot;,
           \&quot;revision\&quot;: \&quot;$commit_sha1\&quot;
         }&quot;
+       if [ $SubModule == &quot;acLinuxUGW&quot;]; then
+          https://test-gerrit/a/projects/TP%2fOpenSource%2fOpenRG-UGW/tags/$NEWTAG \
+          -d &quot;
+          {
+            \&quot;message\&quot;: \&quot;Jenkins auto tag after $LastUser commit\&quot;,
+            \&quot;revision\&quot;: \&quot;$commit_sha1\&quot;
+          }&quot;
+       fi
     fi
   fi
 }
