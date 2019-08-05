@@ -86,6 +86,9 @@
 VmName=&quot;OVOC-Template-500GB&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
 VmSize=&quot;Standard_D4s_v3&quot;
+vhd_storage_account=&quot;ciresourcegroupstorage&quot;
+subnet=&quot;Net_172.16.100.0&quot;
+security_group=&quot;DefaultNSG&quot;
 #connect to azure cli
 az login -u ${azure_username} -p ${azure_password}
 #create new VM
@@ -97,9 +100,12 @@ az vm create \
     --admin-username ${admin_username} \
     --admin-password ${admin_password} \
     --size ${VmSize} \
-	--public-ip-address &quot;&quot; \
+	--public-ip-address &apos;&quot;&quot;&apos; \
     --use-unmanaged-disk
-
+	--storage-account &quot;${vhd_storage_account}&quot;
+    --subnet ${subnet}
+    --nsg-name ${security_group}
+    --tags &apos;Name=AzureEmsSanityInstall&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
@@ -110,9 +116,9 @@ vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
 #az vm open-port -g ${ResourceGroupName} -n ${VmName} --port &apos;22&apos; --port &apos;80&apos; --port &apos;443&apos;
 
 #add tag to this vm:  &quot;emsSanity&quot;
-az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Name=emsSanityInstall
+#az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Name=emsSanityInstall
 #add tag to this vm:  &quot;Spotinst&quot;
-az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Creator=Spotinst
+#az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Creator=Spotinst
 
 #wait for the vm to start
 
