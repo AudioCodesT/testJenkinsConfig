@@ -95,7 +95,7 @@ az vm create \
     --image ${base_image} \
     --os-type linux \
     --admin-username ${admin_username} \
-    --admin-password ${admin_username} \
+    --admin-password ${admin_password} \
     --size ${VmSize} \
 	--public-ip-address &quot;&quot; \
     --use-unmanaged-disk
