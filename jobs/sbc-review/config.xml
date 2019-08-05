@@ -267,37 +267,39 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
       <command>#****************************************************************************
 #************************** Probe system status *****************************
 #****************************************************************************
+#
+#cat &gt; sysprobe.sh &lt;&lt; EOF
+#today=\$(date +&quot;%Y/%m/%d&quot;)
+#echo \$today
+##
+#outFile=&quot;sysprobe.csv&quot;
+#echo \$outFile
+#[ -f \$outFile ] &amp;&amp; rm \$outFile
+##
+#instType=\$(curl -s http://169.254.169.254/latest/meta-data/instance-type)
+#hostName=\$(curl -s http://169.254.169.254/latest/meta-data/hostname)
+#memrTotl=\$(free -h | gawk &apos;/Mem/ {print \$2}&apos;)
+#diskTotl=\$(df -h | grep -e /\$ | gawk &apos;{print \$2}&apos;)
+#procType=\$(sudo cat /proc/cpuinfo | grep -m 1 &quot;model name&quot; | cut -d&apos;:&apos; -f2)
+#procType=\$(echo \${procType/ /})
+##
+#echo &quot;\$today&quot; &gt; \$outFile
+#echo &quot;Host Name,Instance Type,Processor Type,Total RAM,Total Disk&quot; &gt;&gt; \$outFile
+#echo &quot;\$hostName,\$instType,\$procType,\$memrTotl,\$diskTotl&quot; &gt;&gt; \$outFile
+##
+##
+#echo &quot;Memory %,Disk %,Up Time&quot; &gt;&gt; \$outFile
+##
+#while true; do
+#        memrPcnt=\$(free -w | gawk &apos;/Mem/ {printf(&quot;%.2f&quot;), \$3/\$2*100}&apos;)
+#        diskPcnt=\$(df | grep -e /\$ | gawk &apos;{print \$5}&apos; | cut -d&apos;%&apos; -f1)
+#        echo &quot;\$memrPcnt,\$diskPcnt,\&quot;\$(uptime -p)\&quot;&quot; &gt;&gt; \$outFile
+#        sleep 5
+#done
+#EOF
+#
 
-cat &gt; sysprobe.sh &lt;&lt; EOF
-today=\$(date +&quot;%Y/%m/%d&quot;)
-echo \$today
-#
-outFile=&quot;sysprobe.csv&quot;
-echo \$outFile
-[ -f \$outFile ] &amp;&amp; rm \$outFile
-#
-instType=\$(curl -s http://169.254.169.254/latest/meta-data/instance-type)
-hostName=\$(curl -s http://169.254.169.254/latest/meta-data/hostname)
-memrTotl=\$(free -h | gawk &apos;/Mem/ {print \$2}&apos;)
-diskTotl=\$(df -h | grep -e /\$ | gawk &apos;{print \$2}&apos;)
-procType=\$(sudo cat /proc/cpuinfo | grep -m 1 &quot;model name&quot; | cut -d&apos;:&apos; -f2)
-procType=\$(echo \${procType/ /})
-#
-echo &quot;\$today&quot; &gt; \$outFile
-echo &quot;Host Name,Instance Type,Processor Type,Total RAM,Total Disk&quot; &gt;&gt; \$outFile
-echo &quot;\$hostName,\$instType,\$procType,\$memrTotl,\$diskTotl&quot; &gt;&gt; \$outFile
-#
-#
-echo &quot;Memory %,Disk %,Up Time&quot; &gt;&gt; \$outFile
-#
-while true; do
-        memrPcnt=\$(free -w | gawk &apos;/Mem/ {printf(&quot;%.2f&quot;), \$3/\$2*100}&apos;)
-        diskPcnt=\$(df | grep -e /\$ | gawk &apos;{print \$5}&apos; | cut -d&apos;%&apos; -f1)
-        echo &quot;\$memrPcnt,\$diskPcnt,\&quot;\$(uptime -p)\&quot;&quot; &gt;&gt; \$outFile
-        sleep 5
-done
-EOF
-#
+curl -k -O -u admin:$artifactory_password https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
 
 chmod +x sysprobe.sh
 bash sysprobe.sh &amp;
