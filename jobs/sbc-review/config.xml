@@ -302,8 +302,7 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 curl -k -O -u admin:$artifactory_password https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
 
 chmod +x sysprobe.sh
-(./sysprobe.sh &amp;) &amp;&amp; probePid=$!
-echo &quot;Probe pid: $probePid&quot;
+./sysprobe.sh &amp;
 
 #****************************************************************************
 #****************************************************************************
@@ -328,7 +327,7 @@ fi
 #****************************************************************************
 
 echo &quot;Kill probe process&quot;
-kill -9 $probePid
+kill -9 $(ps | grep sysprobe.sh | gawk &apos;{print $1}&apos;)
 
 echo &quot;Archive probe csv &amp; upload to Artifactory&quot;
 tar zcfv ${BOARDNAME}.tar.gz sysprobe.csv &amp;&amp; curl -u admin:$artifactory_password -T  &quot;https://artifactory/Devops/Probes/sbc-review/${BUILD_NUMBER}/${BOARDNAME}.tar.gz&quot;
