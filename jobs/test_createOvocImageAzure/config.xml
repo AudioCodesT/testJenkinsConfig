@@ -105,12 +105,12 @@ az vm create \
 	--storage-account &quot;${vhd_storage_account}&quot;
     --subnet ${subnet}
     --nsg-name ${security_group}
-    --tags &apos;Name=AzureEmsSanityInstall&apos;
+    --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
 #get new VM IP
-vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
+vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName} --query &quot;[*].virtualMachine.network.privateIpAddresses[0]&quot; --output tsv)
 
 #open ports 22,443,80 (temporary)
 #az vm open-port -g ${ResourceGroupName} -n ${VmName} --port &apos;22&apos; --port &apos;80&apos; --port &apos;443&apos;
@@ -120,7 +120,8 @@ vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName})
 #add tag to this vm:  &quot;Spotinst&quot;
 #az vm update -n ${VmName} -g ${ResourceGroupName} --set tags.Creator=Spotinst
 
-#wait for the vm to start
+#wait for the vm to be running
+az vm wait -g ${ResourceGroupName} -n ${VmName} --custom instanceView.statuses[?code==&apos;PowerState/running&apos;]
 
 
 cd EMS/VersionRelease
