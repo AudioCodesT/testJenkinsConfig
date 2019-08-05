@@ -170,7 +170,7 @@ echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
 if [ -e ../OpenSource/$BOARDNAME.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
-  ./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release &quot;&quot; $NEWTAG 
+  ./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release &quot;&quot;
   if [ $? -eq 1 ]; then
     echo EXITFLAG=2 &gt;&gt; ../generated_sbc_version.properties
     exit 2; 
