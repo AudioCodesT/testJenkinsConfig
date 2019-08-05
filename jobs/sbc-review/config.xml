@@ -302,7 +302,7 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 curl -k -O -u admin:$artifactory_password https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
 
 chmod +x sysprobe.sh
-(bash sysprobe.sh &amp;) &amp;&amp; probePid=$!
+(./sysprobe.sh &amp;) &amp;&amp; probePid=$!
 echo &quot;Probe pid: $probePid&quot;
 
 #****************************************************************************
