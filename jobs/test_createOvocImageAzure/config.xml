@@ -208,7 +208,7 @@ az vm delete -g ${ResourceGroupName} -n ${VmName} --yes</command>
     <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>admin_username=acovoc
-azure_username=benm</propertiesContent>
+azure_username=benm@audiocodes.com</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
@@ -226,7 +226,7 @@ azure_username=benm</propertiesContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>azure_password</name>
-          <value>{AQAAABAAAAAQJ4gmJP9jGoyrz0cesqNV0Q95QCiHZcC+j7kbLdhoav4=}</value>
+          <value>{AQAAABAAAAAQRrj+3MH54IiRspYGTQjVs290QyimvFejWwm0yckyzw0=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
