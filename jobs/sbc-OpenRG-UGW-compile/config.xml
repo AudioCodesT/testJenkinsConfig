@@ -131,6 +131,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>BL=`git describe --tags --first-parent | sed s/-/_/g`
+BL=$(echo $GERRIT_REFNAME | cut -d/ -f3)
+
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
