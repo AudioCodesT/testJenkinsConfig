@@ -333,7 +333,7 @@ kill -9 $(ps | grep sysprobe.sh | gawk &apos;{print $1}&apos;)
 
 echo &quot;Archive probe csv &amp; upload to Artifactory&quot;
 tar zcfv ${BOARDNAME}.tar.gz sysprobe.csv
-curl -u admin:$artifactory_password -T  &quot;https://artifactory/Devops/Probes/sbc-review/${BUILD_NUMBER}/${BOARDNAME}.tar.gz&quot;
+curl -u admin:$artifactory_password -T ${BOARDNAME}.tar.gz &quot;https://artifactory/Devops/Probes/sbc-review/${BUILD_NUMBER}/${BOARDNAME}.tar.gz&quot;
 
 #****************************************************************************
 #****************************************************************************
