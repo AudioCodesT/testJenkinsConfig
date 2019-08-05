@@ -101,10 +101,10 @@ az vm create \
     --admin-password ${admin_password} \
     --size ${VmSize} \
 	--public-ip-address &apos;&quot;&quot;&apos; \
-    --use-unmanaged-disk
-	--storage-account &quot;${vhd_storage_account}&quot;
-    --subnet ${subnet}
-    --nsg-name ${security_group}
+    --use-unmanaged-disk \
+	--storage-account &quot;${vhd_storage_account}&quot; \
+    --subnet ${subnet} \
+    --nsg-name ${security_group} \
     --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
