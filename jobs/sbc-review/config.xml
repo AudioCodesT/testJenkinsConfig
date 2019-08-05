@@ -326,6 +326,8 @@ fi
 #************************** Probe system status *****************************
 #****************************************************************************
 
+cd ${WORKSPACE}
+
 echo &quot;Kill probe process&quot;
 kill -9 $(ps | grep sysprobe.sh | gawk &apos;{print $1}&apos;)
 
