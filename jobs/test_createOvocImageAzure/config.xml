@@ -106,7 +106,8 @@ az vm create \
 	--storage-account &quot;${vhd_storage_account}&quot; \
     --subnet ${subnet} \
     --vnet-name ${vnet_name} \
-    --nsg ${security_group}
+    --nsg ${security_group} \
+    --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
