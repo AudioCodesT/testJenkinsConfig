@@ -302,8 +302,8 @@ BOARD=`echo ${BOARD} | sed -rn s/--fast=yes//p`
 curl -k -O -u admin:$artifactory_password https://artifactory:443/Devops/Tools/AWS/Linux/sysprobe.sh
 
 chmod +x sysprobe.sh
-bash sysprobe.sh &amp;
-#syslog.py --interval 5 --outfile ${WORKSPACE}/syslog.csv
+(bash sysprobe.sh &amp;) &amp;&amp; probePid=$!
+echo &quot;Probe pid: $probePid&quot;
 
 #****************************************************************************
 #****************************************************************************
@@ -322,6 +322,22 @@ if [ ! -f ram${BOARDNAME}.map ]; then
   echo map file does not found, exit with error
   exit 1
 fi
+
+#****************************************************************************
+#************************** Probe system status *****************************
+#****************************************************************************
+
+echo &quot;Kill probe process&quot;
+kill -9 $probePid
+
+echo &quot;Archive probe csv &amp; upload to Artifactory&quot;
+tar zcfv ${BOARDNAME}.tar.gz sysprobe.csv &amp;&amp; curl -u admin:$artifactory_password -T  &quot;https://artifactory/Devops/Probes/sbc-review/${BUILD_NUMBER}/${BOARDNAME}.tar.gz&quot;
+
+#****************************************************************************
+#****************************************************************************
+#****************************************************************************
+
+
 #rename ram${BOARDNAME} ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER} ram${BOARDNAME}.*
 #zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.map
 #zip -r ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf.zip ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER}.elf
