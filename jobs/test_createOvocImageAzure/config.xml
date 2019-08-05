@@ -89,7 +89,7 @@ VmSize=&quot;Standard_D4s_v3&quot;
 vhd_storage_account=&quot;ciresourcegroupstorage&quot;
 subnet=&quot;Net_172.16.100.0&quot;
 vnet_name=&quot;CI_Resource_Group&quot;
-security_group=&quot;DefaultNSG&quot;
+security_group=&quot;None&quot;
 #connect to azure cli
 az login -u ${azure_username} -p ${azure_password}
 #create new VM
