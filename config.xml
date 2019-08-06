@@ -900,7 +900,7 @@
           <shutdownOnIdle>false</shutdownOnIdle>
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
-            <id>/subscriptions/039c0ed7-885b-425d-8129-6a05eaa601fa/resourceGroups/CI_Resource_Group/providers/Microsoft.Compute/images/base_centos_image</id>
+            <id>/subscriptions/039c0ed7-885b-425d-8129-6a05eaa601fa/resourceGroups/CI_Resource_Group/providers/Microsoft.Compute/images/base-centos-image</id>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -910,7 +910,7 @@
           <osType>Linux</osType>
           <agentLaunchMethod>SSH</agentLaunchMethod>
           <preInstallSsh>false</preInstallSsh>
-          <initScript>echo &quot;test&quot;</initScript>
+          <initScript></initScript>
           <credentialsId>centos</credentialsId>
           <agentWorkspace>/home/centos/jenkinsslave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
