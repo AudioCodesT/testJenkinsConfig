@@ -166,6 +166,7 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 #az vm delete -g ${ResourceGroupName} -n ${VmName} --yes
 
 az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv &gt; delete_ids.txt
+sleep 100
 az resource delete --ids $(delete_ids.txt)
 #put in post build task
 #
