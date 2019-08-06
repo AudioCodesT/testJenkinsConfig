@@ -92,6 +92,7 @@ vhd_storage_account=&quot;ciresourcegroupstorage&quot;
 subnet=&quot;Net_172.16.100.0&quot;
 vnet_name=&quot;CI_Resource_Group&quot;
 security_group=&quot;createOvocImageSG&quot;
+disk_name=&quot;ovoc_${NEW_TAG}&quot;
 echo &quot;ResourceGroupName=${ResourceGroupName}&quot; &gt; sanity.properties
 echo &quot;VmName=${VmName}&quot; &gt;&gt; sanity.properties
 #connect to azure cli
@@ -111,7 +112,7 @@ az vm create \
     --vnet-name ${vnet_name} \
     --nsg ${security_group} \
     --os-type linux \
-    --os-disk-name &quot;ovoc_${NEW_TAG}&quot; \
+    --os-disk-name ${disk_name} \
     --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
