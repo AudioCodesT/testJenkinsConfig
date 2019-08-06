@@ -101,7 +101,6 @@ az vm create \
     --resource-group ${ResourceGroupName} \
     --name ${VmName} \
     --image ${base_image} \
-    --os-type linux \
     --admin-username ${admin_username} \
     --admin-password ${admin_password} \
     --size ${VmSize} \
@@ -146,8 +145,8 @@ python SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 #deallocate and generalize the VM
-az vm deallocate --resource-group ${ResourceGroupName} --name ${VmName}
-az vm generalize --resource-group ${ResourceGroupName} --name ${VmName}
+#az vm deallocate --resource-group ${ResourceGroupName} --name ${VmName}
+#az vm generalize --resource-group ${ResourceGroupName} --name ${VmName}
 #create Image
 #az image create --resource-group ${ResourceGroupName} --name ovoc_${NEW_TAG} --source ${VmName}
 
