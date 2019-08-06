@@ -90,8 +90,8 @@ vhd_storage_account=&quot;ciresourcegroupstorage&quot;
 subnet=&quot;Net_172.16.100.0&quot;
 vnet_name=&quot;CI_Resource_Group&quot;
 security_group=&quot;createOvocImageSG&quot;
-disk_name=&quot;ovoc_${NEW_TAG}&quot;
-VmName=&quot;ovoc${NEW_TAG}&quot;
+disk_name=&quot;OVOC_${NEW_TAG}&quot;
+VmName=&quot;OVOC${NEW_TAG}&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
 #connect to azure cli
 az login -u ${azure_username} -p ${azure_password}
@@ -152,11 +152,21 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 #az image create --resource-group ${ResourceGroupName} --name ovoc_${NEW_TAG} --source ${VmName}
 
 
+#create SAS URL to send
+SAS_URL=$()
+
 #delete VM the new security group and the nic
 #az vm delete -g ${ResourceGroupName} -n ${VmName} --yes
 az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)
+
+echo &quot;SAS_URL=${SAS_URL}&quot; &gt; prop
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>prop</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
@@ -183,6 +193,39 @@ az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -ot
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>ben.magriso</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>OVOC_${NEW_TAG} Azure Image</defaultSubject>
+      <defaultContent>OVOC ${NEW_TAG} Image for azure was created.
+
+OVOC_${NEW_TAG} VHD File Download URL: 
+$SAS_URL</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
