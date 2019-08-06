@@ -194,7 +194,7 @@ echo &quot;SAS_URL=${SAS_URL}&quot; &gt; prop
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>ben.magriso</recipientList>
+      <recipientList>ben.magriso@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
