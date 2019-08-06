@@ -85,7 +85,7 @@
       <command>admin_username=acovoc
 azure_username=benm@audiocodes.com
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
-VmName=&quot;ovoc_${NEW_TAG}&quot;
+VmName=&quot;ovoc${NEW_TAG}&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
 VmSize=&quot;Standard_D4s_v3&quot;
 vhd_storage_account=&quot;ciresourcegroupstorage&quot;
