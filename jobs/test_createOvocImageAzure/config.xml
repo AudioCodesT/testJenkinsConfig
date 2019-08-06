@@ -91,7 +91,7 @@ VmSize=&quot;Standard_D4s_v3&quot;
 vhd_storage_account=&quot;ciresourcegroupstorage&quot;
 subnet=&quot;Net_172.16.100.0&quot;
 vnet_name=&quot;CI_Resource_Group&quot;
-security_group=&quot;None&quot;
+security_group=&quot;createOvocImageSG&quot;
 echo &quot;ResourceGroupName=${ResourceGroupName}&quot; &gt; sanity.properties
 echo &quot;VmName=${VmName}&quot; &gt;&gt; sanity.properties
 #connect to azure cli
