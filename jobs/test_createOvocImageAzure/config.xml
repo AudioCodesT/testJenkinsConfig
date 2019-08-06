@@ -111,7 +111,7 @@ az vm create \
     --vnet-name ${vnet_name} \
     --nsg ${security_group} \
     --os-type linux \
-    --os-disk-name &quot;ovoc_${NEW_TAG}\
+    --os-disk-name &quot;ovoc_${NEW_TAG}&quot; \
     --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
