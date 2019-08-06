@@ -82,19 +82,27 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>VmName=&quot;ovoc${NEW_TAG}&quot;
+ResourceGroupName=&quot;CI_Resource_Group&quot;
+echo &quot;ResourceGroupName=${ResourceGroupName}&quot; &gt; sanity.properties
+echo &quot;VmName=${VmName}&quot; &gt;&gt; sanity.properties</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>sanity.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+    <hudson.tasks.Shell>
       <command>admin_username=acovoc
 azure_username=benm@audiocodes.com
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
-VmName=&quot;ovoc${NEW_TAG}&quot;
-ResourceGroupName=&quot;CI_Resource_Group&quot;
 VmSize=&quot;Standard_D4s_v3&quot;
 vhd_storage_account=&quot;ciresourcegroupstorage&quot;
 subnet=&quot;Net_172.16.100.0&quot;
 vnet_name=&quot;CI_Resource_Group&quot;
 security_group=&quot;createOvocImageSG&quot;
 disk_name=&quot;ovoc_${NEW_TAG}&quot;
-echo &quot;ResourceGroupName=${ResourceGroupName}&quot; &gt; sanity.properties
-echo &quot;VmName=${VmName}&quot; &gt;&gt; sanity.properties
+
 #connect to azure cli
 az login -u ${azure_username} -p ${azure_password}
 #create new VM
@@ -161,11 +169,6 @@ az vm delete -g ${ResourceGroupName} -n ${VmName} --yes
 #
 #</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>sanity.properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
