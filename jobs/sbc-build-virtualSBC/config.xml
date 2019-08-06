@@ -79,7 +79,7 @@ e.g.:7.20A.252.001</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>virtualSBC</customWorkspace>
+  <customWorkspace>workspace/virtualSBC</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>#get Gerrit BRANCH
