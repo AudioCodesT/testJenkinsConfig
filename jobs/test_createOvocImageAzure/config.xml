@@ -187,8 +187,7 @@ echo &quot;SAS_URL=${SAS_URL}&quot; &gt; prop
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>&#xd;
-az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
+          <script>az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -307,7 +306,7 @@ $SAS_URL</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>connection_string</name>
-          <value>{AQAAABAAAADQ9WELUMW4ewThzaf5udV35CtCE946bAl2sxPvH1NibI5DXDfPltODFbYxvzzYdNf9bIS05fipUgxFm8NYBXskdep8diqw6huL7abUAOoikosqg5Fk0GYeXbhpRnumnKuql9nmRYMsF7CZx+n3L+BE9Mn+WA4cP+h6lSqaoQRqbLu3bxzxCMhuXVbtoBZQbHH5jrcuskKT5+Iv03sByTpc8y0oIQPUpiHo/usl9fu3IKXkdhFE7M6Qdkf1V86LBeyKUB/ZiNWWqmFgXJqWVmUmBzoRNTlu+2CarMnAESIyOH0=}</value>
+          <value>{AQAAABAAAADQSFkQggtAKgVqN2labh4aAfI2n69J+4ho67ETQFBxvuHWh1VTL+Lhu5KfcmV4q7ppqekXEdwNYGXZkOUGPqHy5DxklxiCKsDjXfHlr2E1PVQWbiE8jyqytlGoPNPQ6aLByUh23ubKrcItDhgvdBl2FsNTeM3wqv67lxW0aSDDpnlLM+hTmhlh8HDWZYk9FNtuAI7ZlspYXtVooPSV5LU9GkGCj5PhfDOR7FEO/sR1IqJckDPdk/xYUqPKJK2+fPU7f4wvk485ab0BxXxex+pwLAkdGsEYL9LOcaEq9SwqYRY=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
