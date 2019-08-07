@@ -156,7 +156,7 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 start_date=$(date --utc +%FT%TZ -d &quot;-1 day&quot;)
 expire_date=$(date --utc +%FT%TZ -d &quot;+30 day&quot;)
 URL=$(az storage blob url --connection-string ${connection_string} -c ${container_name} -n &quot;${vhd_name}.vhd&quot; -o tsv)
-SAS_URL=$(az storage blob generate-sas --connection-string ${connection_string} --container-name ${container_name} --name &quot;${vhd_name}&quot; --permissions r --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
+SAS_URL=$(az storage blob generate-sas --connection-string ${connection_string} --container-name ${container_name} --name ${vhd_name} --permissions r --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
 Download_URL=&quot;${URL}${SAS_URL}&quot;
 #delete VM the new security group and the nic
 az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)
