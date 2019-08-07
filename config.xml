@@ -885,8 +885,8 @@
       <vmTemplates>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>azure-ovoc-vm</templateName>
-          <templateDesc>Azure Ovoco Image Creation</templateDesc>
-          <labels>azure_ovoc_image</labels>
+          <templateDesc>Azure Ovoc Image Creation</templateDesc>
+          <labels>azure_ovoc_slave</labels>
           <location>West Europe</location>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
           <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
