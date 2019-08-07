@@ -139,8 +139,8 @@ do
 	then
 		break
 	fi
-    #if count=5 then exit the job with failure (some error with the VM that is not running)
-    if [[ $count == &quot;5&quot; ]]
+    #if count=6 (wait 2 min) then exit the job with failure (some error with the VM that is not running)
+    if [[ $count == &quot;6&quot; ]]
     then
     	echo &quot;Failed to start the VM... exiting the build&quot;
         exit 1
