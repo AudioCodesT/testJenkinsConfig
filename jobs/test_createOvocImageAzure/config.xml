@@ -153,7 +153,6 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 
 #create SAS URL to send
-connection_string=&quot;&quot;
 start_date=&quot;&quot;
 expire_date=&quot;&quot;
 #SAS_URL=$(az storage container generate-sas --connection-string &quot;${connection_string}&quot; --name ${vhd_name} --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot;)
@@ -187,7 +186,8 @@ echo &quot;SAS_URL=${SAS_URL}&quot; &gt; prop
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
+          <script>&#xd;
+az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -303,6 +303,10 @@ $SAS_URL</defaultContent>
         <EnvInjectPasswordEntry>
           <name>azure_password</name>
           <value>{AQAAABAAAAAQRjYFsb2TnmX10jmGEwViAfIacZe1PsUw8tsKyCOLVEk=}</value>
+        </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>connection_string</name>
+          <value>{AQAAABAAAADQtTDliB8ceF+X8mp4kvl574lFo+01on3BW+PBswxJHy+fJCV7FrBnzTaIhQVNOKmqV/1COHruF45YHuuczLpVLwNkOFMu/0W2neAhqoT+EOkMJinJNjfO4WoPlSvLVS0xr/qTSEIL9LgUMDE0d+D+5TRx1jU3F7hraXJf6Njn7eajLBjwmErhzRfwXM7pcfnMRDm2feK8ADMJKjhHILrgCxm1rE/ZKx1zbUZuqk2jDt7PtvPeLuxYD7oDrIWyWXi39FRcLFs7xNj44V/qW8WyBmHmtLeMCroaoSsKroGBhEU=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
