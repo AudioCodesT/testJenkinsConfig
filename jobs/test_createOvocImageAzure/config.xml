@@ -82,7 +82,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>admin_username=acovoc
+      <command>echo &quot;SAS_URL=&quot; &gt; prop
+admin_username=acovoc
 azure_username=benm@audiocodes.com
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
 VmSize=&quot;Standard_D4s_v3&quot;
@@ -306,7 +307,7 @@ $SAS_URL</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>connection_string</name>
-          <value>{AQAAABAAAADQtTDliB8ceF+X8mp4kvl574lFo+01on3BW+PBswxJHy+fJCV7FrBnzTaIhQVNOKmqV/1COHruF45YHuuczLpVLwNkOFMu/0W2neAhqoT+EOkMJinJNjfO4WoPlSvLVS0xr/qTSEIL9LgUMDE0d+D+5TRx1jU3F7hraXJf6Njn7eajLBjwmErhzRfwXM7pcfnMRDm2feK8ADMJKjhHILrgCxm1rE/ZKx1zbUZuqk2jDt7PtvPeLuxYD7oDrIWyWXi39FRcLFs7xNj44V/qW8WyBmHmtLeMCroaoSsKroGBhEU=}</value>
+          <value>{AQAAABAAAADQ9WELUMW4ewThzaf5udV35CtCE946bAl2sxPvH1NibI5DXDfPltODFbYxvzzYdNf9bIS05fipUgxFm8NYBXskdep8diqw6huL7abUAOoikosqg5Fk0GYeXbhpRnumnKuql9nmRYMsF7CZx+n3L+BE9Mn+WA4cP+h6lSqaoQRqbLu3bxzxCMhuXVbtoBZQbHH5jrcuskKT5+Iv03sByTpc8y0oIQPUpiHo/usl9fu3IKXkdhFE7M6Qdkf1V86LBeyKUB/ZiNWWqmFgXJqWVmUmBzoRNTlu+2CarMnAESIyOH0=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
