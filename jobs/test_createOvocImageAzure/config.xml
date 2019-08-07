@@ -86,7 +86,7 @@ vhd_name=&quot;OVOC_${NEW_TAG}&quot;
 VmName=&quot;OVOC${NEW_TAG}&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
 
-
+#details of service principal app (test-jenkins) to connect azure cli
 test_jenkins_app_id=&quot;666a283f-ae93-4069-8e2e-cb35cca51cfa&quot;
 test_jenkins_tenant_id=&quot;1911c65c-893b-42f9-83fa-66c1b86fdf85&quot;
 
@@ -295,7 +295,7 @@ ${Download_URL}</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>test_jenkins_secret_key</name>
-          <value>{AQAAABAAAAAws/X4vjk3Qr0Q9cEMlc+fQyLZ36SAUdaFPGDOLMKzK5En9820/Gt2icTtMbpe6OGcVI4OguTw14oHq3sqqIuJwA==}</value>
+          <value>{AQAAABAAAAAwiKbneVJFJ4n/ianeVjP0V56sal+Uq5xfc+/F5lblTGGzveJd9YR+zz/UyM27GvS7u5FV5pHd3E5CSfdQxHWS0w==}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>connection_string</name>
