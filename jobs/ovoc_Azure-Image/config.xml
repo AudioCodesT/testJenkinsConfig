@@ -231,9 +231,7 @@ echo &quot;Download_URL=${Download_URL}&quot; &gt; prop
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>OVOC_${NEW_TAG} Azure Image</defaultSubject>
-      <defaultContent>OVOC ${NEW_TAG} Image for azure was created.
-
-OVOC_${NEW_TAG} VHD File Download URL: 
+      <defaultContent>OVOC_${NEW_TAG} VHD File Download URL: 
 ${Download_URL}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
