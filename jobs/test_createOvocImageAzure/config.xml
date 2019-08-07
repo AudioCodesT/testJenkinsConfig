@@ -76,7 +76,6 @@
 container_name=&quot;vhds&quot;
 ISO_DEPLOY_DESTINATION=&quot;official_iso&quot;
 admin_username=&quot;acovoc&quot;
-azure_username=&quot;benm@audiocodes.com&quot;
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
 VmSize=&quot;Standard_D4s_v3&quot;
 vhd_storage_account=&quot;ciresourcegroupstorage&quot;
@@ -87,8 +86,12 @@ vhd_name=&quot;OVOC_${NEW_TAG}&quot;
 VmName=&quot;OVOC${NEW_TAG}&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
 
+
+test_jenkins_app_id=&quot;666a283f-ae93-4069-8e2e-cb35cca51cfa&quot;
+test_jenkins_tenant_id=&quot;1911c65c-893b-42f9-83fa-66c1b86fdf85&quot;
+
 #connect to azure cli
-az login -u ${azure_username} -p ${azure_password}
+az login --service-principal -u ${test_jenkins_app_id} -p ${test_jenkins_secret_key} --tenant ${test_jenkins_tenant_id}
 #create new VM
 az vm create \
     --resource-group ${ResourceGroupName} \
@@ -291,8 +294,8 @@ ${Download_URL}</defaultContent>
           <value>{AQAAABAAAAAQofhnjB3Zz0pzciacF1ol8NCW/XK1eQsZWGj61evL1E0=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>azure_password</name>
-          <value>{AQAAABAAAAAQRjYFsb2TnmX10jmGEwViAfIacZe1PsUw8tsKyCOLVEk=}</value>
+          <name>test_jenkins_secret_key</name>
+          <value>{AQAAABAAAAAws/X4vjk3Qr0Q9cEMlc+fQyLZ36SAUdaFPGDOLMKzK5En9820/Gt2icTtMbpe6OGcVI4OguTw14oHq3sqqIuJwA==}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>connection_string</name>
