@@ -1117,7 +1117,7 @@
         <string>emsSanity_install</string>
         <string>emsSanity_upgrade</string>
         <string>emsUpgradeOvocUIDevServer</string>
-        <string>ovoc_Azure-Image</string>
+        <string>ovocAzureImage</string>
       </jobNames>
       <jobFilters/>
       <columns>
