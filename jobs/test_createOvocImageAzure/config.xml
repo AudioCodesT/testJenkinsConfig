@@ -114,7 +114,7 @@ az vm create \
     --nsg ${security_group} \
     --os-type linux \
     --os-disk-name ${vhd_name} \
-    --tags &apos;Name=AzureEmsSanityInstall&apos; &apos;Creator=Azure&apos;
+    --tags &apos;Name=AzureOvocSanityInstall&apos; &apos;Creator=Jenkins&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
@@ -159,7 +159,7 @@ URL=$(az storage blob url --connection-string ${connection_string} -c vhds -n &q
 SAS_URL=$(az storage blob generate-sas --connection-string &quot;${connection_string}&quot; --container-name ${container_name} --name &quot;${vhd_name}&quot; --permissions r --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
 Download_URL=&quot;${URL}${SAS_URL}&quot;
 #delete VM the new security group and the nic
-az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)
+az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)
 
 echo &quot;Download_URL=${Download_URL}&quot; &gt; prop
 </command>
