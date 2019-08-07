@@ -83,6 +83,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>echo &quot;SAS_URL=&quot; &gt; prop
+container_name=&quot;vhds&quot;
 admin_username=acovoc
 azure_username=benm@audiocodes.com
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
@@ -94,6 +95,7 @@ security_group=&quot;createOvocImageSG&quot;
 vhd_name=&quot;OVOC_${NEW_TAG}&quot;
 VmName=&quot;OVOC${NEW_TAG}&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
+
 #connect to azure cli
 az login -u ${azure_username} -p ${azure_password}
 #create new VM
@@ -154,9 +156,9 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 
 #create SAS URL to send
-start_date=&quot;&quot;
-expire_date=&quot;&quot;
-#SAS_URL=$(az storage container generate-sas --connection-string &quot;${connection_string}&quot; --name ${vhd_name} --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot;)
+start_date=$(date --utc +%FT%TZ -d &quot;-1 day&quot;)
+expire_date=$(date --utc +%FT%TZ -d &quot;+30 day&quot;)
+#SAS_URL=$(az storage blob generate-sas --connection-string &quot;${connection_string}&quot; --container-name ${container_name} --name &quot;${vhd_name}.vhd&quot; --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot;)
 
 #delete VM the new security group and the nic
 #az vm delete -g ${ResourceGroupName} -n ${VmName} --yes
@@ -306,7 +308,7 @@ $SAS_URL</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>connection_string</name>
-          <value>{AQAAABAAAADQSFkQggtAKgVqN2labh4aAfI2n69J+4ho67ETQFBxvuHWh1VTL+Lhu5KfcmV4q7ppqekXEdwNYGXZkOUGPqHy5DxklxiCKsDjXfHlr2E1PVQWbiE8jyqytlGoPNPQ6aLByUh23ubKrcItDhgvdBl2FsNTeM3wqv67lxW0aSDDpnlLM+hTmhlh8HDWZYk9FNtuAI7ZlspYXtVooPSV5LU9GkGCj5PhfDOR7FEO/sR1IqJckDPdk/xYUqPKJK2+fPU7f4wvk485ab0BxXxex+pwLAkdGsEYL9LOcaEq9SwqYRY=}</value>
+          <value>{AQAAABAAAADQzOqtVsS81+VEe/A4axGR4uxQCkFTbxRJbte6x1TidHZ/k9xcHA+I1H2YaFGvTdOVzxgqJHFcU0+d29wBE+MNP1e0v2mT6jReyxO7Y8apmQf+S0nQWB5gyRfff3dR3s43lrtz6W5Zz0f9e7LYTsXGC7YiO2ZkqdBofKl67mW9Xbdlsawx5TaDgHkQThUC06EckFaEp1c814SNoABlIqK2Lc0TjsEWvqytLMi5RTZVeD7/K7hMWo3SAQqoZuWJyI+CFeNYA+QkISoWTWNGZtueo9lZoA77yvZJe25BrNr9yLI=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
