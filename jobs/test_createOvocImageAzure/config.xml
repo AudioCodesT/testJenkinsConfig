@@ -25,16 +25,6 @@
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>ISO_DEPLOY_DESTINATION</name>
-          <description></description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>official_iso</string>
-              <string>latest_iso</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -84,8 +74,9 @@
     <hudson.tasks.Shell>
       <command>echo &quot;Download_URL=&quot; &gt; prop
 container_name=&quot;vhds&quot;
-admin_username=acovoc
-azure_username=benm@audiocodes.com
+ISO_DEPLOY_DESTINATION=&quot;official_iso&quot;
+admin_username=&quot;acovoc&quot;
+azure_username=&quot;benm@audiocodes.com&quot;
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
 VmSize=&quot;Standard_D4s_v3&quot;
 vhd_storage_account=&quot;ciresourcegroupstorage&quot;
