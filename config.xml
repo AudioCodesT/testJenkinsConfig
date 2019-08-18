@@ -417,6 +417,7 @@
     </hudson.plugins.ec2.EC2Cloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-e20df392</name>
+      <accountId></accountId>
       <groupId>sig-e20df392</groupId>
       <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
@@ -467,6 +468,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-8a99c992</name>
+      <accountId></accountId>
       <groupId>sig-8a99c992</groupId>
       <pendingInstances/>
       <labelString>ems-build</labelString>
@@ -517,6 +519,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-0ba4f0c3</name>
+      <accountId></accountId>
       <groupId>sig-0ba4f0c3</groupId>
       <pendingInstances/>
       <labelString>MP-linux-build</labelString>
@@ -599,6 +602,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-c2878797</name>
+      <accountId></accountId>
       <groupId>sig-c2878797</groupId>
       <pendingInstances/>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
@@ -649,6 +653,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-d72cb55a</name>
+      <accountId></accountId>
       <groupId>sig-d72cb55a</groupId>
       <pendingInstances/>
       <labelString>smt-codeanalysis</labelString>
@@ -707,6 +712,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-c0b4d0da</name>
+      <accountId></accountId>
       <groupId>sig-c0b4d0da</groupId>
       <pendingInstances/>
       <labelString>clm-build-slave</labelString>
@@ -749,6 +755,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-7813d586</name>
+      <accountId></accountId>
       <groupId>sig-7813d586</groupId>
       <pendingInstances/>
       <labelString>sbc-buildVirtualSSBC</labelString>
@@ -791,6 +798,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-c751f889</name>
+      <accountId></accountId>
       <groupId>sig-c751f889</groupId>
       <pendingInstances/>
       <labelString>mtr-Build-Label</labelString>
@@ -841,6 +849,7 @@
     </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-a252d010</name>
+      <accountId></accountId>
       <groupId>sig-a252d010</groupId>
       <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
@@ -903,7 +912,6 @@
           <templateDesc>Azure Ovoc Image Creation</templateDesc>
           <labels>azure_ovoc_slave</labels>
           <location>West Europe</location>
-          <availabilityType/>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
           <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
           <diskType>managed</diskType>
@@ -953,6 +961,21 @@
       <deploymentTimeout>1200</deploymentTimeout>
       <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
+    <hudson.plugins.spotinst.cloud.AzureSpotinstCloud plugin="spotinst@2.0.16">
+      <name>sig-1eea0190</name>
+      <accountId>act-96d87a11</accountId>
+      <groupId>sig-1eea0190</groupId>
+      <pendingInstances/>
+      <labelString>azure_ovoc_slave</labelString>
+      <idleTerminationMinutes>5</idleTerminationMinutes>
+      <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
+      <labelSet class="sorted-set">
+        <hudson.model.labels.LabelAtom>azure_ovoc_slave</hudson.model.labels.LabelAtom>
+      </labelSet>
+      <usage>EXCLUSIVE</usage>
+      <tunnel></tunnel>
+      <vmargs></vmargs>
+    </hudson.plugins.spotinst.cloud.AzureSpotinstCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>
   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
