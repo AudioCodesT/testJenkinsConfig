@@ -145,6 +145,8 @@ curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value
 	then
     	echo &quot;sendEmail=True&quot; &gt; prop
 		echo &quot;Currently running jenkins job in Web-ui OVOC... exiting the build&quot;
+        echo &quot;Currently running jenkins job in Web-ui OVOC&quot; &gt; infraNotLatest.txt
+    	echo &quot;If you want to execute ems_sanity_multijob anyway, please run again with the paremeter &apos;checkIfInfraIsLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
         exit 1
 	fi
 fi
@@ -159,14 +161,81 @@ if [[ $infra_in_ovoc_commit_id != $infra_commit_id ]]
 then
 	echo &quot;sendEmail=True&quot; &gt; prop
 	echo &quot;Infra in ovoc is not the latest... exiting the build&quot;
+    echo &quot;The infra in ovoc is not the latest commit&quot; &gt; infraNotLatest.txt
+    echo &quot;If you want to execute ems_sanity_multijob anyway, please run again with the paremeter &apos;checkIfInfraIsLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
     exit 1
 fi
 </command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>prop</propertiesFilePath>
+        <propertiesContent>LINK=https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/${BRANCH}/official_iso/DVD3_EMS_${NEW_TAG}.iso</propertiesContent>
+      </info>
+    </EnvInjectBuilder>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts></artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+            <arg1>${sendEmail}</arg1>
+            <arg2>True</arg2>
+            <ignoreCase>false</ignoreCase>
+          </condition>
+          <publisherList>
+            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+              <recipientList>ben.magriso</recipientList>
+              <configuredTriggers>
+                <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+                  <email>
+                    <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                    <body>$PROJECT_DEFAULT_CONTENT</body>
+                    <recipientProviders>
+                      <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
+                      <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+                    </recipientProviders>
+                    <attachmentsPattern></attachmentsPattern>
+                    <attachBuildLog>false</attachBuildLog>
+                    <compressBuildLog>false</compressBuildLog>
+                    <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                    <contentType>project</contentType>
+                  </email>
+                </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+              </configuredTriggers>
+              <contentType>text/html</contentType>
+              <defaultSubject>web-ui build is still running or infra isn’t latest</defaultSubject>
+              <defaultContent>&lt;pre&gt;
+${FILE,path=&quot;infraNotLatest.txt&quot;}
+&lt;/pre&gt;
+
+</defaultContent>
+              <attachmentsPattern></attachmentsPattern>
+              <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+              <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+              <attachBuildLog>false</attachBuildLog>
+              <compressBuildLog>false</compressBuildLog>
+              <replyTo>$DEFAULT_REPLYTO</replyTo>
+              <saveOutput>false</saveOutput>
+              <disabled>false</disabled>
+            </hudson.plugins.emailext.ExtendedEmailPublisher>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+  </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
