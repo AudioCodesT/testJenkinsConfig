@@ -129,10 +129,10 @@ JOB_URL=&quot;${JENKINS_URL}/job/webReviewOvoc-windows&quot;
 RETURN_CODE=0
 echo &quot;sendEmail=False&quot; &gt; prop
 #check if job is in progress or finished
-curl --insecure -X GET ${JOB_URL}/lastBuild/api/json  | grep --color &apos;result&quot;:null&apos; || RETURN_CODE=$?
+curl --insecure -X GET ${JOB_URL}/lastBuild/api/json  | grep --color &apos;result&quot;:null&apos; &gt; /dev/null || RETURN_CODE=$?
 if [[ $RETURN_CODE == &quot;0&quot; ]]
 then
-curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value\&quot;:\&quot;${BRANCH}\&quot; || RETURN_CODE=$?
+curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value\&quot;:\&quot;${BRANCH}\&quot; &gt; /dev/null || RETURN_CODE=$?
 	if [[ $RETURN_CODE == &quot;0&quot; ]]
 	then
     	echo &quot;sendEmail=True&quot; &gt; prop
