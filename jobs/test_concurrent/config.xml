@@ -184,7 +184,7 @@ fi
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
           <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
-            <arg1>${sendEmail}</arg1>
+            <arg1>$sendEmail</arg1>
             <arg2>True</arg2>
             <ignoreCase>false</ignoreCase>
           </condition>
