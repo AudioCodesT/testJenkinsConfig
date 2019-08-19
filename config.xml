@@ -910,7 +910,7 @@
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>azure-ovoc-vm</templateName>
           <templateDesc>Azure Ovoc Image Creation</templateDesc>
-          <labels>azure_ovoc_slave</labels>
+          <labels></labels>
           <location>West Europe</location>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
           <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
@@ -966,11 +966,11 @@
       <accountId>act-96d87a11</accountId>
       <groupId>sig-1eea0190</groupId>
       <pendingInstances/>
-      <labelString>azure_ovoc</labelString>
+      <labelString>azure_ovoc_slave</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
-        <hudson.model.labels.LabelAtom>azure_ovoc</hudson.model.labels.LabelAtom>
+        <hudson.model.labels.LabelAtom>azure_ovoc_slave</hudson.model.labels.LabelAtom>
       </labelSet>
       <usage>EXCLUSIVE</usage>
       <tunnel></tunnel>
