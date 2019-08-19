@@ -128,7 +128,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
       <buildStep class="hudson.tasks.Shell">
         <command>#check if currently running job in jenkins for web-ui ovoc in same branch
 JENKINS_URL=&apos;https://jenkins&apos;
-JOB_URL=&quot;${JENKINS_URL}/job/webBuildOvoc-windows&quot;
+JOB_URL=&quot;${JENKINS_URL}/job/webReviewOvoc-windows&quot;
 RETURN_CODE=0
 echo &quot;sendEmail=False&quot; &gt; prop
 #check if job is in progress or finished
