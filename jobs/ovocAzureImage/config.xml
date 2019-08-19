@@ -73,7 +73,7 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <assignedNode>azure_ovoc_slave</assignedNode>
+  <assignedNode>azure_ovoc</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -82,8 +82,8 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;Download_URL=&quot; &gt; prop
-container_name=&quot;vhds&quot;
+      <command>NEW_TAG_WithoutDots=${NEW_TAG//./}
+container_name=&quot;ovoc${NEW_TAG_WithoutDots}&quot;
 ISO_DEPLOY_DESTINATION=&quot;official_iso&quot;
 admin_username=&quot;acovoc&quot;
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
@@ -95,7 +95,7 @@ security_group=&quot;createOvocImageSG&quot;
 vhd_name=&quot;OVOC_${NEW_TAG}&quot;
 VmName=&quot;OVOC${NEW_TAG}&quot;
 ResourceGroupName=&quot;CI_Resource_Group&quot;
-
+echo &quot;vhd_name=${vhd_name}&quot; &gt; properties
 #details of service principal app (test-jenkins) to connect azure cli
 test_jenkins_app_id=&quot;666a283f-ae93-4069-8e2e-cb35cca51cfa&quot;
 test_jenkins_tenant_id=&quot;1911c65c-893b-42f9-83fa-66c1b86fdf85&quot;
@@ -118,6 +118,7 @@ az vm create \
     --nsg ${security_group} \
     --os-type linux \
     --os-disk-name ${vhd_name} \
+    --storage-container-name ${container_name} \
     --tags &apos;Name=AzureOvocSanityInstall&apos; &apos;Creator=Jenkins&apos;
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
@@ -161,28 +162,22 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 
 
-#deallocate and generalize the VM
-#az vm deallocate --resource-group ${ResourceGroupName} --name ${VmName}
-#az vm generalize --resource-group ${ResourceGroupName} --name ${VmName}
-#create Image
-#az image create --resource-group ${ResourceGroupName} --name ovoc_${NEW_TAG} --source ${VmName}
-
-
 #create SAS URL to send
 start_date=$(date --utc +%FT%TZ -d &quot;-1 day&quot;)
-expire_date=$(date --utc +%FT%TZ -d &quot;+30 day&quot;)
+expire_date=$(date --utc +%FT%TZ -d &quot;+2 month&quot;)
 URL=$(az storage blob url --connection-string ${connection_string} -c ${container_name} -n &quot;${vhd_name}.vhd&quot; -o tsv)
-SAS_URL=$(az storage blob generate-sas --connection-string ${connection_string} --container-name ${container_name} --name ${vhd_name} --permissions r --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
-Download_URL=&quot;${URL}${SAS_URL}&quot;
+SAS_URL=$(az storage container generate-sas --connection-string ${connection_string} --name ${container_name} --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
+download_URL=&quot;${URL}?${SAS_URL}&quot;
 #delete VM the new security group and the nic
 az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)
 
-echo &quot;Download_URL=${Download_URL}&quot; &gt; prop
+cd ${WORKSPACE}
+echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
-        <propertiesFilePath>prop</propertiesFilePath>
+        <propertiesFilePath>properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -202,7 +197,7 @@ echo &quot;Download_URL=${Download_URL}&quot; &gt; prop
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>az resource delete --ids $(az resource list --tag Name=AzureEmsSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
+          <script>az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -212,7 +207,7 @@ echo &quot;Download_URL=${Download_URL}&quot; &gt; prop
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>ben.magriso@audiocodes.com</recipientList>
+      <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -229,10 +224,10 @@ echo &quot;Download_URL=${Download_URL}&quot; &gt; prop
           </email>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>OVOC_${NEW_TAG} Azure Image</defaultSubject>
-      <defaultContent>OVOC_${NEW_TAG} VHD File Download URL: 
-${Download_URL}</defaultContent>
+      <contentType>text/html</contentType>
+      <defaultSubject>OVOC ${NEW_TAG} image for azure is ready</defaultSubject>
+      <defaultContent>OVOC_${NEW_TAG} vhd file can be downloaded here: 
+${download_URL}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
@@ -319,7 +314,7 @@ ${Download_URL}</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>connection_string</name>
-          <value>{AQAAABAAAADQzOqtVsS81+VEe/A4axGR4uxQCkFTbxRJbte6x1TidHZ/k9xcHA+I1H2YaFGvTdOVzxgqJHFcU0+d29wBE+MNP1e0v2mT6jReyxO7Y8apmQf+S0nQWB5gyRfff3dR3s43lrtz6W5Zz0f9e7LYTsXGC7YiO2ZkqdBofKl67mW9Xbdlsawx5TaDgHkQThUC06EckFaEp1c814SNoABlIqK2Lc0TjsEWvqytLMi5RTZVeD7/K7hMWo3SAQqoZuWJyI+CFeNYA+QkISoWTWNGZtueo9lZoA77yvZJe25BrNr9yLI=}</value>
+          <value>{AQAAABAAAADQvM1pZjOfo49pEsbtSCfASI6j0V3kilSaOnB4uVkkDqJU1kdDHrY8RXSJSF8qs6vhR4f1UIO74PAQaCTTatEyhy0eCmzeU83LM8J3UgX6nihoW4lyPocTZerGI3ZR7xY4Ch9l1YZQX/7BLnbAHbxXzqsqOfDlqafnqNvLt/N6i1Ig8OeFj5r6LQ49z0I8KglqXhVyRtYhxufcc+ZLgGkeB8QPhqhlxxP/Yp79t6iH683s0pL90jA+byS8lyvCTcJeO4hrhZwuBOwMF0pi4xIShugTkuKvr2nQokQFFI8ugQo=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
