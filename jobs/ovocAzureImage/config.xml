@@ -73,7 +73,7 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
   </scm>
-  <assignedNode>azure_ovoc</assignedNode>
+  <assignedNode>azure_ovoc_slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
