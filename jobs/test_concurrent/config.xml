@@ -78,7 +78,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
-      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentPerNode>2</maxConcurrentPerNode>
       <maxConcurrentTotal>2</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
       <throttleEnabled>true</throttleEnabled>
