@@ -111,7 +111,8 @@ output: if official &amp; all jobs succeeded then email to QA</description>
   <builders>
     <hudson.tasks.Shell>
       <command>echo &quot;branch: ${BRANCH}&quot;
-echo &quot;new tag: ${NEW_TAG}&quot;</command>
+echo &quot;new tag: ${NEW_TAG}&quot;
+sleep 60</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
