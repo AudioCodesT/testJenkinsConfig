@@ -84,7 +84,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
       <throttleEnabled>true</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit>BRANCH</paramsToUseForLimit>
+      <paramsToUseForLimit>NEW_TAG</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
