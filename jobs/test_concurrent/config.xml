@@ -75,6 +75,16 @@ output: if official &amp; all jobs succeeded then email to QA</description>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>checkIfInfraIsLatest</name>
+          <description>this param check if in ovoc ui the infra is latest. default is &apos;1&apos; (yes)</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>1</string>
+              <string>0</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -114,6 +124,47 @@ output: if official &amp; all jobs succeeded then email to QA</description>
 echo &quot;new tag: ${NEW_TAG}&quot;
 sleep 60</command>
     </hudson.tasks.Shell>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+        <arg1>${checkIfInfraNotLatest}</arg1>
+        <arg2>Yes</arg2>
+        <ignoreCase>false</ignoreCase>
+      </condition>
+      <buildStep class="hudson.tasks.Shell">
+        <command>#check if currently running job in jenkins for web-ui ovoc in same branch
+JENKINS_URL=&apos;https://jenkins&apos;
+JOB_URL=&quot;${JENKINS_URL}/job/webBuildOvoc-windows&quot;
+RETURN_CODE=0
+echo &quot;sendEmail=False&quot; &gt; prop
+#check if job is in progress or finished
+curl --insecure -X GET ${JOB_URL}/lastBuild/api/json  | grep --color &apos;result&quot;:null&apos; || RETURN_CODE=$?
+if [[ $RETURN_CODE == &quot;0&quot; ]]
+then
+curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value\&quot;:\&quot;${BRANCH}\&quot; || RETURN_CODE=$?
+	if [[ $RETURN_CODE == &quot;0&quot; ]]
+	then
+    	echo &quot;sendEmail=True&quot; &gt; prop
+		echo &quot;Currently running jenkins job in Web-ui OVOC... exiting the build&quot;
+        exit 1
+	fi
+fi
+#check if the infra is the latest
+rm -rf ovoc
+git -c http.sslverify=false clone --depth 10 -n -b $BRANCH https://gerrit/web-ui/ovoc
+cd ovoc
+git checkout ${BRANCH}
+infra_in_ovoc_commit_id=$(git ls-files -s src/app/angular2/infra2 | awk &apos;{print $2}&apos;)
+infra_commit_id=$(git ls-remote https://gerrit/web-ui/ac-infra | grep refs/heads/7.6.2000 | awk &apos;{print $1}&apos;)
+if [[ $infra_in_ovoc_commit_id != $infra_commit_id ]]
+then
+	echo &quot;sendEmail=True&quot; &gt; prop
+	echo &quot;Infra in ovoc is not the latest... exiting the build&quot;
+    exit 1
+fi
+</command>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
   </builders>
   <publishers/>
   <buildWrappers>
