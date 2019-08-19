@@ -170,7 +170,7 @@ fi
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts></artifacts>
+      <artifacts>infraNotLatest.txt</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
