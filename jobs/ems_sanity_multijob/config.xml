@@ -136,7 +136,7 @@ echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
 curl --insecure -X GET ${JOB_URL}/lastBuild/api/json  | grep --color &apos;result&quot;:null&apos; &gt; /dev/null || RETURN_CODE=$?
 if [[ $RETURN_CODE == &quot;0&quot; ]]
 then
-curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value\&quot;:\&quot;${BRANCH}\&quot; &gt; /dev/null || RETURN_CODE=$?
+	curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value\&quot;:\&quot;${BRANCH}\&quot; &gt; /dev/null || RETURN_CODE=$?
 	if [[ $RETURN_CODE == &quot;0&quot; ]]
 	then
     	sendEmail=&quot;True&quot;
