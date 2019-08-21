@@ -80,8 +80,8 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <description>this param check if web-ui build is still running or infra isn’t latest. default is &apos;0&apos; (no)</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>0</string>
               <string>1</string>
+              <string>0</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -159,7 +159,7 @@ then
 	sendEmail=&quot;True&quot;
 	echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
 	echo &quot;Infra in ovoc is not the latest... exiting the build&quot;
-    echo &quot;The infra in ovoc is not the latest commit&quot; &gt; infraNotLatest.txt
+    echo &quot;Infra in ovoc is not the latest commit&quot; &gt; infraNotLatest.txt
     echo &quot;If you want to execute ems_sanity_multijob anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
     exit 1
 fi
