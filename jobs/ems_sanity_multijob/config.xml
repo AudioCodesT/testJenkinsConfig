@@ -77,7 +77,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>checkIfInfraIsNotLatest</name>
-          <description>this param check if web-ui build is still running or infra isn’t latest. default is &apos;0&apos; (no)</description>
+          <description>this param check if web-ui build is still running or infra isn’t latest. default is &apos;1&apos; (yes)</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>1</string>
