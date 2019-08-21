@@ -59,7 +59,6 @@
       <roles>
         <string>authenticated</string>
         <string>Palo_AWS-RND-BKP_NTWS</string>
-        <string>AWS_Jira_Users</string>
         <string># All ISRAEL</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -77,7 +76,7 @@
         <string>Logistics_maintenance</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1566104624829</timestamp>
+      <timestamp>1566379834659</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>a58f89d9881597cc</seed>
