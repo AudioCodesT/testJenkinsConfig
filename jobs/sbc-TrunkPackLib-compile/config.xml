@@ -22,7 +22,7 @@
         <hudson.model.StringParameterDefinition>
           <name>TPRAM_BRANCH</name>
           <description></description>
-          <defaultValue>7.2.252</defaultValue>
+          <defaultValue>7.2.256</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -36,10 +36,10 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -51,7 +51,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -167,7 +167,7 @@ set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#
 git describe --tags &gt; TAG.txt&#xd;
 set /P BL=&lt;TAG.txt&#xd;
 echo COMP_VER=%BL% &gt; generated_version.properties&#xd;
-git branch --no-color -r --contains HEAD | head -1 | cut -d/ -f2 &gt; GIT_BRANCH.txt&#xd;
+git branch --no-color -r --contains HEAD | head -1 | cut -d/ -f2 | sed &apos;s:feature/voice-ai:7.2.256:&apos; &gt; GIT_BRANCH.txt&#xd;
 set /P GIT_BRANCH=&lt;GIT_BRANCH.txt&#xd;
 echo GIT_BRANCH=%GIT_BRANCH% &gt;&gt; generated_version.properties&#xd;
 &#xd;
@@ -211,7 +211,7 @@ mkdir y:\TCL\%BL%&#xd;
 copy /Y voplibtcl\voplibext\voplibcon\* y:\TCL\%BL%&#xd;
 </command>
     </hudson.tasks.BatchFile>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
@@ -225,7 +225,7 @@ copy /Y voplibtcl\voplibext\voplibcon\* y:\TCL\%BL%&#xd;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@2.15.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
