@@ -962,9 +962,9 @@
       <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
     <hudson.plugins.spotinst.cloud.AzureSpotinstCloud plugin="spotinst@2.0.16">
-      <name>sig-1eea0190</name>
+      <name>sig-f550f500</name>
       <accountId>act-96d87a11</accountId>
-      <groupId>sig-1eea0190</groupId>
+      <groupId>sig-f550f500</groupId>
       <pendingInstances/>
       <labelString>azure_ovoc_slave</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
