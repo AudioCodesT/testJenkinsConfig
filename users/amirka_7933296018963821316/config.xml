@@ -2,7 +2,7 @@
 <user>
   <version>10</version>
   <id>amirka</id>
-  <fullName>Amir Kagan</fullName>
+  <fullName>amirka</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
@@ -12,6 +12,7 @@
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20"/>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
@@ -33,13 +34,135 @@
       <collapsed/>
     </hudson.model.PaneStatusProperties>
     <jenkins.security.seed.UserSeedProperty>
-      <seed>6dbfae9bb61532c6</seed>
+      <seed>8cfe334706e53095</seed>
     </jenkins.security.seed.UserSeedProperty>
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
-      <emailAddress>amir.kagan@audiocodes.com</emailAddress>
-    </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string>ForcePoint_IT_Policy</string>
+        <string>Palo_AWS-RND-BKP_NTWS</string>
+        <string>e2kpro</string>
+        <string># IL - Infrastructure</string>
+        <string>AI-BackupAdmin</string>
+        <string>SSL_OracleVPN</string>
+        <string># UPS Server Room Floor 0 Alerts</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_ARM_access_BS_Internal_Users</string>
+        <string># IT Strategy</string>
+        <string>Oracle-Alerts</string>
+        <string># Employee Mobility ROW</string>
+        <string>View-Only Organization Management</string>
+        <string># IL- System</string>
+        <string># All Lunch</string>
+        <string>Logistics_maintenance</string>
+        <string>365_MFA</string>
+        <string>Admin_FullAccess</string>
+        <string>CSAdministrator</string>
+        <string># Microsoft DogFood</string>
+        <string>IT</string>
+        <string>TX_ops</string>
+        <string>Exchange Public Folder Administrators</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># All Cellular</string>
+        <string>ExchangeAdmins</string>
+        <string>SMSAdmin</string>
+        <string>RTCUniversalGlobalReadOnlyGroup</string>
+        <string>VM admins</string>
+        <string>Certificate Service DCOM Access</string>
+        <string># All Airport City</string>
+        <string># All_Lync_Pilot</string>
+        <string>SMSRemoteControl</string>
+        <string>Agile users</string>
+        <string>Denied RODC Password Replication Group</string>
+        <string># IT Infrastructure</string>
+        <string>ACDeviceAdmins</string>
+        <string># Content Managers</string>
+        <string># Sunflower Product Team</string>
+        <string>Cyberark_SFE_admin</string>
+        <string>NetMonitor</string>
+        <string>Portnoxaccess</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
+        <string># PTailor Notifications</string>
+        <string>SSL_MFA</string>
+        <string>Infrastructure</string>
+        <string>CatalogApps_Everyone</string>
+        <string># AUDC - Nagios Agent (HQ)</string>
+        <string># VM Admins</string>
+        <string># IT_System_department</string>
+        <string>Remote Control</string>
+        <string># Employee Mobility</string>
+        <string>CatalogApps_Office</string>
+        <string># Employee New</string>
+        <string>Exchange View-Only Administrators</string>
+        <string>Exchange Organization Administrators</string>
+        <string>Public Folder Management</string>
+        <string># All HotMobile</string>
+        <string>RTCUniversalServerAdmins</string>
+        <string>IT_NetApp_OpMan</string>
+        <string>Checkpoint_MFA</string>
+        <string>SSL_Admin</string>
+        <string># IT ALL</string>
+        <string>Exchange Recipient Administrators</string>
+        <string>itstaff</string>
+        <string># Forcepoint Alerts</string>
+        <string>RMS Users</string>
+        <string>Recipient Management</string>
+        <string>WirelessUsers</string>
+        <string>CT_ALL</string>
+        <string>DHCP Administrators</string>
+        <string>RTCUniversalServerReadOnlyGroup</string>
+        <string>IT License</string>
+        <string># 014-ISP-Israel</string>
+        <string>Domain Admins</string>
+        <string>RTCReportReaders</string>
+        <string>Password Manager Apply</string>
+        <string>O365</string>
+        <string># All ISRAEL</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>CT_ADMIN</string>
+        <string>CyberArk_Remote</string>
+        <string>AudioCodes_VPN</string>
+        <string>RTCUniversalGlobalWriteGroup</string>
+        <string># All AudioCodes</string>
+        <string># All YEHUD</string>
+        <string>Admins</string>
+        <string>Alerts</string>
+        <string>WSUS Administrators</string>
+        <string>iwww</string>
+        <string>SAVFMSE Admins</string>
+        <string>LyncDeshboardAccess</string>
+        <string># All 012 voip</string>
+        <string># IT Admins</string>
+        <string>NetappAdmins</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Operation</string>
+        <string>BackUpAlert</string>
+        <string>CatalogApps_IT</string>
+        <string>Allow Office365 Groups</string>
+        <string># 014-ISP-USA</string>
+        <string>Oncall</string>
+        <string>CSUserAdministrator</string>
+        <string># AUDC - Nagios Agent (Networking)</string>
+        <string>PortnoxAlerts</string>
+        <string># Oracle Israel-From</string>
+        <string># Oracle</string>
+        <string>RTCUniversalReadOnlyAdmins</string>
+        <string>Remote Desktop Users</string>
+        <string>Linuxusers</string>
+        <string>OraSec</string>
+        <string>Organization Management</string>
+        <string>RTCUniversalUserReadOnlyGroup</string>
+        <string>Domain Users</string>
+        <string>CSServerAdministrator</string>
+        <string>Citrix_Allow_Project</string>
+      </roles>
+      <timestamp>1566731469163</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
