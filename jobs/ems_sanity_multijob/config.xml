@@ -154,6 +154,7 @@ cd ovoc
 git checkout ${BRANCH}
 infra_in_ovoc_commit_id=$(git ls-files -s src/app/angular2/infra2 | awk &apos;{print $2}&apos;)
 infra_commit_id=$(git ls-remote https://gerrit/web-ui/ac-infra | grep refs/heads/7.6.2000 | awk &apos;{print $1}&apos;)
+cd ${WORKSPACE}
 if [[ $infra_in_ovoc_commit_id != $infra_commit_id ]]
 then
 	sendEmail=&quot;True&quot;
@@ -411,7 +412,7 @@ fi
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
           <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
-            <arg1>$sendEmail</arg1>
+            <arg1>${sendEmail}</arg1>
             <arg2>True</arg2>
             <ignoreCase>false</ignoreCase>
           </condition>
