@@ -169,6 +169,13 @@ mv -f id_rsa_gerrit ..
 export PATH=$HOME/Utils:/usr/local/sbin:/usr/sbin:$PATH
 
 rm -f build-error.log
+if [ -e TrunkPackLib/.git ]; then
+(
+cd TrunkPackLib
+git reset --hard
+git clean -df
+)
+fi
 git gwinit
 git verify-gwapp
 res=$?
