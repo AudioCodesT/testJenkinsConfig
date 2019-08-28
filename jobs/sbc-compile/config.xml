@@ -181,6 +181,8 @@ cd ..
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+sudo mount -a
+
 BOARDNAME=${BOARDFINALNAME}
 echo EXITFLAG=0 &gt;&gt; ../generated_sbc_version.properties
 
