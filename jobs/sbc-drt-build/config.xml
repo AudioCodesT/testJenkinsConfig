@@ -251,6 +251,8 @@ fi
 cd ..
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
+
+sudo mount -a
 cd TrunkPackRam
 
 </command>
