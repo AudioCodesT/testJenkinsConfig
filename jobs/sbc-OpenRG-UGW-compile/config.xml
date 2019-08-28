@@ -150,6 +150,8 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/incl
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+sudo mount -a
+
 GERRIT_BRANCH=$(git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | sed &apos;s:.*origin/::&apos;)
 if [ $(echo $GERRIT_BRANCH | wc -w) -gt 1 ]; then
     header=$(git log -1 --pretty=format:%d)
