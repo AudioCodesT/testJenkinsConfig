@@ -188,6 +188,8 @@ fi
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+sudo mount -a
+
 rm -f build-error.log
 cd TrunkPackRam
 
