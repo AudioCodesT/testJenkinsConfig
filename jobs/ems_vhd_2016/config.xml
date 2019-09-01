@@ -130,6 +130,18 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
+rm  -f /tmp/noDest.err || true
+if [[ ! -d /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual ]]; then
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;$(date) : No destination folder for branch ${BRANCH} on NetApp !!!&quot; &gt; /tmp/noDest.err
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    exit 1
+fi
+
 ## Check that TAG matches BaseVM version
 BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
 if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
@@ -429,7 +441,7 @@ else&#xd;
     mkdir ${TAG}&#xd;
 fi&#xd;
 &#xd;
-scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
+scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -456,23 +468,24 @@ scp -r centos@10.7.10.117:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
           </email>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
-      <contentType>default</contentType>
+      <contentType>text/html</contentType>
       <defaultSubject>OVOC Hyper-V 2016 image is ready</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT
 
-OVOC for Hyper-V 2016 completed.
-
-Files can be found on Netapp:
-\\netapp01\ems\Versions\ISO_Files
-
-
-Tests results:
-${RESULTS}</defaultContent>
+&quot;$MSG&quot;</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
-cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
-RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}</presendScript>
+if [[ -f /tmp/noDest.err ]]; then
+    MSG=$(cat /tmp/noDest.err)
+else
+    . ${WORKSPACE}/buildVars
+
+    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
+    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+
+    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+fi</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
