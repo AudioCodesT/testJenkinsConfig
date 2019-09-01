@@ -80,7 +80,9 @@ Copy AMI to all Regions and make him public</description>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>checkIfInfraIsNotLatest</name>
-          <description>this param check if web-ui build is still running or infra isn’t latest. default is &apos;1&apos; (yes)</description>
+          <description>1 = Yes (default)
+0 = No
+this param check if web-ui build is still running or infra isn’t latest.</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>1</string>
