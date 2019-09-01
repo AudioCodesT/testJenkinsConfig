@@ -82,7 +82,11 @@ Copy AMI to all Regions and make him public</description>
           <name>checkIfInfraIsNotLatest</name>
           <description>1 = Yes (default)
 0 = No
-this param check if web-ui build is still running or infra isn’t latest.</description>
+this param checks if web-ui build is still running or infra isn’t latest.
+if &apos;1&apos; the build will fail when web-ui build is still running or infra isn’t latest.
+if you still want to run it then run again with &apos;0&apos;
+
+</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>1</string>
