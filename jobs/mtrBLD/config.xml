@@ -284,7 +284,7 @@ echo &quot;**************************************************************&quot;
 echo &quot;**************************************************************&quot;
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>release.prop</propertiesFilePath>
       </info>
@@ -578,6 +578,17 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
       <saveOutput>false</saveOutput>
       <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun></regexpForRerun>
+      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>false</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>60</delay>
+      </delay>
+      <maxSchedule>1</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
