@@ -171,6 +171,7 @@ then
 	fi
 fi
 #check if the infra is the latest
+echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 rm -rf ovoc
 git -c http.sslverify=false clone --depth 10 -n -b $BRANCH https://gerrit/web-ui/ovoc
 cd ovoc
