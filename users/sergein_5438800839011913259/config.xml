@@ -75,6 +75,7 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string># AUDC - NJ Engineering Team</string>
+        <string>AI-SmartTAP_Log</string>
         <string>AI-QMS-RO</string>
         <string>AudioCodes_VPN</string>
         <string># SmartTAP</string>
@@ -86,7 +87,7 @@
         <string>NewUser_Israel-BS</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1560681599082</timestamp>
+      <timestamp>1567422152267</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>7a614888f17fba7b</seed>
