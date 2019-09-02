@@ -207,7 +207,7 @@ echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,Natan.Merfish@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
+      <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
