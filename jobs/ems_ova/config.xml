@@ -450,6 +450,8 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
     fi&#xd;
     &#xd;
     mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/&#xd;
+else&#xd;
+    TAG=&quot;${TAG}-DryRun&quot;&#xd;
 fi</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
