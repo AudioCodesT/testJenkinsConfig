@@ -282,6 +282,8 @@ fi
 EMAIL=`echo $EMAIL |tr &quot; &quot; &quot;\n&quot; | sort -u`
 cd ${WORKSPACE}
 
+if [ -z $EMAIL ]; then EMAIL=$GIT_COMMITTER_EMAIL; fi
+
 echo RN=${RN} &gt;&gt; ems_build.properties
 echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; ems_build.properties
 echo EMAIL=${EMAIL} &gt;&gt; ems_build.properties
