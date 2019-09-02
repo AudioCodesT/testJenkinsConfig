@@ -129,6 +129,18 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
+rm  -f /tmp/noDest.err || true
+if [[ ! -d /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual ]]; then
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;$(date) : No destination folder for branch ${BRANCH} on NetApp !!!&quot; &gt; /tmp/noDest.err
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    exit 1
+fi
+
 ## Check that TAG matches OVA version
 OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
 if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
@@ -442,7 +454,7 @@ mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>gal.erez, Gennady.Tsiporkin, marina.Risher, liran.badiri, shuky.riechard, yuval.yosha</recipientList>
+      <recipientList>yuval.yosha</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -459,13 +471,27 @@ mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/
           </email>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
-      <contentType>default</contentType>
+      <contentType>text/html</contentType>
       <defaultSubject>OVOC OVA is ready </defaultSubject>
-      <defaultContent>Files can be found on Netapp:
-\\netapp01\ems\Versions\ISO_Files
+      <defaultContent>$DEFAUL_CONTENT
+
+&quot;$MSG&quot;
+
+ESXi version: 6.5.0 Update 2 (Build 8294253)
 </defaultContent>
       <attachmentsPattern></attachmentsPattern>
-      <presendScript></presendScript>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT
+
+if [[ -f /tmp/noDest.err ]]; then
+    export MSG=$(cat /tmp/noDest.err)
+else
+    . ${WORKSPACE}/buildVars
+
+    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
+    export RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+
+    export MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+fi</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
