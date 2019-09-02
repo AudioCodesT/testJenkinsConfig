@@ -407,6 +407,7 @@ echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
 echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
 echo &quot;export OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
 
+###### Create &amp; export sanity result &amp; message for email
 if [[ -f /tmp/noDest.err ]]; then
     MSG=$(cat /tmp/noDest.err)
     echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
@@ -420,6 +421,10 @@ else
     MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
     echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
 fi
+
+#####  Name job if DryRun
+[[ &quot;${DryRun}&quot; == &quot;false&quot; ]] &amp;&amp; TAG_EXT=${TAG} || TAG_EXT=&quot;${TAG}-DryRun&quot;
+echo &quot;export TAG_EXT=${TAG_EXT}&quot; &gt;&gt; buildVars
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
@@ -469,8 +474,6 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
     fi&#xd;
     &#xd;
     mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/&#xd;
-else&#xd;
-    TAG=&quot;${TAG}-DryRun&quot;&#xd;
 fi</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
@@ -579,7 +582,7 @@ ems-release:com/ac/ems/ovoc_server/Sanity_preReq/scripts/*.*=&gt;${workspace}/EM
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${TAG}</template>
+      <template>#${BUILD_NUMBER}__${TAG_EXT}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
