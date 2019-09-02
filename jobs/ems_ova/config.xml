@@ -404,12 +404,31 @@ fi
 
 cd ${WORKSPACE}
 echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
-echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
+echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
 echo &quot;export OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
+
+if [[ -f /tmp/noDest.err ]]; then
+    MSG=$(cat /tmp/noDest.err)
+    echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
+else
+    . ${WORKSPACE}/buildVars
+
+    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
+    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+    echo &quot;export RESULT=${RESULT}&quot; &gt;&gt; buildVars
+    
+    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+    echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
+fi
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>${WORKSPACE}/buildVars</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
@@ -488,18 +507,7 @@ fi</script>
 ESXi version: 6.5.0 Update 2 (Build 8294253)
 </defaultContent>
       <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT
-
-if [[ -f /tmp/noDest.err ]]; then
-    export MSG=$(cat /tmp/noDest.err)
-else
-    . ${WORKSPACE}/buildVars
-
-    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
-    export RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
-
-    export MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
-fi</presendScript>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
