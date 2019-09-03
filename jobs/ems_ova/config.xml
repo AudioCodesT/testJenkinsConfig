@@ -583,7 +583,7 @@ ems-release:com/ac/ems/ovoc_server/Sanity_preReq/scripts/*.*=&gt;${workspace}/EM
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${TAG_EXT}</template>
-      <runAtStart>true</runAtStart>
+      <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
