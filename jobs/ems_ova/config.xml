@@ -431,7 +431,7 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
-        <propertiesFilePath>${WORKSPACE}/buildVars</propertiesFilePath>
+        <propertiesFilePath>buildVars</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
