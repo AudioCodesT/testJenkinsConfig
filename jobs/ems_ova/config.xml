@@ -422,10 +422,6 @@ else
     echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
 fi
 
-#####  Name job if DryRun
-[[ &quot;${DryRun}&quot; == &quot;false&quot; ]] &amp;&amp; TAG_EXT=${TAG} || TAG_EXT=&quot;${TAG}-DryRun&quot;
-echo &quot;export TAG_EXT=${TAG_EXT}&quot; &gt;&gt; buildVars
-
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
     </hudson.tasks.Shell>
@@ -582,7 +578,7 @@ ems-release:com/ac/ems/ovoc_server/Sanity_preReq/scripts/*.*=&gt;${workspace}/EM
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}__${TAG_EXT}</template>
+      <template>#${BUILD_NUMBER}__${TAG}</template>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
