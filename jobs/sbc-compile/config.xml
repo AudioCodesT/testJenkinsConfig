@@ -303,7 +303,6 @@ REPOSITORY=sbc-release</properties>
       <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed &apos;s:.*origin/::&apos;`
 echo GERRIT_BRANCH=${GERRIT_BRANCH}
 
-sudo mount -a
 </script>
       <scriptType>unixScript</scriptType>
       <runOnlyOnParent>false</runOnlyOnParent>
