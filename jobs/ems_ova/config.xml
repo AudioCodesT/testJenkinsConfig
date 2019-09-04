@@ -403,23 +403,23 @@ else
 fi
 
 cd ${WORKSPACE}
-echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
-echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
-echo &quot;export OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
+echo &quot;BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
+echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
+echo &quot;OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
 
 ###### Create &amp; export sanity result &amp; message for email
 if [[ -f /tmp/noDest.err ]]; then
     MSG=$(cat /tmp/noDest.err)
-    echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
+    echo &quot;MSG=${MSG}&quot; &gt;&gt; buildVars
 else
     . ${WORKSPACE}/buildVars
 
     cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
     RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
-    echo &quot;export RESULT=${RESULT}&quot; &gt;&gt; buildVars
+    echo &quot;RESULT=${RESULT}&quot; &gt;&gt; buildVars
     
     MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
-    echo &quot;export MSG=${MSG}&quot; &gt;&gt; buildVars
+    echo &quot;MSG=${MSG}&quot; &gt;&gt; buildVars
 fi
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
