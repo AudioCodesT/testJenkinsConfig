@@ -61,7 +61,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -474,9 +473,10 @@ mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/
       </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>OVOC OVA is ready </defaultSubject>
-      <defaultContent>$DEFAUL_CONTENT
+      <defaultContent>
 
-&quot;$MSG&quot;
+Files are at -
+\\netapp01\EMS\Versions\ISO_Files
 
 ESXi version: 6.5.0 Update 2 (Build 8294253)
 </defaultContent>
