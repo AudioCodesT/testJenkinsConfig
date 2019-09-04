@@ -347,7 +347,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
           </condition>
           <publisherList>
             <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-              <recipientList>cc:ben.magriso@audiocodes,cc:Shuky.Riechard@audiocodes.com</recipientList>
+              <recipientList>cc:ben.magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
               <configuredTriggers>
                 <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
                   <email>
