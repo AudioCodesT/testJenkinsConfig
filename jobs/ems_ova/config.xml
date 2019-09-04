@@ -51,11 +51,6 @@
           <description>Run sanity tests</description>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>DryRun</name>
-          <description>Output not copied to NetApp</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -66,6 +61,7 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
@@ -403,33 +399,13 @@ else
 fi
 
 cd ${WORKSPACE}
-echo BR_DIR=OVOC_${TAG%???}XXX &gt; buildVars
-echo BRANCH=${BRANCH} &gt;&gt; buildVars
-echo OVA_NAME=OVOC_VMware_${Brand}${TAG} &gt;&gt; buildVars
-
-###### Create &amp; export sanity result &amp; message for email
-if [[ -f /tmp/noDest.err ]]; then
-    MSG=$(cat /tmp/noDest.err)
-    echo MSG=${MSG} &gt;&gt; buildVars
-else
-    . ${WORKSPACE}/buildVars
-
-    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
-    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
-    echo RESULT=${RESULT} &gt;&gt; buildVars
-    
-    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\ems\\Versions\\ISO_Files\\&apos;${BR_DIR}\\${TAG}; echo -e &apos;\n\nTests results: \n&apos;${RESULTS})
-    echo MSG=${MSG} &gt;&gt; buildVars
-fi
+echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
+echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
+echo &quot;export OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
 
 echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>buildVars</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
@@ -451,26 +427,25 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
-          <script>if [[ &quot;${DryRun}&quot; == &quot;false&quot; ]]; then  &#xd;
-    . ${WORKSPACE}/buildVars&#xd;
-    &#xd;
-    # Move output to Netapp&#xd;
-    echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
-    &#xd;
-    cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
-    &#xd;
-    if [[ -d ${TAG} ]]; then&#xd;
-        cd ${TAG}&#xd;
-        if [[ -f &quot;${HVM_NAME}&quot;.7z ]]; then&#xd;
-            last_mod=`date -r ${OVA_NAME}.ova +%Y-%m-%d--%H-%M`&#xd;
-            find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
-        fi&#xd;
-    else&#xd;
-        mkdir ${TAG}&#xd;
+          <script>. ${WORKSPACE}/buildVars&#xd;
+&#xd;
+# Move output to Netapp&#xd;
+echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
+&#xd;
+cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
+&#xd;
+if [[ -d ${TAG} ]]; then&#xd;
+    cd ${TAG}&#xd;
+    if [[ -f &quot;${HVM_NAME}&quot;.7z ]]; then&#xd;
+        last_mod=`date -r ${OVA_NAME}.ova +%Y-%m-%d--%H-%M`&#xd;
+        find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
     fi&#xd;
-    &#xd;
-    mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/&#xd;
-fi</script>
+else&#xd;
+    mkdir ${TAG}&#xd;
+fi&#xd;
+&#xd;
+&#xd;
+mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -480,17 +455,12 @@ fi</script>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>yuval.yosha</recipientList>
+      <recipientList>gal.erez, Gennady.Tsiporkin, marina.Risher, liran.badiri, shuky.riechard, yuval.yosha</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT
-
-&quot;$MSG&quot;
-
-ESXi version: 6.5.0 Update 2 (Build 8294253)
-</body>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
@@ -511,7 +481,18 @@ ESXi version: 6.5.0 Update 2 (Build 8294253)
 ESXi version: 6.5.0 Update 2 (Build 8294253)
 </defaultContent>
       <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT
+
+if [[ -f /tmp/noDest.err ]]; then
+    MSG=$(cat /tmp/noDest.err)
+else
+    . ${WORKSPACE}/buildVars
+
+    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
+    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+
+    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+fi</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
@@ -584,7 +565,7 @@ ems-release:com/ac/ems/ovoc_server/Sanity_preReq/scripts/*.*=&gt;${workspace}/EM
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
       <template>#${BUILD_NUMBER}__${TAG}</template>
-      <runAtStart>false</runAtStart>
+      <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
