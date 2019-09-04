@@ -94,13 +94,13 @@
         <string># sbcwizard</string>
         <string># ATCA forum</string>
         <string># R&amp;D HDGW GROUP</string>
-        <string>FTP_default</string>
         <string>Linuxusers</string>
+        <string>FTP_5G</string>
         <string>Domain Users</string>
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># SDN &amp; NFV</string>
       </roles>
-      <timestamp>1550738590370</timestamp>
+      <timestamp>1567577638011</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Alex.Agranov@audiocodes.com</emailAddress>
