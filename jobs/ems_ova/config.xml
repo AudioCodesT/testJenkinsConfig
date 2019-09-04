@@ -418,7 +418,7 @@ else
     RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
     echo &quot;RESULT=${RESULT}&quot; &gt;&gt; buildVars
     
-    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\ems\\Versions\\ISO_Files\\&apos;${BR_DIR}\\${TAG}; echo -e &apos;\n\nTests results: \n&apos;${RESULTS})
     echo &quot;MSG=${MSG}&quot; &gt;&gt; buildVars
 fi
 
