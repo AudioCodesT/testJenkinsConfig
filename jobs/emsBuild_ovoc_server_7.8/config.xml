@@ -367,9 +367,8 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
               </configuredTriggers>
               <contentType>default</contentType>
               <defaultSubject>web-ui build is still running or infra isn’t latest</defaultSubject>
-              <defaultContent>&lt;pre&gt;
-${FILE,path=&quot;infraNotLatest.txt&quot;}
-&lt;/pre&gt;
+              <defaultContent>${FILE,path=&quot;infraNotLatest.txt&quot;}
+
 </defaultContent>
               <attachmentsPattern></attachmentsPattern>
               <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
