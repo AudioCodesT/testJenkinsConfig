@@ -501,7 +501,7 @@ fi</script>
       <defaultSubject>OVOC OVA is ready </defaultSubject>
       <defaultContent>$DEFAUL_CONTENT
 
-$MSG
+&quot;$MSG&quot;
 
 ESXi version: 6.5.0 Update 2 (Build 8294253)
 </defaultContent>
