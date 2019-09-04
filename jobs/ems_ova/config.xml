@@ -485,7 +485,12 @@ fi</script>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <body>$PROJECT_DEFAULT_CONTENT
+
+&quot;$MSG&quot;
+
+ESXi version: 6.5.0 Update 2 (Build 8294253)
+</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
