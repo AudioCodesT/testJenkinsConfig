@@ -79,7 +79,6 @@ e.g.:7.20A.252.001</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>workspace/virtualSBC</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>#get Gerrit BRANCH
@@ -101,8 +100,10 @@ JENKINS_URL=&apos;https://test-jenkins&apos;
 JOB_NAME=&apos;job/sbc-iso&apos;
 JOB_TOKEN=&apos;sbcCreateISO&apos;
 mkdir artifacts
-#get the relevant ISO FILE
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+#get the relevant ISO FILE (try to download him once, if it failed try to download it again, if it failing again, triggering sbc-iso job.
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
+curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
 	echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
@@ -178,6 +179,11 @@ then
    fi
     
 fi
+# temporary change to fix verify_sbc function in build_sbc.sh
+line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cli\&quot;&apos;
+replace_line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cl\&quot;&apos;
+sed -i &quot;s/${line}/${replace_line}/g&quot; build_sbc.sh
+
 EnvironmentList=(&quot;kvm&quot; &quot;azure&quot; &quot;aws&quot; &quot;hyperv&quot; &quot;vmware&quot; &quot;google&quot;)
 # if Environment = all then run all environments
 if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
@@ -243,7 +249,7 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Build Virtual SBC for ${TAG} was created successfully</defaultSubject>
-      <defaultContent>${TAG} virtual SBC artifacts:
+      <defaultContent>${TAG} virtual SBC artifacts for ${Environment} environment:
 https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
