@@ -163,11 +163,11 @@ python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 
 #create SAS URL to send
-#start_date=$(date --utc +%FT%TZ -d &quot;-1 day&quot;)
-#expire_date=$(date --utc +%FT%TZ -d &quot;+2 month&quot;)
-#URL=$(az storage blob url --connection-string ${connection_string} -c ${container_name} -n &quot;${vhd_name}.vhd&quot; -o tsv)
-#SAS_URL=$(az storage container generate-sas --connection-string ${connection_string} --name ${container_name} --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
-#download_URL=&quot;${URL}?${SAS_URL}&quot;
+start_date=$(date --utc +%FT%TZ -d &quot;-1 day&quot;)
+expire_date=$(date --utc +%FT%TZ -d &quot;+2 month&quot;)
+URL=$(az storage blob url --connection-string ${connection_string} -c ${container_name} -n &quot;${vhd_name}.vhd&quot; -o tsv)
+SAS_URL=$(az storage container generate-sas --connection-string ${connection_string} --name ${container_name} --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
+download_URL=&quot;${URL}?${SAS_URL}&quot;
 #delete VM the new security group and the nic
 az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)
 
@@ -208,6 +208,22 @@ echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>OVOC ${NEW_TAG} image for azure is ready</defaultSubject>
       <defaultContent>OVOC_${NEW_TAG} vhd file can be downloaded here: 
