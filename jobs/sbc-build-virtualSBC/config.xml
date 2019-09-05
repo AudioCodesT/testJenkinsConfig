@@ -103,6 +103,7 @@ mkdir artifacts
 #get the relevant ISO FILE (try to download him once, if it failed try to download it again, if it failing again, triggering sbc-iso job.
 curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
 curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
 curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
