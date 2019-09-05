@@ -208,22 +208,6 @@ echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-          <email>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-      </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>OVOC ${NEW_TAG} image for azure is ready</defaultSubject>
       <defaultContent>OVOC_${NEW_TAG} vhd file can be downloaded here: 
