@@ -54,8 +54,12 @@
 printf &quot;%s------------------------------------\n&quot; &gt;&gt; RegionsNameAndIds.txt
 
 #list of other regions
-OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 ap-southeast-1&quot;
+#OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 ap-southeast-1&quot;
+#OTHER_REGIONS=($OTHER_REGIONS) 
+
+OTHER_REGIONS=&quot;us-east-2&quot;
 OTHER_REGIONS=($OTHER_REGIONS) 
+
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
 
