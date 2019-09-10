@@ -48,7 +48,6 @@
         <string>authenticated</string>
         <string>R&amp;D HDGW software</string>
         <string>TG1000</string>
-        <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>CI_EMS_Developers</string>
@@ -75,7 +74,6 @@
         <string>Mailvision Branch Office Users</string>
         <string>CI_EMS_Admins</string>
         <string>AudioCodes_VPN</string>
-        <string># OVOC MGMT</string>
         <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
@@ -85,7 +83,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1550762033477</timestamp>
+      <timestamp>1568098658950</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Gal.Erez@audiocodes.com</emailAddress>
