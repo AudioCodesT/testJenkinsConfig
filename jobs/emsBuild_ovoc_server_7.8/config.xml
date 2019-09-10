@@ -307,7 +307,11 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+            <arg1>${checkIfInfraIsNotLatest}</arg1>
+            <arg2>1</arg2>
+            <ignoreCase>false</ignoreCase>
+          </condition>
           <publisherList>
             <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
               <config>
