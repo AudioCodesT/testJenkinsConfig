@@ -64,13 +64,13 @@
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
         <string>Password Manager Apply</string>
+        <string># OVOC QOE</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>AudioCodes_VPN</string>
-        <string># OVOC MGMT</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
@@ -78,7 +78,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1557146341052</timestamp>
+      <timestamp>1568095843673</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Hadas.Attal@audiocodes.com</emailAddress>
