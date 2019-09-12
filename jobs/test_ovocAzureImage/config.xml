@@ -57,8 +57,7 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>NEW_TAG_WithoutDots=${NEW_TAG//./}
-container_name=&quot;ovoc${NEW_TAG_WithoutDots}&quot;
+      <command>container_name=&quot;ovoc2115test&quot;
 ISO_DEPLOY_DESTINATION=&quot;official_iso&quot;
 admin_username=&quot;acovoc&quot;
 base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/ovoc762125/OVOC_7.6.2125.vhd&quot;
