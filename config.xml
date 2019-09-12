@@ -1041,6 +1041,7 @@
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
+        <string>test_ovocAzureImage</string>
         <string>UpdateVI-Jira</string>
       </jobNames>
       <jobFilters/>
