@@ -419,7 +419,18 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-03ab9f7ab6e875a43</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-03ab9f7ab6e875a43</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2019-09-12 13:25:35.668 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1041,7 +1052,6 @@
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
-        <string>test_ovocAzureImage</string>
         <string>UpdateVI-Jira</string>
       </jobNames>
       <jobFilters/>
