@@ -1,7 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Support only SBC feature batchץ&#xd;
+  <description>Triggered manually for a specific TAG&#xd;
+Support only SBC feature batch&#xd;
 &#xd;
 To run SBC batch please send ModeType=Full in Run command.&#xd;
 In the compilation folder please make sure that it contains the following cmps:&#xd;
@@ -19,8 +20,8 @@ In the compilation folder please make sure that it contains the following cmps:&
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>50</daysToKeep>
-        <numToKeep>-1</numToKeep>
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>30</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
@@ -47,18 +48,31 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
           <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>FOLDER_PATH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>MODE</name>
-          <description>For now, the only available option is: Full</description>
+          <description>For now, the only available options are: Full and VoiceAI</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>Full</string>
               <string>Web_IE</string>
               <string>Web_CHROME</string>
-              <string>Web_FIREFOX </string>
+              <string>Web_FIREFOX</string>
+              <string>VoiceAI</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CurrentBatchID</name>
+          <description>In case you execute manually a DRT that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -84,42 +98,55 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
       <command># send Batch Runner request and keep the serial number from the response:
 #&quot;BatchId: batchName_636159240296404766_BTR&quot;
 
+if [ -z &quot;$BUILD_USER_EMAIL&quot; ]; then BUILD_USER_EMAIL=&quot;Shmulik.Yudkovich@audiocodes.com&quot;; fi
 echo BUILD_USER: $BUILD_USER
 echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
 
-# Find the full path of this TAG in the netapp1 
-FullPath=$(find &quot;/netapp1/CompilationResults/$MajorVersion Release/&quot; -type d -name &quot;F$TAG&quot;)
+if [ ! -z $CurrentBatchID ]; then
+  echo LinkToPage=&quot;---&quot; &gt; generated_BR.properties
+  echo batchID=${CurrentBatchID} &gt;&gt; generated_BR.properties
+  exit 0
+fi
 
-if [ ! -d &quot;$FullPath&quot; ]; then echo Directory of $TAG was not found,  exit; exit 1; fi
-echo Following directory was found: $FullPath
+if [ -z &quot;$FOLDER_PATH&quot; ]; then
+  # Find the full path of this TAG in the netapp1 
+  FullPath=$(find &quot;/netapp1/CompilationResults/$MajorVersion Release/&quot; -type d -name &quot;F$TAG&quot;)
 
-copyTo=&quot;/netapp1/CompilationResults/BR_Feature/F$TAG&quot;
+  if [ ! -d &quot;$FullPath&quot; ]; then echo Directory of $TAG was not found,  exit; exit 1; fi
+  echo Following directory was found: $FullPath
 
-# Create the directory if it doesn&apos;t exist
-if [ ! -d &quot;$copyTo&quot; ]; then mkdir &quot;$copyTo&quot;; fi
+  copyTo=&quot;/netapp1/CompilationResults/BR_Feature/F$TAG&quot;
 
-# Copy the ZIP files to &quot;$copyTo&quot; and unzip them
-cd &quot;$copyTo&quot;
-CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
-for eachImage in $CmpList; do
-  echo Copy file $eachImage...
-  if [ ! -f $eachImage*.cmp ]; then
-    copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
-    cp &quot;$copyZIP&quot; .
-    unzip *$eachImage*.zip
-    rm -f *$eachImage*.zip
-  else
-    echo File $eachImage exist already
-  fi
-done
+  # Create the directory if it doesn&apos;t exist
+  if [ ! -d &quot;$copyTo&quot; ]; then mkdir &quot;$copyTo&quot;; fi
 
-# Check if all was copied successfully
-if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing cmp files, exiting job&quot;; exit 2; fi
+  # Copy the ZIP files to &quot;$copyTo&quot; and unzip them
+  cd &quot;$copyTo&quot;
+  CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
+  for eachImage in $CmpList; do
+    echo Copy file $eachImage...
+    if [ ! -f $eachImage*.cmp ]; then
+      copyZIP=$(find &quot;$FullPath&quot; -type f -name &quot;*$eachImage*&quot; | grep -v LAB | head -1)
+      cp &quot;$copyZIP&quot; .
+      unzip *$eachImage*.zip
+      rm -f *$eachImage*.zip
+    else
+      echo File $eachImage exist already
+    fi
+  done
+
+  # Check if all was copied successfully
+  if [ `ls *.cmp | wc -l` -lt $(echo $CmpList | wc -w) ]; then echo &quot;Missing cmp files, exiting job&quot;; exit 2; fi
+  BatchTAG=$(echo $TAG |  sed &apos;s:\.:_:g&apos;)
+  CompilationFolder=&quot;\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&quot;
+else
+  BatchTAG=$(echo $FOLDER_PATH |  sed &apos;s:\.:_:g&apos;)
+  CompilationFolder=&quot;\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\$FOLDER_PATH&quot;
+fi
 
 cd $WORKSPACE
 
-BatchTAG=$(echo $TAG |  sed &apos;s:\.:_:g&apos;)
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\BR_Feature\\F$TAG&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
+Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunFeatureBatch.aspx?ModeType=$MODE&amp;CompilationFolder=$CompilationFolder&amp;RunByUserEmail=$BUILD_USER_EMAIL&amp;MajorVersion=$MajorVersion&amp;BatchTag=$BatchTAG&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
 batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
 LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
 
@@ -136,12 +163,9 @@ if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
   echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
   exit 1;
 fi
-
-echo Output=&quot;Execution error&quot; &gt;&gt; generated_BR.properties
-
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_BR.properties</propertiesFilePath>
       </info>
@@ -184,7 +208,7 @@ exit 1</command>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER} ${TAG} $MajorVersion</template>
+      <template>#${BUILD_NUMBER} ${TAG} $FOLDER_PATH $MODE</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
