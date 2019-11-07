@@ -140,8 +140,6 @@ case $PROJECT in
 esac
 
 echo SendTo: $SendTo
-
-SendTo=yossim
 echo SendTo=$SendTo &gt; SendTo.txt
 
 
