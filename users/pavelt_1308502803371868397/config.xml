@@ -65,6 +65,7 @@
         <string>Logistics_maintenance</string>
         <string>AI-QA</string>
         <string># All Beer Sheva</string>
+        <string>365_Tas</string>
         <string># All WeWork</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
@@ -82,7 +83,7 @@
         <string>Domain Users</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1549964497482</timestamp>
+      <timestamp>1573127995531</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>56dc3bdf99df605c</seed>
