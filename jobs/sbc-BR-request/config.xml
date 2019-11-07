@@ -102,9 +102,8 @@ if [ -z &quot;$BUILD_USER_EMAIL&quot; ]; then BUILD_USER_EMAIL=&quot;Shmulik.Yud
 echo BUILD_USER: $BUILD_USER
 echo BUILD_USER_EMAIL: $BUILD_USER_EMAIL
 
-if [ ! -z $CurrentBatchID ]; then
-  echo LinkToPage=&quot;---&quot; &gt; generated_BR.properties
-  echo batchID=${CurrentBatchID} &gt;&gt; generated_BR.properties
+if [ ! -z &quot;$CurrentBatchID&quot; ]; then
+  echo batchID=${CurrentBatchID} &gt; generated_BR.properties
   exit 0
 fi
 
