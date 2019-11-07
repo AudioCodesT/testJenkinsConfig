@@ -41,6 +41,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -55,7 +56,7 @@
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1566823553897</timestamp>
+      <timestamp>1573140094752</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Eduard.Egorov@audiocodes.com</emailAddress>
