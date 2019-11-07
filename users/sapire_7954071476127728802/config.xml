@@ -44,6 +44,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string># Guy Amit Team</string>
@@ -66,7 +67,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1563957826942</timestamp>
+      <timestamp>1573130053624</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
