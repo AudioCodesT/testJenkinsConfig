@@ -127,7 +127,7 @@ cd $WORKSPACE
 case $PROJECT in
 	*&quot;GWApp&quot;*) SendTo=&quot;Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham&quot;;;
     *&quot;VoiceAIConnector&quot;) SendTo=&quot;Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil&quot;;;
-    *&quot;IPP&quot;*} SendTo=IppSwReleases;;
+    *&quot;IPP&quot;*} SendTo=&quot;IppSwReleases&quot;;;
     *&quot;EMS&quot;*) SendTo=&quot;Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz&quot;;;
     *&quot;MP&quot;*) SendTo=&quot;Hagayh, MP20xdeliveries&quot;;;
     *&quot;Arm&quot;*) SendTo=&quot;RnD-ARM, _ARMQA, Eran.Feldman&quot;;;
