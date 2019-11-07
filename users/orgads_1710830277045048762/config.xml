@@ -59,6 +59,7 @@
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -76,7 +77,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1561983886990</timestamp>
+      <timestamp>1573128064829</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Orgad.Shaneh@audiocodes.com</emailAddress>
