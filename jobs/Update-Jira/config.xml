@@ -122,31 +122,21 @@ fi
 ./update_report_tags.pl $NEWTAG &quot;$GERRIT_BRANCH&quot; &quot;$PROJECT&quot;
 
 cd $WORKSPACE
-SendTo=yossim
+
 
 case $PROJECT in
-	GWApp)
-           SendTo=&quot;Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham&quot;; break
-    VoiceAIConnector)
-           SendTo=&quot;Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil&quot;; break
-    IPP}
-           SendTo=IppSwReleases; break
-    EMS)
-           SendTo=&quot;Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz&quot;; break
-    MP)
-           SendTo=&quot;Hagayh, MP20xdeliveries&quot;; break
-    Arm)
-           SendTo=&quot;RnD-ARM, _ARMQA, Eran.Feldman&quot;; break
-    mediatech}
-           SendTo=&quot;Yishai.Gil, Maayan.Aharoni&quot;; break
-    Smart)
-           SendTo=&quot;Brian.Kling, Alex.Shlachter&quot;; break
-    WebRTC/Android)
-           SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;; break
-    WebRTC/iOS)
-           SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;; break
-    DSP/Gen5)
-           SendTo=&quot;DSP2, Ben.Magriso&quot;
+	*&quot;GWApp&quot;*) SendTo=&quot;Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham&quot;;;
+    *&quot;VoiceAIConnector&quot;) SendTo=&quot;Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil&quot;;;
+    *&quot;IPP&quot;*} SendTo=IppSwReleases;;
+    *&quot;EMS&quot;*) SendTo=&quot;Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz&quot;;;
+    *&quot;MP&quot;*) SendTo=&quot;Hagayh, MP20xdeliveries&quot;;;
+    *&quot;Arm&quot;*) SendTo=&quot;RnD-ARM, _ARMQA, Eran.Feldman&quot;;;
+    *&quot;mediatech&quot;*} SendTo=&quot;Yishai.Gil, Maayan.Aharoni&quot;;;
+    *&quot;Smart&quot;*) SendTo=&quot;Brian.Kling, Alex.Shlachter&quot;;;
+    *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
+    *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
+    *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
+    *) SendTo=&quot;yossim&quot;
 esac
 
 echo SendTo: $SendTo
