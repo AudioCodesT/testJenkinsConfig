@@ -63,6 +63,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># OVOC QOE</string>
         <string># All ISRAEL</string>
@@ -78,7 +79,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1568095843673</timestamp>
+      <timestamp>1573403589264</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Hadas.Attal@audiocodes.com</emailAddress>
