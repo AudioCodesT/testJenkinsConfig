@@ -42,6 +42,7 @@
       <roles>
         <string># All Beer Sheva</string>
         <string>authenticated</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
@@ -60,7 +61,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1562069249765</timestamp>
+      <timestamp>1573365450523</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
       <emailAddress>Tal.Aviad@audiocodes.com</emailAddress>
