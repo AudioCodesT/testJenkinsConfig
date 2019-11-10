@@ -229,11 +229,13 @@ while IFS= read -r line; do
    fi
 done &lt; othersCommits.txt
 
+depsName=$BOARDNAME
+if [[ &quot;$BOARD&quot; =~ &quot;centos=&quot; ]]; then depsName=$BOARDNAME$(echo ${BOARD} | sed &apos;s:.*centos=::; s: .*::&apos;); fi
 
-if [ -e ../OpenSource/$BOARDNAME.deps ]; then
+if [ -e ../OpenSource/$depsName.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
-  ./GetImages.sh $BOARDNAME $artifactory_host $User &quot;&quot; &quot;-i ../id_rsa_gerrit jenkins@test-gerrit&quot;
+  ./GetImages.sh $depsName $artifactory_host $User &quot;&quot; &quot;-i ../id_rsa_gerrit jenkins@test-gerrit&quot;
   if [ $? -eq 1 ]; then
     echo EXITFLAG=2 &gt; ../generated_sbc_version.properties
     exit 2; 
@@ -255,6 +257,7 @@ cd ..
 echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
+BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--centos=7.*/_CENTOS7/p`
 echo BOARD=${BOARD} &gt;&gt; generated_sbc_version.properties
 echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
 #TARGET=`echo $GERRIT_REFSPEC | sed &apos;s/[^0-9]*//g&apos;`
