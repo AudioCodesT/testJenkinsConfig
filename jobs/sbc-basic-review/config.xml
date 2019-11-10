@@ -230,6 +230,7 @@ while IFS= read -r line; do
 done &lt; othersCommits.txt
 
 depsName=$BOARDNAME
+# In case of &quot;--centos=7&quot; in the flag, the board dependencies should be &quot;HostedTP7&quot; instead of &quot;HostedTP&quot;
 if [[ &quot;$BOARD&quot; =~ &quot;centos=&quot; ]]; then depsName=$BOARDNAME$(echo ${BOARD} | sed &apos;s:.*centos=::; s: .*::&apos;); fi
 
 if [ -e ../OpenSource/$depsName.deps ]; then
