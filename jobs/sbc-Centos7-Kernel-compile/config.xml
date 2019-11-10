@@ -167,8 +167,8 @@ sudo chown -R centos:centos .
 
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos7_external_version_data.h
 
-if [ ! -f ssbc.vmlinux.tar.gz ] || (( `du ssbc.vmlinux.tar.gz | cut -f1` &lt; 40000 )); then
-  echo &quot;ssbc.vmlinux.tar.gz Image too small.. exit with error&quot;
+if [ ! -f ssbc_centos7.vmlinux.tar.gz ] || (( `du ssbc_centos7.vmlinux.tar.gz | cut -f1` &lt; 40000 )); then
+  echo &quot;ssbc_centos7.vmlinux.tar.gz Image too small.. exit with error&quot;
   exit -1
 fi</command>
     </hudson.tasks.Shell>
@@ -216,7 +216,7 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/${OPEN_RG_VER}
+      <deployPattern>${WORKSPACE}/ssbc_centos7.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/${OPEN_RG_VER}
 $WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7/${OPEN_RG_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
