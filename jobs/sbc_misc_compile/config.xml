@@ -218,10 +218,12 @@ if [ $FixNum &gt; 1 ]; then
   RN=&quot;&quot;
   VI=&quot;&quot;
   while read -r hash; do
-    VI+=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g&apos;)
+    Jira=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g&apos;)
+    VI+=$Jira
     # Add all issues to the commit in the first parent, includes issues in all others commits
     if [[ $firstParent =~ $hash ]]; then
       subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+      if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; &amp;&amp; $subject =~ &quot;Merge remote-tracking&quot; ]]; then VI=$Jira; fi
       RN+=---$subject::$hash::$VI
       VI=&quot;&quot;
     else
@@ -236,7 +238,7 @@ if [ $FixNum &gt; 1 ]; then
 
   #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$NEWTAG | sed s/\&quot;/\&apos;/g`
   #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$NEWTAG | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
-  EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | sort -u`
+  EMAIL=`git log --first-parent --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | sort -u`
   echo RN=${RN} &gt;&gt; ../generated_sbc_version.properties
   #echo VIS=${VIS} &gt;&gt; ../generated_sbc_version.properties
   echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
@@ -330,7 +332,7 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
               <onlyExactRuns>false</onlyExactRuns>
             </hudson.plugins.parameterizedtrigger.FileBuildParameters>
           </configs>
-          <projects>UpdateVI-Jira</projects>
+          <projects>Update-Jira</projects>
           <condition>UNSTABLE_OR_BETTER</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
