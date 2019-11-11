@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -72,7 +73,7 @@ PATH=/bin:$PATH</propertiesContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -136,6 +137,7 @@ BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
 
 BOARDFINALNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
+BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--centos=7.*/_CENTOS7/p`
 
 cd TrunkPackRam
 
@@ -167,10 +169,12 @@ fi
 EMAIL=`git log -n1 --pretty=format:&quot;%ce&quot;`
 echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
 
-if [ -e ../OpenSource/$BOARDNAME.deps ]; then
+depsName=$BOARDNAME
+# In case of &quot;--centos=7&quot; in the flag, the board dependencies should be &quot;HostedTP7&quot; instead of &quot;HostedTP&quot;
+if [ -e ../OpenSource/$depsName.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
-  ./GetImages.sh $BOARDNAME $artifactory_host $User sbc-release &quot;&quot;
+  ./GetImages.sh $depsName $artifactory_host $User sbc-release &quot;&quot;
   if [ $? -eq 1 ]; then
     echo EXITFLAG=2 &gt;&gt; ../generated_sbc_version.properties
     exit 2; 
@@ -268,7 +272,8 @@ $PROJECT_DEFAULT_CONTENT
                     <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                       <properties>TAGNAME=${NEWTAG}
 GERRIT_BRANCH=${GERRIT_BRANCH}
-REPOSITORY=sbc-release</properties>
+REPOSITORY=sbc-release
+Project=GWApp</properties>
                       <textParamValueOnNewLine>false</textParamValueOnNewLine>
                     </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                   </configs>
@@ -308,7 +313,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
       <runOnlyOnParent>false</runOnlyOnParent>
       <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
     </com.lookout.jenkins.EnvironmentScript>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -325,19 +330,11 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -390,8 +387,9 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWT
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${NEWTAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
