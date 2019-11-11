@@ -145,6 +145,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
 
 
 ### Add AudioCodes Public certificate to local machine
+echo *** Verify AUDC certificate ***
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
 if ! curl -s -o /dev/null https://google.com; then
   dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
