@@ -150,8 +150,10 @@ if ! curl -s -o /dev/null https://google.com; then
   dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
   if [[ &quot;$dist&quot; == &quot;ubuntu&quot; ]]; then
     cert=/usr/local/share/ca-certificates/audc2016.crt
+    cmd=&quot;update-ca-certificates&quot;
   elif [[ &quot;$dist&quot; =~ &quot;centos&quot; ]]; then
     cert=/etc/pki/ca-trust/source/anchors/audc2016.crt
+    cmd=&quot;update-ca-trust&quot;
   fi
   sudo rm -f $cert
   cat &lt;&lt;-EOL | sudo tee $cert &gt; /dev/null
@@ -189,7 +191,7 @@ peitA/lOlYGE3DAptUoSpBpHOsB1BJEJ4Hz7MYO7tA8kH00WzuEx5Kw93voG76JY
 TlFgcDc2WETWYgFeiv5Yx4AQsmbJtegjBcQJ6w==
 -----END CERTIFICATE-----
 EOL
-  sudo update-ca-certificates
+  sudo ${cmd}
 fi
 
 
