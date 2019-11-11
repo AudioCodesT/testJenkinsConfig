@@ -137,16 +137,16 @@ function RemoveEachFolder() {
         	$curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
           	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
           	if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then
-            	##***************temp solution for ConfGenerator.zip (can&apos;t download it)*********************
-                #if [[ &quot;$uri&quot; =~ &quot;ConfGenerator.zip&quot; ]]
-                #then
-               # 	echo &quot;skip this file not deleting ConfGenerator.zip  and not copied to aclnas03&quot;
-               # 
-               # else
+            #	#***************temp solution for ConfGenerator.zip (can&apos;t download it)*********************
+            #   if [[ &quot;$uri&quot; =~ &quot;ConfGenerator.zip&quot; ]]
+            #    then
+            #    	echo &quot;skip this file not deleting ConfGenerator.zip  and not copied to aclnas03&quot;
+            #    
+            #    else
             #		echo $ArtSize--$DestSize: $url is differ - No delete and exit......
             #		exit 1
             #    fi
-                #************** finish temp solution ******************************************************
+            #   #************** finish temp solution ******************************************************
                 echo $ArtSize--$DestSize: $url is differ - No delete and exit......
             	exit 1
           	else
