@@ -1446,7 +1446,14 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
       </jobNames>
-      <jobFilters/>
+      <jobFilters>
+        <hudson.views.BuildStatusFilter plugin="view-job-filters@2.1.1">
+          <includeExcludeTypeString>includeMatched</includeExcludeTypeString>
+          <neverBuilt>false</neverBuilt>
+          <building>true</building>
+          <inBuildQueue>false</inBuildQueue>
+        </hudson.views.BuildStatusFilter>
+      </jobFilters>
       <columns>
         <hudson.views.StatusColumn/>
         <hudson.views.WeatherColumn/>
@@ -1458,7 +1465,11 @@
         <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
         <io.jenkins.plugins.analysis.core.columns.IssuesTotalColumn plugin="warnings-ng@4.0.0">
           <selectTools>false</selectTools>
-          <tools/>
+          <tools>
+            <io.jenkins.plugins.analysis.core.model.ToolSelection>
+              <id></id>
+            </io.jenkins.plugins.analysis.core.model.ToolSelection>
+          </tools>
           <name># Issues</name>
           <labelProviderFactory>
             <jenkins/>
