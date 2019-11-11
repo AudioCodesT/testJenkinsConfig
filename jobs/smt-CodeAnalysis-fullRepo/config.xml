@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -34,9 +35,9 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.42">
+        <secureGroovyScript plugin="script-security@1.55">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -48,7 +49,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -120,6 +121,39 @@ cd ${WORKSPACE}
     </hudson.tasks.Shell>
   </builders>
   <publishers>
+    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
+      <analysisTools>
+        <io.jenkins.plugins.analysis.warnings.FindBugs>
+          <id></id>
+          <name></name>
+          <pattern>**/findbugs.xml</pattern>
+          <reportEncoding></reportEncoding>
+          <skipSymbolicLinks>false</skipSymbolicLinks>
+          <useRankAsPriority>true</useRankAsPriority>
+        </io.jenkins.plugins.analysis.warnings.FindBugs>
+        <io.jenkins.plugins.analysis.warnings.Pmd>
+          <id></id>
+          <name></name>
+          <pattern>**/pmd.xml</pattern>
+          <reportEncoding></reportEncoding>
+          <skipSymbolicLinks>false</skipSymbolicLinks>
+        </io.jenkins.plugins.analysis.warnings.Pmd>
+      </analysisTools>
+      <sourceCodeEncoding></sourceCodeEncoding>
+      <ignoreQualityGate>false</ignoreQualityGate>
+      <ignoreFailedBuilds>true</ignoreFailedBuilds>
+      <referenceJobName>-</referenceJobName>
+      <healthy>0</healthy>
+      <unhealthy>0</unhealthy>
+      <minimumSeverity plugin="analysis-model-api@7.0.1">
+        <name>LOW</name>
+      </minimumSeverity>
+      <filters/>
+      <isEnabledForFailure>true</isEnabledForFailure>
+      <isAggregatingResults>false</isAggregatingResults>
+      <isBlameDisabled>false</isBlameDisabled>
+      <qualityGates/>
+    </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
     <hudson.plugins.pmd.PmdPublisher plugin="pmd@3.50">
       <healthy></healthy>
       <unHealthy></unHealthy>
@@ -224,7 +258,7 @@ cd ${WORKSPACE}
         </configGraph>
       </cppcheckConfig>
     </org.jenkinsci.plugins.cppcheck.CppcheckPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>shukyr@audiocodes.com yuvaly@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -265,7 +299,7 @@ DevOps Team</defaultContent>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -275,8 +309,9 @@ DevOps Team</defaultContent>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
