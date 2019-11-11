@@ -144,6 +144,7 @@ echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.j
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
 
+
 ## Set vars
 DOCKER_URL=&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com&quot;
 DOCKER_REG=&quot;${DOCKER_URL}&quot;
