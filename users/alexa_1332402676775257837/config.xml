@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -36,7 +36,7 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
@@ -48,13 +48,13 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string># TRAVEL IL</string>
-        <string># All Dinner</string>
         <string># R&amp;D HDGW SYSTEM</string>
+        <string># All Dinner</string>
         <string>authenticated</string>
         <string>System_Software</string>
         <string>TG1000</string>
-        <string># All Orange</string>
         <string># R&amp;D HDGW SYSTEM SW</string>
+        <string># All Orange</string>
         <string>cc_users</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -92,6 +92,8 @@
         <string># R&amp;D Sys SW Group Leaders</string>
         <string>CatalogApps_Everyone</string>
         <string># sbcwizard</string>
+        <string>365_Tas</string>
+        <string># Agile users</string>
         <string># ATCA forum</string>
         <string># R&amp;D HDGW GROUP</string>
         <string>Linuxusers</string>
@@ -100,9 +102,9 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># SDN &amp; NFV</string>
       </roles>
-      <timestamp>1567577638011</timestamp>
+      <timestamp>1573460986228</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Alex.Agranov@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
