@@ -309,15 +309,9 @@ cat voiceAI.properties</command>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>for f in $(git show --pretty=&quot;&quot; --name-only $GERRIT_PATCHSET_REVISION); do
-    case $f in
-        &quot;config.sh&quot;)
-            
-            ;;
-        &quot;common/setup-cert.sh&quot;)
-            
-            ;;
-    esac
+      <command>for ff in $(git show --pretty=&quot;&quot; --name-only $GERRIT_PATCHSET_REVISION); do
+    [[ &quot;$ff&quot; ==  &quot;common/setup-cert.sh&quot; ]] &amp;&amp; [[ fn=&quot;setup-cert.sh&quot; ]] || fn=&quot;config.sh&quot;
+    curl -u myUser:myP455w0rd! -X PUT &quot;https://test-artifactory:443/docker-voice-ai/files/$fn&quot; -T $ff
 do</command>
     </hudson.tasks.Shell>
   </builders>
