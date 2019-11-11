@@ -89,7 +89,7 @@ ARTIFACTORY=artifactory</propertiesContent>
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
