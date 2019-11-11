@@ -226,6 +226,18 @@ cat voiceAI.properties</command>
         <propertiesFilePath>voiceAI.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
+    <hudson.tasks.Shell>
+      <command>for f in $(git show --pretty=&quot;&quot; --name-only $GERRIT_PATCHSET_REVISION); do
+    case $f in
+        &quot;config.sh&quot;)
+            
+            ;;
+        &quot;common/setup-cert.sh&quot;)
+            
+            ;;
+    esac
+do</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers>
     <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
