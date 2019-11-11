@@ -129,30 +129,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>## Runtime vars
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
-NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
-
-## run eslint
-git ls-files session-manager/\*js | grep -v grpc | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
-
-## change in some files some parameters to build number
-cd ${WORKSPACE}
-echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
-
-
-## Set vars
-DOCKER_URL=&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com&quot;
-DOCKER_REG=&quot;${DOCKER_URL}&quot;
-# Used in build.sh
-export DOCKER_REG_PREFIX=&quot;${DOCKER_REG}/&quot;
-export GIT_BRANCH=$BRANCH
-
-## Prepare docker login to unsecure registry
+      <command>## Prepare docker login to unsecure registry
 #if [[ -f /etc/default/docker ]]; then
 #    if [[ $(grep -e &quot;^DOCKER_OPTS&quot; /etc/default/docker) ]]; then
 #        opts=$(grep -e &quot;^DOCKER_OPTS&quot; /etc/default/docker)
@@ -166,6 +143,8 @@ export GIT_BRANCH=$BRANCH
 #    sudo echo &quot;DOCKER_OPTS=\&quot;--insecure-registry=${DOCKER_URL}\&quot;&quot; &gt; /etc/default/docker
 #fi
 
+
+### Add AudioCodes Public certificate to local machine
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
 if ! curl -s -o /dev/null https://google.com; then
   dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
@@ -224,7 +203,32 @@ echo &quot;Docker login Return Value: $ret_value&quot;
 if [[ &quot;$ret_value&quot; -ne &quot;Login Succeeded&quot; ]]
 then
 	exit 1
-fi
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>## Runtime vars
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
+NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
+
+## run eslint
+git ls-files session-manager/\*js | grep -v grpc | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
+
+## change in some files some parameters to build number
+cd ${WORKSPACE}
+echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
+#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
+#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
+
+
+## Set vars
+DOCKER_URL=&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com&quot;
+DOCKER_REG=&quot;${DOCKER_URL}&quot;
+# Used in build.sh
+export DOCKER_REG_PREFIX=&quot;${DOCKER_REG}/&quot;
+export GIT_BRANCH=$BRANCH
+
 
 ### Build the project
 # Clean ALL docker objects
