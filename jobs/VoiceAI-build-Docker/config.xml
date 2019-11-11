@@ -168,6 +168,17 @@ else
     sudo systemctl restart docker
 fi
 
+docker login -u jenkins -p $jenkinsPass docker-voice-ai.artifactory.corp.audiocodes.com
+ret_value=$?
+
+echo &quot;Docker login Return Value: $ret_value&quot;
+
+if [[ &quot;$ret_value&quot; -ne &quot;Login Succeeded&quot; ]]
+then
+	exit 1
+fi
+
+
 # Used in build.sh
 export DOCKER_REG_PREFIX=&quot;${DOCKER_REG}/&quot;
 export GIT_BRANCH=$BRANCH
