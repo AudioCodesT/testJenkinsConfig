@@ -5,6 +5,7 @@
 Executed periodically every night.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -136,18 +137,18 @@ function RemoveEachFolder() {
         	$curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
           	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
           	if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then
-            	#***************temp solution for ConfGenerator.zip (can&apos;t download it)*********************
-                if [[ &quot;$uri&quot; =~ &quot;ConfGenerator.zip&quot; ]]
-                then
-                	echo &quot;skip this file not deleting ConfGenerator.zip  and not copied to aclnas03&quot;
-                
-                else
-            		echo $ArtSize--$DestSize: $url is differ - No delete and exit......
-            		exit 1
-                fi
+            	##***************temp solution for ConfGenerator.zip (can&apos;t download it)*********************
+                #if [[ &quot;$uri&quot; =~ &quot;ConfGenerator.zip&quot; ]]
+                #then
+               # 	echo &quot;skip this file not deleting ConfGenerator.zip  and not copied to aclnas03&quot;
+               # 
+               # else
+            #		echo $ArtSize--$DestSize: $url is differ - No delete and exit......
+            #		exit 1
+            #    fi
                 #************** finish temp solution ******************************************************
-                #echo $ArtSize--$DestSize: $url is differ - No delete and exit......
-            	#exit 1
+                echo $ArtSize--$DestSize: $url is differ - No delete and exit......
+            	exit 1
           	else
             	echo Size equel - delete from Artifactory...
             	$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
@@ -291,7 +292,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -318,8 +319,9 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
