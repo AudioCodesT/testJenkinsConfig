@@ -194,6 +194,7 @@ EOL
   sudo ${cmd}
 fi
 
+sleep 5
 
 sudo systemctl restart docker
 
