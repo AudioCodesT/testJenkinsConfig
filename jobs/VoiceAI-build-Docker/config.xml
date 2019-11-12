@@ -182,7 +182,7 @@ EOL
   sudo systemctl restart docker
 fi
 
-echo ${jenkinsPass} | docker login -u jenkins --password-stdin docker-voice-ai.artifactory.corp.audiocodes.com
+echo ${jenkinsPass} | docker login -u jenkins --password-stdin docker-voice-ai.test-artifactory.corp.audiocodes.com
 ret_value=$?
 
 echo &quot;Docker login Return Value: $ret_value&quot;
