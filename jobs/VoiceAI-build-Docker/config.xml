@@ -129,7 +129,12 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>### Add AudioCodes Public certificate to local machine
+      <command>sudo yum -y reinstall ca-certificates
+sudo rm -f /etc/pki/ca-trust/source/anchors/*
+sudo update-ca-trust extract
+
+
+### Add AudioCodes Public certificate to local machine
 echo &quot;*** Verify AUDC certificate ***&quot;
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
 if ! curl -s -o /dev/null https://google.com; then
