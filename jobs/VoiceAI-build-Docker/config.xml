@@ -133,12 +133,13 @@ git archive 3 folders and upload to artifactory under tag folder</description>
 echo &quot;*** Verify AUDC certificate ***&quot;
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
 if ! curl -s -o /dev/null https://google.com; then
+  echo &quot;Installing AudioCodes CA certificate.&quot;
   dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
   if [[ &quot;$dist&quot; == &quot;ubuntu&quot; ]]; then
-    cert=/usr/local/share/ca-certificates/audc2016.crt
+    cert=&quot;/usr/local/share/ca-certificates/audc2016.crt&quot;
     updtCAcmd=&quot;update-ca-certificates&quot;
   elif [[ &quot;$dist&quot; =~ &quot;centos&quot; ]]; then
-    cert=/etc/pki/ca-trust/source/anchors/audc2016.crt
+    cert=&quot;/etc/pki/ca-trust/source/anchors/audc2016.crt&quot;
     updtCAcmd=&quot;update-ca-trust&quot;
   fi
   sudo rm -f $cert
@@ -180,12 +181,19 @@ EOL
   sudo ${updtCAcmd}
   sleep 3
   sudo systemctl restart docker
+else
+  echo &quot;Skipped installing AudioCodes CA certificate.&quot;
 fi
 
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin docker-voice-ai.test-artifactory.corp.audiocodes.com
 ret_value=$?
 
 echo &quot;Docker login Return Value: $ret_value&quot;
+
+if [[ &quot;$ret_value&quot; -ne &quot;Login Succeeded&quot; ]]
+then
+	exit 1
+fi
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
