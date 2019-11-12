@@ -142,16 +142,16 @@ if [[ -f /etc/docker/daemon.json ]]; then
         echo &quot;Found docker deamon config&quot;
         if [[ ! $(grep -e &quot;insecure-registries&quot; /etc/default/docker) ]]; then
             echo &quot;Inserting line for insecure registries&quot;
-            sed -i $&apos;/^{$/a \\\t&quot;insecure-registries&quot; : [&quot;docker-voice-ai.test-artifactory&quot;, &quot;docker-voice-ai.artifactory&quot;, &quot;docker-voice-ai.test-artifactory.corp.audiocodes.com&quot;, &quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;]&apos; /etc/docker/daemon.json
+            sudo sed -i $&apos;/^{$/a \\\t&quot;insecure-registries&quot; : [&quot;docker-voice-ai.test-artifactory&quot;, &quot;docker-voice-ai.artifactory&quot;, &quot;docker-voice-ai.test-artifactory.corp.audiocodes.com&quot;, &quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;]&apos; /etc/docker/daemon.json
         else
             echo &quot;Updating line for insecure registries&quot;
             regs=$(cat /etc/docker/daemon.json | jq &apos;.[]&apos;)
             regs=${regs:3:-2}
-            sed -i &quot;s/.*insecure-registries.*/\\\t\&quot;insecure-registries\&quot; : [$regs, \&quot;docker-voice-ai.test-artifactory\&quot;, \&quot;docker-voice-ai.artifactory\&quot;, \&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com\&quot;, \&quot;docker-voice-ai.artifactory.corp.audiocodes.com\&quot;]\&quot;&quot; /etc/docker/daemon.json
+            sudo sed -i &quot;s/.*insecure-registries.*/\\\t\&quot;insecure-registries\&quot; : [$regs, \&quot;docker-voice-ai.test-artifactory\&quot;, \&quot;docker-voice-ai.artifactory\&quot;, \&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com\&quot;, \&quot;docker-voice-ai.artifactory.corp.audiocodes.com\&quot;]\&quot;&quot; /etc/docker/daemon.json
         fi
     fi
 else
-    echo -e &quot;{\n\t\&quot;insecure-registries\&quot; : [\&quot;docker-voice-ai.test-artifactory\&quot;, \&quot;docker-voice-ai.artifactory\&quot;, \&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com\&quot;, \&quot;docker-voice-ai.artifactory.corp.audiocodes.com\&quot;]\n}&quot; &gt; /etc/docker/daemon.json
+    sudo echo -e &quot;{\n\t\&quot;insecure-registries\&quot; : [\&quot;docker-voice-ai.test-artifactory\&quot;, \&quot;docker-voice-ai.artifactory\&quot;, \&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com\&quot;, \&quot;docker-voice-ai.artifactory.corp.audiocodes.com\&quot;]\n}&quot; &gt; /etc/docker/daemon.json
 fi
 
 
