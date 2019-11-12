@@ -116,7 +116,7 @@ PATH=/bin:$PATH</propertiesContent>
   </scm>
   <assignedNode>sbc-test-slave</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
