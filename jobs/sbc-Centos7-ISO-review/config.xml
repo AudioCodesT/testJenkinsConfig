@@ -225,6 +225,7 @@ cd $CurrentPath
 downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f centos7/isofiles/sbc.install/ramHostedTP_LAB_CENTOS7.cmp
 curl -ks -u $User $downloadUri --output centos7/isofiles/sbc.install
+cp centos7/isofiles/sbc.install ./
 
 ls -l centos7/isofiles
 
