@@ -1336,6 +1336,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
+        <string>Windows OpenJDK 11</string>
       </jobNames>
       <jobFilters/>
       <columns>
