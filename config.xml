@@ -1329,7 +1329,7 @@
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>Test-Gerrit-Update</name>
+      <name>Test</name>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
