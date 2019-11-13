@@ -62,7 +62,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
@@ -108,7 +107,7 @@ PATH=/bin:$PATH</propertiesContent>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference>/home/centos/GWApp.git</reference>
         <depth>0</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -349,7 +348,6 @@ echo &quot;#${BUILD_NUMBER} ${GERRIT_BRANCH}: ${GERRIT_CHANGE_NUMBER},${GERRIT_P
                       <string>SUCCESS</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
@@ -388,7 +386,6 @@ $change,$ps
                       <string>FAILURE</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
@@ -414,7 +411,6 @@ $change,$ps
                       <string>FAILURE</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <org.jenkinsci.plugins.buildnameupdater.BuildNameUpdater plugin="build-name-setter@2.0.3">
                         <buildName>buildName.txt</buildName>
