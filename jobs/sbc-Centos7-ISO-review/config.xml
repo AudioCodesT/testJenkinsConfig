@@ -229,16 +229,13 @@ curl -ks -u $User $downloadUri --output centos7/isofiles/sbc.install/ramHostedTP
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-ifconfig -a  | grep inet
-id
+./build_centos7_iso.sh
 
-./buildKernel.sh --threads=$(nproc)
+ls -l 
 
-cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos7_external_version_data.h
-
-gzfile=ssbc.vmlinux.tar.gz
-if [ ! -f $gzfile ] || [ &quot;`du $gzfile | cut -f1`&quot; -lt 40000 ]; then
-  echo &quot;ssbc.vmlinux.tar.gz Image too small.. exit with error&quot;
+imageFile=ssbc.vmlinux.tar.gz
+if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 40000 ]; then
+  echo &quot;$imageFile Image too small.. exit with error&quot;
   exit -1
 fi</command>
     </hudson.tasks.Shell>
