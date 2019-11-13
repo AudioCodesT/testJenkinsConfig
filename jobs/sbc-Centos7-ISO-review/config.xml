@@ -224,7 +224,9 @@ cd $CurrentPath
 
 downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f centos7/isofiles/sbc.install/ramHostedTP_LAB_CENTOS7.cmp
-curl -ks -u $User $downloadUri --output centos7/isofiles/sbc.install/ramHostedTP_LAB_CENTOS7.cmp
+curl -ks -u $User $downloadUri --output centos7/isofiles/sbc.install
+
+ls -l centos7/isofiles
 
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
@@ -233,7 +235,7 @@ sudo chown -R centos:centos .
 
 ls -l 
 
-imageFile=ssbc.vmlinux.tar.gz
+imageFile=sbc.iso
 if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 40000 ]; then
   echo &quot;$imageFile Image too small.. exit with error&quot;
   exit -1
