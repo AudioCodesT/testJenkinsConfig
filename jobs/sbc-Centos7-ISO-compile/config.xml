@@ -149,7 +149,7 @@ echo ISO_VER=${BL} &gt; generated_version.properties
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;origin/&apos; &apos;{print $NF}&apos;`
 cd ../..
 if [ ! -d .git ]; then
-  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
+  git -c http.sslverify=false clone --depth 30 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
   mv GWApp/.git .
   rm -rf GWApp
 else
