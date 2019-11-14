@@ -145,12 +145,7 @@ echo ISO_VER=${BL} &gt; generated_version.properties
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-User=&quot;admin:$artifactory_password&quot;
-refs=&quot;&quot;
-
 #echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
-cat ~/.netrc
-
 cd ../..
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
@@ -160,6 +155,7 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
+git checkout $ISO_VER
 rev=$(git rev-parse HEAD)
 cd $WORKSPACE
 
@@ -167,6 +163,7 @@ sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
 #Bring &apos;HostedTP_CENTOS7&apos; the needed cmp for this compilation
+User=&quot;admin:$artifactory_password&quot;
 uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | \
       cut -d&apos;&quot;&apos; -f4 | grep HostedTP_SIP_CENTOS7 | grep -v LAB | grep .cmp  | head -1)
 if [ &quot;$uri&quot; == &quot;&quot; ]; then
@@ -270,7 +267,7 @@ fi
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQ+j8MowJczdKI4ZKPiWzXXOoBqIEhNODWAK6QCRZO3c0=}</value>
+          <value>{AQAAABAAAAAQ++ZRPZJvZwMvjmIJ2p3+4N9cQQVuxvh8U3RzV6t3ZEI=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
