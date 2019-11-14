@@ -136,6 +136,10 @@ function RemoveEachFolder() {
       		echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
         	$curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
           	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
+            local_md5=$(md5sum &quot;${DESTINATION}/${TargetPath}$uri&quot; | cut -d&apos; &apos; -f1)
+            remote_md5=$(remote_md5=sendWait(&quot;$curl -ks -u $User -X GET -I https://$ARTIFACTORY/${RemoveFolder}$uri 2&gt;/dev/null | grep X-Checksum-Md5 | cut -d&apos; &apos; -f2 | cut -c 1-32&quot;)
+            echo &quot;local file md5: $local_md5&quot;
+            echo &quot;remote file md5: $remote_md5&quot;
           	if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then
             #	#***************temp solution for ConfGenerator.zip (can&apos;t download it)*********************
             #   if [[ &quot;$uri&quot; =~ &quot;ConfGenerator.zip&quot; ]]
