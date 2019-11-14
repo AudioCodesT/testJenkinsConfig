@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -54,12 +54,14 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
+        <string># ClearCase R&amp;D</string>
         <string>Sp365-rdnetworking-modify</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
+        <string>365_Tas</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
         <string># All ISRAEL</string>
@@ -70,17 +72,18 @@
         <string># MSBR</string>
         <string>AudioCodes_VPN</string>
         <string># Tsachi Or Team</string>
+        <string># RnD Israel</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
       </roles>
-      <timestamp>1555428642045</timestamp>
+      <timestamp>1573745224724</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Binyamin.Zax@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <jenkins.security.seed.UserSeedProperty>
