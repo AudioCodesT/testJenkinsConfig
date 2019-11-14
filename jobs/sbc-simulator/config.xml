@@ -266,31 +266,6 @@ exit $res</command>
       <isWarningsDeactivated>false</isWarningsDeactivated>
       <isAndroidLintDeactivated>false</isAndroidLintDeactivated>
     </hudson.plugins.analysis.collector.AnalysisPublisher>
-    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
-      <analysisTools>
-        <io.jenkins.plugins.analysis.warnings.Gcc4>
-          <id></id>
-          <name></name>
-          <pattern></pattern>
-          <reportEncoding></reportEncoding>
-          <skipSymbolicLinks>false</skipSymbolicLinks>
-        </io.jenkins.plugins.analysis.warnings.Gcc4>
-      </analysisTools>
-      <sourceCodeEncoding></sourceCodeEncoding>
-      <ignoreQualityGate>false</ignoreQualityGate>
-      <ignoreFailedBuilds>true</ignoreFailedBuilds>
-      <referenceJobName></referenceJobName>
-      <healthy>0</healthy>
-      <unhealthy>0</unhealthy>
-      <minimumSeverity plugin="analysis-model-api@7.0.1">
-        <name>LOW</name>
-      </minimumSeverity>
-      <filters/>
-      <isEnabledForFailure>false</isEnabledForFailure>
-      <isAggregatingResults>false</isAggregatingResults>
-      <isBlameDisabled>false</isBlameDisabled>
-      <qualityGates/>
-    </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
     <hudson.tasks.ArtifactArchiver>
       <artifacts>jest.log</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
