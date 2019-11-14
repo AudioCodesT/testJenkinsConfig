@@ -168,7 +168,7 @@ uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$
       cut -d&apos;&quot;&apos; -f4 | grep HostedTP_SIP_CENTOS7 | grep -v LAB | grep .cmp  | head -1)
 if [ &quot;$uri&quot; == &quot;&quot; ]; then
   echo Need waiting to HostedTP CENTOS7 compilation...
-  if [ &quot;$NAGINATOR_COUNT&quot; == 2 ]; then
+  if [ &quot;$NAGINATOR_COUNT&quot; == 3 ]; then
     echo Exit, no HostedTP was found
     exit 1
   else
@@ -267,7 +267,7 @@ fi
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQ++ZRPZJvZwMvjmIJ2p3+4N9cQQVuxvh8U3RzV6t3ZEI=}</value>
+          <value>{AQAAABAAAAAQPRyh9PDNLAqHbUYVPWA1zqJtQygRaSOnGC6aa75OZys=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
