@@ -156,8 +156,8 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
-git checkout $ISO_VER
-rev=$(git rev-parse HEAD)
+git tag -l
+rev=$(git rev-parse $ISO_VER)
 cd $WORKSPACE
 
 sudo chmod -R 755 .
