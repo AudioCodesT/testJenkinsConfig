@@ -246,7 +246,7 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/ISO/${ISO_VER}
+      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/Centos7/ISO/${ISO_VER}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
