@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -83,6 +84,12 @@
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>CENTOS7</name>
+          <description>Relevant to HostedTP only
+If Ttue, execute with parameter: --centos=7</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -116,7 +123,7 @@ PATH=/bin:$PATH</propertiesContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -241,6 +248,7 @@ echo TAG Found $NEWTAG
 
 cd ..
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=_SIP
+[[ &quot;$CENTOS7&quot; = &apos;true&apos; &amp;&amp; &quot;${BOARD}&quot; = &quot;HostedTP&quot; ]] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
 echo BOARDNAME=${BOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
@@ -278,6 +286,7 @@ echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
 cd TrunkPackRam
 
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --sip=yes&quot;
+[[ &quot;$CENTOS7&quot; = &apos;true&apos; &amp;&amp; &quot;${BOARD}&quot; = &quot;HostedTP&quot; ]] &amp;&amp; FLAGS=&quot;$FLAGS --centos=7&quot;
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --lab=yes&quot;
 [ &quot;$USE_GIT_VER&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --custom-version=-u${BUILD_NUMBER}&quot;
 ./buildAll.sh --board=${BOARD} $FLAGS --user=no --fast=yes --server=localhost
@@ -478,7 +487,7 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -495,19 +504,11 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -559,8 +560,9 @@ ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${TargetArtif
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER},${ENV,var=&quot;BUILD_NAME&quot;}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
