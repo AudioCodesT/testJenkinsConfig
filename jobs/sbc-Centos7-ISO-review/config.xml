@@ -301,7 +301,7 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/Centos7/${COMP_VER}
+      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/Centos7/ISO/${COMP_VER}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
