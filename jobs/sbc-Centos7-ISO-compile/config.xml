@@ -158,6 +158,7 @@ fi
 
 git tag -l
 rev=$(git rev-parse $ISO_VER)
+rev=$(git rev-parse HEAD)
 cd $WORKSPACE
 
 sudo chmod -R 755 .
