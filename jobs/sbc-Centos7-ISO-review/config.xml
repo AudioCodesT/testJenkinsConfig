@@ -187,40 +187,36 @@ if [ ! -z &quot;$refs&quot; ]; then
   echo GWAppChange: $rev
 fi
 
-CurrentPath=`pwd`
-#echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
-cd ../..
-if [ ! -d .git ]; then
-  git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
-  mv GWApp/.git .
-  rm -rf GWApp
-fi
-
-#In case you don&apos;t find the revision from another commit, take it from the last submitted commit
+#In case you don&apos;t find the revision from another commit, take the last revision from the repository in this branch
 if [ -z &quot;$rev&quot; ]; then 
-  rev=$(git rev-parse HEAD)
+  CurrentPath=`pwd`
+  #echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+  cd ../..
+  if [ ! -d .git ]; then
+    git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
+    mv GWApp/.git .
+    rm -rf GWApp
+  fi
+
   git fetch origin $GERRIT_BRANCH
-else
-  git fetch origin $refs
+  rev=$(git rev-parse HEAD)
+  
+  cd $CurrentPath
 fi
 
-git checkout -f FETCH_HEAD -- Shared || true
-
-#Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
+#Bring &apos;HostedTP_CENTOS7&apos; the needed cmp for this compilation
 uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | \
       cut -d&apos;&quot;&apos; -f4 | grep HostedTP_SIP_CENTOS7 | grep -v LAB | grep .cmp  | head -1)
 if [ &quot;$uri&quot; == &quot;&quot; ]; then
   echo Need waiting to HostedTP CENTOS7 compilation...
   if [ &quot;$NAGINATOR_COUNT&quot; == 2 ]; then
-    echo Give vote to Gerrit
+    echo Exit, no HostedTP was found
     exit 1
   else
-    echo Skip vote and try again by the Naginator
+    echo Try again, HostedTP is not ready
     exit 2
   fi
 fi
-
-cd $CurrentPath
 
 downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
 rm -f centos7/isofiles/sbc.install
@@ -237,13 +233,26 @@ sudo chown -R centos:centos .
 ls -l 
 
 imageFile=sbc.iso
-if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 40000 ]; then
+if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 900000 ]; then
   echo &quot;$imageFile Image too small.. exit with error&quot;
   exit -1
 fi</command>
+      <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>HostedTP is not ready</regexpForRerun>
+      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>600</delay>
+      </delay>
+      <maxSchedule>2</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
@@ -292,7 +301,7 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/${COMP_VER}
+      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/Centos7/${COMP_VER}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
