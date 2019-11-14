@@ -190,6 +190,7 @@ sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
 ./build_openrg --board=${BOARD} &amp;&gt; ${BOARD}.log || ( tail -200 ${BOARD}.log; exit 1 )
+tail -50 ${BOARD}.log
 
 cp  $WORKSPACE/$EXTERNAL_VERSION/external_version_data.h $WORKSPACE/OpenRG_external_version_data.h
 
