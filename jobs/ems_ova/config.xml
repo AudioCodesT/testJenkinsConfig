@@ -209,8 +209,9 @@ echo &quot;$(date) : vm id is $vmid&quot; | tee -a $logfile
 echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
 sleep 300
 
-# find new vm IP address
-vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+# find new vm IPv4 address
+# YY vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
+vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -E &quot;ipAddress.*\[$&quot; -m 1 -A 5 | grep -E -o &quot;([0-9]{1,3}[\.]){3}[0-9]{1,3}&quot;
 ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
 echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
 
