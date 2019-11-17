@@ -14,7 +14,6 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
 10. send an email with the SAS URL</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -46,6 +45,7 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -253,11 +253,19 @@ ${download_URL}</defaultContent>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
+        <credentials>
+          <username></username>
+          <password></password>
+        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -273,11 +281,6 @@ ${download_URL}</defaultContent>
 
             &quot;pattern&quot;: &quot;Devops/Tools/Azure/ovoc/ovoc_azure_image_update.py&quot;,
             &quot;target&quot;: &quot;${workspace}/EMS/VersionRelease/&quot;,
-            &quot;flat&quot;: &quot;true&quot;
-        },
-        {
-            &quot;pattern&quot;: &quot;libs-release-local/com/ac/arm/VHD/${TAG}/ARM-Conf_${TAG}/ARM-Conf_${TAG}.vhdx&quot;,
-            &quot;target&quot;: &quot;${workspace}/&quot;,
             &quot;flat&quot;: &quot;true&quot;
         }
     ]
@@ -319,7 +322,6 @@ ${download_URL}</defaultContent>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
-      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
