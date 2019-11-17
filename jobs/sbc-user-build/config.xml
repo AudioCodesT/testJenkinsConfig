@@ -242,10 +242,11 @@ echo TAG Found $NEWTAG
 #head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
 cd ..
+realBOARD=$BOARD
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=_SIP
-[ &quot;${BOARD}&quot; = &quot;HostedTP7&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7
+[ &quot;$BOARD&quot; = &quot;HostedTP7&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7 &amp;&amp; realBOARD=&quot;HostedTP&quot;
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
-echo BOARDNAME=${BOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
+echo BOARDNAME=${realBOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
 if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
   Fix=$(echo ${BUILD_NAME}: | cut -d: -f2)
