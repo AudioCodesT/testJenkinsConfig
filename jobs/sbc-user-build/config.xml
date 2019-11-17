@@ -84,12 +84,6 @@
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>CENTOS7</name>
-          <description>Relevant to HostedTP only
-If Ttue, execute with parameter: --centos=7</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -225,9 +219,6 @@ if [[ $CHANGES != &quot;&quot; ]]; then
 fi
 
 depsName=$BOARD
-# In case of &quot;--centos=7&quot; in the flag, the board dependencies should be &quot;HostedTP7&quot; instead of &quot;HostedTP&quot;
-[[ &quot;$CENTOS7&quot; = &apos;true&apos; &amp;&amp; &quot;${BOARD}&quot; = &quot;HostedTP&quot; ]] &amp;&amp; depsName=&quot;HostedTP7&quot;
-
 if [ -e ../OpenSource/$depsName.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
@@ -252,7 +243,7 @@ echo TAG Found $NEWTAG
 
 cd ..
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=_SIP
-[[ &quot;$CENTOS7&quot; = &apos;true&apos; &amp;&amp; &quot;${BOARD}&quot; = &quot;HostedTP&quot; ]] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7
+[ &quot;${BOARD}&quot; = &quot;HostedTP7&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
 echo BOARDNAME=${BOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
@@ -290,7 +281,7 @@ echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
 cd TrunkPackRam
 
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --sip=yes&quot;
-[[ &quot;$CENTOS7&quot; = &apos;true&apos; &amp;&amp; &quot;${BOARD}&quot; = &quot;HostedTP&quot; ]] &amp;&amp; FLAGS=&quot;$FLAGS --centos=7&quot;
+[ &quot;${BOARD}&quot; = &quot;HostedTP7&quot; ] &amp;&amp; FLAGS=&quot;$FLAGS --centos=7&quot; &amp;&amp; BOARD=&quot;HostedTP&quot;
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --lab=yes&quot;
 [ &quot;$USE_GIT_VER&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --custom-version=-u${BUILD_NUMBER}&quot;
 ./buildAll.sh --board=${BOARD} $FLAGS --user=no --fast=yes --server=localhost
