@@ -138,6 +138,13 @@ cd ${WORKSPACE}
           <reportEncoding></reportEncoding>
           <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.Pmd>
+        <io.jenkins.plugins.analysis.warnings.CppCheck>
+          <id></id>
+          <name></name>
+          <pattern>**/cppcheck.xml</pattern>
+          <reportEncoding></reportEncoding>
+          <skipSymbolicLinks>false</skipSymbolicLinks>
+        </io.jenkins.plugins.analysis.warnings.CppCheck>
       </analysisTools>
       <sourceCodeEncoding></sourceCodeEncoding>
       <ignoreQualityGate>false</ignoreQualityGate>
