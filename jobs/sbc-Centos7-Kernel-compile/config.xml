@@ -211,8 +211,8 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc_centos7.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7-Kernel/${OPEN_RG_VER}
-$WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7-Kernel/${OPEN_RG_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/ssbc_centos7.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/Kernel/${OPEN_RG_VER}
+$WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7/Kernel/${OPEN_RG_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
