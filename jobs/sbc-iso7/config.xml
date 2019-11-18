@@ -235,8 +235,8 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
-${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}</deployPattern>
+      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/ISO/Centos7/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/Centos7/${GERRIT_BRANCH}/${NEWTAG}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
