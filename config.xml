@@ -1114,7 +1114,6 @@
         <string>sbc-acLinux2.0-codeAnalysis</string>
         <string>sbc-acLinux20-compile</string>
         <string>sbc-acLinux20-review</string>
-        <string>sbc-Centos7-ISO-compile</string>
         <string>sbc-Centos7-ISO-review</string>
         <string>sbc-Centos7-Kernel-compile</string>
         <string>sbc-Centos7-Kernel-review</string>
@@ -1124,6 +1123,7 @@
         <string>sbc-HostedBL-compile</string>
         <string>sbc-HostedBL-review</string>
         <string>sbc-iso-review</string>
+        <string>sbc-iso7</string>
         <string>sbc-openRG-codeAnalysis</string>
         <string>sbc-openRG-Compile</string>
         <string>sbc-openRG-review</string>
