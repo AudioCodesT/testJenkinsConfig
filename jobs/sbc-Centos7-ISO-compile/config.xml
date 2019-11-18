@@ -157,7 +157,7 @@ else
 fi
 
 git tag -l
-rev=$(git rev-parse $ISO_VER)
+rev=$(git rev-parse --verify $ISO_VER^{commit})
 #rev=$(git rev-parse HEAD)
 cd $WORKSPACE
 
