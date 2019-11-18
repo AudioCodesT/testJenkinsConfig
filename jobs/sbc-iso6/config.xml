@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -44,7 +45,7 @@ If exist, all files under this customer folder will be copied from artifactory t
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
@@ -62,7 +63,7 @@ PATH=/bin:/sbin:/usr/sbin:$PATH</propertiesContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -137,7 +138,7 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -180,6 +181,7 @@ if [[ $Customer != &quot;&quot; ]]; then
         # Dos2unix
     	tr -d &apos;\r&apos; &lt; copyFiles.sh &gt; copyFiles_unix.sh
 		chmod +x copyFiles_unix.sh
+        CENTOS_VERSION=6
 		./copyFiles_unix.sh
         cat copyFiles_unix.sh
 		echo &quot;$Customer files were copied to the right path&quot;
@@ -211,7 +213,7 @@ fi
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -249,7 +251,7 @@ fi
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -266,19 +268,11 @@ fi
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -290,10 +284,10 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
-${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
-${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
-${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
+      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
@@ -310,7 +304,7 @@ ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
         <secureGroovyScript plugin="script-security@1.55">
@@ -320,7 +314,7 @@ ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -330,8 +324,9 @@ ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/${GERRIT_BRANCH}/${NEWTAG}
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_$Tag $Customer</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
