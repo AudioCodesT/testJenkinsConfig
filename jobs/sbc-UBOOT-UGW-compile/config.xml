@@ -144,7 +144,7 @@ sudo chown -R centos:centos .
 ./buildAll.sh
 
 mv u-boot-serial.asc u-boot-serial-${BL}.asc
-mv u-boot-serial.bin u-boot-serial-${BL}.bin
+mv u-boot-nand.bin u-boot-nand-${BL}.bin
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
