@@ -191,6 +191,7 @@ fi
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+TAGVER=${NEWTAG::-2}
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 
 ## run eslint
@@ -238,8 +239,7 @@ for outcomeImage in $(docker images *vag-* --format &quot;{{.Repository}}&quot; 
     # If highest tag on Artifactory is lower then ${NEWTAG},
     # we also push docker images with tag ${BRANCH}
     allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$dockerImage/tags/list | jq &apos;.&quot;tags&quot;[]&apos;)
-    filterTags=$(echo $allTags | tr &quot; &quot; &quot;\n&quot; | grep -v -e latest -e ${BRANCH})
-    highTag=$(echo $filterTags | tr &quot; &quot; &quot;\n&quot; | sort -t&apos;.&apos; -n -k3 | tail -n 1)
+    highTag=$(echo $allTags | tr &quot; &quot; &quot;\n&quot; | grep -F ${TAGVER} | sort -t&apos;.&apos; -n -k3 | tail -n 1)
     highTag=${highTag:1:-1}
     higherTag=$(echo -e &quot;$highTag\n${NEWTAG}&quot; | sort -t&apos;.&apos; -n -k3 | tail -n 1)
     if [[ &quot;$higherTag&quot; == &quot;${NEWTAG}&quot; ]]; then
