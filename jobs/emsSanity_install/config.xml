@@ -11,6 +11,7 @@
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -72,7 +73,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -363,8 +364,11 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quo
 #    python2.7 SanityFK.py $vmIP $NEW_TAG
 #    python2.7 SanityReboot.py $vmIP
 else
+	#run sanityInstall and if sanity install fails then copy logs and exit with error
     echo &quot;Running single script for install&quot;
-    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION \
+    || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
+    
 fi
 
 echo &quot;Finish SanityInstall&quot;
@@ -449,7 +453,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quo
     echo &quot;Running 2 scripts SanityFK and SanityReboot&quot;
  
     python2.7 SanityFK.py $vmIP $NEW_TAG
-    python2.7 SanityReboot.py $vmIP
+    python2.7 SanityReboot.py $vmIP || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
 
 fi
 
@@ -464,7 +468,9 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#export &quot;$(cat sanity.properties)&quot;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 
 </command>
@@ -526,13 +532,11 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
-</script>
+          <script></script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, marina.Risher, yuval.yosha , ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -549,8 +553,9 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
