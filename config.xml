@@ -71,7 +71,7 @@
           <sid># AUDC - NJ Engineering Team</sid>
         </assignedSIDs>
       </role>
-      <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|voiceAI.*)">
+      <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|VoiceAI.*)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Delete</permission>
@@ -430,7 +430,7 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C54xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -438,7 +438,7 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C34xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M54xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -446,11 +446,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C54xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C34xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M54xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -497,7 +497,7 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -505,11 +505,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C3Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -552,23 +552,7 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R4large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -577,6 +561,22 @@
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -631,19 +631,19 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -682,15 +682,11 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -699,6 +695,10 @@
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -741,7 +741,7 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Small</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
@@ -749,7 +749,7 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Small</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Medium</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -788,11 +788,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -827,19 +827,19 @@
       <vmargs></vmargs>
       <executorsForInstanceType>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -882,15 +882,15 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
-          <int>1</int>
-        </entry>
-        <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M3Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
           <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -1114,6 +1114,7 @@
         <string>sbc-acLinux2.0-codeAnalysis</string>
         <string>sbc-acLinux20-compile</string>
         <string>sbc-acLinux20-review</string>
+        <string>sbc-Centos7-ISO-compile</string>
         <string>sbc-Centos7-ISO-review</string>
         <string>sbc-Centos7-Kernel-compile</string>
         <string>sbc-Centos7-Kernel-review</string>
@@ -1336,6 +1337,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
         <string>Windows OpenJDK 11</string>
       </jobNames>
@@ -1425,8 +1427,9 @@
         <string>VoiceAI-build-Docker</string>
         <string>VoiceAI-create-tag</string>
         <string>VoiceAI-review</string>
-        <string>voiceAI-sanity-copy</string>
-        <string>VoiceAI_nightSanity</string>
+        <string>VoiceAI-sanity-copy</string>
+        <string>VoiceAI_nightSanity_1.2</string>
+        <string>VoiceAI_nightSanity_1.4</string>
       </jobNames>
       <jobFilters/>
       <columns>
