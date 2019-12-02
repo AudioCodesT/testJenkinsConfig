@@ -87,7 +87,7 @@ PATH=/bin:/sbin:/usr/sbin:$PATH</propertiesContent>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <authToken>sbcCreateISO</authToken>
+  <authToken>sbcCreateISO6</authToken>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
@@ -170,19 +170,24 @@ if [[ $Customer != &quot;&quot; ]]; then
     User=&quot;$artifactory_user:$artifactory_password&quot;
 
 	echo &quot;*******    START PRIVATE LABALING    ************&quot;
-	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
+	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels
 	DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 	echo &quot;download from artifactory all files under $Customer&quot;
-	for f in $(curl -ks -u $User &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
-		curl -ks -u $User -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
+	for f in $(curl -ks -u $User &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+        if [ ! -d $Customer ]; then mkdir $Customer; fi
+		curl -ks -u $User -X GET &quot;${DOWNLOAD}/${Customer}$f&quot; --output ${Customer}$f;
 	done
-	echo &quot;Check if copyFiles.sh exist&quot;
-	if [ -f ./copyFiles.sh ]; then
+    echo Download copyFiles_master.sh
+    curl -ks -u $User -X GET &quot;${DOWNLOAD}/copyFiles_master.sh&quot; --output copyFiles_master.sh
+	echo &quot;Check if copyFiles_master.sh exist&quot;
+	if [ -f ./copyFiles_master.sh ]; then
         # Dos2unix
-    	tr -d &apos;\r&apos; &lt; copyFiles.sh &gt; copyFiles_unix.sh
+    	tr -d &apos;\r&apos; &lt; copyFiles_master.sh &gt; copyFiles_unix.sh
 		chmod +x copyFiles_unix.sh
+        # The two following new variables are needed for the copyFiles_master.sh script
         CENTOS_VERSION=6
-		./copyFiles_unix.sh
+        LABEL_SRC=$Customer
+		source ./copyFiles_unix.sh
         cat copyFiles_unix.sh
 		echo &quot;$Customer files were copied to the right path&quot;
         echo &quot;*******    END PRIVATE LABALING    ***********&quot;
@@ -205,9 +210,8 @@ rm -f sbc-F$NEWTAG.iso
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
 ls -l *.iso
-if [[ $Customer != &quot;&quot; ]]; then
-  mv sbc*.iso sbc-F$NEWTAG.iso
-fi
+
+mv sbc*.iso sbc-c6-F$NEWTAG.iso
 
 </command>
     </hudson.tasks.Shell>
@@ -284,7 +288,7 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
+      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/sbc-c6-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
 ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
 ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
 ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/Centos6/${GERRIT_BRANCH}/${NEWTAG}
