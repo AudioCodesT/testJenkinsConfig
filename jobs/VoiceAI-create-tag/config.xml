@@ -159,7 +159,7 @@ then
         #if the current user name  diffrent from the next commit user name then tag current commit
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
      	then
-        	NEWTAG=$(echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;).$(printf &quot;%03d&quot; $(echo $LastTag | awk -F. &apos;{print $NF+1}&apos;))
+        	NEWTAG=$(echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;).$(echo $LastTag | awk -F. &apos;{print $NF+1}&apos;)
      		git tag -a -m &quot;Jenkins auto tag after ${User} commit&quot; ${NEWTAG} ${commit_id}
             git push origin ${NEWTAG}
             LastTag=${NEWTAG}
