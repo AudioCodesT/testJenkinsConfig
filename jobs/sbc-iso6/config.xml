@@ -185,7 +185,7 @@ if [[ $Customer != &quot;&quot; ]]; then
     	tr -d &apos;\r&apos; &lt; copyFiles_master.sh &gt; copyFiles_unix.sh
 		chmod +x copyFiles_unix.sh
         # The two following new variables are needed for the copyFiles_master.sh script
-        CENTOS_VERSION=7
+        CENTOS_VERSION=6
         LABEL_SRC=$Customer
 		source ./copyFiles_unix.sh
         cat copyFiles_unix.sh
