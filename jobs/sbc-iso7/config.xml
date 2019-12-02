@@ -1,7 +1,11 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>1. triggered manually   -   inputs: 1. tag of TP/GWAPP.  2.customer (optional)&#xd;
+2. download  HostedTP_CENTOS7   of this tag&#xd;
+3. use private labeling if customer != empty&#xd;
+4. compile and deploy to artifactory&#xd;
+</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -22,8 +26,8 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>Tag</name>
-          <description></description>
-          <defaultValue>7.20CE.255.066</defaultValue>
+          <description>TP/GWApp tag</description>
+          <defaultValue>7.20CE.255.067</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -64,7 +68,7 @@ If exist, all files under this customer folder will be copied from artifactory t
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$Tag</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/Centos7-ISO</url>
+        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -105,23 +109,9 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-#echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;origin/&apos; &apos;{print $NF}&apos;`
-cd ../..
-if [ ! -d .git ]; then
-  git -c http.sslverify=false clone --depth 30 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
-  mv GWApp/.git .
-  rm -rf GWApp
-else
-  git fetch origin $GERRIT_BRANCH
-fi
 
 rev=$(git rev-parse --verify $Tag^{commit})
 #rev=$(git rev-parse HEAD)
-cd $WORKSPACE
-
-sudo chmod -R 755 .
-sudo chown -R centos:centos .
 
 #Bring &apos;HostedTP_CENTOS7&apos; the needed cmp for this compilation
 User=&quot;admin:$artifactory_password&quot;
@@ -139,6 +129,20 @@ if [ &quot;$uri&quot; == &quot;&quot; ]; then
 fi
 
 downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
+
+# Bring the Centos7-ISO repository - you must it to build the ISO
+commit_sha1=`git ls-files --stage OpenSource/Centos7-ISO | cut -f2 -d &apos; &apos;`
+cd ..
+if [ ! -e Centos7-ISO/.git ]; then
+  git -c http.sslverify=false clone -n https://test-gerrit/TP/OpenSource/Centos7-ISO OpenSource/Centos7-ISO 
+fi
+
+cd OpenSource/Centos7-ISO
+git checkout -f $commit_sha1
+sudo chmod -R 755 .
+sudo chown -R centos:centos .
+
+#Copy HostedTP_SIP_CENTOS7.cmp to centos7/isofiles/sbc.install
 rm -f centos7/isofiles/sbc.install
 curl -ks -u $User $downloadUri --output centos7/isofiles/sbc.install
 cp centos7/isofiles/sbc.install ./
@@ -149,25 +153,32 @@ ls -l centos7/isofiles
 echo &quot;Check if need to change files for a specific customer&quot;
 if [[ $Customer != &quot;&quot; ]]; then
 
+    cd ../..
 	echo &quot;*******    START PRIVATE LABALING    ************&quot;
-	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels/$Customer
+	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels
 	DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
 	echo &quot;download from artifactory all files under $Customer&quot;
-	for f in $(curl -ks -u $User &quot;$PRIVATE&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
-		curl -ks -u $User -X GET &quot;${DOWNLOAD}$f&quot; --output .$f; 
+	for f in $(curl -ks -u $User &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+        if [ ! -d $Customer ]; then mkdir $Customer; fi
+		curl -ks -u $User -X GET &quot;${DOWNLOAD}/${Customer}$f&quot; --output ${Customer}$f;
 	done
-	echo &quot;Check if copyFiles.sh exist&quot;
-	if [ -f ./copyFiles.sh ]; then
+    echo Download copyFiles_master.sh
+    curl -ks -u $User -X GET &quot;${DOWNLOAD}/copyFiles_master.sh&quot; --output copyFiles_master.sh
+	echo &quot;Check if copyFiles_master.sh exist&quot;
+	if [[ -f ./copyFiles_master.sh &amp;&amp; -d $Customer ]]; then
         # Dos2unix
-    	tr -d &apos;\r&apos; &lt; copyFiles.sh &gt; copyFiles_unix.sh
+    	tr -d &apos;\r&apos; &lt; copyFiles_master.sh &gt; copyFiles_unix.sh
 		chmod +x copyFiles_unix.sh
+        # The two following new variables are needed for the copyFiles_master.sh script
         CENTOS_VERSION=7
-		./copyFiles_unix.sh
+        LABEL_SRC=$Customer
+		source ./copyFiles_unix.sh
         cat copyFiles_unix.sh
 		echo &quot;$Customer files were copied to the right path&quot;
         echo &quot;*******    END PRIVATE LABALING    ***********&quot;
+        cd OpenSource/Centos7-ISO
 	else
-		echo &quot;The file copyFiles.sh is missing, no files were copied&quot;
+		echo &quot;The file copyFiles_master.sh is missing or the $Customer directory was not created, no files were copied&quot;
         exit 1
 	fi
 else
@@ -184,6 +195,8 @@ if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 900000 ]; 
   echo &quot;$imageFile Image too small.. exit with error&quot;
   exit -1
 fi
+
+mv $imageFile $WORKSPACE/sbc-c7-F$NEWTAG.iso
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
@@ -235,7 +248,7 @@ fi
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/ISO/Centos7/${GERRIT_BRANCH}/${NEWTAG}
+      <deployPattern>${WORKSPACE}/sbc-c7-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/Centos7/${GERRIT_BRANCH}/${NEWTAG}
 ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/Centos7/${GERRIT_BRANCH}/${NEWTAG}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
