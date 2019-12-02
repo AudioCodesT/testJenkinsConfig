@@ -6,6 +6,7 @@
 3. if last commit - then tag all untagged commits (since last tagged commit) per user</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -37,7 +38,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -158,7 +159,7 @@ then
         #if the current user name  diffrent from the next commit user name then tag current commit
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
      	then
-        	NEWTAG=`echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $LastTag | awk -F. &apos;{print $NF+1}&apos;`
+        	NEWTAG=$(echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;).$(printf &quot;%03d&quot; $(echo $LastTag | awk -F. &apos;{print $NF+1}&apos;))
      		git tag -a -m &quot;Jenkins auto tag after ${User} commit&quot; ${NEWTAG} ${commit_id}
             git push origin ${NEWTAG}
             LastTag=${NEWTAG}
@@ -178,7 +179,7 @@ echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -193,8 +194,9 @@ echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${ALLTAGS}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
