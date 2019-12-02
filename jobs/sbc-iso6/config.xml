@@ -180,19 +180,19 @@ if [[ $Customer != &quot;&quot; ]]; then
     echo Download copyFiles_master.sh
     curl -ks -u $User -X GET &quot;${DOWNLOAD}/copyFiles_master.sh&quot; --output copyFiles_master.sh
 	echo &quot;Check if copyFiles_master.sh exist&quot;
-	if [ -f ./copyFiles_master.sh ]; then
+	if [[ -f ./copyFiles_master.sh &amp;&amp; -d $Customer ]]; then
         # Dos2unix
     	tr -d &apos;\r&apos; &lt; copyFiles_master.sh &gt; copyFiles_unix.sh
 		chmod +x copyFiles_unix.sh
         # The two following new variables are needed for the copyFiles_master.sh script
-        CENTOS_VERSION=6
+        CENTOS_VERSION=7
         LABEL_SRC=$Customer
 		source ./copyFiles_unix.sh
         cat copyFiles_unix.sh
 		echo &quot;$Customer files were copied to the right path&quot;
         echo &quot;*******    END PRIVATE LABALING    ***********&quot;
 	else
-		echo &quot;The file copyFiles.sh is missing, no files were copied&quot;
+		echo &quot;The file copyFiles_master.sh is missing or the $Customer directory was not created, no files were copied&quot;
         exit 1
 	fi
 else
