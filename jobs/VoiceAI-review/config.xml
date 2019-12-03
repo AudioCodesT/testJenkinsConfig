@@ -5,6 +5,7 @@
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -36,7 +37,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -123,16 +124,45 @@
     <hudson.tasks.Shell>
       <command>set -ex
 #enter the location to run the script
-ret_value=0
-sh common/build_all.sh || ret_value=$?
+version=$(git describe --tags --abbrev=0)
+echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
 
+git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
+
+sh common/build_all.sh
+ret_value=$?
 echo &quot;script Return Value: $ret_value&quot;
 
-if [[ &quot;$ret_value&quot; -ne &quot;0&quot; ]]
+[ &quot;$ret_value&quot; -eq 0 ] || exit 1
+
+for file in $(git ls-files \*package.json); do
+  npm -C $(dirname $file) version --allow-same-version $(echo $version | sed &apos;s/\.0*/./g&apos;) &gt; /dev/null
+done
+
+
+
+tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; --exclude=&apos;session-manager/node_modules&apos; -cvf VoiceAICo.tar *
+tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
+folder_name=VoiceAICo-$version
+if [[ -e ${folder_name} ]]
 then
-	exit 1
-fi</command>
+	rm -rf ${folder_name}
+fi
+mkdir ${folder_name}
+tar -xvf VoiceAICo.tar -C ${folder_name}
+tar -cvzf ${folder_name}.tgz ${folder_name}/
+
+TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+echo TARGET=${TARGET} &gt; voiceAI.properties
+echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
+exit $ret_value
+</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
@@ -166,5 +196,59 @@ fi</command>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+      <deployerDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>true</useSpecs>
+      <uploadSpec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;${WORKSPACE}/${folder_name}.tgz&quot;,
+            &quot;target&quot;: &quot;sbc-review/com/ac/sbc/VoiceAiConnector/${TARGET}/&quot;,
+            &quot;props&quot;: &quot;type=tar;status=ready&quot;,
+             &quot;recursive&quot;: &quot;false&quot;
+        }
+    ]
+}</spec>
+      </uploadSpec>
+      <downloadSpec>
+        <spec></spec>
+      </downloadSpec>
+      <deployPattern></deployPattern>
+      <resolvePattern></resolvePattern>
+      <deploymentProperties></deploymentProperties>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <multiConfProject>false</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+  </buildWrappers>
 </project>
