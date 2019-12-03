@@ -444,7 +444,7 @@ AuthorCommitter=$AuthorCommitter</properties>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/config.sh
 ${WORKSPACE}/common/setup-cert.sh
-${WORKSPACE}/docker-compose-$NEWTAG.yml
+${WORKSPACE}/docker-compose-*.yml
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
