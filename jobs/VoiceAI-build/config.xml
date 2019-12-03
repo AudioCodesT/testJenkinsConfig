@@ -257,7 +257,7 @@ AuthorCommitter=$AuthorCommitter
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
           <projects>Update-Jira</projects>
-          <condition>UNSTABLE_OR_BETTER</condition>
+          <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
