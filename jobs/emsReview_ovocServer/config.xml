@@ -8,6 +8,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -39,7 +40,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -166,7 +167,7 @@ fi</command>
       <mavenName>maven-for-ems</mavenName>
       <pom>pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
-      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@2.18">
+      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
         <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
       </settings>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
@@ -221,14 +222,14 @@ cat ems-ovoc-pmd.properties
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients></recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@2.18">
+    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@3.6.2">
       <managedFiles>
         <org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
           <fileId>d857ddc2-8a40-475d-9641-da74b243c754</fileId>
@@ -239,13 +240,13 @@ cat ems-ovoc-pmd.properties
     </org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
-        <timeoutMinutes>25</timeoutMinutes>
+        <timeoutMinutes>40</timeoutMinutes>
       </strategy>
       <operationList>
         <hudson.plugins.build__timeout.operations.FailOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
