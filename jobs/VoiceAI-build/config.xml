@@ -7,6 +7,7 @@ add version number to UI and to Session-manager (and to MongoDB)&#xd;
 git archive 3 folders and upload to artifactory under tag folder</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -48,7 +49,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -133,7 +134,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
 
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 #run eslint
-git ls-files session-manager/\*js | grep -v wbc-monitor | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
+git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
 #change in some files some parameters to build number
 echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
 #sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
@@ -151,10 +152,10 @@ fi
 
 version=$(git describe --tags)
 for file in $(git ls-files \*package.json); do
-  npm -C $(dirname $file) version --allow-same-version $version &gt; /dev/null
+  npm -C $(dirname $file) version --allow-same-version $(echo $version | sed &apos;s/\.0*/./g&apos;) &gt; /dev/null
 done
 
-tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; -cvf VoiceAICo.tar *
+tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; --exclude=&apos;session-manager/node_modules&apos; -cvf VoiceAICo.tar *
 tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
 folder_name=VoiceAICo-$version
 if [[ -e ${folder_name} ]]
@@ -213,7 +214,7 @@ cat voiceAI.properties</command>
       <referenceJobName>-</referenceJobName>
       <healthy>0</healthy>
       <unhealthy>0</unhealthy>
-      <minimumSeverity plugin="analysis-model-api@4.0.0">
+      <minimumSeverity plugin="analysis-model-api@7.0.1">
         <name>LOW</name>
       </minimumSeverity>
       <filters/>
@@ -222,7 +223,7 @@ cat voiceAI.properties</command>
       <isBlameDisabled>false</isBlameDisabled>
       <qualityGates/>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -255,8 +256,23 @@ AuthorCommitter=$AuthorCommitter
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>UpdateVI-Jira</projects>
+          <projects>Update-Jira</projects>
           <condition>UNSTABLE_OR_BETTER</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>TAGNAME=${NEWTAG}
+GERRIT_BRANCH=${BRANCH}
+REPOSITORY=sbc-release
+Project=VoiceAIConnector</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>sbc-copy-to-netapp1</projects>
+          <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
@@ -264,7 +280,11 @@ AuthorCommitter=$AuthorCommitter
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -276,19 +296,11 @@ AuthorCommitter=$AuthorCommitter
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -325,8 +337,9 @@ AuthorCommitter=$AuthorCommitter
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEWTAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
