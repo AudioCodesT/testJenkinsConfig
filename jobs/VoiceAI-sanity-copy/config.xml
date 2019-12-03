@@ -137,8 +137,7 @@ if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; 
     echo $extention file not ready, will try again automatically, please wait...
     exit 2
   fi
-  
-  CHANGES=&quot;$change/$lastREWORK&quot;
+
   DirChangeName=$(echo $DirChangeName | sed &quot;s:\-$ps:\-$lastREWORK:&quot;)
   if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; then
     echo $extention for patch-set $lastREWORK file not ready, will try again automatically, please wait...
