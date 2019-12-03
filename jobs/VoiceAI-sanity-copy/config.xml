@@ -1,0 +1,368 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Started by Sanity button in test-gerrit.&#xd;
+This job will trigger the job &quot;sbc-sanity-request&quot; </description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>7</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>REFSPEC</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_BRANCH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>EMAIL</name>
+          <description></description>
+          <defaultValue>yossim@audiocodes.com</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TestMode</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>true</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>copy2netapp</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>User=&quot;$artifactory_user:$artifactory_password&quot;
+Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
+DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
+CHANGES=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
+
+# Find the last TAG in GWApp branch
+HostedLocation=&quot;/netapp1/CompilationResults/7.2.250 Release/7.2.254_VoAI&quot;
+TPLastVoiceAI=$(ls -tr &quot;$HostedLocation&quot; | tail -1)
+# Find the last TAG in voiceAI branch
+voiceAILocation=&quot;/netapp1/CompilationResults/VoAI_Connector/1.2&quot;
+LastVoiceAI=$(ls -tr &quot;$voiceAILocation&quot; | tail -1)
+# Remove the &apos;F&apos; character
+TAG=$(echo $TPLastVoiceAI | cut -c2-)
+ChangeWithHyphen=$(echo $CHANGES | sed &apos;s:/:-:g&apos;)
+REFTARGET=${TAG}-${LastVoiceAI}-${ChangeWithHyphen}
+Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
+
+# Create the folder in netapp1, in case it wasn&apos;t done already
+if ! [ -d &quot;$Target&quot; ]; then
+  mkdir &quot;$Target&quot;
+fi
+
+if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]]; then 
+  DirChangeName=VoiceAiConnector/$ChangeWithHyphen
+  extention=&quot;.tgz&quot;
+  # Find the latest HostedTP in feature/voice-ai branch
+  if [ `ls $Target/*.cmp | wc -l` == 0 ]; then
+    cd &quot;$HostedLocation/$TPLastVoiceAI/&quot;
+    unzip $(ls HostedTP_SIP* | grep -v LAB) -d $Target
+  fi
+else
+  DirChangeName=Firmware/$ChangeWithHyphen
+  extention=&quot;.cmp&quot;
+  if [ `ls $Target/*.tgz | wc -l` == 0 ]; then
+    cd &quot;$voiceAILocation/$LastVoiceAI/&quot;
+    cp *.tgz $Target
+  fi
+fi
+
+# if file was compiled successfully but not yet deployed to artifactory, then wait 30 sec
+if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; then
+  echo $extention was not found, check if this patch-set will be compiled or no code was changed
+  change=`echo $CHANGES | cut -d/ -f1`
+  ps=`echo $CHANGES | cut -d/ -f2`
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; /tmp/$change.txt
+# $field Could be: number or kind
+# $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
+  lastREWORK=$ps;
+  if grep -q number /tmp/$change.txt; then lastREWORK=1; fi
+
+  while IFS=: read -r field value; do   
+    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
+    else
+      echo Check PS $checkPS: $value;
+      if [[ ! &quot;$value&quot; =~ &quot;NO_&quot; ]]; then lastREWORK=$checkPS; fi
+    fi
+  done &lt; /tmp/$change.txt
+
+  if [ &quot;$ps&quot; -eq &quot;$lastREWORK&quot; ]; then
+    echo $extention file not ready, will try again automatically, please wait...
+    exit 2
+  fi
+  
+  CHANGES=&quot;$change/$lastREWORK&quot;
+  DirChangeName=$(echo $DirChangeName | sed &quot;s:\-$ps:\-$lastREWORK:&quot;)
+  if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; then
+    echo $extention for patch-set $lastREWORK file not ready, will try again automatically, please wait...
+    exit 2
+  fi
+fi
+
+cd $WORKSPACE
+echo CHANGES=${CHANGES} &gt; VoiceAI.properties
+echo REFTARGET=${REFTARGET} &gt;&gt; VoiceAI.properties
+echo SBC_GERRIT_BRANCH=7.2.250 &gt;&gt; VoiceAI.properties
+
+# Go over all cmp files in the Artifactory and copy them to netapp1 ($Target)
+curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep uri | grep $extention | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $ChangeWithHyphen.list
+if [ -s &quot;$ChangeWithHyphen.list&quot; ]; then
+   while read -r FileName
+   do
+     if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
+     echo Download $FileName to netapp1
+     curl -ks -u $User -X GET $DOWNLOAD/$DirChangeName/$FileName --output &quot;$Target/$FileName&quot;
+   done &lt; &quot;$ChangeWithHyphen.list&quot;
+fi
+
+# Don&apos;t execute the next job in case you don&apos;t found 2 files
+if [ `ls $Target/*.cmp | wc -l` != 1 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
+if [ `ls $Target/*.tgz | wc -l` != 1 ]; then echo &quot;Missing tgz file, exiting job&quot;; exit 1; fi
+
+# Check the checksum of the 1 $extention file before executing the SANITY itself
+for f in $Target/*$extention; do
+  checkSum1=$(curl -ks -u $User -X GET \
+            $Artifactory/$DirChangeName/$(basename $f) | \
+            grep md5 | head -1 | cut -d\&quot; -f4)
+  checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
+  if [ $checkSum1 != $checkSum2 ]; then
+    echo Abort - the CheckSum of $(basename $f) is differ, copy again
+    rm -f $f
+    exit 1
+  fi
+done
+</command>
+      <unstableReturn>2</unstableReturn>
+    </hudson.tasks.Shell>
+    <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.0"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+        <worstResult>
+          <name>SUCCESS</name>
+          <ordinal>0</ordinal>
+          <color>BLUE</color>
+          <completeBuild>true</completeBuild>
+        </worstResult>
+        <bestResult>
+          <name>SUCCESS</name>
+          <ordinal>0</ordinal>
+          <color>BLUE</color>
+          <completeBuild>true</completeBuild>
+        </bestResult>
+      </runCondition>
+      <conditionalbuilders>
+        <hudson.tasks.Shell>
+          <command>echo &quot;Send a message regarding the compilation was completed&quot;
+exit 0
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
+-d &quot;{\&quot;message\&quot;: \&quot;$TestMode Sanity Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;voicAI-Sanity\&quot;}&quot; \
+-H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
+        </hudson.tasks.Shell>
+      </conditionalbuilders>
+    </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>VoiceAI.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+            <worstResult>
+              <name>ABORTED</name>
+              <ordinal>4</ordinal>
+              <color>ABORTED</color>
+              <completeBuild>false</completeBuild>
+            </worstResult>
+            <bestResult>
+              <name>FAILURE</name>
+              <ordinal>2</ordinal>
+              <color>RED</color>
+              <completeBuild>true</completeBuild>
+            </bestResult>
+          </condition>
+          <publisherList>
+            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
+              <config>
+                <scriptFiles/>
+                <groovyScripts/>
+                <buildSteps>
+                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                    <results>
+                      <string>NOT_BUILT</string>
+                      <string>ABORTED</string>
+                      <string>FAILURE</string>
+                    </results>
+                    <role>BOTH</role>
+                    <buildSteps>
+                      <hudson.tasks.Shell>
+                        <command>
+
+echo &quot;It is the last copy job, send a message to the user&quot;
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
+-d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press Sanity again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
+-H &apos;Content-Type: application/json&apos; &gt; /dev/null
+</command>
+                      </hudson.tasks.Shell>
+                    </buildSteps>
+                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                </buildSteps>
+                <markBuildUnstable>false</markBuildUnstable>
+              </config>
+            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>REFSPEC=${REFSPEC}
+GERRIT_BRANCH=${SBC_GERRIT_BRANCH}
+EMAIL=${EMAIL}
+REFTARGET=${REFTARGET}
+CHANGES=${CHANGES}
+TestMode=${TestMode}</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>sbc-sanity-request</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>yossim Shuky.Riechard</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders/>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>(is differ, copy again|file not ready)</regexpForRerun>
+      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>300</delay>
+      </delay>
+      <maxSchedule>3</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1200</timeoutSecondsString>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.AbortOperation/>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+      <info>
+        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.55">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>artifactory_password</name>
+          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}__${REFSPEC}</template>
+      <descriptionTemplate></descriptionTemplate>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
