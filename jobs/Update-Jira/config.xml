@@ -6,6 +6,7 @@ it pairs VI/Issue with the relevant commit&#xd;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -135,6 +136,7 @@ case $PROJECT in
     *&quot;Smart&quot;*) SendTo=&quot;Brian.Kling, Alex.Shlachter&quot;;;
     *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
+    *&quot;Backend/&quot;*) SendTo=&quot;Aahd.Said, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
     *) SendTo=&quot;yossim&quot;
 esac
@@ -166,7 +168,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
         </htmlpublisher.HtmlPublisherTarget>
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -250,8 +252,9 @@ $BUILD_URL</body>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${PROJECT}__${NEWTAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
