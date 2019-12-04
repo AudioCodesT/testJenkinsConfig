@@ -1423,6 +1423,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>VAG-copy-to-NetApp</string>
         <string>VoiceAI-build</string>
         <string>VoiceAI-build-Docker</string>
         <string>VoiceAI-create-tag</string>
