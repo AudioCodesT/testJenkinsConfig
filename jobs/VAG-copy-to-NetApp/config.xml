@@ -54,7 +54,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cp docker-compose-vag-${NEWTAG}.yml /netapp1/CompilationResults/VoAI_Connector/${BRANCH}/${NEWTAG}/</command>
+      <command>cd /netapp1/CompilationResults/VoAI_Connector
+[[ ! -d ${BRANCH}/${NEWTAG} ]] &amp;&amp; mkdir -p ${BRANCH}/${NEWTAG}
+cp docker-compose-vag-${NEWTAG}.yml /netapp1/CompilationResults/VoAI_Connector/${BRANCH}/${NEWTAG}/</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
