@@ -130,13 +130,13 @@ case $PROJECT in
     *&quot;VoiceAIConnector&quot;) SendTo=&quot;Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil&quot;;;
     *&quot;IPP&quot;*) SendTo=IppSwReleases;;
     *&quot;EMS&quot;*) SendTo=&quot;Marina.Risher, Gal.Erez, Gennady.Tsiporkin, Michael.Lallouz&quot;;;
+    *&quot;Backend/&quot;*) SendTo=&quot;Aahd.Said, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;MP&quot;*) SendTo=&quot;Hagayh, MP20xdeliveries&quot;;;
     *&quot;Arm&quot;*) SendTo=&quot;RnD-ARM, _ARMQA, Eran.Feldman&quot;;;
     *&quot;mediatech&quot;*) SendTo=&quot;Yishai.Gil, Maayan.Aharoni&quot;;;
     *&quot;Smart&quot;*) SendTo=&quot;Brian.Kling, Alex.Shlachter&quot;;;
     *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;Backend/&quot;*) SendTo=&quot;Aahd.Said, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
     *) SendTo=&quot;yossim&quot;
 esac
