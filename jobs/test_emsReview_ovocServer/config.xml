@@ -67,7 +67,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   </scm>
   <assignedNode>ems_temp</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -123,10 +123,15 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
-  <concurrentBuild>true</concurrentBuild>
+  <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd EMS/tools/
+      <command>if [[ $GERRIT_REFSPEC != *&quot;83866&quot;* ]]
+then
+exit 1
+fi
+
+cd EMS/tools/
 if [[ -e compile_perl_scripts.pl ]]
 then
 	if [[ ! &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
