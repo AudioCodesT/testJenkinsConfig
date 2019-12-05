@@ -1339,6 +1339,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
+        <string>test_emsReview_ovocServer</string>
         <string>Windows OpenJDK 11</string>
       </jobNames>
       <jobFilters/>
