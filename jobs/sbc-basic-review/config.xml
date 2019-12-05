@@ -108,7 +108,7 @@ PATH=/bin:$PATH</propertiesContent>
         <shallow>false</shallow>
         <noTags>false</noTags>
         <reference>/gerrit_mnt/TP/GWApp.git</reference>
-        <depth>0</depth>
+        <depth>5</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
