@@ -236,7 +236,7 @@ if [ $FixNum &gt; 1 ]; then
   #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$NEWTAG | sed s/\&quot;/\&apos;/g`
   #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$NEWTAG | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
   EMAIL=`git log --first-parent --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | sort -u`
-  echo RN=${RN} &gt;&gt; ../generated_sbc_version.properties
+  echo RN=&quot;${RN}&quot; &gt;&gt; ../generated_sbc_version.properties
   #echo VIS=${VIS} &gt;&gt; ../generated_sbc_version.properties
   echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
   echo PROJECT=${GERRIT_PROJECT} &gt;&gt; ../generated_sbc_version.properties
