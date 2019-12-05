@@ -38,7 +38,6 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -66,7 +65,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
     </extensions>
   </scm>
-  <assignedNode>ems-build</assignedNode>
+  <assignedNode>ems_temp</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
