@@ -286,7 +286,7 @@ done
 
 echo Delete all ELF from Artifacrory
 User=admin:$Artifact_pass
-curl -ks -u $User -X DELETE https://artifactory/webapp/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET/map
+curl -ks -u $User -X DELETE https://artifactory/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET/map
 
 </command>
                       </hudson.tasks.Shell>
