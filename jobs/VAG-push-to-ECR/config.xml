@@ -220,11 +220,11 @@ done
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSkey</name>
-          <value>{AQAAABAAAAAgkSj78/KUuNHNpmi9AlQlcANY0DGlVqSJWEYGANCsm3zoMYDgDsnFWMCb799GcxtA}</value>
+          <value>{AQAAABAAAAAgPE6Svgp8No4//CSo1DZEJOj4UC1Avxj9L0lcsjsJ0kZ4AzqU9i08DsMyEuQ9Wx5m}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSsecret</name>
-          <value>{AQAAABAAAAAwECmY/mGPWk+/r2Q36Uys+qr80cNbU7uN0/ImY7FOk14Dwp0l4RiUgho7HEolKh5vcbzedWOL30QLD3WW8cuyNg==}</value>
+          <value>{AQAAABAAAAAwWQkFnEOU9nXqDZJbIN0nkEk+QxCRkt4/LFnHCcVn6Mm+nbHpLhJadAnSSBYmrOenDBsugIVb8/w7BSC7ZOzgrA==}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
