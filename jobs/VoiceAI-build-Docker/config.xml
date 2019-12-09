@@ -220,7 +220,7 @@ DOCKER_REG=&quot;${DOCKER_URL}&quot;
 export DOCKER_REG_PREFIX=&quot;${DOCKER_URL}/&quot;
 export GIT_BRANCH=$BRANCH
 
-## Clean ALL docker objects
+## 
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
 remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://docker-voice-ai.test-artifactory.corp.audiocodes.com/v2/_catalog | jq &apos;.[][]&apos;)
 
