@@ -232,7 +232,7 @@ for ri in ${remoteImgs}; do
     docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
     # Collect all hashes of pulled images into HASHES
     hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
-    HASHES=&quot;${HASHES} ${hash} &quot;
+    HASHES=&quot;${HASHES}${hash} &quot;
 done
 
 ## Run build script
