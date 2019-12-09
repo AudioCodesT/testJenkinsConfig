@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -42,7 +42,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>false</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Leonid.Fayngold@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -66,7 +66,9 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string># Agile users</string>
         <string># OVOC QOE</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -82,9 +84,9 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1553184322298</timestamp>
+      <timestamp>1575877952765</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <jenkins.security.seed.UserSeedProperty>
