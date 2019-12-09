@@ -149,6 +149,7 @@ IF NOT EXIST .git (&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/PerformanceMonitoring/Include/PerformanceMonitoringDef.h&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/ControlProtocols/CommonResources/Include&#xd;
 @set TPFILES=%TPFILES% TrunkPackRam/TPApp/HA/Include/HAProtectedDef.h&#xd;
+@set TPFILES=%TPFILES% Modules/GWApp/Pkgs/Services/LDAP/LDAPService/Include&#xd;
 @echo Checking out TrunkPackRam linked files&#xd;
 git -c http.sslverify=false fetch&#xd;
 git checkout -f origin/%TPRAM_BRANCH% -- %TPFILES%&#xd;
