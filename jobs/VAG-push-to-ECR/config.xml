@@ -1,7 +1,9 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>This job pulls VoiceAI docker images from the Artifactory repository and pushes them to ECR.&#xd;
+Fill in the tags for each image.&#xd;
+Images without tags will not be processed.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -21,10 +23,46 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
-          <description>Tag to push to ECR</description>
+          <name>ui-server</name>
+          <description></description>
           <defaultValue></defaultValue>
           <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>ui-client</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>session-manager</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>nginx</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>mongo</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>fluentd</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>version</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -146,19 +184,14 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
 $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
 
 ## 
-echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-artifactoryImages=$(curl -u jenkins:${jenkinsPass} -k https://docker-voice-ai.test-artifactory.corp.audiocodes.com/v2/_catalog | jq &apos;.[][]&apos;)
-
-HASHES=&quot;&quot;
-
-for ri in ${artifactoryImages}; do
-    ri=${ri:1:-1}
-    docker pull ${ART_DOCKER_REG}/${ri}:${TAG}
-    docker tag ${ART_DOCKER_REG}/${ri}:${TAG} ${ECR_DOCKER_REG}/${ECR_DOCKER_REPO}/${ri}:${TAG}
-    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_REPO}/${ri}:${TAG}
-    # Collect all hashes of pulled images into HASHES
-    hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
-    HASHES=&quot;${HASHES}${hash} &quot;
+echo &quot;Pull selected images from Artifactory (those that are tagged with \${BRANCH}).&quot;
+for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session-manager&apos; &apos;nginx&apos; &apos;mongo&apos; &apos;fluentd&apos; &apos;version&apos;; do
+    if [[ &quot;$((img))-XYZ&quot; != &quot;XYZ&quot; ]]; then
+        tag=&quot;$((img))&quot;
+        docker pull ${ART_DOCKER_REG}/&quot;vag-${img}:${tag}&quot;
+        docker tag ${ART_DOCKER_REG}/&quot;vag-${img}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_REPO}/&quot;vag-${img}:${tag}&quot;
+        docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_REPO}/&quot;vag-${img}:${tag}&quot;
+    fi
 done
 
 </command>
