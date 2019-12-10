@@ -188,7 +188,7 @@ $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
 
 ## 
 echo &quot;Pull selected images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session_manager&apos; &apos;nginx&apos; &apos;mongo&apos; &apos;fluentd&apos; &apos;version&apos;; do
+for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session-manager&apos; &apos;nginx&apos; &apos;mongo&apos; &apos;fluentd&apos; &apos;version&apos;; do
     case $img in
         ui-server)
             tag=$ui_server
@@ -196,7 +196,7 @@ for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session_manager&apo
         ui-client)
             tag=$ui_client
             ;;
-        session_manager)
+        session-manager)
             tag=$session_manager
             ;;
         nginx)
@@ -288,7 +288,7 @@ done
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${TAG}</template>
+      <template>#${BUILD_NUMBER}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
