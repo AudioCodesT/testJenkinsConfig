@@ -152,8 +152,7 @@ echo &quot;machine docker-voice-ai.test-artifactory.corp.audiocodes.com&quot; &g
 echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
 echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
 
-pip install --user awscli
-
+## Create AWS files
 [[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
 cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
 [default]
