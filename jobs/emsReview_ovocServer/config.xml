@@ -139,7 +139,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <builders>
     <hudson.tasks.Shell>
       <command># add some commands to enable Unit-tests
-sudo cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
+#sudo cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
 #dmidecode | grep -i uuid |  awk &apos;{print$2}&apos; | sed -e &apos;s/-//g&apos;
 
 
