@@ -159,11 +159,15 @@ cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
 region = eu-central-1
 EOD
 
+cat /home/centos/.aws/config
+
 cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
 [default]
 aws_access_key_id = ${jenkinsAWSkey}
 aws_secret_access_key = ${jenkinsAWSsecret}
 EOD
+
+cat /home/centos/.aws/credentials
 
 </command>
     </hudson.tasks.Shell>
