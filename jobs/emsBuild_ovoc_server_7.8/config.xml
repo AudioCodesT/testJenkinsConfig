@@ -201,8 +201,8 @@ fi
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command># add some commands to enable Unit-tests
-sudo cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
-dmidecode | grep -i uuid |  awk &apos;{print$2}&apos; | sed -e &apos;s/-//g&apos;</command>
+#sudo cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
+#dmidecode | grep -i uuid |  awk &apos;{print$2}&apos; | sed -e &apos;s/-//g&apos;</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
       <targets>clean install -U</targets>
