@@ -10,6 +10,7 @@
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -104,7 +105,7 @@ if you still want to run it then run again with &apos;0&apos;</description>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -152,6 +153,7 @@ if you still want to run it then run again with &apos;0&apos;</description>
       <buildStep class="hudson.tasks.Shell">
         <command>#check if currently running job in jenkins for web-ui ovoc in same branch
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+BRANCH=&quot;7.6.2000_Fix1&quot;
 JENKINS_URL=&apos;https://jenkins&apos;
 JOB_URL=&quot;${JENKINS_URL}/job/webBuildOvoc-windows&quot;
 RETURN_CODE=0
@@ -169,6 +171,7 @@ then
 		echo &quot;Currently running jenkins job in Web-ui OVOC... exiting the build&quot;
         echo &quot;Currently running jenkins job in Web-ui OVOC&quot; &gt; infraNotLatest.txt
     	echo &quot;If you want to execute ${JOB_NAME} anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
+        echo &quot;You can see the build here: ${BUILD_URL}&quot; &gt;&gt; infraNotLatest.txt
         exit 1
 	fi
 fi
@@ -188,19 +191,25 @@ then
 	echo &quot;Infra in ovoc is not the latest... exiting the build&quot;
     echo &quot;Infra in ovoc is not the latest commit&quot; &gt; infraNotLatest.txt
     echo &quot;If you want to execute ${JOB_NAME} anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
+    echo &quot;You can see the build here: ${BUILD_URL}&quot; &gt;&gt; infraNotLatest.txt
     exit 1
 fi
 </command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <hudson.tasks.Shell>
+      <command># add some commands to enable Unit-tests
+sudo cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
+dmidecode | grep -i uuid |  awk &apos;{print$2}&apos; | sed -e &apos;s/-//g&apos;</command>
+    </hudson.tasks.Shell>
     <hudson.tasks.Maven>
       <targets>clean install -U</targets>
       <mavenName>maven-for-ems</mavenName>
       <jvmOptions>-DpushChanges=false</jvmOptions>
       <pom>pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
-      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@2.18">
+      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
         <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
       </settings>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
@@ -236,6 +245,7 @@ while read -r hash; do
 done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$GIT_BRANCH)&quot;
 
 EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
+if [ -z &quot;$EMAIL&quot; ]; then EMAIL=$BUILD_USER_EMAIL; fi
 
 #for an official release to QA, we need to prepere a special email (besides the email from UpdateVI job)
 if [ $ISO_DEPLOY_DESTINATION == &quot;official_iso&quot; ]; then
@@ -253,7 +263,7 @@ if [ -d &quot;ovoc-ui&quot; ]; then rm -rf ovoc-ui; fi
 echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 git -c http.sslVerify=false clone -n https://gerrit/web-ui/ovoc ovoc-ui
 cd ovoc-ui
-git checkout 7.6.2000
+git checkout 7.6.2000_Fix1
 head=$(git rev-parse HEAD)
 curl -k -u jenkins:$jpass --basic -X PUT --header &apos;Content-Type: application/json;charset=UTF-8&apos; https://gerrit/a/projects/web-ui%2fovoc/tags/$FULL_NEW_TAG -d &apos; { &quot;message&quot;: &quot;Automatic tag&quot;, &quot;revision&quot;: &quot;&apos;$head&apos;&quot;  }&apos;
 git -c http.sslVerify=false fetch
@@ -332,7 +342,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
@@ -363,9 +373,8 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
               </configuredTriggers>
               <contentType>default</contentType>
               <defaultSubject>web-ui build is still running or infra isn’t latest</defaultSubject>
-              <defaultContent>&lt;pre&gt;
-${FILE,path=&quot;infraNotLatest.txt&quot;}
-&lt;/pre&gt;
+              <defaultContent>${FILE,path=&quot;infraNotLatest.txt&quot;}
+
 </defaultContent>
               <attachmentsPattern></attachmentsPattern>
               <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
@@ -377,7 +386,7 @@ ${FILE,path=&quot;infraNotLatest.txt&quot;}
               <disabled>false</disabled>
             </hudson.plugins.emailext.ExtendedEmailPublisher>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -390,7 +399,7 @@ ${FILE,path=&quot;infraNotLatest.txt&quot;}
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.git.GitPublisher plugin="git@3.9.3">
+    <hudson.plugins.git.GitPublisher plugin="git@4.0.0">
       <configVersion>2</configVersion>
       <pushMerge>false</pushMerge>
       <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
@@ -439,11 +448,11 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
 </properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@3.9.3">
+            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@4.0.0">
               <combineQueuedCommits>false</combineQueuedCommits>
             </hudson.plugins.git.GitRevisionBuildParameters>
           </configs>
-          <projects>UpdateVI-Jira</projects>
+          <projects>Update-Jira</projects>
           <condition>UNSTABLE_OR_BETTER</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -476,7 +485,7 @@ fi</command>
     </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@2.18">
+    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@3.6.2">
       <managedFiles>
         <org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
           <fileId>d857ddc2-8a40-475d-9641-da74b243c754</fileId>
@@ -485,7 +494,7 @@ fi</command>
         </org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
       </managedFiles>
     </org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -502,19 +511,11 @@ fi</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -559,8 +560,9 @@ ${WORKSPACE}/EMS/FKGenerator.ini=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
