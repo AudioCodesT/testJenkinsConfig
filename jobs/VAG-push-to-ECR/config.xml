@@ -210,7 +210,7 @@ for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session_manager&apo
             ;;
         version)
             tag=$version
-            ;
+            ;;
     esac
     
     if $(echo $tag | egrep -q &quot;^([0-9]{1,3}\.){2}[0-9]{1,3}$&quot;); then
