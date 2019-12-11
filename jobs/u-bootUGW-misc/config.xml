@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Triggered by every new TAG called 4.*&#xd;
+  <description>Triggered by every new TAG&#xd;
 Execute the UpdateVI job with all needed parameters </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -45,7 +45,6 @@ Execute the UpdateVI job with all needed parameters </description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
@@ -65,7 +64,7 @@ Execute the UpdateVI job with all needed parameters </description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://jenkins@test-gerrit:29418/MP/MP-20x</url>
+        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/u-bootUGW</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -91,11 +90,11 @@ Execute the UpdateVI job with all needed parameters </description>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
-          <pattern>MP/MP-20x</pattern>
+          <pattern>TP/OpenSource/u-bootUGW</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/4.*</pattern>
+              <pattern>refs/tags/*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
@@ -142,9 +141,9 @@ OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 
 User=`git log --first-parent --pretty=format:&quot;%aN&quot; $OLDTAG..$NEWTAG | head -1 | sed s/\ /_/g`
 git log --decorate --no-color $OLDTAG..$NEWTAG &gt; ReleaseNote.txt
-echo User=${User} &gt; generated_mp_version.properties
-echo Major=`echo ${NEWTAG} | cut -d_ -f1` &gt;&gt; generated_mp_version.properties
-echo Build=`echo ${NEWTAG} | cut -d_ -f2,3` &gt;&gt; generated_mp_version.properties
+echo User=${User} &gt; generated_version.properties
+echo Major=`echo ${NEWTAG} | cut -d_ -f1` &gt;&gt; generated_version.properties
+echo Build=`echo ${NEWTAG} | cut -d_ -f2,3` &gt;&gt; generated_version.properties
 
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$NEWTAG | grep -v Jenkins | sort -u | sed s/$/\;/g`
 #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$NEWTAG | sed s/\&quot;/\&apos;/g`
@@ -161,25 +160,22 @@ EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | grep -v d
 GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5`
 DATE=`git for-each-ref --format &apos;%(taggerdate)&apos; refs/tags/$NEWTAG`
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-echo NEWTAG=${NEWTAG} &gt;&gt; generated_mp_version.properties
-echo RN=${RN} &gt;&gt; generated_mp_version.properties
-echo GERRIT_HOST=${GERRIT_NAME} &gt;&gt; generated_mp_version.properties
-echo EMAIL=${EMAIL} &gt;&gt; generated_mp_version.properties
-echo PROJECT=${GERRIT_PROJECT} &gt;&gt; generated_mp_version.properties
-echo DATE=${DATE} &gt;&gt; generated_mp_version.properties
-echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_mp_version.properties
-echo AuthorCommitter=${AuthorCommitter} &gt;&gt; generated_mp_version.properties
-Destination=&quot;&quot;
-if [ $GERRIT_BRANCH == &quot;4.4.5&quot; ]; then Destination=&quot;No Artifactory&quot;; fi
-echo Destination=${Destination} &gt;&gt; generated_mp_version.properties
+echo NEWTAG=${NEWTAG} &gt;&gt; generated_version.properties
+echo RN=${RN} &gt;&gt; generated_version.properties
+echo GERRIT_HOST=${GERRIT_NAME} &gt;&gt; generated_version.properties
+echo EMAIL=${EMAIL} &gt;&gt; generated_version.properties
+echo PROJECT=${GERRIT_PROJECT} &gt;&gt; generated_version.properties
+echo DATE=${DATE} &gt;&gt; generated_version.properties
+echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; generated_version.properties
 
 #replace backslash with space, because it is not a valid properties file if it includes a backslash char
 #it save a &quot;&lt;name&gt;.bak&quot; backup file for debug if we will encounter problems
-sed -i.bak &apos;s/\\/ /g&apos; generated_mp_version.properties</command>
+sed -i.bak &apos;s/\\/ /g&apos; generated_version.properties</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
-        <propertiesFilePath>generated_mp_version.properties</propertiesFilePath>
+        <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -215,56 +211,6 @@ Destination=$Destination</properties>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
-      <deployerDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>MP20x</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
-        <stagingPlugin/>
-      </deployerDetails>
-      <resolverDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <stagingPlugin/>
-      </resolverDetails>
-      <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </deployerCredentialsConfig>
-      <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </resolverCredentialsConfig>
-      <useSpecs>false</useSpecs>
-      <uploadSpec>
-        <spec></spec>
-      </uploadSpec>
-      <downloadSpec>
-        <spec></spec>
-      </downloadSpec>
-      <deployPattern>${WORKSPACE}/ReleaseNote.txt=&gt;com/ac/MP/$Major/$Build
-</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties>User=$User;</deploymentProperties>
-      <deployBuildInfo>true</deployBuildInfo>
-      <includeEnvVars>false</includeEnvVars>
-      <envVarsPatterns>
-        <includePatterns></includePatterns>
-        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
-      </envVarsPatterns>
-      <discardOldBuilds>false</discardOldBuilds>
-      <discardBuildArtifacts>true</discardBuildArtifacts>
-      <asyncBuildRetention>false</asyncBuildRetention>
-      <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
-      <overrideBuildName>false</overrideBuildName>
-    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} - ${NEWTAG}</template>
       <descriptionTemplate></descriptionTemplate>
