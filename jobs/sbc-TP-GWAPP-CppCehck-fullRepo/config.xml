@@ -122,12 +122,12 @@ cp cppcheck/* ${WORKSPACE}/
 
 cd ${WORKSPACE}
 
-while read line; do [[ ! -z &quot;$line&quot; ]] &amp;&amp; printf &quot;%s-i &quot;$line&quot;%s &quot; ; done &lt; exclude.txt &gt; onestring
-_exclude=`cat onestring`
+while read line; do [[ ! -z &quot;$line&quot; ]] &amp;&amp; _exclude=&quot;$_exclude -i $line &quot; ; done &lt; exclude.txt
+
 echo _exclude
 
 # Static code analysis - CPP Check
-cppcheck --force --enable=all --config-excludes-file=../tools/cppcheck/exclude.txt --suppressions-list=suppressions.txt --inconclusive --xml-version=2 TrunkPackRam/ Modules/ OpenSource/ 2&gt; cppcheck.xml
+cppcheck --force --enable=all $_exclude --suppressions-list=suppressions.txt --inconclusive --xml-version=2 TrunkPackRam/ Modules/ OpenSource/ 2&gt; cppcheck.xml
 
 </command>
     </hudson.tasks.Shell>
