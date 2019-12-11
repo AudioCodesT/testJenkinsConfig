@@ -138,7 +138,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># add some commands to enable Unit-tests
+      <command># copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
 
 
