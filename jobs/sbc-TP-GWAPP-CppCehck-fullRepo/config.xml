@@ -127,7 +127,7 @@ _exclude=`cat onestring`
 echo _exclude
 
 # Static code analysis - CPP Check
-cppcheck --force --enable=all $_exclude --suppressions-list=suppressions.txt --inconclusive --xml-version=2 TrunkPackRam/ Modules/ OpenSource/ 2&gt; cppcheck.xml
+cppcheck --force --enable=all --config-excludes-file=../tools/cppcheck/exclude.txt --suppressions-list=suppressions.txt --inconclusive --xml-version=2 TrunkPackRam/ Modules/ OpenSource/ 2&gt; cppcheck.xml
 
 </command>
     </hudson.tasks.Shell>
