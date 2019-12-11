@@ -1137,6 +1137,7 @@
         <string>sbc-uboot2.0-compile</string>
         <string>sbc-uboot2.0-review</string>
         <string>sbc-VRX-compile</string>
+        <string>u-bootUGW-misc</string>
       </jobNames>
       <jobFilters/>
       <columns>
