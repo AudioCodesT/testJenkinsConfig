@@ -185,6 +185,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
@@ -1208,6 +1209,7 @@
         <string>MP20x-Compile</string>
         <string>MP20x-Misc</string>
         <string>MP20x-Review</string>
+        <string>u-bootUGW-misc</string>
       </jobNames>
       <jobFilters/>
       <columns>
