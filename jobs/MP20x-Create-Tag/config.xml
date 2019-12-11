@@ -4,6 +4,7 @@
   <description>This job check every 10 minutes the Repository and create a new TAG by incrementing the last TAG in the build code   configured branches</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -45,7 +46,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -116,12 +117,12 @@ do
 
   echo Check the last commit if 5 minutes passed...
   CurrentTime=`date +%s`
-  if [ `expr $CurrentTime - $LastWhen` -gt 300 ]; then
+  #if [ `expr $CurrentTime - $LastWhen` -gt 300 ]; then
     createTag
-  else
-    echo Try again later after 300 seconds
-    exit 2
-  fi
+  #else
+  #  echo Try again later after 300 seconds
+  #  exit 2
+  #fi
 done
 
 
@@ -130,7 +131,7 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>Shuky.Riechard yossim</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -148,8 +149,9 @@ done
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} - ${BUILD_LOG_REGEX, regex=&quot;^.*NEWTAG=(\S*)&quot;,substText=&quot;$1&quot;,showTruncatedLines=false}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
