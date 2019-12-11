@@ -117,12 +117,12 @@ do
 
   echo Check the last commit if 5 minutes passed...
   CurrentTime=`date +%s`
-  #if [ `expr $CurrentTime - $LastWhen` -gt 300 ]; then
+  if [ `expr $CurrentTime - $LastWhen` -gt 300 ]; then
     createTag
-  #else
-  #  echo Try again later after 300 seconds
-  #  exit 2
-  #fi
+  else
+    echo Try again later after 300 seconds
+    exit 2
+  fi
 done
 
 
