@@ -105,7 +105,6 @@ if you still want to run it then run again with &apos;0&apos;
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -136,7 +135,7 @@ if you still want to run it then run again with &apos;0&apos;
   </scm>
   <assignedNode>ems-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -332,7 +331,6 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
                       <string>UNSTABLE</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
@@ -473,7 +471,6 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
               <string>SUCCESS</string>
             </results>
             <role>BOTH</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
