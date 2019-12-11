@@ -157,7 +157,7 @@ while read -r hash; do
 done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)&quot;
 
 EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | grep -v devops | sort -u`
-GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5`
+GERRIT_PROJECT=`echo $GIT_URL | cut -d/ -f4,5,6`
 DATE=`git for-each-ref --format &apos;%(taggerdate)&apos; refs/tags/$NEWTAG`
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 echo NEWTAG=${NEWTAG} &gt;&gt; generated_version.properties
