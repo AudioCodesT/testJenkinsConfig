@@ -2,7 +2,7 @@
 <user>
   <version>10</version>
   <id>tovas</id>
-  <fullName>Tova Shoham</fullName>
+  <fullName>tovas</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
@@ -33,13 +33,13 @@
       <collapsed/>
     </hudson.model.PaneStatusProperties>
     <jenkins.security.seed.UserSeedProperty>
-      <seed>21bcf5e52d5b3223</seed>
+      <seed>772771570030e3b2</seed>
     </jenkins.security.seed.UserSeedProperty>
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
-      <emailAddress>Tova.Shoham@audiocodes.com</emailAddress>
+      <emailAddress>tovas@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
   </properties>
 </user>
