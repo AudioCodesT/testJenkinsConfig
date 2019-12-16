@@ -148,8 +148,6 @@ else
 	fi
 fi
 
-
-exit 1
 if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
 then
 	#get Last Tag and all the commits since the last tag in reverse list
