@@ -136,7 +136,6 @@ if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; 
 then
 	echo &quot;Not the last merged commit, exiting the build&quot;
 	exit 0
-fi
 else
 	# wait 2 minutes to check if another submit happend, if its not the last merged commit, exit the build
 	sleep 120
