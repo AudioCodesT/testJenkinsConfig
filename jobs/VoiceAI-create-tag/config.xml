@@ -115,12 +115,10 @@
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
-  <concurrentBuild>true</concurrentBuild>
+  <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># wait 2 minutes to check if another submit happend
-sleep 120
-#get premissions from id_rsa_gerrit to do git pull
+      <command>#get premissions from id_rsa_gerrit to do git pull
 cat &lt;&lt; EOF &gt; ~/.ssh/config
 Host test-gerrit
     Port 29418
@@ -131,10 +129,27 @@ EOF
 chmod 600 ~/.ssh/config
 chmod 600 id_rsa_gerrit
 git pull origin ${GERRIT_BRANCH}
-# we build only if jenkins checked out on the last commit in branch, else exit 0
+
+# check if its not the last merged commit, exit the build
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
-echo $LastGerritCommitHash
-echo $GERRIT_PATCHSET_REVISION
+if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]
+then
+	echo &quot;Not the last merged commit, exiting the build&quot;
+	exit 0
+fi
+else
+	# wait 2 minutes to check if another submit happend, if its not the last merged commit, exit the build
+	sleep 120
+	LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
+	if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]
+	then
+		echo &quot;Not the last merged commit, exiting the build&quot;
+		exit 0
+	fi
+fi
+
+
+exit 1
 if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
 then
 	#get Last Tag and all the commits since the last tag in reverse list
