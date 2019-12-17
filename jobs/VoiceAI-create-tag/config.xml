@@ -119,6 +119,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#get premissions from id_rsa_gerrit to do git pull
+echo &quot;ALLTAGS=&quot; &gt; prop
 cat &lt;&lt; EOF &gt; ~/.ssh/config
 Host test-gerrit
     Port 29418
