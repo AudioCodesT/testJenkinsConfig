@@ -455,8 +455,7 @@ BRANCH=$BRANCH</properties>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/config.sh
-${WORKSPACE}/common/setup-cert.sh
+      <deployPattern>${WORKSPACE}/common/setup-cert.sh
 ${WORKSPACE}/docker-compose-*.yml
 </deployPattern>
       <resolvePattern></resolvePattern>
