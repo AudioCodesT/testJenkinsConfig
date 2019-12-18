@@ -81,6 +81,9 @@ oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 moveDone=0
 DESTINATION=T:
 
+net use T: /delete
+net use T: &quot;$FullDESTINATION&quot;
+
 cd $WORKSPACE
 
 function RemoveEachFolder() {
