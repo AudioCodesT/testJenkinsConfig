@@ -36,7 +36,7 @@ Executed periodically every night.</description>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>FullDESTINATION</name>
+          <name>DESTINATION</name>
           <description></description>
           <defaultValue>\\aclnas03\Versions\CompilationResults</defaultValue>
           <trim>false</trim>
@@ -51,6 +51,7 @@ Executed periodically every night.</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -67,8 +68,8 @@ Executed periodically every night.</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>rem net use T: /delete&#xd;
-rem net use T: &quot;%FullDESTINATION%&quot;&#xd;
+      <command>net use T: /delete&#xd;
+net use T: &quot;%DESTINATION%&quot;&#xd;
 &#xd;
 </command>
     </hudson.tasks.BatchFile>
@@ -79,7 +80,7 @@ curl=c:/curl/curl
 # Calculate the date we are going to delete
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 moveDone=0
-DESTINATION=T:
+
 
 cd $WORKSPACE
 
