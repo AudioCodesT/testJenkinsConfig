@@ -67,8 +67,8 @@ Executed periodically every night.</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>net use T: /delete&#xd;
-net use T: &quot;%FullDESTINATION%&quot;&#xd;
+      <command>rem net use T: /delete&#xd;
+rem net use T: &quot;%FullDESTINATION%&quot;&#xd;
 &#xd;
 </command>
     </hudson.tasks.BatchFile>
