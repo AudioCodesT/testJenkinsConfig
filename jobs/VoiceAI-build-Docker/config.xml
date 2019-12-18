@@ -214,7 +214,7 @@ echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.j
 
 ### Build the project
 ## Set docker vars
-DOCKER_URL=&quot;docker-voice-ai.test-artifactory.corp.audiocodes.com&quot;
+DOCKER_URL=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
 DOCKER_REG=&quot;${DOCKER_URL}&quot;
 # Used in build.sh
 export DOCKER_REG_PREFIX=&quot;${DOCKER_URL}/&quot;
