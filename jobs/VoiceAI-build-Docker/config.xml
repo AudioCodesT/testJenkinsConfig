@@ -220,9 +220,12 @@ DOCKER_REG=&quot;${DOCKER_URL}&quot;
 export DOCKER_REG_PREFIX=&quot;${DOCKER_URL}/&quot;
 export GIT_BRANCH=$BRANCH
 
+## Login to docker registry on Artifactory
+echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
+
 ## 
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://docker-voice-ai.test-artifactory.corp.audiocodes.com/v2/_catalog | jq &apos;.[][]&apos;)
+remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq &apos;.[][]&apos;)
 
 HASHES=&quot;&quot;
 
@@ -409,8 +412,8 @@ BRANCH=$BRANCH</properties>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
-        <artifactoryName>artifactory-pro</artifactoryName>
-        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
           <keyFromText></keyFromText>
           <keyFromSelect>docker-voice-ai-files</keyFromSelect>
