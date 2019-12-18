@@ -67,8 +67,8 @@ Executed periodically every night.</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>rem net use T: /delete&#xd;
-rem net use T: &quot;%FullDESTINATION%&quot;&#xd;
+      <command>net use T: /delete&#xd;
+net use T: &quot;%FullDESTINATION%&quot;&#xd;
 &#xd;
 </command>
     </hudson.tasks.BatchFile>
@@ -80,9 +80,6 @@ curl=c:/curl/curl
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 moveDone=0
 DESTINATION=T:
-
-net use T: /delete
-net use T: &quot;$FullDESTINATION&quot;
 
 cd $WORKSPACE
 
