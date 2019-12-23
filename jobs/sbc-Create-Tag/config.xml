@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -30,7 +31,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Branches</name>
           <description></description>
-          <defaultValue>7.4 7.2.202 7.2.204 7.2.162 7.2.250 NextGenCPE  7.2.250 7.2.252 7.2.252_AWS 7.2.252_MSBR 7.2.254 7.2.254_MSBR 7.2.256</defaultValue>
+          <defaultValue>NextGenCPE NextGenCPE_R1 7.2.204 7.2.252 7.2.252_AWS 7.2.252_MSBR 7.2.254 7.2.254_1 7.2.254_MSBR 7.2.256 7.4</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -45,7 +46,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -151,29 +152,36 @@ do
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
   git checkout -f origin/$GERRIT_BRANCH
   echo Find the last TAG name...
+  LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
   #LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
   LastMergedTag=`git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1`
+  # If no last merged TAG exist, give the last TAG found in this branch
+  if [ -z &quot;$LastMergedTag&quot; ]; then
+    echo No last merged TAG exist ......
+    LastMergedTag=$LastTag
+  fi
+  
   LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
-  echo Last merged TAG is $LastMergedTag, use this MINOR for the next TAG $LastMergedMINOR
-  LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
+  LastMINOR=$(echo $LastTag | cut -d. -f3)
+  echo Last merged TAG is $LastMergedTag, use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
+
   LastUser=&quot;&quot;
   PreLastTag=&quot;&quot;
   if [[ $GERRIT_BRANCH =~ &quot;feature&quot; ]]; then
     # Find the first 2 characters of the feature name - change them to uppercase
     IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ &apos;{print $NF}&apos; | cut -c1-2)
-    if [[ ! &quot;$LastTag&quot; =~  \.[0-9]+$IDs\.$LastMergedMINOR ]]; then
-      # If is the first TAG in this feature branch
+    if [[ ! &quot;$LastTag&quot; =~  \.[0-9]+$IDs\. || &quot;$LastMINOR&quot; -ne &quot;$LastMergedMINOR&quot; ]]; then
+      # If it is the first TAG in this feature branch or a newer branch was merged to
       # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
       if [[ &quot;$LastTag&quot; =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
         PreLastTag=$(echo $LastTag | cut -c1-4)$IDs.$LastMergedMINOR
         if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
-          NEWTAG=\!$PreLastTag.001
-          echo TAG $PreLastTag.001 already exist, skip this branch 
-          continue
+          echo TAG $PreLastTag.001 already exist, check this branch $GERRIT_BRANCH ... exit
+          exit 1
         fi
       else
-        echo Found last TAG: $LastTag, is not in the right format, skip this branch
-        continue
+        echo Found last TAG: $LastTag, is not in the right format, check this branch $GERRIT_BRANCH ... exit
+        exit 1
       fi
     fi
   fi
@@ -208,7 +216,7 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>yossim shuky.richad</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -226,8 +234,9 @@ done
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}, ${BUILD_LOG_REGEX, regex=&quot;^.*NEWTAG=(\S*)&quot;,substText=&quot;$1&quot;,showTruncatedLines=false}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
