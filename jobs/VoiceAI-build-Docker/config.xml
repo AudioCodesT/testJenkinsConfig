@@ -346,7 +346,7 @@ cat voiceAI.properties</command>
       <qualityGates/>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
     <hudson.tasks.Mailer plugin="mailer@1.29">
-      <recipients>ben.magriso</recipients>
+      <recipients>ben.magriso, yuval.yosha</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
