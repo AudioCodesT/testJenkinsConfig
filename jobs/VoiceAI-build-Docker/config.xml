@@ -367,25 +367,6 @@ cat voiceAI.properties</command>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
               <properties>NEWTAG=$NEWTAG
-RN=$RN
-GERRIT_HOST=$GERRIT_HOST
-EMAIL=$EMAIL
-PROJECT=$PROJECT
-DATE=$DATE
-GERRIT_BRANCH=$BRANCH
-AuthorCommitter=$AuthorCommitter</properties>
-              <textParamValueOnNewLine>false</textParamValueOnNewLine>
-            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-          </configs>
-          <projects>Update-Jira</projects>
-          <condition>UNSTABLE_OR_BETTER</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <triggerFromChildProjects>false</triggerFromChildProjects>
-        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-          <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>NEWTAG=$NEWTAG
 BRANCH=$BRANCH</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
