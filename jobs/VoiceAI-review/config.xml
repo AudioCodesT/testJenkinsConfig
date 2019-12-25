@@ -179,9 +179,9 @@ exit $ret_value
           <reportName>Coverage Report</reportName>
           <reportDir>session-manager/coverage</reportDir>
           <reportFiles>index.html</reportFiles>
-          <alwaysLinkToLastBuild>false</alwaysLinkToLastBuild>
+          <alwaysLinkToLastBuild>true</alwaysLinkToLastBuild>
           <reportTitles></reportTitles>
-          <keepAll>false</keepAll>
+          <keepAll>true</keepAll>
           <allowMissing>false</allowMissing>
           <includes>**/*</includes>
           <escapeUnderscores>true</escapeUnderscores>
