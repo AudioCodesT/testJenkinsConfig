@@ -173,10 +173,10 @@ exit $ret_value
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.14">
+    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.21">
       <reportTargets>
         <htmlpublisher.HtmlPublisherTarget>
-          <reportName>Coverage</reportName>
+          <reportName>Coverage Report</reportName>
           <reportDir>session-manager/coverage</reportDir>
           <reportFiles>index.html</reportFiles>
           <alwaysLinkToLastBuild>false</alwaysLinkToLastBuild>
@@ -184,6 +184,7 @@ exit $ret_value
           <keepAll>false</keepAll>
           <allowMissing>false</allowMissing>
           <includes>**/*</includes>
+          <escapeUnderscores>true</escapeUnderscores>
         </htmlpublisher.HtmlPublisherTarget>
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
