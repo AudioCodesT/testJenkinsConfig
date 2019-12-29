@@ -64,6 +64,12 @@ Images without tags will not be processed.</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>alarms</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -210,6 +216,9 @@ for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session-manager&apo
             ;;
         version)
             tag=$version
+            ;;
+        alarms)
+            tag=$alarms
             ;;
     esac
     
