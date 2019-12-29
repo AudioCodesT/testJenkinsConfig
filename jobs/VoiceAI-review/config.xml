@@ -165,14 +165,6 @@ exit $ret_value
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>session-manager/coverage/**/*</artifacts>
-      <allowEmptyArchive>true</allowEmptyArchive>
-      <onlyIfSuccessful>false</onlyIfSuccessful>
-      <fingerprint>false</fingerprint>
-      <defaultExcludes>true</defaultExcludes>
-      <caseSensitive>true</caseSensitive>
-    </hudson.tasks.ArtifactArchiver>
     <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.21">
       <reportTargets>
         <htmlpublisher.HtmlPublisherTarget>
