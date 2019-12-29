@@ -182,7 +182,7 @@ exit $ret_value
           <alwaysLinkToLastBuild>true</alwaysLinkToLastBuild>
           <reportTitles></reportTitles>
           <keepAll>true</keepAll>
-          <allowMissing>false</allowMissing>
+          <allowMissing>true</allowMissing>
           <includes>**/*</includes>
           <escapeUnderscores>true</escapeUnderscores>
         </htmlpublisher.HtmlPublisherTarget>
