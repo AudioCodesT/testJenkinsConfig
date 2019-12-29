@@ -194,7 +194,7 @@ $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
 
 ## 
 echo &quot;Pull selected images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session-manager&apos; &apos;nginx&apos; &apos;mongo&apos; &apos;fluentd&apos; &apos;version&apos;; do
+for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session-manager&apos; &apos;nginx&apos; &apos;mongo&apos; &apos;fluentd&apos; &apos;version&apos; &apos;alarms&apos;; do
     case $img in
         ui-server)
             tag=$ui_server
