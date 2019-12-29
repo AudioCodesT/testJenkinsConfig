@@ -203,7 +203,8 @@ for img in ${images}; do
     tag=$(echo $img | cut -d: -f2)
     
     ## Create remote repository if not exist
-    if [[ ! $(aws ecr describe-repositories --repository-name voice-ai/${image} &amp;&gt;/dev/null) ]]; then
+    awsCommand=&quot;aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}&quot;
+    if [[ ! $($awsCommand &amp;&gt;/dev/null) ]]; then
         echo &quot;*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}&quot;
         aws ecr create-repository --repository-name &quot;${ECR_DOCKER_PREFIX}/${image}&quot;
     fi
