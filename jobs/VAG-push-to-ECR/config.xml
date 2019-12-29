@@ -204,7 +204,7 @@ for img in ${images}; do
     
     ## Create remote repository if not exist
     awsCommand=&quot;aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}&quot;
-    if [[ ! $($awsCommand &amp;&gt;/dev/null) ]]; then
+    if [[ ! $($awsCommand) ]]; then
         echo &quot;*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}&quot;
         aws ecr create-repository --repository-name &quot;${ECR_DOCKER_PREFIX}/${image}&quot;
     fi
