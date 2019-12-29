@@ -184,7 +184,7 @@ cat /home/centos/.aws/credentials
 ## Set docker vars
 ART_DOCKER_REG=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
 ECR_DOCKER_REG=&quot;858367874798.dkr.ecr.eu-central-1.amazonaws.com&quot;
-ECR_DOCKER_REPO=&quot;voice-ai&quot;
+ECR_DOCKER_PREFIX=&quot;voice-ai&quot;
 
 ## Login to docker registry on Artifactory
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
@@ -192,43 +192,27 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
 ## Login to ECR
 $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
 
-## 
-echo &quot;Pull selected images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-for img in &apos;ui-server&apos; &apos;ui-client&apos; &apos;session-manager&apos; &apos;nginx&apos; &apos;mongo&apos; &apos;fluentd&apos; &apos;version&apos; &apos;alarms&apos;; do
-    case $img in
-        ui-server)
-            tag=$ui_server
-            ;;
-        ui-client)
-            tag=$ui_client
-            ;;
-        session-manager)
-            tag=$session_manager
-            ;;
-        nginx)
-            tag=$nginx
-            ;;
-        mongo)
-            tag=$mongo
-            ;;
-        fluentd)
-            tag=$fluentd
-            ;;
-        version)
-            tag=$version
-            ;;
-        alarms)
-            tag=$alarms
-            ;;
-    esac
-    
-    if $(echo $tag | egrep -q &quot;^([0-9]{1,3}\.){1,2}[0-9]{1,3}$&quot;); then
-        docker pull ${ART_DOCKER_REG}/&quot;vag-${img}:${tag}&quot;
-        docker tag ${ART_DOCKER_REG}/&quot;vag-${img}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_REPO}/&quot;vag-${img}:${tag}&quot;
-        docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_REPO}/&quot;vag-${img}:${tag}&quot;
-    fi
-done
+## Download version YAML file
+curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
 
+## Get images and versions
+images=$(grep &quot;image: docker-voice-ai&quot; docker-compose-vag-$version.yml | cut -d/ -f2)
+
+for img in ${images}; do
+    image=$(echo $img | cut -d: -f1)
+    tag=$(echo $img | cut -d: -f2)
+    
+    ## Create remote repository if not exist
+    if [[ ! $(aws ecr describe-repositories --repository-name voice-ai/${image} &amp;&gt;/dev/null) ]]; then
+        echo &quot;*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}&quot;
+        aws ecr create-repository --repository-name &quot;${ECR_DOCKER_PREFIX}/${image}&quot;
+    fi
+    
+    ## Pull tag and push image to remote repository
+    docker pull ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot;
+    docker tag ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
+    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
+done
 </command>
     </hudson.tasks.Shell>
   </builders>
