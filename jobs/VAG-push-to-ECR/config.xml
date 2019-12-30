@@ -219,7 +219,7 @@ echo &quot;IMAGES=${images}&quot; &gt; VAG.properties
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Push Docker images to AWS ECR Repository</defaultSubject>
-      <defaultContent>Pushed docker images ${IMAGWS} to ECR.
+      <defaultContent>Pushed docker images $IMAGES to ECR.
 
 $JOB_URL
 
