@@ -193,8 +193,8 @@ echo &quot;IMAGES=${images}&quot; &gt; VAG.properties
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <subject>Failed to push docker images to ECR</subject>
+            <body>${IMAGES}</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
