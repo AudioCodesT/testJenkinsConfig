@@ -191,13 +191,8 @@ echo &quot;IMAGES=${images}&quot; &gt; VAG.properties
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
-      <recipients>shukyr, yuvaly</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$DEFAULT_RECIPIENTS, Shmulik.Yudkovich@audiocodes.com</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, Shmulik.Yudkovich@audiocodes.com, shuky.riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
@@ -247,6 +242,11 @@ DevOps Team</defaultContent>
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <hudson.tasks.Mailer plugin="mailer@1.29">
+      <recipients>shukyr, yuvaly</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
