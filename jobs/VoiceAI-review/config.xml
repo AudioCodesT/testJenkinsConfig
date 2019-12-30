@@ -177,7 +177,7 @@ exit $ret_value
       <reportTargets>
         <htmlpublisher.HtmlPublisherTarget>
           <reportName>Coverage Report</reportName>
-          <reportDir>session-manager/coverage/session-manager</reportDir>
+          <reportDir>session-manager/coverage</reportDir>
           <reportFiles>index.html</reportFiles>
           <alwaysLinkToLastBuild>true</alwaysLinkToLastBuild>
           <reportTitles></reportTitles>
