@@ -222,7 +222,7 @@ cat VAG.properties
       <defaultSubject>Push Docker images to AWS ECR Repository</defaultSubject>
       <defaultContent>Pushed docker images $IMAGES to ECR.
 
-$JOB_URL
+$BUILD_URL
 
 Regards,
 DevOps Team</defaultContent>
