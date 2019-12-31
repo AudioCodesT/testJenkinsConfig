@@ -173,7 +173,7 @@ for img in ${images}; do
     docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
 done
 
-echo &quot;IMAGES=${images}&quot; &gt; VAG.properties
+echo IMAGES=${images} &gt; VAG.properties
 cat VAG.properties
 </command>
     </hudson.tasks.Shell>
