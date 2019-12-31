@@ -190,7 +190,9 @@ cat VAG.properties
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
             <subject>Failed to push docker images to ECR</subject>
-            <body>${IMAGES}</body>
+            <body>Fail to push docker images:
+$IMAGES
+to ECR</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
