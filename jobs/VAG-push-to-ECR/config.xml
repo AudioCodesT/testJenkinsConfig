@@ -177,7 +177,8 @@ done
 sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com/g&apos; docker-compose-vag-$version.yml &gt; docker-compose-vag-ecr-$version.yml
 
 ## Properties to export to environment
-echo IMAGES=${images} &gt; VAG.properties
+echo VERSION=$version &gt; VAG.properties
+echo IMAGES=${images} &gt;&gt; VAG.properties
 cat VAG.properties
 </command>
     </hudson.tasks.Shell>
@@ -194,9 +195,9 @@ cat VAG.properties
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
             <subject>Failed to push docker images to ECR</subject>
-            <body>Fail to push docker images:
-$IMAGES
-to ECR</body>
+            <body>FAIL!!
+
+$IMAGES</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
@@ -227,6 +228,8 @@ to ECR</body>
       <contentType>default</contentType>
       <defaultSubject>Push Docker images to AWS ECR Repository</defaultSubject>
       <defaultContent>Pushed docker images $IMAGES to ECR.
+
+Deployed  docker-compose-vag-ecr-$VERSION.yml to Artifactory.
 
 $BUILD_URL
 
