@@ -173,6 +173,10 @@ for img in ${images}; do
     docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
 done
 
+## Create YAML for ECR
+sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com/g&apos; docker-compose-vag-$version.yml &gt; docker-compose-vag-ecr-$version.yml
+
+
 echo IMAGES=${images} &gt; VAG.properties
 cat VAG.properties
 </command>
@@ -246,8 +250,8 @@ DevOps Team</defaultContent>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
       <deployerDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -267,7 +271,18 @@ DevOps Team</defaultContent>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;[Mandatory]&quot;,
+            &quot;target&quot;: &quot;[Mandatory]&quot;,
+            &quot;props&quot;: &quot;[Optional]&quot;,
+            &quot;recursive&quot;: &quot;[Optional, Default: &apos;true&apos;]&quot;,
+            &quot;flat&quot; : &quot;[Optional, Default: &apos;true&apos;]&quot;,
+            &quot;regexp&quot;: &quot;[Optional, Default: &apos;false&apos;]&quot;
+        }
+    ]
+}</spec>
       </uploadSpec>
       <downloadSpec>
         <spec></spec>
