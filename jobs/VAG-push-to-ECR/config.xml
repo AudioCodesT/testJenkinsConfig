@@ -174,7 +174,7 @@ for img in ${images}; do
 done
 
 ## Create YAML for ECR
-sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com/g&apos; docker-compose-vag-$version.yml &gt; docker-compose-vag-ecr-$version.yml
+sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version.yml &gt; docker-compose-vag-ecr-$version.yml
 
 ## Properties to export to environment
 echo VERSION=$version &gt; VAG.properties
