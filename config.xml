@@ -51,6 +51,7 @@
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
+          <sid># OVOC MGMT</sid>
           <sid>CI_EMS_Developers</sid>
           <sid># OVOC Web UI</sid>
         </assignedSIDs>
