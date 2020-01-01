@@ -274,7 +274,7 @@ DevOps Team</defaultContent>
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;docker-compose-vag-central-ecr-$version.yml&quot;,
+            &quot;pattern&quot;: &quot;docker-compose-vag-ecr-$version.yml&quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files&quot;
         }
     ]
