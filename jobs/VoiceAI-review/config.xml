@@ -245,21 +245,6 @@ exit $ret_value
       </failingTarget>
       <sourceEncoding>Cp1252</sourceEncoding>
     </hudson.plugins.cobertura.CoberturaPublisher>
-    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.21">
-      <reportTargets>
-        <htmlpublisher.HtmlPublisherTarget>
-          <reportName>Coverage Report</reportName>
-          <reportDir>session-manager/coverage</reportDir>
-          <reportFiles>index.html</reportFiles>
-          <alwaysLinkToLastBuild>true</alwaysLinkToLastBuild>
-          <reportTitles></reportTitles>
-          <keepAll>true</keepAll>
-          <allowMissing>true</allowMissing>
-          <includes>**/*</includes>
-          <escapeUnderscores>true</escapeUnderscores>
-        </htmlpublisher.HtmlPublisherTarget>
-      </reportTargets>
-    </htmlpublisher.HtmlPublisher>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>$DEFAULT_RECIPIENTS</recipientList>
       <configuredTriggers>
