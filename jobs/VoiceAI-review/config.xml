@@ -252,7 +252,7 @@ exit $ret_value
       <sourceEncoding>Cp1252</sourceEncoding>
     </hudson.plugins.cobertura.CoberturaPublisher>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
+      <recipientList>$GERRIT_CHANGE_OWNER_EMAIL, Shmulik.Yudkovich@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
@@ -286,7 +286,7 @@ ${coverage_summary}</body>
         </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultSubject>VoiceAI review</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT
 
 ${coverage_summary}</defaultContent>
