@@ -178,6 +178,56 @@ exit $ret_value
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.12">
+      <coberturaReportFile>${WORKSPACE}/session-manager/coverage/cobertura-coverage.xml</coberturaReportFile>
+      <onlyStable>false</onlyStable>
+      <failUnhealthy>false</failUnhealthy>
+      <failUnstable>false</failUnstable>
+      <autoUpdateHealth>false</autoUpdateHealth>
+      <autoUpdateStability>false</autoUpdateStability>
+      <zoomCoverageChart>false</zoomCoverageChart>
+      <maxNumberOfBuilds>0</maxNumberOfBuilds>
+      <failNoReports>false</failNoReports>
+      <lineCoverageTargets>60, 40, 50</lineCoverageTargets>
+      <conditionalCoverageTargets>60, 40, 50</conditionalCoverageTargets>
+      <healthyTarget>
+        <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>6000000</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>6000000</int>
+          </entry>
+        </targets>
+      </healthyTarget>
+      <unhealthyTarget>
+        <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>4000000</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>4000000</int>
+          </entry>
+        </targets>
+      </unhealthyTarget>
+      <failingTarget>
+        <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>5000000</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>5000000</int>
+          </entry>
+        </targets>
+      </failingTarget>
+      <sourceEncoding>Cp1252</sourceEncoding>
+    </hudson.plugins.cobertura.CoberturaPublisher>
     <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.21">
       <reportTargets>
         <htmlpublisher.HtmlPublisherTarget>
