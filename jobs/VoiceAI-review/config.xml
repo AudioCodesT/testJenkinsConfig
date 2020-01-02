@@ -140,7 +140,7 @@ echo &quot;script Return Value: $ret_value&quot;
 
 ## Get coverage Summary
 coverage_summary=$(curl -k https://test-jenkins/view/VoiceAI/job/VoiceAI-review/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -A5 &quot;Coverage summary&quot;)
-echo $coverage_summary
+echo &quot;$coverage_summary&quot;
 
 ## Calculate coverage vote
 cd ${WORKSPACE}
@@ -268,6 +268,21 @@ exit $ret_value
             <contentType>project</contentType>
           </email>
         </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <recipientList>$GERRIT_CHANGE_OWNER_EMAIL, Shmulik.Yudkovich@audiocodes.com, shukyr@audiocodes.com</recipientList>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>VoiceAI review</defaultSubject>
