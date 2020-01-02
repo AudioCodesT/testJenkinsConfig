@@ -205,8 +205,8 @@ exit $ret_value
       <zoomCoverageChart>false</zoomCoverageChart>
       <maxNumberOfBuilds>0</maxNumberOfBuilds>
       <failNoReports>false</failNoReports>
-      <lineCoverageTargets>60, 40, 50</lineCoverageTargets>
-      <conditionalCoverageTargets>60, 40, 50</conditionalCoverageTargets>
+      <lineCoverageTargets>60, 0, 0</lineCoverageTargets>
+      <conditionalCoverageTargets>60, 0, 0</conditionalCoverageTargets>
       <healthyTarget>
         <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
           <entry>
@@ -223,11 +223,11 @@ exit $ret_value
         <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
           <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
-            <int>4000000</int>
+            <int>0</int>
           </entry>
           <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
-            <int>4000000</int>
+            <int>0</int>
           </entry>
         </targets>
       </unhealthyTarget>
@@ -235,11 +235,11 @@ exit $ret_value
         <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
           <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
-            <int>5000000</int>
+            <int>0</int>
           </entry>
           <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
-            <int>5000000</int>
+            <int>0</int>
           </entry>
         </targets>
       </failingTarget>
