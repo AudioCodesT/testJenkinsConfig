@@ -144,7 +144,7 @@ coverage_summary=$(curl -k https://test-jenkins/view/VoiceAI/job/VoiceAI-review/
 ## Calculate coverage vote
 cd ${WORKSPACE}
 if [[ -f session-manager/coverage/cobertura-coverage.xml ]]; then
-    data=$(egrep &quot;^&lt;coverage&quot; ${WORKSPACE}/session-manager/coverage/cobertura-coverage.xml)
+    data=$(grep -m1 &quot;&lt;coverage&quot; session-manager/coverage/cobertura-coverage.xml)
     for item in $data; do
         case $item in
             line-rate* )
