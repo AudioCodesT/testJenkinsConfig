@@ -125,7 +125,7 @@
       <command>set -ex
 
 ## Coverage threshold
-CVG=&quot;0.30&quot;
+CVG=&quot;0.20&quot;
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
 echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
