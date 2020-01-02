@@ -150,11 +150,11 @@ if [[ -f session-manager/coverage/cobertura-coverage.xml ]]; then
         case $item in
             line-rate* )
                 lineRate=$(echo $item | cut -d&apos;=&apos; -f2 | sed &apos;s/\&quot;//g&apos;)
-                [[ $lineRate -lt $CVG ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
+                [[ $lineRate &lt; $CVG ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
                 ;;
             branch-rate* )
                 branchRate=$(echo $item | cut -d&apos;=&apos; -f2 | sed &apos;s/\&quot;//g&apos;)
-                [[ $branchRate -lt $CVG ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
+                [[ $branchRate &lt; $CVG ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
                 ;;
         esac
     done
