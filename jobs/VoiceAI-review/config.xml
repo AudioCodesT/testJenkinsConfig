@@ -252,7 +252,7 @@ exit $ret_value
       <sourceEncoding>Cp1252</sourceEncoding>
     </hudson.plugins.cobertura.CoberturaPublisher>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$GERRIT_CHANGE_OWNER_EMAIL, Shmulik.Yudkovich@audiocodes.com</recipientList>
+      <recipientList>$GERRIT_CHANGE_OWNER_EMAIL, Shmulik.Yudkovich@audiocodes.com, shukyr@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
