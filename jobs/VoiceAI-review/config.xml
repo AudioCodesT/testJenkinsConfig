@@ -268,29 +268,12 @@ exit $ret_value
             <contentType>project</contentType>
           </email>
         </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-        <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
-          <email>
-            <recipientList>$GERRIT_CHANGE_OWNER_EMAIL, Shmulik.Yudkovich@audiocodes.com</recipientList>
-            <subject>VoiceAI review</subject>
-            <body>$PROJECT_DEFAULT_CONTENT
-
-${coverage_summary}</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>VoiceAI review</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT
 
-${coverage_summary}</defaultContent>
+&quot;${coverage_summary}&quot;</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
