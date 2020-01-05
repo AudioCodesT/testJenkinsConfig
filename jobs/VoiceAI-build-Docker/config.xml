@@ -223,7 +223,7 @@ export GIT_BRANCH=$BRANCH
 ## Login to docker registry on Artifactory
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 
-## 
+## Pull latest images from Artifactory &amp; get their hashes
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
 remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq &apos;.[][]&apos;)
 
@@ -393,7 +393,7 @@ BRANCH=$BRANCH</properties>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
