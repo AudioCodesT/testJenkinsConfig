@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -41,6 +42,16 @@ e.g.:7.20A.252.001</description>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>centos_version</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>6</string>
+              <string>7</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -53,7 +64,7 @@ e.g.:7.20A.252.001</description>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -85,7 +96,7 @@ e.g.:7.20A.252.001</description>
 cd ${WORKSPACE}/..
 cd GWApp
 git -c http.sslverify=false fetch || true
-git checkout ${Tag} || true
+git checkout ${Tag}
 Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
 arti_user=admin
@@ -97,17 +108,17 @@ artifactory_host=artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
 curlHasFailed=&quot;False&quot;
 JENKINS_URL=&apos;https://test-jenkins&apos;
-JOB_NAME=&apos;job/sbc-iso&apos;
-JOB_TOKEN=&apos;sbcCreateISO&apos;
+JOB_NAME=&quot;job/sbc-iso${centos_version}&quot;
+JOB_TOKEN=&quot;sbcCreateISO${centos_version}&quot;
 mkdir artifacts
 #get the relevant ISO FILE (try to download him once, if it failed try to download it again, if it failing again, triggering sbc-iso job.
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || \
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || \
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || \
+curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || \
 curlHasFailed=&quot;True&quot;
 if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 then 
-	echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
+	echo &quot;sbc-c${centos_version}-F${Tag}.iso not Exists in Artifactory&quot;
     echo &quot;****************Create a new ISO*******************&quot;
 	#trigger sbc-iso job to create ISO
 	curl --insecure -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot; &gt;output 2&gt;&amp;1
@@ -172,31 +183,50 @@ then
     echo &quot;****************Finish Creating a new ISO*******************&quot;
     #get the relevant ISO FILE
     curlHasFailed=&quot;False&quot;
-	curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/${Branch}/${Tag}/sbc-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
+	curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
 	if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
 	then 
-		echo &quot;sbc-F${Tag}.iso not Exists in Artifactory&quot;
+		echo &quot;sbc-c${centos_version}-F${Tag}.iso not Exists in Artifactory&quot;
         exit 1
    fi
     
 fi
 # temporary change to fix verify_sbc function in build_sbc.sh
-line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cli\&quot;&apos;
-replace_line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cl\&quot;&apos;
-sed -i &quot;s/${line}/${replace_line}/g&quot; build_sbc.sh
+#line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cli\&quot;&apos;
+#replace_line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cl\&quot;&apos;
+#sed -i &quot;s/${line}/${replace_line}/g&quot; build_sbc.sh
 
 EnvironmentList=(&quot;kvm&quot; &quot;azure&quot; &quot;aws&quot; &quot;hyperv&quot; &quot;vmware&quot; &quot;google&quot;)
 # if Environment = all then run all environments
-if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
+if [[ $centos_version == &quot;6&quot; ]]
 then
-	for FLAVOR in ${EnvironmentList[@]}
-	do
-  		cd ${WORKSPACE}
-		./build_sbc.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-	done
-else
-# run the Environment that the user choosed
-./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+    if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
+    then
+        for FLAVOR in ${EnvironmentList[@]}
+        do
+            cd ${WORKSPACE}
+            ./build_sbc.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+        done
+    else
+    # run the Environment that the user choosed
+    ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+    fi
+fi
+if [[ $centos_version == &quot;7&quot; ]]
+then
+cp ../build_sbc_centos7.sh .
+	if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
+    then
+        for FLAVOR in ${EnvironmentList[@]}
+        do
+            cd ${WORKSPACE}
+            ./build_sbc_centos7.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+        done
+    else
+    # run the Environment that the user choosed
+    ./build_sbc_centos7.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+    fi
+
 fi
 
 
@@ -204,7 +234,7 @@ fi
 
 echo &quot;Branch=${Branch}&quot; &gt; properties
 
-</command>
+#, shuky.riechard</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
@@ -224,8 +254,8 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
       </delay>
       <maxSchedule>2</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
-      <recipients>ben.magriso, shuky.riechard</recipients>
+    <hudson.tasks.Mailer plugin="mailer@1.29">
+      <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
@@ -250,8 +280,8 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>Build Virtual SBC for ${TAG} was created successfully</defaultSubject>
-      <defaultContent>${TAG} virtual SBC artifacts for ${Environment} environment:
-https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultContent>
+      <defaultContent>${TAG} virtual SBC artifacts for ${Environment} environment in centos${centos_version}:
+https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
@@ -276,15 +306,11 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultConten
         <hudson.plugins.build__timeout.operations.FailOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>sbc-release</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -293,31 +319,31 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultConten
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>false</useSpecs>
+      <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;${WORKSPACE}/artifacts/*&quot;,
+            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}/&quot;,
+             &quot;recursive&quot;: &quot;false&quot;
+        }
+    ]
+}</spec>
       </uploadSpec>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/artifacts/*=&gt;com/ac/sbc/VSSBC/${Branch}/${TAG}</deployPattern>
+      <deployPattern>${WORKSPACE}/artifacts/*=&gt;com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>false</deployBuildInfo>
@@ -343,8 +369,9 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/${Branch}/${TAG}</defaultConten
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
-      <template>#${BUILD_NUMBER}_${Tag}_${Environment}</template>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}_${Tag}_${Environment}_centos${centos_version}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
