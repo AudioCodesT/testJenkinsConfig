@@ -496,7 +496,7 @@ fi</command>
         </org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
       </managedFiles>
     </org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -535,6 +535,7 @@ ${WORKSPACE}/common/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preR
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 ${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/clm/target/*-SNAPSHOT.jar=&gt;com/ac/ems/floating-license-simulator
 ${WORKSPACE}/EMS/FKGenerator.ini=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 </deployPattern>
       <resolvePattern></resolvePattern>
