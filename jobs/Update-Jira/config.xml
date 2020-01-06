@@ -90,6 +90,12 @@ it pairs VI/Issue with the relevant commit&#xd;
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>CALLER_URL</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -113,10 +119,7 @@ it pairs VI/Issue with the relevant commit&#xd;
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>CALLER=$(curl -k https://test-jenkins/job/Update-Jira/${BUILD_ID}/console 2&gt;/dev/null | grep -m1 &quot;build number&quot; | sed &apos;0,/^.*build/ s//build/&apos; | cut -d&quot;&apos;&quot; -f2)
-ret_value=$?
-[[ &quot;$ret_value&quot; -eq 0 ]] &amp;&amp; CALLER_URL=&quot;${JENKINS_URL}${CALLER}&quot; || CALLER_URL=&quot;&quot;
-
+      <command>## Who called us
 echo &quot;Job called by: ${CALLER_URL}&quot;
 
 
