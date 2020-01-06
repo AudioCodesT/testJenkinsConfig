@@ -36,7 +36,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
@@ -57,7 +56,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFNAME</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/Centos7-Kernel</url>
+        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/Centos8-Kernel</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -89,7 +88,7 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>ANT</compareType>
-          <pattern>TP/OpenSource/Centos7-Kernel</pattern>
+          <pattern>TP/OpenSource/Centos8-Kernel</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -169,10 +168,10 @@ sudo chown -R centos:centos .
 
 ./buildKernel.sh --threads=$(nproc)
 
-cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos7_external_version_data.h
+cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos8_external_version_data.h
 
-if [ ! -f ssbc_centos7.vmlinux.tar.gz ] || (( `du ssbc_centos7.vmlinux.tar.gz | cut -f1` &lt; 40000 )); then
-  echo &quot;ssbc_centos7.vmlinux.tar.gz Image too small.. exit with error&quot;
+if [ ! -f ssbc_centos8.vmlinux.tar.gz ] || (( `du ssbc_centos8.vmlinux.tar.gz | cut -f1` &lt; 40000 )); then
+  echo &quot;ssbc_centos8.vmlinux.tar.gz Image too small.. exit with error&quot;
   exit -1
 fi</command>
     </hudson.tasks.Shell>
@@ -212,8 +211,8 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc_centos7.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/Kernel/${OPEN_RG_VER}
-$WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7/Kernel/${OPEN_RG_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/ssbc_centos8.vmlinux.tar.gz=&gt;com/ac/sbc/Centos8/Kernel/${OPEN_RG_VER}
+$WORKSPACE/centos8_external_version_data.h=&gt;com/ac/sbc/Centos8/Kernel/${OPEN_RG_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
