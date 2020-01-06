@@ -3,7 +3,7 @@
   <actions/>
   <description>This job should be executed periodically at 21:00 every night and do the following:&#xd;
 a.	Takes last sbc 7.2.254_VoAI&#xd;
-\\netapp01\CM\CompilationResults\7.2.250 Release\7.2.256&#xd;
+\\netapp01\CM\CompilationResults\7.a Release&#xd;
 b.	takes last VoiceAI 1.4&#xd;
 \\netapp01\CM\CompilationResults\VoAI_Connector\1.4&#xd;
 c.	copy to netapp1 folder named “SBC version – VAI version”&#xd;
@@ -41,7 +41,7 @@ Send params: FOLDER_PATH , MODE&#xd;
         <hudson.model.StringParameterDefinition>
           <name>TP_DIR</name>
           <description></description>
-          <defaultValue>/netapp1/CompilationResults/7.2.250 Release/7.2.256</defaultValue>
+          <defaultValue>/netapp1/CompilationResults/7.4 Release/Firmware</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
