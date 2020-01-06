@@ -290,44 +290,17 @@ done
 echo &quot;Finished docker push to Artifactory.&quot;
 
 
-### For UpdateVI job
-# BRANCH OLDTAG AuthorCommitter moved to top of script
-DATE=`date`
-RN=&quot;&quot;
-while read -r hash; do
-  if [ &quot;$hash&quot; != &quot;&quot; ]; then
-    subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
-    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;)
-    RN+=---$subject::$hash::$VI
-  fi
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..HEAD)&quot;
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..HEAD | sort -u`
-echo NEWTAG=${NEWTAG} &gt; voiceAI.properties
-echo RN=${RN} &gt;&gt; voiceAI.properties
-echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; voiceAI.properties
-echo EMAIL=${EMAIL} &gt;&gt; voiceAI.properties
-echo BRANCH=$BRANCH&gt;&gt; voiceAI.properties
-echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;` &gt;&gt; voiceAI.properties
-echo DATE=${DATE} &gt;&gt; voiceAI.properties
-echo AuthorCommitter=${AuthorCommitter} &gt;&gt; voiceAI.properties
-echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
-cat voiceAI.properties</command>
+</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
-    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
+    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@3.0.3">
       <analysisTools>
         <io.jenkins.plugins.analysis.warnings.EsLint>
           <id></id>
           <name></name>
           <pattern>eslint.xml</pattern>
           <reportEncoding></reportEncoding>
-          <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.EsLint>
       </analysisTools>
       <sourceCodeEncoding></sourceCodeEncoding>
