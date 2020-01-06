@@ -124,7 +124,8 @@
 
 sudo chown -R centos:centos .
 ./buildAll.sh
-</command>
+
+tar -czf allUbootUGW.gz.tar .</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
@@ -163,6 +164,7 @@ sudo chown -R centos:centos .
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/u-boot-*.*=&gt;com/ac/sbc/Flash/uboot-UGW/${BUILD_NUMBER}
+${WORKSPACE}/*.tar=&gt;com/ac/sbc/Flash/uboot-UGW/${BUILD_NUMBER}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
