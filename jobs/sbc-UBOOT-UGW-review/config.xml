@@ -125,7 +125,8 @@
 sudo chown -R centos:centos .
 ./buildAll.sh
 
-tar -czf allUbootUGW.gz.tar .</command>
+tar -czf ../allUbootUGW.gz.tar .
+mv ../allUbootUGW.gz.tar .</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
