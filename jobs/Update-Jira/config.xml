@@ -108,7 +108,9 @@ it pairs VI/Issue with the relevant commit&#xd;
   <builders>
     <hudson.tasks.Shell>
       <command>CALLER=$(curl -k https://test-jenkins/job/Update-Jira/${BUILD_ID}/console 2&gt;/dev/null | grep &quot;build number&quot; | sed &apos;0,/^.*build/ s//build/&apos; | cut -d&quot;&apos;&quot; -f2)
-CALLER_URL=${JENKINS_URL}${CALLER}
+ret_value=$?
+[ &quot;$ret_value&quot; -eq 0 ] &amp;&amp; CALLER_URL=&quot;${JENKINS_URL}${CALLER}&quot; || CALLER_URL=&quot;&quot;
+
 echo &quot;Job called by: ${CALLER_URL}&quot;
 
 
