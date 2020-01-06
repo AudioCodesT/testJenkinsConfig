@@ -419,7 +419,38 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-03fbd7f0f3467927c</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-03fbd7f0f3467927c</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-01-06 09:35:27.33 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-00e3a08e70dbdd7bc</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-00e3a08e70dbdd7bc</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-01-06 09:35:05.139 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-014f2cff996a2d701</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-014f2cff996a2d701</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-01-06 09:35:13.938 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1121,7 +1152,6 @@
         <string>sbc-Centos7-Kernel-review</string>
         <string>sbc-Centos8-ISO-compile</string>
         <string>sbc-Centos8-ISO-review</string>
-        <string>sbc-Centos8-Kernel-compile</string>
         <string>sbc-Centos8-Kernel-review</string>
         <string>sbc-coverity-for-OpenRG</string>
         <string>sbc-Hosted02-compile</string>
