@@ -126,7 +126,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>if [[ $GERRIT_REFSPEC != *&quot;83866&quot;* ]]
+      <command>if [[ $GERRIT_REFSPEC != *&quot;84961&quot;* ]]
 then
 exit 1
 fi
