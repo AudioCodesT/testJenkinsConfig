@@ -162,8 +162,7 @@ sudo chown -R centos:centos .
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/u-boot-serial-${COMP_VER}.asc=&gt;com/ac/sbc/Flash/uboot-UGW/${BUILD_NUMBER}
-${WORKSPACE}/u-boot-nand-${COMP_VER}.bin=&gt;com/ac/sbc/Flash/uboot-UGW/${BUILD_NUMBER}
+      <deployPattern>${WORKSPACE}/u-boot-*.*=&gt;com/ac/sbc/Flash/uboot-UGW/${BUILD_NUMBER}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
