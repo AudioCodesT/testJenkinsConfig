@@ -107,11 +107,15 @@ it pairs VI/Issue with the relevant commit&#xd;
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>
+      <command>CALLER=$(curl -k https://test-jenkins/job/Update-Jira/${BUILD_ID}/console 2&gt;/dev/null | grep &quot;build number&quot; | sed &apos;0,/^.*build/ s//build/&apos; | cut -d&quot;&apos;&quot; -f2)
+CALLER_URL=${JENKINS_URL}${CALLER}
+echo &quot;Job called by: ${CALLER_URL}&quot;
+
+
 cd /opt/devops/tools/update-jira
 rm -f $WORKSPACE/index.html
 
-./update_after_new_tag.pl &quot;$NEWTAG&quot; &quot;$RN&quot; &quot;$GERRIT_HOST&quot; &quot;$PROJECT&quot; &quot;$DATE&quot; &quot;$GERRIT_BRANCH&quot; &quot;$Jirapass&quot; &quot;$AuthorCommitter&quot; &quot;$Destination&quot;
+./update_after_new_tag.pl &quot;$NEWTAG&quot; &quot;$RN&quot; &quot;$GERRIT_HOST&quot; &quot;$PROJECT&quot; &quot;$DATE&quot; &quot;$GERRIT_BRANCH&quot; &quot;$Jirapass&quot; &quot;$AuthorCommitter&quot; &quot;$Destination&quot; &quot;$Coverage_Summary&quot; &quot;$CALLER_URL&quot;
 
 if [ -f log/$NEWTAG.html ]; then
   cp log/$NEWTAG.html $WORKSPACE/index.html
