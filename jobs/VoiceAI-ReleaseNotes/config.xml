@@ -129,7 +129,7 @@ AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OL
 sh common/build_all.sh
 
 curl -k https://test-jenkins/view/VoiceAI/job/VoiceAI-review/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
-sed -i &quot;1s/^/${BUILD_URL}\n/&quot; summary.txt
+#sed -i &quot;1s/^/${BUILD_URL}\n/&quot; summary.txt
 
 ## Prepare Release Notes data
 DATE=`date`
@@ -178,7 +178,8 @@ EMAIL=$EMAIL
 PROJECT=$PROJECT
 DATE=$DATE
 GERRIT_BRANCH=$BRANCH
-AuthorCommitter=$AuthorCommitter</properties>
+AuthorCommitter=$AuthorCommitter
+Coverage_Summary=$Coverage_Summary</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
