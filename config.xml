@@ -488,13 +488,13 @@
       <groupId>sig-8a99c992</groupId>
       <pendingInstances>
         <entry>
-          <string>i-047b8672ea8370639</string>
+          <string>i-04ddd7b9893886a10</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-047b8672ea8370639</id>
+            <id>i-04ddd7b9893886a10</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>ems-build</requestedLabel>
-            <createdAt>2020-01-06 09:25:24.124 UTC</createdAt>
+            <createdAt>2020-01-06 09:29:24.551 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
@@ -1130,6 +1130,7 @@
         <string>sbc-Centos7-ISO-review</string>
         <string>sbc-Centos7-Kernel-compile</string>
         <string>sbc-Centos7-Kernel-review</string>
+        <string>sbc-Centos8-ISO-compile</string>
         <string>sbc-Centos8-ISO-review</string>
         <string>sbc-Centos8-Kernel-review</string>
         <string>sbc-coverity-for-OpenRG</string>
