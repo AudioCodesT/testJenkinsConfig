@@ -131,6 +131,8 @@ sh common/build_all.sh
 curl -k https://test-jenkins/job/VoiceAI-ReleaseNotes/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
 #sed -i &quot;1s/^/${BUILD_URL}\n/&quot; summary.txt
 sed &quot;s/$/&lt;\/br&gt;/g&quot; summary.txt &gt; summary.html
+Coverage_Summary=$(cat summary.html)
+echo $Coverage_Summary
 
 ## Prepare Release Notes data
 DATE=`date`
@@ -152,7 +154,7 @@ echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;`
 echo DATE=${DATE} &gt;&gt; voiceAI.properties
 echo AuthorCommitter=${AuthorCommitter} &gt;&gt; voiceAI.properties
 echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
-echo Coverage_Summary=$(cat summary.html) &gt;&gt; voiceAI.properties
+echo Coverage_Summary=${Coverage_Summary} &gt;&gt; voiceAI.properties
 cat voiceAI.properties</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
