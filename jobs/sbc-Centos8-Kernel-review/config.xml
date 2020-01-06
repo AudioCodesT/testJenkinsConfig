@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -33,7 +34,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
@@ -54,7 +54,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFSPEC</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/Centos7-Kernel</url>
+        <url>ssh://jenkins@test-gerrit:29418/TP/OpenSource/Centos8-Kernel</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -85,7 +85,7 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>ANT</compareType>
-          <pattern>TP/OpenSource/Centos7-Kernel</pattern>
+          <pattern>TP/OpenSource/Centos8-Kernel</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -205,11 +205,11 @@ id
 
 ./buildKernel.sh --threads=$(nproc)
 
-cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos7_external_version_data.h
+cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos8_external_version_data.h
 
-gzfile=ssbc_centos7.vmlinux.tar.gz
+gzfile=ssbc_centos8.vmlinux.tar.gz
 if [ ! -f $gzfile ] || [ &quot;`du $gzfile | cut -f1`&quot; -lt 40000 ]; then
-  echo &quot;ssbc_centos7.vmlinux.tar.gz Image too small.. exit with error&quot;
+  echo &quot;ssbc_centos8.vmlinux.tar.gz Image too small.. exit with error&quot;
   exit -1
 fi</command>
     </hudson.tasks.Shell>
@@ -247,26 +247,14 @@ fi</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <username></username>
-        <password></password>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <username></username>
-        <password></password>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
@@ -275,8 +263,8 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/ssbc_centos7.vmlinux.tar.gz=&gt;com/ac/sbc/Centos7/${COMP_VER}
-$WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7/${COMP_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/ssbc_centos8.vmlinux.tar.gz=&gt;com/ac/sbc/Centos8/${COMP_VER}
+$WORKSPACE/centos8_external_version_data.h=&gt;com/ac/sbc/Centos8/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
@@ -294,6 +282,7 @@ $WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7/${COMP_VER}</d
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
