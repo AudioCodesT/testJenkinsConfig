@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -33,7 +34,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
@@ -54,18 +54,19 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>$GERRIT_REFSPEC</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
+        <url>ssh://jenkins@test-gerrit:29418/${GERRIT_PROJECT}</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>$GERRIT_REFSPEC</name>
+        <name>$GERRIT_BRANCH</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
+      <hudson.plugins.git.extensions.impl.WipeWorkspace/>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
         <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
           <separator>#</separator>
@@ -73,7 +74,7 @@
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
     </extensions>
   </scm>
-  <assignedNode>sbc-linux-build</assignedNode>
+  <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -84,10 +85,21 @@
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
-          <pattern>TP/GWApp</pattern>
+          <pattern>VocaNom/MRCP</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
+              <pattern>**</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+          </branches>
+          <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+          <compareType>PLAIN</compareType>
+          <pattern>VocaNom/PLM</pattern>
+          <branches>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>PLAIN</compareType>
               <pattern>**</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
@@ -133,11 +145,7 @@
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cat &lt;&lt;-EOF &gt; ~/.netrc
-machine test-gerrit login jenkins password $jpass
-machine gerrit login jenkins password $jpass
-EOF
-
+      <command>
 cd ${WORKSPACE}/..
 rm -rf tools
 git -c http.sslverify=false clone -n https://gerrit/devops/tools
@@ -163,12 +171,13 @@ _exclude=`cat onestring`
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.29">
-      <recipients>shukyr@audiocodes.com yuvaly@audiocodes.com</recipients>
+      <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
@@ -180,7 +189,8 @@ _exclude=`cat onestring`
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER} - ${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
+      <template>#${BUILD_NUMBER}_Project:${GERRIT_PROJECT}_Branch:${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
