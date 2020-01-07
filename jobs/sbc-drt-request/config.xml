@@ -100,8 +100,6 @@ actions:&#xd;
 Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
 echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
 
-# 7.4 is not ready, can run with 7.2.250
-if [ &quot;$GERRIT_BRANCH&quot; == &quot;7.4&quot; ]; then GERRIT_BRANCH=7.2.250; fi
 # Can run with major version only: 7.2.150, 7.2.170
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
