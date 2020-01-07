@@ -290,8 +290,15 @@ done
 echo &quot;Finished docker push to Artifactory.&quot;
 
 
-</command>
+## Export env vars
+echo NEWTAG=${NEWTAG} &gt; VoiceAI.env
+echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>VoiceAI.env</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@3.0.3">
@@ -339,8 +346,8 @@ echo &quot;Finished docker push to Artifactory.&quot;
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>NEWTAG=$NEWTAG
-BRANCH=$BRANCH</properties>
+              <properties>NEWTAG=${NEWTAG}
+BRANCH=${BRANCH}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
