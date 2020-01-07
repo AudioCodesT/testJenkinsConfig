@@ -1323,6 +1323,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>vcnWebAdmin_SCA</string>
+        <string>VocaNom-JavaCodeAnalysis</string>
       </jobNames>
       <jobFilters/>
       <columns>
