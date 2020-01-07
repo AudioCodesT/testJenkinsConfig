@@ -326,7 +326,7 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
       <qualityGates/>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
     <hudson.tasks.Mailer plugin="mailer@1.29">
-      <recipients>ben.magriso, yuval.yosha</recipients>
+      <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
