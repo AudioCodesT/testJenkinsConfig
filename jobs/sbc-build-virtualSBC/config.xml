@@ -243,17 +243,6 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|node is offline|Error fetching remote|JNLP4-connect connection|Error cloning remote repo &apos;origin&apos;|java.io.EOFException|java.io.StreamCorruptedException|java.net.SocketException: Connection reset).*</regexpForRerun>
-      <rerunIfUnstable>false</rerunIfUnstable>
-      <rerunMatrixPart>false</rerunMatrixPart>
-      <checkRegexp>true</checkRegexp>
-      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
-      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
-        <delay>5</delay>
-      </delay>
-      <maxSchedule>2</maxSchedule>
-    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
