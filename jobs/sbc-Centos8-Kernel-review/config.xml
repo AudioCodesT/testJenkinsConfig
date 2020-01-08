@@ -210,7 +210,7 @@ cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos8_external_version_data.
 gzfile=ssbc_centos8.vmlinux.tar.gz
 if [ ! -f $gzfile ] || [ &quot;`du $gzfile | cut -f1`&quot; -lt 40000 ]; then
   echo &quot;ssbc_centos8.vmlinux.tar.gz Image too small.. exit with error&quot;
-  exit -1
+  #exit -1
 fi</command>
     </hudson.tasks.Shell>
   </builders>
