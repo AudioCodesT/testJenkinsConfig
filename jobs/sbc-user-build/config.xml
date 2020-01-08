@@ -105,7 +105,7 @@
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -245,6 +245,7 @@ cd ..
 realBOARD=$BOARD
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=_SIP
 [ &quot;$BOARD&quot; = &quot;HostedTP7&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7 &amp;&amp; realBOARD=&quot;HostedTP&quot;
+[ &quot;$BOARD&quot; = &quot;HostedTP8&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS8 &amp;&amp; realBOARD=&quot;HostedTP&quot;
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
 echo BOARDNAME=${realBOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
@@ -283,6 +284,7 @@ cd TrunkPackRam
 
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --sip=yes&quot;
 [ &quot;${BOARD}&quot; = &quot;HostedTP7&quot; ] &amp;&amp; FLAGS=&quot;$FLAGS --centos=7&quot; &amp;&amp; BOARD=&quot;HostedTP&quot;
+[ &quot;${BOARD}&quot; = &quot;HostedTP8&quot; ] &amp;&amp; FLAGS=&quot;$FLAGS --centos=8&quot; &amp;&amp; BOARD=&quot;HostedTP&quot;
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --lab=yes&quot;
 [ &quot;$USE_GIT_VER&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --custom-version=-u${BUILD_NUMBER}&quot;
 ./buildAll.sh --board=${BOARD} $FLAGS --user=no --fast=yes --server=localhost
@@ -361,7 +363,7 @@ git jenkins-report 1
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
-      <script plugin="script-security@1.55">
+      <script plugin="script-security@1.68">
         <script>artfcty_pat = ~/Deploying artifact: https:\/\/(.+\/)([^\/\s]+\b)/
 
 // Adds artifacts from child build
@@ -483,7 +485,7 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -539,7 +541,7 @@ ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${TargetArtif
     <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
