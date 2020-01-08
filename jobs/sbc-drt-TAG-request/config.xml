@@ -4,6 +4,7 @@
   <description>Execute manually the DRT for a specific TAG</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -36,7 +37,7 @@ Must be under &apos;\\netapp1\cm\CompilationResults\7.2.250 Release&apos;</descr
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>MajorVersion</name>
-          <description>Right to now, it should be 7.2.250 only</description>
+          <description>7.2.250 or 7.4</description>
           <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -177,8 +178,9 @@ exit 1</command>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${TAG} $MajorVersion</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
