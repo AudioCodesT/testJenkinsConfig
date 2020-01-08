@@ -41,7 +41,7 @@ Send params: FOLDER_PATH , MODE&#xd;
         <hudson.model.StringParameterDefinition>
           <name>TP_DIR</name>
           <description></description>
-          <defaultValue>/netapp1/CompilationResults/7.4 Release/Firmware</defaultValue>
+          <defaultValue>/netapp1/CompilationResults/7.2.250 Release/7.2.256</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -59,7 +59,7 @@ Send params: FOLDER_PATH , MODE&#xd;
         <hudson.model.StringParameterDefinition>
           <name>MajorVersion</name>
           <description></description>
-          <defaultValue>7.4</defaultValue>
+          <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
