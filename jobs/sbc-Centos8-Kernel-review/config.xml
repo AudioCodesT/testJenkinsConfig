@@ -37,7 +37,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -203,7 +203,7 @@ sudo chown -R centos:centos .
 ifconfig -a  | grep inet
 id
 
-./buildKernel.sh --threads=$(nproc)
+./buildKernel.sh --threads=$(nproc) --incremental=yes 
 
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos8_external_version_data.h
 
@@ -264,7 +264,8 @@ fi</command>
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/ssbc_centos8.vmlinux.tar.gz=&gt;com/ac/sbc/Centos8/${COMP_VER}
-$WORKSPACE/centos8_external_version_data.h=&gt;com/ac/sbc/Centos8/${COMP_VER}</deployPattern>
+$WORKSPACE/centos8_external_version_data.h=&gt;com/ac/sbc/Centos8/${COMP_VER}
+$WORKSPACE/rpmbuild/SPECS/*.log=&gt;com/ac/sbc/Centos8/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
