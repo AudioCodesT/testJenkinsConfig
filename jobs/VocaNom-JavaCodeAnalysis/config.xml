@@ -140,7 +140,7 @@ cp pmd/audc-ruleset.xml ${WORKSPACE}/
 cd ${WORKSPACE}
 
 ## Run Sputnik
-cat ems-ovoc-pmd.properties
+cat vocanom-pmd.properties
 /opt/sputnik/bin/sputnik --conf ${WORKSPACE}/vocanom-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
 </command>
     </hudson.tasks.Shell>
