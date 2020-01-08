@@ -51,7 +51,6 @@ Executed periodically every night.</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -135,7 +134,7 @@ function RemoveEachFolder() {
         then       
           	#copy file from artifactory to aclnas03
       		echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
-        	$curl -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
+        	$curl -R -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
           	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
             local_md5=$(md5sum &quot;${DESTINATION}/${TargetPath}$uri&quot; | cut -d&apos; &apos; -f1)
             remote_md5=$($curl -ks -u $User -X GET -I https://$ARTIFACTORY/${RemoveFolder}$uri 2&gt;/dev/null | grep X-Checksum-Md5 | cut -d&apos; &apos; -f2 | cut -c 1-32)
