@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -45,6 +46,12 @@
           <defaultValue>sbc-release</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>Project</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -72,9 +79,24 @@ artifactory=&quot;https://artifactory&quot;
 User=&quot;$artifactory_user:$artifactory_password&quot;
 Branch=$GERRIT_BRANCH
 
-if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
+
+if [ &quot;$TAGNAME&quot; == &quot;&quot; ]; then
+  echo No valid TAG... exit
+  exit 1
+else
+  NEWTAG=$TAGNAME
+fi
+
+if [ &quot;$Project&quot; == &quot;GWApp&quot; ]; then
   location=&quot;$REPOSITORY/com/ac/sbc/$Branch/Firmware&quot;
-  
+
+  BaseFirmware=Firmware
+  # New split from NextGenCPE
+  if [ $Branch == &quot;NextGenCPE_R1&quot; ]; then
+    Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
+    BaseFirmware=7.2.$(echo $NEWTAG | cut -d. -f3)
+  fi
+
   # Remove the _ suffix in case of fix branches such as 7.2.204_jio
   if echo $Branch | grep -q _; then
     if echo $Branch | grep -q _MSBR; then 
@@ -83,55 +105,60 @@ if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then
       BaseFirmware=$(echo $Branch | sed &apos;s/_.*//&apos;)
     fi
     Branch=$(echo $Branch | sed &apos;s/_.*//; s/.$/0/&apos;)
-  else
-    BaseFirmware=Firmware
   fi
+
   # Feature branches should be copied to &quot;&lt;Main branch&gt; Release/Features/&lt;Sub main branch&gt;&quot;
   if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; ]]; then
     # Find parent branch of this feature branch
-    Branch=7.2.250
-    if [[ $GERRIT_BRANCH =~ &quot;/fips&quot; ]]; then Branch=7.2.250; fi
-    BaseFirmware=Features/$(echo $Branch | cut -d. -f3)
+    if [[ &quot;$NEWTAG&quot; =~ &quot;7.30&quot; ]]; then
+      Branch=7.4
+      BaseFirmware=Features
+    else
+      Branch=7.2.250
+      BaseFirmware=Features/$(echo $Branch | cut -d. -f3)
+    fi
+    if [[ $GERRIT_BRANCH =~ &quot;/voice-ai&quot; ]]; then 
+      BaseFirmware=7.2.254_VoAI
+    fi
   fi
 
   Firmware=&quot;$Branch Release/$BaseFirmware&quot;
-  if (( $(echo $Branch | cut -d. -f3) % 10 != 0 )); then
-    Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:\.160:\.150:&apos;) Release/$Branch&quot;
+  if [ $(echo $Branch | sed &apos;s:\.:\n:g&apos; | wc -l) -eq 3 ]; then
+    if (( $(echo $Branch | cut -d. -f3) % 10 != 0 )); then
+      Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:\.160:\.150:&apos;) Release/$Branch&quot;
+    fi  
   fi
-  #if [ &quot;$Branch&quot; == &quot;NextGenCPE&quot; ]; then
-  #  Firmware=&quot;$Branch Release/Next_Firmware&quot;
-  #fi  
-elif [ &quot;$REPOSITORY&quot; == &quot;MP20x&quot; ]; then
+
+  Target=&quot;/netapp1/CompilationResults/$Firmware/F$NEWTAG&quot;
+
+elif [ &quot;$Project&quot; == &quot;MP-20x&quot; ]; then
+  # Rakefet ask from $Branch/$NEWTAG To $Branch/${Branch}_$NEWTAG
   location=&quot;$REPOSITORY/com/ac/MP/$Branch&quot;
+  Target=&quot;/netapp1/CompilationResults/MP20x/$Branch/${Branch}_$NEWTAG&quot;
+
+elif [ &quot;$Project&quot; == &quot;VoiceAIConnector&quot; ]; then
+  location=&quot;$REPOSITORY/com/ac/sbc/VoiceAiConnector/$Branch&quot;
+  Target=&quot;/netapp1/CompilationResults/VoAI_Connector/$Branch/$NEWTAG&quot;
 else
   echo No valid repository... exit
   exit 1
-fi
-
-if [ &quot;$TAGNAME&quot; == &quot;&quot; ]; then
-  NEWTAG=`curl -k -s -u $User -X GET $artifactory/api/storage/$location | grep uri | grep -v artifactory | sort -r  | head -1 | cut -d&apos;&quot;&apos; -f4 | cut -c 2-`
-else
-  NEWTAG=$TAGNAME
-fi
-
-if [ &quot;$REPOSITORY&quot; == &quot;sbc-release&quot; ]; then 
-  Target=&quot;/netapp1/CompilationResults/$Firmware/F$NEWTAG&quot;
-elif [ &quot;$REPOSITORY&quot; == &quot;MP20x&quot; ]; then
-  # Rakefet ask from $Branch/$NEWTAG To $Branch/${Branch}_$NEWTAG
-  Target=&quot;/netapp1/CompilationResults/MP20x/$Branch/${Branch}_$NEWTAG&quot;
 fi
 
 if ! [ -d &quot;$Target&quot; ]; then
   mkdir -p &quot;$Target&quot;
 fi
 
-curl -k -s -u $User -X GET $artifactory/api/storage/$location/$NEWTAG | grep uri | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $NEWTAG.list
+curl -k -s -u $User -X GET $artifactory/api/storage/$location/$NEWTAG | grep uri |\
+grep -v https | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $NEWTAG.list
 if [ -s &quot;$NEWTAG.list&quot; ]; then
    while read -r FileName
    do
      Extention=`echo ${FileName##*.}`
      if [ $Extention == &quot;cmp&quot; ]; then
        BOARD=`echo $FileName | sed -r s/.cmp//`
+       # For branch voice-ai copy HostedTP only!
+       if [[ $GERRIT_BRANCH =~ &quot;/voice-ai&quot; &amp;&amp; ! $BOARD =~ &quot;HostedTP&quot; ]]; then continue; fi
+       if [[ $GERRIT_BRANCH =~ &quot;/NextGenCPE&quot; &amp;&amp; ! $BOARD =~ &quot;MP5XXNG&quot; ]]; then continue; fi   
        if [ -e &quot;$Target/$BOARD.zip&quot; ]; then continue; fi
        #if [ ! -e &quot;$Target/$FileName&quot; ]; then
          echo Download $FileName into &quot;$Target/$FileName&quot;...
@@ -146,7 +173,7 @@ if [ -s &quot;$NEWTAG.list&quot; ]; then
        #fi
        echo Create Zip from $FileName...
        zip -b /tmp -mj &quot;$Target/$BOARD.zip&quot; &quot;$Target/$FileName&quot;
-     elif [ $Extention == &quot;zip&quot; ] || [ $Extention == &quot;txt&quot; ] || [ $Extention == &quot;rms&quot; ]; then
+     elif [ $Extention == &quot;zip&quot; ] || [ $Extention == &quot;txt&quot; ] || [ $Extention == &quot;rms&quot; ] || [ $Extention == &quot;tgz&quot; ]; then
        if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
        echo Download $FileName into &quot;$Target/$FileName&quot;...
        curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output &quot;$Target/$FileName&quot;
@@ -157,7 +184,7 @@ fi
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>yossim shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -188,17 +215,17 @@ fi
     </hudson.plugins.ws__cleanup.WsCleanup>
   </publishers>
   <buildWrappers>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -208,8 +235,9 @@ fi
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${TAGNAME}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
