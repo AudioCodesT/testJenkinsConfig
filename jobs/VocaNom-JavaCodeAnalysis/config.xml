@@ -131,17 +131,17 @@ git -c http.sslverify=false clone -n https://gerrit/devops/tools
 
 cd tools
 
-git checkout -f origin/master -- sputnik/test-gerrit/ems-ovoc-pmd.properties
+git checkout -f origin/master -- sputnik/test-gerrit/vocanom-pmd.properties
 git checkout -f origin/master -- pmd/audc-ruleset.xml
 
-cp sputnik/test-gerrit/ems-ovoc-pmd.properties ${WORKSPACE}/
+cp sputnik/test-gerrit/vocanom-pmd.properties ${WORKSPACE}/
 cp pmd/audc-ruleset.xml ${WORKSPACE}/
 
 cd ${WORKSPACE}
 
 ## Run Sputnik
 cat ems-ovoc-pmd.properties
-/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/ems-ovoc-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
+/opt/sputnik/bin/sputnik --conf ${WORKSPACE}/vocanom-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
 </command>
     </hudson.tasks.Shell>
   </builders>
