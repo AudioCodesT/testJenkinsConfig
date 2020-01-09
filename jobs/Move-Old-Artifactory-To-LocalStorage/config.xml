@@ -109,9 +109,9 @@ function RemoveEachFolder() {
         then
         	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;SFB/release&quot;* &amp;&amp; &quot;${RemoveFolder}$uri&quot; != *&quot;non_lync/release&quot;* ]]
             then
-            	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* ]]
+            	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* || &quot;${RemoveFolder}$uri&quot; == &quot;build.tgz&quot; ]]
                 then
-                	echo &quot;The file is From SFB or non_lync and with .csv or .img type&quot;
+                	echo &quot;The file is From SFB or non_lync and with .csv or .img type or build.tgz&quot;
                 elif [[ &quot;${RemoveFolder}$uri&quot; == *&quot;C450HD&quot;* ]]
                 then
                     #if the model is C450HD copy also env.bin, logo_image, rootfs.ext4, phone.bin
@@ -294,7 +294,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
     <EnvInjectBuildWrapper plugin="envinject@2.1.6">
       <info>
         <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
