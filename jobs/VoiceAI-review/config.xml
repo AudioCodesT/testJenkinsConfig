@@ -175,7 +175,7 @@ echo &quot;Lines:      $CVG_TH%&quot; &amp;&amp; \
 echo &quot;&quot; &amp;&amp; \
 cat summary.txt )
 
-msgHTML=$( echo &quot;$message&quot; | sed &apos;s/$/&lt;\/br&gt;/g&apos; )
+msgHTML=$( echo &quot;$message&quot; | sed &apos;s/$/ /g&apos; )
 
 [[ $statementsRate &lt; $CVG_TH || $branchesRate &lt; $CVG_TH_Branches || $functionsRate &lt; $CVG_TH || $linesRate &lt; $CVG_TH ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
 
