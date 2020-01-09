@@ -115,7 +115,7 @@ cd &quot;$TP_DIR/$TPLastTAG&quot;
 unzip $(ls HostedTP_SIP* | grep -v LAB) -d $TARGET
 
 # Copy VoiceAICo.tgz
-cp -f $VOICEAI_DIR/$VoiceLastTAG/*.tgz $TARGET
+cp -f $VOICEAI_DIR/$VoiceLastTAG/* $TARGET
 
 # Don&apos;t execute the next job in case you don&apos;t found 2 files
 if [ `ls $TARGET/*.cmp | wc -l` != 1 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
