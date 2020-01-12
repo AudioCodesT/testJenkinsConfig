@@ -206,7 +206,7 @@ cat VAG.properties
       <profileName>AWS-Jenkins</profileName>
       <entries>
         <hudson.plugins.s3.Entry>
-          <bucket>voice-ai</bucket>
+          <bucket>voice-ai/docker-compose/${version}/</bucket>
           <sourceFile>docker-compose-vag-ecr-*.yml</sourceFile>
           <excludedFile></excludedFile>
           <storageClass>STANDARD</storageClass>
