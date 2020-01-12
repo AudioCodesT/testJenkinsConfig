@@ -279,7 +279,11 @@ Deployed -
 &gt; docker-compose-vag-ecr-$VERSION.yml
 &gt; docker-compose-vag-ecr-$VERSION-sm.yml
 &gt; docker-compose-vag-ecr-$VERSION-central.yml
-to Artifactory.
+to Artifactory &amp; S3
+
+
+https://artifactory:443/docker-voice-ai-files/
+https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION&lt;type&gt;.yml
 
 $BUILD_URL
 
