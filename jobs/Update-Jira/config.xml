@@ -153,7 +153,7 @@ case $PROJECT in
     *&quot;AudioEngine&quot;*) SendTo=&quot;Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;WebRTC/Web&quot;*) SendTo=&quot;Ariel.Pessah@audiocodes.com,Igor.Kolosov@audiocodes.com,Ben.Magriso&quot;;;
+    *&quot;WebRTC/Web&quot;*) SendTo=&quot;Ariel.Pessah,Igor.Kolosov,Ben.Magriso&quot;;;
     *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
     *) SendTo=&quot;yossim&quot;
 esac
