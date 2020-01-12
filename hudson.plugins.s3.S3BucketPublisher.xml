@@ -2,9 +2,9 @@
 <hudson.plugins.s3.S3BucketPublisher_-DescriptorImpl plugin="s3@0.11.0">
   <profiles>
     <hudson.plugins.s3.S3Profile>
-      <name></name>
-      <accessKey></accessKey>
-      <secretKey>{AQAAABAAAAAQPFxGs75rgPigZaqS0+IokLmVqQE9gSIBMe8MZFbUNus=}</secretKey>
+      <name>AWS-Jenkins</name>
+      <accessKey>AKIAJCKG7DTRMESAY52A</accessKey>
+      <secretKey>{AQAAABAAAAAw6UgHO3/SBE5n78Y+7mmwE20WKJwtzdVLm4faX0ApzxKeqeM53qgaBpLlfpFaunxdmmo1thRnnqzkUVmMJO29pA==}</secretKey>
       <maxUploadRetries>5</maxUploadRetries>
       <uploadRetryTime>5</uploadRetryTime>
       <maxDownloadRetries>5</maxDownloadRetries>
