@@ -180,6 +180,11 @@ sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr
 sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-sm.yml &gt; docker-compose-vag-ecr-$version-sm.yml
 sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-central.yml &gt; docker-compose-vag-ecr-$version-central.yml
 
+## Copy YAML files to S3
+curl -X PUT -T docker-compose-vag-ecr-$version.yml -H &quot;Host: voice-ai.s3.amazonaws.com&quot; -H &quot;Date: $(date -R)&quot; -H &quot;Content-Type: application/x-compressed-zip&quot; -H &quot;x-amz-acl: bucket-owner-full-control&quot; https://voice-ai.s3.amazonaws.com/docker-compose/docker-compose-vag-ecr-$version.yml
+curl -X PUT -T docker-compose-vag-ecr-$version-sm.yml -H &quot;Host: voice-ai.s3.amazonaws.com&quot; -H &quot;Date: $(date -R)&quot; -H &quot;Content-Type: application/x-compressed-zip&quot; -H &quot;x-amz-acl: bucket-owner-full-control&quot; https://voice-ai.s3.amazonaws.com/docker-compose/docker-compose-vag-ecr-$version-sm.yml
+curl -X PUT -T docker-compose-vag-ecr-$version-central.yml -H &quot;Host: voice-ai.s3.amazonaws.com&quot; -H &quot;Date: $(date -R)&quot; -H &quot;Content-Type: application/x-compressed-zip&quot; -H &quot;x-amz-acl: bucket-owner-full-control&quot; https://voice-ai.s3.amazonaws.com/docker-compose/docker-compose-vag-ecr-$version-central.yml
+
 ## Properties to export to environment
 echo VERSION=$version &gt; VAG.properties
 echo IMAGES=${images} &gt;&gt; VAG.properties
