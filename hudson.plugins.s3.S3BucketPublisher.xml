@@ -4,7 +4,7 @@
     <hudson.plugins.s3.S3Profile>
       <name></name>
       <accessKey></accessKey>
-      <secretKey>{AQAAABAAAAAQN/tuBNKY2O83GvtjgdR2RUIbFMLPG89hgvdXWWVOHRY=}</secretKey>
+      <secretKey>{AQAAABAAAAAQv4QQpqEX/4aZz+Yg/yBGyKZNBALov9dKbYsA3ZbM3qk=}</secretKey>
       <maxUploadRetries>5</maxUploadRetries>
       <uploadRetryTime>5</uploadRetryTime>
       <maxDownloadRetries>5</maxDownloadRetries>
