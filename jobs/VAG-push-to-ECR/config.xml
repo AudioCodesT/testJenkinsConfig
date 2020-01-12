@@ -233,7 +233,11 @@ $IMAGES</body>
       <defaultSubject>Push Docker images to AWS ECR Repository</defaultSubject>
       <defaultContent>Pushed docker images $IMAGES to ECR.
 
-Deployed  docker-compose-vag-ecr-$VERSION.yml to Artifactory.
+Deployed -
+&gt; docker-compose-vag-ecr-$VERSION.yml
+&gt; docker-compose-vag-ecr-$VERSION-sm.yml
+&gt; docker-compose-vag-ecr-$VERSION-central.yml
+to Artifactory.
 
 $BUILD_URL
 
