@@ -532,7 +532,7 @@ fi</command>
       <deployPattern>${WORKSPACE}/EMS/target/DVD3*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/${ISO_DEPLOY_DESTINATION}
 ${WORKSPACE}/clm/target/*-SNAPSHOT.jar=&gt;com/ac/ems/floating-license-simulator
 ${WORKSPACE}/clm/target/*-SNAPSHOT.jar=&gt;com/ac/ems/clm
-${WORKSPACE}/clm/target/*-SNAPSHOT.pom=&gt;com/ac/ems/clm
+${WORKSPACE}/clm/target/*.pom=&gt;com/ac/ems/clm
 ${WORKSPACE}/EMS/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
