@@ -88,33 +88,6 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.tasks.Shell>
-      <command>cd ${WORKSPACE}
-ls -al
-cd EMS/tools/
-if [[ -e compile_perl_scripts.pl ]]
-then
-	if [[ ! &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
-    then	
-    	set +e
-        echo &quot;***************************** running the perl script******************************&quot;
-		sudo perl compile_perl_scripts.pl
-		RetunedValue=$?
-        echo &quot;***************************** finish running the script******************************&quot;
-        set -e
-		if [[ ! $RetunedValue == &quot;0&quot; ]]
-    	then
-    	#if the script failed
-        cd ${WORKSPACE}
-    	exit 0
-    	else
-    	#if the script Pass
-        cd ${WORKSPACE}
-    	exit 0
-    	fi
-    fi
-fi</command>
-    </hudson.tasks.Shell>
     <hudson.tasks.Maven>
       <targets>clean install -X</targets>
       <mavenName>maven-for-ems</mavenName>
