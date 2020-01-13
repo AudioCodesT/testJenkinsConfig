@@ -56,6 +56,7 @@
         <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
         <string>AI-Engineering</string>
+        <string>365_Monday</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -87,7 +88,7 @@
         <string>sp365-smarttap-modify</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1576669841619</timestamp>
+      <timestamp>1578933957380</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>4d1c15469e964704</seed>
