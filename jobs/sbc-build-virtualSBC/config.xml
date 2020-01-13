@@ -228,10 +228,12 @@ cp ../build_sbc_centos7.sh .
     # run the Environment that the user choosed
     ./build_sbc_centos7.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
      #upload file to artifactory
+     echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
      curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}.zip&quot;
     fi
 
 fi
+
 
 
 #curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/*&quot;
