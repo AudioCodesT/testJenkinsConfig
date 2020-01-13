@@ -234,14 +234,14 @@ fi
 #upload file to artifactory
 if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
 then
-        for FLAVOR in ${EnvironmentList[@]}
-        do
-        	echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
-			curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}.zip&quot;
-        done
+	for FLAVOR in ${EnvironmentList[@]}
+	do
+		echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
+		curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}.zip&quot;
+	done
 else
-echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
-curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}.zip&quot;
+	echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
+	curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}.zip&quot;
 fi
 
 
