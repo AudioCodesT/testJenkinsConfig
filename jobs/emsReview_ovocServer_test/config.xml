@@ -89,7 +89,9 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd EMS/tools/
+      <command>cd ${WORKSPACE}
+ls -al
+cd EMS/tools/
 if [[ -e compile_perl_scripts.pl ]]
 then
 	if [[ ! &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
