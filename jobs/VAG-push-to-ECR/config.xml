@@ -202,39 +202,6 @@ cat VAG.properties
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.11.0">
-      <profileName>AWS-Jenkins</profileName>
-      <entries>
-        <hudson.plugins.s3.Entry>
-          <bucket>voice-ai/docker-compose/${version}</bucket>
-          <sourceFile>docker-compose-vag-ecr-*.yml</sourceFile>
-          <excludedFile></excludedFile>
-          <storageClass>STANDARD</storageClass>
-          <selectedRegion>eu-central-1</selectedRegion>
-          <noUploadOnFailure>true</noUploadOnFailure>
-          <uploadFromSlave>true</uploadFromSlave>
-          <managedArtifacts>false</managedArtifacts>
-          <useServerSideEncryption>false</useServerSideEncryption>
-          <flatten>false</flatten>
-          <gzipFiles>false</gzipFiles>
-          <showDirectlyInBrowser>false</showDirectlyInBrowser>
-          <keepForever>true</keepForever>
-        </hudson.plugins.s3.Entry>
-      </entries>
-      <dontWaitForConcurrentBuildCompletion>false</dontWaitForConcurrentBuildCompletion>
-      <consoleLogLevel>
-        <name>INFO</name>
-        <value>800</value>
-        <resourceBundleName>sun.util.logging.resources.logging</resourceBundleName>
-      </consoleLogLevel>
-      <pluginFailureResultConstraint>
-        <name>FAILURE</name>
-        <ordinal>2</ordinal>
-        <color>RED</color>
-        <completeBuild>true</completeBuild>
-      </pluginFailureResultConstraint>
-      <userMetadata/>
-    </hudson.plugins.s3.S3BucketPublisher>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>$DEFAULT_RECIPIENTS, Shmulik.Yudkovich@audiocodes.com, shuky.riechard@audiocodes.com</recipientList>
       <configuredTriggers>
