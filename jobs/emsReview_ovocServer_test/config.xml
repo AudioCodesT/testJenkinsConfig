@@ -186,7 +186,7 @@ fi</command>
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/clm/target/*-SNAPSHOT.jar=&gt;com/ac/ems/clm/${BRANCH}
-${WORKSPACE}/clm/*.pom=&gt;com/ac/ems/clm/${BRANCH}</deployPattern>
+${WORKSPACE}/clm/*-SNAPSHOT.pom=&gt;com/ac/ems/clm/${BRANCH}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
