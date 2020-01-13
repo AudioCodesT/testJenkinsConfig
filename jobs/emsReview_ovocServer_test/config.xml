@@ -73,12 +73,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>if [[ $GERRIT_REFSPEC != *&quot;84961&quot;* ]]
-then
-exit 1
-fi
-
-cd EMS/tools/
+      <command>cd EMS/tools/
 if [[ -e compile_perl_scripts.pl ]]
 then
 	if [[ ! &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
@@ -114,8 +109,7 @@ fi</command>
       <injectBuildVariables>false</injectBuildVariables>
     </hudson.tasks.Maven>
     <hudson.tasks.Shell>
-      <command>cp ${WORKSPACE}/clm/target/clm-${BRANCH}-SNAPSHOT.jar ${WORKSPACE}/clm/target/clm-${BRANCH}.jar
-cp ${WORKSPACE}/clm/pom.xml ${WORKSPACE}/clm/clm-${BRANCH}-SNAPSHOT.pom</command>
+      <command>cp ${WORKSPACE}/clm/pom.xml ${WORKSPACE}/clm/clm-${BRANCH}-SNAPSHOT.pom</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
