@@ -62,7 +62,6 @@ e.g.:7.20A.252.001</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -231,6 +230,19 @@ cp ../build_sbc_centos7.sh .
 fi
 
 
+
+#upload file to artifactory
+if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
+then
+        for FLAVOR in ${EnvironmentList[@]}
+        do
+        	echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
+			curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}.zip&quot;
+        done
+else
+echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
+curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}.zip&quot;
+fi
 
 
 echo &quot;Branch=${Branch}&quot; &gt; properties
