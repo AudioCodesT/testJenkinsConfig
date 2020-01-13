@@ -199,10 +199,7 @@ cat ems-ovoc-pmd.properties
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cp ${WORKSPACE}/clm/target/*-SNAPSHOT.jar
-
-${WORKSPACE}/clm/target/clm-${BRANCH}-SNAPSHOT.jar ${WORKSPACE}/clm/target/clm-${BRANCH}.jar
-
+      <command>cp ${WORKSPACE}/clm/target/clm-${BRANCH}-SNAPSHOT.jar ${WORKSPACE}/clm/target/clm-${BRANCH}.jar
 cp ${WORKSPACE}/clm/pom.xml ${WORKSPACE}/clm/clm-${BRANCH}-SNAPSHOT.pom</command>
     </hudson.tasks.Shell>
   </builders>
