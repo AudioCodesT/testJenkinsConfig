@@ -221,16 +221,20 @@ cp ../build_sbc_centos7.sh .
         do
             cd ${WORKSPACE}
             ./build_sbc_centos7.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+        	#upload file to artifactory
+            curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}.zip&quot;
         done
     else
     # run the Environment that the user choosed
     ./build_sbc_centos7.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+            	#upload file to artifactory
+            curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}.zip&quot;
     fi
 
 fi
 
 
-curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}/&quot; -T &quot;${WORKSPACE}/artifacts/*&quot;
+#curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T &quot;${WORKSPACE}/artifacts/*&quot;
 
 echo &quot;Branch=${Branch}&quot; &gt; properties
 
