@@ -230,7 +230,7 @@ cp ../build_sbc_centos7.sh .
 fi
 
 
-curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}&quot; -T &quot;${WORKSPACE}/artifacts/*&quot;
+curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}/&quot; -T &quot;${WORKSPACE}/artifacts/*&quot;
 
 echo &quot;Branch=${Branch}&quot; &gt; properties
 
