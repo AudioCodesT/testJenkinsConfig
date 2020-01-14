@@ -146,7 +146,7 @@ if you still want to run it then run again with &apos;0&apos;
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
-      <targets>clean install -U</targets>
+      <targets>clean install -X</targets>
       <mavenName>maven-for-ems</mavenName>
       <jvmOptions>-DpushChanges=false</jvmOptions>
       <pom>pom.xml</pom>
