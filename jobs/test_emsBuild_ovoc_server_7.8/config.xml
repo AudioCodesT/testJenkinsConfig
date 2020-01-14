@@ -117,7 +117,7 @@ if you still want to run it then run again with &apos;0&apos;
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/heads/7.8</name>
+        <name>refs/heads/7.8.1000</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -129,7 +129,7 @@ if you still want to run it then run again with &apos;0&apos;
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.LocalBranch>
-        <localBranch>refs/heads/7.8</localBranch>
+        <localBranch>refs/heads/7.8.1000</localBranch>
       </hudson.plugins.git.extensions.impl.LocalBranch>
     </extensions>
   </scm>
