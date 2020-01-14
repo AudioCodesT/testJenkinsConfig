@@ -2,7 +2,7 @@
 <user>
   <version>10</version>
   <id>tovas</id>
-  <fullName>tovas</fullName>
+  <fullName>Tova Shoham</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
@@ -41,5 +41,8 @@
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>tovas@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <timestamp>0</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
