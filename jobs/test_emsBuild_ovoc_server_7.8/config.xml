@@ -158,21 +158,7 @@ cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
       <injectBuildVariables>false</injectBuildVariables>
     </hudson.tasks.Maven>
     <hudson.tasks.Shell>
-      <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH`
-DATE=`date`
-#calculate new tag with &quot;server_&quot; prefix
-FULL_NEW_TAG=`echo $OLDTAG | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $OLDTAG | awk -F. &apos;{print $NF+1}&apos;`
-#calculate new tag without &quot;server_&quot; prefix
-NEW_TAG=${FULL_NEW_TAG:7}
-
-echo &quot;NEW_TAG=${NEW_TAG}&quot; &gt; ems_build.properties
-echo &quot;FULL_NEW_TAG=${FULL_NEW_TAG}&quot; &gt;&gt; ems_build.properties
-chmod 777 EMS/generate_iso.sh
-. EMS/generate_iso.sh  &amp;&gt; ${WORKSPACE}/mkiso.log
-tail -200 ${WORKSPACE}/mkiso.log
-
-#change name of clm pom.xml to clm-7.8-SNAPSOHT.pom
+      <command>#change name of clm pom.xml to clm-7.8-SNAPSOHT.pom
 cp ${WORKSPACE}/clm/pom.xml ${WORKSPACE}/clm/clm-${BRANCH}-SNAPSHOT.pom
 
 
