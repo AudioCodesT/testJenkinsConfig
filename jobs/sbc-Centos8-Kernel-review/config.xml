@@ -203,7 +203,7 @@ sudo chown -R centos:centos .
 ifconfig -a  | grep inet
 id
 
-./buildKernel.sh --threads=$(nproc) --incremental=yes 
+./buildKernel.sh --threads=$(nproc)
 
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/centos8_external_version_data.h
 
