@@ -214,7 +214,7 @@ cat VAG.properties
             <subject>Failed to push docker images to ECR</subject>
             <body>FAIL!!
 
-$IMAGES</body>
+version: ${version}</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
@@ -243,7 +243,7 @@ $IMAGES</body>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>Push Docker images to AWS ECR Repository</defaultSubject>
+      <defaultSubject>VoiceAI ${version} - docker images pushed to ECR successfully</defaultSubject>
       <defaultContent>Pushed docker images $IMAGES to ECR.
 
 Deployed -
