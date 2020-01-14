@@ -230,10 +230,6 @@ chmod 777 EMS/generate_iso.sh
 . EMS/generate_iso.sh  &amp;&gt; ${WORKSPACE}/mkiso.log
 tail -200 ${WORKSPACE}/mkiso.log
 
-#change name of clm pom.xml to clm-7.8-SNAPSOHT.pom
-cp ${WORKSPACE}/clm/pom.xml ${WORKSPACE}/clm/clm-${BRANCH}-SNAPSHOT.pom
-
-
 # For UpdateVI job
 cd ${WORKSPACE}
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$GIT_BRANCH | sort -u | sed s/$/\;/g`
@@ -535,7 +531,6 @@ fi</command>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/EMS/target/DVD3*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/${ISO_DEPLOY_DESTINATION}
 ${WORKSPACE}/clm/target/*-SNAPSHOT.jar=&gt;com/ac/ems/clm/${BRANCH}-SNAPSHOT
-${WORKSPACE}/clm/*-SNAPSHOT.pom=&gt;com/ac/ems/clm/${BRANCH}-SNAPSHOT
 ${WORKSPACE}/EMS/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
