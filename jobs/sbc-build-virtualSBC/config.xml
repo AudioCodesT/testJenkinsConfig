@@ -281,8 +281,8 @@ echo &quot;Branch=${Branch}&quot; &gt; properties
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>Build Virtual SBC for ${TAG} was created successfully</defaultSubject>
-      <defaultContent>${TAG} virtual SBC artifacts for ${Environment} environment in centos${centos_version}:
+      <defaultSubject>Virtual SBC for ${Environment} ${TAG} was created successfully</defaultSubject>
+      <defaultContent>${TAG}  for  ${Environment}  in centos${centos_version}:
 https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${TAG}</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
