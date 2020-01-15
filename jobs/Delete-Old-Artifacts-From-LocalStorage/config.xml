@@ -93,26 +93,6 @@ function RemoveFiles() {
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
-      <info>
-        <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
-          <sandbox>false</sandbox>
-        </secureGroovyScript>
-        <loadFilesFromMaster>false</loadFilesFromMaster>
-      </info>
-    </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
-      <injectGlobalPasswords>false</injectGlobalPasswords>
-      <maskPasswordParameters>true</maskPasswordParameters>
-      <passwordEntries>
-        <EnvInjectPasswordEntry>
-          <name>ARTIFACTORY_PASSWORD</name>
-          <value>{AQAAABAAAAAQP7YB5qfoH7d77gN7dK0t6aE7KnTasaJzn7I1RwqhBGw=}</value>
-        </EnvInjectPasswordEntry>
-      </passwordEntries>
-    </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}</template>
       <descriptionTemplate></descriptionTemplate>
