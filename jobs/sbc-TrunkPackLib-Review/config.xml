@@ -82,6 +82,7 @@
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+      <hudson.plugins.git.extensions.impl.CleanCheckout/>
     </extensions>
   </scm>
   <assignedNode>TrunkPackLib</assignedNode>
@@ -163,8 +164,6 @@ IF NOT EXIST .git (&#xd;
 git -c http.sslverify=false fetch&#xd;
 @git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/$TPRAM_BRANCH -- %TPFILES%&#xd;
 cd %WORKSPACE%&#xd;
-&#xd;
-del lib.zip&#xd;
 &#xd;
 git describe --tags &gt; TAG.txt&#xd;
 set /P BL=&lt;TAG.txt&#xd;
