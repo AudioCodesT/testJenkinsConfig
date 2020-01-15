@@ -418,18 +418,7 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-06409fa3759fc4cea</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-06409fa3759fc4cea</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-01-14 12:10:51.865 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -877,7 +866,18 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0f8ecea2b4a468e11</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0f8ecea2b4a468e11</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>VoiceAI-build</requestedLabel>
+            <createdAt>2020-01-15 12:42:21.862 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1049,6 +1049,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
         <string>CheckJira</string>
+        <string>Delete-Old-Artifacts-From-LocalStorage</string>
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>

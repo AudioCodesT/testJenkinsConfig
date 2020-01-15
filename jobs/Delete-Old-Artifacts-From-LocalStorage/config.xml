@@ -1,0 +1,322 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>This job go over all the folders in the Artifactory and move the old version to aclnas03.&#xd;
+Executed periodically every night.</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>15</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>OLD</name>
+          <description>Delete all Artifacts OLD of this number of days </description>
+          <defaultValue>60</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>DESTINATION</name>
+          <description></description>
+          <defaultValue>\\aclnas03\Versions\CompilationResults</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>compile3</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H 22 * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>net use T: /delete&#xd;
+net use T: &quot;%DESTINATION%&quot;&#xd;
+&#xd;
+</command>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.Shell>
+      <command>#!c:\cygwin_aclnas03\bin\bash --login
+User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
+curl=c:/curl/curl
+# Calculate the date we are going to delete
+oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
+moveDone=0
+
+
+cd $WORKSPACE
+
+function RemoveEachFolder() {
+  
+  local RemoveFolder=$1
+  local TargetPath=$2
+  local copy_to_local_storage=True
+  #iretate on all files from artifactory inside folder 
+  $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$RemoveFolder | grep uri | grep -v https: | sort -V | while read line
+  do
+  	copy_to_local_storage=True
+  	#uri = file/folder name
+    uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
+    DestSize=0; ArtSize=0
+    ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    #check if there is size to the artifacts --- its a file to copy from artifactory to local storage
+    if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
+    	#check if file already exists in the destination path, if he exists delete him
+        if [[ -e ${DESTINATION}/${TargetPath}$uri ]]
+        then
+        	echo &quot;deleting ${DESTINATION}/${TargetPath}$uri before copy him from artifactory&quot;
+        	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        fi
+        #check if its from SFB or Non-lync and not from &quot;release&quot; branch then copy only .csv and .img files to local storage
+        if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;SFB&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;non_lync&quot;* ]]
+        then
+        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;SFB/release&quot;* &amp;&amp; &quot;${RemoveFolder}$uri&quot; != *&quot;non_lync/release&quot;* ]]
+            then
+            	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;build.tgz&quot;* ]]
+                then
+                	echo &quot;The file is From SFB or non_lync and with .csv or .img type or build.tgz&quot;
+                elif [[ &quot;${RemoveFolder}$uri&quot; == *&quot;C450HD&quot;* ]]
+                then
+                    #if the model is C450HD copy also env.bin, logo_image, rootfs.ext4, phone.bin
+                    if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;env.bin&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;logo_image&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;rootfs.ext4&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;phone.bin&quot;* ]]
+                    then
+                    	echo &quot;The Model is C450HD, and the file is for dualBin (env.bin, logo_image, rootfs.ext4, phone.bin)&quot;
+                    else
+                    	copy_to_local_storage=False
+                		echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri...&quot;
+          				$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+                    fi
+                else
+                	copy_to_local_storage=False
+                	echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri...&quot;
+          			$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+                fi
+            fi
+        fi
+        if [[ &quot;$copy_to_local_storage&quot; == &quot;True&quot; ]]
+        then       
+          	#copy file from artifactory to aclnas03
+      		echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
+        	$curl -R -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
+          	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
+            local_md5=$(md5sum &quot;${DESTINATION}/${TargetPath}$uri&quot; | cut -d&apos; &apos; -f1)
+            remote_md5=$($curl -ks -u $User -X GET -I https://$ARTIFACTORY/${RemoveFolder}$uri 2&gt;/dev/null | grep X-Checksum-Md5 | cut -d&apos; &apos; -f2 | cut -c 1-32)
+          	if [ &quot;$local_md5&quot; != &quot;$remote_md5&quot; ]; then
+                echo local md5: $local_md5 and remote md5 $remote_md5: $uri is different - No delete and exit......
+            	exit 1
+          	else
+            	echo md5 is equal - delete from Artifactory...
+            	$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+           	fi
+         fi
+    # because there is no size = its a folder (its creating a new folder in the local storage)     
+    else
+    	#check if already exists file with the same name of the directory that we will create (mkdir ${DESTINATION}/${TargetPath}$uri) delete the file 
+    	if [[ -f &quot;${DESTINATION}/${TargetPath}$uri&quot; ]]
+        then
+        	echo &quot;Deleting ${DESTINATION}/${TargetPath}$uri because its a file and we creating Folder with the same name&quot;
+        	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        fi
+        echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot; || true
+        RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
+        if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+          echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
+          $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
+        fi
+    fi
+  done
+}
+
+# this is a recursive function - check the last modified date, if old or equel to $oldThan than remove this folder from the Artifactory
+function CheckFolder() {
+   set -e
+  ((deep+=1))
+  local Folder=$1
+  local Target=$2
+  # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
+  lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
+
+  if [ &quot;$lastModified&quot; == &quot;&quot; ]; then return 0; fi
+  echo &quot;$lastModified -le $oldThan&quot;
+  if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
+    echo move $Folder
+    echo ---------------------
+    echo &quot;mkdir -p ${DESTINATION}/$Target&quot;
+    mkdir -p &quot;${DESTINATION}/$Target&quot; || true
+    RemoveEachFolder $Folder &quot;$Target&quot;
+    if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+      echo ----- Delete the empty directory from Artifactory $Folder...
+      $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
+    fi
+    set +e
+    ((deep-=1))
+    return 1
+  else
+    echo $Folder is not old - check its sub folders
+    $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
+    do
+      echo Execute this function again to check the following directory: ${Folder}$uri
+      lastMovedone=$moveDone
+      CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
+      moveDone=$?
+      echo Deep: $deep *******
+      if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]
+      then 
+      	#check if the 2 next folders is older too before break
+      	((countExtraFolderCheck[$deep]+=1))
+        echo counter: ${countExtraFolderCheck[$deep]} ******
+        if [[ ${countExtraFolderCheck[$deep]} -gt 6 ]]
+        then
+        	echo ---------- Probably all next folder are not older... break from this folder check ------------
+            countExtraFolderCheck[$deep]=0
+        	break
+        fi
+      fi
+    done
+    ((deep-=1))
+    return 0
+  fi
+}
+
+countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
+DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
+deep=2
+
+ARTIFACTORY=artifactory
+# SBC 
+CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware &quot;7.2.150 Release/7.2.154&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.156/Firmware &quot;7.2.150 Release/7.2.156&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.158/Firmware &quot;7.2.150 Release/7.2.158&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.162/Firmware &quot;7.2.150 Release/7.2.162&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.170/Firmware &quot;7.2.170 Release/7.2.170&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmware&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.204_4jio/Firmware &quot;7.2.200 Release/7.2.204_4jio&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmware&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7.2.250_MSBR&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.252_MSBR/Firmware &quot;7.2.250 Release/7.2.252_MSBR&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.254/Firmware &quot;7.2.250 Release/7.2.254&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.256/Firmware &quot;7.2.250 Release/7.2.256&quot;
+CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware &quot;NextGenCPE Release/Firmware&quot;
+#All Feature branches
+CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware &quot;feature/centos7/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/fips/Firmware &quot;feature/fips/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/PM/Firmware &quot;feature/PM/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/voice-ai/Firmware &quot;feature/voice-ai/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/websocket/Firmware &quot;feature/websocket/Firmware&quot; 
+#All ISO
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.150 &quot;ISO/7.2.150&quot;
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.152 &quot;ISO/7.2.152&quot;
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.154 &quot;ISO/7.2.154&quot;
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.156 &quot;ISO/7.2.156&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.158 &quot;ISO/7.2.158&quot;
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.162 &quot;ISO/7.2.162&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.170 &quot;ISO/7.2.170&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.200 &quot;ISO/7.2.200&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.202 &quot;ISO/7.2.202&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.250 &quot;ISO/7.2.250&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_1 &quot;ISO/7.2.252_1&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_AWS &quot;ISO/7.2.252_AWS&quot;  
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252 &quot;ISO/7.2.252&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.254 &quot;ISO/7.2.254&quot; 
+#All VSSBC
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.156 &quot;VSSBC/7.2.156&quot; 
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.204 &quot;VSSBC/7.2.204&quot;
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.250 &quot;VSSBC/7.2.250&quot;
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_1 &quot;VSSBC/7.2.252_1&quot; 
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_AWS &quot;VSSBC/7.2.252_AWS&quot;  
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252 &quot;VSSBC/7.2.252&quot; 
+#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 &quot;VSSBC/7.2.254&quot; 
+# Other Projects
+CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector &quot;VoiceAiConnector&quot;
+CheckFolder dsp-release/com/ac/dsp/Gen5 &quot;DSP/Gen5&quot;
+
+# Calculate the date we are going to delete for IPPPhone (only 30 days)
+countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
+deep=1
+OLD=30
+oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
+CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 
+CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 
+CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.29">
+      <recipients>ben.magriso</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+      <info>
+        <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.68">
+          <script></script>
+          <sandbox>false</sandbox>
+        </secureGroovyScript>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>ARTIFACTORY_PASSWORD</name>
+          <value>{AQAAABAAAAAQP7YB5qfoH7d77gN7dK0t6aE7KnTasaJzn7I1RwqhBGw=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}</template>
+      <descriptionTemplate></descriptionTemplate>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
