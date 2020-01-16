@@ -80,10 +80,15 @@ cd $WORKSPACE
 
 function RemoveFiles() {
 	FolderToCheck=$1
+    filesToDelete=()
 	for i in {1..$#}
 	do
-  		echo $i
+    	filesToDelete+=(&quot;$i&quot;)
   	done
+    for file in ${filesToDelete[@]}
+    do
+    	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD} 2&gt;/dev/null 
+    done
 }
 
 
