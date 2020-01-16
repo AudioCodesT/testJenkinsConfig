@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -36,7 +36,7 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
@@ -51,6 +51,7 @@
         <string>authenticated</string>
         <string>TECHSUPPORTSAMBA</string>
         <string># SmartTAP Dev</string>
+        <string>365_Monday</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>BACKPRINTGROUP</string>
@@ -66,6 +67,7 @@
         <string>MUSIC Telecom SDevel</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NA Regions</string>
         <string>AudioCodes_VPN</string>
         <string># SmartTAP</string>
         <string># Oracle USA</string>
@@ -84,6 +86,8 @@
         <string>CatalogApps_Everyone</string>
         <string>AI-QA</string>
         <string>allusers</string>
+        <string>365_Tas</string>
+        <string># Agile users</string>
         <string># All ACI - USA</string>
         <string># Oracle</string>
         <string>AI-OPT</string>
@@ -97,9 +101,9 @@
         <string>AI-ClearCase</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1551882801290</timestamp>
+      <timestamp>1579182285823</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Brian.Kling@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
