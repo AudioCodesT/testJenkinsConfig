@@ -40,7 +40,7 @@
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -68,12 +68,12 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
         <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
   <assignedNode>TrunkPackLib</assignedNode>
@@ -132,7 +132,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#xd;
+      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#xd;
 cd ..&#xd;
 IF NOT EXIST .git (&#xd;
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#xd;
@@ -149,20 +149,14 @@ IF NOT EXIST .git (&#xd;
 @set TPFILES=%TPFILES% Modules/GWApp/Pkgs/Services/LDAP/LDAPService/Include&#xd;
 @echo Checking out TrunkPackRam linked files&#xd;
 git -c http.sslverify=false fetch&#xd;
-git checkout -f origin/%TPRAM_BRANCH% -- %TPFILES%&#xd;
+@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/$TPRAM_BRANCH -- %TPFILES%&#xd;
 cd %WORKSPACE%&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>IF NOT exist &quot;CopyLinks.sh&quot; (&#xd;
-  echo Error: CopyLinks.sh doesn&apos;t exist&#xd;
-  exit 1;&#xd;
-)&#xd;
-&#xd;
-copy CopyLinks.sh c:\temp&#xd;
-C:\cygwin\bin\bash --login -i -c &quot;c:/temp/CopyLinks.sh %WORKSPACE:\=/%&quot;&#xd;
-&#xd;
+      <command>&#xd;
 set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#xd;
+&#xd;
 git describe --tags &gt; TAG.txt&#xd;
 set /P BL=&lt;TAG.txt&#xd;
 echo COMP_VER=%BL% &gt; generated_version.properties&#xd;
@@ -178,14 +172,12 @@ echo cp -f VoIPver.h VoPLib/include/VoIPver.h &gt;&gt; c:\temp\BuildHost.sh&#xd;
 echo ./Build_Host_Compilation %BL% 74 &gt;&gt; c:\temp\BuildHost.sh&#xd;
 C:\cygwin\bin\bash --login -i -c c:/temp/BuildHost.sh || exit 1&#xd;
 &#xd;
-rem ------------ build tpncp.dat ---------------&#xd;
-echo cd %WORKSPACE:\=/%/voplibtcl/voplibext/wireShark &gt; c:\temp\ExecTpncp.sh&#xd;
-echo cp -fp C:/cygwin/usr/local/bin/new/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\ExecTpncp.sh&#xd;
-echo ./wireShark.tcl Release &gt;&gt; c:\temp\ExecTpncp.sh&#xd;
-echo cp -fp C:/cygwin/usr/local/bin/old/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\ExecTpncp.sh&#xd;
-C:\cygwin\bin\bash --login -i -c c:/temp/ExecTpncp.sh || exit 1&#xd;
+&quot;C:\Program Files\Git\bin\bash.exe&quot; --login -c &quot;./Build_Host_Compilation %BL% 74&quot;&#xd;
 &#xd;
-cd voplibtcl\voplibext\wireShark&#xd;
+rem ------------ build tpncp.dat ---------------&#xd;
+cd voplibtcl\voplibext\wireshark&#xd;
+&quot;C:\Program Files\Git\bin\bash.exe&quot; --login -c ./wireshark.tcl&#xd;
+&#xd;
 set maxbytesize=300000&#xd;
 FOR /F &quot;usebackq&quot; %%A IN (&apos;tpncp.dat&apos;) DO set size=%%~zA&#xd;
 if %size% LSS %maxbytesize% (&#xd;
@@ -198,7 +190,7 @@ if %size% LSS %maxbytesize% (&#xd;
 )&#xd;
 &#xd;
 cd ..\..\..&#xd;
-WZZIP -rp lib.zip c:\temp\%BL% &gt; NUL 2&gt;&amp;1&#xd;
+WZZIP -rp lib.zip build\%BL% &gt; NUL 2&gt;&amp;1&#xd;
 &#xd;
 set MAIN_GIT_BRANCH=%GIT_BRANCH:~0,-1%0&#xd;
 &#xd;
@@ -224,7 +216,7 @@ copy /Y voplibtcl\voplibext\voplibcon\* y:\TCL\%BL%&#xd;
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
