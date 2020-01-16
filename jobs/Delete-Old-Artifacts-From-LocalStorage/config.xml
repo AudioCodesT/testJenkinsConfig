@@ -79,10 +79,16 @@ oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 cd $WORKSPACE
 
 function RemoveFiles() {
-  
-  
+	FolderToCheck=$1
+	for i in {1..$#}
+	do
+  		echo $i
+  	done
 }
-</command>
+
+
+
+RemoveFiles IPP/SFB build_tgz</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
