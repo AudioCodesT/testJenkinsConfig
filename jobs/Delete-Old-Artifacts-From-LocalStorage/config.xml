@@ -82,10 +82,11 @@ cd $WORKSPACE
 function RemoveFiles() {
 	FolderToCheck=$1
     filesToDelete=()
+    allArgs=$@
     args_len=${#@}
 	for ((i=0;i &lt; ${args_len};i++))
 	do
-    	filesToDelete+=(&quot;$i&quot;)
+    	filesToDelete+=(&quot;${allArgs[$i]}&quot;)
   	done
     for file in ${filesToDelete[@]}
     do
