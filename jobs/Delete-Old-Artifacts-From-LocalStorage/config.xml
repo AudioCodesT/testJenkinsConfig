@@ -84,7 +84,7 @@ function RemoveFiles() {
     filesToDelete=()
     allArgs=$@
     args_len=${#@}
-	for ((i=0;i &lt; ${args_len};i++))
+	for ((i=1;i &lt; ${args_len};i++))
 	do
     	filesToDelete+=(&quot;${allArgs[$i]}&quot;)
   	done
