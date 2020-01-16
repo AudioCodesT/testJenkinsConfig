@@ -160,7 +160,7 @@ set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#
 git describe --tags &gt; TAG.txt&#xd;
 set /P BL=&lt;TAG.txt&#xd;
 echo COMP_VER=%BL% &gt; generated_version.properties&#xd;
-git branch --no-color -r --contains HEAD | head -1 | cut -d/ -f2 | sed &apos;s:feature/voice-ai:7.2.256:&apos; &gt; GIT_BRANCH.txt&#xd;
+git branch --no-color -r --contains HEAD | tail -1 | cut -d/ -f2 | sed &apos;s:feature/voice-ai:7.4:&apos; &gt; GIT_BRANCH.txt&#xd;
 set /P GIT_BRANCH=&lt;GIT_BRANCH.txt&#xd;
 echo GIT_BRANCH=%GIT_BRANCH% &gt;&gt; generated_version.properties&#xd;
 &#xd;
