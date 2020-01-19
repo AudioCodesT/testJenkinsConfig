@@ -357,7 +357,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>cd ACU\NGP\Build&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD_ST4.2\%NEWTAG%.7z C:\j\workspace\smtBLD_ST4.2\ACU\NGP\Build\Release\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\smtBLD\ACU\NGP\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
