@@ -78,6 +78,7 @@ e.g.: refs/tags/5.0.0.9345T</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>C:\j\workspace\smtBLD</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>#!c:\cygwin\bin\bash --login -i
