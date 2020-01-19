@@ -54,7 +54,7 @@ Executed periodically every night.</description>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>Artifactory-Update</assignedNode>
+  <assignedNode>AclnasArtifactory-Update</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -74,7 +74,8 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin_aclnas03\bin\bash --login
+      <command>#!c:\cygwin\bin\bash --login
+###!c:\cygwin_aclnas03\bin\bash --login
 User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
