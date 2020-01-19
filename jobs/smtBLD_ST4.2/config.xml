@@ -4,6 +4,7 @@
   <description>SmartTAP Build static server - run nightly for branch ST4.2</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>true</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -47,7 +48,7 @@ e.g.: refs/tags/4.2.0.9145T</description>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -167,7 +168,7 @@ echo &quot;**************************************************************&quot;
 echo &quot;**************************************************************&quot;
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.5">
+    <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
         <propertiesFilePath>release.prop</propertiesFilePath>
       </info>
@@ -368,7 +369,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
             <ignoreCase>true</ignoreCase>
           </condition>
           <publisherList>
-            <hudson.plugins.git.GitPublisher plugin="git@3.8.0">
+            <hudson.plugins.git.GitPublisher plugin="git@4.0.0">
               <configVersion>2</configVersion>
               <pushMerge>false</pushMerge>
               <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
@@ -395,7 +396,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
                       <onlyExactRuns>false</onlyExactRuns>
                     </hudson.plugins.parameterizedtrigger.FileBuildParameters>
                   </configs>
-                  <projects>UpdateVI-Jira</projects>
+                  <projects>Update-Jira</projects>
                   <condition>UNSTABLE_OR_BETTER</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -431,7 +432,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>yuvaly shukyr briank</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -466,9 +467,22 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <hudson.plugins.ws__cleanup.WsCleanup plugin="ws-cleanup@0.34">
+      <patterns class="empty-list"/>
+      <deleteDirs>false</deleteDirs>
+      <skipWhenFailed>false</skipWhenFailed>
+      <cleanWhenSuccess>true</cleanWhenSuccess>
+      <cleanWhenUnstable>true</cleanWhenUnstable>
+      <cleanWhenFailure>true</cleanWhenFailure>
+      <cleanWhenNotBuilt>true</cleanWhenNotBuilt>
+      <cleanWhenAborted>true</cleanWhenAborted>
+      <notFailBuild>true</notFailBuild>
+      <cleanupMatrixParent>false</cleanupMatrixParent>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.WsCleanup>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -485,19 +499,11 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -525,8 +531,9 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEWTAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
