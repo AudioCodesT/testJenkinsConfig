@@ -516,7 +516,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\smtBLD_ST4.2\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
+      <deployPattern>C:\j\workspace\smtBLD\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
