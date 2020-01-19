@@ -357,7 +357,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
       <command>cd ACU\NGP\Build&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD_ST4.3\%NEWTAG%.7z C:\j\workspace\smtBLD_ST4.3\ACU\NGP\Build\Release\</command>
+&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\smtBLD\%NEWTAG%.7z C:\j\workspace\smtBLD\ACU\NGP\Build\Release\</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
@@ -516,7 +516,7 @@ LaunchOneTouchEx.bat %NEWBUILD% 0</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>C:\j\workspace\smtBLD_ST4.3\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
+      <deployPattern>C:\j\workspace\smtBLD\${NEWTAG}.7z=&gt;SmartTAP/${VERSION}/</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
