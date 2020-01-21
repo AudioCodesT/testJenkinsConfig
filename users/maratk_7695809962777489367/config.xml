@@ -32,6 +32,7 @@
     <hudson.model.PaneStatusProperties>
       <collapsed>
         <string>executors</string>
+        <string>buildQueue</string>
       </collapsed>
     </hudson.model.PaneStatusProperties>
     <jenkins.security.seed.UserSeedProperty>
