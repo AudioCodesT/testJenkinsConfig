@@ -199,7 +199,17 @@ mkdir y:\Lib\%BL%&#xd;
 copy /Y lib.zip y:\Lib\%BL%&#xd;
 mkdir y:\TCL\%BL%&#xd;
 copy /Y voplibtcl\voplibext\voplibcon\* y:\TCL\%BL%&#xd;
-</command>
+&#xd;
+IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
+) ELSE ( net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot; )&#xd;
+&#xd;
+copy /Y voplibtcl\voplibext\wireshark\tpncp.dat z:Plugins_x64&#xd;
+copy /Y voplibtcl\voplibext\wireshark\tpncp.dat z:plugins&#xd;
+z:&#xd;
+del /F acWireShark.zip&#xd;
+WZZIP -rpu acWireShark.zip&#xd;
+&#xd;
+cd %WORKSPACE%</command>
     </hudson.tasks.BatchFile>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
