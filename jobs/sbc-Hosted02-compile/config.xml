@@ -154,7 +154,8 @@ if [ ! -d .git ]; then
   mv GWApp/.git .
   rm -rf GWApp
 else
-  git fetch origin $GERRIT_BRANCH
+  #git fetch origin $GERRIT_BRANCH
+  git fetch
 fi
 
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam OpenSource 
