@@ -154,12 +154,12 @@ if [ ! -d .git ]; then
   mv GWApp/.git .
   rm -rf GWApp
 else
-  #git fetch origin $GERRIT_BRANCH
-  git fetch
+  git fetch origin $GERRIT_BRANCH
+  #git fetch
 fi
 
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam OpenSource 
-git checkout -f origin/$GERRIT_BRANCH -- Shared || true    
+git checkout -f $GERRIT_BRANCH -- TrunkPackRam OpenSource 
+git checkout -f $GERRIT_BRANCH -- Shared || true    
 cd $WORKSPACE
 
 sudo chmod -R 755 .
