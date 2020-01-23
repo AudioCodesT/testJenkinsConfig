@@ -169,10 +169,14 @@ for img in ${images}; do
         aws ecr create-repository --repository-name &quot;${ECR_DOCKER_PREFIX}/${image}&quot;
     fi
     
-    ## Pull tag and push image to remote repository
+    ## Pull, tag and push image to remote repository
+    #  Image is pushed to ECR once with the tag it was pulled from Artifactory
+    #  and once with YAML version tag
     docker pull ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot;
     docker tag ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
+    docker tag ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
     docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
+    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
 done
 
 ## Create YAML for ECR
