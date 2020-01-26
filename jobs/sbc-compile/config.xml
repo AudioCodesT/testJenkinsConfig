@@ -307,6 +307,15 @@ Project=GWApp</properties>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.ElasticTimeOutStrategy">
+        <timeoutPercentage>150</timeoutPercentage>
+        <numberOfBuilds>3</numberOfBuilds>
+        <failSafeTimeoutDuration>false</failSafeTimeoutDuration>
+        <timeoutMinutesElasticDefault>60</timeoutMinutesElasticDefault>
+      </strategy>
+      <operationList/>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
       <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed &apos;s:.*origin/::&apos;`
 echo GERRIT_BRANCH=${GERRIT_BRANCH}
