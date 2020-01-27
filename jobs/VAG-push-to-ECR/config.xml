@@ -179,13 +179,14 @@ for img in ${images}; do
     docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
 done
 
-## Create YAML for ECR
-	#if ecr folder already exist then delete it before creating a new one
-[[ -d ecr ]] &amp;&amp; rm -rf ecr
-mkdir ecr
-sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version.yml &gt; ecr/docker-compose-vag-ecr-$version.yml
-sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-sm.yml &gt; ecr/docker-compose-vag-ecr-$version-sm.yml
-sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-central.yml &gt; ecr/docker-compose-vag-ecr-$version-central.yml
+## Create YAMLs for ECR
+#Basicaly this script does the following:
+#1. Create an empty `ecr` directory
+#2. Replace URI `docker-voice-ai.artifactory.corp.audiocodes.com`
+#          with `858367874798.dkr.ecr.eu-central-1.amazonaws.com/voice-ai`
+#   and put the new file in `ecr` directory
+#3. Remove tags from mongo &amp; influxdb images on the combined yaml.
+. ${WORKSPACE}/common/ECR-yaml-manipulation.sh
 
 ## Copy YAML files to S3
 aws s3 sync &quot;ecr&quot; s3://voice-ai/docker-compose/${version}
