@@ -194,6 +194,7 @@ done
 [[ -d ecr ]] &amp;&amp; rm -rf ecr
 mkdir ecr
 sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version.yml &gt; ecr/docker-compose-vag-ecr-$version.yml
+sed -r &apos;s/vag-(mongo|influxdb):.*/vag-\1/&apos; ecr/docker-compose-vag-ecr-$version.yml
 sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-sm.yml &gt; ecr/docker-compose-vag-ecr-$version-sm.yml
 sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-central.yml &gt; ecr/docker-compose-vag-ecr-$version-central.yml
 
