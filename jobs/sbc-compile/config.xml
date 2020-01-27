@@ -308,11 +308,8 @@ Project=GWApp</properties>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
-      <strategy class="hudson.plugins.build_timeout.impl.ElasticTimeOutStrategy">
-        <timeoutPercentage>150</timeoutPercentage>
-        <numberOfBuilds>3</numberOfBuilds>
-        <failSafeTimeoutDuration>false</failSafeTimeoutDuration>
-        <timeoutMinutesElasticDefault>60</timeoutMinutesElasticDefault>
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1000</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
