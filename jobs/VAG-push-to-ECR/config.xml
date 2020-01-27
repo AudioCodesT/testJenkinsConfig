@@ -191,11 +191,11 @@ done
 
 ## Create YAML for ECR
 #if ecr folder already exist then delete it before creating a new one
-[[ -d ecr ]] &amp;amp;&amp;amp; rm -rf ecr
+[[ -d ecr ]] &amp;&amp; rm -rf ecr
 mkdir ecr
-sed &amp;apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&amp;apos; docker-compose-vag-$version.yml &amp;gt; ecr/docker-compose-vag-ecr-$version.yml
-sed &amp;apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&amp;apos; docker-compose-vag-$version-sm.yml &amp;gt; ecr/docker-compose-vag-ecr-$version-sm.yml
-sed &amp;apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&amp;apos; docker-compose-vag-$version-central.yml &amp;gt; ecr/docker-compose-vag-ecr-$version-central.yml
+sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version.yml &gt; ecr/docker-compose-vag-ecr-$version.yml
+sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-sm.yml &gt; ecr/docker-compose-vag-ecr-$version-sm.yml
+sed &apos;s/docker-voice-ai.artifactory.corp.audiocodes.com/858367874798.dkr.ecr.eu-central-1.amazonaws.com\/voice-ai/g&apos; docker-compose-vag-$version-central.yml &gt; ecr/docker-compose-vag-ecr-$version-central.yml
 
 
 
