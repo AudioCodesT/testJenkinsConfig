@@ -186,7 +186,7 @@ done
 #          with `858367874798.dkr.ecr.eu-central-1.amazonaws.com/voice-ai`
 #   and put the new file in `ecr` directory
 #3. Remove tags from mongo &amp; influxdb images on the combined yaml.
-. ${WORKSPACE}/common/ECR-yaml-manipulation.sh
+#. ${WORKSPACE}/common/ECR-yaml-manipulation.sh
 
 ## Copy YAML files to S3
 aws s3 sync &quot;ecr&quot; s3://voice-ai/docker-compose/${version}
