@@ -148,7 +148,12 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/exte
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command># Find if this build should use another Opensorce Images with the same Commit change-ID
+      <command>echo Free space to this compile by deleting GWAPP compilation
+df -h .
+rm -rf /home/centos/jenkinsslave/workspace/TP_GWApp
+df -h .
+
+# Find if this build should use another Opensorce Images with the same Commit change-ID
 chmod 600 id_rsa_gerrit
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 #ID=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
