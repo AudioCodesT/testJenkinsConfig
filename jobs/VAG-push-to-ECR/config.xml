@@ -136,7 +136,11 @@ cat /home/centos/.aws/credentials
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>##
+      <command>## Install yq - this is temporary solution, should be installed in AMI!!!
+sudo add-apt-repository -y ppa:rmescandon/yq
+sudo apt update -y
+sudo apt install yq -y
+
 
 ### Build the project
 ## Set docker vars
