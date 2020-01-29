@@ -4,6 +4,7 @@
   <description>Create Hyper-V 2012 VM for ovoc server official release</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -51,7 +52,7 @@
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -130,11 +131,23 @@ else
     BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
 fi
 
+rm  -f /tmp/noDest.err || true
+if [[ ! -d /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual ]]; then
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;$(date) : No destination folder for branch ${BRANCH} on NetApp !!!&quot; &gt; /tmp/noDest.err
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    echo &quot;***********************************************************************&quot;
+    exit 1
+fi
+
 ## Check that TAG matches BaseVM version
 BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
-if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
-	exit -1
-fi
+#if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
+#	exit -1
+#fi
 
 cd ${WORKSPACE}
 
@@ -435,7 +448,7 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>Shuky.Riechard@audiocodes.com yuvaly@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -460,18 +473,23 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>OVOC Hyper-V 2012 image is ready</defaultSubject>
-      <defaultContent>OVOC for Hyper-V 2012 completed.
+      <defaultContent>$DEFAUL_CONTENT
 
-Files can be found on Netapp:
-\\netapp01\ems\Versions\ISO_Files
+&quot;$MSG&quot;
 </defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
-. ${WORKSPACE}/buildVars
+if [[ -f /tmp/noDest.err ]]; then
+    MSG=$(cat /tmp/noDest.err)
+else
+    . ${WORKSPACE}/buildVars
 
-cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
-RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}</presendScript>
+    cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
+    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+
+    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+fi</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
@@ -481,7 +499,7 @@ RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}</presendScript>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -493,19 +511,11 @@ RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}</presendScript>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -545,7 +555,7 @@ RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}</presendScript>
       <info>
         <propertiesContent>vmHostIP=&quot;10.7.10.177&quot;
 HyperV=&quot;2012&quot;</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -566,8 +576,9 @@ HyperV=&quot;2012&quot;</propertiesContent>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${TAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
