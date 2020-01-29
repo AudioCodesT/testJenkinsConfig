@@ -144,9 +144,9 @@ fi
 
 ## Check that TAG matches OVA version
 OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
-#if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
-#	exit -1
-#fi
+if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
+	exit -1
+fi
 
 OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
 
