@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -54,7 +55,7 @@
 printf &quot;%s------------------------------------\n&quot; &gt;&gt; RegionsNameAndIds.txt
 
 #list of other regions
-OTHER_REGIONS=&quot;us-west-2 us-west-1 us-east-1 eu-west-1 us-east-2 ap-southeast-1&quot;
+OTHER_REGIONS=&quot;eu-west-1 us-east-1 us-east-2 us-west-1 us-west-2 ap-southeast-1 ap-south-1&quot;
 OTHER_REGIONS=($OTHER_REGIONS) 
 
 currentRegion=&quot;eu-central-1&quot;
@@ -112,29 +113,13 @@ cat RegionsNameAndIds.txt
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.29">
       <recipients>ben.magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>cc:ben.magriso,cc:Shuky.Riechard,Mark.Kemel,Marina.Risher,Natan.Merfish,Liran.Badiri,Gal.Erez</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-          <email>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
-            </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
-            <attachBuildLog>false</attachBuildLog>
-            <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
-      </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>OVOC_${NEW_TAG} AMIs</defaultSubject>
       <defaultContent>&lt;pre&gt;
@@ -153,8 +138,9 @@ ${FILE,path=&quot;RegionsNameAndIds.txt&quot;}
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${NEW_TAG}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
