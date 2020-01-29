@@ -996,11 +996,11 @@
       <accountId>act-96d87a11</accountId>
       <groupId>sig-62a645da</groupId>
       <pendingInstances/>
-      <labelString>azure_win_slave</labelString>
+      <labelString>azure__win__slave</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
-        <hudson.model.labels.LabelAtom>azure_win_slave</hudson.model.labels.LabelAtom>
+        <hudson.model.labels.LabelAtom>azure__win__slave</hudson.model.labels.LabelAtom>
       </labelSet>
       <usage>EXCLUSIVE</usage>
       <tunnel></tunnel>
