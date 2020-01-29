@@ -866,18 +866,7 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0f8ecea2b4a468e11</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0f8ecea2b4a468e11</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-01-15 12:42:21.862 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -938,7 +927,6 @@
           <templateDesc>Azure Ovoc Image Creation</templateDesc>
           <labels></labels>
           <location>West Europe</location>
-          <availabilityType/>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
           <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
           <diskType>managed</diskType>
@@ -998,6 +986,21 @@
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
         <hudson.model.labels.LabelAtom>azure_ovoc_slave</hudson.model.labels.LabelAtom>
+      </labelSet>
+      <usage>EXCLUSIVE</usage>
+      <tunnel></tunnel>
+      <vmargs></vmargs>
+    </hudson.plugins.spotinst.cloud.AzureSpotinstCloud>
+    <hudson.plugins.spotinst.cloud.AzureSpotinstCloud plugin="spotinst@2.0.16">
+      <name>sig-62a645da</name>
+      <accountId>act-96d87a11</accountId>
+      <groupId>sig-62a645da</groupId>
+      <pendingInstances/>
+      <labelString>azure_win_slave</labelString>
+      <idleTerminationMinutes>10</idleTerminationMinutes>
+      <workspaceDir>c:\jenkinsslave</workspaceDir>
+      <labelSet class="sorted-set">
+        <hudson.model.labels.LabelAtom>azure_win_slave</hudson.model.labels.LabelAtom>
       </labelSet>
       <usage>EXCLUSIVE</usage>
       <tunnel></tunnel>
