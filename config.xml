@@ -992,9 +992,9 @@
       <vmargs></vmargs>
     </hudson.plugins.spotinst.cloud.AzureSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AzureSpotinstCloud plugin="spotinst@2.0.16">
-      <name>sig-62a645da</name>
+      <name>sig-83205856</name>
       <accountId>act-96d87a11</accountId>
-      <groupId>sig-62a645da</groupId>
+      <groupId>sig-83205856</groupId>
       <pendingInstances/>
       <labelString>azure_win_slave</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
