@@ -40,7 +40,14 @@ Push full repository (mirror) to server in DMZ at APC.</description>
   <customWorkspace>/home/centos/jenkinsslave/MeetingRecorder</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd ${WORKSPACE}
+      <command># GiT remote section in .git/config for DMZ server:
+#[remote &quot;mtr-dmz&quot;]
+#        url = jenkins@aclmrdev:gitsvr/MeetingRecorder.git
+#        uploadpack = powershell git-upload-pack
+#        receivepack = powershell git-receive-pack
+#        updatepack = powershell git-update-pack
+#        mirror = true
+
 git fetch
 sleep 10s
 git push --mirror mtr-dmz
