@@ -79,6 +79,7 @@
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
         <string>BIS Feature Keying</string>
+        <string>netbricks_jira</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string># R&amp;D Next Generation CPE</string>
@@ -88,7 +89,7 @@
         <string># All_BSP</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1580028636294</timestamp>
+      <timestamp>1580389096137</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Yaniv.Botner@audiocodes.com</emailAddress>
