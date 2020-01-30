@@ -73,7 +73,7 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin\bin\bash --login
+      <command>#!c:\cygwin64\bin\bash --login
 ###!c:\cygwin_aclnas03\bin\bash --login
 User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
