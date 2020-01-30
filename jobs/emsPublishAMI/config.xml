@@ -36,7 +36,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
@@ -61,6 +60,10 @@ OTHER_REGIONS=($OTHER_REGIONS)
 
 currentRegion=&quot;eu-central-1&quot;
 ImageName=ovocAMI_${NEW_TAG}
+
+BRANCH=${NEW_TAG:0:3}
+echo &quot;BRANCH=${BRANCH}&quot; &gt; prop
+
 
 #Get Image Id
 ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query &apos;Images[*].ImageId&apos;)
@@ -102,8 +105,14 @@ done
 echo &quot;Region Name &amp; Id&quot;
 cat RegionsNameAndIds.txt
 
+
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>prop</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
@@ -119,6 +128,47 @@ cat RegionsNameAndIds.txt
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
+          <publisherList>
+            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+              <recipientList>ben.magriso,Shuky.Riechard</recipientList>
+              <configuredTriggers>
+                <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+                  <email>
+                    <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                    <body>$PROJECT_DEFAULT_CONTENT</body>
+                    <recipientProviders>
+                      <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+                    </recipientProviders>
+                    <attachmentsPattern></attachmentsPattern>
+                    <attachBuildLog>false</attachBuildLog>
+                    <compressBuildLog>false</compressBuildLog>
+                    <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                    <contentType>project</contentType>
+                  </email>
+                </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+              </configuredTriggers>
+              <contentType>text/html</contentType>
+              <defaultSubject>OVOC Major version ${BRANCH} is released</defaultSubject>
+              <defaultContent>edit &lt;b&gt;aws_deleteOvocAmi&lt;/b&gt;https://jenkins/view/admin/job/aws_deleteOvocAmi/&lt;br&gt; jenkins job to not delete AMIs version ${BRANCH}</defaultContent>
+              <attachmentsPattern></attachmentsPattern>
+              <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+              <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+              <attachBuildLog>false</attachBuildLog>
+              <compressBuildLog>false</compressBuildLog>
+              <replyTo>$DEFAULT_REPLYTO</replyTo>
+              <saveOutput>false</saveOutput>
+              <disabled>false</disabled>
+            </hudson.plugins.emailext.ExtendedEmailPublisher>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
       <recipientList>cc:ben.magriso,cc:Shuky.Riechard,Mark.Kemel,Marina.Risher,Natan.Merfish,Liran.Badiri,Gal.Erez</recipientList>
       <configuredTriggers>
