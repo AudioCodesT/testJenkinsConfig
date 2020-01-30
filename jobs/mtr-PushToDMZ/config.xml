@@ -52,7 +52,7 @@ git fetch
 sleep 10s
 git push --mirror mtr-dmz
 status=$?
-[[ &quot;$status&quot; -ne &quot;0&quot; ]] &amp;&amp; exit 1
+#[[ &quot;$status&quot; -ne &quot;0&quot; ]] &amp;&amp; exit 1
 
 
 </command>
