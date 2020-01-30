@@ -35,7 +35,11 @@ Push full repository (mirror) to server in DMZ at APC.</description>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H/5 * * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <customWorkspace>/home/centos/jenkinsslave/MeetingRecorder</customWorkspace>
   <builders>
