@@ -153,7 +153,7 @@ cat RegionsNameAndIds.txt
               </configuredTriggers>
               <contentType>text/html</contentType>
               <defaultSubject>OVOC Major version ${BRANCH} is released</defaultSubject>
-              <defaultContent>edit &lt;b&gt;aws_deleteOvocAmi&lt;/b&gt;https://jenkins/view/admin/job/aws_deleteOvocAmi/&lt;br&gt; jenkins job to not delete AMIs version ${BRANCH}</defaultContent>
+              <defaultContent>edit &lt;a href=&quot;https://jenkins/view/admin/job/aws_deleteOvocAmi/&quot;&gt;aws_deleteOvocAmi&lt;/a&gt; jenkins job to not delete AMIs in version ${BRANCH}</defaultContent>
               <attachmentsPattern></attachmentsPattern>
               <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
               <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
