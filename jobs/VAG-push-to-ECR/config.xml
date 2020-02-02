@@ -48,6 +48,7 @@ Images without tags will not be processed.</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>VoiceAI-build-Docker</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>##
