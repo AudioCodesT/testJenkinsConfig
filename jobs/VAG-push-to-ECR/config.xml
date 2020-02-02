@@ -204,7 +204,7 @@ done
 cd ${WORKSPACE}
 git fetch
 git checkout -f origin/${BRANCH} -- common/ECR-yaml-manipulation.sh
-. /common/ECR-yaml-manipulation.sh
+. common/ECR-yaml-manipulation.sh
 
 
 
