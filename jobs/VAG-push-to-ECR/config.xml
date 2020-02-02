@@ -219,7 +219,7 @@ done
 #3. Remove `ports` section from mongo &amp; influxdb images on the combined yaml.
 #
 cd ${WORKSPACE}
-[[ &quot;$version&quot; -eq &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout ${BRANCH} -- common/ECR-yaml-manipulation.sh || git checkout refs/tags/${version} -- common/ECR-yaml-manipulation.sh
+[ &quot;$version&quot; -eq &quot;${BRANCH}&quot; ] &amp;&amp; git checkout ${BRANCH} -- common/ECR-yaml-manipulation.sh || git checkout refs/tags/${version} -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 
 
