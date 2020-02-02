@@ -47,6 +47,7 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string>AWS_Jira_Users</string>
+        <string>Synagogue</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>cc_users</string>
@@ -78,7 +79,7 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
       </roles>
-      <timestamp>1573745224724</timestamp>
+      <timestamp>1580651473306</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Binyamin.Zax@audiocodes.com</emailAddress>
