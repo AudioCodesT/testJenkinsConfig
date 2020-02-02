@@ -137,10 +137,10 @@ cat /home/centos/.aws/credentials
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>## Install yq - this is temporary solution, should be installed in AMI!!!
-curl -sL -o https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64 &amp;&amp; \
-         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
-         sudo chmod +x /usr/local/bin/yq
+      <command>### Install yq - this is temporary solution, should be installed in AMI!!!
+#curl -sL -o https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64 &amp;&amp; \
+#         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
+#         sudo chmod +x /usr/local/bin/yq
 
 ## Set branch by $version
 case $version in
