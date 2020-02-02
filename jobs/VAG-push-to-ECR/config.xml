@@ -48,7 +48,7 @@ Images without tags will not be processed.</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI-build-Docker</customWorkspace>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>##
