@@ -63,7 +63,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 git fetch
 sleep 10s
 
-for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s/\s*origin\///&apos;); do
+for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
     git checkout $br
     git push mtr-dmz --all
 done
