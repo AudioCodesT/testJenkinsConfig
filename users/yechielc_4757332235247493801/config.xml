@@ -46,6 +46,7 @@
       <roles>
         <string>authenticated</string>
         <string>AWS_Jira_Users</string>
+        <string>Synagogue</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -78,7 +79,7 @@
         <string>NewUser_Israel-BS</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1573461246988</timestamp>
+      <timestamp>1580723451118</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
       <emailAddress>Yechiel.Corn@audiocodes.com</emailAddress>
