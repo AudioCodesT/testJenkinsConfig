@@ -136,7 +136,7 @@ cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_e
 cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/about_logo.png
 cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo_login.png
 cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/images/about_logo.png
-echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/emsFile/conf/branding.txt
+echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/emsFiles/conf/branding.txt
 
 if [ $COMPANY == Nuera ]; then
 mkdir Documentation
