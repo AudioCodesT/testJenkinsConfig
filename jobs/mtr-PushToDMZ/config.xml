@@ -62,10 +62,11 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 
 git fetch
 sleep 10s
-git push --mirror mtr-dmz
-status=$?
-#[[ &quot;$status&quot; -ne &quot;0&quot; ]] &amp;&amp; exit 1
 
+for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s/\s*origin\///&apos;); do
+    git checkout $br
+    git push mtr-dmz --all
+done
 
 </command>
     </hudson.tasks.Shell>
