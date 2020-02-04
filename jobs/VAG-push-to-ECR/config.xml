@@ -349,10 +349,6 @@ DevOps Team</defaultContent>
         {
             &quot;pattern&quot;: &quot;docker-compose-vag-ecr-$version*.yml&quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files&quot;
-        },
-        {
-            &quot;pattern&quot;: &quot;$version-azure-mock.yml&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files&quot;
         }
     ]
 }</spec>
