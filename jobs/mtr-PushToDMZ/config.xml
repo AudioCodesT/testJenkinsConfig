@@ -66,7 +66,7 @@ sleep 10s
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
     git checkout $br
     echo &quot;*******************************************************************&quot;
-    echo &quot;\t\t\tPushing $br&quot;
+    echo -e &quot;\t\t\tPushing $br&quot;
     echo &quot;*******************************************************************&quot;
     git push mtr-dmz --all
 done
