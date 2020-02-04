@@ -285,6 +285,7 @@ Deployed -
 &gt; docker-compose-vag-ecr-$VERSION.yml
 &gt; docker-compose-vag-ecr-$VERSION-sm.yml
 &gt; docker-compose-vag-ecr-$VERSION-central.yml
+&gt; $VERSION-azure-mock.yml 
 to Artifactory &amp; S3
 
 On Artifactory
