@@ -1428,7 +1428,6 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>mtr-CodeAnalysis</string>
         <string>mtr-CodeAnalysis-FullRepo</string>
-        <string>mtr-PushToDMZ</string>
         <string>mtrBLD</string>
         <string>mtrCRV</string>
       </jobNames>
