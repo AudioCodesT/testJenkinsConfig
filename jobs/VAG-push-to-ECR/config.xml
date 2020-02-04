@@ -310,7 +310,7 @@ DevOps Team</defaultContent>
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>shukyr, yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -343,7 +343,10 @@ DevOps Team</defaultContent>
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;docker-compose-vag-ecr-$version*.yml&quot;,
+            &quot;pattern&quot;: [
+                &quot;docker-compose-vag-ecr-$version*.yml&quot;,
+                &quot;$version-azure-mock.yml&quot;
+            ],
             &quot;target&quot;: &quot;docker-voice-ai-files&quot;
         }
     ]
