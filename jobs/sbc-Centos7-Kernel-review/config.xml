@@ -33,10 +33,11 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -48,7 +49,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -75,7 +76,7 @@
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -229,7 +230,7 @@ fi</command>
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -246,22 +247,26 @@ fi</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
+        <username></username>
+        <password></password>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
         <credentials>
           <username></username>
           <password></password>
         </credentials>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
+        <username></username>
+        <password></password>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
         <credentials>
           <username></username>
           <password></password>
         </credentials>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
@@ -287,7 +292,7 @@ $WORKSPACE/centos7_external_version_data.h=&gt;com/ac/sbc/Centos7/${COMP_VER}</d
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
