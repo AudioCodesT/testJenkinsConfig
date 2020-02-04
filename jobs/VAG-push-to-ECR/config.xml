@@ -354,7 +354,7 @@ DevOps Team</defaultContent>
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;docker-voice-ai-files/docker-compose-vag-$version*.yml&quot;,
+            &quot;pattern&quot;: &quot;docker-voice-ai-files/docker-compose-vag-$version*.yml&quot;
         }
     ]
 }
