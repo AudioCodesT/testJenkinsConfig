@@ -39,7 +39,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -149,6 +149,9 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/exte
 cat ~/.netrc
 
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;origin/&apos; &apos;{print $NF}&apos;`
+
+#Clean the disk as possible as we can
+rm -rf ../TP_GWApp ../sbc_misc_compile
 
 cd ../..
 if [ ! -d .git ]; then
