@@ -48,6 +48,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>293e82d041830533</seed>
     </jenkins.security.seed.UserSeedProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29"/>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30"/>
   </properties>
 </user>
