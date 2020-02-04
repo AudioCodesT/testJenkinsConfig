@@ -216,15 +216,14 @@ done
 #1. Create an empty `ecr` directory
 #2. Replace URI `docker-voice-ai.artifactory.corp.audiocodes.com`
 #          with `858367874798.dkr.ecr.eu-central-1.amazonaws.com/voice-ai`
-#   and put the new file in `ecr` directory
 #3. Remove `ports` section from mongo &amp; influxdb images on the combined yaml.
+#4. Put the new file in `ecr` directory. 
 #
 cd ${WORKSPACE}
 [[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout refs/tags/${version} -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 
 cp $version-azure-mock.yml ecr
-
 
 
 ## Copy YAML files to S3
