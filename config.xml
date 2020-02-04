@@ -1390,6 +1390,10 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>MoveArtifactoryToLocalStorage_File</string>
         <string>MoveArtifactoryToLocalStorage_Zip</string>
+        <string>sbc-Centos7-ISO-compile</string>
+        <string>sbc-Centos7-ISO-review</string>
+        <string>sbc-Centos7-Kernel-compile</string>
+        <string>sbc-Centos7-Kernel-review</string>
         <string>sbc-collab-compile_end-web-user</string>
         <string>sbc-simulator-2.15</string>
         <string>SmartTAP-UpdateVI</string>
