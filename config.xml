@@ -1055,6 +1055,7 @@
         <string>CheckJira</string>
         <string>Delete-Old-Artifacts-From-LocalStorage</string>
         <string>Move-Old-Artifactory-To-LocalStorage</string>
+        <string>mtr-PushToDMZ</string>
         <string>syncFilesOvocServerToUi</string>
         <string>test-job</string>
         <string>test_sbc-basic-review</string>
