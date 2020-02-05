@@ -38,7 +38,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Yaakov.Bivas@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -46,6 +46,7 @@
         <string>authenticated</string>
         <string>365_Tas</string>
         <string>AWS_Jira_Users</string>
+        <string>Synagogue</string>
         <string># All ISRAEL</string>
         <string>Allowed RODC Password Replication Group</string>
         <string># SBC</string>
@@ -66,7 +67,7 @@
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1579427339053</timestamp>
+      <timestamp>1580913351691</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
