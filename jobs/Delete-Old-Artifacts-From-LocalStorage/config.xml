@@ -61,7 +61,7 @@ Executed periodically every night.</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.SCMTrigger>
-      <spec>H 20 * * 0</spec>
+      <spec>H 19 * * 0</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
     </hudson.triggers.SCMTrigger>
   </triggers>
@@ -107,7 +107,7 @@ RemoveFiles IPP/SFB build_tgz</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
