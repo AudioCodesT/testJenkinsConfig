@@ -80,7 +80,6 @@ DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 # Calculate the date we are going to delete
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
 
-set -xe
 cd $WORKSPACE
 
 function RemoveFiles() {
