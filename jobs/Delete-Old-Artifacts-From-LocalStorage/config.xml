@@ -76,8 +76,6 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
     <hudson.tasks.Shell>
       <command>#!c:\cygwin64\bin\bash --login
 ###!c:\cygwin_aclnas03\bin\bash --login
-User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
-curl=c:/curl/curl
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 # Calculate the date we are going to delete
 oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
