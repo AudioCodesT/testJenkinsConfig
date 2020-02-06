@@ -151,10 +151,10 @@ REM rename SmartTAP smtCRV</scriptContent>
       <command>$FILES = git show --pretty=&quot;&quot; --name-only $GERRIT_PATCHSET_REVISION | tail -n +6
 
 $SKIP = 1 # In review we start with 1 for skipping installers
-if (( $FILES -nomatch &quot;.cpp&quot; -AND $FILES -nomatch &quot;.c&quot; -AND $FILES -nomatch &quot;.h&quot; )) { $OPER+=2 }
-if (( $FILES -nomatch &quot;.java&quot; )) { $OPER+=4 }
-if (( $FILES -nomatch &quot;.cs&quot; )) { $OPER+=8 }
-#if (( $FILES -nomatch &quot;.pl&quot; )) { $OPER+=16 }
+if ( $FILES -nomatch &quot;.cpp&quot; -AND $FILES -nomatch &quot;.c&quot; -AND $FILES -nomatch &quot;.h&quot; ) { $OPER+=2 }
+if ( $FILES -nomatch &quot;.java&quot; ) { $OPER+=4 }
+if ( $FILES -nomatch &quot;.cs&quot; ) { $OPER+=8 }
+#if ( $FILES -nomatch &quot;.pl&quot; ) { $OPER+=16 }
 
 echo &quot;Skip code is: $SKIP&quot;
 
