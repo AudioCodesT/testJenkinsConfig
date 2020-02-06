@@ -44,39 +44,23 @@
     </hudson.search.UserSearchProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string>Agile users</string>
         <string># R&amp;D HDGW SYSTEM</string>
         <string>authenticated</string>
         <string>Palo_AWS-RND-BKP_NTWS</string>
-        <string># All 012 voip</string>
-        <string># ARM</string>
         <string>TG1000</string>
-        <string>AWS_Jira_Users</string>
-        <string># RnD ARM</string>
         <string>cc_users</string>
-        <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
-        <string>Allow Office365 Groups</string>
-        <string># ClearCase R&amp;D</string>
         <string>#All Breakfast</string>
-        <string># All R&amp;D</string>
         <string># All Lunch</string>
-        <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
-        <string># Gym</string>
         <string># MP20x deliveries</string>
-        <string>365_Tas</string>
-        <string>DevOps Team</string>
         <string>Password Manager Apply</string>
-        <string># Agile users</string>
         <string>CI_ARM_admins</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
-        <string># R&amp;D HDGW GROUP</string>
-        <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string># R&amp;D HDGW SYSTEM QA</string>
         <string>AudioCodes_VPN</string>
@@ -84,18 +68,35 @@
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
-        <string>Domain Users</string>
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
         <string>Sp365-DevOps-modify</string>
+        <string>CI_ARM_developers</string>
+        <string>Agile users</string>
+        <string># All 012 voip</string>
+        <string># ARM</string>
+        <string>AWS_Jira_Users</string>
+        <string># RnD ARM</string>
+        <string>Synagogue</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
+        <string># All R&amp;D</string>
+        <string>CatalogApps_Everyone</string>
+        <string># Gym</string>
+        <string>365_Tas</string>
+        <string>DevOps Team</string>
+        <string># Agile users</string>
+        <string># R&amp;D HDGW GROUP</string>
+        <string>FTP_default</string>
+        <string>Domain Users</string>
         <string>ARM-FC</string>
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
-        <string>CI_ARM_developers</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1579589661462</timestamp>
+      <timestamp>1580989500481</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Shuky.Riechard@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
