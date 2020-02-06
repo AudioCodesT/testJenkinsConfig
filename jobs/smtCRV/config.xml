@@ -160,7 +160,7 @@ echo &quot;Skip code is: $SKIP&quot;
 
 cd ACU\NGP\Build
 echo &quot;Running build batch with skip code $SKIP and with Build number 0000&quot;
-LaunchOneTouchEx.bat 0000 $SKIP
+.\LaunchOneTouchEx.bat 0000 $SKIP
 
 </command>
     </hudson.plugins.powershell.PowerShell>
