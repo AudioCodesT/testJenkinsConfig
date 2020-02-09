@@ -154,7 +154,7 @@ case $PROJECT in
     *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
     *&quot;WebRTC/Web&quot;*) SendTo=&quot;Ariel.Pessah,Igor.Kolosov,Ben.Magriso&quot;;;
-    *&quot;MobilityPlus/Android&quot;*) SendTo=&quot;Ariel.Pessah, Bjorn.Meijer, Eyal.Peretz, Sharon.Biniashvili, Ben.Magriso&quot;;;
+    *&quot;MobilityPlus&quot;*) SendTo=&quot;Ariel.Pessah, Bjorn.Meijer, Eyal.Peretz, Sharon.Biniashvili, Ben.Magriso&quot;;;
     *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
     *) SendTo=&quot;yossim&quot;
 esac
@@ -187,7 +187,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
         </htmlpublisher.HtmlPublisherTarget>
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
