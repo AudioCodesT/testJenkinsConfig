@@ -42,7 +42,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>false</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>kobi.Buskila@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -53,6 +53,7 @@
         <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
         <string># All Orange</string>
+        <string>Synagogue</string>
         <string># All Cars</string>
         <string># All__Beer_Sheva</string>
         <string># QA Networking</string>
@@ -91,7 +92,7 @@
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
       </roles>
-      <timestamp>1575467169098</timestamp>
+      <timestamp>1581260736170</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
