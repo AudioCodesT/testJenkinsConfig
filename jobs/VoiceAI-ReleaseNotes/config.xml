@@ -44,7 +44,7 @@ This job get all the information on the commits between the old tag to the new t
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector</url>
-        <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
