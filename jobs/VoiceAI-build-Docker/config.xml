@@ -53,6 +53,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <refspec>${GERRIT_REFNAME}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -330,7 +331,7 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
       <qualityGates/>
       <trendChartType>AGGREGATION_TOOLS</trendChartType>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
