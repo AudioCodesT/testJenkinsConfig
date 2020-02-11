@@ -65,6 +65,7 @@ sleep 10s
 
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
     git checkout $br
+    git pull origin $br
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
     echo &quot;*******************************************************************&quot;
@@ -75,7 +76,7 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>shukyr yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
