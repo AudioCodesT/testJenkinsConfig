@@ -69,12 +69,11 @@ git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
                                 done
 
 git fetch origin
-git pull origin
 
 sleep 10s
 
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
-    #git pull origin $br
+    git pull origin $br
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
     echo &quot;*******************************************************************&quot;
