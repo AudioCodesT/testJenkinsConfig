@@ -60,11 +60,15 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 #        updatepack = powershell git-update-pack
 #        mirror = true
 
-git fetch
+## Track ALL remote branches
+git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;; done
+
+git fetch origin
+git pull origin --all
+
 sleep 10s
 
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
-    git checkout $br
     git pull origin $br
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
