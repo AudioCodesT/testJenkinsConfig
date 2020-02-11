@@ -64,7 +64,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
                                     git branch --track | grep &quot;${remote#origin/}&quot;
                                     if [[ $? -eq 1]]; then
-                                        git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;;
+                                        git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;
                                     fi
                                 done
 
