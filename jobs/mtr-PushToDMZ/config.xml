@@ -68,13 +68,11 @@ git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
                                     fi
                                 done
 
-git fetch origin
-
-sleep 10s
 
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
     git reset --hard
-    git pull origin $br
+    git checkout $br
+    git pull origin
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
     echo &quot;*******************************************************************&quot;
