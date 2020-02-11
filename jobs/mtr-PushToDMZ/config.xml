@@ -84,12 +84,6 @@ done
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>shukyr yuvaly</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
-  </publishers>
+  <publishers/>
   <buildWrappers/>
 </project>
