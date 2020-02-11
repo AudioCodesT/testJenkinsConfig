@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -44,14 +44,15 @@
     </hudson.search.UserSearchProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string># All Dinner</string>
         <string># R&amp;D HDGW SYSTEM</string>
+        <string># All Dinner</string>
         <string>authenticated</string>
         <string># All 012 voip</string>
         <string>R&amp;D HDGW software</string>
         <string>TG1000</string>
         <string>AWS_Jira_Users</string>
         <string># R&amp;D HDGW SYSTEM SW</string>
+        <string>Synagogue</string>
         <string># All Cars</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -63,6 +64,7 @@
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># SBC ETAS</string>
         <string># All ISRAEL</string>
@@ -77,18 +79,19 @@
         <string># R&amp;D HDGW SYSTEM QA</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
+        <string>BIS Feature Keying</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1567433967505</timestamp>
+      <timestamp>1581415281875</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Haim.Hazan@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <jenkins.security.seed.UserSeedProperty>
