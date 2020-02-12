@@ -43,7 +43,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -177,6 +177,8 @@ if [ ! -d .git ]; then
   rm -rf GWApp
 fi
 git fetch
+if [ -z &quot;$GERRIT_BRANCH&quot; ]; then GERRIT_BRANCH=&quot;7.4&quot;; fi
+
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/Common/Include/HAWatchdog.h
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/HWwatchdog.h
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/SPI_Driver.h
