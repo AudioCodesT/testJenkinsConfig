@@ -45,7 +45,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Beni.Bloch@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -56,6 +56,7 @@
         <string>System_Software</string>
         <string># Board ETAS</string>
         <string>AWS_Jira_Users</string>
+        <string>Synagogue</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -90,7 +91,7 @@
         <string># All Airport City</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1573486734602</timestamp>
+      <timestamp>1581531768230</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>032e78a217d150d7</seed>
