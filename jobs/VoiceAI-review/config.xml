@@ -125,8 +125,8 @@
       <command>set -ex
 
 ## Coverage thresholds
-CVG_TH=&quot;50&quot;
-CVG_TH_Branches=&quot;35&quot;
+CVG_TH=&quot;0&quot;
+CVG_TH_Branches=&quot;0&quot;
 
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
