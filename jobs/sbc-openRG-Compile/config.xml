@@ -42,7 +42,7 @@
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>EXTERNAL_VERSION=rg/pkg/include</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -171,7 +171,8 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>
+      <command>sudo mount -o remount,rw /dce
+
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 cd ../..
