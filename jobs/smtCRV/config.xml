@@ -153,6 +153,10 @@ REM rename SmartTAP smtCRV</scriptContent>
 
 $FILES = git show --pretty=&quot;format:&quot; --name-only $GERRIT_PATCHSET_REVISION
 
+Write-Host &quot;*** Files in this commit:&quot;
+$FILES
+Write-Host &quot;***&quot;
+
 $SKIP = 1 # In review we start with 1 for skipping installers
 if ( -Not ( $FILES -Match &quot;.cpp&quot; -AND $FILES -Match &quot;.c&quot; -AND $FILES -Match &quot;.h&quot; ) ) { $SKIP+=2; Write-Host &quot;*** No .cpp .c .h files found.&quot; }
 if ( -Not ( $FILES -Match &quot;.java&quot; ) ) { $SKIP+=4; Write-Host &quot;*** No .java files found.&quot; }
