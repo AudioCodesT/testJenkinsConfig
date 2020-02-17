@@ -188,20 +188,24 @@ for file in $(git ls-files \*package.json); do
   npm -C $(dirname $file) version --allow-same-version $(echo $version | sed &apos;s/\.0*/./g&apos;) &gt; /dev/null
 done
 
-tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; --exclude=&apos;session-manager/node_modules&apos; -cvf VoiceAICo.tar *
-tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
-folder_name=VoiceAICo-$version
-if [[ -e ${folder_name} ]]
-then
-	rm -rf ${folder_name}
-fi
-mkdir ${folder_name}
-tar -xvf VoiceAICo.tar -C ${folder_name}
-tar -cvzf ${folder_name}.tgz ${folder_name}/
-
-TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-echo TARGET=${TARGET} &gt; voiceAI.properties
-echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
+#########################################################################################
+# WE STOP TO PRODUCE TGZ FILE
+#########################################################################################
+#tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; --exclude=&apos;session-manager/node_modules&apos; -cvf VoiceAICo.tar *
+#tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
+#folder_name=VoiceAICo-$version
+#if [[ -e ${folder_name} ]]
+#then
+#	rm -rf ${folder_name}
+#fi
+#mkdir ${folder_name}
+#tar -xvf VoiceAICo.tar -C ${folder_name}
+#tar -cvzf ${folder_name}.tgz ${folder_name}/
+#
+#TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+#echo TARGET=${TARGET} &gt; voiceAI.properties
+#echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
+#########################################################################################
 
 exit $ret_value
 </command>
