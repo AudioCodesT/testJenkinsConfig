@@ -309,7 +309,8 @@ netMask=&quot;24&quot;
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
 if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
 then
-	AMI_ID=ami-03b07cb67f9a8730b
+	#AMI_ID=ami-03b07cb67f9a8730b # &lt;-- without ENA support
+    AMI_ID=ami-0264e23c55ba36c29
 else
 	AMI_ID=ami-097a30155f82688fb
 fi
@@ -555,7 +556,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, yuval.yosha, ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
