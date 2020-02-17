@@ -312,7 +312,8 @@ then
 	#AMI_ID=ami-03b07cb67f9a8730b # &lt;-- without ENA support
     AMI_ID=ami-0264e23c55ba36c29
 else
-	AMI_ID=ami-097a30155f82688fb
+	#AMI_ID=ami-097a30155f82688fb # &lt;-- without ENA support
+    AMI_ID=ami-035a9df9f78df3db1
 fi
 
 emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
