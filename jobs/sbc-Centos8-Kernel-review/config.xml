@@ -148,7 +148,8 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/exte
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>
+      <command>sudo mount -o remount,rw /dce
+
 #Clean the disk as possible as we can
 echo Free space to this compile by deleting GWAPP compilation
 df -h .
