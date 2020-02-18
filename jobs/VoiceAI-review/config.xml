@@ -210,11 +210,6 @@ done
 exit $ret_value
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
