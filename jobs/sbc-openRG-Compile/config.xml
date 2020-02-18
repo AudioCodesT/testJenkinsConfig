@@ -171,7 +171,8 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>sudo mount -o remount,rw /dce
+      <command>#temporary add write permissions on the DCE
+sudo mount -o remount,rw /dce
 
 CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
