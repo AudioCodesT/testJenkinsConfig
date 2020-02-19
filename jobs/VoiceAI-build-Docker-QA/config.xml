@@ -52,7 +52,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <info>
         <scriptContent>export OLDTAG=$(echo ${description} | sed -e &apos;s/-.*$//&apos;)
 export short_ID=$(echo ${description} | sed -e &apos;s/.*-g//&apos;)
-export commit_ID=$(git show $short_ID | head -n 1 | cut -d&apos; &apos; -f2)
+export commit_ID=$(git show --format=&quot;%H&quot; --no-patch $short_ID)
 </scriptContent>
         <secureGroovyScript plugin="script-security@1.68">
           <script></script>
