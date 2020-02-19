@@ -74,7 +74,7 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin64\bin\bash
+      <command>#!c:\cygwin64\bin\bash --login
 ###!c:\cygwin_aclnas03\bin\bash --login
 set -xe
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
