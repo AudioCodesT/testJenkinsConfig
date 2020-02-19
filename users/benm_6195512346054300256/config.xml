@@ -52,7 +52,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Ben.Magriso@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -73,12 +73,13 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1573457558252</timestamp>
+      <timestamp>1582092487088</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>a58f89d9881597cc</seed>
