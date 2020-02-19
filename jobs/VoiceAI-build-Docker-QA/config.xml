@@ -395,19 +395,12 @@ BRANCH=${BRANCH}</properties>
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;config.sh&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/review&quot;,
-        },
-        {
-            &quot;pattern&quot;: &quot;common/setup-cert.sh&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/review&quot;,
-        }
-        {
-            &quot;pattern&quot;: &quot;docker-compose-$VERSION.yml &quot;,
+            &quot;pattern&quot;: &quot;docker-compose-*.yml &quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files/review&quot;,
         }
     ]
-}</spec>
+}
+</spec>
       </uploadSpec>
       <downloadSpec>
         <spec></spec>
