@@ -169,7 +169,9 @@ then
 	then
     	sendEmail=&quot;True&quot;
     	echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
+        echo &quot;****************************************************************************************************************&quot;
 		echo &quot;Currently running jenkins job in Web-ui OVOC... exiting the build&quot;
+        echo &quot;****************************************************************************************************************&quot;
         echo &quot;Currently running jenkins job in Web-ui OVOC&quot; &gt; infraNotLatest.txt
     	echo &quot;If you want to execute ${JOB_NAME} anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
         echo &quot;You can see the build here: ${BUILD_URL}&quot; &gt;&gt; infraNotLatest.txt
@@ -189,7 +191,9 @@ if [[ $infra_in_ovoc_commit_id != $infra_commit_id ]]
 then
 	sendEmail=&quot;True&quot;
 	echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
+    echo &quot;****************************************************************************************************************&quot;
 	echo &quot;Infra in ovoc is not the latest... exiting the build&quot;
+    echo &quot;****************************************************************************************************************&quot;
     echo &quot;Infra in ovoc is not the latest commit&quot; &gt; infraNotLatest.txt
     echo &quot;If you want to execute ${JOB_NAME} anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
     echo &quot;You can see the build here: ${BUILD_URL}&quot; &gt;&gt; infraNotLatest.txt
