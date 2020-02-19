@@ -69,7 +69,7 @@ commit_ID=$(git show $short_ID | head -n 1 | cut -d&apos; &apos; -f2)</scriptCon
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>${GERRIT_REFNAME}</refspec>
+        <refspec>${commit_ID}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -262,46 +262,6 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@7.3.0">
-      <analysisTools>
-        <io.jenkins.plugins.analysis.warnings.EsLint>
-          <id></id>
-          <name></name>
-          <pattern>eslint.xml</pattern>
-          <reportEncoding></reportEncoding>
-          <skipSymbolicLinks>false</skipSymbolicLinks>
-        </io.jenkins.plugins.analysis.warnings.EsLint>
-      </analysisTools>
-      <sourceCodeEncoding></sourceCodeEncoding>
-      <sourceDirectory></sourceDirectory>
-      <ignoreQualityGate>false</ignoreQualityGate>
-      <ignoreFailedBuilds>true</ignoreFailedBuilds>
-      <referenceJobName>-</referenceJobName>
-      <failOnError>false</failOnError>
-      <healthy>0</healthy>
-      <unhealthy>0</unhealthy>
-      <minimumSeverity plugin="analysis-model-api@7.0.4">
-        <name>LOW</name>
-      </minimumSeverity>
-      <filters/>
-      <isEnabledForFailure>false</isEnabledForFailure>
-      <isAggregatingResults>false</isAggregatingResults>
-      <isBlameDisabled>false</isBlameDisabled>
-      <isForensicsDisabled>false</isForensicsDisabled>
-      <qualityGates/>
-      <trendChartType>AGGREGATION_TOOLS</trendChartType>
-    </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
-    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun></regexpForRerun>
-      <rerunIfUnstable>false</rerunIfUnstable>
-      <rerunMatrixPart>false</rerunMatrixPart>
-      <checkRegexp>false</checkRegexp>
-      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
-      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
-        <delay>5</delay>
-      </delay>
-      <maxSchedule>2</maxSchedule>
-    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
