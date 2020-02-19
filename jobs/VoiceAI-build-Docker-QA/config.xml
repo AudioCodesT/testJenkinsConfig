@@ -203,6 +203,7 @@ for ri in ${remoteImgs}; do
 done
 
 ## Run build script
+echo &quot;***** Steart build *****&quot;
 cd ${WORKSPACE}
 sh build.sh
 ret_value=$?
