@@ -74,7 +74,7 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>#!c:\cygwin64\bin\bash --login
+      <command>#!c:\cygwin64\bin\bash
 ###!c:\cygwin_aclnas03\bin\bash --login
 DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
 # Calculate the date we are going to delete
