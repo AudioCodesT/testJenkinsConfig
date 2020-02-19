@@ -153,7 +153,14 @@ if you still want to run it then run again with &apos;0&apos;
         <ignoreCase>false</ignoreCase>
       </condition>
       <buildStep class="hudson.tasks.Shell">
-        <command>#check if currently running job in jenkins for web-ui ovoc in same branch
+        <command>#if its not official_iso exit this step
+if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; != &quot;official_iso&quot; ]]
+then
+	echo &quot;It&apos;s not official_iso, no need to check if currently running job in jenkins for web-ui ovoc in same branch&quot;
+    exit 0
+fi
+
+#check if currently running job in jenkins for web-ui ovoc in same branch
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 JENKINS_URL=&apos;https://jenkins&apos;
 JOB_URL=&quot;${JENKINS_URL}/job/webBuildOvoc-windows&quot;
