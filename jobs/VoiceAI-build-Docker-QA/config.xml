@@ -304,6 +304,11 @@ BRANCH=${BRANCH}</properties>
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>docker-voice-ai-files</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -321,7 +326,7 @@ BRANCH=${BRANCH}</properties>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
+      <useSpecs>false</useSpecs>
       <uploadSpec>
         <spec>{
     &quot;files&quot;: [
@@ -336,9 +341,8 @@ BRANCH=${BRANCH}</properties>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/common/setup-cert.sh
-${WORKSPACE}/docker-compose-*.yml
-${WORKSPACE}/docker/setup-machine.sh
+      <deployPattern>${WORKSPACE}/docker-compose-*.yml=&gt;review
+
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
