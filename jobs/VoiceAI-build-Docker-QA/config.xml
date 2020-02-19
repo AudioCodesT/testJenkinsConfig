@@ -52,7 +52,8 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <info>
         <scriptContent>OLDTAG=$(echo ${description} | sed -e &apos;s/-.*$//&apos;)
 short_ID=$(echo ${description} | sed -e &apos;s/.*-g//&apos;)
-commit_ID=$(git show $short_ID | head -n 1 | cut -d&apos; &apos; -f2)</scriptContent>
+commit_ID=$(git show $short_ID | head -n 1 | cut -d&apos; &apos; -f2)
+</scriptContent>
         <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
@@ -69,7 +70,6 @@ commit_ID=$(git show $short_ID | head -n 1 | cut -d&apos; &apos; -f2)</scriptCon
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>${commit_ID}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
