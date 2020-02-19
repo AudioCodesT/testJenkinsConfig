@@ -373,11 +373,6 @@ BRANCH=${BRANCH}</properties>
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>docker-voice-ai-files</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -395,21 +390,21 @@ BRANCH=${BRANCH}</properties>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>false</useSpecs>
+      <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;config.sh&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files&quot;,
+            &quot;target&quot;: &quot;docker-voice-ai-files/review&quot;,
         },
         {
             &quot;pattern&quot;: &quot;common/setup-cert.sh&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files&quot;,
+            &quot;target&quot;: &quot;docker-voice-ai-files/review&quot;,
         }
         {
             &quot;pattern&quot;: &quot;docker-compose-$VERSION.yml &quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files&quot;,
+            &quot;target&quot;: &quot;docker-voice-ai-files/review&quot;,
         }
     ]
 }</spec>
