@@ -304,11 +304,6 @@ BRANCH=${BRANCH}</properties>
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>docker-voice-ai-files</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
         <stagingPlugin/>
       </deployerDetails>
       <resolverDetails>
@@ -326,7 +321,7 @@ BRANCH=${BRANCH}</properties>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
-      <useSpecs>false</useSpecs>
+      <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
     &quot;files&quot;: [
