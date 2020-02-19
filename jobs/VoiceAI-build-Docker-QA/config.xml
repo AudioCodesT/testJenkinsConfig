@@ -248,6 +248,12 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
     fi
 done
 
+for yaml in `ls docker-compose-vag-*.yml`; do
+    newName=$(echo $yaml | sed -e &quot;s|[0-9]*.[0-9]*.[0-9]*|$description|&quot;)
+    mv $yaml $newName
+done
+
+ls -1 docker-compose-vag-*.yml
 
 echo &quot;Finished docker push to Artifactory.&quot;
 
