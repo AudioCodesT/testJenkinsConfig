@@ -166,8 +166,6 @@ BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; 
 #OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 #NEWTAG=`echo ${commit_ID} | awk -F/ &apos;{print $NF}&apos;`
 
-TAGVER=${NEWTAG::-2}
-
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 
 ## run eslint
@@ -249,10 +247,6 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
     fi
 done
 
-# Clean ALL docker objects
-#echo &quot;Step 3 - Removing ALL Docker objects.&quot;
-#docker rm --force $(docker ps -a -q) &gt; /dev/null 2&gt;&amp;1 || true
-#docker system prune --all --volumes --force
 
 echo &quot;Finished docker push to Artifactory.&quot;
 
