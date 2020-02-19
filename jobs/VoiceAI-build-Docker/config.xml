@@ -226,12 +226,11 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 
 ## Pull latest images from Artifactory &amp; get their hashes
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq &apos;.[][]&apos;)
+remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
 
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
-    ri=${ri:1:-1}
     docker pull ${DOCKER_REG}/${ri}:${BRANCH}
     docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
     # Collect all hashes of pulled images into HASHES
