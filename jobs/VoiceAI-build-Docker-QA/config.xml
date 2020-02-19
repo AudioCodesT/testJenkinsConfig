@@ -280,7 +280,7 @@ BRANCH=${BRANCH}</properties>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
     <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>ben.magriso yuvaly</recipients>
+      <recipients>yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
