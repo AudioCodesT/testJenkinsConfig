@@ -163,9 +163,11 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
     <hudson.tasks.Shell>
       <command>## Runtime vars
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
-NEWTAG=`echo ${commit_ID} | awk -F/ &apos;{print $NF}&apos;`
+#OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
+#NEWTAG=`echo ${commit_ID} | awk -F/ &apos;{print $NF}&apos;`
+
 TAGVER=${NEWTAG::-2}
+
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 
 ## run eslint
@@ -190,12 +192,11 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 
 ## Pull latest images from Artifactory &amp; get their hashes
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq &apos;.[][]&apos;)
+remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
 
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
-    ri=${ri:1:-1}
     docker pull ${DOCKER_REG}/${ri}:${BRANCH}
     docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
     # Collect all hashes of pulled images into HASHES
@@ -219,17 +220,18 @@ fi
 echo &quot;Pushing Docker images to Artifactory.&quot;
 
 ## Login to docker registry
-echo &quot;Step 1 - Login to docker registry.&quot;
+echo &quot;*** Step 1 - Login to docker registry.&quot;
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
-echo &quot;Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
+## Tagging &amp; pushing images to Artifactory
+echo &quot;*** Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
 for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; | grep -v vag-common); do
     dockerImage=$(echo $outcomeImage | sed &apos;s/^.*_//&apos;)
     imageID=$(docker images vag-* | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
     # only push images that are new (Were not pulled from Artifactory)
     if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
-        docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${NEWTAG}
-        docker push ${DOCKER_REG}/${dockerImage}:${NEWTAG}
+        docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${description}
+        docker push ${DOCKER_REG}/${dockerImage}:${description}
         ## Also push image with ${BRANCH} tag
         # Check if need to push with tag ${BRANCH} to Artifactory:
         # If highest tag on Artifactory is lower then ${NEWTAG},
