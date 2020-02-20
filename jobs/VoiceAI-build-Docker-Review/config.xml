@@ -334,7 +334,7 @@ BRANCH=${BRANCH}</properties>
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;yamls/docker-compose-*.yml &quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/review/${description}/&quot;
+            &quot;target&quot;: &quot;docker-voice-ai-files/review/&quot;
         }
     ]
 }
