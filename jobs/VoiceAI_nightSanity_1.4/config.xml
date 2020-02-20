@@ -100,6 +100,7 @@ fi
 
 TARGET=&quot;/netapp1/CompilationResults/BR_Feature/${TPLastTAG}_${VoiceLastTAG}_Night&quot;
 echo FOLDER_PATH=${TPLastTAG}_${VoiceLastTAG}_Night &gt; VoiceAI.properties
+echo TPLastTAG=${TPLastTAG} &gt;&gt; VoiceAI.properties
 
 # Create the folder in netapp1 but if exist, do not execute it again
 if [ -d &quot;$TARGET&quot; ]; then
