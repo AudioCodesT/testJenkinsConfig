@@ -248,11 +248,11 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
     fi
 done
 
-for yaml in `ls docker-compose-vag-*.yml | grep -v ${BRANCH}`; do
-    newName=$(echo $yaml | sed -r &quot;s|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|$description|g&quot;)
-    [[ -d yamls ]] || mkdir yamls
-    mv $yaml yamls/$newName
-done
+#for yaml in `ls docker-compose-vag-*.yml | grep -v ${BRANCH}`; do
+#    newName=$(echo $yaml | sed -r &quot;s|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|$description|g&quot;)
+#    [[ -d yamls ]] || mkdir yamls
+#    mv $yaml yamls/$newName
+#done
 
 ls -1 yamls/docker-compose-vag-*.yml
 
@@ -333,7 +333,7 @@ BRANCH=${BRANCH}</properties>
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;yamls/docker-compose-vag*.yml&quot;,
+            &quot;pattern&quot;: &quot;docker-compose-vag*.yml&quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files/review/&quot;
         }
     ]
