@@ -99,7 +99,7 @@ fi
 
 if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]]; then 
   DirChangeName=VoiceAiConnector/$ChangeWithHyphen
-  extention=&quot;.tgz&quot;
+  extention=&quot;.yml&quot;
   # Find the latest HostedTP in feature/voice-ai branch
   if [ `ls $Target/*.cmp | wc -l` == 0 ]; then
     cd &quot;$HostedLocation/$TPLastVoiceAI/&quot;
@@ -108,9 +108,9 @@ if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]];
 else
   DirChangeName=Firmware/$ChangeWithHyphen
   extention=&quot;.cmp&quot;
-  if [ `ls $Target/*.tgz | wc -l` == 0 ]; then
+  if [ `ls $Target/*.yml | wc -l` == 0 ]; then
     cd &quot;$voiceAILocation/$LastVoiceAI/&quot;
-    cp *.tgz $Target
+    cp *.yml $Target
   fi
 fi
 
@@ -163,7 +163,7 @@ fi
 
 # Don&apos;t execute the next job in case you don&apos;t found 2 files
 if [ `ls $Target/*.cmp | wc -l` != 1 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
-if [ `ls $Target/*.tgz | wc -l` != 1 ]; then echo &quot;Missing tgz file, exiting job&quot;; exit 1; fi
+if [ `ls $Target/*.yml | wc -l` != 1 ]; then echo &quot;Missing yml file, exiting job&quot;; exit 1; fi
 
 # Check the checksum of the 1 $extention file before executing the SANITY itself
 for f in $Target/*$extention; do
