@@ -151,8 +151,8 @@ MODE=${TESTMODE}</properties>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
-      <recipients>yossim</recipients>
+    <hudson.tasks.Mailer plugin="mailer@1.30">
+      <recipients>yossim shukyr</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
