@@ -453,6 +453,7 @@ BRANCH=${BRANCH}</properties>
       <deployPattern>${WORKSPACE}/common/setup-cert.sh
 ${WORKSPACE}/docker-compose-*.yml
 ${WORKSPACE}/docker/setup-machine.sh
+${WORKSPACE}/docker/config.json.sample
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
