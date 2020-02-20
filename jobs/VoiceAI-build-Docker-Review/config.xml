@@ -333,7 +333,7 @@ BRANCH=${BRANCH}</properties>
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;yamls/docker-compose-*.yml&quot;,
+            &quot;pattern&quot;: &quot;yamls/docker-compose-vag*.yml&quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files/review/&quot;
         }
     ]
