@@ -254,7 +254,7 @@ for yaml in `ls docker-compose-vag-*.yml | grep -v ${BRANCH}`; do
     mv $yaml yamls/$newName
 done
 
-ls -1 docker-compose-vag-*.yml
+ls -1 yamls/docker-compose-vag-*.yml
 
 echo &quot;Finished docker push to Artifactory.&quot;
 
