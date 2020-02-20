@@ -207,9 +207,17 @@ done
 #echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
 #########################################################################################
 
+description=$(git describe)
+echo &quot;description=$description&quot; &gt; voiceAI.properties
+
 exit $ret_value
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
@@ -307,6 +315,22 @@ exit $ret_value
       </delay>
       <maxSchedule>3</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>$description</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>VoiceAI-Review-build-Docker</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
