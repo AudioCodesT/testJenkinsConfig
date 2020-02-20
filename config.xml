@@ -1364,6 +1364,7 @@
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
         <string>test</string>
         <string>test_emsBuild_ovoc_server_7.8</string>
+        <string>test_sbc-simulator</string>
         <string>Windows OpenJDK 11</string>
       </jobNames>
       <jobFilters/>
