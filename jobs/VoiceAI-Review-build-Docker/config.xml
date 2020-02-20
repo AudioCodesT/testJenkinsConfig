@@ -205,7 +205,7 @@ done
 ## Run build script
 echo &quot;***** Steart build *****&quot;
 cd ${WORKSPACE}
-sh build.sh
+sh build.sh ac
 ret_value=$?
 
 echo &quot;script Return Value: $ret_value&quot;
