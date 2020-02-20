@@ -257,36 +257,10 @@ done
 ls -1 docker-compose-vag-*.yml
 
 echo &quot;Finished docker push to Artifactory.&quot;
-
-
-## Export env vars
-echo NEWTAG=${NEWTAG} &gt; VoiceAI.env
-echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
+</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>VoiceAI.env</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
-      <configs>
-        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-          <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>NEWTAG=${NEWTAG}
-BRANCH=${BRANCH}</properties>
-              <textParamValueOnNewLine>false</textParamValueOnNewLine>
-            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-          </configs>
-          <projects>VAG-copy-to-NetApp</projects>
-          <condition>UNSTABLE_OR_BETTER</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <triggerFromChildProjects>false</triggerFromChildProjects>
-        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-      </configs>
-    </hudson.plugins.parameterizedtrigger.BuildTrigger>
     <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
