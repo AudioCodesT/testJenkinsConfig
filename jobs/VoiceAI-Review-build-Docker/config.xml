@@ -254,7 +254,7 @@ done
 #    mv $yaml yamls/$newName
 #done
 
-ls -1 docker-compose-vag-*.yml
+ls -1 docker-compose-vag-${description}*.yml
 
 echo &quot;Finished docker push to Artifactory.&quot;
 </command>
