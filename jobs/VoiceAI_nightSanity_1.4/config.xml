@@ -114,12 +114,12 @@ fi
 cd &quot;$TP_DIR/$TPLastTAG&quot;
 unzip $(ls HostedTP_SIP* | grep -v LAB) -d $TARGET
 
-# Copy VoiceAICo.tgz
+# Copy yml docker file
 cp -f $VOICEAI_DIR/$VoiceLastTAG/* $TARGET
 
 # Don&apos;t execute the next job in case you don&apos;t found 2 files
 if [ `ls $TARGET/*.cmp | wc -l` != 1 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
-if [ `ls $TARGET/*.tgz | wc -l` != 1 ]; then echo &quot;Missing tgz file, exiting job&quot;; exit 1; fi
+if [ `ls $TARGET/*.yml | wc -l` != 1 ]; then echo &quot;Missing yml file, exiting job&quot;; exit 1; fi
 
 echo Execute sbc-BR-request ${TPLastTAG}_${VoiceLastTAG}
 
