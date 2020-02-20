@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
@@ -39,7 +40,7 @@
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
         <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -51,7 +52,7 @@
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -134,6 +135,7 @@
     <hudson.tasks.BatchFile>
       <command>setup.rb&#xd;
 cd ACPlugins&#xd;
+git clean -df Release*&#xd;
 build_qbs.rb&#xd;
 &#xd;
 IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
@@ -150,16 +152,16 @@ IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
 cd $WORKSPACE/ACPlugins
 cp -f README.VERSION.txt z:/plugins
 cp -f README.VERSION.txt z:/plugins_x64
-cp -f Release_Win32/*.dll z:/plugins
-cp -f Release_x64/*.dll z:/plugins_x64
+cp -f Release/Release_Win32/*.dll z:/plugins
+cp -f Release/Release_x64/*.dll z:/plugins_x64
 
 TAG=$(echo $GERRIT_REFNAME | awk -F &quot;/&quot; &apos;{print $NF}&apos;)
 
 mkdir c:/temp/$TAG
 mkdir c:/temp/$TAG/plugins
 mkdir c:/temp/$TAG/plugins_x64
-cp -f Release_Win32/*.dll c:/temp/$TAG/plugins
-cp -f Release_x64/*.dll c:/temp/$TAG/plugins_x64
+cp -f Release/Release_Win32/*.dll c:/temp/$TAG/plugins
+cp -f Release/Release_x64/*.dll c:/temp/$TAG/plugins_x64
 cd c:/temp/$TAG
 zip -r Plugin.zip . &gt; /dev/null
 echo TAG=$TAG &gt; $WORKSPACE/Wireshark.properties
@@ -178,7 +180,7 @@ WZZIP -rpu acWireShark.zip</command>
   </builders>
   <publishers/>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -195,19 +197,11 @@ WZZIP -rpu acWireShark.zip</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
         <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
@@ -236,8 +230,9 @@ WZZIP -rpu acWireShark.zip</command>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${GERRIT_REFNAME}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
