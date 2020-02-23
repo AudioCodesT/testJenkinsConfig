@@ -45,7 +45,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Pavel.Temnogorod@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -81,9 +81,10 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1573127995531</timestamp>
+      <timestamp>1582469502111</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>56dc3bdf99df605c</seed>
