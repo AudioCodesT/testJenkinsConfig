@@ -70,6 +70,9 @@ git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
 
 
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
+    echo &quot;*******************************************************************&quot;
+    echo -e &quot;\t\t\tPulling $br&quot;
+    echo &quot;*******************************************************************&quot;
     git reset --hard
     git checkout $br
     git pull origin $br
