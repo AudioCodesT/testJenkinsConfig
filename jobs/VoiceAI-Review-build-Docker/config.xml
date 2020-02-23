@@ -171,7 +171,7 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Runtime vars
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+#BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 #OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 #NEWTAG=`echo ${commit_ID} | awk -F/ &apos;{print $NF}&apos;`
 
