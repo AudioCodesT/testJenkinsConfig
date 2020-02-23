@@ -49,6 +49,18 @@ git archive 3 folders and upload to artifactory under tag folder</description>
           <defaultValue></defaultValue>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_PATCHSET_NUMBER</name>
+          <description>GERRIT_PATCHSET_NUMBER from triggering job (VoiceAI-Review)</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_CHANGE_NUMBER</name>
+          <description>GERRIT_CHANGE_NUMBER from triggering job (VoiceAI-Review)</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -258,8 +270,6 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
     fi
 done
 
-ls -1 docker-compose-vag-*.yml
-
 echo &quot;Finished docker push to Artifactory.&quot;
 </command>
     </hudson.tasks.Shell>
@@ -312,7 +322,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;docker-compose-vag-*-g???????.yml&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/review/&quot;
+            &quot;target&quot;: &quot;docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/&quot;
         }
     ]
 }
