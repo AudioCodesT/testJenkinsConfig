@@ -311,7 +311,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;docker-compose-vag*.yml&quot;,
+            &quot;pattern&quot;: &quot;docker-compose-vag-*-g*-central.yml&quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files/review/&quot;
         }
     ]
