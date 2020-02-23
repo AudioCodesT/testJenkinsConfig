@@ -32,6 +32,12 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
+          <name>BRANCH</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>description</name>
           <description></description>
           <defaultValue></defaultValue>
@@ -194,6 +200,7 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 ## Pull latest images from Artifactory &amp; get their hashes
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
 remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
+echo $remoteImgs
 
 HASHES=&quot;&quot;
 
@@ -208,7 +215,7 @@ done
 ## Run build script
 echo &quot;***** Steart build *****&quot;
 cd ${WORKSPACE}
-sh build.sh ac
+sh build.sh
 ret_value=$?
 
 echo &quot;script Return Value: $ret_value&quot;
@@ -250,12 +257,6 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
         echo &quot;*** No change in docker image \&quot;${dockerImage}\&quot;. Image not pushed to repository. ***&quot;
     fi
 done
-
-#for yaml in `ls docker-compose-vag-*.yml | grep -v ${BRANCH}`; do
-#    newName=$(echo $yaml | sed -r &quot;s|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|$description|g&quot;)
-#    [[ -d yamls ]] || mkdir yamls
-#    mv $yaml yamls/$newName
-#done
 
 ls -1 docker-compose-vag-*.yml
 
