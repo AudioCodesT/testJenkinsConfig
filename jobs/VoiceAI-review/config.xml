@@ -210,7 +210,7 @@ done
 description=$(git describe)
 echo &quot;description=$description&quot; &gt; voiceAI.properties
 echo &quot;GERRIT_PATCHSET_REVISION=${GERRIT_PATCHSET_REVISION}&quot; &gt;&gt; voiceAI.properties
-echo &quot;BRANCH=${BRANCH}&quot; &gt;&gt; voiceAI.properties
+echo &quot;BRANCH=${GERRIT_BRANCH}&quot; &gt;&gt; voiceAI.properties
 
 exit $ret_value
 </command>
