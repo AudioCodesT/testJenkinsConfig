@@ -35,7 +35,13 @@ git archive 3 folders and upload to artifactory under tag folder</description>
           <name>description</name>
           <description></description>
           <defaultValue></defaultValue>
-          <trim>false</trim>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_PATCHSET_REVISION</name>
+          <description>GERRIT_PATCHSET_REVISION from triggering job (VoiceAI-Review)</description>
+          <defaultValue></defaultValue>
+          <trim>true</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -50,10 +56,6 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <scriptContent>export OLDTAG=$(echo ${description} | sed -e &apos;s/-.*$//&apos;)
-export short_ID=$(echo ${description} | sed -e &apos;s/.*-g//&apos;)
-export commit_ID=$(git show --format=&quot;%H&quot; --no-patch $short_ID)
-</scriptContent>
         <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
