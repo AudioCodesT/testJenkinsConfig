@@ -210,7 +210,20 @@ if [[ $BOARD == &quot;M1000&quot; &amp;&amp; -e rg/pkg/tools/collect_rg_modules.
 fi</command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|wait for dependent artifact|Error fetching remote repo|UnknownHostException|JNLP4-connect connection).*</regexpForRerun>
+      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunMatrixPart>true</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestChildrenRetriggerAll</regexpForMatrixStrategy>
+      <noChildStrategy>DontRun</noChildStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>600</delay>
+      </delay>
+      <maxSchedule>3</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
   <buildWrappers>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
       <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
