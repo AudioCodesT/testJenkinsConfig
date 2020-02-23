@@ -78,7 +78,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${commit_ID}</name>
+        <name>${GERRIT_PATCHSET_REVISION}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
