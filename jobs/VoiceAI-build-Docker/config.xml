@@ -440,7 +440,7 @@ BRANCH=${BRANCH}</properties>
             &quot;target&quot;: &quot;docker-voice-ai-files/&quot;
         },
         {
-            &quot;pattern&quot;: &quot;utils/configLoader/config.json.sample&quot;,
+            &quot;pattern&quot;: &quot;utils/configLoader/config.sample.json&quot;,
             &quot;target&quot;: &quot;docker-voice-ai-files/&quot;
         }
     ]
