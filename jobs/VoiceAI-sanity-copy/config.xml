@@ -76,8 +76,6 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
   <builders>
     <hudson.tasks.Shell>
       <command>User=&quot;$artifactory_user:$artifactory_password&quot;
-Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
-DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
 CHANGES=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
 
 # Find the last TAG in GWApp branch
@@ -97,8 +95,9 @@ if ! [ -d &quot;$Target&quot; ]; then
   mkdir &quot;$Target&quot;
 fi
 
-if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]]; then 
-  DirChangeName=VoiceAiConnector/$ChangeWithHyphen
+if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]]; then
+  Artifactory=&quot;https://artifactory/api/storage/docker-voice-ai-files/review&quot;
+  DirChangeName=$ChangeWithHyphen
   extention=&quot;.yml&quot;
   # Find the latest HostedTP in feature/voice-ai branch
   if [ `ls $Target/*.cmp | wc -l` == 0 ]; then
@@ -106,6 +105,7 @@ if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]];
     unzip $(ls HostedTP_SIP* | grep -v LAB) -d $Target
   fi
 else
+  Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
   DirChangeName=Firmware/$ChangeWithHyphen
   extention=&quot;.cmp&quot;
   if [ `ls $Target/*.yml | wc -l` == 0 ]; then
@@ -113,6 +113,8 @@ else
     cp *.yml $Target
   fi
 fi
+
+DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
 
 # if file was compiled successfully but not yet deployed to artifactory, then wait 30 sec
 if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; then
