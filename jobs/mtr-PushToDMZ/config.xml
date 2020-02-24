@@ -111,27 +111,34 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 #        updatepack = powershell git-update-pack
 
 
-## Track ALL remote branches
-git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
-                                    git branch --track | grep &quot;${remote#origin/}&quot;
-                                    if [[ $? -eq 1 ]]; then
-                                        git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;
-                                    fi
-                                done
+## Track ALL remote branches --&gt; This was used when the job was scheduled.
+##                               Now that the job is triggered by gerrit,
+##                               the change that triggered the job is checked out
+##                               to the workspace and then pushed to the remote on DMZ
 
-
-for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
-    echo &quot;*******************************************************************&quot;
-    echo -e &quot;\t\t\tPulling $br&quot;
-    echo &quot;*******************************************************************&quot;
-    git reset --hard
-    git checkout $br
-    git pull origin $br
-    echo &quot;*******************************************************************&quot;
-    echo -e &quot;\t\t\tPushing $br&quot;
-    echo &quot;*******************************************************************&quot;
-    git push mtr-dmz --all
-done
+#git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
+#                                    git branch --track | grep &quot;${remote#origin/}&quot;
+#                                    if [[ $? -eq 1 ]]; then
+#                                        git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;
+#                                    fi
+#                                done
+#
+#
+#for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
+#    echo &quot;*******************************************************************&quot;
+#    echo -e &quot;\t\t\tPulling $br&quot;
+#    echo &quot;*******************************************************************&quot;
+#    git reset --hard
+#    git checkout $br
+#    git pull origin $br
+#    echo &quot;*******************************************************************&quot;
+#    echo -e &quot;\t\t\tPushing $br&quot;
+#    echo &quot;*******************************************************************&quot;
+#    git push mtr-dmz --all
+#done
+echo &quot;*******************************************************************&quot;
+git push mtr-dmz
+echo &quot;*******************************************************************&quot;
 
 </command>
     </hudson.tasks.Shell>
