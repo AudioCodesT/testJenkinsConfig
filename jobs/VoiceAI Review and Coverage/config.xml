@@ -150,7 +150,7 @@ for n in ${arr_name[@]}; do
 done
 
 cat thresholds.vars
-source thresholds.vars || exit 1
+source ./thresholds.vars || exit 1
 
 
 #enter the location to run the script
