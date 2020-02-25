@@ -47,7 +47,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
-        <secureGroovyScript plugin="script-security@1.55">
+        <secureGroovyScript plugin="script-security@1.68">
           <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
@@ -165,7 +165,8 @@ fi
 git checkout -f origin/$GERRIT_BRANCH -- \
   TrunkPackRam/Bsps/Common \
   TrunkPackRam/Bsps/BspOcteon/Include \
-  TrunkPackRam/PSTN/ph/PstnInt.h
+  TrunkPackRam/PSTN/ph/PstnInt.h \
+  OpenSource/pkgs
 cd $CurrentPath
 
 sudo chmod -R 755 .
