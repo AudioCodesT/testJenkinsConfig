@@ -113,7 +113,7 @@ fi
 
 # Copy the HostedTP and unzip it
 cd &quot;$TP_DIR/$TPLastTAG&quot;
-unzip $(ls HostedTP_SIP* | grep -v LAB) -d $TARGET
+unzip $(ls HostedTP* | grep -v LAB) -d $TARGET
 
 # Copy yml docker file
 cp -f $VOICEAI_DIR/$VoiceLastTAG/* $TARGET
