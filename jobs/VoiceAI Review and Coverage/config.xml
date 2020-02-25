@@ -129,7 +129,7 @@ CVG_TH=&quot;0&quot;
 CVG_TH_Branches=&quot;0&quot;
 
 arr_name=(session-manager)
-arr_cat=(Statements Branches Functions Lines)
+arr_cat=(Statements Branches Functions Lines blocking)
 
 [[ -f thresholds.vars ]] &amp;&amp; rm thresholds.vars
 
