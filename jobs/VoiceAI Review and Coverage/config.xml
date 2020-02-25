@@ -129,7 +129,7 @@ CVG_TH=&quot;0&quot;
 CVG_TH_Branches=&quot;0&quot;
 
 arr_name=(session-manager)
-arr_cat=(Statements Branches Functions Lines blocking)
+arr_cat=(Statements Branches Functions Lines)
 
 [[ -f thresholds.vars ]] &amp;&amp; rm thresholds.vars
 
@@ -143,7 +143,7 @@ for n in ${arr_name[@]}; do
         #echo $th_name: ${!th_name}
     done
 
-    bl_name=&quot;$n&quot;_blocking
+    bl_name=$(echo $n | sed &apos;s/-/_/g&apos;)_blocking
     bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .blocking&quot; coverage.json)
     echo &quot;export $bl_name=$bl_val&quot; &gt;&gt; thresholds.vars
     #echo $bl_name: ${!bl_name}
