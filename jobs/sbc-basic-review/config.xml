@@ -257,9 +257,9 @@ echo TAG Found $NEWTAG
 
 cd ..
 echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
+BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--centos=8.*/_CENTOS8/p`
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
-BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--centos=8.*/_CENTOS8/p`
 echo BOARD=${BOARD} &gt;&gt; generated_sbc_version.properties
 echo BOARDNAME=${BOARDNAME} &gt;&gt; generated_sbc_version.properties
 #TARGET=`echo $GERRIT_REFSPEC | sed &apos;s/[^0-9]*//g&apos;`
