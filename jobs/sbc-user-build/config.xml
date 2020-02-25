@@ -243,9 +243,10 @@ echo TAG Found $NEWTAG
 
 cd ..
 realBOARD=$BOARD
-[ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=_SIP
+SIPLAB=&quot;&quot;
 [ &quot;$BOARD&quot; = &quot;HostedTP7&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7 &amp;&amp; realBOARD=&quot;HostedTP&quot;
 [ &quot;$BOARD&quot; = &quot;HostedTP8&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS8 &amp;&amp; realBOARD=&quot;HostedTP&quot;
+[ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_SIP
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
 echo BOARDNAME=${realBOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
