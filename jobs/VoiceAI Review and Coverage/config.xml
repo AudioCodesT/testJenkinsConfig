@@ -131,21 +131,24 @@ CVG_TH_Branches=&quot;0&quot;
 arr_name=(session-manager)
 arr_cat=(Statements Branches Functions Lines)
 
+rm thresholds.prop
 for n in ${arr_name[@]}; do
     for c in ${arr_cat[@]}; do
-        th_name=&quot;$n&quot;_&quot;$c&quot;
+        th_name=$(echo $n | sed &apos;s/-/_/g&apos;)_&quot;$c&quot;
         th_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .\&quot;$c\&quot;&quot; coverage.json)
-        eval $th_name=\$th_val
-        
+        echo &quot;export $th_name=$th_val&quot; &gt;&gt; thresholds.prop
+
         #eval echo $th_name: \$th_val
-        echo $th_name: ${!th_name}
+        #echo $th_name: ${!th_name}
     done
-    
+
     bl_name=&quot;$n&quot;_blocking
     bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .blocking&quot; coverage.json)
-    eval $bl_name=\$bl_val
-    echo $bl_name: ${!bl_name}
+    echo &quot;export $bl_name=$bl_val&quot; &gt;&gt; Thresholds.prop
+    #echo $bl_name: ${!bl_name}
 done
+
+. thresholds.prop
 
 
 #enter the location to run the script
