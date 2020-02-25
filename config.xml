@@ -47,7 +47,6 @@
           <permission>hudson.model.Item.Build</permission>
           <permission>jenkins.metrics.api.Metrics.View</permission>
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
-          <permission>hudson.model.Item.Configure</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
@@ -185,7 +184,6 @@
         </assignedSIDs>
       </role>
     </roleMap>
-    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
