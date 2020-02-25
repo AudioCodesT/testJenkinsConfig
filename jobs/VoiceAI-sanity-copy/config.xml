@@ -102,7 +102,7 @@ if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]];
   # Find the latest HostedTP in feature/voice-ai branch
   if [ `ls $Target/*.cmp | wc -l` == 0 ]; then
     cd &quot;$HostedLocation/$TPLastVoiceAI/&quot;
-    unzip $(ls HostedTP_SIP* | grep -v LAB) -d $Target
+    unzip $(ls HostedTP* | grep -v LAB) -d $Target
   fi
 else
   Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
