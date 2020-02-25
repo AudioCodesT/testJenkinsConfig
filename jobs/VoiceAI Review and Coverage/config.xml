@@ -131,7 +131,8 @@ CVG_TH_Branches=&quot;0&quot;
 arr_name=(session-manager)
 arr_cat=(Statements Branches Functions Lines)
 
-rm thresholds.prop
+[[ -f thresholds.prop ]] || rm thresholds.prop
+
 for n in ${arr_name[@]}; do
     for c in ${arr_cat[@]}; do
         th_name=$(echo $n | sed &apos;s/-/_/g&apos;)_&quot;$c&quot;
