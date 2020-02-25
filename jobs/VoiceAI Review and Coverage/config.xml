@@ -35,7 +35,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -128,6 +127,26 @@
 ## Coverage thresholds
 CVG_TH=&quot;0&quot;
 CVG_TH_Branches=&quot;0&quot;
+
+arr_name=(google azure aws yandex)
+arr_cat=(Statements Branches Functions Lines)
+
+for n in ${arr_name[@]}; do
+    for c in ${arr_cat[@]}; do
+        th_name=&quot;$n&quot;_&quot;$c&quot;
+        th_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .\&quot;$c\&quot;&quot; coverage.json)
+        eval $th_name=\$th_val
+        
+        #eval echo $th_name: \$th_val
+        echo $th_name: ${!th_name}
+    done
+    
+    bl_name=&quot;$n&quot;_blocking
+    bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .blocking&quot; coverage.json)
+    eval $bl_name=\$bl_val
+    echo $bl_name: ${!bl_name}
+done
+
 
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
@@ -364,16 +383,7 @@ exit $ret_value
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec>{
-    &quot;files&quot;: [
-        {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/${folder_name}.tgz&quot;,
-            &quot;target&quot;: &quot;sbc-review/com/ac/sbc/VoiceAiConnector/${TARGET}/&quot;,
-            &quot;props&quot;: &quot;type=tar;status=ready&quot;,
-             &quot;recursive&quot;: &quot;false&quot;
-        }
-    ]
-}</spec>
+        <spec></spec>
       </uploadSpec>
       <downloadSpec>
         <spec></spec>
