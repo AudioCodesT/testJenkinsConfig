@@ -166,7 +166,7 @@ echo &quot;script Return Value: $ret_value&quot;
 [ &quot;$ret_value&quot; -eq 0 ] || exit 1
 
 ## Get coverage Summary
-curl -k https://test-jenkins/view/VoiceAI/job/VoiceAI-review/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
+curl -k https://test-jenkins/view/VoiceAI/job/${JOB_NAME}/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
 
 ## Calculate coverage vote
 while read item; do
