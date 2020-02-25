@@ -149,6 +149,7 @@ for n in ${arr_name[@]}; do
     #echo $bl_name: ${!bl_name}
 done
 
+cat thresholds.vars
 source thresholds.vars || exit 1
 
 
