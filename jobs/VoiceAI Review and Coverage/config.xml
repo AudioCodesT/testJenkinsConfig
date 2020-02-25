@@ -131,7 +131,7 @@ CVG_TH_Branches=&quot;0&quot;
 arr_name=(session-manager)
 arr_cat=(Statements Branches Functions Lines)
 
-[[ -f thresholds.prop ]] || rm thresholds.prop
+[[ -f thresholds.prop ]] &amp;&amp; rm thresholds.prop
 
 for n in ${arr_name[@]}; do
     for c in ${arr_cat[@]}; do
