@@ -1117,6 +1117,7 @@
         <string>sbc-user-build</string>
         <string>sbc_misc_compile</string>
         <string>sbc_nightSanity</string>
+        <string>test-sbc-compile</string>
       </jobNames>
       <jobFilters/>
       <columns>
