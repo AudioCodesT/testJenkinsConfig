@@ -399,7 +399,6 @@ echo &quot;Finish SanityInstall&quot;
 
 if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; || &quot;$BRANCH&quot; =~ &quot;7.8&quot; ]]; then
     echo &quot;Running 2 scripts SanityFK and SanityReboot&quot;
- 
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
 
@@ -416,7 +415,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 
 </command>
@@ -478,8 +477,8 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+          <script>#export &quot;$(cat sanity.properties)&quot;&#xd;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
