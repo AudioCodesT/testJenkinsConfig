@@ -161,7 +161,7 @@ git checkout -f origin/$GERRIT_BRANCH -- \
   TrunkPackRam/Bsps/Common \
   TrunkPackRam/Bsps/BspOcteon/Include \
   TrunkPackRam/PSTN/ph/PstnInt.h \
-  OpenSource/pkgs
+  OpenSource/pkgs Modules\Apps
 cd $CurrentPath
 
 sudo chmod -R 755 .
