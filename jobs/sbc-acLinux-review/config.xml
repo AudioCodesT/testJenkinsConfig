@@ -181,7 +181,7 @@ git checkout -f origin/$GERRIT_BRANCH -- \
   TrunkPackRam/Bsps/BspOcteon/Include/HWwatchdog.h \
   TrunkPackRam/Bsps/BspOcteon/Include/SPI_Driver.h \
   TrunkPackRam/PSTN/ph/PstnInt.h \
-  OpenSource/pkgs Modules\Apps
+  OpenSource/pkgs Modules/Apps
 cd $CurrentPath
 
 sudo chmod -R 755 .
