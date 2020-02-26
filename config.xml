@@ -55,6 +55,20 @@
           <sid># OVOC Web UI</sid>
         </assignedSIDs>
       </role>
+      <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Create</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Configure</permission>
+          <permission>hudson.model.Item.Discover</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
       <role name="CI_MeetRec_Developers" pattern="(mtr.*)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
