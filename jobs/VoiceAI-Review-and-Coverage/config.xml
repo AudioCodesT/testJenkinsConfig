@@ -139,7 +139,8 @@ for n in ${arr_name[@]}; do
         th_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .\&quot;$c\&quot;&quot; coverage.json)
         #echo &quot;export $th_name=$th_val&quot; &gt;&gt; thresholds.vars
         eval declare &quot;\$th_name&quot;=&quot;$th_val&quot;
-        eval echo &quot;Name: \$$th_name&quot;
+        eval echo &quot;Name: \$th_name&quot;
+        eval echo &quot;Thershold: \$$th_name&quot;
         #eval echo $th_name: \$th_val
         #echo $th_name: ${!th_name}
     done
@@ -148,6 +149,7 @@ for n in ${arr_name[@]}; do
     bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .blocking&quot; coverage.json)
     #echo &quot;export $bl_name=$bl_val&quot; &gt;&gt; thresholds.vars
     eval declare &quot;\$bl_name&quot;=&quot;$bl_val&quot;
+    eval echo &quot;Block Name: \$bl_name&quot;
     eval echo &quot;Block: \$$bl_name&quot;
     #echo $bl_name: ${!bl_name}
 done
