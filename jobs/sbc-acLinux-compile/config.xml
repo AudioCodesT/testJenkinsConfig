@@ -184,7 +184,7 @@ git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/HWw
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/SPI_Driver.h
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/PSTN/ph/PstnInt.h
 git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs
-git checkout -f origin/$GERRIT_BRANCH -- Modules\Apps
+git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps
 cd $CurrentPath
 
 sudo chmod -R 755 .
