@@ -9,7 +9,7 @@
         <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -26,7 +26,7 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
@@ -38,36 +38,41 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Michal.Vanunu@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string># All Beer Sheva</string>
         <string>authenticated</string>
-        <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
-        <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
-        <string># SBC</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># ClearCase R&amp;D</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string># All Beer Sheva</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
         <string># SBC Infra Core</string>
-        <string># R&amp;D System Software</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1553074181006</timestamp>
+      <timestamp>1582706757555</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
