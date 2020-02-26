@@ -141,7 +141,7 @@ echo &quot;script Return Value: $ret_value&quot;
 
 [ &quot;$ret_value&quot; -eq 0 ] || exit 1
 
-## Get thresholds &amp; blocings from json file
+## Get thresholds &amp; blockings from json file
 arr_name=(session-manager)
 arr_cat=(Statements Branches Functions Lines)
 
