@@ -76,6 +76,7 @@
         <string># All Managers</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Palo_Access_To_AWS-Remote_Desktop</string>
@@ -91,8 +92,9 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1581260736170</timestamp>
+      <timestamp>1582719752752</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
