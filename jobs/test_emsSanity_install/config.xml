@@ -330,7 +330,7 @@ aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityIn
 #add tag to this instans:  &quot;Spotinst&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Creator,Value=Spotinst
 #set to its delete volume when instance will be terminated
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
+aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: false    }  } &quot;
 #keep ip address into &quot;vmIP&quot;
 vmIP=$(aws ec2 describe-instances --instance-id $INSTANCE_ID --output text --query &apos;Reservations[*].Instances[*].PrivateIpAddress&apos;)
 #find what is the current branch
