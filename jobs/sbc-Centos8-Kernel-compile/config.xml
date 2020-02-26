@@ -152,8 +152,10 @@ cat ~/.netrc
 
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;origin/&apos; &apos;{print $NF}&apos;`
 
-#Clean the disk as possible as we can
+echo Free space to this compile by deleting GWAPP compilation
+df -h .
 rm -rf ../TP_GWApp ../sbc_misc_compile
+df -h .
 
 cd ../..
 if [ ! -d .git ]; then
