@@ -128,6 +128,20 @@
 CVG_TH=&quot;0&quot;
 CVG_TH_Branches=&quot;0&quot;
 
+
+#enter the location to run the script
+version=$(git describe --tags --abbrev=0)
+echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
+
+git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
+
+sh common/build_all.sh
+ret_value=$?
+echo &quot;script Return Value: $ret_value&quot;
+
+[ &quot;$ret_value&quot; -eq 0 ] || exit 1
+
+## Get thresholds &amp; blocings from json file
 arr_name=(session-manager)
 arr_cat=(Statements Branches Functions Lines)
 
@@ -153,22 +167,6 @@ for n in ${arr_name[@]}; do
     eval echo &quot;Block: \$$bl_name&quot;
     #echo $bl_name: ${!bl_name}
 done
-
-#cat thresholds.vars
-#source ./thresholds.vars || exit 1
-
-
-#enter the location to run the script
-version=$(git describe --tags --abbrev=0)
-echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
-
-git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
-
-sh common/build_all.sh
-ret_value=$?
-echo &quot;script Return Value: $ret_value&quot;
-
-[ &quot;$ret_value&quot; -eq 0 ] || exit 1
 
 ## Get coverage Summary
 curl -k https://test-jenkins/view/VoiceAI/job/${JOB_NAME}/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
