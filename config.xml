@@ -68,7 +68,6 @@
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
-          <sid>Hadas Attal</sid>
           <sid>hadasat</sid>
         </assignedSIDs>
       </role>
