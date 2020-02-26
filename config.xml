@@ -68,8 +68,8 @@
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
-          <sid>hadasa</sid>
           <sid>Hadas Attal</sid>
+          <sid>hadasat</sid>
         </assignedSIDs>
       </role>
       <role name="CI_MeetRec_Developers" pattern="(mtr.*)">
