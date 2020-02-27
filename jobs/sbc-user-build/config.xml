@@ -195,9 +195,12 @@ cd TrunkPackRam
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
 chmod 600 ../id_rsa_gerrit
-ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $GERRIT_REFSPEC | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
-ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID status:open | \
+&gt; othersCommits.txt
+if git show-branch --list | grep -q $GERRIT_REFSPEC; then
+  ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $GERRIT_REFSPEC | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+  ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID status:open | \
      grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
+fi
 
 while IFS= read -r line; do
    if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
