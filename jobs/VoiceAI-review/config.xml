@@ -308,21 +308,6 @@ exit $ret_value
       </failingTarget>
       <sourceEncoding>Cp1252</sourceEncoding>
     </hudson.plugins.cobertura.CoberturaPublisher>
-    <hudson.plugins.emma.EmmaPublisher plugin="emma@1.29">
-      <includes>**/coverage/*coverage.xml</includes>
-      <healthReports>
-        <minClass>0</minClass>
-        <maxClass>100</maxClass>
-        <minMethod>0</minMethod>
-        <maxMethod>70</maxMethod>
-        <minBlock>0</minBlock>
-        <maxBlock>80</maxBlock>
-        <minLine>0</minLine>
-        <maxLine>80</maxLine>
-        <minCondition>0</minCondition>
-        <maxCondition>80</maxCondition>
-      </healthReports>
-    </hudson.plugins.emma.EmmaPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|node is offline|Error fetching remote|JNLP4-connect connection).*</regexpForRerun>
       <rerunIfUnstable>false</rerunIfUnstable>
