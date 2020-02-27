@@ -44,6 +44,7 @@
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
+        <string>365_Lucca</string>
         <string>Allowed RODC Password Replication Group</string>
         <string># SBC</string>
         <string>Users</string>
@@ -60,9 +61,9 @@
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1573487826828</timestamp>
+      <timestamp>1582788915972</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Eduard.Egorov@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
   </properties>
