@@ -411,7 +411,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 	# run sanity test and copy logs, and if sanity fails then copy logs and exit with error:
     else python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
          &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
-         || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
+         || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ;}
 fi
 
 if [[ &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]; then 
