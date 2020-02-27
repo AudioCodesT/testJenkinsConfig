@@ -233,7 +233,7 @@ exit $ret_value
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.12">
-      <coberturaReportFile>**/coverage/coverage*.xml</coberturaReportFile>
+      <coberturaReportFile>**/coverage/*coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
       <failUnhealthy>false</failUnhealthy>
       <failUnstable>false</failUnstable>
