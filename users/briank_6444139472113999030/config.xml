@@ -106,6 +106,7 @@
         <string>AI-ENG</string>
         <string># AUDC - HR - All USA</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string>MUSIC Telecom SDevel</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
@@ -143,7 +144,7 @@
         <string>AI-ClearCase</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1579182285823</timestamp>
+      <timestamp>1582910105056</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Brian.Kling@audiocodes.com</emailAddress>
