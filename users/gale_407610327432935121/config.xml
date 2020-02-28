@@ -69,6 +69,7 @@
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -83,12 +84,13 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1573497705094</timestamp>
+      <timestamp>1582920587590</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Gal.Erez@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
