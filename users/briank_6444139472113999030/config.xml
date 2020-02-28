@@ -42,6 +42,13 @@
           <properties class="hudson.model.View$PropertyList"/>
           <jobNames>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
+            <string>mtrBLD</string>
+            <string>mtrCRV</string>
+            <string>smtBLD</string>
+            <string>smtBLD_ST4.2</string>
+            <string>smtBLD_ST4.3</string>
+            <string>smtBLD_ST5.0</string>
+            <string>smtCRV</string>
           </jobNames>
           <jobFilters/>
           <columns>
@@ -55,7 +62,11 @@
             <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
             <io.jenkins.plugins.analysis.core.columns.IssuesTotalColumn plugin="warnings-ng@7.3.0">
               <selectTools>false</selectTools>
-              <tools/>
+              <tools>
+                <io.jenkins.plugins.analysis.core.model.ToolSelection>
+                  <id></id>
+                </io.jenkins.plugins.analysis.core.model.ToolSelection>
+              </tools>
               <name># Issues</name>
               <labelProviderFactory>
                 <jenkins/>
