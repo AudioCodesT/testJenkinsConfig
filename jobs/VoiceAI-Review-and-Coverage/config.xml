@@ -248,15 +248,15 @@ exit $ret_value
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>session-manager/coverage/**/*</artifacts>
+      <artifacts>session-manager/coverage/**/* alarms/coverage.xml</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.12">
-      <coberturaReportFile>**/*coverage.xml</coberturaReportFile>
+    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.15">
+      <coberturaReportFile>alarms/coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
       <failUnhealthy>false</failUnhealthy>
       <failUnstable>false</failUnstable>
@@ -330,6 +330,7 @@ exit $ret_value
         </targets>
       </failingTarget>
       <sourceEncoding>Cp1252</sourceEncoding>
+      <enableNewApi>false</enableNewApi>
     </hudson.plugins.cobertura.CoberturaPublisher>
   </publishers>
   <buildWrappers>
