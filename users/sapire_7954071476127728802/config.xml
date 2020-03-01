@@ -38,7 +38,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Sapir.Erlich@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -55,6 +55,7 @@
         <string>Logistics_maintenance</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -69,7 +70,7 @@
         <string>Domain Users</string>
         <string># All Airport City</string>
       </roles>
-      <timestamp>1573564215952</timestamp>
+      <timestamp>1583051556584</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
