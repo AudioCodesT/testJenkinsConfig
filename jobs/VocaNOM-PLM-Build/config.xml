@@ -99,7 +99,7 @@
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\PLM</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>cd PLM&#xd;
+      <command>cd PhoneListManager&#xd;
 %comspec% /k go.bat</command>
     </hudson.tasks.BatchFile>
   </builders>
