@@ -103,7 +103,23 @@
 %comspec% /k go.bat</command>
     </hudson.tasks.BatchFile>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.plugins.gerrit.GerritNotifier plugin="gerrit@0.7">
+      <git__home>.git</git__home>
+      <gerrit__host>test-gerrit</gerrit__host>
+      <gerrit__port>29418</gerrit__port>
+      <gerrit__username>jenkins</gerrit__username>
+      <approve__value>+1</approve__value>
+      <unstable__value>-1</unstable__value>
+      <reject__value>-1</reject__value>
+      <review__approve__value>0</review__approve__value>
+      <review__unstable__value>0</review__unstable__value>
+      <review__reject__value>0</review__reject__value>
+      <gerrit__approve__command>gerrit approve --verified=%s --code-review=%s --message=&quot;%s&quot; %s</gerrit__approve__command>
+      <private__key__file__path>/var/lib/jenkins/.ssh/id_rsa_jenkins</private__key__file__path>
+      <passPhrase></passPhrase>
+    </hudson.plugins.gerrit.GerritNotifier>
+  </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${GERRIT_REFSPEC}</template>
