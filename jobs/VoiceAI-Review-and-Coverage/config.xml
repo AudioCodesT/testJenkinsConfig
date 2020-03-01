@@ -248,7 +248,7 @@ exit $ret_value
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>session-manager/coverage/**/* alarms/coverage.xml</artifacts>
+      <artifacts>alarms/**/coverage.xml</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
