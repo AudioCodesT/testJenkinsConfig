@@ -134,7 +134,7 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>OpenSource/acLinux</customWorkspace>
+  <customWorkspace>OpenSource/acLinux2.0</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>BL=`git describe --tags`
