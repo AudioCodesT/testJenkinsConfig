@@ -271,8 +271,9 @@ CheckFolder sbc-release/com/ac/sbc/ISO/7.2.254 &quot;ISO/7.2.254&quot;
 #CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 &quot;VSSBC/7.2.254&quot; 
 # Other Projects
 CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector &quot;VoiceAiConnector&quot;
-CheckFolder dsp-release/com/ac/dsp/Gen5 &quot;DSP/Gen5&quot;
-
+CheckFolder dsp-release/com/ac/dsp/Gen5/710 &quot;DSP/Gen5/710&quot;
+CheckFolder dsp-release/com/ac/dsp/Gen5/722 &quot;DSP/Gen5/722&quot;
+CheckFolder dsp-release/com/ac/dsp/Gen5/723 &quot;DSP/Gen5/723&quot;
 # Calculate the date we are going to delete for IPPPhone (only 30 days)
 countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
 deep=1
@@ -285,7 +286,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
