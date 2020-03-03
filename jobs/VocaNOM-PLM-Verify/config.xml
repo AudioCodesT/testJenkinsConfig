@@ -104,7 +104,8 @@
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
-      <command>&quot;/C/Program Files/Git/bin/bash.exe&quot; --login
+      <command>#!C:\Program Files\Git\bin\bash --login -i
+set -x
 
 WORKSPACE=&quot;/c/jenkinsslave/workspace/VocaNom&quot;
 cd ${WORKSPACE}/PLM
