@@ -76,8 +76,9 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1582820532862</timestamp>
+      <timestamp>1583249587902</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Irina.Veisas@audiocodes.com</emailAddress>
