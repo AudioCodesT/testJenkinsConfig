@@ -100,7 +100,8 @@
   <builders>
     <hudson.tasks.BatchFile>
       <command>cd PhoneListManager&#xd;
-%comspec% /k go.bat</command>
+%comspec% /k go.bat&#xd;
+</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
