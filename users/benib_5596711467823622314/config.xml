@@ -74,6 +74,7 @@
         <string># All Managers</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -89,9 +90,10 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1581531768230</timestamp>
+      <timestamp>1583259963069</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>032e78a217d150d7</seed>
