@@ -420,7 +420,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]; then
 
 fi
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 
 </command>
@@ -482,8 +482,8 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+          <script>#export &quot;$(cat sanity.properties)&quot;&#xd;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
