@@ -109,7 +109,7 @@ set -x
 
 WORKSPACE=&quot;/c/jenkinsslave/workspace/VocaNom&quot;
 cd ${WORKSPACE}/PLM
-cat vote.txt</command>
+ca vote.txt</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
