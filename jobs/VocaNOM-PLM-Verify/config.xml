@@ -106,7 +106,7 @@
   <publishers/>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${GERRIT_REFSPEC}</template>
+      <template>#${BUILD_NUMBER}_Project:${GERRIT_PROJECT}_Branch:${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
