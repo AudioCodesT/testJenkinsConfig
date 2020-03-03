@@ -103,6 +103,13 @@
 %comspec% /k go.bat&#xd;
 </command>
     </hudson.tasks.BatchFile>
+    <hudson.tasks.Shell>
+      <command>&quot;/C/Program Files/Git/bin/bash.exe&quot; --login
+
+WORKSPACE=&quot;/c/jenkinsslave/workspace/VocaNom&quot;
+cd ${WORKSPACE}/PLM
+cat vote.txt</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers/>
   <buildWrappers>
