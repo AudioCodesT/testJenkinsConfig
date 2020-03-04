@@ -63,6 +63,7 @@
         <string># All Lunch</string>
         <string>Logistics_maintenance</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -75,6 +76,7 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string>Agile users</string>
         <string># All 012 voip</string>
         <string>R&amp;D HDGW software</string>
@@ -102,9 +104,9 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># SDN &amp; NFV</string>
       </roles>
-      <timestamp>1573460986228</timestamp>
+      <timestamp>1583327702716</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Alex.Agranov@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
