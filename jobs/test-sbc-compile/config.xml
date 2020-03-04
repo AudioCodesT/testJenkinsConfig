@@ -31,7 +31,7 @@
         <hudson.model.StringParameterDefinition>
           <name>NEWTAG</name>
           <description></description>
-          <defaultValue></defaultValue>
+          <defaultValue>7.30A.000</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -109,11 +109,6 @@ BOARDNAME=${BOARD}
 #rm -f $output_folder/*external_version_data.h
 BOARDFINALNAME=${BOARDNAME}
 
-NEWTAG=&quot;7.30A.000&quot;
-echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
-echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; generated_sbc_version.properties
-echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_sbc_version.properties
-
 echo Test &gt; ram${BOARDNAME}.cmp
 echo Test &gt; ram${BOARDNAME}.map
 
@@ -123,11 +118,6 @@ zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
-      </info>
-    </EnvInjectBuilder>
   </builders>
   <publishers/>
   <buildWrappers>
@@ -137,15 +127,6 @@ zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
-      <script>GERRIT_BRANCH=&quot;7.4&quot;
-echo GERRIT_BRANCH=${GERRIT_BRANCH}
-
-</script>
-      <scriptType>unixScript</scriptType>
-      <runOnlyOnParent>false</runOnlyOnParent>
-      <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
-    </com.lookout.jenkins.EnvironmentScript>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
@@ -179,8 +160,8 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/Temp/${NEWTAG}
-${WORKSPACE}/${BOARDNAME}_F$NEWTAG.zip=&gt;com/ac/sbc/Temp/${NEWTAG}/map
+      <deployPattern>${WORKSPACE}/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/Temp/${GERRIT_BRANCH}/${NEWTAG}
+${WORKSPACE}/${BOARDNAME}_F$NEWTAG.map.zip=&gt;com/ac/sbc/Temp/${GERRIT_BRANCH}/${NEWTAG}/map
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
@@ -193,7 +174,7 @@ ${WORKSPACE}/${BOARDNAME}_F$NEWTAG.zip=&gt;com/ac/sbc/Temp/${NEWTAG}/map
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
-      <artifactoryCombinationFilter>label==&quot;sbc-linux-build&quot;</artifactoryCombinationFilter>
+      <artifactoryCombinationFilter>$GERRIT_BRANCH!=NextGenCPE || BOARD==MP5XXNG_SIP</artifactoryCombinationFilter>
       <multiConfProject>true</multiConfProject>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
