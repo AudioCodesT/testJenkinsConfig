@@ -416,7 +416,7 @@ fi
 
 if [[ &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]; then 
 	python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP
-	python2.7 SanityTest.py $NEW_TAG $vmIP
+	python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting
 
 fi
 #3. if tests pass then terminate the tested machine
