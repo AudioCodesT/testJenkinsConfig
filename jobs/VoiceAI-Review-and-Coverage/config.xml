@@ -141,7 +141,7 @@ echo &quot;script Return Value: $ret_value&quot;
 
 [ &quot;$ret_value&quot; -eq 0 ] || exit 1
 
-## Collect all coverage reports
+## Collect all coverage reports to one place
 cd ${WORKSPACE}
 mkdir coverage
 find . -path ./misc -prune -o -name &quot;*coverage.xml&quot; -exec cp {} coverage/ \;
