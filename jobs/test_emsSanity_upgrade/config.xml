@@ -77,7 +77,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -429,7 +428,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 fi
 
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 </command>
     </hudson.tasks.Shell>
@@ -454,7 +453,6 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
               <string>UNSTABLE</string>
             </results>
             <role>SLAVE</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
@@ -491,17 +489,12 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+          <script>#export &quot;$(cat sanity.properties)&quot;&#xd;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, ben.magriso, yuval.yosha</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
