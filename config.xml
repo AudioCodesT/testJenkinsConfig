@@ -1382,6 +1382,7 @@
         <string>test</string>
         <string>test_emsBuild_ovoc_server_7.8</string>
         <string>test_emsSanity_install</string>
+        <string>test_emsSanity_upgrade</string>
         <string>test_sbc-simulator</string>
         <string>Windows OpenJDK 11</string>
       </jobNames>
