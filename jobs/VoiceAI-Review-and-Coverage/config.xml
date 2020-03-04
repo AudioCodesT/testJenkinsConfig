@@ -141,6 +141,11 @@ echo &quot;script Return Value: $ret_value&quot;
 
 [ &quot;$ret_value&quot; -eq 0 ] || exit 1
 
+## Collect all coverage reports
+cd ${WORKSPACE}
+mkdir coverage
+cp -R *cobertura.xml coverage/*
+
 ## Get thresholds &amp; blockings from json file
 arr_name=(session-manager)
 arr_cat=(Statements Branches Functions Lines)
@@ -248,7 +253,7 @@ exit $ret_value
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>alarms/**/coverage.xml</artifacts>
+      <artifacts>coverage/*coverage.xml</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
