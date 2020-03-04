@@ -117,6 +117,7 @@
         <string>Software Configuration Management</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
+        <string>365_MFA_Apps</string>
         <string>Agile users</string>
         <string>AI-SmartLockAdmin</string>
         <string>AWS_Jira_Users</string>
@@ -144,7 +145,7 @@
         <string>AI-ClearCase</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1582910105056</timestamp>
+      <timestamp>1583327856149</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Brian.Kling@audiocodes.com</emailAddress>
