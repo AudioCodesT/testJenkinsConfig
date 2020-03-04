@@ -82,12 +82,14 @@ PATH=/bin:$PATH</propertiesContent>
   <triggers/>
   <concurrentBuild>true</concurrentBuild>
   <axes>
-    <org.jenkinsci.plugins.yamlaxis.YamlAxis plugin="yaml-axis@0.2.0">
+    <hudson.matrix.TextAxis>
       <name>BOARD</name>
       <values>
-        <string>boards2compile.yml</string>
+        <string>M1000_MSBG_SIP</string>
+        <string>HostedTP_SIP</string>
+        <string>MP5XXNG_SIP</string>
       </values>
-    </org.jenkinsci.plugins.yamlaxis.YamlAxis>
+    </hudson.matrix.TextAxis>
     <hudson.matrix.LabelAxis>
       <name>label</name>
       <values>
@@ -100,27 +102,24 @@ PATH=/bin:$PATH</propertiesContent>
       <command>#!/bin/sh -x
 
 artifactory_host=${ARTIFACTORY_HOST}
-output_folder=${DEPENDENCIES_FOLDER}
 
 # find the board that need to be compiled
-BOARDNAME=`echo ${BOARD} | cut -f1 -d &apos; &apos; | cut -f2 -d=`
+BOARDNAME=${BOARD}
 
 #rm -f $output_folder/*external_version_data.h
 BOARDFINALNAME=${BOARDNAME}
 
+NEWTAG=&quot;7.30A.000&quot;
 echo NEWTAG=${NEWTAG} &gt; generated_sbc_version.properties
 echo BOARDNAME=${BOARDFINALNAME} &gt;&gt; generated_sbc_version.properties
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_sbc_version.properties
 
-cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
+echo Test &gt; ram${BOARDNAME}.cmp
+echo Test &gt; ram${BOARDNAME}.map
+
 rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
 
-find ../../Media/m5eEngine/MPCBin  ../../VoiceEngines/MPCBin -name &quot;DL*.c&quot; | ( xargs grep Descriptor.VersionNumber || true ) &gt; ${BOARDNAME}_DspVersions.txt
-
-zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map ${BOARDNAME}_DspVersions.txt
-zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
-#zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
-
+zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
@@ -139,7 +138,7 @@ zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
-      <script>GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | sed &apos;s:.*origin/::&apos;`
+      <script>GERRIT_BRANCH=&quot;7.4&quot;
 echo GERRIT_BRANCH=${GERRIT_BRANCH}
 
 </script>
@@ -180,10 +179,8 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
-${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
-${WORKSPACE}/TrunkPackRam/Networking/ApplicationsAndProtocols/CLI/adsl_vrx_ext_version_data.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
-${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
+      <deployPattern>${WORKSPACE}/${BOARDNAME}_F$NEWTAG.cmp=&gt;com/ac/sbc/Temp/${NEWTAG}
+${WORKSPACE}/${BOARDNAME}_F$NEWTAG.zip=&gt;com/ac/sbc/Temp/${NEWTAG}/map
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
