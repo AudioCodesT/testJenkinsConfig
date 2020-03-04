@@ -97,7 +97,7 @@ cd ${WORKSPACE}/..
 cd GWApp
 git -c http.sslverify=false fetch || true
 git checkout ${Tag}
-Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | awk &apos;NR==2&apos; | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | awk &apos;NR==1&apos; | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 cd ${WORKSPACE}
 arti_user=admin
 user=${arti_user}:${arti_password}
