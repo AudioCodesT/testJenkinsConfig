@@ -144,7 +144,7 @@ echo &quot;script Return Value: $ret_value&quot;
 ## Collect all coverage reports
 cd ${WORKSPACE}
 mkdir coverage
-cp -R *coverage.xml coverage/
+find . -path ./misc -prune -o -name &quot;*coverage.xml&quot; -exec cp {} coverage/ \;
 
 ## Get thresholds &amp; blockings from json file
 arr_name=(session-manager)
