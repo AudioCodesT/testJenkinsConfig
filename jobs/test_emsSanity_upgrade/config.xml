@@ -98,7 +98,7 @@
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>ems-build</assignedNode>
+  <assignedNode>ems_temp_slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
