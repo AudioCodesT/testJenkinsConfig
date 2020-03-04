@@ -145,6 +145,7 @@ sudo chown -R centos:centos .
 
 mv u-boot-serial.asc u-boot-serial-${BL}.asc
 mv u-boot-nand.bin u-boot-nand-${BL}.bin
+mv u-boot-nand.tar.gz u-boot-nand-${BL}.tar.gz
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
@@ -195,7 +196,8 @@ mv u-boot-nand.bin u-boot-nand-${BL}.bin
         <spec></spec>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/u-boot-serial-${COMP_VER}.asc=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}
-${WORKSPACE}/u-boot-nand-.*.bin=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}
+${WORKSPACE}/u-boot-nand-${COMP_VER}.bin=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}
+${WORKSPACE}/u-boot-nand-${COMP_VER}.tar.gz=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}
 ${WORKSPACE}/ChangeLog.txt=&gt;com/ac/sbc/Flash/uboot-UGW/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
