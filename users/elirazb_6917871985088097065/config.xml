@@ -41,28 +41,32 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string># ClearCase R&amp;D</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string>365_Lucca</string>
         <string># All ISRAEL</string>
-        <string>Allowed RODC Password Replication Group</string>
-        <string>Users</string>
-        <string>ActionBase Users</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string># SBC Infra App</string>
         <string>Linuxusers</string>
-        <string># ClearCase R&amp;D</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>NewUser_Israel-Lod</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
-        <string># R&amp;D System Software</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1583248897300</timestamp>
+      <timestamp>1583325192111</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Eliraz.Benmoshe@audiocodes.com</emailAddress>
