@@ -106,6 +106,7 @@ artifactory_host=${ARTIFACTORY_HOST}
 # find the board that need to be compiled
 BOARDNAME=${BOARD}
 
+echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt; properties.txt
 #rm -f $output_folder/*external_version_data.h
 BOARDFINALNAME=${BOARDNAME}
 
@@ -118,6 +119,11 @@ zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>properties.txt</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers/>
   <buildWrappers>
