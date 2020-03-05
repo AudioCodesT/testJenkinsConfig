@@ -1027,7 +1027,7 @@
       <groupId>sig-917fc015</groupId>
       <pendingInstances/>
       <labelString>VocaNom_winsrv2019</labelString>
-      <idleTerminationMinutes>10</idleTerminationMinutes>
+      <idleTerminationMinutes>30</idleTerminationMinutes>
       <workspaceDir>c:\jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
         <hudson.model.labels.LabelAtom>VocaNom_winsrv2019</hudson.model.labels.LabelAtom>
