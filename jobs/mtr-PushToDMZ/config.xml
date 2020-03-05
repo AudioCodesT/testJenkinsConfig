@@ -41,7 +41,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>${GERRIT_BRANCH}</refspec>
+        <refspec>${GERRIT_REFSPEC}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/SmartTAP/MeetingRecorder.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -53,7 +53,13 @@ Push full repository (mirror) to server in DMZ at APC.</description>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.BuildChooserSetting>
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+          <separator>#</separator>
+        </buildChooser>
+      </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+    </extensions>
   </scm>
   <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
