@@ -101,7 +101,7 @@ cp docker-compose.azure-mock.yml /netapp1/CompilationResults/VoAI_Connector/${BR
             &quot;pattern&quot;: &quot;docker-voice-ai-files/docker-compose-vag-${NEWTAG}.yml&quot;
         },
         {
-            &quot;pattern&quot;: &quot;docker-compose.azure-mock.yml&quot;
+            &quot;pattern&quot;: &quot;docker-voice-ai-files/docker-compose.azure-mock.yml&quot;
         }
     ]
 }</spec>
