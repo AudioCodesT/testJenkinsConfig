@@ -461,11 +461,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C34xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C34xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R44xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -709,11 +709,11 @@
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
         <entry>
-          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>C32xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>R42xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
           <int>1</int>
         </entry>
       </executorsForInstanceType>
@@ -942,7 +942,6 @@
           <templateDesc>Azure Ovoc Image Creation</templateDesc>
           <labels></labels>
           <location>West Europe</location>
-          <availabilityType/>
           <virtualMachineSize>Standard_B1s</virtualMachineSize>
           <storageAccountNameReferenceType>existing</storageAccountNameReferenceType>
           <diskType>managed</diskType>
@@ -1022,6 +1021,49 @@
       <tunnel></tunnel>
       <vmargs></vmargs>
     </hudson.plugins.spotinst.cloud.AzureSpotinstCloud>
+    <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
+      <name>sig-917fc015</name>
+      <accountId>act-96d87a11</accountId>
+      <groupId>sig-917fc015</groupId>
+      <pendingInstances/>
+      <labelString>VocaNom_winsrv2019</labelString>
+      <idleTerminationMinutes>10</idleTerminationMinutes>
+      <workspaceDir>c:\jenkinsslave</workspaceDir>
+      <labelSet class="sorted-set">
+        <hudson.model.labels.LabelAtom>VocaNom_winsrv2019</hudson.model.labels.LabelAtom>
+      </labelSet>
+      <usage>EXCLUSIVE</usage>
+      <tunnel></tunnel>
+      <vmargs></vmargs>
+      <executorsForInstanceType>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T2Large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>T3large</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+        <entry>
+          <hudson.plugins.spotinst.common.AwsInstanceTypeEnum>M4Xlarge</hudson.plugins.spotinst.common.AwsInstanceTypeEnum>
+          <int>1</int>
+        </entry>
+      </executorsForInstanceType>
+      <executorsForTypes>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>M4Xlarge</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>T2Large</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+        <hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+          <awsInstanceType>T3large</awsInstanceType>
+          <executors>1</executors>
+        </hudson.plugins.spotinst.cloud.SpotinstInstanceWeight>
+      </executorsForTypes>
+    </hudson.plugins.spotinst.cloud.AwsSpotinstCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>
   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
