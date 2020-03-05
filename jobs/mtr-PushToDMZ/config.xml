@@ -48,18 +48,12 @@ Push full repository (mirror) to server in DMZ at APC.</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${GERRIT_BRANCH}</name>
+        <name>*/master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions>
-      <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
-          <separator>#</separator>
-        </buildChooser>
-      </hudson.plugins.git.extensions.impl.BuildChooserSetting>
-    </extensions>
+    <extensions/>
   </scm>
   <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
@@ -159,8 +153,8 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 #    echo &quot;*******************************************************************&quot;
 #    git push mtr-dmz --all
 #done
-#git fetch
-#git checkout ${GERRIT_BRANCH}
+git fetch
+git checkout ${GERRIT_BRANCH}
 echo &quot;*******************************************************************&quot;
 git push mtr-dmz
 echo &quot;*******************************************************************&quot;
