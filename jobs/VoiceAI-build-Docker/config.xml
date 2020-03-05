@@ -198,7 +198,9 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Runtime vars
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+#temp workaround  -  branch is always 1.4
+BRANCH=&quot;1.4&quot;
+#BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 TAGVER=${NEWTAG::-2}
