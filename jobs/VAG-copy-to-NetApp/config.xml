@@ -57,7 +57,7 @@
       <command>cd /netapp1/CompilationResults/VoAI_Connector
 [[ ! -d ${BRANCH}/${NEWTAG} ]] &amp;&amp; mkdir -p ${BRANCH}/${NEWTAG}
 cd ${WORKSPACE}
-cp docker-compose-vag-${NEWTAG}.yml /netapp1/CompilationResults/VoAI_Connector/${BRANCH}/${NEWTAG}/</command>
+cp docker*.yml /netapp1/CompilationResults/VoAI_Connector/${BRANCH}/${NEWTAG}/</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -98,6 +98,9 @@ cp docker-compose-vag-${NEWTAG}.yml /netapp1/CompilationResults/VoAI_Connector/$
     &quot;files&quot;: [
         {
             &quot;pattern&quot;: &quot;docker-voice-ai-files/docker-compose-vag-${NEWTAG}.yml&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;docker-compose.azure-mock.yml&quot;
         }
     ]
 }</spec>
