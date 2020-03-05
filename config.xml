@@ -1023,7 +1023,7 @@
     </hudson.plugins.spotinst.cloud.AzureSpotinstCloud>
     <hudson.plugins.spotinst.cloud.AwsSpotinstCloud plugin="spotinst@2.0.16">
       <name>sig-917fc015</name>
-      <accountId>act-96d87a11</accountId>
+      <accountId></accountId>
       <groupId>sig-917fc015</groupId>
       <pendingInstances/>
       <labelString>VocaNom_winsrv2019</labelString>
