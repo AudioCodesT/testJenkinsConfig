@@ -214,21 +214,18 @@ cd TrunkPackRam
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 
 echo Delete all output that not needed in Artitactory at all
-if [[ &quot;$GERRIT_BRANCH&quot; == &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;MP5XXNG&quot; ]]; then
+
+if [[ (&quot;$GERRIT_BRANCH&quot; == &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;MP5XXNG&quot;) || (&quot;$GERRIT_BRANCH&quot; =~ &quot;MSBR&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;MP500&quot;) ]]; then
   rm -f ram${BOARDNAME}*.*
+else
+  rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
+
+  find ../../Media/m5eEngine/MPCBin  ../../VoiceEngines/MPCBin -name &quot;DL*.c&quot; | ( xargs grep Descriptor.VersionNumber || true ) &gt; ${BOARDNAME}_DspVersions.txt
+
+  zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map ${BOARDNAME}_DspVersions.txt
+  zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
+  #zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
 fi
-if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;MSBR&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;MP500&quot; ]]; then
-  rm -f ram${BOARDNAME}*.*
-fi
-
-rename ram${BOARDNAME} ${BOARDNAME}_F$NEWTAG ram${BOARDNAME}.*
-
-find ../../Media/m5eEngine/MPCBin  ../../VoiceEngines/MPCBin -name &quot;DL*.c&quot; | ( xargs grep Descriptor.VersionNumber || true ) &gt; ${BOARDNAME}_DspVersions.txt
-
-zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map ${BOARDNAME}_DspVersions.txt
-zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
-#zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
-
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
