@@ -180,7 +180,7 @@ ${WORKSPACE}/${BOARDNAME}_F$NEWTAG.map.zip=&gt;com/ac/sbc/Temp/${GERRIT_BRANCH}/
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
-      <artifactoryCombinationFilter>${GERRIT_BRANCH}!=NextGenCPE || BOARD==MP5XXNG_SIP</artifactoryCombinationFilter>
+      <artifactoryCombinationFilter>${GERRIT_BRANCH}!=&quot;NextGenCPE&quot; || ${BOARD}==&quot;MP5XXNG_SIP&quot;</artifactoryCombinationFilter>
       <multiConfProject>true</multiConfProject>
       <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
