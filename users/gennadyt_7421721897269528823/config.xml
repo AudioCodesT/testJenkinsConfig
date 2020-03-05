@@ -72,6 +72,7 @@
         <string>Password Manager Apply</string>
         <string># Agile users</string>
         <string># OVOC QOE</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -90,7 +91,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1582097764654</timestamp>
+      <timestamp>1583427259710</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Gennady.Tsiporkin@audiocodes.com</emailAddress>
