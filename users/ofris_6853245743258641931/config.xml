@@ -38,36 +38,38 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Ofri.Stolero@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string># All Beer Sheva</string>
         <string>authenticated</string>
-        <string>365_Tas</string>
-        <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
-        <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
-        <string># SBC</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># ClearCase R&amp;D</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string># All Beer Sheva</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
         <string># SBC SIP Infra</string>
-        <string># ClearCase R&amp;D</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
-        <string># R&amp;D System Software</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1576058259976</timestamp>
+      <timestamp>1583417640967</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
