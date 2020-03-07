@@ -75,6 +75,7 @@
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -91,7 +92,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1582469345289</timestamp>
+      <timestamp>1583582982046</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Guy.Amit@audiocodes.com</emailAddress>
