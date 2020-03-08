@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>b66e0de1-f708-4802-904d-928b89e4aae2</uuid>
+          <uuid>b16332ac-42d9-45d4-bae5-9c91fc5ab9c2</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -126,7 +126,7 @@ if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
     NEW_PCH=$((LASTPCH+1))
     
     # Construct new values
-    NEWTAG=&quot;$LASTMAJ.$LASTMID.$LASTMIN.$NEW_PCH&quot;    
+    NEWTAG=&quot;$LASTMAJ.$LASTMID.$LASTMIN.$NEW_PCH&quot;
     NEW_VER=&quot;$LASTMAJ,$LASTMID,$LASTMIN,$NEW_PCH&quot;
     NEW_V_E_R=&quot;$LASTMAJ, $LASTMID, $LASTMIN, $NEW_PCH&quot;
 else
