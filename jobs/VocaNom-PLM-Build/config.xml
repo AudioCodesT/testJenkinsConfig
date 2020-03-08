@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>382e99c5-d240-4282-986f-b174dc8fffaf</uuid>
+          <uuid>835a58c9-36f5-401e-ba82-d0c26d6ba651</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -46,8 +46,8 @@
         </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>USER_COMMIT</name>
-          <description>Commit to checkout. If left empty - last commit (HEAD)</description>
-          <uuid>7c53233c-8aae-4a71-98ae-caf8098b3366</uuid>
+          <description>If left empty - last commit (HEAD). Else checkout and build this commit</description>
+          <uuid>a8ae7e17-4d79-474a-afdb-ddaed0ae472c</uuid>
           <type>PT_REVISION</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
