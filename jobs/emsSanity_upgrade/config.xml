@@ -418,13 +418,28 @@ echo &quot;*** Upgrade has been finished *****************&quot;
 echo &quot;***********************************************&quot;
 
 # run sanity tests and log collect
-echo &quot;*** Run sanity tests and log collect ***&quot;
+echo &quot;Run sanity tests and log collect&quot;
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
-	then python2.7 SanityTest.py $NEW_TAG $vmIP
+then 
+	python2.7 SanityTest.py $NEW_TAG $vmIP
 	# run sanity test and copy logs, and if sanity fails then copy logs and exit with error:
-    else python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
-         &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
-         || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
+elif [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; || &quot;$BRANCH&quot; == &quot;7.8&quot; ]]
+then
+    python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
+    &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
+    || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
+else
+	#for branch 7.8.1000 and up, run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
+	python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
+    || { python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP; \
+    	 python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting; \
+         python2.7 SanityCopyLogs.py $NEW_TAG $vmIP; \
+         exit 1; }
+	# if SanityTest passed successfully change ovoc to one voice live mode and run sanity tests again, if failed copy logs and exit the build
+	python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP \
+	&amp;&amp; python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
+    &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
+    || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
 fi
 
 #3. if tests pass then terminate the tested machine
@@ -495,7 +510,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, ben.magriso, yuval.yosha</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
