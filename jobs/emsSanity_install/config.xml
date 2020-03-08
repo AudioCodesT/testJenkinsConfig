@@ -532,6 +532,10 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
             <role>SLAVE</role>
             <buildSteps>
               <hudson.tasks.Shell>
+                <command>#run copy logs
+python2.7 SanityCopyLogs.py $NEW_TAG $vmIP || echo &quot;not fail the build if there is no logs&quot;</command>
+              </hudson.tasks.Shell>
+              <hudson.tasks.Shell>
                 <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
     cd ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest
     tar zcfv PMTemplateTest.tgz PMTemplateTest &amp;&amp; rm -rf PMTemplateTest
