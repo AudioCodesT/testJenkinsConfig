@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>5beadcec-dc42-447f-933f-d67ff14dd40f</uuid>
+          <uuid>762be863-3e5b-4612-9a68-05f48350a4f5</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -102,6 +102,9 @@ If left empty will increment last tag on gerrit.</description>
 
 ## If no tag specified for build, get last tag from test-gerrit and increment it by 1 to set new version and new tag
 ## Else use given tag as new tag and also make new version from it.
+## The version value has two forms:
+## x,x,x,x which is reprsented by *_VER
+## &quot;x, x, x, x&quot; which is represented by *_V_E_R
 if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
     LastTag=$(git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1)
     
@@ -112,15 +115,15 @@ if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
     LASTMAJ=$(echo $LASTTAG | gawk -F. &apos;{print $1}&apos;
     LASTMID=$(echo $LASTTAG | gawk -F. &apos;{print $2}&apos;
     LASTMIN=$(echo $LASTTAG | gawk -F. &apos;{print $3}&apos;
-    LASTPST=$(echo $LASTTAG | gawk -F. &apos;{print $4}&apos;
+    LASTPCH=$(echo $LASTTAG | gawk -F. &apos;{print $4}&apos;
     
     # Increment last field
-    NEW_PST=$((LASTPST+1))
+    NEW_PCH=$((LASTPCH+1))
     
     # Construct new values
-    NEWTAG=&quot;$LASTMAJ.$LASTMID.$LASTMIN.$NEW_PST&quot;    
-    NEW_VER=&quot;$LASTMAJ,$LASTMID,$LASTMIN,$NEW_PST&quot;
-    NEW_V_E_R=&quot;$LASTMAJ, $LASTMID, $LASTMIN, $NEW_PST&quot;
+    NEWTAG=&quot;$LASTMAJ.$LASTMID.$LASTMIN.$NEW_PCH&quot;    
+    NEW_VER=&quot;$LASTMAJ,$LASTMID,$LASTMIN,$NEW_PCH&quot;
+    NEW_V_E_R=&quot;$LASTMAJ, $LASTMID, $LASTMIN, $NEW_PCH&quot;
 else
     # Construct new values
     NEW_VER=$(echo $NEWTAG | sed &apos;s/\.\,/g&apos;)
