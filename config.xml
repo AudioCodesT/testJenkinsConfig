@@ -883,7 +883,7 @@
       <groupId>sig-a252d010</groupId>
       <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
-      <idleTerminationMinutes>5</idleTerminationMinutes>
+      <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
         <hudson.model.labels.LabelAtom>VoiceAI-build</hudson.model.labels.LabelAtom>
