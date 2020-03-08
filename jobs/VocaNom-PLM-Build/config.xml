@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>5c0c0455-65e4-4f36-b702-94bea4d6fd45</uuid>
+          <uuid>ad31ee42-54a5-4209-9e1c-7c32d15baba8</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -131,7 +131,7 @@ fi
 
 ## Embed new version inside c# assembly file
 sed -E -i &apos;s:^( *FILEVERSION| *PRODUCTVERSION).*$:\1 &apos;&quot;$NEW_VER&quot;&apos;:g&apos; PhoneListManager.rc
-sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersion&quot;,).*$:\1 &apos;&quot;$NEW_V_E_R&quot;&apos;:g&apos; PhoneListManager.rc
+sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersion&quot;,).*$:\1 \&quot;&apos;&quot;$NEW_V_E_R&quot;&apos;\&quot;:g&apos; PhoneListManager.rc
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.BatchFile>
