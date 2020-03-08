@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>762be863-3e5b-4612-9a68-05f48350a4f5</uuid>
+          <uuid>b66e0de1-f708-4802-904d-928b89e4aae2</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -106,7 +106,12 @@ If left empty will increment last tag on gerrit.</description>
 ## x,x,x,x which is reprsented by *_VER
 ## &quot;x, x, x, x&quot; which is represented by *_V_E_R
 if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
-    LastTag=$(git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1)
+    Tags=$(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)
+    if [&quot;$Tags&quot; != &quot;&quot; ]; then
+        LastTag=$(git tag --points-at $(git rev-list -n1 $Tags) --sort=-taggerdate | head -1)
+    else
+        LastTag=&quot;0.0.0.0&quot;
+    fi
     
     LAST_VER=$(echo $LastTag | sed &apos;s/\.\,/g&apos;)
     LAST_V_E_R=$(echo $LastTag | sed &apos;s/\.\, /g&apos;)
