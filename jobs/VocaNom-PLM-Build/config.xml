@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>b16332ac-42d9-45d4-bae5-9c91fc5ab9c2</uuid>
+          <uuid>49f10247-0c93-43e0-a0f3-94ab3c6a5222</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -100,6 +100,8 @@ If left empty will increment last tag on gerrit.</description>
     <hudson.tasks.Shell>
       <command>#!C:\Program Files\Git\bin\bash.exe -login
 
+COMMSHA1=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
+
 ## If no tag specified for build, get last tag from test-gerrit and increment it by 1 to set new version and new tag
 ## Else use given tag as new tag and also make new version from it.
 ## The version value has two forms:
@@ -112,9 +114,6 @@ if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
     else
         LastTag=&quot;0.0.0.0&quot;
     fi
-    
-    LAST_VER=$(echo $LastTag | sed &apos;s/\.\,/g&apos;)
-    LAST_V_E_R=$(echo $LastTag | sed &apos;s/\.\, /g&apos;)
     
     # Disassemble tag
     LASTMAJ=$(echo $LASTTAG | gawk -F. &apos;{print $1}&apos;
@@ -129,13 +128,19 @@ if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
     NEWTAG=&quot;$LASTMAJ.$LASTMID.$LASTMIN.$NEW_PCH&quot;
     NEW_VER=&quot;$LASTMAJ,$LASTMID,$LASTMIN,$NEW_PCH&quot;
     NEW_V_E_R=&quot;$LASTMAJ, $LASTMID, $LASTMIN, $NEW_PCH&quot;
+    
+    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG provided by user&quot;
 else
     # Construct new values
     NEW_VER=$(echo $NEWTAG | sed &apos;s/\.\,/g&apos;)
     NEW_V_E_R=$(echo $NEWTAG | sed &apos;s/\.\, /g&apos;)
+    
+    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG incremented from last tag in git&quot;
 fi
 
-## TODO - Tag current commit with NEWTAG
+## Tag current commit with NEWTAG
+git tag -a -m &quot;$TAGMSG&quot; $NEWTAG
+git push origin $NEWTAG
 
 ## Embed new version inside c# assembly file.
 ## For easy reading, this was split into two commands.
