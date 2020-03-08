@@ -133,6 +133,7 @@
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>OpenSource/Centos8-Kernel</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>BL=`git describe --tags --first-parent | sed s/-/_/g`
