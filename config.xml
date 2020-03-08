@@ -1395,6 +1395,7 @@
         <string>vcnWebAdmin_SCA</string>
         <string>VocaNom-CPPCodeAnalysis</string>
         <string>VocaNom-JavaCodeAnalysis</string>
+        <string>VocaNom-PLM-Build</string>
         <string>VocaNOM-PLM-Verify</string>
       </jobNames>
       <jobFilters/>
