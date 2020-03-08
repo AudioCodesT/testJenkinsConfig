@@ -477,7 +477,7 @@ ${WORKSPACE}/docker/config.json.sample
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQOeD+AbXDOo0B0GhQbwBlinW2va2qC7PNuTqkFLsoh0w=}</value>
+          <value>{AQAAABAAAAAQ++kJRV5maC2YJoCuRtXyswO7XT//+YXz+Ce2rMAV+JQ=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
