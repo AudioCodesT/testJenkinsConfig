@@ -309,7 +309,7 @@ DevOps Team</defaultContent>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>true</disabled>
+      <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>shukyr, yuvaly</recipients>
