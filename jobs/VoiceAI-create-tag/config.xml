@@ -160,7 +160,7 @@ then
   	do
     	#get commit hash and The User Name of that commit
 		commit_id=${commits[$array_index]}	
-     	User=$(git log --pretty=format:&quot;%an&quot; -n 1 ${commit_id})
+     	User=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${commit_id})
         #get next commit user name (if there is not commit in the list then leave it empty)
         ((array_index+=1))
         next_commit_id=${commits[$array_index]}
@@ -168,7 +168,7 @@ then
         then
         	next_commit_user=&quot;&quot;
         else
-        	next_commit_user=$(git log --pretty=format:&quot;%an&quot; -n 1 ${next_commit_id})
+        	next_commit_user=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${next_commit_id})
         fi
         #if the current user name  diffrent from the next commit user name then tag current commit
      	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
@@ -193,7 +193,7 @@ echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
