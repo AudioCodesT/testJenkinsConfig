@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>1.       Get latest code from branch 7.8.1000&#xd;
+  <description>1.       Get latest code from branch 7.8.2000&#xd;
 2.       Run maven clean install&#xd;
 3.       find last tag and increment&#xd;
 3.       Run generate_iso script&#xd;
@@ -105,7 +105,6 @@ if you still want to run it then run again with &apos;0&apos;
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -118,7 +117,7 @@ if you still want to run it then run again with &apos;0&apos;
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/heads/7.8.1000</name>
+        <name>refs/heads/7.8.2000</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -130,13 +129,13 @@ if you still want to run it then run again with &apos;0&apos;
     <extensions>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
       <hudson.plugins.git.extensions.impl.LocalBranch>
-        <localBranch>refs/heads/7.8.1000</localBranch>
+        <localBranch>refs/heads/7.8.2000</localBranch>
       </hudson.plugins.git.extensions.impl.LocalBranch>
     </extensions>
   </scm>
   <assignedNode>ems-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -261,10 +260,10 @@ if [ -z &quot;$EMAIL&quot; ]; then EMAIL=$BUILD_USER_EMAIL; fi
 
 #for an official release to QA, we need to prepere a special email (besides the email from UpdateVI job)
 if [ $ISO_DEPLOY_DESTINATION == &quot;official_iso&quot; ]; then
-  ARTIFACTORY=https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.8.1000/official_iso
+  ARTIFACTORY=https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.8.2000/official_iso
   LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
   echo LAST_OFFICIAL=${LAST_OFFICIAL} &gt;&gt; ems_build.properties
-  LINK=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.8.1000/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
+  LINK=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.8.2000/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
   echo LINK=${LINK} &gt;&gt; ems_build.properties
 fi
 
@@ -275,7 +274,7 @@ cd ${WORKSPACE}
     echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
     git -c http.sslVerify=false clone -n https://gerrit/web-ui/ovoc ovoc-ui
     cd ovoc-ui
-    git checkout 7.8.1000
+    git checkout 7.8.2000
     head=$(git rev-parse HEAD)
     curl -k -u jenkins:$jpass --basic -X PUT --header &apos;Content-Type: application/json;charset=UTF-8&apos; https://gerrit/a/projects/web-ui%2fovoc/tags/$FULL_NEW_TAG -d &apos; { &quot;message&quot;: &quot;Automatic tag&quot;, &quot;revision&quot;: &quot;&apos;$head&apos;&quot;  }&apos;
     git -c http.sslVerify=false fetch
@@ -343,7 +342,6 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
                       <string>UNSTABLE</string>
                     </results>
                     <role>BOTH</role>
-                    <executeOn>BOTH</executeOn>
                     <buildSteps>
                       <EnvInjectBuilder plugin="envinject@2.1.6">
                         <info>
@@ -436,7 +434,7 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
             <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
               <properties>NEW_TAG=${NEW_TAG}
-BRANCH=7.8.1000
+BRANCH=7.8.2000
 FullTesting=$FullTesting
 UpgradeUiDevServer=$UpgradeUiDevServer
 PublishAMI=$PublishAMI</properties>
@@ -484,13 +482,12 @@ Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
               <string>SUCCESS</string>
             </results>
             <role>BOTH</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
 	qaServerIP=10.3.180.50
     cd ${WORKSPACE}/EMS/VersionRelease
-    python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.8.1000 || echo &quot;**************** Download ISO 2 QA Failed ****************&quot;
+    python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.8.2000 || echo &quot;**************** Download ISO 2 QA Failed ****************&quot;
 fi</command>
               </hudson.tasks.Shell>
             </buildSteps>
