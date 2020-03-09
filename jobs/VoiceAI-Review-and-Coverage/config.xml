@@ -172,6 +172,8 @@ done
 ## Delete comma at end of last line
 sed -i &apos;$s/\,$//&apos; report
 
+cat report
+
 msg4json=$(cat report)
 
 ## Set vote
