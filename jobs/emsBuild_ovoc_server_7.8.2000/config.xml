@@ -215,7 +215,7 @@ fi
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
-      <targets>clean install -XU</targets>
+      <targets>clean install -X -U</targets>
       <mavenName>maven-for-ems</mavenName>
       <jvmOptions>-DpushChanges=false</jvmOptions>
       <pom>pom.xml</pom>
