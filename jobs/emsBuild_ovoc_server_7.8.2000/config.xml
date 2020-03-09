@@ -217,7 +217,7 @@ cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
     <hudson.tasks.Maven>
       <targets>clean install -U</targets>
       <mavenName>maven-for-ems</mavenName>
-      <jvmOptions>-Xmx4096m -DpushChanges=false</jvmOptions>
+      <jvmOptions>-DpushChanges=false</jvmOptions>
       <pom>pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
