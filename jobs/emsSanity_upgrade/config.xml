@@ -261,6 +261,25 @@ do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
         <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.8.2000&quot; ]]; then exit 0; else exit 1; fi</command>
+      </condition>
+      <buildStep class="hudson.tasks.Shell">
+        <command>cd ${WORKSPACE}/EMS
+[[ -d target ]] &amp;&amp; rm -rf target
+mkdir target
+cd target
+for f in common-7.8.2000-SNAPSHOT.jar \
+server-7.8.2000-SNAPSHOT.jar \
+rest-core-7.8.2000-SNAPSHOT.jar \
+oracle_trigger-7.8.2000-SNAPSHOT.jar \
+database-7.8.2000-SNAPSHOT.jar
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 if [[ &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]; then
     echo &quot;Pre-Req files retrieved from Jenkins job.&quot;
     exit 0
