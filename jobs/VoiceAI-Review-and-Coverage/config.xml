@@ -146,72 +146,73 @@ mkdir coverage
 find . -path ./misc -prune -o -name &quot;*coverage.xml&quot; -exec cp {} coverage/ \;
 
 ## Get thresholds &amp; blockings from json file
-arr_name=(session-manager)
+arr_name=$(jq &apos;.thresholds[].Name&apos; coverage.json)
 arr_cat=(Statements Branches Functions Lines)
 
-[[ -f thresholds.vars ]] &amp;&amp; rm thresholds.vars
+[[ -f underTH ]] &amp;&amp; rm -f underTH
 
 for n in ${arr_name[@]}; do
+    ## Getting `blocking` value
+    bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name == \&quot;$n\&quot;) | .blocking&quot; coverage.json)
+    
+    ## Looping through categories thresholds
+    sumFile=&quot;$n/coverage/textsum.txt&quot;
     for c in ${arr_cat[@]}; do
-        th_name=$(echo $n | sed &apos;s/-/_/g&apos;)_&quot;$c&quot;
         th_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .\&quot;$c\&quot;&quot; coverage.json)
-        #echo &quot;export $th_name=$th_val&quot; &gt;&gt; thresholds.vars
-        eval declare &quot;\$th_name&quot;=&quot;$th_val&quot;
-        eval echo &quot;Name: \$th_name&quot;
-        eval echo &quot;Thershold: \$$th_name&quot;
-        #eval echo $th_name: \$th_val
-        #echo $th_name: ${!th_name}
+        cat_val=$(grep &quot;$c&quot; $sumFile | gawk &apos;{print $3}&apos;); cat_val=${cat_val::-1}
+        
+        [[ $cat_val &lt; $th_val ]] &amp;&amp; echo &quot;$n $c is %$cat_val which is under the threshold (%$th_val):$bl_val&quot; &gt;&gt; underTH
     done
+    
 
-    bl_name=$(echo $n | sed &apos;s/-/_/g&apos;)_blocking
-    bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .blocking&quot; coverage.json)
-    #echo &quot;export $bl_name=$bl_val&quot; &gt;&gt; thresholds.vars
-    eval declare &quot;\$bl_name&quot;=&quot;$bl_val&quot;
+    echo &quot;$bl_name=$bl_val&quot; &gt;&gt; thresholds.vars
+    #eval declare &quot;\$bl_name&quot;=&quot;$bl_val&quot;
     eval echo &quot;Block Name: \$bl_name&quot;
     eval echo &quot;Block: \$$bl_name&quot;
     #echo $bl_name: ${!bl_name}
+    
+    ##
+    ## Calculate coverage vote
+    while read item; do
+        case $item in
+            Statements* )
+                val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+                statementsRate=$val
+                ;;
+            Branches* )
+                val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+                branchesRate=$val
+                ;;
+            Functions* )
+                val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+                functionsRate=$val
+                ;;
+            Lines* )
+                val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+                linesRate=$val
+                ;;
+        esac
+    done &lt; summary.txt
+    
+    ## Construct message
+    message=$( \
+    echo &quot;Coverage thresholds:&quot; &amp;&amp; \
+    echo &quot;Statements: $CVG_TH%&quot; &amp;&amp; \
+    echo &quot;Branchs:    $CVG_TH_Branches%&quot; &amp;&amp; \
+    echo &quot;Functions:  $CVG_TH%&quot; &amp;&amp; \
+    echo &quot;Lines:      $CVG_TH%&quot; &amp;&amp; \
+    echo &quot;&quot; &amp;&amp; \
+    cat summary.txt )
+    
+    msg4json=$( echo &quot;$message&quot; | sed &apos;s/$/ /g&apos; )
+    
+    [[ $statementsRate &lt; $CVG_TH || $branchesRate &lt; $CVG_TH_Branches || $functionsRate &lt; $CVG_TH || $linesRate &lt; $CVG_TH ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
+    
 done
 
-## Get coverage Summary
-curl -k https://test-jenkins/view/VoiceAI/job/${JOB_NAME}/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
-
-## Calculate coverage vote
-while read item; do
-    case $item in
-        Statements* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
-            statementsRate=$val
-            ;;
-        Branches* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
-            branchesRate=$val
-            ;;
-        Functions* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
-            functionsRate=$val
-            ;;
-        Lines* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
-            linesRate=$val
-            ;;
-    esac
-done &lt; summary.txt
-
-## Construct message
-message=$( \
-echo &quot;Coverage thresholds:&quot; &amp;&amp; \
-echo &quot;Statements: $CVG_TH%&quot; &amp;&amp; \
-echo &quot;Branchs:    $CVG_TH_Branches%&quot; &amp;&amp; \
-echo &quot;Functions:  $CVG_TH%&quot; &amp;&amp; \
-echo &quot;Lines:      $CVG_TH%&quot; &amp;&amp; \
-echo &quot;&quot; &amp;&amp; \
-cat summary.txt )
-
-msg4json=$( echo &quot;$message&quot; | sed &apos;s/$/ /g&apos; )
-
-[[ $statementsRate &lt; $CVG_TH || $branchesRate &lt; $CVG_TH_Branches || $functionsRate &lt; $CVG_TH || $linesRate &lt; $CVG_TH ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
-
+## Voting
 fullJson=&quot;{\&quot;tag\&quot;: \&quot;autogenerated:bot:coverage\&quot;, \&quot;labels\&quot;: {\&quot;Coverage\&quot;: $cvgVote }, \&quot;message\&quot;: \&quot;$msg4json\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;}&quot;
+echo $fullJson
 #curl -k -u codeanalyzer:AC@${GERRIT_HOST} --basic -X POST https://${GERRIT_HOST}/a/changes/${GERRIT_CHANGE_NUMBER}/revisions/${GERRIT_PATCHSET_REVISION}/review -d &quot;$fullJson&quot; -H &apos;Content-Type:application/json&apos;
 
 
