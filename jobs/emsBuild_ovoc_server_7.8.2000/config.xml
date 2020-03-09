@@ -217,7 +217,7 @@ cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
     <hudson.tasks.Maven>
       <targets>clean install -U</targets>
       <mavenName>maven-for-ems</mavenName>
-      <jvmOptions>-DpushChanges=false</jvmOptions>
+      <jvmOptions>-Xmx4096m -DpushChanges=false</jvmOptions>
       <pom>pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
@@ -426,8 +426,6 @@ sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
           <updateTag>true</updateTag>
         </hudson.plugins.git.GitPublisher_-TagToPush>
       </tagsToPush>
-      <branchesToPush/>
-      <notesToPush/>
     </hudson.plugins.git.GitPublisher>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
