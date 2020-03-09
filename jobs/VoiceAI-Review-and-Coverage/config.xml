@@ -192,6 +192,8 @@ echo &quot;BRANCH=${GERRIT_BRANCH}&quot; &gt;&gt; voiceAI.properties
 echo &quot;GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}&quot; &gt;&gt; voiceAI.properties
 echo &quot;GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}&quot; &gt;&gt; voiceAI.properties
 
+
+
 exit $ret_value
 </command>
     </hudson.tasks.Shell>
