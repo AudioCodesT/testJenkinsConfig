@@ -1,0 +1,591 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>1.       Get latest code from branch 7.8.1000&#xd;
+2.       Run maven clean install&#xd;
+3.       find last tag and increment&#xd;
+3.       Run generate_iso script&#xd;
+4.       deploy the new iso to artifctory&#xd;
+5.       tag the remote repo with the new tag&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>30</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>ISO_DEPLOY_DESTINATION</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>latest_iso</string>
+              <string>official_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>FullTesting</name>
+          <description>1 = Yes (default)
+0 = No</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>1</string>
+              <string>0</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>UpgradeUiDevServer</name>
+          <description>1 = Yes (default)
+0 = No
+upgrading the UI Dev server if this option is 1 and ISO_DEPLOY_DESTINATION is offical_iso</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>1</string>
+              <string>0</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>PublishAMI</name>
+          <description>0 = No (default)
+1 = Yes
+Copy AMI to all Regions and make him public</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>0</string>
+              <string>1</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>checkIfInfraIsNotLatest</name>
+          <description>1 = Yes (default)
+0 = No
+this param checks if web-ui build is still running or infra isn’t latest.
+if &apos;1&apos; the build will fail when web-ui build is still running or infra isn’t latest.
+if you still want to run it then run again with &apos;0&apos;
+
+</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>1</string>
+              <string>0</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>refs/heads/7.8.1000</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
+      <url>https://test-gerrit/plugins/gitblit/</url>
+      <projectName>EMS/ovoc_server</projectName>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.LocalBranch>
+        <localBranch>refs/heads/7.8.1000</localBranch>
+      </hudson.plugins.git.extensions.impl.LocalBranch>
+    </extensions>
+  </scm>
+  <assignedNode>ems-build</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H 1 * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+        <arg1>${checkIfInfraIsNotLatest}</arg1>
+        <arg2>1</arg2>
+        <ignoreCase>false</ignoreCase>
+      </condition>
+      <buildStep class="hudson.tasks.Shell">
+        <command>#if its not official_iso exit this step
+if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; != &quot;official_iso&quot; ]]
+then
+	echo &quot;It&apos;s not official_iso, no need to check if currently running job in jenkins for web-ui ovoc in same branch&quot;
+    exit 0
+fi
+
+#check if currently running job in jenkins for web-ui ovoc in same branch
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+JENKINS_URL=&apos;https://jenkins&apos;
+JOB_URL=&quot;${JENKINS_URL}/job/webBuildOvoc-windows&quot;
+RETURN_CODE=0
+sendEmail=&quot;False&quot;
+echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
+#check if job is in progress or finished
+curl --insecure -X GET ${JOB_URL}/lastBuild/api/json  | grep --color &apos;result&quot;:null&apos; &gt; /dev/null || RETURN_CODE=$?
+if [[ $RETURN_CODE == &quot;0&quot; ]]
+then
+	curl --insecure -X GET ${JOB_URL}/lastBuild/api/json | grep --color \&quot;value\&quot;:\&quot;${BRANCH}\&quot; &gt; /dev/null || RETURN_CODE=$?
+	if [[ $RETURN_CODE == &quot;0&quot; ]]
+	then
+    	sendEmail=&quot;True&quot;
+    	echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
+        echo &quot;****************************************************************************************************************&quot;
+		echo &quot;Currently running jenkins job in Web-ui OVOC... exiting the build&quot;
+        echo &quot;****************************************************************************************************************&quot;
+        echo &quot;Currently running jenkins job in Web-ui OVOC&quot; &gt; infraNotLatest.txt
+    	echo &quot;If you want to execute ${JOB_NAME} anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
+        echo &quot;You can see the build here: ${BUILD_URL}&quot; &gt;&gt; infraNotLatest.txt
+        exit 1
+	fi
+fi
+#check if the infra is the latest
+echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+rm -rf ovoc
+git -c http.sslverify=false clone --depth 10 -n -b $BRANCH https://gerrit/web-ui/ovoc
+cd ovoc
+git checkout ${BRANCH}
+infra_in_ovoc_commit_id=$(git ls-files -s src/app/angular2/infra2 | awk &apos;{print $2}&apos;)
+infra_commit_id=$(git ls-remote https://gerrit/web-ui/ac-infra | grep -E &quot;refs/heads/${BRANCH}(\$|\s)&quot; | awk &apos;{print $1}&apos;)
+cd ${WORKSPACE}
+if [[ $infra_in_ovoc_commit_id != $infra_commit_id ]]
+then
+	sendEmail=&quot;True&quot;
+	echo &quot;sendEmail=${sendEmail}&quot; &gt; checkIfInfraIsNotLatest_prop
+    echo &quot;****************************************************************************************************************&quot;
+	echo &quot;Infra in ovoc is not the latest... exiting the build&quot;
+    echo &quot;****************************************************************************************************************&quot;
+    echo &quot;Infra in ovoc is not the latest commit&quot; &gt; infraNotLatest.txt
+    echo &quot;If you want to execute ${JOB_NAME} anyway, please run again with the paremeter &apos;checkIfInfraIsNotLatest&apos; with the value &apos;0&apos; (no)&quot; &gt;&gt; infraNotLatest.txt
+    echo &quot;You can see the build here: ${BUILD_URL}&quot; &gt;&gt; infraNotLatest.txt
+    exit 1
+fi
+</command>
+      </buildStep>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
+    <hudson.tasks.Shell>
+      <command># copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
+cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Maven>
+      <targets>clean install -U</targets>
+      <mavenName>maven-for-ems</mavenName>
+      <jvmOptions>-DpushChanges=false</jvmOptions>
+      <pom>pom.xml</pom>
+      <usePrivateRepository>false</usePrivateRepository>
+      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
+        <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
+      </settings>
+      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+      <injectBuildVariables>false</injectBuildVariables>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+OLDTAG=`git describe --abbrev=0 --first-parent --tags origin/$BRANCH`
+DATE=`date`
+#calculate new tag with &quot;server_&quot; prefix
+FULL_NEW_TAG=`echo $OLDTAG | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $OLDTAG | awk -F. &apos;{print $NF+1}&apos;`
+#calculate new tag without &quot;server_&quot; prefix
+NEW_TAG=${FULL_NEW_TAG:7}
+
+echo &quot;NEW_TAG=${NEW_TAG}&quot; &gt; ems_build.properties
+echo &quot;FULL_NEW_TAG=${FULL_NEW_TAG}&quot; &gt;&gt; ems_build.properties
+chmod 777 EMS/generate_iso.sh
+. EMS/generate_iso.sh  &amp;&gt; ${WORKSPACE}/mkiso.log
+tail -200 ${WORKSPACE}/mkiso.log
+
+# For UpdateVI job
+cd ${WORKSPACE}
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$GIT_BRANCH | sort -u | sed s/$/\;/g`
+#RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$GIT_BRANCH | sed s/\&quot;/\&apos;/g`
+#VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$GIT_BRANCH | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;`
+RN=&quot;&quot;
+while read -r hash; do
+  if [ &quot;$hash&quot; != &quot;&quot; ]; then
+    subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;)
+    RN+=---$subject::$hash::$VI
+  fi
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$GIT_BRANCH)&quot;
+
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$GIT_BRANCH`
+if [ -z &quot;$EMAIL&quot; ]; then EMAIL=$BUILD_USER_EMAIL; fi
+
+#for an official release to QA, we need to prepere a special email (besides the email from UpdateVI job)
+if [ $ISO_DEPLOY_DESTINATION == &quot;official_iso&quot; ]; then
+  ARTIFACTORY=https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/7.8.1000/official_iso
+  LAST_OFFICIAL=&quot;$(curl -k -s -X GET $ARTIFACTORY |grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
+  echo LAST_OFFICIAL=${LAST_OFFICIAL} &gt;&gt; ems_build.properties
+  LINK=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/ems-release/com/ac/ems/ovoc_server/7.8.1000/official_iso/DVD3_EMS_$NEW_TAG.iso&quot;
+  echo LINK=${LINK} &gt;&gt; ems_build.properties
+fi
+
+#tag also the web-ui/ovoc repository:
+cd ${WORKSPACE}
+    cd ..
+    if [ -d &quot;ovoc-ui&quot; ]; then rm -rf ovoc-ui; fi
+    echo &quot;machine gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+    git -c http.sslVerify=false clone -n https://gerrit/web-ui/ovoc ovoc-ui
+    cd ovoc-ui
+    git checkout 7.8.1000
+    head=$(git rev-parse HEAD)
+    curl -k -u jenkins:$jpass --basic -X PUT --header &apos;Content-Type: application/json;charset=UTF-8&apos; https://gerrit/a/projects/web-ui%2fovoc/tags/$FULL_NEW_TAG -d &apos; { &quot;message&quot;: &quot;Automatic tag&quot;, &quot;revision&quot;: &quot;&apos;$head&apos;&quot;  }&apos;
+    git -c http.sslVerify=false fetch
+    
+    # Gathering information to UpdateVI from web-ui/ovoc repository as well
+    AuthorCommitter+=&quot; &quot;`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$FULL_NEW_TAG | sort -u | sed s/$/\;/g`
+    #RN+=&quot; &quot;`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$FULL_NEW_TAG | sed s/\&quot;/\&apos;/g`
+    #VIS+=&quot; &quot;`git log --pretty=format:&quot;%B&quot; $OLDTAG..$FULL_NEW_TAG | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;`
+    #VIS=`echo $VIS |tr &quot; &quot; &quot;\n&quot; | sort -u`
+    while read -r hash; do
+      if [ &quot;$hash&quot; != &quot;&quot; ]; then
+        subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
+        VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep -i ^Issue | sed &apos;s/.* \(VI\|\)//gi; s/ .*//g&apos;)
+        RN+=---$subject::$hash::$VI
+      fi
+    done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$FULL_NEW_TAG)&quot;
+    
+    EMAIL+=&quot; &quot;`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$FULL_NEW_TAG`
+
+EMAIL=`echo $EMAIL |tr &quot; &quot; &quot;\n&quot; | sort -u`
+cd ${WORKSPACE}
+
+if [ -z $EMAIL ]; then EMAIL=$GIT_COMMITTER_EMAIL; fi
+
+echo RN=${RN} &gt;&gt; ems_build.properties
+echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; ems_build.properties
+echo EMAIL=${EMAIL} &gt;&gt; ems_build.properties
+echo BRANCH=`echo $GIT_BRANCH | sed &apos;s:origin/::&apos;` &gt;&gt; ems_build.properties
+echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;` &gt;&gt; ems_build.properties
+echo DATE=${DATE} &gt;&gt; ems_build.properties
+echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ems_build.properties
+
+#replace backslash with space, because it is not a valid properties file if it has a backslash char
+#it save a &quot;ems_build.properties.bak&quot; backup file for debug if we will encounter problems
+sed -i.bak &apos;s/\\/ /g&apos; ems_build.properties
+</command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>ems_build.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
+      <publishers>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+            <arg1>${checkIfInfraIsNotLatest}</arg1>
+            <arg2>1</arg2>
+            <ignoreCase>false</ignoreCase>
+          </condition>
+          <publisherList>
+            <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
+              <config>
+                <scriptFiles/>
+                <groovyScripts/>
+                <buildSteps>
+                  <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                    <results>
+                      <string>SUCCESS</string>
+                      <string>NOT_BUILT</string>
+                      <string>ABORTED</string>
+                      <string>FAILURE</string>
+                      <string>UNSTABLE</string>
+                    </results>
+                    <role>BOTH</role>
+                    <executeOn>BOTH</executeOn>
+                    <buildSteps>
+                      <EnvInjectBuilder plugin="envinject@2.1.6">
+                        <info>
+                          <propertiesFilePath>checkIfInfraIsNotLatest_prop</propertiesFilePath>
+                        </info>
+                      </EnvInjectBuilder>
+                    </buildSteps>
+                  </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+                </buildSteps>
+                <markBuildUnstable>false</markBuildUnstable>
+              </config>
+            </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
+            <arg1>${sendEmail}</arg1>
+            <arg2>True</arg2>
+            <ignoreCase>false</ignoreCase>
+          </condition>
+          <publisherList>
+            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+              <recipientList>Michael.Lallouz@audiocodes.com,cc:ben.magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
+              <configuredTriggers>
+                <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+                  <email>
+                    <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                    <body>$PROJECT_DEFAULT_CONTENT</body>
+                    <recipientProviders>
+                      <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+                      <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
+                    </recipientProviders>
+                    <attachmentsPattern></attachmentsPattern>
+                    <attachBuildLog>false</attachBuildLog>
+                    <compressBuildLog>false</compressBuildLog>
+                    <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                    <contentType>project</contentType>
+                  </email>
+                </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+              </configuredTriggers>
+              <contentType>default</contentType>
+              <defaultSubject>web-ui build is still running or infra isn’t latest</defaultSubject>
+              <defaultContent>${FILE,path=&quot;infraNotLatest.txt&quot;}
+
+</defaultContent>
+              <attachmentsPattern></attachmentsPattern>
+              <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+              <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+              <attachBuildLog>false</attachBuildLog>
+              <compressBuildLog>false</compressBuildLog>
+              <replyTo>$DEFAULT_REPLYTO</replyTo>
+              <saveOutput>false</saveOutput>
+              <disabled>false</disabled>
+            </hudson.plugins.emailext.ExtendedEmailPublisher>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+      </publishers>
+    </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>mkiso.log, EMS/target/*-SNAPSHOT.jar, common/target/*-SNAPSHOT.jar, database/target/*-SNAPSHOT.jar, oracle_triggers/target/*-SNAPSHOT.jar, rest-core/target/*-SNAPSHOT.jar,EMS/FKGenerator.ini</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.git.GitPublisher plugin="git@4.0.0">
+      <configVersion>2</configVersion>
+      <pushMerge>false</pushMerge>
+      <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
+      <forcePush>false</forcePush>
+      <tagsToPush>
+        <hudson.plugins.git.GitPublisher_-TagToPush>
+          <targetRepoName>origin</targetRepoName>
+          <tagName>${FULL_NEW_TAG}</tagName>
+          <tagMessage>Jenkins auto tagging</tagMessage>
+          <createTag>true</createTag>
+          <updateTag>true</updateTag>
+        </hudson.plugins.git.GitPublisher_-TagToPush>
+      </tagsToPush>
+    </hudson.plugins.git.GitPublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>NEW_TAG=${NEW_TAG}
+BRANCH=7.8.1000
+FullTesting=$FullTesting
+UpgradeUiDevServer=$UpgradeUiDevServer
+PublishAMI=$PublishAMI</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>ems_sanity_multijob</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>NEWTAG=$NEW_TAG
+RN=$RN
+GERRIT_HOST=$GERRIT_HOST
+EMAIL=$EMAIL
+PROJECT=$PROJECT
+DATE=$DATE
+GERRIT_BRANCH=$BRANCH
+AuthorCommitter=$AuthorCommitter
+Destination=$BRANCH/${ISO_DEPLOY_DESTINATION}
+</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+            <hudson.plugins.git.GitRevisionBuildParameters plugin="git@4.0.0">
+              <combineQueuedCommits>false</combineQueuedCommits>
+            </hudson.plugins.git.GitRevisionBuildParameters>
+          </configs>
+          <projects>Update-Jira</projects>
+          <condition>UNSTABLE_OR_BETTER</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
+      <config>
+        <scriptFiles/>
+        <groovyScripts/>
+        <buildSteps>
+          <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+            <results>
+              <string>SUCCESS</string>
+            </results>
+            <role>BOTH</role>
+            <executeOn>BOTH</executeOn>
+            <buildSteps>
+              <hudson.tasks.Shell>
+                <command>if [ $ISO_DEPLOY_DESTINATION == official_iso ]; then
+	qaServerIP=10.3.180.50
+    cd ${WORKSPACE}/EMS/VersionRelease
+    python2.7 iso2qa.py $NEW_TAG $qaServerIP 7.8.1000 || echo &quot;**************** Download ISO 2 QA Failed ****************&quot;
+fi</command>
+              </hudson.tasks.Shell>
+            </buildSteps>
+          </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
+        </buildSteps>
+        <markBuildUnstable>true</markBuildUnstable>
+      </config>
+    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+  </publishers>
+  <buildWrappers>
+    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@3.6.2">
+      <managedFiles>
+        <org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
+          <fileId>d857ddc2-8a40-475d-9641-da74b243c754</fileId>
+          <targetLocation>${WORKSPACE}</targetLocation>
+          <replaceTokens>false</replaceTokens>
+        </org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
+      </managedFiles>
+    </org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+      <deployerDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <deployReleaseRepository>
+          <keyFromText></keyFromText>
+          <keyFromSelect>ems-release</keyFromSelect>
+          <dynamicMode>false</dynamicMode>
+        </deployReleaseRepository>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>false</useSpecs>
+      <uploadSpec>
+        <spec></spec>
+      </uploadSpec>
+      <downloadSpec>
+        <spec></spec>
+      </downloadSpec>
+      <deployPattern>${WORKSPACE}/EMS/target/DVD3*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/${ISO_DEPLOY_DESTINATION}
+${WORKSPACE}/EMS/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/common/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/database/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/EMS/FKGenerator.ini=&gt;com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}
+${WORKSPACE}/clm/target/*-SNAPSHOT.jar=&gt;com/ac/ems/clm/${BRANCH}-SNAPSHOT
+${WORKSPACE}/common/target/*-SNAPSHOT.jar=&gt;com/ac/ems/common/${BRANCH}-SNAPSHOT
+${WORKSPACE}/database/target/*-SNAPSHOT.jar=&gt;com/ac/ems/database/${BRANCH}-SNAPSHOT
+${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar=&gt;com/ac/ems/oracle_trigger/${BRANCH}-SNAPSHOT
+${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar=&gt;com/audioCodes/solutions/rest-core/${BRANCH}-SNAPSHOT
+</deployPattern>
+      <resolvePattern></resolvePattern>
+      <deploymentProperties></deploymentProperties>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>true</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <multiConfProject>false</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>jpass</name>
+          <value>{AQAAABAAAAAQ7pBBn7p+qjtEM3NIRgLpHBduw9fbhwUcrJXOWQXyqxo=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <descriptionTemplate></descriptionTemplate>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
