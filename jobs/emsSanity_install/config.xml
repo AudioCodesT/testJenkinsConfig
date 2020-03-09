@@ -569,7 +569,13 @@ fi</command>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>cd ${WORKSPACE}/EMS/VersionRelease
-python2.7 SanityCopyLogs.py $NEW_TAG $vmIP</command>
+#run copy logs
+if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
+then 
+	echo &quot;dont run copyLogs&quot;
+else
+	python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
+fi</command>
               </hudson.tasks.Shell>
             </buildSteps>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
