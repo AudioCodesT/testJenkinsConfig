@@ -242,7 +242,7 @@ cat VAG.properties
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$DEFAULT_RECIPIENTS, Shmulik.Yudkovich@audiocodes.com, shuky.riechard@audiocodes.com</recipientList>
+      <recipientList>shuky.riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
