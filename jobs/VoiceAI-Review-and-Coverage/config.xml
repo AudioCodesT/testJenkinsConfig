@@ -179,9 +179,9 @@ sed -i &apos;$s/\,$//&apos; report
 msg4json=$(cat report)
 
 ## Set vote
-if [ $(grep -q &quot;Fail:Block=false&quot; report) ]; then
+if [ ! $(grep -q &quot;Fail:Block=false&quot; report) ]; then
     cvgVote=&quot;-1&quot;
-elif [ $(grep -q &quot;Fail:Block=true&quot; report) ]; then
+elif [ ! $(grep -q &quot;Fail:Block=true&quot; report) ]; then
     cvgVote=&quot;-1&quot;
 else
     cvgVote=&quot;+1&quot;
