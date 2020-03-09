@@ -123,11 +123,6 @@
     <hudson.tasks.Shell>
       <command>set -ex
 
-## Coverage thresholds
-CVG_TH=&quot;0&quot;
-CVG_TH_Branches=&quot;0&quot;
-
-
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
 echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
@@ -151,7 +146,7 @@ arr_cat=(Statements Branches Functions Lines)
 
 ## Reset before comparisson
 [[ -f report ]] &amp;&amp; rm -f report
-cvgVote=
+cvgVote=&quot;+2&quot;
 
 ## Compare test with thresholds
 for n in ${arr_name[@]}; do
@@ -174,18 +169,14 @@ for n in ${arr_name[@]}; do
     done
 done
 
+## Delete comma at end of last line
 sed -i &apos;$s/\,$//&apos; report
 
 msg4json=$(cat report)
 
 ## Set vote
-if [ ! $(grep -q &quot;Fail:Block=false&quot; report) ]; then
-    cvgVote=&quot;-1&quot;
-elif [ ! $(grep -q &quot;Fail:Block=true&quot; report) ]; then
-    cvgVote=&quot;-2&quot;
-else
-    cvgVote=&quot;+2&quot;
-fi
+if grep -q &quot;Fail:Block=false&quot; report; then cvgVote=&quot;-1&quot;
+if grep -q &quot;Fail:Block=true&quot; report; then cvgVote=&quot;-2&quot;
 
 
 ## Voting
