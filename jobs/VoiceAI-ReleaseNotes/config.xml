@@ -176,8 +176,8 @@ cat voiceAI.properties</command>
       </delay>
       <maxSchedule>3</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
-    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.12">
-      <coberturaReportFile>**/coverage/cobertura-coverage.xml</coberturaReportFile>
+    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.15">
+      <coberturaReportFile>**/coverage/*coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
       <failUnhealthy>false</failUnhealthy>
       <failUnstable>false</failUnstable>
@@ -238,6 +238,7 @@ cat voiceAI.properties</command>
         </targets>
       </failingTarget>
       <sourceEncoding>ASCII</sourceEncoding>
+      <enableNewApi>false</enableNewApi>
     </hudson.plugins.cobertura.CoberturaPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>ben.magriso, yuval.yosha</recipients>
