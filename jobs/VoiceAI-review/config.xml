@@ -232,7 +232,7 @@ exit $ret_value
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.12">
+    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.15">
       <coberturaReportFile>**/coverage/*coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
       <failUnhealthy>false</failUnhealthy>
@@ -307,6 +307,7 @@ exit $ret_value
         </targets>
       </failingTarget>
       <sourceEncoding>Cp1252</sourceEncoding>
+      <enableNewApi>false</enableNewApi>
     </hudson.plugins.cobertura.CoberturaPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|node is offline|Error fetching remote|JNLP4-connect connection).*</regexpForRerun>
