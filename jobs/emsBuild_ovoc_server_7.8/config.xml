@@ -157,6 +157,7 @@ if you still want to run it then run again with &apos;0&apos;
 if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; != &quot;official_iso&quot; ]]
 then
 	echo &quot;It&apos;s not official_iso, no need to check if currently running job in jenkins for web-ui ovoc in same branch&quot;
+    echo &quot;sendEmail=False&quot; &gt; checkIfInfraIsNotLatest_prop
     exit 0
 fi
 
