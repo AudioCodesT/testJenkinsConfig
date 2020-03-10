@@ -68,6 +68,7 @@
         <string># All Managers</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -86,12 +87,13 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string># All_BSP</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1580389096137</timestamp>
+      <timestamp>1583835411932</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Yaniv.Botner@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
