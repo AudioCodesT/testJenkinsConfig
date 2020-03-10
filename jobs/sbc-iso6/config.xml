@@ -82,7 +82,7 @@ PATH=/bin:/sbin:/usr/sbin:$PATH</propertiesContent>
       <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
-  <assignedNode>sbc-tests</assignedNode>
+  <assignedNode>sbc-linux-build</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
