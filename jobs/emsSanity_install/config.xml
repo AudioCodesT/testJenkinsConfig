@@ -357,7 +357,7 @@ BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; 
 if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
 
 echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
-
+echo &quot;vmIP=${vmIP}&quot; &gt;&gt; sanity.properties
 #Wait for the instance to startup
 echo &quot;Wait until the instance is up&quot;
 OLD_STATE=&quot;&quot;
