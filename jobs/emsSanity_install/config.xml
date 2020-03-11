@@ -568,14 +568,20 @@ fi</command>
             <role>SLAVE</role>
             <buildSteps>
               <hudson.tasks.Shell>
-                <command>cd ${WORKSPACE}/EMS/VersionRelease
+                <command>#get all instance id and vm ip
+set -a
+source sanity.properties
+
+cd ${WORKSPACE}/EMS/VersionRelease
 #run copy logs
 if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 then 
 	echo &quot;dont run copyLogs&quot;
 else
 	python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
-fi</command>
+fi
+
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
               </hudson.tasks.Shell>
             </buildSteps>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
@@ -606,8 +612,8 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
+          <script>#export &quot;$(cat sanity.properties)&quot;&#xd;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
