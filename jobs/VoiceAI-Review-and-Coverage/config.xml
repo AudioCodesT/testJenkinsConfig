@@ -158,7 +158,7 @@ for n in ${arr_name[@]}; do
     sumFile=&quot;$n/coverage/textsum.txt&quot;
     
     ## Initial coverage report
-    printf &quot;%s&quot; &quot;$n&quot; &gt;&gt; report
+    printf &quot;%s:\n&quot; &quot;$n&quot; &gt;&gt; report
     printf &quot;Category\tCoverage\tThreshold\tBlocking\n&quot; &gt;&gt; report
     
     ##
