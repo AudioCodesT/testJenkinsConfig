@@ -571,6 +571,7 @@ fi</command>
                 <command>#get all instance id and vm ip
 set -a
 source sanity.properties
+set +a
 
 cd ${WORKSPACE}/EMS/VersionRelease
 #run copy logs
