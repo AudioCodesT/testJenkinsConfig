@@ -155,7 +155,7 @@ GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;
 
 echo Free space to this compile by deleting GWAPP compilation
 df -h .
-rm -rf ../TP_GWApp ../sbc_misc_compile
+rm -rf ../../workspace/TP_GWApp ../sbc_misc_compile
 df -h .
 
 cd ../..
