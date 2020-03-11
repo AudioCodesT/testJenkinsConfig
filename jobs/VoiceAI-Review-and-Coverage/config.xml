@@ -172,7 +172,7 @@ for n in ${arr_name[@]}; do
         ## Create coverage report for current package\module
         if [ &quot;$failFlag&quot; == &quot;1&quot; ]; then
             printf &quot;%s:\t\t%s\t\t%s\t\t%s\n&quot; &quot;$c&quot; &quot;$cat_val&quot; &quot;$th_val&quot; &quot;$bl_val&quot; &gt;&gt; report
-            sed -e -i &quot;s/^$n$/$n: Coverage is beneeth threshold/&quot; report
+            sed -e &quot;s|^$n:$|$n: \*\*\* Coverage is beneeth threshold \*\*\*|&quot; report
         else
             printf &quot;%s:\t\t%s\t\t%s\n&quot; &quot;$c&quot; &quot;$cat_val&quot; &quot;$th_val&quot; &gt;&gt; report
         fi
