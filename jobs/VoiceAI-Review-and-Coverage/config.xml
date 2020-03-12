@@ -227,12 +227,17 @@ exit $ret_value
       <failNoReports>false</failNoReports>
       <lineCoverageTargets>60, 0, 0</lineCoverageTargets>
       <packageCoverageTargets>60, 0, 0</packageCoverageTargets>
+      <classCoverageTargets>60, 0, 0</classCoverageTargets>
       <methodCoverageTargets>60, 0, 0</methodCoverageTargets>
       <conditionalCoverageTargets>60, 0, 0</conditionalCoverageTargets>
       <healthyTarget>
         <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
           <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>PACKAGES</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>6000000</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CLASSES</hudson.plugins.cobertura.targets.CoverageMetric>
             <int>6000000</int>
           </entry>
           <entry>
@@ -256,6 +261,10 @@ exit $ret_value
             <int>0</int>
           </entry>
           <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CLASSES</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+          <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>METHOD</hudson.plugins.cobertura.targets.CoverageMetric>
             <int>0</int>
           </entry>
@@ -276,6 +285,10 @@ exit $ret_value
             <int>0</int>
           </entry>
           <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CLASSES</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+          <entry>
             <hudson.plugins.cobertura.targets.CoverageMetric>METHOD</hudson.plugins.cobertura.targets.CoverageMetric>
             <int>0</int>
           </entry>
@@ -292,6 +305,25 @@ exit $ret_value
       <sourceEncoding>Cp1252</sourceEncoding>
       <enableNewApi>false</enableNewApi>
     </hudson.plugins.cobertura.CoberturaPublisher>
+    <io.jenkins.plugins.coverage.CoveragePublisher plugin="code-coverage-api@1.1.3">
+      <adapters>
+        <io.jenkins.plugins.coverage.adapter.IstanbulCoberturaReportAdapter>
+          <path>coverage/*coverage.xml</path>
+          <mergeToOneReport>false</mergeToOneReport>
+          <thresholds class="linked-list"/>
+        </io.jenkins.plugins.coverage.adapter.IstanbulCoberturaReportAdapter>
+      </adapters>
+      <globalThresholds class="linked-list"/>
+      <failUnhealthy>false</failUnhealthy>
+      <failUnstable>false</failUnstable>
+      <failNoReports>false</failNoReports>
+      <applyThresholdRecursively>false</applyThresholdRecursively>
+      <sourceFileResolver>
+        <level>NEVER_STORE</level>
+      </sourceFileResolver>
+      <calculateDiffForChangeRequests>false</calculateDiffForChangeRequests>
+      <failBuildIfCoverageDecreasedInChangeRequest>false</failBuildIfCoverageDecreasedInChangeRequest>
+    </io.jenkins.plugins.coverage.CoveragePublisher>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
