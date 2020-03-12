@@ -95,7 +95,7 @@ COMMSHA1=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 ## The version value has two forms:
 ## x,x,x,x which is reprsented by *_VER
 ## &quot;x, x, x, x&quot; which is represented by *_V_E_R
-if [[ &quot;X$NEWTAG&quot; == &quot;X&quot; ]]; then
+if [ -z &quot;$NEWTAG&quot; ]; then
     Tags=$(git describe --tags --abbrev=0 --first-parent origin/${BRANCH} 2&gt;/dev/null)
     if [[ &quot;$Tags&quot; != &quot;&quot; ]]; then
         LASTTAG=$(git tag --points-at $(git rev-list -n1 $Tags) --sort=-taggerdate | head -1)
