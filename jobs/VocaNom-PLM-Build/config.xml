@@ -96,20 +96,20 @@ COMMHASH=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 ## x,x,x,x which is reprsented by *_VER
 ## &quot;x, x, x, x&quot; which is represented by *_V_E_R
 if [ -z &quot;$NEWTAG&quot; ]; then
+    # get sorted tags of current commit
     headTags=$(git tag --points-at HEAD --sort=-taggerdate)
+    # Get last tags on the branch
     parentTags=$(git describe --tags --abbrev=0 --first-parent origin/${BRANCH} 2&gt;/dev/null)
-    parentSortedTags=$(git tag --points-at $(git rev-list -n1 $parentTags) --sort=-taggerdate)
+    # Sort last tags on the branch
+    [[ -z &quot;$parentTags&quot; ]] || parentSortedTags=$(git tag --points-at $(git rev-list -n1 $parentTags) --sort=-taggerdate)
     
     ## If current commit has the last tag on the branch - exit
     if [ &quot;$headTags&quot; -eq &quot;$parentSortedTags&quot; ]; then
         echo &quot;Current commit has the last tag on the branch. Exiting!&quot; &amp;&amp; exit 1
     fi
     
-    if [[ &quot;$parentTags&quot; != &quot;&quot; ]]; then
-        LASTTAG=$(echo $parentSortedTags | head -1)
-    else
-        LASTTAG=&quot;0.0.0.0&quot;
-    fi
+    ## Get or Set last tag value
+    [[ &quot;$parentSortedTags&quot; != &quot;&quot; ]] &amp;&amp; LASTTAG=$(echo $parentSortedTags | head -1) || LASTTAG=&quot;0.0.0.0&quot;
     
     echo $LASTTAG
     
