@@ -202,7 +202,7 @@ sudo chown -R centos:centos .
 
 ls -l 
 
-imageFile=sbc.iso
+imageFile=sbc8.iso
 if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 900000 ]; then
   echo &quot;$imageFile Image too small.. exit with error&quot;
   exit -1
@@ -263,7 +263,7 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/sbc.iso=&gt;com/ac/sbc/Centos8/ISO/${COMP_VER}
+      <deployPattern>${WORKSPACE}/sbc8.iso=&gt;com/ac/sbc/Centos8/ISO/${COMP_VER}
 </deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
