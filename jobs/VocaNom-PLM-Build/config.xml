@@ -173,11 +173,11 @@ sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersio
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/Release/PhoneListManager.exe&quot;,
+            &quot;pattern&quot;: &quot;${WORKSPACE}/PhoneListManager/Release/PhoneListManager.exe&quot;,
             &quot;target&quot;: &quot;VocaNom/PLM/${NEWTAG}/&quot;,
         },
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/Release/PhoneListManager.pdb&quot;,
+            &quot;pattern&quot;: &quot;${WORKSPACE}/PhoneListManager/Release/PhoneListManager.pdb&quot;,
             &quot;target&quot;: &quot;VocaNom/PLM/${NEWTAG}/&quot;,
         },
         {
