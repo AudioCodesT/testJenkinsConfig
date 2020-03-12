@@ -141,10 +141,13 @@ sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersio
 cd ${WORKSPACE}
 echo &quot;setx NEWTAG $NEWTAG&quot; &gt; envVars.bat
 echo &quot;set NEWTAG=$NEWTAG&quot; &gt;&gt; envVars.bat
+echo &quot;export NEWTAG=$NEWTAG&quot; &gt; envVars.prop
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info/>
+      <info>
+        <propertiesFilePath>envVars.prop</propertiesFilePath>
+      </info>
     </EnvInjectBuilder>
     <hudson.tasks.BatchFile>
       <command>call envVars.bat&#xd;
