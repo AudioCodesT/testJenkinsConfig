@@ -88,7 +88,7 @@ If empty will increment last tag on gerrit.</description>
     <hudson.tasks.Shell>
       <command>#!C:\Program Files\Git\bin\bash.exe -login
 
-COMMSHA1=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
+COMMHASH=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 
 ## If no tag specified for build, get last tag from test-gerrit and increment it by 1 to set new version and new tag
 ## Else use given tag as new tag and also make new version from it.
@@ -119,13 +119,13 @@ if [ -z &quot;$NEWTAG&quot; ]; then
     NEW_VER=&quot;$LASTMAJ,$LASTMID,$LASTMIN,$NEW_PCH&quot;
     NEW_V_E_R=&quot;$LASTMAJ, $LASTMID, $LASTMIN, $NEW_PCH&quot;
     
-    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG incremented from last tag in git&quot;
+    TAGMSG=&quot;Tagged commit $COMMHASH with tag $NEWTAG incremented from last tag in git&quot;
 else
     # Construct new values
     NEW_VER=$(echo $NEWTAG | sed &apos;s/\.\,/g&apos;)
     NEW_V_E_R=$(echo $NEWTAG | sed &apos;s/\.\, /g&apos;)
     
-    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG provided by user&quot;
+    TAGMSG=&quot;Tagged commit $COMMHASH with tag $NEWTAG provided by user&quot;
 fi
 
 ## Tag current commit with NEWTAG
@@ -139,16 +139,17 @@ sed -E -i &apos;s:^( *FILEVERSION| *PRODUCTVERSION).*$:\1 &apos;&quot;$NEW_VER&q
 sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersion&quot;,).*$:\1 \&quot;&apos;&quot;$NEW_V_E_R&quot;&apos;\&quot;:g&apos; PhoneListManager.rc
 
 cd ${WORKSPACE}
-echo &quot;setx NEWTAG $NEWTAG&quot; &gt; vars.env
+echo &quot;setx NEWTAG $NEWTAG&quot; &gt; envVars.bat
+echo &quot;set NEWTAG=$NEWTAG&quot; &gt;&gt; envVars.bat
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
-      <info>
-        <propertiesFilePath>vars.env</propertiesFilePath>
-      </info>
+      <info/>
     </EnvInjectBuilder>
     <hudson.tasks.BatchFile>
-      <command>cd PhoneListManager&#xd;
+      <command>call envVars.bat&#xd;
+&#xd;
+cd PhoneListManager&#xd;
 %comspec% /k go.bat&#xd;
 </command>
     </hudson.tasks.BatchFile>
