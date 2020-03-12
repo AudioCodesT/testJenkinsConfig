@@ -130,7 +130,9 @@
           <permission>hudson.model.Item.Workspace</permission>
           <permission>hudson.model.Item.Build</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>ronnya</sid>
+        </assignedSIDs>
       </role>
       <role name="adminJobs" pattern="UpdateVI">
         <permissions>
