@@ -161,11 +161,26 @@ echo &quot;NEWTAG=$NEWTAG&quot; &gt; envVars.prop
       <command>call envVars.bat&#xd;
 &#xd;
 cd PhoneListManager&#xd;
-%comspec% /k go.bat&#xd;
-</command>
+%comspec% /k go.bat</command>
     </hudson.tasks.BatchFile>
+    <hudson.tasks.Shell>
+      <command>#!C:\Program Files\Git\bin\bash.exe -login
+
+cd ${WORKSPACE}
+rm -f envVars.prop
+rm -f envVars.bat</command>
+    </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>PhoneListManager\PhoneListManager.rc</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
