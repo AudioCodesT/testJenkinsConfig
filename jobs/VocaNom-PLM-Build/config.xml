@@ -104,7 +104,7 @@ if [ -z &quot;$NEWTAG&quot; ]; then
     [[ -z &quot;$parentTags&quot; ]] || parentSortedTags=$(git tag --points-at $(git rev-list -n1 $parentTags) --sort=-taggerdate)
     
     ## If current commit has the last tag on the branch - exit
-    if [ &quot;$headTags&quot; -eq &quot;$parentSortedTags&quot; ]; then
+    if [[ &quot;$headTags&quot; == &quot;$parentSortedTags&quot; ]]; then
         echo &quot;Current commit has the last tag on the branch. Exiting!&quot; &amp;&amp; exit 1
     fi
     
