@@ -172,6 +172,7 @@
           <permission>hudson.model.Run.Update</permission>
         </permissions>
         <assignedSIDs>
+          <sid>benib</sid>
           <sid>yossim</sid>
           <sid>yuvaly</sid>
           <sid>shukyr</sid>
