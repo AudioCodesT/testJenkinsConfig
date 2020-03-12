@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>4ff18ee1-5e8d-4f11-b2eb-df0798688c69</uuid>
+          <uuid>6a81ae9b-992e-44ac-8161-acfcfc71b8b4</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -156,7 +156,7 @@ sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersio
   <publishers/>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_Project:${GERRIT_PROJECT}_Branch:${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
+      <template>#${BUILD_NUMBER}_Branch:${BRANCH}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
