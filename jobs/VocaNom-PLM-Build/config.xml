@@ -242,7 +242,7 @@ rm -f envVars.bat</command>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_Branch:${BRANCH}</template>
+      <template>#${BUILD_NUMBER}_${NEWTAG}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
