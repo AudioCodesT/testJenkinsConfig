@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>00fdd8ae-b09d-4b04-a4aa-810ae47ffaec</uuid>
+          <uuid>4ff18ee1-5e8d-4f11-b2eb-df0798688c69</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -67,7 +67,6 @@ If left empty will increment last tag on gerrit.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec> +refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/VocaNom/PLM.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
