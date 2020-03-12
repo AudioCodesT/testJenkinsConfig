@@ -118,11 +118,9 @@ Fix=`echo $Tag | cut -d. -f4 | sed -r &apos;s/^0*//&apos;`
 if [ -z $Fix ]; then Fix=0; fi
 
 Minor=`echo $Tag | cut -d. -f3 | sed -r &apos;s/^0*//&apos;`
-#if Minor is 000 (for example if Tag is: 7.30CE.000.003) then minor suppose to be 0 
-if [[ $Minor == &quot;&quot; ]]
-then
-Minor=0
-fi
+#if Minor is 000 (for example if Tag is: 7.30CE.000.003) then minor suppose to be 0
+if [ -z &quot;$Minor&quot; ]; then Minor=0; fi
+
 Name=`echo &quot;$Tag&quot; | sed &apos;s/^.\.[[:digit:]]*//; s/\..*$//&apos;`
 BrdFile=&quot;Bsps/Common/Include/BrdVersion.h&quot;
 
