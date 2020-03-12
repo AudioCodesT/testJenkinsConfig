@@ -60,6 +60,7 @@ If empty will increment last tag on gerrit.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <refspec>+refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/VocaNom/PLM.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
