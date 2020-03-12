@@ -121,13 +121,13 @@ if [[ &quot;X$NEWTAG&quot; == &quot;X&quot; ]]; then
     NEW_VER=&quot;$LASTMAJ,$LASTMID,$LASTMIN,$NEW_PCH&quot;
     NEW_V_E_R=&quot;$LASTMAJ, $LASTMID, $LASTMIN, $NEW_PCH&quot;
     
-    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG provided by user&quot;
+    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG incremented from last tag in git&quot;
 else
     # Construct new values
     NEW_VER=$(echo $NEWTAG | sed &apos;s/\.\,/g&apos;)
     NEW_V_E_R=$(echo $NEWTAG | sed &apos;s/\.\, /g&apos;)
     
-    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG incremented from last tag in git&quot;
+    TAGMSG=&quot;Tagged commit $COMMSHA1 with tag $NEWTAG provided by user&quot;
 fi
 
 ## Tag current commit with NEWTAG
