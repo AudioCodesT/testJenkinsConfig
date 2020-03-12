@@ -130,7 +130,9 @@
           <permission>hudson.model.Item.Workspace</permission>
           <permission>hudson.model.Item.Build</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>Ronny Aruch</sid>
+        </assignedSIDs>
       </role>
       <role name="adminJobs" pattern="UpdateVI">
         <permissions>
@@ -210,6 +212,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
