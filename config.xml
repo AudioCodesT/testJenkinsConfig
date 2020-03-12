@@ -101,6 +101,7 @@
         <assignedSIDs>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
+          <sid>anonymous</sid>
           <sid># SBC</sid>
           <sid># R&amp;D Application Group</sid>
           <sid># R&amp;D System Software</sid>
