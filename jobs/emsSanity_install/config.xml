@@ -569,9 +569,8 @@ fi</command>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>#get all instance id and vm ip
-cd ${WORKSPACE}
 set -a
-source sanity.properties
+source ${WORKSPACE}/sanity.properties
 set +a
 
 cd ${WORKSPACE}/EMS/VersionRelease
