@@ -494,6 +494,57 @@ fi</command>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
+            <command>if [[ ! &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]
+  then
+  exit 1
+elif [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; &amp;&amp; &quot;$UpgradeUiDevServer&quot; == &quot;1&quot; ]]
+  then 
+  exit 0
+else
+  exit 1
+fi</command>
+          </condition>
+          <publisherList>
+            <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+              <configs>
+                <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+                  <configs>
+                    <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+                    <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                      <properties>serverToUpgrade=172.17.118.25</properties>
+                      <textParamValueOnNewLine>false</textParamValueOnNewLine>
+                    </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                  </configs>
+                  <projects>EMSUpgradeOvocUIDevServer</projects>
+                  <condition>SUCCESS</condition>
+                  <triggerWithNoParameters>false</triggerWithNoParameters>
+                  <triggerFromChildProjects>false</triggerFromChildProjects>
+                </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+              </configs>
+            </hudson.plugins.parameterizedtrigger.BuildTrigger>
+            <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+              <configs>
+                <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+                  <configs>
+                    <hudson.plugins.parameterizedtrigger.CurrentBuildParameters/>
+                    <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                      <properties>serverToUpgrade=172.17.118.26</properties>
+                      <textParamValueOnNewLine>false</textParamValueOnNewLine>
+                    </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+                  </configs>
+                  <projects>EMSUpgradeOvocUIDevServer</projects>
+                  <condition>SUCCESS</condition>
+                  <triggerWithNoParameters>false</triggerWithNoParameters>
+                  <triggerFromChildProjects>false</triggerFromChildProjects>
+                </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+              </configs>
+            </hudson.plugins.parameterizedtrigger.BuildTrigger>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
           <condition class="org.jenkins_ci.plugins.run_condition.core.StringsMatchCondition" plugin="run-condition@1.0">
             <arg1>$PublishAMI</arg1>
             <arg2>1</arg2>
