@@ -34,7 +34,7 @@
         <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>BRANCH</name>
           <description>The branch to build.</description>
-          <uuid>b3b3be29-b8f3-4927-95a8-2415d185472e</uuid>
+          <uuid>00fdd8ae-b09d-4b04-a4aa-810ae47ffaec</uuid>
           <type>PT_BRANCH</type>
           <branch></branch>
           <tagFilter>*</tagFilter>
@@ -44,13 +44,6 @@
           <selectedValue>DEFAULT</selectedValue>
           <quickFilterEnabled>false</quickFilterEnabled>
         </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>USER_COMMIT</name>
-          <description>Specify commit hash.
-If left empty - last commit (HEAD). Else checkout and build this commit</description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>NEWTAG</name>
           <description>Specific tag to build.
@@ -74,13 +67,14 @@ If left empty will increment last tag on gerrit.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <refspec> +refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/VocaNom/PLM.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${GERRIT_BRANCH}</name>
+        <name>${BRANCH}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -114,7 +108,7 @@ COMMSHA1=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 ## x,x,x,x which is reprsented by *_VER
 ## &quot;x, x, x, x&quot; which is represented by *_V_E_R
 if [ &quot;X$NEWTAG&quot; == &quot;X&quot; ]; then
-    Tags=$(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)
+    Tags=$(git describe --tags --abbrev=0 --first-parent origin/${BRANCH})
     if [&quot;$Tags&quot; != &quot;&quot; ]; then
         LastTag=$(git tag --points-at $(git rev-list -n1 $Tags) --sort=-taggerdate | head -1)
     else
@@ -160,13 +154,7 @@ sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersio
 </command>
     </hudson.tasks.BatchFile>
   </builders>
-  <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>yuvaly@audiocodes.com</recipients>
-      <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>true</sendToIndividuals>
-    </hudson.tasks.Mailer>
-  </publishers>
+  <publishers/>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_Project:${GERRIT_PROJECT}_Branch:${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
