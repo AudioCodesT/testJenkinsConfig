@@ -137,10 +137,13 @@ git push origin $NEWTAG
 cd PhoneListManager
 sed -E -i &apos;s:^( *FILEVERSION| *PRODUCTVERSION).*$:\1 &apos;&quot;$NEW_VER&quot;&apos;:g&apos; PhoneListManager.rc
 sed -E -i &apos;s:^( *VALUE &quot;FileVersion&quot;,| *VALUE &quot;ProductVersion&quot;,).*$:\1 \&quot;&apos;&quot;$NEW_V_E_R&quot;&apos;\&quot;:g&apos; PhoneListManager.rc
+
+echo &quot;setx NEWTAG $NEWTAG&quot; &gt; env.bat
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.BatchFile>
-      <command>cd PhoneListManager&#xd;
+      <command>call env.bat&#xd;
+cd PhoneListManager&#xd;
 %comspec% /k go.bat&#xd;
 </command>
     </hudson.tasks.BatchFile>
