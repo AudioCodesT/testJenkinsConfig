@@ -112,6 +112,7 @@ if [ -z &quot;$NEWTAG&quot; ]; then
     [[ &quot;$parentSortedTags&quot; != &quot;&quot; ]] &amp;&amp; LASTTAG=$(echo $parentSortedTags | head -1) || LASTTAG=&quot;0.0.0.0&quot;
     
     echo $LASTTAG
+    git tag -d $LASTTAG
     
     # Disassemble tag
     LASTMAJ=$(echo $LASTTAG | gawk -F. &apos;{print $1}&apos;)
