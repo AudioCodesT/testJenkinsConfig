@@ -66,7 +66,6 @@ exit 1</command>
               <hudson.tasks.Shell>
                 <command>#get all instance id and vm ip
 ls -al
-$(pwd)
 set -a
 source ${WORKSPACE}/sanity.properties
 set +a
