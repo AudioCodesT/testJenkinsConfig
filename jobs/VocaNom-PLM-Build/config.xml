@@ -40,7 +40,7 @@
         <hudson.model.StringParameterDefinition>
           <name>NEWTAG</name>
           <description>Specific tag to build.
-If left empty will increment last tag on gerrit.</description>
+If empty will increment last tag on gerrit.</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
