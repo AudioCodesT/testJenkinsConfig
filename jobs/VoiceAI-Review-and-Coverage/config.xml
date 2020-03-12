@@ -184,7 +184,7 @@ msg4json=$( echo &quot;$message&quot; | sed &apos;s/$/ /g&apos; )
 
 ## Set vote
 if grep -q &quot;false&quot; report; then cvgVote=&quot;-1&quot;; fi
-if grep -q &quot;true&quot; report; then cvgVote=&quot;-1&quot;; fi
+if grep -q &quot;true&quot; report; then cvgVote=&quot;-2&quot;; fi
 
 
 ## Voting
