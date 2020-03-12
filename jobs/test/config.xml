@@ -39,7 +39,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>echo &quot;INSTANCE_ID=i-afdsfsdfsdfs&quot; &gt; sanity.properties
-echo &quot;vmIP=172.16.133.42&quot; &gt;&gt; sanity.properties</command>
+echo &quot;vmIP=172.16.133.42&quot; &gt;&gt; sanity.properties
+exit 1</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
