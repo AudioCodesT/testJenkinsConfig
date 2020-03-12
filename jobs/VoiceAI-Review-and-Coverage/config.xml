@@ -208,7 +208,7 @@ exit $ret_value
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>coverage/*coverage.xml</artifacts>
+      <artifacts>coverage/*coverage.xml **/textsum.txt</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
