@@ -31,19 +31,12 @@
     </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
+        <hudson.model.StringParameterDefinition>
           <name>BRANCH</name>
-          <description>The branch to build.</description>
-          <uuid>39432094-8c56-4999-b882-4ff1a316763b</uuid>
-          <type>PT_BRANCH</type>
-          <branch></branch>
-          <tagFilter>*</tagFilter>
-          <branchFilter>.*</branchFilter>
-          <sortMode>DESCENDING_SMART</sortMode>
+          <description>Branch to build</description>
           <defaultValue>master</defaultValue>
-          <selectedValue>DEFAULT</selectedValue>
-          <quickFilterEnabled>false</quickFilterEnabled>
-        </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>NEWTAG</name>
           <description>Specific tag to build.
