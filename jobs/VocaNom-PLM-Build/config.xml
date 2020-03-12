@@ -102,9 +102,9 @@ COMMSHA1=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 if [[ &quot;X$NEWTAG&quot; == &quot;X&quot; ]]; then
     Tags=$(git describe --tags --abbrev=0 --first-parent origin/${BRANCH})
     if [[ &quot;$Tags&quot; != &quot;&quot; ]]; then
-        LastTag=$(git tag --points-at $(git rev-list -n1 $Tags) --sort=-taggerdate | head -1)
+        LASTTAG=$(git tag --points-at $(git rev-list -n1 $Tags) --sort=-taggerdate | head -1)
     else
-        LastTag=&quot;0.0.0.0&quot;
+        LASTTAG=&quot;0.0.0.0&quot;
     fi
     
     # Disassemble tag
