@@ -187,7 +187,6 @@ cd PhoneListManager&#xd;
 %comspec% /k go.bat&#xd;
 &#xd;
 cd ..&#xd;
-del envVars.prop&#xd;
 del envVars.bat</command>
     </hudson.tasks.BatchFile>
   </builders>
