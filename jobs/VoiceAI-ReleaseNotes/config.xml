@@ -125,7 +125,7 @@ NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 TAGVER=${NEWTAG::-2}
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 
-## Run bild script for coverage report
+## Run build script for coverage report
 sh common/build_all.sh
 
 curl -k https://test-jenkins/job/VoiceAI-ReleaseNotes/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
