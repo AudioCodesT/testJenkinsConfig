@@ -86,9 +86,10 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1582707402687</timestamp>
+      <timestamp>1584290149838</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
