@@ -317,7 +317,7 @@ output: if official &amp; all jobs succeeded then email to QA</description>
           <enableRetryStrategy>false</enableRetryStrategy>
           <enableCondition>true</enableCondition>
           <abortAllJob>true</abortAllJob>
-          <condition> &quot;${BRANCH}&quot;.startsWith(&quot;7.8.1000&quot;)</condition>
+          <condition> &quot;${BRANCH}&quot;.startsWith(&quot;7.8.1000&quot;) || &quot;${BRANCH}&quot;.startsWith(&quot;7.8.2000&quot;)</condition>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters plugin="parameterized-trigger@2.35.2">
               <properties>UPGRADE_FROM=7.8.1000</properties>
