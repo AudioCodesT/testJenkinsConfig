@@ -160,8 +160,8 @@ while read -r hash; do
     VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*: \(VI\|\)//gi; s/ .*//g&apos;)
     RN+=---$subject::$hash::$VI
   fi
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $OLDTAG..HEAD)&quot;
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..HEAD | sort -u`
+done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; $LASTTAG..HEAD)&quot;
+EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; $LASTTAG..HEAD | sort -u`
 echo NEWTAG=${NEWTAG} &gt; voiceAI.properties
 echo RN=${RN} &gt;&gt; voiceAI.properties
 echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; voiceAI.properties
