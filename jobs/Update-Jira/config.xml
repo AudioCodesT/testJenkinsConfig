@@ -152,9 +152,8 @@ case $PROJECT in
     *&quot;Smart&quot;*) SendTo=&quot;Brian.Kling, Alex.Shlachter&quot;;;
     *&quot;AudioEngine&quot;*) SendTo=&quot;Ariel.Pessah,Bjorn.Meijer, Eyal.Peretz, Ben.Magriso&quot;;;
     *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;WebRTC/Web&quot;) SendTo=&quot;Ariel.Pessah,Igor.Kolosov,Ben.Magriso&quot;;;
-    *&quot;WebRTC/WebClient&quot;*) SendTo=&quot;Ariel.Pessah,Tomer.Landesman,Olga.Triebich,Moshe.Avrahami,Ben.Magriso&quot;;;
+    *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;;
+    *&quot;WebRTC/Web&quot;*) SendTo=&quot;Ariel.Pessah,Igor.Kolosov,Tomer.Landesman,Olga.Triebich,Moshe.Avrahami,Ben.Magriso&quot;;;
     *&quot;MobilityPlus&quot;*) SendTo=&quot;Ariel.Pessah, Bjorn.Meijer, Eyal.Peretz, Sharon.Biniashvili, Ben.Magriso&quot;;;
     *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
     *) SendTo=&quot;yossim&quot;
