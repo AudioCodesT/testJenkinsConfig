@@ -45,7 +45,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>/home/centos/jenkinsslave/workspace/CloudServises/EazyBot</customWorkspace>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/CloudServices/EazyBot</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>## GiT remote section in .git/config for DMZ server:
