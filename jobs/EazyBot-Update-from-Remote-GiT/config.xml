@@ -1,0 +1,174 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Fetch Meeting Recorder full repository.&#xd;
+Push full repository (mirror) to server in DMZ at APC.</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <refspec>${GERRIT_REFSPEC}</refspec>
+        <url>ssh://jenkins@test-gerrit:29418/SmartTAP/MeetingRecorder.git</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <assignedNode>test-Sanjer</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
+      <spec></spec>
+      <gerritProjects>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+          <compareType>PLAIN</compareType>
+          <pattern>SmartTAP/MeetingRecorder</pattern>
+          <branches>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>ANT</compareType>
+              <pattern>**</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+          </branches>
+          <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+      </gerritProjects>
+      <dynamicGerritProjects class="empty-list"/>
+      <skipVote>
+        <onSuccessful>false</onSuccessful>
+        <onFailed>false</onFailed>
+        <onUnstable>false</onUnstable>
+        <onNotBuilt>false</onNotBuilt>
+      </skipVote>
+      <silentMode>false</silentMode>
+      <notificationLevel></notificationLevel>
+      <silentStartMode>false</silentStartMode>
+      <escapeQuotes>true</escapeQuotes>
+      <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
+      <dependencyJobsNames></dependencyJobsNames>
+      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
+      <commentTextParameterMode>BASE64</commentTextParameterMode>
+      <buildStartMessage></buildStartMessage>
+      <buildFailureMessage></buildFailureMessage>
+      <buildSuccessfulMessage></buildSuccessfulMessage>
+      <buildUnstableMessage></buildUnstableMessage>
+      <buildNotBuiltMessage></buildNotBuiltMessage>
+      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
+      <customUrl></customUrl>
+      <serverName>test-gerrit</serverName>
+      <triggerOnEvents>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent/>
+      </triggerOnEvents>
+      <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
+      <triggerConfigURL></triggerConfigURL>
+      <triggerInformationAction/>
+    </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/MeetingRecorder</customWorkspace>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># GiT remote section in .git/config for DMZ server:
+#[core]
+#        repositoryformatversion = 0
+#        filemode = true
+#        bare = false
+#        logallrefupdates = true
+#[remote &quot;origin&quot;]
+#        url = ssh://jenkins@test-gerrit:29418/SmartTAP/MeetingRecorder.git
+#        fetch = +refs/heads/*:refs/remotes/origin/*
+#[remote &quot;mtr-dmz&quot;]
+#        url = jenkins@aclmrdev:gitsvr/MeetingRecorder.git
+#        uploadpack = powershell git-upload-pack
+#        receivepack = powershell git-receive-pack
+#        updatepack = powershell git-update-pack
+
+
+## Track ALL remote branches --&gt; This was used when the job was scheduled.
+##                               Now that the job is triggered by gerrit,
+##                               the change that triggered the job is checked out
+##                               to the workspace and then pushed to the remote on DMZ
+
+#git branch -r | grep -v &apos;\-&gt;&apos; | while read remote; do
+#                                    git branch --track | grep &quot;${remote#origin/}&quot;
+#                                    if [[ $? -eq 1 ]]; then
+#                                        git branch --track &quot;${remote#origin/}&quot; &quot;$remote&quot;
+#                                    fi
+#                                done
+#
+#
+#for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
+#    echo &quot;*******************************************************************&quot;
+#    echo -e &quot;\t\t\tPulling $br&quot;
+#    echo &quot;*******************************************************************&quot;
+#    git reset --hard
+#    git checkout $br
+#    git pull origin $br
+#    echo &quot;*******************************************************************&quot;
+#    echo -e &quot;\t\t\tPushing $br&quot;
+#    echo &quot;*******************************************************************&quot;
+#    git push mtr-dmz --all
+#done
+git checkout ${GERRIT_BRANCH}
+git pull --rebase
+echo &quot;*******************************************************************&quot;
+git push mtr-dmz
+echo &quot;*******************************************************************&quot;
+
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.30">
+      <recipients>shukyr yuvaly</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers/>
+</project>

@@ -221,6 +221,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
@@ -1131,6 +1132,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
         <string>CheckJira</string>
         <string>Delete-Old-Artifacts-From-LocalStorage</string>
+        <string>EazyBot-Update-from-Remote-GiT</string>
         <string>Move-Old-Artifactory-To-LocalStorage</string>
         <string>mtr-PushToDMZ</string>
         <string>syncFilesOvocServerToUi</string>
