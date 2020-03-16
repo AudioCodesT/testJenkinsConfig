@@ -16,8 +16,8 @@
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>7</daysToKeep>
-        <numToKeep>10</numToKeep>
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>30</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
@@ -39,8 +39,9 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>NEWTAG</name>
-          <description>Specific tag to build.
-If empty will increment last tag on gerrit.</description>
+          <description>Leave empty by default in order to ++ the last tag
+If you need to &quot;jump&quot; - please set the new number.
+For example: current tag is 3.0.7.15  but the new should be 4.0.0.0</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
