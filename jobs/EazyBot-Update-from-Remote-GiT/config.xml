@@ -35,7 +35,6 @@ Push full repository (mirror) to server in DMZ at APC.</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -61,72 +60,30 @@ Push full repository (mirror) to server in DMZ at APC.</description>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
-      <gerritProjects>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-          <compareType>PLAIN</compareType>
-          <pattern>SmartTAP/MeetingRecorder</pattern>
-          <branches>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>ANT</compareType>
-              <pattern>**</pattern>
-            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-          </branches>
-          <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
-        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-      </gerritProjects>
-      <dynamicGerritProjects class="empty-list"/>
-      <skipVote>
-        <onSuccessful>false</onSuccessful>
-        <onFailed>false</onFailed>
-        <onUnstable>false</onUnstable>
-        <onNotBuilt>false</onNotBuilt>
-      </skipVote>
-      <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
-      <silentStartMode>false</silentStartMode>
-      <escapeQuotes>true</escapeQuotes>
-      <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
-      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
-      <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
-      <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
-      <serverName>test-gerrit</serverName>
-      <triggerOnEvents>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent/>
-      </triggerOnEvents>
-      <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
-      <triggerInformationAction/>
-    </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
-  </triggers>
+  <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <customWorkspace>/home/centos/jenkinsslave/workspace/MeetingRecorder</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command># GiT remote section in .git/config for DMZ server:
+      <command>## GiT remote section in .git/config for DMZ server:
 #[core]
 #        repositoryformatversion = 0
 #        filemode = true
 #        bare = false
 #        logallrefupdates = true
 #[remote &quot;origin&quot;]
-#        url = ssh://jenkins@test-gerrit:29418/SmartTAP/MeetingRecorder.git
+#        url = https://devops@git.flatrocktech.com/dot-net/audiocodes-pnc.git
 #        fetch = +refs/heads/*:refs/remotes/origin/*
-#[remote &quot;mtr-dmz&quot;]
-#        url = jenkins@aclmrdev:gitsvr/MeetingRecorder.git
-#        uploadpack = powershell git-upload-pack
-#        receivepack = powershell git-receive-pack
-#        updatepack = powershell git-update-pack
+#[branch &quot;develop&quot;]
+#        remote = origin
+#        merge = refs/heads/develop
+#[remote &quot;test-gerrit&quot;]
+#        url = ssh://jenkins@test-gerrit:29418/CloudServices/EazyBot.git
+#        fetch = +refs/heads/*:refs/remotes/test-gerrit/*
+#
+## Also used this command to store https password inside git:
+# git config --global credential.helper store
+#
 
 
 ## Track ALL remote branches --&gt; This was used when the job was scheduled.
@@ -154,10 +111,11 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 #    echo &quot;*******************************************************************&quot;
 #    git push mtr-dmz --all
 #done
-git checkout ${GERRIT_BRANCH}
+git fetch origin
+git checkout
 git pull --rebase
 echo &quot;*******************************************************************&quot;
-git push mtr-dmz
+git push test-gerrit
 echo &quot;*******************************************************************&quot;
 
 </command>
