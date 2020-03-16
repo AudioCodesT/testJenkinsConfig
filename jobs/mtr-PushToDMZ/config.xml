@@ -109,7 +109,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>/home/centos/jenkinsslave/MeetingRecorder</customWorkspace>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/MeetingRecorder</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command># GiT remote section in .git/config for DMZ server:
