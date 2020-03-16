@@ -901,18 +901,7 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0980bcfc91ea3c0e7</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0980bcfc91ea3c0e7</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-03-16 17:38:53.965 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
