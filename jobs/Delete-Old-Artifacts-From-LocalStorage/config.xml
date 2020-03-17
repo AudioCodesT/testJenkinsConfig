@@ -98,7 +98,7 @@ function RemoveFiles() {
     for file in ${filesToDelete[@]}
     do
     	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD} 2&gt;/dev/null 
-    	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD}  -exec rm -rv {} \; 2&gt;/dev/null 
+    	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD} -exec rm -rv {} \; 2&gt;/dev/null 
     done
 }
 
