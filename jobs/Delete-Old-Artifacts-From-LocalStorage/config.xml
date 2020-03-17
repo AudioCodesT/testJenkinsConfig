@@ -20,6 +20,9 @@ Executed periodically every night.</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -95,7 +98,7 @@ function RemoveFiles() {
     for file in ${filesToDelete[@]}
     do
     	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD} 2&gt;/dev/null 
-    	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD} -delete 2&gt;/dev/null 
+    	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD}  -exec rm -rv {} \; 2&gt;/dev/null 
     done
 }
 
