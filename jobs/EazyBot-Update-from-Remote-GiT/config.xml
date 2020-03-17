@@ -82,7 +82,7 @@ for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed
     echo -e &quot;\t\t\tPulling $br&quot;
     echo &quot;*******************************************************************&quot;
     git reset --hard
-    git checkout --track origin/$br
+    git checkout origin/$br
     git pull
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
