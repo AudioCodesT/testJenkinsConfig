@@ -116,7 +116,6 @@
 #git checkout master
 #git pull
 
-remoteDest=&quot;test-gerrit&quot;
 
 echo &quot;*******************************************************************&quot;
 git push test-gerrit HEAD:refs/heads/develop
