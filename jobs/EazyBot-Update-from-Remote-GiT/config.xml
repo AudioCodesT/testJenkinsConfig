@@ -92,9 +92,9 @@ remoteDest=&quot;test-gerrit&quot;
 
 git fetch origin
 git checkout origin/develop
-git pull --rebase
+git pull origin/develop --rebase
 echo &quot;*******************************************************************&quot;
-git push test-gerrit
+git push test-gerrit 
 echo &quot;*******************************************************************&quot;
 
 </command>
