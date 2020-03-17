@@ -77,25 +77,25 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 remoteDest=&quot;test-gerrit&quot;
 
 ## Pull from origin &amp; push to remote destination
-for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
-    echo &quot;*******************************************************************&quot;
-    echo -e &quot;\t\t\tPulling $br&quot;
-    echo &quot;*******************************************************************&quot;
-    git reset --hard
-    git checkout origin/$br
-    git pull origin $br
-    echo &quot;*******************************************************************&quot;
-    echo -e &quot;\t\t\tPushing $br&quot;
-    echo &quot;*******************************************************************&quot;
-    git push --tags $remoteDest $br
-done
+#for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
+#    echo &quot;*******************************************************************&quot;
+#    echo -e &quot;\t\t\tPulling $br&quot;
+#    echo &quot;*******************************************************************&quot;
+#    git reset --hard
+#    git checkout origin/$br
+#    git pull origin $br
+#    echo &quot;*******************************************************************&quot;
+#    echo -e &quot;\t\t\tPushing $br&quot;
+#    echo &quot;*******************************************************************&quot;
+#    git push --tags $remoteDest $br
+#done
 
-#git fetch origin
-#git checkout
-#git pull --rebase
-#echo &quot;*******************************************************************&quot;
-#git push test-gerrit
-#echo &quot;*******************************************************************&quot;
+git fetch origin
+git checkout origin/develop
+git pull --rebase
+echo &quot;*******************************************************************&quot;
+git push test-gerrit
+echo &quot;*******************************************************************&quot;
 
 </command>
     </hudson.tasks.Shell>
