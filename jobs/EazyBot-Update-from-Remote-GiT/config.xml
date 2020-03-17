@@ -20,6 +20,9 @@ Push full repository (mirror) to server in DMZ at APC.</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -37,13 +40,35 @@ Push full repository (mirror) to server in DMZ at APC.</description>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.scm.NullSCM"/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <url>https://git.flatrocktech.com/dot-net/audiocodes-pnc.git</url>
+        <credentialsId>fc312c10-918b-4b1c-9b75-2a7ec8217250</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
   <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H 6-23/2 * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <customWorkspace>/home/centos/jenkinsslave/workspace/CloudServices/EazyBot</customWorkspace>
   <builders>
@@ -74,8 +99,6 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 ##                               the change that triggered the job is checked out
 ##                               to the workspace and then pushed to the remote on DMZ
 
-remoteDest=&quot;test-gerrit&quot;
-
 ## Pull from origin &amp; push to remote destination
 #for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
 #    echo &quot;*******************************************************************&quot;
@@ -90,9 +113,12 @@ remoteDest=&quot;test-gerrit&quot;
 #    git push --tags $remoteDest $br
 #done
 
-git fetch origin
-git checkout master
-git pull
+#git fetch origin
+#git checkout master
+#git pull
+
+remoteDest=&quot;test-gerrit&quot;
+
 echo &quot;*******************************************************************&quot;
 git push test-gerrit HEAD
 echo &quot;*******************************************************************&quot;
@@ -102,7 +128,7 @@ echo &quot;*******************************************************************&q
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>shukyr yuvaly</recipients>
+      <recipients>yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
