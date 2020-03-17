@@ -91,7 +91,7 @@ remoteDest=&quot;test-gerrit&quot;
 #done
 
 git fetch origin
-git checkout develop
+git checkout master
 git pull
 echo &quot;*******************************************************************&quot;
 git push test-gerrit HEAD
