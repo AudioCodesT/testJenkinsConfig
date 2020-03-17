@@ -92,7 +92,7 @@ remoteDest=&quot;test-gerrit&quot;
 
 git fetch origin
 git checkout develop
-git pull develop
+git pull
 echo &quot;*******************************************************************&quot;
 git push test-gerrit HEAD
 echo &quot;*******************************************************************&quot;
