@@ -120,7 +120,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 remoteDest=&quot;test-gerrit&quot;
 
 echo &quot;*******************************************************************&quot;
-git push test-gerrit HEAD:develop
+git push test-gerrit HEAD:refs/heads/develop
 echo &quot;*******************************************************************&quot;
 
 </command>
