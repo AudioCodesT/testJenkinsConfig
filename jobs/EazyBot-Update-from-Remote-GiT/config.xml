@@ -87,7 +87,7 @@ for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
     echo &quot;*******************************************************************&quot;
-    git push --all $remoteDest HEAD
+    git push --tags $remoteDest HEAD
 done
 
 #git fetch origin
