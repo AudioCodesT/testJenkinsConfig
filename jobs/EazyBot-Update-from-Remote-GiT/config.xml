@@ -76,22 +76,13 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 
 remoteDest=&quot;test-gerrit&quot;
 
-## Make all remote branches tracked
-for remote in $(git branch -r | grep &quot;origin&quot; | grep -v &quot;\-&gt;&quot;); do
-    remote=$(echo &quot;${remote#origin/}&quot;)
-    git branch --track | grep -q &quot;$remote&quot;
-    if [[ &quot;$?&quot; -eq &quot;1&quot; ]]; then
-        git branch --track &quot;origin/$remote&quot; &quot;$remote&quot;
-    fi
-done
-
 ## Pull from origin &amp; push to remote destination
 for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPulling $br&quot;
     echo &quot;*******************************************************************&quot;
     git reset --hard
-    git checkout $br
+    git checkout --track $br
     git pull origin $br
     echo &quot;*******************************************************************&quot;
     echo -e &quot;\t\t\tPushing $br&quot;
