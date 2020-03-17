@@ -133,7 +133,7 @@
           <sid>ronnya</sid>
         </assignedSIDs>
       </role>
-      <role name="Execute_DRT" pattern="(sbc-sanity-build|sbc-drt-build|VoiceAI-sanity-copy|sbc-user-build)">
+      <role name="Execute_DRT" pattern="(sbc-sanity-build|sbc-drt-build|VoiceAI-sanity-copy-test|sbc-user-build)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
