@@ -91,10 +91,10 @@ remoteDest=&quot;test-gerrit&quot;
 #done
 
 git fetch origin
-git checkout origin/develop
-git pull origin develop --rebase
+git checkout develop
+git pull develop
 echo &quot;*******************************************************************&quot;
-git push test-gerrit 
+git push test-gerrit HEAD
 echo &quot;*******************************************************************&quot;
 
 </command>
