@@ -133,7 +133,7 @@
           <sid>ronnya</sid>
         </assignedSIDs>
       </role>
-      <role name="Execute_DRT" pattern="(sbc-sanity-build|sbc-user-build)">
+      <role name="Execute_DRT" pattern="(sbc-sanity-build)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
@@ -453,7 +453,28 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0e9c3fa89ff9867bb</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0e9c3fa89ff9867bb</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-03-18 14:45:55.13 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0be06fdf01bf45e19</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0be06fdf01bf45e19</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-03-18 14:45:14.218 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
