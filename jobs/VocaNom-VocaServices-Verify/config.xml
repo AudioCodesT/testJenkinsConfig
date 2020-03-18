@@ -125,17 +125,25 @@
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\PLM</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>## TODO
-# Find changed files and make a list of targets to build.
+      <command>
+# Find changed files
 chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | egrep &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
-while read f; do target=$(echo $f | gawk -F/ &apos;{print $1}&apos;); grep -q $target targets; if [[ &quot;$?&quot; == &quot;1&quot; ]]; then echo -n &quot;$target &quot; &gt;&gt; targets; fi; done &lt;&lt;&lt; $chFiles
+# Collect targets to which changed files belong into a list
+while read f; do target=$(echo $f | gawk -F/ &apos;{print $1}&apos;); grep -q $target targets; if [[ &quot;$?&quot; == &quot;1&quot; ]]; then echo -n &quot;$target;&quot; &gt;&gt; targets; fi; done &lt;&lt;&lt; $chFiles
+# Delete last semicolon
+sed -i &apos;s/;$//&apos; targets
+
 echo &quot;***** Targets to verify:&quot;
 cat targets
-</command>
+
+echo &quot;set targets=$(cat targets)&quot; &gt; setTargets.bat</command>
     </hudson.tasks.Shell>
     <hudson.tasks.BatchFile>
-      <command>%comspec% /k go.bat&#xd;
-</command>
+      <command>call setTargets.bat&#xd;
+&#xd;
+call &quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat&quot;&#xd;
+&#xd;
+&quot;C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe&quot; /p:Configuration=Release VocaServices.sln -target:%targets%</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
