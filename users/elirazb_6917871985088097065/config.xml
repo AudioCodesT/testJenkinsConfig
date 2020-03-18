@@ -58,6 +58,7 @@
         <string>Mailvision Branch Office Users</string>
         <string># SBC Infra App</string>
         <string>Linuxusers</string>
+        <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>NewUser_Israel-Lod</string>
@@ -66,7 +67,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1583325192111</timestamp>
+      <timestamp>1584535622118</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Eliraz.Benmoshe@audiocodes.com</emailAddress>
