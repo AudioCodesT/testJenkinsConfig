@@ -46,13 +46,12 @@ e.g.:7.20A.252.001</description>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>centos_version</name>
+          <name>OS_Version</name>
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>6</string>
-              <string>7</string>
-              <string>8</string>
+              <string>centos6</string>
+              <string>centos8</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -107,6 +106,9 @@ arti_user=admin
 user=${arti_user}:${arti_password}
 #copy all scripts related files from  sub directory MediantVEBuild to WORKSPACE
 cp -R MediantVEBuild/* ${WORKSPACE}
+
+
+centos_version=$(echo ${OS_Version} | awk -F &apos;centos&apos; &apos;{print $2}&apos;)
 
 artifactory_host=artifactory
 artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
@@ -209,11 +211,11 @@ then
         for FLAVOR in ${EnvironmentList[@]}
         do
             cd ${WORKSPACE}
-            ./build_sbc.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+            ./build_sbc.sh --os=${OS_Version} --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
         done
     else
     # run the Environment that the user choosed
-    ./build_sbc.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
+    ./build_sbc.sh --os=${OS_Version} --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
     fi
 fi
 if [[ $centos_version == &quot;7&quot; ]]
