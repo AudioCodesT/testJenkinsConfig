@@ -50,6 +50,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># All manager Israel</string>
         <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -74,7 +75,7 @@
         <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1582724991983</timestamp>
+      <timestamp>1584531240765</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Amit.Bashan@audiocodes.com</emailAddress>
