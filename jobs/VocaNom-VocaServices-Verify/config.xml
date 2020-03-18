@@ -126,11 +126,15 @@
   <builders>
     <hudson.tasks.Shell>
       <command>## TODO
-# Find changed files and make a list of targets to build.</command>
+# Find changed files and make a list of targets to build.
+chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | egrep &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
+while read f; do target=$(echo $f | gawk -F/ &apos;{print $1}&apos;); grep -q $target targets; if [[ &quot;$?&quot; == &quot;1&quot; ]]; then echo -n &quot;$target &quot; &gt;&gt; targets; fi; done &lt;&lt;&lt; $chFiles
+echo &quot;***** Targets to verify:&quot;
+cat targets
+</command>
     </hudson.tasks.Shell>
     <hudson.tasks.BatchFile>
-      <command>cd PhoneListManager&#xd;
-%comspec% /k go.bat&#xd;
+      <command>%comspec% /k go.bat&#xd;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
