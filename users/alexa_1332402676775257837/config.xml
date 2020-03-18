@@ -59,6 +59,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
         <string>Logistics_maintenance</string>
@@ -104,7 +105,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># SDN &amp; NFV</string>
       </roles>
-      <timestamp>1583327702716</timestamp>
+      <timestamp>1584536277476</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Alex.Agranov@audiocodes.com</emailAddress>
