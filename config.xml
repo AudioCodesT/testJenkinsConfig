@@ -221,6 +221,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
@@ -1418,7 +1419,7 @@
         <string>VocaNom-CPPCodeAnalysis</string>
         <string>VocaNom-JavaCodeAnalysis</string>
         <string>VocaNom-PLM-Build</string>
-        <string>VocaNOM-PLM-Verify</string>
+        <string>VocaNOM-Verify</string>
       </jobNames>
       <jobFilters/>
       <columns>
