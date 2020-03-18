@@ -29,27 +29,6 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>REPOSITORY</name>
-          <description>Name of the gerrit repository of the component to verify.
-If component is part of a collection of components,
-supply the component name in the next field.
-i.e.
-For PLM enter here PLM and leave the next field empty.
-For LicenseManager enter here VocaServices and LicenseManager in the next field.</description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>PROJECT</name>
-          <description>Name of a project which is one of a collection of project in the solution.</description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -65,7 +44,7 @@ For LicenseManager enter here VocaServices and LicenseManager in the next field.
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>${GERRIT_REFSPEC}</refspec>
-        <url>ssh://jenkins@test-gerrit:29418/VocaNom/${REPOSITORY}.git</url>
+        <url>ssh://jenkins@test-gerrit:29418/VocaNom/PLM.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
