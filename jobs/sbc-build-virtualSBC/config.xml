@@ -202,7 +202,7 @@ fi
 
 EnvironmentList=(&quot;kvm&quot; &quot;azure&quot; &quot;aws&quot; &quot;hyperv&quot; &quot;vmware&quot; &quot;google&quot;)
 # if Environment = all then run all environments
-if [[ $centos_version == &quot;6&quot; ]]
+if [[ $centos_version == &quot;6&quot; || $centos_version == &quot;8&quot; ]]
 then
     if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
     then
