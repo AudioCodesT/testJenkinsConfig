@@ -62,6 +62,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
@@ -93,7 +94,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1583259963069</timestamp>
+      <timestamp>1584639358858</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>032e78a217d150d7</seed>
