@@ -58,6 +58,7 @@
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
         <string># SBC SIP</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
@@ -67,7 +68,7 @@
         <string>NewUser_Israel-BS</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1582816444375</timestamp>
+      <timestamp>1584632949626</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Tal.Aviad@audiocodes.com</emailAddress>
