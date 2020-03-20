@@ -19,6 +19,9 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -34,7 +37,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.1.6">
       <info>
@@ -89,8 +91,8 @@
           <pattern>TP/OpenSource/acLinux2.0</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>ANT</compareType>
-              <pattern>**</pattern>
+              <compareType>PLAIN</compareType>
+              <pattern>feature/M3100</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
@@ -170,11 +172,11 @@ cd $CurrentPath
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-./build_acLinux --board=M4000 --comp=SDK-20
+./build_acLinux --board=M3100 --comp=SDK-20
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/acLinux20_external_version_data.h
 
-if (( `du M4000.vmlinux.64.gz | cut -f1` &lt; 7000 )); then
-  echo &quot;M4000.vmlinux.64.gz Image too small.. exit with error&quot;
+if (( `du M3100.vmlinux.64.gz | cut -f1` &lt; 7000 )); then
+  echo &quot;M3100.vmlinux.64.gz Image too small.. exit with error&quot;
   exit -1
 fi</command>
     </hudson.tasks.Shell>
@@ -228,7 +230,7 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/M4000.vmlinux.64.gz=&gt;com/ac/sbc/acLinux2.0/${BUILD_NUMBER}
+      <deployPattern>${WORKSPACE}/M3100.vmlinux.64.gz=&gt;com/ac/sbc/acLinux2.0/${BUILD_NUMBER}
 ${WORKSPACE}/acLinux20_external_version_data.h=&gt;com/ac/sbc/acLinux2.0/${BUILD_NUMBER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
