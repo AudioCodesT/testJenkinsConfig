@@ -177,13 +177,13 @@ cd $CurrentPath
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
-./build_acLinux --board=M3200 --comp=SDK-20 &amp;&gt; M3200.log
+./build_acLinux --board=M3100 --comp=SDK-20 &amp;&gt; M3100.log
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/acLinux20_external_version_data.h
 
-tail -200 M3200.log
+tail -200 M3100.log
 
-if (( `du M3200.vmlinux.64.gz | cut -f1` &lt; 7000 )); then
-  echo &quot;M3200.vmlinux.64.gz Image too small.. exit with error&quot;
+if (( `du M3100.vmlinux.64.gz | cut -f1` &lt; 7000 )); then
+  echo &quot;M3100.vmlinux.64.gz Image too small.. exit with error&quot;
   exit -1
 fi</command>
     </hudson.tasks.Shell>
@@ -237,7 +237,7 @@ fi</command>
       <downloadSpec>
         <spec></spec>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/M3200.vmlinux.64.gz=&gt;com/ac/sbc/acLinux2.0/${COMP_VER}
+      <deployPattern>${WORKSPACE}/M3100.vmlinux.64.gz=&gt;com/ac/sbc/acLinux2.0/${COMP_VER}
 ${WORKSPACE}/acLinux20_external_version_data.h=&gt;com/ac/sbc/acLinux2.0/${COMP_VER}</deployPattern>
       <resolvePattern></resolvePattern>
       <deploymentProperties></deploymentProperties>
