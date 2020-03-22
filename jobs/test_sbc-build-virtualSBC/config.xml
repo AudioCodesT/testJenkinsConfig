@@ -127,7 +127,7 @@ echo &quot;centos_version=${centos_version}&quot; &gt;&gt; properties
         <spec>{
     &quot;files&quot;: [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/artifacts/*&quot;,
+            &quot;pattern&quot;: &quot;/root/jenkinsslave/workspace/sbc-build-virtualSBC/artifacts/*&quot;,
             &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot;,
              &quot;recursive&quot;: &quot;false&quot;
         }
