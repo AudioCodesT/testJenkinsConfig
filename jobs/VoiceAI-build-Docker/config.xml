@@ -22,6 +22,9 @@ git archive 3 folders and upload to artifactory under tag folder</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -198,7 +201,6 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Runtime vars
-#temp workaround  -  branch is always 1.4
 
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
