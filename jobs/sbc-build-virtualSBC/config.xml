@@ -247,7 +247,9 @@ then
 	done
 else
 	echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
-	curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}*
+	curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
+    curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
+    curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}*
 fi
 
 
