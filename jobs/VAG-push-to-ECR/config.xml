@@ -211,6 +211,7 @@ done
 #
 cd ${WORKSPACE}
 git fetch --tags
+git checkout -f ${BRANCH}
 [[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout refs/tags/${version} -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 
