@@ -212,7 +212,7 @@ done
 #
 cd ${WORKSPACE}
 git fetch &amp;&amp; git fetch --tags
-git tag | grep &quot;$version&quot;
+git tag
 [[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout -f refs/for/$version --common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 #
