@@ -65,28 +65,9 @@ e.g.:7.20A.252.001</description>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
-    <configVersion>2</configVersion>
-    <userRemoteConfigs>
-      <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://jenkins@test-gerrit:29418/Utils</url>
-        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
-      </hudson.plugins.git.UserRemoteConfig>
-    </userRemoteConfigs>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
-    </extensions>
-  </scm>
+  <scm class="hudson.scm.NullSCM"/>
   <assignedNode>sbc-VirtualSSBC</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
@@ -96,164 +77,9 @@ e.g.:7.20A.252.001</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#get Gerrit BRANCH
-cd ${WORKSPACE}/..
-cd GWApp
-git -c http.sslverify=false fetch || true
-git checkout ${Tag}
-Branch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | awk &apos;NR==1&apos; | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-cd ${WORKSPACE}
-arti_user=admin
-user=${arti_user}:${arti_password}
-#copy all scripts related files from  sub directory MediantVEBuild to WORKSPACE
-cp -R MediantVEBuild/* ${WORKSPACE}
-
-
-centos_version=$(echo ${OS_Version} | awk -F &apos;centos&apos; &apos;{print $2}&apos;)
-
-artifactory_host=artifactory
-artifactory_url=https://$artifactory_host/sbc-release/com/ac/sbc/ISO
-curlHasFailed=&quot;False&quot;
-JENKINS_URL=&apos;https://test-jenkins&apos;
-JOB_NAME=&quot;job/sbc-iso${centos_version}&quot;
-JOB_TOKEN=&quot;sbcCreateISO${centos_version}&quot;
-mkdir artifacts
-#get the relevant ISO FILE (try to download him once, if it failed try to download it again, if it failing again, triggering sbc-iso job.
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || \
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || \
-curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || \
-curlHasFailed=&quot;True&quot;
-if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
-then 
-	echo &quot;sbc-c${centos_version}-F${Tag}.iso not Exists in Artifactory&quot;
-    echo &quot;****************Create a new ISO*******************&quot;
-	#trigger sbc-iso job to create ISO
-	curl --insecure -v -X POST $JENKINS_URL/$JOB_NAME/buildWithParameters?token=${JOB_TOKEN} --data &quot;Tag=${Tag}&quot; &gt;output 2&gt;&amp;1
-
-    cat output
-	#check if job is in queue
-	queueURL=$(cat output | grep Location | cut -d&apos; &apos; -f3)
-    queueURL=$(echo $queueURL | tr -d &apos;\r\n&apos;)
-    echo $queueURL
-	#failed to start the build
-	if [[ $queueURL == &quot;&quot; ]]
-	then
-		echo &quot;Failed to start the build remotely Exiting the build&quot;
-		exit 1
-	fi
-    #if not find ERROR 404 or EXECUTABLE (BUILD NUMBER) DONT FAIL THE BUILD
-    set +e
-	inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;) 
-	ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
-	queueJson=$(curl --insecure -X GET ${queueURL}api/json?pretty=true)
-	while [[ &quot;$inQueue&quot; == &quot;&quot; &amp;&amp; $ERROR == &quot;&quot; ]]
-	do
-    	echo &quot;************BUILD STILL IN QUEUE**************************&quot;
-		sleep 20
-		buildNumber=$(curl --insecure -X GET ${queueURL}api/json?pretty=true | grep number)
-		inQueue=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;executable&quot;)
-        echo $inQueue
-		ERROR=$(curl --insecure -X GET ${queueURL}api/json | grep &quot;Error 404&quot;)
-        echo $ERROR
-	done
-    set -e
-	if [[ $ERROR != &quot;&quot; ]]
-	then
-		echo &quot;Failed to start the job after been in queue... Exit the build&quot;
-		exit 1
-	fi
-	buildNumber=$(echo $buildNumber | cut -d&apos;:&apos; -f2 |sed s&apos;/[,&quot; ]//g&apos;)
-    echo $buildNumber
-	#check if job is running
-	JOB_URL=$JENKINS_URL/$JOB_NAME/$buildNumber/api/json
-	curl --insecure --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
-	GREP_RETURN_CODE=$?
-	# Poll every thirty seconds until the build is finished (if result is 0 its &quot;IN PROGRESS&quot; if result is 1 the job FINISHED running	
-    set +e
-	while [ $GREP_RETURN_CODE -eq 0 ]
-	do
-    	echo &quot;************BUILD IS RUNNING**************************&quot;
-    	sleep 240
-    	# Grep will return 0 while the build is running
-    	curl --insecure --silent $JOB_URL | grep result\&quot;:null &gt; /dev/null
-    	GREP_RETURN_CODE=$?
-	done
-    set -e
-    #check JOB STATUS IF PASSED OR FAILED
-	JOB_STATUS=$(curl --insecure -X GET $JENKINS_URL/$JOB_NAME/$buildNumber/api/json?pretty=true | grep result | cut -d&apos;:&apos; -f2 | sed &apos;s/[&quot;, ]//g&apos;)
-    echo $JOB_STATUS
-	if [[ &quot;$JOB_STATUS&quot; == &quot;FAULURE&quot; ]]
-	then
-		echo &quot;Failed to create ISO in job sbc-iso build number $buildNumber&quot;
-        exit 1
-	fi
-    echo &quot;****************Finish Creating a new ISO*******************&quot;
-    #get the relevant ISO FILE
-    curlHasFailed=&quot;False&quot;
-	curl -k -u ${user} --insecure -fO &quot;${artifactory_url}/Centos${centos_version}/${Branch}/${Tag}/sbc-c${centos_version}-F${Tag}.iso&quot; || curlHasFailed=&quot;True&quot;
-	if [[ &quot;$curlHasFailed&quot; == &quot;True&quot; ]]
-	then 
-		echo &quot;sbc-c${centos_version}-F${Tag}.iso not Exists in Artifactory&quot;
-        exit 1
-   fi
-    
-fi
-# temporary change to fix verify_sbc function in build_sbc.sh
-#line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cli\&quot;&apos;
-#replace_line=&apos;tesseract $WORK_DIR\/screenshot.ppm stdout 2&gt;\&amp;1 | grep -qi \&quot;c.des cl\&quot;&apos;
-#sed -i &quot;s/${line}/${replace_line}/g&quot; build_sbc.sh
-
-EnvironmentList=(&quot;kvm&quot; &quot;azure&quot; &quot;aws&quot; &quot;hyperv&quot; &quot;vmware&quot; &quot;google&quot;)
-# if Environment = all then run all environments
-if [[ $centos_version == &quot;6&quot; || $centos_version == &quot;8&quot; ]]
-then
-    if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
-    then
-        for FLAVOR in ${EnvironmentList[@]}
-        do
-            cd ${WORKSPACE}
-            ./build_sbc.sh --os=${OS_Version} --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-        done
-    else
-    # run the Environment that the user choosed
-    ./build_sbc.sh --os=${OS_Version} --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-    fi
-fi
-if [[ $centos_version == &quot;7&quot; ]]
-then
-cp ../build_sbc_centos7.sh .
-	if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
-    then
-        for FLAVOR in ${EnvironmentList[@]}
-        do
-            cd ${WORKSPACE}
-            ./build_sbc_centos7.sh --flavor=${FLAVOR} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-        done
-    else
-    # run the Environment that the user choosed
-    ./build_sbc_centos7.sh --flavor=${Environment} --iso=${WORKSPACE}/sbc-c${centos_version}-F${Tag}.iso --baseline=${Tag} --outputdir=${WORKSPACE}/artifacts
-    fi
-
-fi
-
-
-
-#upload file to artifactory
-#if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
-#then
-#	for FLAVOR in ${EnvironmentList[@]}
-#	do
-#		echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
-#		curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}*
-#	done
-#else
-#	echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
-#	curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
- #   curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
-#    curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}*
-#fi
-
-
+      <command>
+Branch=&quot;7.2.256&quot;
+centos_version=&quot;6&quot;
 echo &quot;Branch=${Branch}&quot; &gt; properties
 echo &quot;centos_version=${centos_version}&quot; &gt;&gt; properties
 #, shuky.riechard</command>
@@ -304,11 +130,6 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branc
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>5000</timeoutSecondsString>
