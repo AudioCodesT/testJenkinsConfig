@@ -146,6 +146,8 @@ cat /home/centos/.aws/credentials
 #         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
 #         sudo chmod +x /usr/local/bin/yq
 
+WORKSPACE=&quot;/home/centos/jenkinsslave/workspace/VoiceAI&quot;
+
 ## Set branch by $version
 case $version in
 	1.1*|1.2)
