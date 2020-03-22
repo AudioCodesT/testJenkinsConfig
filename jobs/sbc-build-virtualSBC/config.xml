@@ -254,7 +254,7 @@ fi
 
 
 echo &quot;Branch=${Branch}&quot; &gt; properties
-
+echo &quot;centos_version=${centos_version}&quot; &gt;&gt; properties
 #, shuky.riechard</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
