@@ -213,7 +213,7 @@ done
 cd ${WORKSPACE}
 git fetch &amp;&amp; git fetch --tags
 git tag
-[[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout -f refs/for/$version --common/ECR-yaml-manipulation.sh
+[[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout -f refs/for/$version -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
