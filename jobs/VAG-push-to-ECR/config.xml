@@ -13,6 +13,9 @@ Images without tags will not be processed.</description>
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -24,7 +27,8 @@ Images without tags will not be processed.</description>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>version</name>
-          <description></description>
+          <description>The specific version to push to ECR.
+This is the tag the image on ECR will get.</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -40,24 +44,7 @@ Images without tags will not be processed.</description>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
-    <configVersion>2</configVersion>
-    <userRemoteConfigs>
-      <hudson.plugins.git.UserRemoteConfig>
-        <name>origin</name>
-        <url>ssh://test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
-        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
-      </hudson.plugins.git.UserRemoteConfig>
-    </userRemoteConfigs>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>refs/heads/1.4</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions/>
-  </scm>
+  <scm class="hudson.scm.NullSCM"/>
   <assignedNode>VoiceAI-build</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
@@ -167,6 +154,9 @@ case $version in
     1.3*|1.4)
     	BRANCH=1.4
         ;;
+    1.5*|1.6)
+        BRANCH=1.6
+        ;;
 esac
 
 ### Build the project
@@ -182,7 +172,7 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
 $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
 
 ## Download version YAML file
-#curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
+curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
 #curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version-sm.yml
 #curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version-central.yml
 #curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version-azure-mock.yml
