@@ -238,19 +238,19 @@ fi
 
 
 #upload file to artifactory
-if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
-then
-	for FLAVOR in ${EnvironmentList[@]}
-	do
-		echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
-		curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}*
-	done
-else
-	echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
-	curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
-    curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
-    curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}*
-fi
+#if [[ &quot;$Environment&quot; == &quot;all&quot; ]]
+#then
+#	for FLAVOR in ${EnvironmentList[@]}
+#	do
+#		echo &quot;upload sbc-F${Tag}-${FLAVOR}.zip to artifactory&quot;
+#		curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${FLAVOR}*
+#	done
+#else
+#	echo &quot;upload sbc-F${Tag}-${Environment}.zip to artifactory&quot;
+#	curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
+ #   curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}* || \
+#    curl -kv -u ${user} -X PUT &quot;https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot; -T ${WORKSPACE}/artifacts/sbc-F${Tag}-${Environment}*
+#fi
 
 
 echo &quot;Branch=${Branch}&quot; &gt; properties
@@ -317,6 +317,58 @@ https://artifactory/sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branc
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+      <deployerDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory-pro</artifactoryName>
+        <artifactoryUrl>https://test-artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentialsId></credentialsId>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>true</useSpecs>
+      <uploadSpec>
+        <spec>{
+    &quot;files&quot;: [
+        {
+            &quot;pattern&quot;: &quot;${WORKSPACE}/artifacts/*&quot;,
+            &quot;target&quot;: &quot;sbc-release/com/ac/sbc/VSSBC/Centos${centos_version}/${Branch}/${Tag}/&quot;,
+             &quot;recursive&quot;: &quot;false&quot;
+        }
+    ]
+}</spec>
+      </uploadSpec>
+      <downloadSpec>
+        <spec></spec>
+      </downloadSpec>
+      <deployPattern></deployPattern>
+      <resolvePattern></resolvePattern>
+      <deploymentProperties></deploymentProperties>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns></includePatterns>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <multiConfProject>false</multiConfProject>
+      <customBuildName></customBuildName>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
