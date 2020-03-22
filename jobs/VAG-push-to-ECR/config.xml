@@ -146,18 +146,17 @@ cat /home/centos/.aws/credentials
 #         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
 #         sudo chmod +x /usr/local/bin/yq
 
-WORKSPACE=&quot;/home/centos/jenkinsslave/workspace/VoiceAI&quot;
 
 ## Set branch by $version
 case $version in
 	1.1*|1.2)
-    	BRANCH=1.2
+    	BRANCH=&quot;1.2&quot;
         ;;
     1.3*|1.4)
-    	BRANCH=1.4
+    	BRANCH=&quot;1.4&quot;
         ;;
     1.5*|1.6)
-        BRANCH=1.6
+        BRANCH=&quot;1.6&quot;
         ;;
 esac
 
@@ -213,11 +212,10 @@ done
 #
 cd ${WORKSPACE}
 git fetch &amp;&amp; git fetch --tags
-git checkout origin/${BRANCH}
+git tag | grep &quot;$version&quot;
 [[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout -f refs/for/$version --common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
-
-
+#
 ## Copy YAML files to S3
 aws s3 sync &quot;ecr&quot; s3://voice-ai/docker-compose/${version}
 
