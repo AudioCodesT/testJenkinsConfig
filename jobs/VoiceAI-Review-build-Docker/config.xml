@@ -22,6 +22,9 @@ git archive 3 folders and upload to artifactory under tag folder</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -214,11 +217,14 @@ echo &quot;Pull latest images from Artifactory (those that are tagged with \${BR
 remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
 echo $remoteImgs
 
+## If there is no BRANCH tag yet on artifactory - use previous branch
+[[ &quot;$(echo $remoteImgs | grep -q &quot;${BRANCH}&quot;)&quot; == &quot;1&quot;) ]] &amp;&amp; PULLBRANCH=$(echo &quot;$BRANCH-0.2&quot; | bc) || PULLBRANCH=&quot;$BRANCH&quot;
+
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
-    docker pull ${DOCKER_REG}/${ri}:${BRANCH}
-    docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
+    docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
+    docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${BRANCH}
     # Collect all hashes of pulled images into HASHES
     hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
     HASHES=&quot;${HASHES}${hash} &quot;
