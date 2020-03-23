@@ -21,6 +21,9 @@ it pairs VI/Issue with the relevant commit&#xd;
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -156,6 +159,7 @@ case $PROJECT in
     *&quot;WebRTC/Web&quot;*) SendTo=&quot;Ariel.Pessah,Igor.Kolosov,Tomer.Landesman,Olga.Triebich,Moshe.Avrahami,Ben.Magriso&quot;;;
     *&quot;MobilityPlus&quot;*) SendTo=&quot;Ariel.Pessah, Bjorn.Meijer, Eyal.Peretz, Sharon.Biniashvili, Ben.Magriso&quot;;;
     *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
+    *&quot;VocaNom&quot;*) SendTo=&quot;Ronny.Aruch&quot;;;
     *) SendTo=&quot;yossim&quot;
 esac
 
