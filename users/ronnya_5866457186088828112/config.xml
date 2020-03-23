@@ -50,6 +50,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string># Voca Dev</string>
+        <string># All manager Israel</string>
         <string>Allow Office365 Groups</string>
         <string>Jira leaders</string>
         <string># All Lunch</string>
@@ -77,7 +78,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1584023087293</timestamp>
+      <timestamp>1584969014014</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
