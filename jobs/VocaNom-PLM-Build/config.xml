@@ -136,8 +136,8 @@ if [ -z &quot;$NEWTAG&quot; ]; then
     TAGMSG=&quot;Tagged commit $COMMHASH with tag $NEWTAG incremented from last tag in git&quot;
 else
     # Construct new values
-    NEW_VER=$(echo $NEWTAG | sed &apos;s/\.\,/g&apos;)
-    NEW_V_E_R=$(echo $NEWTAG | sed &apos;s/\.\, /g&apos;)
+    NEW_VER=$(echo $NEWTAG | sed &apos;s/\./,/g&apos;)
+    NEW_V_E_R=$(echo $NEWTAG | sed &apos;s/\./, /g&apos;)
     
     TAGMSG=&quot;Tagged commit $COMMHASH with tag $NEWTAG provided by user&quot;
 fi
