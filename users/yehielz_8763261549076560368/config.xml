@@ -51,6 +51,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Citrix_Allow_Visio</string>
+        <string># All manager Israel</string>
         <string># ClearCase R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -78,7 +79,7 @@
         <string># SBC Infra Core</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1583681632943</timestamp>
+      <timestamp>1584970979671</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Yehiel.Zohar@audiocodes.com</emailAddress>
