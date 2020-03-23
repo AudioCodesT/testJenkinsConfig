@@ -206,6 +206,11 @@ OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 TAGVER=${NEWTAG::-2}
+
+if [[ &quot;${BRANCH}&quot; &lt; &quot;${TAGVER}&quot;]]; then
+    BRANCH=`git branch -r --contains  ${NEWTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+fi
+
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 
 ## run eslint
