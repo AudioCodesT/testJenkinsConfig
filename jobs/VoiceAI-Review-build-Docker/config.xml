@@ -218,7 +218,11 @@ remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog
 echo $remoteImgs
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
-[[ &quot;$(echo $remoteImgs | grep -q &quot;${BRANCH}&quot;)&quot; == &quot;1&quot;) ]] &amp;&amp; PULLBRANCH=$(echo &quot;$BRANCH-0.2&quot; | bc) || PULLBRANCH=&quot;$BRANCH&quot;
+if [[ &quot;$(echo $remoteImgs | grep -q &quot;${BRANCH}&quot;)&quot; == &quot;1&quot;) ]]; then
+    PULLBRANCH=$(echo &quot;${BRANCH}-0.2&quot; | bc)
+else
+    PULLBRANCH=&quot;${BRANCH}&quot;
+fi
 
 HASHES=&quot;&quot;
 
