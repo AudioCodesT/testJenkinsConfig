@@ -343,7 +343,7 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
         <delay>5</delay>
       </delay>
-      <maxSchedule>2</maxSchedule>
+      <maxSchedule>1</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
     <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
       <configs>
