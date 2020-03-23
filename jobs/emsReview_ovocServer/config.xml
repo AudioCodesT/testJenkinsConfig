@@ -206,7 +206,8 @@ fi</command>
         <mavenName>maven-for-ems</mavenName>
         <jvmOptions>-Xmx4096m</jvmOptions>
         <pom>pom.xml</pom>
-        <properties>environmentType=Test</properties>
+        <properties>environmentType=Test
+log4j.configuration=configurationProperties/serverLog4J.xml</properties>
         <usePrivateRepository>false</usePrivateRepository>
         <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
           <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
