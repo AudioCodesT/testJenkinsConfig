@@ -219,16 +219,16 @@ echo $remoteImgs
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
 if [[ &quot;$(echo $remoteImgs | grep -q &quot;${BRANCH}&quot;)&quot; == &quot;1&quot;) ]]; then
-    PULLBRANCH=$(echo &quot;${BRANCH}-0.2&quot; | bc)
+    BRANCH=$(echo &quot;${BRANCH}-0.2&quot; | bc)
 else
-    PULLBRANCH=&quot;${BRANCH}&quot;
+    BRANCH=&quot;${BRANCH}&quot;
 fi
 
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
-    docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
-    docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${BRANCH}
+    docker pull ${DOCKER_REG}/${ri}:${BRANCH}
+    docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
     # Collect all hashes of pulled images into HASHES
     hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
     HASHES=&quot;${HASHES}${hash} &quot;
