@@ -124,7 +124,7 @@ if [ -z &quot;$NEWTAG&quot; ]; then
     LASTPCH=$(echo $LASTTAG | gawk -F. &apos;{print $4}&apos;)
     
     # Increment last field
-    NEW_PCH=$((LASTPCH+1))
+    NEW_PCH=$(( LASTPCH+1 ))
     
     # Construct new values
     NEWTAG=&quot;$LASTMAJ.$LASTMID.$LASTMIN.$NEW_PCH&quot;
