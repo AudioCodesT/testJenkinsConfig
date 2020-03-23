@@ -143,7 +143,8 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
     <hudson.tasks.Shell>
       <command># copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
-mkdir -p emsFiles/Logs
+#create emsFiles/Logs to enable maven to create logs
+mkdir -p ${WORKSPACE}/emsFiles/Logs
 
 
 
