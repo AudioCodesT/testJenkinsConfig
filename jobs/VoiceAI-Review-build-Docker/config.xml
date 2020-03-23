@@ -218,7 +218,7 @@ remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog
 echo $remoteImgs
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
-LATESTTAG=$(curl -k -u yuvaly:$mypass https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
+LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
 if [[ &quot;${BRANCH}&quot; != &quot;${LATEST}&quot; ]]; then
     BRANCH=&quot;${LATEST}&quot;
 fi
