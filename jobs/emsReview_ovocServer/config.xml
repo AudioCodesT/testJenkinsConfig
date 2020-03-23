@@ -252,7 +252,7 @@ cat ems-ovoc-pmd.properties
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>emsFile/logs/*</artifacts>
+      <artifacts>emsFiles/Logs/*</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
