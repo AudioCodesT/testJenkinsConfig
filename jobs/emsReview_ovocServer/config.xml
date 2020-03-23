@@ -68,7 +68,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
     </extensions>
   </scm>
-  <assignedNode>ems-build</assignedNode>
+  <assignedNode>ems-slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -204,10 +204,8 @@ fi</command>
       <buildStep class="hudson.tasks.Maven">
         <targets>clean install -X</targets>
         <mavenName>maven-for-ems</mavenName>
-        <jvmOptions>-Xmx4096m</jvmOptions>
+        <jvmOptions>-Xmx4096m -Dlog4j.configuration=EMS/externals/configurationProperties/serverLog4j.xml -DenvironmentType=Test</jvmOptions>
         <pom>pom.xml</pom>
-        <properties>environmentType=Test
-log4j.configuration=${WORKSPACE}/EMS/externals/configurationProperties/serverLog4j.xml</properties>
         <usePrivateRepository>false</usePrivateRepository>
         <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
           <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
