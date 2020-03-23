@@ -232,6 +232,12 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
 remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
 
+## If there is no BRANCH tag yet on artifactory - use previous branch
+LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
+if [[ &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ]]; then
+    BRANCH=&quot;${LATESTTAG}&quot;
+fi
+
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
