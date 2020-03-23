@@ -90,7 +90,7 @@ For example: current tag is 3.0.7.15  but the new should be 4.0.0.0</description
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\PLM</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\Program Files\Git\bin\bash.exe -login
+      <command>#!C:\Program Files\Git\bin\bash.exe --login -i
 
 cd ${WORKSPACE}
 
