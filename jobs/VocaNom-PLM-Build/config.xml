@@ -94,6 +94,8 @@ For example: current tag is 3.0.7.15  but the new should be 4.0.0.0</description
 
 cd ${WORKSPACE}
 
+id
+
 COMMHASH=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 
 ## If no tag specified for build, get last tag from test-gerrit and increment it by 1 to set new version and new tag
