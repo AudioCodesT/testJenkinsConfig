@@ -219,8 +219,8 @@ echo $remoteImgs
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
 LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
-if [[ &quot;${BRANCH}&quot; != &quot;${LATEST}&quot; ]]; then
-    BRANCH=&quot;${LATEST}&quot;
+if [[ &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ]]; then
+    BRANCH=&quot;${LATESTTAG}&quot;
 fi
 
 HASHES=&quot;&quot;
