@@ -22,6 +22,9 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -167,7 +170,7 @@ echo NEWTAG=${NEWTAG} &gt; voiceAI.properties
 echo RN=${RN} &gt;&gt; voiceAI.properties
 echo GERRIT_HOST=$(echo $GIT_URL | cut -d@ -f2 | cut -d: -f1) &gt;&gt; voiceAI.properties
 echo EMAIL=${EMAIL} &gt;&gt; voiceAI.properties
-echo BRANCH=$BRANCH&gt;&gt; voiceAI.properties
+echo GERRIT_BRANCH=$BRANCH&gt;&gt; voiceAI.properties
 echo PROJECT=`git config --get remote.origin.url | sed &apos;s:.*29418/::&apos;` &gt;&gt; voiceAI.properties
 echo DATE=${DATE} &gt;&gt; voiceAI.properties
 echo AuthorCommitter=${AuthorCommitter} &gt;&gt; voiceAI.properties
