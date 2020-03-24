@@ -60,6 +60,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># All manager Israel</string>
         <string>AI-ENG</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
@@ -83,7 +84,7 @@
         <string>NewUser_Israel-BS</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1584366272657</timestamp>
+      <timestamp>1585040524468</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>f5ef984c7696f77e</seed>
