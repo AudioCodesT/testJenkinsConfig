@@ -38,7 +38,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Andrii.Pavliv@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -48,6 +48,7 @@
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string># OVOC QOE</string>
+        <string>365_Lucca</string>
         <string>CI_EMS_Developers</string>
         <string>cc_users</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -60,7 +61,7 @@
         <string># OVOC</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1575538899162</timestamp>
+      <timestamp>1585044116536</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
