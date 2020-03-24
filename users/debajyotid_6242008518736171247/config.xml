@@ -68,6 +68,7 @@
         <string>AI-QA</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ACI - USA</string>
         <string># Oracle</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -84,10 +85,11 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string># Audiocodes USA-Development</string>
         <string>AI-ClearCase</string>
       </roles>
-      <timestamp>1580935638779</timestamp>
+      <timestamp>1585009725308</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Debajyoti.Dutta@audiocodes.com</emailAddress>
