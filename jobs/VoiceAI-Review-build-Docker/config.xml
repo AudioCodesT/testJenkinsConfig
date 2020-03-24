@@ -161,16 +161,19 @@ echo $remoteImgs
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
 LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
-if [[ &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ]]; then
-    BRANCH=&quot;${LATESTTAG}&quot;
+
+if [[ ( &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
+    PULLBRANCH=&quot;${LATESTTAG}&quot;
+else
+    PULLBRANCH=&quot;${BRANCH}&quot;
 fi
 
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
-    docker pull ${DOCKER_REG}/${ri}:${BRANCH}
-    docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
-    # Collect all hashes of pulled images into HASHES
+    docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
+    docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${BRANCH}
+
     hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
     HASHES=&quot;${HASHES}${hash} &quot;
 done
