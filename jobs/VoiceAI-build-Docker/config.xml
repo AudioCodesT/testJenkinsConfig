@@ -210,7 +210,7 @@ BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | head -1
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 TAGVER=${NEWTAG::3}
 
-if [[ &quot;${BRANCH}&quot; &lt; &quot;${TAGVER}&quot; ]]; then
+if [[ -z &quot;${BRANCH}&quot; || ( &quot;${BRANCH}&quot; &lt; &quot;${TAGVER}&quot; ) ]]; then
     BRANCH=`git branch -r --contains  ${NEWTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 fi
 
