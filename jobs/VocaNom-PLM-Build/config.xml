@@ -98,7 +98,7 @@ id
 
 git tag -d ${NEWTAG}
 
-git fetch origin --tags || exit 1
+#git fetch origin --tags || exit 1
 
 COMMHASH=$(git log -1 --oneline | gawk &apos;{print $1}&apos;)
 
