@@ -248,7 +248,7 @@ HASHES=&quot;&quot;
 for ri in ${remoteImgs}; do
     docker pull ${DOCKER_REG}/${ri}:${LATESTTAG}
     docker tag ${DOCKER_REG}/${ri}:${LATESTTAG} ${ri}:${BRANCH}
-    # Collect all hashes of pulled images into HASHES
+
     hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
     HASHES=&quot;${HASHES}${hash} &quot;
 done
@@ -273,17 +273,19 @@ echo &quot;Step 1 - Login to docker registry.&quot;
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
 echo &quot;Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
+# only push images that are new (Were not pulled from Artifactory)
+## Also push image with ${BRANCH} tag
+# Check if need to push with tag ${BRANCH} to Artifactory:
+# If highest tag on Artifactory is lower then ${NEWTAG},
+# we also push docker images with tag ${BRANCH}
 for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; | grep -v vag-common); do
     dockerImage=$(echo $outcomeImage | sed &apos;s/^.*_//&apos;)
     imageID=$(docker images vag-* | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
-    # only push images that are new (Were not pulled from Artifactory)
+
     if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${NEWTAG}
         docker push ${DOCKER_REG}/${dockerImage}:${NEWTAG}
-        ## Also push image with ${BRANCH} tag
-        # Check if need to push with tag ${BRANCH} to Artifactory:
-        # If highest tag on Artifactory is lower then ${NEWTAG},
-        # we also push docker images with tag ${BRANCH}
+
         allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$dockerImage/tags/list | jq &apos;.tags[]&apos;)
         highTag=$(echo &quot;$allTags&quot; | grep -F ${TAGVER} | grep -v -e &quot;\-g.*&quot; | sort -t&apos;.&apos; -n -k3 | tail -n 1)
         highTag=${highTag:1:-1}
