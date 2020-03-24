@@ -533,7 +533,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, ben.magriso, yuval.yosha,Aliya.Peretz</recipients>
+      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, ben.magriso, yuval.yosha</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
