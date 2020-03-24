@@ -205,16 +205,16 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
 
 #git fetch --tags
 
-OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
-BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1`
-NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+OLDTAG=$(git describe --first-parent --tags --abbrev=0 HEAD^)
+BRANCH=$(git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1)
+NEWTAG=$(echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;)
 TAGVER=${NEWTAG::3}
 
 if [[ ( &quot;${BRANCH}&quot; == &quot;&quot; ) || ( &quot;${BRANCH}&quot; &lt; &quot;${TAGVER}&quot; ) ]]; then
-    BRANCH=`git branch -r --contains  ${NEWTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1`
+    BRANCH=$(git branch -r --contains  ${NEWTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1)
 fi
 
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
+AuthorCommitter=$(git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g)
 
 ## run eslint
 git ls-files session-manager/\*js | grep -v grpc | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
@@ -398,7 +398,7 @@ BRANCH=${BRANCH}</properties>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
     <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>ben.magriso yuvaly</recipients>
+      <recipients>ben.magriso yuvaly shmulik.yudkovich orgad.shaneh</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
