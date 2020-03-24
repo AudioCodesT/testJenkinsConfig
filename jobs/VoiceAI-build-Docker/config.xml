@@ -203,7 +203,7 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
     <hudson.tasks.Shell>
       <command>## Runtime vars
 
-git fetch --tags
+#git fetch --tags
 
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
