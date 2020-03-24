@@ -291,8 +291,8 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
         highTag=${highTag:1:-1}
         higherTag=$(echo -e &quot;$highTag\n${NEWTAG}&quot; | sort -t&apos;.&apos; -n -k3 | tail -n 1)
         if [[ &quot;$higherTag&quot; == &quot;${NEWTAG}&quot; ]]; then
-            docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${BRANCH};
-            docker push ${DOCKER_REG}/${dockerImage}:${BRANCH};
+            docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${BRANCH}
+            docker push ${DOCKER_REG}/${dockerImage}:${BRANCH}
         fi
     else
         echo &quot;*** No change in docker image \&quot;${dockerImage}\&quot;. Image not pushed to repository. ***&quot;
