@@ -291,10 +291,10 @@ echo &quot;Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
 # Check if need to push with tag ${BRANCH} to Artifactory:
 # If highest tag on Artifactory is lower then ${NEWTAG},
 # we also push docker images with tag ${BRANCH}
-for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; | grep -v vag-common); do
+for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; | grep ${BRANCH} | grep -v vag-common); do
     dockerImage=$(echo $outcomeImage | sed &apos;s/^.*_//&apos;)
     echo &quot;***************************************************&quot;
-    docker images vag-*
+    #docker images vag-*
     imageID=$(docker images vag-* | grep &quot;${BRANCH}&quot; | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
 
     if [[ &quot;$(echo $HASHES | grep -q ${imageID})&quot; == &quot;&quot; ]]; then
