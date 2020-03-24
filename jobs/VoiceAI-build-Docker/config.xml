@@ -206,12 +206,12 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
 #git fetch --tags
 
 OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
-BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+BRANCH=`git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1`
 NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
 TAGVER=${NEWTAG::3}
 
 if [[ ( &quot;${BRANCH}&quot; == &quot;&quot; ) || ( &quot;${BRANCH}&quot; &lt; &quot;${TAGVER}&quot; ) ]]; then
-    BRANCH=`git branch -r --contains  ${NEWTAG} | grep -v &quot;HEAD&quot; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+    BRANCH=`git branch -r --contains  ${NEWTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1`
 fi
 
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
