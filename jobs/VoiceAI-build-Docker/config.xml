@@ -259,8 +259,8 @@ LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactor
 HASHES=&quot;&quot;
 
 for ri in ${remoteImgs}; do
-    docker pull ${DOCKER_REG}/${ri}:${LATESTTAG}
-    docker tag ${DOCKER_REG}/${ri}:${LATESTTAG} ${ri}:${BRANCH}
+    docker pull ${DOCKER_REG}/${ri}:${BRANCH}
+    docker tag ${DOCKER_REG}/${ri}:${BRANCH} ${ri}:${BRANCH}
 
     hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
     HASHES=&quot;${HASHES}${hash} &quot;
