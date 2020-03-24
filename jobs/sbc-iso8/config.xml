@@ -93,7 +93,7 @@ If exist, all files under this customer folder will be copied from artifactory t
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <authToken>sbcCreateISO8</authToken>
   <triggers/>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
       <command>BL=`git describe --tags --first-parent | sed s/-/_/g`
