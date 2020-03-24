@@ -119,63 +119,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>### Add AudioCodes Public certificate to local machine
-echo &quot;*** Verify AUDC certificate ***&quot;
-curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
-if ! curl -s -o /dev/null https://artifactory; then
-  echo &quot;Installing AudioCodes CA certificate.&quot;
-  dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
-  if [[ &quot;$dist&quot; == &quot;ubuntu&quot; ]]; then
-    cert=/usr/local/share/ca-certificates/audc2016.crt
-    updtCAcmd=&quot;update-ca-certificates&quot;
-  elif [[ &quot;$dist&quot; =~ &quot;centos&quot; ]]; then
-    cert=/etc/pki/ca-trust/source/anchors/audc2016.crt
-    updtCAcmd=&quot;update-ca-trust&quot;
-  fi
-  sudo rm -f $cert
-  cat &lt;&lt;-EOL | sudo tee $cert &gt; /dev/null
------BEGIN CERTIFICATE-----
-MIIFuDCCA6CgAwIBAgIQG5DSb8NKUYJK1U6xTLTlRTANBgkqhkiG9w0BAQ0FADBk
-MRMwEQYKCZImiZPyLGQBGRYDY29tMRowGAYKCZImiZPyLGQBGRYKYXVkaW9jb2Rl
-czEUMBIGCgmSJomT8ixkARkWBGNvcnAxGzAZBgNVBAMTEkF1ZGlvQ29kZXMgQ0Eg
-MjAxNjAeFw0xNjA3MTgxNTE3MDdaFw0yNjA3MTgxNTI3MDNaMGQxEzARBgoJkiaJ
-k/IsZAEZFgNjb20xGjAYBgoJkiaJk/IsZAEZFgphdWRpb2NvZGVzMRQwEgYKCZIm
-iZPyLGQBGRYEY29ycDEbMBkGA1UEAxMSQXVkaW9Db2RlcyBDQSAyMDE2MIICIjAN
-BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsRwzw6ZL5bHw91zCtH5pV3izRNRZ
-15BZQsKD7YHu0nuAzhicr6OcFdJQxVqKmNv67WieawwYzTtGpxBml4SBscmMVqoV
-8zVlPrvXkXXOOPRcS5iVt7XkP/euh5pbkB8LBY1XNmqf4vl3LlQPVQ5XIC4zZBzC
-HIzteCFX9IS5cx2b0dsoJDu/b4ey7NJhoRwmYsQWr5qJjXtqDfE83+pQEre/KBRR
-NEhK8rRBmuhBIQGn5j42YxUjGXXXSU6buSwYMulSN8PjBkhIkhquvEo2XNwwF34g
-A1vTLLbsCYLOjsQxbeJigkHWPQeJh7Z0CD7B1SoX5BPrvDigVYlljQuNelY0Pzw0
-eY0EKY0Mo7ErM+sIoZMrEnKzGmwYMAndYPMhfq16+49Xx7UPHuduf5/f8FzOkVF4
-NAeP2Lcx71V0iZR/urWFBZsLEtiUVv7CtPXUeBXluf3H/G8GVP1PyFe1tBFjxGOQ
-K+DXmgeSPg87bTRgMz4qoURNmsPKzpkvw+CEuCITCIqq0f0il13cW00el86vTdUx
-8auIK89Nb0gLvnGoXpMGiMRiD8SKA+8KsU+HTv8NsCxtQVGoicRCFBUNTIG4KkwH
-EfetYu6Nf4+gctCNPFHEX1Lju2lcJkTrhZvPCRkTRyPeQ0Ey2d8vBfmNJOMqPyqy
-IySNJgz4SCT5ricCAwEAAaNmMGQwEwYJKwYBBAGCNxQCBAYeBABDAEEwCwYDVR0P
-BAQDAgGGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFMDsJiUHoatHWLX6wXLC
-7SGIno0RMBAGCSsGAQQBgjcVAQQDAgEAMA0GCSqGSIb3DQEBDQUAA4ICAQAb/gMv
-PPmZD9Tmx8ktwEPMgiWOU77vjCnlNyhKk+tqXTj4mEXuFyFuy7ZxR4fmGBfe2BZE
-Yihw087NUCwftb+fEDlk1VEp0rCk1R07LBL5vjoJaoicUqcj83Junj5JVvjIN2ny
-ZCCXwt2sDJovHSJSdbhoo5h0kxLrqKZNnz18UWUDYG9/ZX8wfJLS9vW/Z+PfehgQ
-h0BsRwIRrSor6ifjtAXEMN4q+MwDzMYgXRXo5+TVVcLQ0DfQy8qWWGjHMIziaIv6
-ZDUrnr+9R+e6KWL5gzSlNENteK7QtvTi6EyB4+wO5OgTu5X2GkZGxTkXrX7zIie7
-IKqqO/OwLOXqZA+DwsiDdoAxmh7XrN1HX92we8ZIZyp53Ve/AWBfhXWcV1x6uTGP
-6c7V188fOxh9c8w1NZnCG9ZY6BB4A612CxPOVloyx5asNA1hnxzIFUNVaEmN5uHt
-8zToCQ/OiWjrIBdnjR3uFWKn4JMPIs7Mok8TYyFL4ys3WjIScjcY2wdBIkNRvcIR
-vOq50OLigP9cF14t9xac12YzfqYEJ2CSdCNgD784+sBgsbf0711jmrTrwVXIwjk3
-peitA/lOlYGE3DAptUoSpBpHOsB1BJEJ4Hz7MYO7tA8kH00WzuEx5Kw93voG76JY
-TlFgcDc2WETWYgFeiv5Yx4AQsmbJtegjBcQJ6w==
------END CERTIFICATE-----
-EOL
-  sudo ${updtCAcmd}
-  sleep 3
-  sudo systemctl restart docker
-else
-  echo &quot;Skipped installing AudioCodes CA certificate.&quot;
-fi
-
-## Create .netrc
+      <command>## Create .netrc
 [[ -f ~/.netrc ]] &amp;&amp; rm ~/.netrc
 echo &quot;machine docker-voice-ai.artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
 echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
@@ -192,9 +136,6 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
 #NEWTAG=`echo ${commit_ID} | awk -F/ &apos;{print $NF}&apos;`
 
 AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
-
-## run eslint
-git ls-files session-manager/\*js | grep -v grpc | xargs eslint -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
 
 ## change in some files some parameters to build number
 cd ${WORKSPACE}
