@@ -282,7 +282,7 @@ for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; |
     dockerImage=$(echo $outcomeImage | sed &apos;s/^.*_//&apos;)
     imageID=$(docker images vag-* | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
 
-    if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
+    if [[ ! $(echo $HASHES | grep -q ${imageID}) ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${NEWTAG}
         docker push ${DOCKER_REG}/${dockerImage}:${NEWTAG}
 
