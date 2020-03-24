@@ -25,6 +25,9 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -213,12 +216,14 @@ fi
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command># copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
-cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS</command>
+cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
+#create emsFiles/Logs to enable maven to create logs
+mkdir -p ${WORKSPACE}/emsFiles/Logs</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
       <targets>clean install -U</targets>
       <mavenName>maven-for-ems</mavenName>
-      <jvmOptions>-DpushChanges=false</jvmOptions>
+      <jvmOptions>-DpushChanges=false -Dlog4j.configuration=file://${WORKSPACE}/EMS/externals/configurationProperties/serverLog4j.xml -DenvironmentType=Test</jvmOptions>
       <pom>pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
