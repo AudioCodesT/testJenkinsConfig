@@ -371,7 +371,7 @@ exit $ret_value
               <onlyExactRuns>false</onlyExactRuns>
             </hudson.plugins.parameterizedtrigger.FileBuildParameters>
           </configs>
-          <projects>VoiceAI-Review-build-Docker</projects>
+          <projects>VoiceAI-Review-Docker</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
