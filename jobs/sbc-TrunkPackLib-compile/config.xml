@@ -11,6 +11,9 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -193,7 +196,7 @@ WZZIP -rp lib.zip build\%BL% &gt; NUL 2&gt;&amp;1&#xd;
 &#xd;
 set MAIN_GIT_BRANCH=%GIT_BRANCH%&#xd;
 set count=0&#xd;
-for %a in (%GIT_BRANCH:.= %) do set /a count+=1&#xd;
+for %%a in (%GIT_BRANCH:.= %) do set /a count+=1&#xd;
 if %count% == 3 ( set MAIN_GIT_BRANCH=%GIT_BRANCH:~0,-1%0 )&#xd;
 &#xd;
 net use y: /DELETE&#xd;
@@ -221,7 +224,7 @@ cd %WORKSPACE%</command>
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>alex.rodikov</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
