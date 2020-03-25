@@ -19,6 +19,9 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -247,7 +250,6 @@ echo TAG Found $NEWTAG
 cd ..
 realBOARD=$BOARD
 SIPLAB=&quot;&quot;
-[ &quot;$BOARD&quot; = &quot;HostedTP7&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS7 &amp;&amp; realBOARD=&quot;HostedTP&quot;
 [ &quot;$BOARD&quot; = &quot;HostedTP8&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS8 &amp;&amp; realBOARD=&quot;HostedTP&quot;
 [ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_SIP
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
@@ -286,9 +288,8 @@ echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
 
 cd TrunkPackRam
 
-[ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --sip=yes&quot;
-[ &quot;${BOARD}&quot; = &quot;HostedTP7&quot; ] &amp;&amp; FLAGS=&quot;$FLAGS --centos=7&quot; &amp;&amp; BOARD=&quot;HostedTP&quot;
 [ &quot;${BOARD}&quot; = &quot;HostedTP8&quot; ] &amp;&amp; FLAGS=&quot;$FLAGS --centos=8&quot; &amp;&amp; BOARD=&quot;HostedTP&quot;
+[ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --sip=yes&quot;
 [ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --lab=yes&quot;
 [ &quot;$USE_GIT_VER&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --custom-version=-u${BUILD_NUMBER}&quot;
 ./buildAll.sh --board=${BOARD} $FLAGS --user=no --fast=yes --server=localhost
