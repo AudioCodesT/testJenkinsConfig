@@ -98,7 +98,7 @@ if ! [ -d &quot;$Target&quot; ]; then
   mkdir &quot;$Target&quot;
 fi
 
-if [[ &quot;$GERRIT_BRANCH&quot; == 1.2 || &quot;$GERRIT_BRANCH&quot; == 1.4 ]]; then
+if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;1\..&quot; ]]; then
   Artifactory=&quot;https://artifactory/api/storage/docker-voice-ai-files/review&quot;
   DirChangeName=$ChangeWithHyphen
   extention=&quot;.yml&quot;
