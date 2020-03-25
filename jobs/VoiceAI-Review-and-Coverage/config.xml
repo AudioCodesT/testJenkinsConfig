@@ -124,7 +124,10 @@
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>set -ex
+      <command>#################################################################
+### Review and coverage
+#################################################################
+set -ex
 
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
@@ -207,6 +210,94 @@ echo &quot;GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}&quot; &gt;&gt; voice
 
 exit $ret_value
 </command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>#################################################################
+### Build docker
+#################################################################
+set -ex
+
+## Use variables from earlier step
+source voiceAI.properties
+
+AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
+
+## change in some files some parameters to build number
+cd ${WORKSPACE}
+echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
+#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
+#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
+
+### Build the project
+## Set docker vars
+DOCKER_URL=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
+DOCKER_REG=&quot;${DOCKER_URL}&quot;
+# Used in build.sh
+export DOCKER_REG_PREFIX=&quot;${DOCKER_URL}/&quot;
+export GIT_BRANCH=$BRANCH
+
+## Login to docker registry on Artifactory
+echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
+
+## Pull latest images from Artifactory &amp; get their hashes
+echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
+remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
+echo $remoteImgs
+
+## If there is no BRANCH tag yet on artifactory - use previous branch
+LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
+
+if [[ ( &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
+    PULLBRANCH=&quot;${LATESTTAG}&quot;
+else
+    PULLBRANCH=&quot;${BRANCH}&quot;
+fi
+
+HASHES=&quot;&quot;
+
+for ri in ${remoteImgs}; do
+    docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
+    docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${BRANCH}
+
+    hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
+    HASHES=&quot;${HASHES}${hash} &quot;
+done
+
+## Run build script
+echo &quot;***** Steart build *****&quot;
+cd ${WORKSPACE}
+sh build.sh
+ret_value=$?
+
+echo &quot;script Return Value: $ret_value&quot;
+
+if [[ &quot;$ret_value&quot; -ne &quot;0&quot; ]]
+then
+	exit 1
+fi
+
+### Pushing docker images to Artifactory
+echo &quot;Pushing Docker images to Artifactory.&quot;
+
+## Login to docker registry
+echo &quot;*** Step 1 - Login to docker registry.&quot;
+echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
+
+## Tagging &amp; pushing images to Artifactory
+echo &quot;*** Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
+for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; | grep -v vag-common); do
+    dockerImage=$(echo $outcomeImage | sed &apos;s/^.*_//&apos;)
+    imageID=$(docker images vag-* | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
+    
+    if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
+        docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${description}
+        docker push ${DOCKER_REG}/${dockerImage}:${description}
+    else
+        echo &quot;*** No change in docker image \&quot;${dockerImage}\&quot;. Image not pushed to repository. ***&quot;
+    fi
+done
+
+echo &quot;Finished docker push to Artifactory.&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -341,7 +432,7 @@ exit $ret_value
       <sourceDirectory></sourceDirectory>
       <ignoreQualityGate>false</ignoreQualityGate>
       <ignoreFailedBuilds>true</ignoreFailedBuilds>
-      <referenceJobName></referenceJobName>
+      <referenceJobName>-</referenceJobName>
       <failOnError>false</failOnError>
       <healthy>0</healthy>
       <unhealthy>0</unhealthy>
