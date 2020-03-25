@@ -202,7 +202,7 @@ curl -k -u codeanalyzer:AC@${GERRIT_HOST} --basic -X POST https://${GERRIT_HOST}
 description=$(git describe)
 echo &quot;description=$description&quot; &gt; voiceAI.properties
 echo &quot;GERRIT_PATCHSET_REVISION=${GERRIT_PATCHSET_REVISION}&quot; &gt;&gt; voiceAI.properties
-echo &quot;BRANCH=${GERRIT_BRANCH}&quot; &gt;&gt; voiceAI.properties
+echo &quot;GERRIT_BRANCH=${GERRIT_BRANCH}&quot; &gt;&gt; voiceAI.properties
 echo &quot;GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}&quot; &gt;&gt; voiceAI.properties
 echo &quot;GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}&quot; &gt;&gt; voiceAI.properties
 
