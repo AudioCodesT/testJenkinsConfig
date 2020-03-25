@@ -85,7 +85,7 @@ CHANGES=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
 HostedLocation=&quot;/netapp1/CompilationResults/7.2.250 Release/7.2.254_VoAI&quot;
 TPLastVoiceAI=$(ls -tr &quot;$HostedLocation&quot; | tail -1)
 # Find the last TAG in voiceAI branch
-voiceAILocation=&quot;/netapp1/CompilationResults/VoAI_Connector/1.2&quot;
+voiceAILocation=&quot;/netapp1/CompilationResults/VoAI_Connector/1.6&quot;
 LastVoiceAI=$(ls -tr &quot;$voiceAILocation&quot; | tail -1)
 # Remove the &apos;F&apos; character
 TAG=$(echo $TPLastVoiceAI | cut -c2-)
