@@ -111,7 +111,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   </scm>
   <assignedNode>VoiceAI-build</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
