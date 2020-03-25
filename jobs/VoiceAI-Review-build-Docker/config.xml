@@ -302,7 +302,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${description}</template>
+      <template>#${BUILD_NUMBER}__${description}__change:${GERRIT_CHANGE_NUMBER}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
