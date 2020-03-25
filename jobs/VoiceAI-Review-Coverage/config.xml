@@ -359,25 +359,6 @@ exit $ret_value
       <qualityGates/>
       <trendChartType>AGGREGATION_TOOLS</trendChartType>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
-    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
-      <configs>
-        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-          <configs>
-            <hudson.plugins.parameterizedtrigger.FileBuildParameters>
-              <propertiesFile>voiceAI.properties</propertiesFile>
-              <failTriggerOnMissing>false</failTriggerOnMissing>
-              <textParamValueOnNewLine>false</textParamValueOnNewLine>
-              <useMatrixChild>false</useMatrixChild>
-              <onlyExactRuns>false</onlyExactRuns>
-            </hudson.plugins.parameterizedtrigger.FileBuildParameters>
-          </configs>
-          <projects>VoiceAI-Review-Docker</projects>
-          <condition>SUCCESS</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <triggerFromChildProjects>false</triggerFromChildProjects>
-        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-      </configs>
-    </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
