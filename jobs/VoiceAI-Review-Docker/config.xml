@@ -224,9 +224,10 @@ echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
 ## Tagging &amp; pushing images to Artifactory
 echo &quot;*** Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
-for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}&quot; | grep -v vag-common); do
-    dockerImage=$(echo $outcomeImage | sed &apos;s/^.*_//&apos;)
-    imageID=$(docker images vag-* | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
+for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}:{{.Tag}}:{{.ID}}&quot; | grep ${BRANCH} | grep -v vag-common); do
+    imageName=$(echo $outcomeImage | gawk -F: &apos;{print $1}&apos;)
+    imageID=$(echo $outcomeImage | gawk -F: &apos;{print $3}&apos;)
+    echo &quot;***************************************************&quot;
     
     if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${description}
