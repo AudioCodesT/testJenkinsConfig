@@ -62,6 +62,7 @@
         <string>ActionBase Users</string>
         <string>Palo_Access_Aws_Azure-ssh</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string>Allow Office365 Groups</string>
         <string># All R&amp;D</string>
         <string>CatalogApps_Everyone</string>
@@ -94,7 +95,7 @@
         <string># SQA_Team_Leaders</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1582719752752</timestamp>
+      <timestamp>1585218000808</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
