@@ -60,6 +60,7 @@
         <string>Palo_Access_Aws_Azure-ssh</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string>Sp365-rdnetworking-modify</string>
@@ -71,6 +72,7 @@
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># Oracle</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -86,11 +88,12 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1577281876888</timestamp>
+      <timestamp>1585224232726</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Ziv.Zviran@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
