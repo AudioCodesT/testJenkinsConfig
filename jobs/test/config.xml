@@ -72,8 +72,9 @@ echo &apos;HyperV=2016&apos; &gt;&gt; properties
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>\\netapp01\EMS\Versions\ISO_Files\OVOC_${BRANCH}\DVD5_Virtual/${TAG}\OVOC_HyperV-${HyperV}_${TAG}.7z</defaultContent>
+      <defaultSubject>OVOC Hyper-V 2016 image is ready</defaultSubject>
+      <defaultContent>OVOC ${TAG} Hyper-V 2016 image is here:
+\\netapp01\EMS\Versions\ISO_Files\OVOC_${BRANCH}\DVD5_Virtual/${TAG}\OVOC_HyperV-${HyperV}_${TAG}.7z</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
