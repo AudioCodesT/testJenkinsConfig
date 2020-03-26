@@ -146,10 +146,12 @@ while read f; do
         echo -n &quot;$target;&quot; &gt;&gt; targets
     fi
 done &lt;&lt;&lt; &quot;$chFiles&quot;
+
 # Delete last semicolon
 sed -i &apos;s/;$//&apos; targets
 
-echo &quot;***** Targets to verify:&quot;
+## Output targets to build
+echo &quot;***** Targets to build:&quot;
 cat targets
 
 echo &quot;set targets=$(cat targets)&quot; &gt; setTargets.bat</command>
