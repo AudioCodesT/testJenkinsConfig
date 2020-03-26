@@ -140,6 +140,7 @@ cd ${WORKSPACE}
 chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | grep -E &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
 echo &quot;Changed files: $chFiles&quot;
 # Collect targets to which changed files belong into a list
+targets=
 while read f; do
     echo &quot;************ $f **************&quot;
     target=$(echo $f | gawk -F/ &apos;{print $NF}&apos;)
