@@ -82,7 +82,7 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
 CHANGES=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
 
 # Find the last TAG in GWApp branch
-HostedLocation=&quot;/netapp1/CompilationResults/7.2.250 Release/7.2.254_VoAI&quot;
+HostedLocation=&quot;/netapp1/CompilationResults/7.2.250 Release/7.2.256&quot;
 TPLastVoiceAI=$(ls -tr &quot;$HostedLocation&quot; | tail -1)
 # Find the last TAG in voiceAI branch
 voiceAILocation=&quot;/netapp1/CompilationResults/VoAI_Connector/1.6&quot;
