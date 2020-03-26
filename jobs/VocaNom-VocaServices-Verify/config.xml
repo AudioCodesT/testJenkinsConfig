@@ -45,6 +45,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <refspec>${GERRIT_REFSPEC}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/VocaNom/VocaServices.git</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
