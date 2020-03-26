@@ -66,6 +66,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># ClearCase R&amp;D</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
@@ -83,6 +84,7 @@
         <string># All Cellular</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
@@ -91,7 +93,7 @@
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1584894350148</timestamp>
+      <timestamp>1585231497080</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>9b5e651912c78b87</seed>
