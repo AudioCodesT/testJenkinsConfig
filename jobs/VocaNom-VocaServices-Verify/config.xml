@@ -133,7 +133,7 @@ echo &quot;*****************&quot;
 cd ${WORKSPACE}
 
 # Find changed files
-chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | grep -e &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
+chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | grep -E &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
 echo &quot;$chFiles&quot;
 # Collect targets to which changed files belong into a list
 while read f; do
