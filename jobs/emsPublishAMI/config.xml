@@ -11,6 +11,9 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -123,7 +126,7 @@ cat RegionsNameAndIds.txt
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>ben.magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -152,8 +155,10 @@ cat RegionsNameAndIds.txt
                 </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
               </configuredTriggers>
               <contentType>text/html</contentType>
-              <defaultSubject>OVOC Major version ${BRANCH} is released</defaultSubject>
-              <defaultContent>edit &lt;a href=&quot;https://jenkins/view/admin/job/aws_deleteOvocAmi/&quot;&gt;aws_deleteOvocAmi&lt;/a&gt; jenkins job to not delete AMIs in version ${BRANCH}</defaultContent>
+              <defaultSubject>OVOC version ${NEW_TAG} is released</defaultSubject>
+              <defaultContent>edit &lt;a href=&quot;https://jenkins/view/admin/job/aws_deleteOvocAmi/&quot;&gt;aws_deleteOvocAmi&lt;/a&gt; jenkins job to not delete AMIs in version ${NEW_TAG}
+
+send by ${BUILD_URL}</defaultContent>
               <attachmentsPattern></attachmentsPattern>
               <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
               <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
