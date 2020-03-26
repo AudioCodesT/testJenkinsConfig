@@ -126,7 +126,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#!C:\cygwin64\bin\bash.exe --login -i
-login jenkins
+
+id
 
 echo &quot;*****************&quot;
 cd ${WORKSPACE}
