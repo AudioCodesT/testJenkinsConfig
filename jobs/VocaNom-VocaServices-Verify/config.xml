@@ -129,8 +129,9 @@
       <command>
 # Find changed files
 chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | egrep &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
+echo &quot;$chFiles&quot;
 # Collect targets to which changed files belong into a list
-while read f; do target=$(echo $f | gawk -F/ &apos;{print $1}&apos;); grep -q $target targets; if [[ &quot;$?&quot; == &quot;1&quot; ]]; then echo -n &quot;$target;&quot; &gt;&gt; targets; fi; done &lt;&lt;&lt; $chFiles
+while read f; do target=$(echo $f | gawk -F/ &apos;{print $1}&apos;); grep -q $target targets; if [[ &quot;$?&quot; == &quot;1&quot; ]]; then echo -n &quot;$target;&quot; &gt;&gt; targets; fi; done &lt;&lt;&lt; &quot;$chFiles&quot;
 # Delete last semicolon
 sed -i &apos;s/;$//&apos; targets
 
