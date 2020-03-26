@@ -452,7 +452,7 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>Shuky.Riechard@audiocodes.com yuvaly@audiocodes.com</recipients>
+      <recipients>Shuky.Riechard@audiocodes.com yuvaly@audiocodes.com,ben.magriso@audiocodes</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
