@@ -142,7 +142,8 @@ echo &quot;Changed files: $chFiles&quot;
 # Collect targets to which changed files belong into a list
 [[ -f targets ]] &amp;&amp; rm -f targets || touch targets
 while read f; do
-    target=$(echo $f | gawk -F/ &apos;{print $NF}&apos;)
+    target=$(echo $f | gawk -F/ &apos;{print $1}&apos;)
+    [[ -d &quot;$target&quot; ]] echo &quot;Found target $target to build&quot; || exit 2
     grep -q $target targets
     if [[ &quot;$?&quot; == &quot;1&quot; ]]; then
         echo -n &quot;$target;&quot; &gt;&gt; targets
