@@ -11,6 +11,9 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -38,48 +41,48 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;INSTANCE_ID=i-afdsfsdfsdfs&quot; &gt; sanity.properties
-echo &quot;vmIP=172.16.133.42&quot; &gt;&gt; sanity.properties
-exit 1</command>
+      <command>echo &apos;BRANCH=7.8.1XXX&apos; &gt; properties
+echo &apos;TAG=7.8.1098&apos; &gt;&gt; properties
+echo &apos;HyperV=2016&apos; &gt;&gt; properties
+</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.1.6">
       <info>
-        <propertiesFilePath>sanity.properties</propertiesFilePath>
+        <propertiesFilePath>properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
-      <config>
-        <scriptFiles/>
-        <groovyScripts/>
-        <buildSteps>
-          <org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-            <results>
-              <string>NOT_BUILT</string>
-              <string>ABORTED</string>
-              <string>FAILURE</string>
-              <string>UNSTABLE</string>
-            </results>
-            <role>BOTH</role>
-            <buildSteps>
-              <hudson.tasks.Shell>
-                <command>#get all instance id and vm ip
-ls -al
-set -a
-source ${WORKSPACE}/sanity.properties
-set +a
-
-
-echo ${vmIP}
-echo ${INSTANCE_ID}</command>
-              </hudson.tasks.Shell>
-            </buildSteps>
-          </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
-        </buildSteps>
-        <markBuildUnstable>false</markBuildUnstable>
-      </config>
-    </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>ben.magriso@audiocodes.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>\\netapp01\EMS\Versions\ISO_Files\OVOC_${BRANCH}\DVD5_Virtual/${TAG}\OVOC_HyperV-${HyperV}_${TAG}.7z</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
