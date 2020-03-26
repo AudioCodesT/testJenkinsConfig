@@ -126,8 +126,8 @@
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\PLM</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>
-# Find changed files
+      <command># Find changed files
+echo &quot;*****************&quot;
 chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | egrep &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
 echo &quot;$chFiles&quot;
 # Collect targets to which changed files belong into a list
