@@ -125,7 +125,11 @@
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\VocaServices</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\cygwin64\bin\bash.exe --login -i
+      <command>#!C:\cygwin64\bin\bash.exe --login -
+
+env
+whoami
+#!/bin/bash +x
 
 id
 
@@ -137,7 +141,7 @@ chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERR
 echo &quot;Changed files: $chFiles&quot;
 # Collect targets to which changed files belong into a list
 while read f; do
-    target=$(echo $f | gawk -F/ &apos;{print $1}&apos;)
+    target=$(echo $f | gawk -F/ &apos;{print $NF}&apos;)
     grep -q $target targets
     if [[ &quot;$?&quot; == &quot;1&quot; ]]; then
         echo -n &quot;$target;&quot; &gt;&gt; targets
