@@ -125,10 +125,10 @@
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\VocaServices</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!C:\cygwin64\bin\bash.exe
+      <command>#!C:\cygwin64\bin\bash.exe --login -i
 # Find changed files
 echo &quot;*****************&quot;
-chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | egrep &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
+chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | grep -e &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
 echo &quot;$chFiles&quot;
 # Collect targets to which changed files belong into a list
 while read f; do
