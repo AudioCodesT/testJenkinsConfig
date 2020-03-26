@@ -92,8 +92,6 @@ For example: current tag is 3.0.7.15  but the new should be 4.0.0.0</description
     <hudson.tasks.Shell>
       <command>#!C:\cygwin64\bin\bash.exe --login -i
 
-login jenkins
-
 cd ${WORKSPACE}
 
 id
