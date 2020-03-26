@@ -115,7 +115,6 @@
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>true</excludeNoCodeChange>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
-        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
       <triggerConfigURL></triggerConfigURL>
@@ -126,7 +125,8 @@
   <customWorkspace>C:\jenkinsslave\workspace\VocaNom\VocaServices</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command># Find changed files
+      <command>#!C:\cygwin64\bin\bash.exe
+# Find changed files
 echo &quot;*****************&quot;
 chFiles=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r ${GERRIT_PATCHSET_REVISION} | egrep &apos;\.cs$|\.c$|\.cpp$|\.h$&apos;)
 echo &quot;$chFiles&quot;
