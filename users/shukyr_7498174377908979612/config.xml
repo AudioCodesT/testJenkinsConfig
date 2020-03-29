@@ -52,6 +52,7 @@
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string>#All Breakfast</string>
         <string># All Lunch</string>
         <string>Logistics_maintenance</string>
@@ -95,7 +96,7 @@
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1583444740630</timestamp>
+      <timestamp>1585484728028</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Shuky.Riechard@audiocodes.com</emailAddress>
