@@ -244,7 +244,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>yuvaly</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
