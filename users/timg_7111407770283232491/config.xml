@@ -63,6 +63,7 @@
         <string>Logistics_maintenance</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -79,7 +80,7 @@
         <string>365_MFA_Apps</string>
         <string># MSBR ETAS</string>
       </roles>
-      <timestamp>1582105833449</timestamp>
+      <timestamp>1585572601965</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
