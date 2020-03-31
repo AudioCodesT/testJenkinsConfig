@@ -59,6 +59,7 @@
         <string>AI-Engineering</string>
         <string>365_Monday</string>
         <string>Allowed RODC Password Replication Group</string>
+        <string>FTP_2G</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Citrix_Allow_Visio</string>
@@ -72,9 +73,9 @@
         <string># SQA_CORE</string>
         <string>QA Group</string>
         <string>365_Tas</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
-        <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string># AUDC - NJ Engineering Team</string>
         <string>AudioCodes_VPN</string>
@@ -85,10 +86,11 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string>sp365-smarttap-modify</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1581252163518</timestamp>
+      <timestamp>1585642639120</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>4d1c15469e964704</seed>
