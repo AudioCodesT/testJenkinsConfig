@@ -96,7 +96,7 @@ cd ${WORKSPACE}
 
 id
 
-git tag -d ${NEWTAG}
+git tag -d ${NEWTAG} || true
 
 git fetch origin --tags || exit 1
 
