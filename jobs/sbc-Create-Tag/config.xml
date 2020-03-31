@@ -19,9 +19,6 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -34,7 +31,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Branches</name>
           <description></description>
-          <defaultValue>NextGenCPE NextGenCPE_R1 7.2.204 7.2.204_6jio 7.2.252_MSBR  7.2.254 7.2.254_MSBR 7.2.256 7.2.256_2 7.2.256_MSBR 7.4</defaultValue>
+          <defaultValue>NextGenCPE NextGenCPE_R1 7.2.204 7.2.204_6jio 7.2.252_MSBR  7.2.254 7.2.254_MSBR 7.2.256 7.2.256_2 7.2.256_MSBR</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
