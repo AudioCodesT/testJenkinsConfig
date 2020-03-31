@@ -191,13 +191,16 @@ echo &quot;Pull latest images from Artifactory (those that are tagged with \${BR
 remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
-LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
+ARTITAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos;)
+LATESTTAG=$( echo $ARTITAGS | sort | tail -n 1)
 
-if [[ ( &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
-    PULLBRANCH=&quot;${LATESTTAG}&quot;
-else
-    PULLBRANCH=&quot;${BRANCH}&quot;
-fi
+[[ &quot;$(echo $ARTITAGS | gerp -q $BRANCH)&quot; == &quot;&quot; ]] &amp;&amp; PULLBRANCH=&quot;${BRANCH}&quot; || PULLBRANCH=&quot;${TATESTTAG}&quot;
+
+#if [[ $( &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
+#    PULLBRANCH=&quot;${LATESTTAG}&quot;
+#else
+#    PULLBRANCH=&quot;${BRANCH}&quot;
+#fi
 
 HASHES=&quot;&quot;
 
