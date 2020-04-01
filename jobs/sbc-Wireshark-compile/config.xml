@@ -138,7 +138,7 @@ git clean -df Release*&#xd;
 build_qbs.rb&#xd;
 &#xd;
 IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
-) ELSE ( net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot; )&#xd;
+) ELSE ( net use z: &quot;\\netapp1\cm&quot; )&#xd;
 &#xd;
 &#xd;
 &#xd;
@@ -161,6 +161,7 @@ mkdir c:/temp/$TAG/plugins
 mkdir c:/temp/$TAG/plugins_x64
 cp -f Release/Release_Win32/*.dll c:/temp/$TAG/plugins
 cp -f Release/Release_x64/*.dll c:/temp/$TAG/plugins_x64
+cp -r Release/li_* //netapp1/CM/Git
 cd c:/temp/$TAG
 zip -r Plugin.zip . &gt; /dev/null
 echo TAG=$TAG &gt; $WORKSPACE/Wireshark.properties
