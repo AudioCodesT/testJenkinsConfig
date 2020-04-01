@@ -577,7 +577,7 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun></regexpForRerun>
