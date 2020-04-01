@@ -97,7 +97,7 @@ function createTag {
   LastTag=$NEWTAG
 }
 
-for GERRIT_BRANCH in master 4.4.5 4.4.6 4.4.6D 4.4.7 4.4.8 4.4.9
+for GERRIT_BRANCH in master 4.4.5 4.4.6 4.4.6D 4.4.7 4.4.8 4.4.9 4.5.0
 do
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
@@ -131,7 +131,7 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>Shuky.Riechard yossim</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
