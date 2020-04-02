@@ -61,6 +61,7 @@
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
@@ -69,7 +70,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1583417640967</timestamp>
+      <timestamp>1585834472203</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
