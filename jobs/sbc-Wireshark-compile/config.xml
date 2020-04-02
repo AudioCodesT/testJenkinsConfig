@@ -148,6 +148,8 @@ IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
     <hudson.tasks.Shell>
       <command>#!c:\cygwin64\bin\bash  --login
 
+set -x
+
 cd $WORKSPACE/ACPlugins
 cp -f README.VERSION.txt z:/plugins
 cp -f README.VERSION.txt z:/plugins_x64
