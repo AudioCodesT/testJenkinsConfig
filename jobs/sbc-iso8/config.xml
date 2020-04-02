@@ -108,8 +108,8 @@ echo BL ver is: ${BL}
 # Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
 
 Tag=${Tag_Or_GerritChange}
-if [ &quot;$HostedTP_CENTOS8&quot; != &quot;TAG&quot; ]; the Tag=$(echo $Tag | cut -c1-8)
-if [[ $Customer != &quot;&quot; ]]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
+if [ &quot;$HostedTP_CENTOS8&quot; != &quot;TAG&quot; ]; then Tag=$(echo $Tag | cut -c1-8); fi
+if [ &quot;$Customer&quot; != &quot;&quot; ]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
 
 echo NEWTAG=${NEWTAG} &gt; generated_version.properties
 echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;` &gt;&gt; generated_version.properties
