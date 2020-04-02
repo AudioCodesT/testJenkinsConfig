@@ -84,7 +84,7 @@ If exist, all files under this customer folder will be copied from artifactory t
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>$Tag</name>
+        <name>${Tag_Or_GerritChange}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -107,7 +107,7 @@ If exist, all files under this customer folder will be copied from artifactory t
 echo BL ver is: ${BL}
 # Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
 
-Tag=$(echo ${Tag_Or_GerritChange} | cut -c1-8)
+Tag=$(echo ${Tag_Or_GerritChange} | cut -c1-14)
 if [[ $Customer != &quot;&quot; ]]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
 
 echo NEWTAG=${NEWTAG} &gt; generated_version.properties
