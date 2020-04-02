@@ -78,7 +78,7 @@ If exist, all files under this customer folder will be copied from artifactory t
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>${Tag_Or_GerritChange}</refspec>
+        <refspec>${Tag_Or_GerritChange_Value}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -137,10 +137,10 @@ uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$
 if [ &quot;$uri&quot; == &quot;&quot; ]; then
   echo Need waiting to HostedTP CENTOS8 compilation...
   if [ &quot;$NAGINATOR_COUNT&quot; == 3 ]; then
-    echo Exit, no HostedTP was found
+    echo &quot; ***************   Exit, no HostedTP was found  ************************** &quot;
     exit 1
   else
-    echo Try again, HostedTP is not ready
+    echo &quot; ***************  Try again, HostedTP is not ready  ************************** &quot;
     exit 2
   fi
 fi
