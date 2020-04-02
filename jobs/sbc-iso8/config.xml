@@ -25,8 +25,8 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.ChoiceParameterDefinition>
-          <name>HostedTP_CENTOS8</name>
-          <description>Choose if you want ISO for a TP/GWApp TAG or for a Gerrit change</description>
+          <name>Build_ISO_From</name>
+          <description>Do you wish to build ISO from an existing Tag? or from an open gerrit change?</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>TAG</string>
@@ -35,8 +35,9 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>Tag_Or_GerritChange</name>
-          <description>If you want to build ISO not from a TAG but from an open gerrit change, please insert here the commit ID (sha1)</description>
+          <name>Tag_Or_GerritChange_Value</name>
+          <description>If you build ISO from a Tag then insert the desired tag
+If from an open gerrit change then insert here the commit ID (sha1) - you can copy from the gerrit change web page - there is a button of &quot;copy full SHA to clipboard&quot;</description>
           <defaultValue>7.20CE.255.067</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -84,7 +85,7 @@ If exist, all files under this customer folder will be copied from artifactory t
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${Tag_Or_GerritChange}</name>
+        <name>${Tag_Or_GerritChange_Value}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -107,8 +108,8 @@ If exist, all files under this customer folder will be copied from artifactory t
 echo BL ver is: ${BL}
 # Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
 
-Tag=${Tag_Or_GerritChange}
-if [ &quot;$HostedTP_CENTOS8&quot; != &quot;TAG&quot; ]; then Tag=$(echo $Tag | cut -c1-8); fi
+Tag=${Tag_Or_GerritChange_Value}
+if [ &quot;$Build_ISO_From&quot; != &quot;TAG&quot; ]; then Tag=$(echo $Tag | cut -c1-8); fi
 if [ &quot;$Customer&quot; != &quot;&quot; ]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
 
 echo NEWTAG=${NEWTAG} &gt; generated_version.properties
@@ -122,11 +123,11 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-if [ &quot;$HostedTP_CENTOS8&quot; == &quot;TAG&quot; ]; then
-  rev=$(git rev-parse --verify $Tag_Or_GerritChange^{commit})
+if [ &quot;$Build_ISO_From&quot; == &quot;TAG&quot; ]; then
+  rev=$(git rev-parse --verify $Tag_Or_GerritChange_Value^{commit})
   #rev=$(git rev-parse HEAD)
 else
-  rev=${Tag_Or_GerritChange}
+  rev=${Tag_Or_GerritChange_Value}
 fi
 
 #Bring &apos;HostedTP_CENTOS8&apos; the needed cmp for this compilation
@@ -327,7 +328,7 @@ ${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}<
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${Tag_Or_GerritChange} $Customer</template>
+      <template>#${BUILD_NUMBER}_${Tag_Or_GerritChange_Value} $Customer</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
