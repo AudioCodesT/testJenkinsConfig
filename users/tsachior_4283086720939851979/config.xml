@@ -57,6 +57,7 @@
         <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Citrix_Allow_Visio</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string>Sp365-rdnetworking-modify</string>
@@ -67,6 +68,7 @@
         <string># All Beer Sheva</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -80,10 +82,11 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1581843864369</timestamp>
+      <timestamp>1585839664827</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Tsachi.Or@audiocodes.com</emailAddress>
