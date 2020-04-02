@@ -59,29 +59,31 @@
       <roles>
         <string>authenticated</string>
         <string>Palo_AWS-RND-BKP_NTWS</string>
-        <string>365_Tas</string>
         <string>AWS_Jira_Users</string>
-        <string>365_Lucca</string>
-        <string># All ISRAEL</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># ClearCase R&amp;D</string>
+        <string>#All Breakfast</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>365_Tas</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
-        <string>#All Breakfast</string>
+        <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1583046693698</timestamp>
+      <timestamp>1585828382881</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>a58f89d9881597cc</seed>
