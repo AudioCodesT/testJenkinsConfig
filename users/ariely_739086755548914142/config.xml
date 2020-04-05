@@ -56,25 +56,27 @@
         <string># MP20x deliveries</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
-        <string># Hagay Halili Team</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string># MSBR</string>
         <string># MP20x Support</string>
         <string>AudioCodes_VPN</string>
+        <string># Tsachi Or Team</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
         <string>Sp365-rdipp-modify</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1573576448703</timestamp>
+      <timestamp>1586089227999</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Ariel.Yurman@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
   </properties>
