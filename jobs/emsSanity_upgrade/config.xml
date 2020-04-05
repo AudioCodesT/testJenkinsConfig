@@ -26,9 +26,6 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -337,7 +334,7 @@ emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market
 
 
 #keep instance ID
-INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; | grep InstanceId | cut -d &apos;&quot;&apos; -f 4)&quot;
 #add tag to this instans:  &quot;emsSanity&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityUpgrade
 #add tag to this instans &quot;Spotinst&quot; 
