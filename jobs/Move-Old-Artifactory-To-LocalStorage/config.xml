@@ -262,13 +262,13 @@ CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_AWS &quot;ISO/7.2.252_AWS&quot;
 CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252 &quot;ISO/7.2.252&quot; 
 CheckFolder sbc-release/com/ac/sbc/ISO/7.2.254 &quot;ISO/7.2.254&quot; 
 #All VSSBC
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.156 &quot;VSSBC/7.2.156&quot; 
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.204 &quot;VSSBC/7.2.204&quot;
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.250 &quot;VSSBC/7.2.250&quot;
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_1 &quot;VSSBC/7.2.252_1&quot; 
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_AWS &quot;VSSBC/7.2.252_AWS&quot;  
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252 &quot;VSSBC/7.2.252&quot; 
-#CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 &quot;VSSBC/7.2.254&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.156 &quot;VSSBC/7.2.156&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.204 &quot;VSSBC/7.2.204&quot;
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.250 &quot;VSSBC/7.2.250&quot;
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_1 &quot;VSSBC/7.2.252_1&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_AWS &quot;VSSBC/7.2.252_AWS&quot;  
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252 &quot;VSSBC/7.2.252&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 &quot;VSSBC/7.2.254&quot; 
 # Other Projects
 CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector &quot;VoiceAiConnector&quot;
 CheckFolder dsp-release/com/ac/dsp/Gen5/710 &quot;DSP/Gen5/710&quot;
