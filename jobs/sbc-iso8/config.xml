@@ -125,14 +125,16 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;
       <command>
 if [ &quot;$Build_ISO_From&quot; == &quot;TAG&quot; ]; then
   rev=$(git rev-parse --verify $Tag_Or_GerritChange_Value^{commit})
+  ArtifactoryRepo=&quot;sbc-release&quot;
   #rev=$(git rev-parse HEAD)
 else
   rev=${Tag_Or_GerritChange_Value}
+  ArtifactoryRepo=&quot;sbc-review&quot;  
 fi
 
 #Bring &apos;HostedTP_CENTOS8&apos; the needed cmp for this compilation
 User=&quot;admin:$artifactory_password&quot;
-uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | \
+uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=$ArtifactoryRepo&quot; | grep uri | \
       cut -d&apos;&quot;&apos; -f4 | grep HostedTP_CENTOS8 | grep -v LAB | grep .cmp  | head -1)
 if [ &quot;$uri&quot; == &quot;&quot; ]; then
   echo Need waiting to HostedTP CENTOS8 compilation...
