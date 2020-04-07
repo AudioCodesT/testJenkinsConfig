@@ -1654,40 +1654,6 @@
       </columns>
       <recurse>false</recurse>
     </listView>
-    <com.tikal.jenkins.plugins.multijob.views.MultiJobView plugin="jenkins-multijob-plugin@1.29">
-      <owner class="hudson" reference="../../.."/>
-      <name>OVOC-Cluster</name>
-      <filterExecutors>true</filterExecutors>
-      <filterQueue>true</filterQueue>
-      <properties class="hudson.model.View$PropertyList"/>
-      <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
-      </jobNames>
-      <jobFilters/>
-      <columns>
-        <com.tikal.jenkins.plugins.multijob.views.StatusColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.WeatherColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.JobColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastSuccessColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastFailureColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastDurationColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.ConsoleColumn/>
-        <hudson.views.BuildButtonColumn/>
-        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-      </columns>
-      <recurse>false</recurse>
-      <columns defined-in="com.tikal.jenkins.plugins.multijob.views.MultiJobView">
-        <com.tikal.jenkins.plugins.multijob.views.StatusColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.WeatherColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.JobColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastSuccessColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastFailureColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastDurationColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.ConsoleColumn/>
-        <hudson.views.BuildButtonColumn/>
-        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-      </columns>
-    </com.tikal.jenkins.plugins.multijob.views.MultiJobView>
   </views>
   <primaryView>all</primaryView>
   <slaveAgentPort>45374</slaveAgentPort>
@@ -1699,7 +1665,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/com.tikal.jenkins.plugins.multijob.views.MultiJobView/jobNames/comparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
           <int>1</int>
           <string>PATH</string>
