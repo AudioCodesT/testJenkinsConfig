@@ -37,7 +37,7 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
-          <description></description>
+          <description>The tag to install</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
