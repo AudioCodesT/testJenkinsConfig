@@ -55,6 +55,7 @@
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
         <string># All__Beer_Sheva</string>
+        <string>365_Monday</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -85,7 +86,7 @@
         <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1583069802588</timestamp>
+      <timestamp>1586258050000</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>56dc3bdf99df605c</seed>
