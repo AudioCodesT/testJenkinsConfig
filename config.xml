@@ -705,7 +705,18 @@
       <name>sig-d72cb55a</name>
       <accountId></accountId>
       <groupId>sig-d72cb55a</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0fc0b0b71db64b8fc</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0fc0b0b71db64b8fc</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>smt-codeanalysis</requestedLabel>
+            <createdAt>2020-04-07 08:40:08.604 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>smt-codeanalysis</labelString>
       <idleTerminationMinutes>7</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1666,7 +1677,8 @@
     </listView>
     <com.tikal.jenkins.plugins.multijob.views.MultiJobView plugin="jenkins-multijob-plugin@1.29">
       <owner class="hudson" reference="../../.."/>
-      <name>EMS-Cluster</name>
+      <name>OVOC-Cluster</name>
+      <description>OVOC server cluster</description>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
