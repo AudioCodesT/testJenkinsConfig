@@ -852,13 +852,13 @@
       <groupId>sig-c751f889</groupId>
       <pendingInstances>
         <entry>
-          <string>i-00b7bb7a060599f53</string>
+          <string>i-0a672296137a0f833</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-00b7bb7a060599f53</id>
+            <id>i-0a672296137a0f833</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2020-04-07 08:27:47.336 UTC</createdAt>
+            <createdAt>2020-04-07 08:38:58.524 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
@@ -1664,6 +1664,40 @@
       </columns>
       <recurse>false</recurse>
     </listView>
+    <com.tikal.jenkins.plugins.multijob.views.MultiJobView plugin="jenkins-multijob-plugin@1.29">
+      <owner class="hudson" reference="../../.."/>
+      <name>EMS-Cluster</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <com.tikal.jenkins.plugins.multijob.views.StatusColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.WeatherColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.JobColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.LastSuccessColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.LastFailureColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.LastDurationColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.ConsoleColumn/>
+        <hudson.views.BuildButtonColumn/>
+        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
+      </columns>
+      <recurse>false</recurse>
+      <columns defined-in="com.tikal.jenkins.plugins.multijob.views.MultiJobView">
+        <com.tikal.jenkins.plugins.multijob.views.StatusColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.WeatherColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.JobColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.LastSuccessColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.LastFailureColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.LastDurationColumn/>
+        <com.tikal.jenkins.plugins.multijob.views.ConsoleColumn/>
+        <hudson.views.BuildButtonColumn/>
+        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
+      </columns>
+    </com.tikal.jenkins.plugins.multijob.views.MultiJobView>
   </views>
   <primaryView>all</primaryView>
   <slaveAgentPort>45374</slaveAgentPort>
@@ -1675,7 +1709,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/com.tikal.jenkins.plugins.multijob.views.MultiJobView/jobNames/comparator"/>
           </default>
           <int>1</int>
           <string>PATH</string>
