@@ -52,6 +52,22 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
+          <name>ServerRole</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Master</string>
+              <string>Slave</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>ServerIP</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
           <name>FullTesting</name>
           <description>this param is inherited from ovoc build</description>
           <choices class="java.util.Arrays$ArrayList">
@@ -71,7 +87,6 @@
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
@@ -550,7 +565,6 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
               <string>UNSTABLE</string>
             </results>
             <role>SLAVE</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
@@ -568,7 +582,6 @@ fi</command>
               <string>UNSTABLE</string>
             </results>
             <role>SLAVE</role>
-            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>#get all instance id and vm ip
