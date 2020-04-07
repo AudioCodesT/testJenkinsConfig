@@ -238,14 +238,28 @@ CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7
 CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.252_MSBR/Firmware &quot;7.2.250 Release/7.2.252_MSBR&quot;
 CheckFolder sbc-release/com/ac/sbc/7.2.254/Firmware &quot;7.2.250 Release/7.2.254&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.254_MSBR/Firmware &quot;7.2.250 Release/7.2.254_MSBR&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.254_MSBR_IKEV2/Firmwar &quot;7.2.250 Release/7.2.254_MSBR_IKEV2&quot; 
 CheckFolder sbc-release/com/ac/sbc/7.2.256/Firmware &quot;7.2.250 Release/7.2.256&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.256_2/Firmware &quot;7.2.250 Release/7.2.256_2&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.256_MSBR/Firmware/Firmware &quot;7.2.250 Release/7.2.256_MSBR&quot;
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware &quot;NextGenCPE Release/Firmware&quot;
+ckFolder sbc-release/com/ac/sbc/NextGenCPE_R1/Firmware/Firmware &quot;NextGenCPE Release/NextGenCPE_R1
+CheckFolder sbc-release/com/ac/sbc/7.4/Firmware &quot;7.4 Release/7.4&quot;
 #All Feature branches
 CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware &quot;feature/centos7/Firmware&quot; 
 CheckFolder sbc-release/com/ac/sbc/feature/fips/Firmware &quot;feature/fips/Firmware&quot; 
 CheckFolder sbc-release/com/ac/sbc/feature/PM/Firmware &quot;feature/PM/Firmware&quot; 
 CheckFolder sbc-release/com/ac/sbc/feature/voice-ai/Firmware &quot;feature/voice-ai/Firmware&quot; 
 CheckFolder sbc-release/com/ac/sbc/feature/websocket/Firmware &quot;feature/websocket/Firmware&quot; 
+
+CheckFolder sbc-release/com/ac/sbc/feature/GRXInternalDSP/Firmware &quot;feature/GRXInternalDSP/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/IndianArmyPOC/Firmware &quot;feature/IndianArmyPOC/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/JSUpgrades/Firmware &quot;feature/JSUpgrades/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/LI/Firmware &quot;feature/LI/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/centOS8-7.4/Firmware &quot;feature/centOS8-7.4/Firmware&quot; 
+#CheckFolder sbc-release/com/ac/sbc/feature/M3100/Firmware &quot;feature/M3100/Firmware&quot; 
+
 #All ISO
 CheckFolder sbc-release/com/ac/sbc/ISO/7.2.150 &quot;ISO/7.2.150&quot;
 CheckFolder sbc-release/com/ac/sbc/ISO/7.2.152 &quot;ISO/7.2.152&quot;
