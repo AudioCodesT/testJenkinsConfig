@@ -654,18 +654,7 @@
       <name>sig-c2878797</name>
       <accountId></accountId>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0307414b414dc8b6a</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0307414b414dc8b6a</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
-            <createdAt>2020-04-07 08:41:02.621 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1668,8 +1657,8 @@
     <com.tikal.jenkins.plugins.multijob.views.MultiJobView plugin="jenkins-multijob-plugin@1.29">
       <owner class="hudson" reference="../../.."/>
       <name>OVOC-Cluster</name>
-      <filterExecutors>false</filterExecutors>
-      <filterQueue>false</filterQueue>
+      <filterExecutors>true</filterExecutors>
+      <filterQueue>true</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
