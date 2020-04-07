@@ -1,13 +1,19 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Triggered by a finished ovoc_server night build and performs:&#xd;
-1. create a tested VM: launch new instance from sanity AMI and get its IP address&#xd;
-2. run python script which ssh to the tested VM and download the latest DVD3.iso&#xd;
-3. tests: install, integration tests&#xd;
-4. python script copies all logs from tested VM to the jenkins slave&#xd;
-5. archive the logs&#xd;
-6.if build passed then terminate the tested machine&#xd;
+  <description>############ This is work in progress  ################&#xd;
+############## Do NOT run this job #################&#xd;
+&#xd;
+This job accept the followin parameters:&#xd;
+* New tag&#xd;
+* ISO to deploy&#xd;
+* OVOC server IP&#xd;
+* Test mode&#xd;
+&#xd;
+And does the following:&#xd;
+1. Connect to OVOC server by its IP address.&#xd;
+2. Install DVD3 according to given parameters.&#xd;
+&#xd;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
