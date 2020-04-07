@@ -850,7 +850,18 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-00b7bb7a060599f53</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-00b7bb7a060599f53</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>mtr-Build-Label</requestedLabel>
+            <createdAt>2020-04-07 08:27:47.336 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -901,18 +912,7 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-068b8d14b91b2f5f2</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-068b8d14b91b2f5f2</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-04-05 13:56:32.938 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1311,7 +1311,6 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>blablabla</string>
         <string>clmBuild</string>
         <string>clmCreateTag</string>
         <string>ems_CreateBrandedISO</string>
