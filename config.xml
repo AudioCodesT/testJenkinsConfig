@@ -453,7 +453,58 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0d8902494d04a1f7f</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0d8902494d04a1f7f</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-04-07 09:37:26.893 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-05c9ff8620c902c3f</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-05c9ff8620c902c3f</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-04-07 09:37:43.561 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0cf2fe04f63d991f3</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0cf2fe04f63d991f3</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-04-07 09:37:00.9 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-099f57157433c9ea3</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-099f57157433c9ea3</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-04-07 09:37:00.8 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0494d13c81d06c9fc</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0494d13c81d06c9fc</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-04-07 09:37:43.561 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1662,6 +1713,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>OVOC-Cluster-Install</string>
       </jobNames>
       <jobFilters/>
       <columns>
