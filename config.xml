@@ -654,7 +654,18 @@
       <name>sig-c2878797</name>
       <accountId></accountId>
       <groupId>sig-c2878797</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0307414b414dc8b6a</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0307414b414dc8b6a</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>SMRT-Windows-Build-Dynamic</requestedLabel>
+            <createdAt>2020-04-07 08:41:02.621 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>SMRT-Windows-Build-Dynamic</labelString>
       <idleTerminationMinutes>10</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -705,18 +716,7 @@
       <name>sig-d72cb55a</name>
       <accountId></accountId>
       <groupId>sig-d72cb55a</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0fc0b0b71db64b8fc</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0fc0b0b71db64b8fc</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>smt-codeanalysis</requestedLabel>
-            <createdAt>2020-04-07 08:40:08.604 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>smt-codeanalysis</labelString>
       <idleTerminationMinutes>7</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -861,18 +861,7 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0a672296137a0f833</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0a672296137a0f833</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2020-04-07 08:38:58.524 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1675,41 +1664,6 @@
       </columns>
       <recurse>false</recurse>
     </listView>
-    <com.tikal.jenkins.plugins.multijob.views.MultiJobView plugin="jenkins-multijob-plugin@1.29">
-      <owner class="hudson" reference="../../.."/>
-      <name>OVOC-Cluster</name>
-      <description>OVOC server cluster</description>
-      <filterExecutors>false</filterExecutors>
-      <filterQueue>false</filterQueue>
-      <properties class="hudson.model.View$PropertyList"/>
-      <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
-      </jobNames>
-      <jobFilters/>
-      <columns>
-        <com.tikal.jenkins.plugins.multijob.views.StatusColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.WeatherColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.JobColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastSuccessColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastFailureColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastDurationColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.ConsoleColumn/>
-        <hudson.views.BuildButtonColumn/>
-        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-      </columns>
-      <recurse>false</recurse>
-      <columns defined-in="com.tikal.jenkins.plugins.multijob.views.MultiJobView">
-        <com.tikal.jenkins.plugins.multijob.views.StatusColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.WeatherColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.JobColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastSuccessColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastFailureColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.LastDurationColumn/>
-        <com.tikal.jenkins.plugins.multijob.views.ConsoleColumn/>
-        <hudson.views.BuildButtonColumn/>
-        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-      </columns>
-    </com.tikal.jenkins.plugins.multijob.views.MultiJobView>
   </views>
   <primaryView>all</primaryView>
   <slaveAgentPort>45374</slaveAgentPort>
@@ -1721,7 +1675,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/com.tikal.jenkins.plugins.multijob.views.MultiJobView/jobNames/comparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
           <int>1</int>
           <string>PATH</string>
