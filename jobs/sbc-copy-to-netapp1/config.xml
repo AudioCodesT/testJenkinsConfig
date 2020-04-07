@@ -92,7 +92,7 @@ if [ &quot;$Project&quot; == &quot;GWApp&quot; ]; then
 
   BaseFirmware=Firmware
   # New split from NextGenCPE
-  if [ $Branch == &quot;NextGenCPE_R1&quot; ]; then
+  if [[ $Branch =~ &quot;NextGenCPE&quot; ]]; then
     Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
     BaseFirmware=7.2.$(echo $NEWTAG | cut -d. -f3)
   fi
@@ -159,8 +159,8 @@ if [ -s &quot;$NEWTAG.list&quot; ]; then
      if [ $Extention == &quot;cmp&quot; ]; then
        BOARD=`echo $FileName | sed -r s/.cmp//`
        # For branch voice-ai copy HostedTP only!
-       if [[ $GERRIT_BRANCH =~ &quot;/voice-ai&quot; &amp;&amp; ! $BOARD =~ &quot;HostedTP&quot; ]]; then continue; fi
-       if [[ $GERRIT_BRANCH =~ &quot;/NextGenCPE&quot; &amp;&amp; ! $BOARD =~ &quot;MP5XXNG&quot; ]]; then continue; fi   
+       if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;voice-ai&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;HostedTP&quot; ]]; then continue; fi
+       if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;MP5XXNG&quot; ]]; then continue; fi   
        if [ -e &quot;$Target/$BOARD.zip&quot; ]; then continue; fi
        #if [ ! -e &quot;$Target/$FileName&quot; ]; then
          echo Download $FileName into &quot;$Target/$FileName&quot;...
@@ -186,7 +186,7 @@ fi
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>yossim shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
