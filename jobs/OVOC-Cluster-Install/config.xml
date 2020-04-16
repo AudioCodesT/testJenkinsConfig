@@ -659,7 +659,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <template>#${BUILD_NUMBER}_${NEW_TAG}_${ServerRole}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
