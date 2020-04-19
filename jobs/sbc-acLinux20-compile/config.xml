@@ -169,10 +169,10 @@ git checkout -f origin/$GERRIT_BRANCH -- \
   TrunkPackRam/PSTN/ph/PstnInt.h
 git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
 git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps || true
-cd $CurrentPath
+sudo chmod -R 755 TrunkPackRam OpenSource Modules
+sudo chown -R centos:centos TrunkPackRam OpenSource Modules
 
-sudo chmod -R 755 .
-sudo chown -R centos:centos .
+cd $CurrentPath
 
 ./build_acLinux --board=M4000 --comp=SDK-20 &amp;&gt; M4000.log
 cp  $WORKSPACE/external_version_data.h $WORKSPACE/acLinux20_external_version_data.h
