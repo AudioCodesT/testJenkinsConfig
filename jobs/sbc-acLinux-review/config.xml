@@ -113,7 +113,7 @@
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
       <dependencyJobsNames></dependencyJobsNames>
-      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <commitMessageParameterMode>PLAIN</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
       <buildStartMessage></buildStartMessage>
@@ -170,19 +170,39 @@ echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/exte
       <command>CurrentPath=`pwd`
 echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
 cd ../..
-TPBranch=&quot;7.2.150&quot;
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp
   mv GWApp/.git .
   rm -rf GWApp
 fi
-git checkout -f origin/$GERRIT_BRANCH -- \
+
+ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed &apos;s/.*Issue: //g; s/ .*//g&apos;)
+
+ls -l $CurrentPath/id_rsa_gerrit
+chmod 600 $CurrentPath/id_rsa_gerrit
+
+# Find if this build should use another commit with the same Issue
+if [ ! -z &quot;$ISSUE&quot; ]; then 
+    echo Search this Issue: $ISSUE...
+    refs=$(ssh -p 29418 -i $CurrentPath/id_rsa_gerrit jenkins@test-gerrit gerrit query \
+     --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH \
+     status:open project:TP/GWApp | \
+     grep ref: | head -1 | cut -d: -f2) || echo Other change not found
+fi
+
+if [ ! -z &quot;$refs&quot; ]; then
+  git fetch origin $refs
+else
+  git fetch origin $GERRIT_BRANCH
+fi
+
+git checkout -f FETCH_HEAD -- \
   TrunkPackRam/Bsps/Common/Include/HAWatchdog.h \
   TrunkPackRam/Bsps/BspOcteon/Include/HWwatchdog.h \
   TrunkPackRam/Bsps/BspOcteon/Include/SPI_Driver.h \
   TrunkPackRam/PSTN/ph/PstnInt.h
-git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
-git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps || true
+git checkout -f FETCH_HEAD -- OpenSource/pkgs || true
+git checkout -f FETCH_HEAD -- Modules/Apps || true
 cd $CurrentPath
 
 sudo chmod -R 755 .
@@ -201,6 +221,14 @@ fi
   </builders>
   <publishers/>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes></excludes>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
