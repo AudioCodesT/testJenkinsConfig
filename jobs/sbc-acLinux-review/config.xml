@@ -203,10 +203,10 @@ git checkout -f FETCH_HEAD -- \
   TrunkPackRam/PSTN/ph/PstnInt.h
 git checkout -f FETCH_HEAD -- OpenSource/pkgs || true
 git checkout -f FETCH_HEAD -- Modules/Apps || true
-cd $CurrentPath
+sudo chmod -R 755 TrunkPackRam OpenSource Modules
+sudo chown -R centos:centos TrunkPackRam OpenSource Modules
 
-sudo chmod -R 755 .
-sudo chown -R centos:centos .
+cd $CurrentPath
 
 ./build_acLinux --board=${BOARD} || exit 1
 
