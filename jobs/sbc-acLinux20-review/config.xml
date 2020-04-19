@@ -185,6 +185,9 @@ git checkout -f FETCH_HEAD -- \
   TrunkPackRam/PSTN/ph/PstnInt.h
 git checkout -f FETCH_HEAD -- OpenSource/pkgs || true
 git checkout -f FETCH_HEAD -- Modules/Apps || true
+sudo chmod -R 755 TrunkPackRam
+sudo chown -R centos:centos TrunkPackRam
+
 cd $CurrentPath
 
 sudo chmod -R 755 .
