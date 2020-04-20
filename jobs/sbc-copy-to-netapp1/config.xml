@@ -160,7 +160,7 @@ if [ -s &quot;$NEWTAG.list&quot; ]; then
        BOARD=`echo $FileName | sed -r s/.cmp//`
        # For branch voice-ai copy HostedTP only!
        if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;voice-ai&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;HostedTP&quot; ]]; then continue; fi
-       if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;MP5XXNG&quot; ]]; then continue; fi   
+       if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;MP5&quot; ]]; then continue; fi   
        if [ -e &quot;$Target/$BOARD.zip&quot; ]; then continue; fi
        #if [ ! -e &quot;$Target/$FileName&quot; ]; then
          echo Download $FileName into &quot;$Target/$FileName&quot;...
