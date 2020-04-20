@@ -92,7 +92,7 @@ if [ &quot;$Project&quot; == &quot;GWApp&quot; ]; then
 
   BaseFirmware=Firmware
   # New split from NextGenCPE
-  if [[ $Branch =~ &quot;NextGenCPE&quot; ]]; then
+  if [[ $Branch =~ &quot;NextGenCPE_&quot; ]]; then
     Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
     BaseFirmware=7.2.$(echo $NEWTAG | cut -d. -f3)
   fi
