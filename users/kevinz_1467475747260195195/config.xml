@@ -73,8 +73,9 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1583294416645</timestamp>
+      <timestamp>1587350980089</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
