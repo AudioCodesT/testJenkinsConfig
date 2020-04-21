@@ -217,6 +217,7 @@ echo Delete all output that not needed in Artitactory at all
 
 if [[ (&quot;$GERRIT_BRANCH&quot; =~ &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;MP5XXNG&quot;|&quot;MP500_MSBG&quot;) || \
       (&quot;$GERRIT_BRANCH&quot; =~ &quot;MSBR&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;MP500&quot;) || \
+      (&quot;$GERRIT_BRANCH&quot; == &quot;feature/pcipal&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;HostedTP&quot;) || \
       (&quot;$GERRIT_BRANCH&quot; == &quot;feature/M3100&quot; &amp;&amp; ! &quot;$BOARDNAME&quot; =~ &quot;M3100&quot;) ]]; then
   rm -f ram${BOARDNAME}*.*
 else
