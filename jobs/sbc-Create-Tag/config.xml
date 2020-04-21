@@ -164,7 +164,9 @@ do
   
   LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
   LastMINOR=$(echo $LastTag | cut -d. -f3)
-  echo Last merged TAG is $LastMergedTag, use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
+  echo Last merged TAG is $LastMergedTag and last TAG is $LastTag 
+  if [ &quot;$LastMINOR&quot; -gt &quot;$LastMergedMINOR&quot; ]; then LastMergedMINOR=$LastMINOR; fi
+  echo Use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
 
   LastUser=&quot;&quot;
   PreLastTag=&quot;&quot;
