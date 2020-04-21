@@ -103,7 +103,7 @@ echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-rev
 # Can run with major version only: 7.2.150, 7.2.170
 GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
 if [[ $GERRIT_BRANCH =~ &quot;7.2.2&quot; ]]; then
-  GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:\.160:\.150:&apos;)
+  GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:60$:50:&apos;)
 fi
 
 if [ ! -z $CurrentBatchID ]; then
