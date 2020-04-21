@@ -8,6 +8,7 @@ This job accept the following parameters:&#xd;
 * New tag&#xd;
 * ISO to deploy&#xd;
 * OVOC server IP&#xd;
+* Server role (Master, VQ, PM)&#xd;
 * Test mode&#xd;
 &#xd;
 And does the following:&#xd;
@@ -57,22 +58,23 @@ And does the following:&#xd;
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>ServerRole</name>
-          <description></description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>Master</string>
-              <string>Slave</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>ServerIP</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>ServerRole</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Master</string>
+              <string>VQ</string>
+              <string>PM</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>FullTesting</name>
           <description>this param is inherited from ovoc build</description>
