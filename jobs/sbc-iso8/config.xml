@@ -1,8 +1,11 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>1. triggered manually   -   inputs: 1. tag of TP/GWAPP.  2.customer (optional)&#xd;
-2. download  HostedTP_CENTOS8   of this tag&#xd;
+  <description>1. triggered manually   -   inputs: &#xd;
+      1. TAGof TP/GWAPP or Gerrit change&#xd;
+      2. The TAG name or the Gerrit commit ID, use: &quot;copy full SHA to clipboard&quot;               &#xd;
+      3. Customer (optional)&#xd;
+2. download  HostedTP_CENTOS8 of this tag or this Gerrit change&#xd;
 3. use private labeling if customer != empty&#xd;
 4. compile and deploy to artifactory&#xd;
 </description>
@@ -109,7 +112,7 @@ echo BL ver is: ${BL}
 # Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
 
 Tag=${Tag_Or_GerritChange_Value}
-if [ &quot;$Build_ISO_From&quot; != &quot;TAG&quot; ]; then Tag=$(echo $Tag | cut -c1-8); fi
+if [ &quot;$Build_ISO_From&quot; != &quot;TAG&quot; ]; then Tag=$(git describe --tags); fi
 if [ &quot;$Customer&quot; != &quot;&quot; ]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
 
 echo NEWTAG=${NEWTAG} &gt; generated_version.properties
