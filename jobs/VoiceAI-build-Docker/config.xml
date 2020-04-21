@@ -153,6 +153,9 @@ TAGVER=${NEWTAG::3}
 
 ## Set branch by $version
 case $NEWTAG in
+    1.1*|1.2*)
+    	BRANCH=&quot;1.2&quot;
+        ;;
     1.3*|1.4*)
     	BRANCH=&quot;1.4&quot;
         ;;
@@ -188,7 +191,7 @@ remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog
 ARTITAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos;)
 LATESTTAG=$( echo $ARTITAGS | sort | tail -n 1)
 
-[[ &quot;$(echo $ARTITAGS | grep -q $BRANCH)&quot; == &quot;&quot; ]] &amp;&amp; PULLBRANCH=&quot;${BRANCH}&quot; || PULLBRANCH=&quot;${TATESTTAG}&quot;
+[[ &quot;$(echo $ARTITAGS | grep -q $BRANCH)&quot; == &quot;&quot; ]] &amp;&amp; PULLBRANCH=&quot;${BRANCH}&quot; || PULLBRANCH=&quot;${LATESTTAG}&quot;
 
 #if [[ $( &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
 #    PULLBRANCH=&quot;${LATESTTAG}&quot;
