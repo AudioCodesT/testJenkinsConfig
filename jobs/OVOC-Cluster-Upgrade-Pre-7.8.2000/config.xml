@@ -64,7 +64,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#
+      <command>##
+
+[[ &quot;${OLD_TAG:0:5}&quot; == &quot;7.8.2&quot; ]] || ( echo &quot;This job upgrades from pre 7.8.2000 ONLY!&quot;; exit 1)
+
 
 # Launch instances and get their IP addresses
 echo &quot;Launching instance for master from ami-7.8.2000-master:&quot;
