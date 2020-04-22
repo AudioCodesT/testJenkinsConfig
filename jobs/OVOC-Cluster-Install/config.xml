@@ -106,124 +106,6 @@ And does the following:&#xd;
   <triggers/>
   <concurrentBuild>true</concurrentBuild>
   <builders>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
-</command>
-      </condition>
-      <buildStep class="hudson.tasks.Shell">
-        <command>cd ${WORKSPACE}/EMS
-[[ -d target ]] &amp;&amp; rm -rf target
-mkdir target
-cd target
-for f in common-7.6-SNAPSHOT.jar \
-server-7.6-SNAPSHOT.jar \
-rest-core-7.6-SNAPSHOT.jar \
-oracle_trigger-7.6-SNAPSHOT.jar \
-database-7.6-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.6.1000&quot; ]]; then exit 0; else exit 1; fi
-</command>
-      </condition>
-      <buildStep class="hudson.tasks.Shell">
-        <command>cd ${WORKSPACE}/EMS
-[[ -d target ]] &amp;&amp; rm -rf target
-mkdir target
-cd target
-for f in common-7.6.1000-SNAPSHOT.jar \
-server-7.6.1000-SNAPSHOT.jar \
-rest-core-7.6.1000-SNAPSHOT.jar \
-oracle_trigger-7.6.1000-SNAPSHOT.jar \
-database-7.6.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.6.2000&quot; ]]; then exit 0; else exit 1; fi
-</command>
-      </condition>
-      <buildStep class="hudson.tasks.Shell">
-        <command>cd ${WORKSPACE}/EMS
-[[ -d target ]] &amp;&amp; rm -rf target
-mkdir target
-cd target
-for f in common-7.6.2000-SNAPSHOT.jar \
-server-7.6.2000-SNAPSHOT.jar \
-rest-core-7.6.2000-SNAPSHOT.jar \
-oracle_trigger-7.6.2000-SNAPSHOT.jar \
-database-7.6.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.8&quot; ]]; then exit 0; else exit 1; fi
-</command>
-      </condition>
-      <buildStep class="hudson.tasks.Shell">
-        <command>cd ${WORKSPACE}/EMS
-[[ -d target ]] &amp;&amp; rm -rf target
-mkdir target
-cd target
-for f in common-7.8-SNAPSHOT.jar \
-server-7.8-SNAPSHOT.jar \
-rest-core-7.8-SNAPSHOT.jar \
-oracle_trigger-7.8-SNAPSHOT.jar \
-database-7.8-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]; then exit 0; else exit 1; fi</command>
-      </condition>
-      <buildStep class="hudson.tasks.Shell">
-        <command>cd ${WORKSPACE}/EMS
-[[ -d target ]] &amp;&amp; rm -rf target
-mkdir target
-cd target
-for f in common-7.8.1000-SNAPSHOT.jar \
-server-7.8.1000-SNAPSHOT.jar \
-rest-core-7.8.1000-SNAPSHOT.jar \
-oracle_trigger-7.8.1000-SNAPSHOT.jar \
-database-7.8.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
-    <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.8.2000&quot; ]]; then exit 0; else exit 1; fi</command>
-      </condition>
-      <buildStep class="hudson.tasks.Shell">
-        <command>cd ${WORKSPACE}/EMS
-[[ -d target ]] &amp;&amp; rm -rf target
-mkdir target
-cd target
-for f in common-7.8.2000-SNAPSHOT.jar \
-server-7.8.2000-SNAPSHOT.jar \
-rest-core-7.8.2000-SNAPSHOT.jar \
-oracle_trigger-7.8.2000-SNAPSHOT.jar \
-database-7.8.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
-      </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
-    </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>###### Echo parameters for testing
 echo -e &quot;TAG:\t${TAG}&quot;
@@ -235,6 +117,21 @@ echo -e &quot;Role:\t${ServerRole}&quot;
 ############################### Begin old Code ##########################
 if false; then
 # DO NOT RUN ANY OF THIS OLD CODE
+
+## Get prerequisites for current branch
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+
+d ${WORKSPACE}/EMS
+[[ -d target ]] &amp;&amp; rm -rf target
+mkdir target
+cd target
+for f in common-${BRANCH}-SNAPSHOT.jar \
+	server-${BRANCH}-SNAPSHOT.jar \
+	rest-core-${BRANCH}-SNAPSHOT.jar \
+	oracle_trigger-${BRANCH}-SNAPSHOT.jar \
+	database-${BRANCH}-SNAPSHOT.jar
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done
+
 
 # Copy FKGenerator.ini &amp; Change prerequisite files permissions
 cd ${WORKSPACE}/EMS
