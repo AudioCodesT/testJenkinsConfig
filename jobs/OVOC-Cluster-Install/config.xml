@@ -108,10 +108,10 @@ And does the following:&#xd;
   <builders>
     <hudson.tasks.Shell>
       <command>###### Echo parameters for testing
-echo -e &quot;TAG:\t${TAG}&quot;
-echo -e &quot;ISO:\t${DeployISO}&quot;
-echo -e &quot;IP:\t${ServerIP}&quot;
-echo -e &quot;Role:\t${ServerRole}&quot;
+echo -e &quot;TAG:\t${TAG}&quot; &gt; sanity.properties
+echo -e &quot;ISO:\t${DeployISO}&quot; &gt;&gt; sanity.properties
+echo -e &quot;IP:\t${ServerIP}&quot; &gt;&gt; sanity.properties
+echo -e &quot;Role:\t${ServerRole}&quot; &gt;&gt; sanity.properties
 
 
 ############################### Begin old Code ##########################
