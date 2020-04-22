@@ -1664,6 +1664,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>OVOC-Cluster-DVD-Install</string>
         <string>OVOC-Cluster-New-Install</string>
+        <string>OVOC-Cluster-Upgrade</string>
       </jobNames>
       <jobFilters/>
       <columns>
