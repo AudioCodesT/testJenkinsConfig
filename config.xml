@@ -1662,7 +1662,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>OVOC-Cluster-Install</string>
+        <string>OVOC-Cluster-DVD-Install</string>
       </jobNames>
       <jobFilters/>
       <columns>
