@@ -76,7 +76,7 @@ And does the following:&#xd;
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>FullTesting</name>
+          <name>FullTests</name>
           <description>this param is inherited from ovoc build</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -244,7 +244,10 @@ do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>###### Echo parameters for testing
-echo 
+echo -e &quot;TAG:\t${TAG}&quot;
+echo -e &quot;ISO:\t${DeployISO}&quot;
+echo -e &quot;IP:\t${ServerIP}&quot;
+echo -e &quot;Role:\t${ServerRole}&quot;
 
 
 ############################### Begin old Code ##########################
