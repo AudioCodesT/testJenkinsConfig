@@ -79,7 +79,7 @@ cat env.properties</command>
       </info>
     </EnvInjectBuilder>
     <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
-      <phaseName>Install Nodes</phaseName>
+      <phaseName>Install Master</phaseName>
       <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>OVOC-Cluster-DVD-Install</jobName>
@@ -106,6 +106,13 @@ ServerRole=Master</properties>
           <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
           <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
         </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+      </phaseJobs>
+      <continuationCondition>ALWAYS</continuationCondition>
+      <executionType>PARALLEL</executionType>
+    </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+    <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+      <phaseName>Install VQ</phaseName>
+      <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>OVOC-Cluster-DVD-Install</jobName>
           <currParams>true</currParams>
@@ -131,6 +138,13 @@ ServerRole=VQ</properties>
           <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
           <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
         </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
+      </phaseJobs>
+      <continuationCondition>ALWAYS</continuationCondition>
+      <executionType>PARALLEL</executionType>
+    </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+    <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+      <phaseName>Install PM</phaseName>
+      <phaseJobs>
         <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
           <jobName>OVOC-Cluster-DVD-Install</jobName>
           <currParams>true</currParams>
@@ -152,7 +166,7 @@ ServerRole=PM</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
+          <killPhaseOnJobResultCondition>UNSTABLE</killPhaseOnJobResultCondition>
           <buildOnlyIfSCMChanges>false</buildOnlyIfSCMChanges>
           <applyConditionOnlyIfNoSCMChanges>false</applyConditionOnlyIfNoSCMChanges>
         </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
