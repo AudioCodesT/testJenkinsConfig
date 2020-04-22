@@ -54,6 +54,7 @@
         <string>ActionBase Users</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
+        <string># frt-audc-qa</string>
         <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string>#All Breakfast</string>
@@ -85,7 +86,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1583441663190</timestamp>
+      <timestamp>1587555350427</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Orgad.Shaneh@audiocodes.com</emailAddress>
