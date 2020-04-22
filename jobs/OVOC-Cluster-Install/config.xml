@@ -469,27 +469,6 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
       <defaultExcludes>false</defaultExcludes>
       <caseSensitive>false</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
-      <tasks>
-        <hudson.plugins.postbuildtask.TaskProperties>
-          <logTexts>
-            <hudson.plugins.postbuildtask.LogProperties>
-              <logText>Build was aborted</logText>
-              <operator>OR</operator>
-            </hudson.plugins.postbuildtask.LogProperties>
-            <hudson.plugins.postbuildtask.LogProperties>
-              <logText>marked build as failure</logText>
-              <operator>AND</operator>
-            </hudson.plugins.postbuildtask.LogProperties>
-          </logTexts>
-          <EscalateStatus>false</EscalateStatus>
-          <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>#export &quot;$(cat sanity.properties)&quot;&#xd;
-#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
-</script>
-        </hudson.plugins.postbuildtask.TaskProperties>
-      </tasks>
-    </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.Mailer plugin="mailer@1.30">
       <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, yuval.yosha, ben.magriso,Aliya.Peretz</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
