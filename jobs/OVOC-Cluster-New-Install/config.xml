@@ -174,6 +174,18 @@ ServerRole=PM</properties>
       <continuationCondition>ALWAYS</continuationCondition>
       <executionType>PARALLEL</executionType>
     </com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
+    <hudson.tasks.Shell>
+      <command>##
+
+echo &quot;==========================================================================&quot;
+echo &quot;Running OVOC cluster configuration:&quot;
+echo &quot;Master IP: ${MasterIP}&quot;
+echo &quot;VQ slave IP: ${VQslaveIP}&quot;
+echo &quot;PM slave IP: ${PMslaveIP}&quot;
+
+echo &quot;==========================================================================&quot;
+echo &quot;Running sanity test...&quot;</command>
+    </hudson.tasks.Shell>
   </builders>
   <publishers/>
   <buildWrappers/>
