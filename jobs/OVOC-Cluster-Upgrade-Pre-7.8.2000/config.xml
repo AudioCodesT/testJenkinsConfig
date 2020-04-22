@@ -66,6 +66,7 @@
     <hudson.tasks.Shell>
       <command>##
 
+[[ &quot;${NEW_TAG:0:5}&quot; != &quot;7.8.2&quot; ]] &amp;&amp; ( echo &quot;New tag must be 7.8.2000!&quot;; exit 1)
 [[ &quot;${OLD_TAG:0:5}&quot; == &quot;7.8.2&quot; ]] || ( echo &quot;This job upgrades from pre 7.8.2000 ONLY!&quot;; exit 1)
 
 
