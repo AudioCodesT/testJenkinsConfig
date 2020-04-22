@@ -42,6 +42,8 @@ ISO for installation</description>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
       <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
@@ -63,11 +65,11 @@ ISO for installation</description>
 
 # Launch instances and get their IP addresses
 echo &quot;Launching instance for master from ami-7.8.2000-master:&quot;
-echo &quot;MasterIP=1.2.3.10&quot; &gt; env.properties
+echo MasterIP=1.2.3.10 &gt; env.properties
 echo &quot;Launching instance for VQ-slave from ami-7.82000-slave:&quot;
-echo &quot;VQslaveIP=1.2.3.11&quot; &gt;&gt; env.properties
+echo VQslaveIP=1.2.3.11 &gt;&gt; env.properties
 echo &quot;Launching instance for PM-slave from ami-7.82000-slave:&quot;
-echo &quot;PMslaveIP=1.2.3.12&quot; &gt;&gt; env.properties
+echo PMslaveIP=1.2.3.12 &gt;&gt; env.properties
 
 cat env.properties</command>
     </hudson.tasks.Shell>
@@ -90,7 +92,7 @@ ServerRole=Master</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>OVOC-Cluster-DVD-Install, </projects>
+          <projects>OVOC-Cluster-DVD-Install</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -105,7 +107,7 @@ ServerRole=VQ</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>OVOC-Cluster-DVD-Install, </projects>
+          <projects>OVOC-Cluster-DVD-Install</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -120,7 +122,7 @@ ServerRole=PM</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>OVOC-Cluster-DVD-Install, </projects>
+          <projects>OVOC-Cluster-DVD-Install</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
