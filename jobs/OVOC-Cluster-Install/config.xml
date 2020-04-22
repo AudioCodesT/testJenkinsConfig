@@ -343,14 +343,8 @@ set +a
 
 cd ${WORKSPACE}/EMS/VersionRelease
 #run copy logs
-if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
-then 
-	echo &quot;dont run copyLogs&quot;
-else
-	python2.7 SanityCopyLogs.py $TAG $vmIP
-fi
-
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
+python2.7 SanityCopyLogs.py $TAG $vmIP
+</command>
               </hudson.tasks.Shell>
             </buildSteps>
           </org.jenkinsci.plugins.postbuildscript.model.PostBuildStep>
@@ -366,11 +360,6 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
       <defaultExcludes>false</defaultExcludes>
       <caseSensitive>false</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>shuky.riechard, hadas.attal, gal.erez, Gennady.Tsiporkin, yuval.yosha, ben.magriso,Aliya.Peretz</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
