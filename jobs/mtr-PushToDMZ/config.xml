@@ -153,6 +153,7 @@ Push full repository (mirror) to server in DMZ at APC.</description>
 #    echo &quot;*******************************************************************&quot;
 #    git push mtr-dmz --all
 #done
+git fetch --all --tags
 git checkout ${GERRIT_BRANCH}
 git pull --rebase
 echo &quot;*******************************************************************&quot;
