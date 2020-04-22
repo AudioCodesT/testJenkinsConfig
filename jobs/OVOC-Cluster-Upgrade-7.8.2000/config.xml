@@ -274,7 +274,7 @@ echo &quot;Running sanity test...&quot;</command>
   <publishers/>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${OLD_TAG}_${NEW_TAG}</template>
+      <template>#${BUILD_NUMBER}_from_${OLD_TAG}_to_${NEW_TAG}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
