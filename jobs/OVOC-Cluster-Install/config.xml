@@ -49,7 +49,7 @@ And does the following:&#xd;
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>ISO_DEPLOY_DESTINATION</name>
+          <name>DeployISO</name>
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -257,7 +257,7 @@ netMask=&quot;24&quot;
 
 
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
-if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
+if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]
 then
 	AMI_ID=ami-03b07cb67f9a8730b # &lt;-- without ENA support
     #AMI_ID=ami-0264e23c55ba36c29 # &lt;-- with ENA support
@@ -308,7 +308,7 @@ sleep 100
 
 # if this is a build for QA then configure the tested machine with &quot;ami&quot; - means we set TimeZone London (GMT+0)
 # but if this is a regular build then configure the tested machine with &quot;sanity&quot; - means we set TimeZone Israel
-if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
+if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]
 then
 	sanityOrAmi=ami
 else
@@ -331,13 +331,13 @@ echo &quot;Finish SetNetwork Configuration&quot;
 
 if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; || &quot;$BRANCH&quot; =~ &quot;7.8&quot; ]]; then
     echo &quot;Running 1 scripts for install&quot;
-    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $DeployISO
 #    python2.7 SanityFK.py $vmIP $NEW_TAG
 #    python2.7 SanityReboot.py $vmIP
 else
 	#run sanityInstall and if sanity install fails then copy logs and exit with error
     echo &quot;Running single script for install&quot;
-    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION \
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $DeployISO \
     || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
     
 fi
@@ -348,7 +348,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 then
 	echo &quot;We Don&apos;t Create Ami for Versions below 7.6 (the current branch is: $BRANCH)&quot;
 else
-	if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; ]]
+	if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]
     then
     		#check if the ami already exists
             checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${NEW_TAG} --output text --query &quot;Images[0].State&quot;)
