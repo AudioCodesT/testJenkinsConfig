@@ -43,7 +43,7 @@ And does the following:&#xd;
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>NEW_TAG</name>
+          <name>TAG</name>
           <description>The tag to install</description>
           <defaultValue></defaultValue>
           <trim>false</trim>
@@ -107,7 +107,7 @@ And does the following:&#xd;
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>server_${NEW_TAG}</name>
+        <name>server_${TAG}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -140,7 +140,7 @@ server-7.6-SNAPSHOT.jar \
 rest-core-7.6-SNAPSHOT.jar \
 oracle_trigger-7.6-SNAPSHOT.jar \
 database-7.6-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -160,7 +160,7 @@ server-7.6.1000-SNAPSHOT.jar \
 rest-core-7.6.1000-SNAPSHOT.jar \
 oracle_trigger-7.6.1000-SNAPSHOT.jar \
 database-7.6.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -180,7 +180,7 @@ server-7.6.2000-SNAPSHOT.jar \
 rest-core-7.6.2000-SNAPSHOT.jar \
 oracle_trigger-7.6.2000-SNAPSHOT.jar \
 database-7.6.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -200,7 +200,7 @@ server-7.8-SNAPSHOT.jar \
 rest-core-7.8-SNAPSHOT.jar \
 oracle_trigger-7.8-SNAPSHOT.jar \
 database-7.8-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -219,7 +219,7 @@ server-7.8.1000-SNAPSHOT.jar \
 rest-core-7.8.1000-SNAPSHOT.jar \
 oracle_trigger-7.8.1000-SNAPSHOT.jar \
 database-7.8.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -238,12 +238,20 @@ server-7.8.2000-SNAPSHOT.jar \
 rest-core-7.8.2000-SNAPSHOT.jar \
 oracle_trigger-7.8.2000-SNAPSHOT.jar \
 database-7.8.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
-      <command># Copy FKGenerator.ini &amp; Change prerequisite files permissions
+      <command>###### Echo parameters for testing
+echo 
+
+
+############################### Begin old Code ##########################
+if false; then
+# DO NOT RUN ANY OF THIS OLD CODE
+
+# Copy FKGenerator.ini &amp; Change prerequisite files permissions
 cd ${WORKSPACE}/EMS
 chmod 0755 target
 cp FKGenerator.ini target
@@ -325,17 +333,17 @@ echo &quot;Finish SetNetwork Configuration&quot;
 
 #run sanityInstall and if sanity install fails then copy logs and exit with error
 echo &quot;Running single script for install&quot;
-python2.7 SanityInstall.py $NEW_TAG $vmIP $DeployISO || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
+python2.7 SanityInstall.py $TAG $vmIP $DeployISO || { python2.7 SanityCopyLogs.py $TAG $vmIP ; exit 1; }
 echo &quot;Finish SanityInstall&quot;
 
 ## Create AMI
 if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
 	#check if the ami already exists
-	checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${NEW_TAG} --output text --query &quot;Images[0].State&quot;)
+	checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query &quot;Images[0].State&quot;)
 	if [[ &quot;$checkIfAmiExists&quot; == &quot;available&quot; ]]; then
-    	echo &quot;Deleting existing AMI of ovocAMI_${NEW_TAG}&quot;
+    	echo &quot;Deleting existing AMI of ovocAMI_${TAG}&quot;
         #get AmiId to delete it
-        AmiIDToDelete=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${NEW_TAG} --output text --query &quot;Images[0].ImageId&quot;)
+        AmiIDToDelete=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query &quot;Images[0].ImageId&quot;)
         
         #get Snapshot id - delete the Snapshot
         snapshotIdToDelete=$(aws ec2 describe-images --image-ids $AmiIDToDelete --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
@@ -348,7 +356,7 @@ if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
     
 	echo &quot;Creating New Ovoc Ami&quot;
 	#create a new AMI After installation and keep ImageID value
-	AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --output text --query &quot;ImageId&quot;)
+	AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${TAG}&quot; --description &quot;ovoc AMI ${TAG}&quot; --output text --query &quot;ImageId&quot;)
 	
     #check if image available
     OLD_STATE=&quot;&quot;
@@ -370,9 +378,9 @@ if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
 	snapshotId=$(aws ec2 describe-images --image-ids $AmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
 	
 	#give name to the AMI 
-	aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+	aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${TAG}
 	#give name to the snapshot 
-	aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
+	aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${TAG}
 	#give Branch name to the AMI 
 	aws ec2 create-tags --resources $AmiId --tags Key=Branch,Value=$BRANCH
 	
@@ -399,6 +407,10 @@ if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
 	#    echo &quot;**************************************************************************&quot;
 	#fi
 fi
+
+fi
+############################### End old Code ##########################
+
 
 </command>
     </hudson.tasks.Shell>
@@ -453,7 +465,7 @@ if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4
 then 
 	echo &quot;dont run copyLogs&quot;
 else
-	python2.7 SanityCopyLogs.py $NEW_TAG $vmIP
+	python2.7 SanityCopyLogs.py $TAG $vmIP
 fi
 
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
@@ -511,7 +523,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}</command>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${NEW_TAG}_${ServerRole}</template>
+      <template>#${BUILD_NUMBER}_${TAG}_${ServerRole}</template>
       <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
