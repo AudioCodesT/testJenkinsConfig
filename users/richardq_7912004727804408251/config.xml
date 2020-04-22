@@ -56,6 +56,7 @@
         <string># MP20x deliveries</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># Abroad</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -69,10 +70,11 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1576135198549</timestamp>
+      <timestamp>1587518051460</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Richard.Qian@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
   </properties>
