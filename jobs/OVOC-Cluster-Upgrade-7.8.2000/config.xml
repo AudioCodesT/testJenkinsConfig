@@ -64,16 +64,18 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#
+      <command>##
+
+[[ &quot;${OLD_TAG:0:5}&quot; != &quot;7.8.2&quot; ]] &amp;&amp; ( echo &quot;This job upgrades from 7.8.2000 ONLY!&quot;; exit 1)
 
 # Launch instances and get their IP addresses
 echo &quot;Launching instance for master from ami-7.8.2000-master:&quot;
 export MasterIP=1.2.3.10
 echo MasterIP=1.2.3.10 &gt; env.properties
-echo &quot;Launching instance for VQ-slave from ami-7.82000-slave:&quot;
+echo &quot;Launching instance for VQ-slave from ami-7.8.2000-slave:&quot;
 export VQslaveIP=1.2.3.11
 echo VQslaveIP=1.2.3.11 &gt;&gt; env.properties
-echo &quot;Launching instance for PM-slave from ami-7.82000-slave:&quot;
+echo &quot;Launching instance for PM-slave from ami-7.8.2000-slave:&quot;
 export PMslaveIP=1.2.3.12
 echo PMslaveIP=1.2.3.12 &gt;&gt; env.properties
 
