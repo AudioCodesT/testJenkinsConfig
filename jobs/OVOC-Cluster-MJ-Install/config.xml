@@ -73,6 +73,11 @@ echo PMslaveIP=1.2.3.12 &gt;&gt; env.properties
 
 cat env.properties</command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.1.6">
+      <info>
+        <propertiesFilePath>env.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
     <com.tikal.jenkins.plugins.multijob.MultiJobBuilder>
       <phaseName>Install Nodes</phaseName>
       <phaseJobs>
