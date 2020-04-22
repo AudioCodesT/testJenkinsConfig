@@ -113,6 +113,7 @@ echo -e &quot;ISO:\t${DeployISO}&quot; &gt;&gt; sanity.properties
 echo -e &quot;IP:\t${ServerIP}&quot; &gt;&gt; sanity.properties
 echo -e &quot;Role:\t${ServerRole}&quot; &gt;&gt; sanity.properties
 
+cat sanity.properties
 
 ############################### Begin old Code ##########################
 if false; then
