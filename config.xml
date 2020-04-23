@@ -1665,6 +1665,7 @@
         <string>OVOC-Cluster-DVD-Install</string>
         <string>OVOC-Cluster-New-Install</string>
         <string>OVOC-Cluster-Upgrade-7.8.2000</string>
+        <string>OVOC-Cluster-Upgrade-7.8.2000-Pipeline</string>
         <string>OVOC-Cluster-Upgrade-Pre-7.8.2000</string>
       </jobNames>
       <jobFilters/>
