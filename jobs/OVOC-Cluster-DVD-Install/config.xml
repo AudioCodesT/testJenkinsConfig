@@ -122,7 +122,7 @@ if false; then
 ## Get prerequisites for current branch
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
 
-d ${WORKSPACE}/EMS
+cd ${WORKSPACE}/EMS
 [[ -d target ]] &amp;&amp; rm -rf target
 mkdir target
 cd target
