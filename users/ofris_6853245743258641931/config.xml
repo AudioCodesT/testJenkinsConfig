@@ -49,6 +49,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
@@ -70,7 +71,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1585834472203</timestamp>
+      <timestamp>1587640508946</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
