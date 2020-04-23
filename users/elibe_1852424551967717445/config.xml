@@ -48,7 +48,9 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string># Ziv Zviran Team</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
+        <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># R&amp;D System Software</string>
         <string># All Lunch</string>
@@ -58,10 +60,10 @@
         <string># MP20x deliveries</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
-        <string># Hagay Halili Team</string>
         <string>Mailvision Branch Office Users</string>
         <string>Vopp</string>
         <string># MSBR</string>
@@ -72,10 +74,11 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1580024276294</timestamp>
+      <timestamp>1587648093130</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Eli.Berkover@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
   </properties>
