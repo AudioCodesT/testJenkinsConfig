@@ -89,7 +89,15 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>c:\plink\plink.exe -t yair@10.31.192.160 -pw yair USERNAME=%GERRIT_CHANGE_OWNER_EMAIL%;export USERNAME;cd /home/yair;./coverity-git.sh</command>
+      <command>if &quot;%GERRIT_BRANCH%&quot; == &quot;7.2.256&quot; ( &#xd;
+  set SERVER=10.4.6.69&#xd;
+  set COMMAND=coverity-git-256.sh&#xd;
+) else ( &#xd;
+  set SERVER=10.31.192.160&#xd;
+  set COMMAND=coverity-git.sh&#xd;
+)&#xd;
+&#xd;
+c:\plink\plink.exe -t yair@%SERVER% -pw yair USERNAME=%GERRIT_CHANGE_OWNER_EMAIL%;export USERNAME;cd /home/yair;./%COMMAND%</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
