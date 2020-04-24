@@ -53,6 +53,7 @@
         <string>ActionBase Users</string>
         <string>Palo_Access_Aws_Azure-ssh</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string># R&amp;D System Software</string>
@@ -78,7 +79,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1583249587902</timestamp>
+      <timestamp>1587734034967</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
       <emailAddress>Irina.Veisas@audiocodes.com</emailAddress>
