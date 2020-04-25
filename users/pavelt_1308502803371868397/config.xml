@@ -59,6 +59,7 @@
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Allow Office365 Groups</string>
         <string>AI-QA_RO</string>
         <string>Palo_Remote_desktop_access_support</string>
         <string>AI-ENG</string>
@@ -86,7 +87,7 @@
         <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1586258050000</timestamp>
+      <timestamp>1587812495160</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>56dc3bdf99df605c</seed>
