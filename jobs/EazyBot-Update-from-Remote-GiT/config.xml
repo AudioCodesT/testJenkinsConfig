@@ -124,6 +124,7 @@ echo "*******************************************************************"
 echo "*******           PUSH ALSO TO master  BRANCH      ****************"
 git fetch
 git checkout master
+git pull origin master
 git push test-gerrit HEAD:refs/heads/master
 echo "*******************************************************************"
 
