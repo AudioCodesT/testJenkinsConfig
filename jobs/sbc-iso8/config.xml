@@ -129,10 +129,12 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;
 if [ &quot;$Build_ISO_From&quot; == &quot;TAG&quot; ]; then
   rev=$(git rev-parse --verify $Tag_Or_GerritChange_Value^{commit})
   ArtifactoryRepo=&quot;sbc-release&quot;
+  placeInArt=Centos8/${GERRIT_BRANCH}/${NEWTAG}
   #rev=$(git rev-parse HEAD)
 else
   rev=${Tag_Or_GerritChange_Value}
-  ArtifactoryRepo=&quot;sbc-review&quot;  
+  ArtifactoryRepo=&quot;sbc-review&quot; 
+  placeInArt=${BUILD_NUMBER}
 fi
 
 #Bring &apos;HostedTP_CENTOS8&apos; the needed cmp for this compilation
@@ -221,9 +223,9 @@ fi
 mv $imageFile $WORKSPACE/sbc-c8-F$NEWTAG.iso
 
 echo Deploy to Artifactory
-curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}/sbc-c8-F$NEWTAG.iso&quot; \
+curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/$placeInArt/sbc-c8-F$NEWTAG.iso&quot; \
      -T $WORKSPACE/sbc-c8-F$NEWTAG.iso
-curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}/copyFiles.sh&quot; \
+curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/$placeInArt/copyFiles.sh&quot; \
      -T $WORKSPACE/copyFiles.sh
 
 </command>
