@@ -219,6 +219,13 @@ if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 900000 ]; 
 fi
 
 mv $imageFile $WORKSPACE/sbc-c8-F$NEWTAG.iso
+
+echo Deploy to Artifactory
+curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}/sbc-c8-F$NEWTAG.iso&quot; \
+     -T $WORKSPACE/sbc-c8-F$NEWTAG.iso
+curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}/copyFiles.sh&quot; \
+     -T $WORKSPACE/copyFiles.sh
+
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
@@ -272,56 +279,6 @@ mv $imageFile $WORKSPACE/sbc-c8-F$NEWTAG.iso
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
-      <deployerDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <deployReleaseRepository>
-          <keyFromText></keyFromText>
-          <keyFromSelect>sbc-release</keyFromSelect>
-          <dynamicMode>false</dynamicMode>
-        </deployReleaseRepository>
-        <stagingPlugin/>
-      </deployerDetails>
-      <resolverDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <stagingPlugin/>
-      </resolverDetails>
-      <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </deployerCredentialsConfig>
-      <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </resolverCredentialsConfig>
-      <useSpecs>false</useSpecs>
-      <uploadSpec>
-        <spec></spec>
-      </uploadSpec>
-      <downloadSpec>
-        <spec></spec>
-      </downloadSpec>
-      <deployPattern>${WORKSPACE}/sbc-c8-F$NEWTAG.iso=&gt;com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}
-${WORKSPACE}/copyFiles.sh=&gt;com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
-      <deployBuildInfo>true</deployBuildInfo>
-      <includeEnvVars>true</includeEnvVars>
-      <envVarsPatterns>
-        <includePatterns></includePatterns>
-        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
-      </envVarsPatterns>
-      <discardOldBuilds>false</discardOldBuilds>
-      <discardBuildArtifacts>true</discardBuildArtifacts>
-      <asyncBuildRetention>false</asyncBuildRetention>
-      <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
-      <overrideBuildName>false</overrideBuildName>
-    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
