@@ -100,7 +100,6 @@
         </permissions>
         <assignedSIDs>
           <sid>System_Software</sid>
-          <sid>elibe</sid>
           <sid>cc_sys_users</sid>
           <sid># SBC</sid>
           <sid># R&amp;D Application Group</sid>
@@ -222,6 +221,7 @@
         </assignedSIDs>
       </role>
     </roleMap>
+    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
