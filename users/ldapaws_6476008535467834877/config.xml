@@ -48,6 +48,7 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>293e82d041830533</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30"/>
   </properties>
 </user>
