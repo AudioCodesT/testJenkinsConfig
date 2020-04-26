@@ -1656,7 +1656,7 @@
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>OVOC-Cluster</name>
+      <name>OVOC-Tiered</name>
       <filterExecutors>true</filterExecutors>
       <filterQueue>true</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
