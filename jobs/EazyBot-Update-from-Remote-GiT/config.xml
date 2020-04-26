@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>Checkout develop branch from FRT gitlab.&#xd;
+  <description>Checkout develop branch from FRT gitlab.&#13;
 Push to test-gerrit.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -10,7 +9,7 @@ Push to test-gerrit.</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -20,9 +19,6 @@ Push to test-gerrit.</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -37,10 +33,11 @@ Push to test-gerrit.</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -79,13 +76,13 @@ Push to test-gerrit.</description>
 #        filemode = true
 #        bare = false
 #        logallrefupdates = true
-#[remote &quot;origin&quot;]
+#[remote "origin"]
 #        url = https://devops@git.flatrocktech.com/dot-net/audiocodes-pnc.git
 #        fetch = +refs/heads/*:refs/remotes/origin/*
-#[branch &quot;develop&quot;]
+#[branch "develop"]
 #        remote = origin
 #        merge = refs/heads/develop
-#[remote &quot;test-gerrit&quot;]
+#[remote "test-gerrit"]
 #        url = ssh://jenkins@test-gerrit:29418/CloudServices/EazyBot.git
 #        fetch = +refs/heads/*:refs/remotes/test-gerrit/*
 #
@@ -100,16 +97,16 @@ Push to test-gerrit.</description>
 ##                               to the workspace and then pushed to the remote on DMZ
 
 ## Pull from origin &amp; push to remote destination
-#for br in $(git branch -r | grep -E &quot;^\s*origin*&quot; | grep -v HEAD | sed &apos;s|\s*origin/||&apos;); do
-#    echo &quot;*******************************************************************&quot;
-#    echo -e &quot;\t\t\tPulling $br&quot;
-#    echo &quot;*******************************************************************&quot;
+#for br in $(git branch -r | grep -E "^\s*origin*" | grep -v HEAD | sed 's|\s*origin/||'); do
+#    echo "*******************************************************************"
+#    echo -e "\t\t\tPulling $br"
+#    echo "*******************************************************************"
 #    git reset --hard
 #    git checkout origin/$br
 #    git pull origin $br
-#    echo &quot;*******************************************************************&quot;
-#    echo -e &quot;\t\t\tPushing $br&quot;
-#    echo &quot;*******************************************************************&quot;
+#    echo "*******************************************************************"
+#    echo -e "\t\t\tPushing $br"
+#    echo "*******************************************************************"
 #    git push --tags $remoteDest $br
 #done
 
@@ -118,16 +115,25 @@ Push to test-gerrit.</description>
 #git pull
 
 
-echo &quot;*******************************************************************&quot;
+echo "*******************************************************************"
+echo "**********    PUSH TO BRANCH  develop                **************"
 git push test-gerrit HEAD:refs/heads/develop
-echo &quot;*******************************************************************&quot;
+echo "*******************************************************************"
+echo -e "\n"
+echo "*******************************************************************"
+echo "*******           PUSH ALSO TO master  BRANCH      ****************"
+git fetch
+git checkout master
+git push test-gerrit HEAD:refs/heads/master
+echo "*******************************************************************"
+
 
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients>yuvaly</recipients>
+    <hudson.tasks.Mailer plugin="mailer@1.32">
+      <recipients>yuvaly shukyr</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
