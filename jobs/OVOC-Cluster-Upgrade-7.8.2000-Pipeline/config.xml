@@ -58,7 +58,21 @@ latest_iso</description>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
-    <script></script>
+    <script>pipeline {
+   agent {
+       node{
+           label: &apos;ems-build&apos;
+       }
+   }
+
+   stages {
+      stage(&apos;Hello&apos;) {
+         steps {
+            echo &apos;Hello World&apos;
+         }
+      }
+   }
+}</script>
     <sandbox>true</sandbox>
   </definition>
   <triggers/>
