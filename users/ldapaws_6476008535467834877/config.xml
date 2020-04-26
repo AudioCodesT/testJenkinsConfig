@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -49,6 +49,6 @@
       <seed>293e82d041830533</seed>
     </jenkins.security.seed.UserSeedProperty>
     <hudson.model.TimeZoneProperty/>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30"/>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
   </properties>
 </user>
