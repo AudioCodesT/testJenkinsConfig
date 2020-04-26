@@ -173,6 +173,12 @@ if [ -s &quot;$NEWTAG.list&quot; ]; then
            exit 1
          fi
        #fi
+       if [[ &quot;$FileName&quot; =~ &quot;M1000_ESBC&quot; ]]; then
+         echo Duplicate M1000_ESBC to M1000_MSBG
+         FileNameM1000MSBG=$(echo $FileName | sed &apos;s:ESBC:MSBG:g&apos;)
+         cp &quot;$Target/$FileName&quot; &quot;$Target/$FileNameM1000MSBG&quot;
+         zip -b /tmp -mj &quot;$Target/$(echo $FileNameM1000MSBG | sed -r s/.cmp//).zip&quot; &quot;$Target/$FileNameM1000MSBG&quot;
+       fi
        echo Create Zip from $FileName...
        zip -b /tmp -mj &quot;$Target/$BOARD.zip&quot; &quot;$Target/$FileName&quot;
      elif [ $Extention == &quot;zip&quot; ] || [ $Extention == &quot;txt&quot; ] || [ $Extention == &quot;rms&quot; ] || [ $Extention == &quot;tgz&quot; ]; then
