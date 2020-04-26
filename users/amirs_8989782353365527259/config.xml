@@ -43,18 +43,21 @@
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
-        <string># All Beer Sheva</string>
         <string>authenticated</string>
-        <string>365_Tas</string>
-        <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
-        <string>365_Lucca</string>
-        <string># All ISRAEL</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
-        <string># SBC</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Allow Office365 Groups</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string># All Beer Sheva</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
@@ -65,10 +68,8 @@
         <string>Domain Users</string>
         <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
-        <string>CatalogApps_Everyone</string>
-        <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1584530972799</timestamp>
+      <timestamp>1587910587008</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
