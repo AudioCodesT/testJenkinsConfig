@@ -4,7 +4,7 @@
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
     <string>jenkins.security.csrf.CSRFAdministrativeMonitor</string>
   </disabledAdministrativeMonitors>
-  <version>2.150.2</version>
+  <version>2.204.6</version>
   <installStateName>RESTART</installStateName>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
