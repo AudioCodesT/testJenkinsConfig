@@ -133,7 +133,7 @@
           <sid>ronnya</sid>
         </assignedSIDs>
       </role>
-      <role name="Execute_DRT" pattern="(sbc-sanity-build|sbc-drt-build)">
+      <role name="Execute_DRT" pattern="(sbc-sanity-build)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
@@ -221,7 +221,6 @@
         </assignedSIDs>
       </role>
     </roleMap>
-    <roleMap type="slaveRoles"/>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
