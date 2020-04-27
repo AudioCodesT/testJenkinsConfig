@@ -76,7 +76,7 @@ latest_iso</description>
     parameters {
         string(name: 'NEW_TAG', defaultValue: '')
         string(name: 'OLD_TAG', defaultValue: '')
-        choice(name: 'RELEASE', choices: ['official_iso', 'latest_iso'])
+        choice(name: 'DeployDVD', choices: ['official_iso', 'latest_iso'])
         string(name: 'MASTER_IP', defaultValue: '')
         string(name: 'VQ_IP', defaultValue: '')
         string(name: 'PM_IP', defaultValue: '')
@@ -88,16 +88,16 @@ latest_iso</description>
             stage('Install master') {
                 steps {
                     build job: 'Install-DVD', parameters: [
-                        string(name: 'TAG', value: "${OLD_TAG}", description 'Tag'),
-                        string(name: 'Role', value: 'master', description 'master'),
-                        string(name: 'IP', value: "${MASTER_IP}", description 'master IP'),
-                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                        string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                        string(name: 'ServerRole', value: 'master', description: 'master'),
+                        string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
+                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                     build job: 'Install-DVD', parameters: [
-                        string(name: 'TAG', value: "${NEW_TAG}", description 'Tag'),
-                        string(name: 'Role', value: 'master', description 'master'),
-                        string(name: 'IP', value: "${MASTER_IP}", description 'master IP'),
-                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                        string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                        string(name: 'ServerRole', value: 'master', description: 'master'),
+                        string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
+                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                 }
                 post {
@@ -107,16 +107,16 @@ latest_iso</description>
             stage('Install VQ') {
                 steps {
                     build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${OLD_TAG}", description 'Tag'),
-                        string(name: 'Role', value: 'VQ', description 'VQ'),
-                        string(name: 'IP', value: "${VQ_IP}", description 'VQ IP'),
-                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                        tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                        string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
+                        string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
+                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                     build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${NEW_TAG}", description 'Tag'),
-                        string(name: 'Role', value: 'VQ', description 'VQ'),
-                        string(name: 'IP', value: "${VQ_IP}", description 'VQ IP'),
-                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                        tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                        string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
+                        string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
+                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                 }
                 post {
@@ -126,16 +126,16 @@ latest_iso</description>
             stage('Install PM') {
                 steps {
                     build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${OLD_TAG}", description 'Tag'),
-                        string(name: 'Role', value: 'PM', description 'PM'),
-                        string(name: 'IP', value: "${PM_IP}", description 'PM IP'),
-                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                        tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                        string(name: 'ServerRole', value: 'PM', description: 'PM'),
+                        string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
+                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                     build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${NEW_TAG}", description 'Tag'),
-                        string(name: 'Role', value: 'PM', description 'PM'),
-                        string(name: 'IP', value: "${PM_IP}", description 'PM IP'),
-                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                        tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                        string(name: 'ServerRole', value: 'PM', description: 'PM'),
+                        string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
+                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                 }
                 post {
