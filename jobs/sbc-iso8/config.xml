@@ -157,7 +157,7 @@ downloadUri=$(curl -ks -u $User $uri | grep "downloadUri" | cut -d'"' -f4)
 # Bring the Centos8-ISO repository - you must it to build the ISO
 commit_sha1=`git ls-files --stage OpenSource/Centos8-ISO | cut -f2 -d ' '`
 cd ..
-if [ ! -e Centos8-ISO/.git ]; then
+if [ ! -e OpenSource/Centos8-ISO/.git ]; then
   git -c http.sslverify=false clone -n https://test-gerrit/TP/OpenSource/Centos8-ISO OpenSource/Centos8-ISO 
 fi
 
