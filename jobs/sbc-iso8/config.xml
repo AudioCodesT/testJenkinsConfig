@@ -1,13 +1,12 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>1. triggered manually   -   inputs: &#xd;
-      1. TAGof TP/GWAPP or Gerrit change&#xd;
-      2. The TAG name or the Gerrit commit ID, use: &quot;copy full SHA to clipboard&quot;               &#xd;
-      3. Customer (optional)&#xd;
-2. download  HostedTP_CENTOS8 of this tag or this Gerrit change&#xd;
-3. use private labeling if customer != empty&#xd;
-4. compile and deploy to artifactory&#xd;
+  <description>1. triggered manually   -   inputs: &#13;
+      1. TAGof TP/GWAPP or Gerrit change&#13;
+      2. The TAG name or the Gerrit commit ID, use: "copy full SHA to clipboard"               &#13;
+      3. Customer (optional)&#13;
+2. download  HostedTP_CENTOS8 of this tag or this Gerrit change&#13;
+3. use private labeling if customer != empty&#13;
+4. compile and deploy to artifactory&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -16,7 +15,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -40,7 +39,7 @@
         <hudson.model.StringParameterDefinition>
           <name>Tag_Or_GerritChange_Value</name>
           <description>If you build ISO from a Tag then insert the desired tag
-If from an open gerrit change then insert here the commit ID (sha1) - you can copy from the gerrit change web page - there is a button of &quot;copy full SHA to clipboard&quot;</description>
+If from an open gerrit change then insert here the commit ID (sha1) - you can copy from the gerrit change web page - there is a button of "copy full SHA to clipboard"</description>
           <defaultValue>7.20CE.255.067</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -49,7 +48,7 @@ If from an open gerrit change then insert here the commit ID (sha1) - you can co
           <description>This param should be filled only for a private label ISO.
 Search the customer name on the following path: https://artifactory/sbc-release/com/ac/sbc/ISO/private-labels
 If exist, all files under this customer folder will be copied from artifactory to compilation workspace before compilation (should changed the icon image etc...)</description>
-          <defaultValue></defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -61,12 +60,12 @@ If exist, all files under this customer folder will be copied from artifactory t
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -76,8 +75,9 @@ If exist, all files under this customer folder will be copied from artifactory t
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -94,7 +94,9 @@ If exist, all files under this customer folder will be copied from artifactory t
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
@@ -112,50 +114,48 @@ echo BL ver is: ${BL}
 # Use NEWTAG as the name in the Artifactory - add $Customer in case it is exist
 
 Tag=${Tag_Or_GerritChange_Value}
-if [ &quot;$Build_ISO_From&quot; != &quot;TAG&quot; ]; then Tag=$(git describe --tags --abbrev=1); fi
-if [ &quot;$Customer&quot; != &quot;&quot; ]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
+if [ "$Build_ISO_From" != "TAG" ]; then Tag=$(git describe --tags --abbrev=1); fi
+if [ "$Customer" != "" ]; then NEWTAG=${Tag}-$Customer; else NEWTAG=$Tag; fi
 
 echo NEWTAG=${NEWTAG} &gt; generated_version.properties
-echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;` &gt;&gt; generated_version.properties
+echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'` &gt;&gt; generated_version.properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>
-if [ &quot;$Build_ISO_From&quot; == &quot;TAG&quot; ]; then
+if [ "$Build_ISO_From" == "TAG" ]; then
   rev=$(git rev-parse --verify $Tag_Or_GerritChange_Value^{commit})
-  ArtifactoryRepo=&quot;sbc-release&quot;
-  placeInArt=Centos8/${GERRIT_BRANCH}/${NEWTAG}
+  placeInArt="artifactory/sbc-release/com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}"
   #rev=$(git rev-parse HEAD)
 else
   rev=${Tag_Or_GerritChange_Value}
-  ArtifactoryRepo=&quot;sbc-review&quot; 
-  placeInArt=${BUILD_NUMBER}
+  placeInArt="artifactory/sbc-review/com/ac/sbc/ISO/${BUILD_NUMBER}"
 fi
 
-#Bring &apos;HostedTP_CENTOS8&apos; the needed cmp for this compilation
-User=&quot;admin:$artifactory_password&quot;
-uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=$ArtifactoryRepo&quot; | grep uri | \
-      cut -d&apos;&quot;&apos; -f4 | grep HostedTP_CENTOS8 | grep -v LAB | grep .cmp  | head -1)
-if [ &quot;$uri&quot; == &quot;&quot; ]; then
+#Bring 'HostedTP_CENTOS8' the needed cmp for this compilation
+User="admin:$artifactory_password"
+uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=$ArtifactoryRepo" | grep uri | \
+      cut -d'"' -f4 | grep HostedTP_CENTOS8 | grep -v LAB | grep .cmp  | head -1)
+if [ "$uri" == "" ]; then
   echo Need waiting to HostedTP CENTOS8 compilation...
-  if [ &quot;$NAGINATOR_COUNT&quot; == 3 ]; then
-    echo &quot; ***************   Exit, no HostedTP was found  ************************** &quot;
+  if [ "$NAGINATOR_COUNT" == 3 ]; then
+    echo " ***************   Exit, no HostedTP was found  ************************** "
     exit 1
   else
-    echo &quot; ***************  Try again, HostedTP is not ready  ************************** &quot;
+    echo " ***************  Try again, HostedTP is not ready  ************************** "
     exit 2
   fi
 fi
 
-downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
+downloadUri=$(curl -ks -u $User $uri | grep "downloadUri" | cut -d'"' -f4)
 
 # Bring the Centos8-ISO repository - you must it to build the ISO
-commit_sha1=`git ls-files --stage OpenSource/Centos8-ISO | cut -f2 -d &apos; &apos;`
+commit_sha1=`git ls-files --stage OpenSource/Centos8-ISO | cut -f2 -d ' '`
 cd ..
 if [ ! -e Centos8-ISO/.git ]; then
   git -c http.sslverify=false clone -n https://test-gerrit/TP/OpenSource/Centos8-ISO OpenSource/Centos8-ISO 
@@ -174,40 +174,42 @@ cp centos8/isofiles/sbc.install ./
 ls -l centos8/isofiles
 
 # should we use private labeling in this ISO ?
-echo &quot;Check if need to change files for a specific customer&quot;
-if [[ $Customer != &quot;&quot; ]]; then
+echo "Check if need to change files for a specific customer"
+if [[ $Customer != "" ]]; then
 
     cd ../..
-	echo &quot;*******    START PRIVATE LABALING    ************&quot;
+	echo "*******    START PRIVATE LABALING    ************"
 	PRIVATE=https://artifactory/api/storage/sbc-release/com/ac/sbc/ISO/private-labels
-	DOWNLOAD=$(echo $PRIVATE | sed &apos;s|api/storage/||&apos;)
-	echo &quot;download from artifactory all files under $Customer&quot;
-	for f in $(curl -ks -u $User &quot;$PRIVATE/$Customer&quot; | grep -B1 false | grep uri | cut -d&apos;&quot;&apos; -f4); do
+	DOWNLOAD=$(echo $PRIVATE | sed 's|api/storage/||')
+	echo "download from artifactory all files under $Customer"
+	for f in $(curl -ks -u $User "$PRIVATE/$Customer" | grep -B1 false | grep uri | cut -d'"' -f4); do
         if [ ! -d $Customer ]; then mkdir $Customer; fi
-		curl -ks -u $User -X GET &quot;${DOWNLOAD}/${Customer}$f&quot; --output ${Customer}$f;
+		curl -ks -u $User -X GET "${DOWNLOAD}/${Customer}$f" --output ${Customer}$f;
 	done
     echo Download copyFiles_master.sh
-    curl -ks -u $User -X GET &quot;${DOWNLOAD}/copyFiles_master.sh&quot; --output copyFiles_master.sh
-	echo &quot;Check if copyFiles_master.sh exist&quot;
+    curl -ks -u $User -X GET "${DOWNLOAD}/copyFiles_master.sh" --output copyFiles_master.sh
+	echo "Check if copyFiles_master.sh exist"
 	if [[ -f ./copyFiles_master.sh &amp;&amp; -d $Customer ]]; then
         # Dos2unix
-    	tr -d &apos;\r&apos; &lt; copyFiles_master.sh &gt; copyFiles_unix.sh
+    	tr -d '\r' &lt; copyFiles_master.sh &gt; copyFiles_unix.sh
 		chmod +x copyFiles_unix.sh
         # The two following new variables are needed for the copyFiles_master.sh script
         CENTOS_VERSION=8
         LABEL_SRC=$Customer
-		source ./copyFiles_unix.sh
         cat copyFiles_unix.sh
-		echo &quot;$Customer files were copied to the right path&quot;
-        echo &quot;*******    END PRIVATE LABALING    ***********&quot;
+        ls -l $LABEL_SRC
+        echo Execute copyFiles_unix.sh
+		source ./copyFiles_unix.sh
+		echo "$Customer files were copied to the right path"
+        echo "*******    END PRIVATE LABALING    ***********"
         cd OpenSource/Centos8-ISO
 	else
-		echo &quot;The file copyFiles_master.sh is missing or the $Customer directory was not created, no files were copied&quot;
+		echo "The file copyFiles_master.sh is missing or the $Customer directory was not created, no files were copied"
         exit 1
 	fi
 else
-	echo &quot;No private labaling is needed in this ISO&quot;
-    echo &quot;Continuing to build&quot;
+	echo "No private labaling is needed in this ISO"
+    echo "Continuing to build"
 fi
 
 ./build_centos8_iso.sh
@@ -215,25 +217,23 @@ fi
 ls -l 
 
 imageFile=sbc8.iso
-if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 900000 ]; then
-  echo &quot;$imageFile Image too small.. exit with error&quot;
+if [ ! -f $imageFile ] || [ "`du $imageFile | cut -f1`" -lt 900000 ]; then
+  echo "$imageFile Image too small.. exit with error"
   exit -1
 fi
 
 mv $imageFile $WORKSPACE/sbc-c8-F$NEWTAG.iso
 
 echo Deploy to Artifactory
-curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/$placeInArt/sbc-c8-F$NEWTAG.iso&quot; \
-     -T $WORKSPACE/sbc-c8-F$NEWTAG.iso
-curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/ISO/$placeInArt/copyFiles.sh&quot; \
-     -T $WORKSPACE/copyFiles.sh
+curl -ks -u $User -X PUT "https://$placeInArt/sbc-c8-F$NEWTAG.iso" -T $WORKSPACE/sbc-c8-F$NEWTAG.iso
+curl -ks -u $User -X PUT "https://$placeInArt/copyFiles.sh" -T $WORKSPACE/copyFiles.sh
 
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -248,7 +248,7 @@ curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/I
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -259,7 +259,7 @@ curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/I
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -281,7 +281,7 @@ curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/I
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -293,7 +293,7 @@ curl -ks -u $User -X PUT &quot;https://artifactory/$ArtifactoryRepo/com/ac/sbc/I
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${Tag_Or_GerritChange_Value} $Customer</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
