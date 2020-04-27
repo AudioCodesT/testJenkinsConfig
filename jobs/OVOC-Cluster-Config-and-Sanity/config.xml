@@ -51,14 +51,18 @@ run sanity tests</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>Test_Level</name>
-          <description/>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>Install_Type</name>
+          <name>sanityType</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>full</string>
+              <string>short</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>installType</name>
           <description>How this cluster was installed:
 1. New installation from scratch
 2. Upgrade from single server
@@ -96,11 +100,12 @@ run sanity tests</description>
     <hudson.tasks.Shell>
       <command>##
 
-echo "Running configuration of OVOC cluster with tag ${TAG}"
+echo "Running configuration and samity tests on OVOC cluster with tag ${TAG}"
 echo "Master IP is ${Master_IP}"
 echo "VQ slave IP is: ${VQ_IP}"
 echo "PM slave IP is ${PM_IP}"
-echo "Cluster configuration is ${Install_Type}"</command>
+echo "Cluster configuration is ${installType}"
+echo "Running ${sanityType} sanity tests"</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
