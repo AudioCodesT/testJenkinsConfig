@@ -1683,6 +1683,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>OVOC-Cluster-Config-and-Sanity</string>
         <string>OVOC-Cluster-DVD-Install</string>
         <string>OVOC-Cluster-New-Install</string>
         <string>OVOC-Cluster-Upgrade-7.8.2000</string>
