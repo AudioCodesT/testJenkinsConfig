@@ -76,7 +76,7 @@ latest_iso</description>
     parameters {
         string(name: 'NEW_TAG', defaultValue: '')
         string(name: 'OLD_TAG', defaultValue: '')
-        choice(name: 'DeployDVD', choices: ['official_iso', 'latest_iso'], defaultValue: 'official_iso')
+        choice(name: 'DeployDVD', choices: ['official_iso', 'latest_iso'])
         string(name: 'MASTER_IP', defaultValue: '')
         string(name: 'VQ_IP', defaultValue: '')
         string(name: 'PM_IP', defaultValue: '')
