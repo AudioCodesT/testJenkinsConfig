@@ -166,6 +166,8 @@ git checkout -f $commit_sha1
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+# If the build was executed without CUSTOMER, remove this file in case it was before
+if [ -f "../../copyFiles_unix.sh" ]; then rm -f "../../copyFiles_unix.sh"; fi
 #Copy HostedTP_SIP_CENTOS8.cmp to centos8/isofiles/sbc.install
 rm -f centos8/isofiles/sbc.install
 curl -ks -u $User $downloadUri --output centos8/isofiles/sbc.install
@@ -222,6 +224,7 @@ if [ ! -f $imageFile ] || [ "`du $imageFile | cut -f1`" -lt 900000 ]; then
   exit -1
 fi
 
+# Deploy according $placeInArt, to sbc-release or sbc-review
 echo Deploy to Artifactory
 curl -ks -u $User -X PUT "https://$placeInArt/sbc-c8-F$NEWTAG.iso" -T $imageFile
 if [ -f "../../copyFiles_unix.sh" ]; then
