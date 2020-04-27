@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -48,42 +48,6 @@
       <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>NEW_TAG</name>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>OLD_TAG</name>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>MASTER_IP</name>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>VQ_IP</name>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>PM_IP</name>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>pipeline {
@@ -107,48 +71,48 @@
                 stage('Install master') {
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${OLD_TAG}"),
+                            string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'Master'),
-                            string(name: 'ServerIP', value: "${MASTER_IP}"),
-                            string(name: 'DeployISO', value: "${DeployISO}")
+                            string(name: 'ServerIP', value: "${params.MASTER_IP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${NEW_TAG}"),
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'Master'),
-                            string(name: 'ServerIP', value: "${MASTER_IP}"),
-                            string(name: 'DeployISO', value: "${DeployISO}")
+                            string(name: 'ServerIP', value: "${params.MASTER_IP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                     }
                 }
                 stage('Install VQ') {
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${OLD_TAG}"),
+                            string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'VQ'),
-                            string(name: 'ServerIP', value: "${VQ_IP}"),
-                            string(name: 'DeployISO', value: "${DeployISO}")
+                            string(name: 'ServerIP', value: "${params.VQ_IP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${NEW_TAG}"),
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'VQ'),
-                            string(name: 'ServerIP', value: "${VQ_IP}"),
-                            string(name: 'DeployISO', value: "${DeployISO}")
+                            string(name: 'ServerIP', value: "${params.VQ_IP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                     }
                 }
                 stage('Install PM') {
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${OLD_TAG}"),
+                            string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'PM'),
-                            string(name: 'ServerIP', value: "${PM_IP}"),
-                            string(name: 'DeployISO', value: "${DeployISO}")
+                            string(name: 'ServerIP', value: "${params.PM_IP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${NEW_TAG}"),
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'PM'),
-                            string(name: 'ServerIP', value: "${PM_IP}"),
-                            string(name: 'DeployISO', value: "${DeployISO}")
+                            string(name: 'ServerIP', value: "${params.PM_IP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                     }
                 }
