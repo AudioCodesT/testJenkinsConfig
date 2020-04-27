@@ -82,53 +82,55 @@ latest_iso</description>
         string(name: 'PM_IP', defaultValue: '')
     }
     stages {
-        parallel {
-            stage('Install master') {
-                steps {
-                    build job: 'Install-DVD', parameters: [
-                        string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
-                        string(name: 'ServerRole', value: 'master', description: 'master'),
-                        string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
-                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
-                    ]
-                    build job: 'Install-DVD', parameters: [
-                        string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                        string(name: 'ServerRole', value: 'master', description: 'master'),
-                        string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
-                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
-                    ]
+        stage('Install Nodes'){
+            parallel {
+                stage('Install master') {
+                    steps {
+                        build job: 'Install-DVD', parameters: [
+                            string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                            string(name: 'ServerRole', value: 'master', description: 'master'),
+                            string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
+                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        ]
+                        build job: 'Install-DVD', parameters: [
+                            string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                            string(name: 'ServerRole', value: 'master', description: 'master'),
+                            string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
+                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        ]
+                    }
                 }
-            }
-            stage('Install VQ') {
-                steps {
-                    build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
-                        string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
-                        string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
-                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
-                    ]
-                    build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                        string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
-                        string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
-                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
-                    ]
+                stage('Install VQ') {
+                    steps {
+                        build job: 'Install-DVD', parameters: [
+                            tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                            string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
+                            string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
+                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        ]
+                        build job: 'Install-DVD', parameters: [
+                            tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                            string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
+                            string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
+                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        ]
+                    }
                 }
-            }
-            stage('Install PM') {
-                steps {
-                    build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
-                        string(name: 'ServerRole', value: 'PM', description: 'PM'),
-                        string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
-                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
-                    ]
-                    build job: 'Install-DVD', parameters: [
-                        tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                        string(name: 'ServerRole', value: 'PM', description: 'PM'),
-                        string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
-                        string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
-                    ]
+                stage('Install PM') {
+                    steps {
+                        build job: 'Install-DVD', parameters: [
+                            tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                            string(name: 'ServerRole', value: 'PM', description: 'PM'),
+                            string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
+                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        ]
+                        build job: 'Install-DVD', parameters: [
+                            tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                            string(name: 'ServerRole', value: 'PM', description: 'PM'),
+                            string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
+                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        ]
+                    }
                 }
             }
         }
