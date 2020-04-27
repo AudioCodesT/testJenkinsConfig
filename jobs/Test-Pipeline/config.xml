@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -38,47 +38,45 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
-    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
-      <maxConcurrentPerNode>0</maxConcurrentPerNode>
-      <maxConcurrentTotal>0</maxConcurrentTotal>
-      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
-      <throttleEnabled>false</throttleEnabled>
-      <throttleOption>project</throttleOption>
-      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit/>
-    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
+          <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>OLD_TAG</name>
+          <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>DeployDVD</name>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>MASTER_IP</name>
+          <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>VQ_IP</name>
+          <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>PM_IP</name>
+          <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -91,6 +89,16 @@ latest_iso</description>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit/>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>pipeline {
@@ -130,13 +138,13 @@ latest_iso</description>
                 stage('Install VQ') {
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                            string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
                             string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
                             string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
                             string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                            string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
                             string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
                             string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
                             string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
@@ -146,13 +154,13 @@ latest_iso</description>
                 stage('Install PM') {
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            tring(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
+                            string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
                             string(name: 'ServerRole', value: 'PM', description: 'PM'),
                             string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
                             string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            tring(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
+                            string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
                             string(name: 'ServerRole', value: 'PM', description: 'PM'),
                             string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
                             string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
