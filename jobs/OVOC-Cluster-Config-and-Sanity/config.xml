@@ -29,7 +29,7 @@ run sanity tests</description>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
+          <name>NEW_TAG</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
@@ -101,7 +101,7 @@ run sanity tests</description>
     <hudson.tasks.Shell>
       <command>##
 
-echo "Running configuration and samity tests on OVOC cluster with tag ${TAG}"
+echo "Running configuration and samity tests on OVOC cluster with tag ${NEW_TAG}"
 echo "Master IP is ${Master_IP}"
 echo "VQ slave IP is: ${VQ_IP}"
 echo "PM slave IP is ${PM_IP}"
