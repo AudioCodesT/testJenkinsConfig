@@ -222,12 +222,11 @@ if [ ! -f $imageFile ] || [ "`du $imageFile | cut -f1`" -lt 900000 ]; then
   exit -1
 fi
 
-mv $imageFile $WORKSPACE/sbc-c8-F$NEWTAG.iso
-
 echo Deploy to Artifactory
-curl -ks -u $User -X PUT "https://$placeInArt/sbc-c8-F$NEWTAG.iso" -T $WORKSPACE/sbc-c8-F$NEWTAG.iso
-curl -ks -u $User -X PUT "https://$placeInArt/copyFiles.sh" -T $WORKSPACE/copyFiles.sh
-
+curl -ks -u $User -X PUT "https://$placeInArt/sbc-c8-F$NEWTAG.iso" -T $imageFile
+if [ -f "copyFiles_unix.sh" ]; then
+  curl -ks -u $User -X PUT "https://$placeInArt/copyFiles.sh" -T copyFiles_unix.sh
+fi
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
