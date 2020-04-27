@@ -109,7 +109,7 @@
         string(name: 'VQ_IP', defaultValue: '', description: '')
         string(name: 'PM_IP', defaultValue: '', description: '')
         choice(name: 'installType', choices: ['official_isonewInstall', 'upgradeSingle', 'upgradeCluster'], description: '')
-        string(name: 'sanityType', choices: ['full', 'short'], description: '')
+        choice(name: 'sanityType', choices: ['full', 'short'], description: '')
     }
     stages {
         stage('Install Nodes'){
@@ -165,7 +165,7 @@
                 }
             }
         }
-        stage('Congigure and Sanity'){
+        stage('Configure and Sanity'){
             steps{
                 build job: 'OVOC-Cluster-Config-and-Sanity', parameters: [
                     string(name: 'TAG', value: "${params.NEW_TAG}"),
