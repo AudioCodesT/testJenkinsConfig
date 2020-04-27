@@ -76,7 +76,7 @@ latest_iso</description>
     parameters {
         string(name: 'NEW_TAG', defaultValue: '')
         string(name: 'OLD_TAG', defaultValue: '')
-        choice(name: 'DeployDVD', choices: ['official_iso', 'latest_iso'])
+        choice(name: 'DeployDVD', choices: ['official_iso', 'latest_iso'], defaultValue: 'official_iso')
         string(name: 'MASTER_IP', defaultValue: '')
         string(name: 'VQ_IP', defaultValue: '')
         string(name: 'PM_IP', defaultValue: '')
@@ -98,9 +98,6 @@ latest_iso</description>
                         string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                 }
-                post {
-                    //
-                }
             }
             stage('Install VQ') {
                 steps {
@@ -117,9 +114,6 @@ latest_iso</description>
                         string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
                 }
-                post {
-                    //
-                }
             }
             stage('Install PM') {
                 steps {
@@ -135,9 +129,6 @@ latest_iso</description>
                         string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
                         string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
                     ]
-                }
-                post {
-                    //
                 }
             }
         }
