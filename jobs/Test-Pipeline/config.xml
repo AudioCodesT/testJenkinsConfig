@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -67,21 +67,85 @@ latest_iso</description>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>pipeline {
-   agent {
-       node{
-           label 'ems-build'
-       }
-   }
-
-   stages {
-      stage('Hello') {
-         steps {
-            echo 'Hello World'
-         }
-      }
-   }
+    agent {
+        node {
+            label 'ems-build'
+            customWorkspace '/jenkins/workspace'
+        }
+    }
+    parameters {
+        string(name: 'NEW_TAG', defaultValue: '')
+        string(name: 'OLD_TAG', defaultValue: '')
+        choice(name: 'RELEASE', choices: ['official_iso', 'latest_iso'])
+        string(name: 'MASTER_IP', defaultValue: '')
+        string(name: 'VQ_IP', defaultValue: '')
+        string(name: 'PM_IP', defaultValue: '')
+    }
+    stages {
+        parallel {
+        /////////////////////////////////////// Upgrade from 7.8.2000
+            failFast true
+            stage('Install master') {
+                steps {
+                    build job: 'Install-DVD', parameters: [
+                        string(name: 'TAG', value: "${OLD_TAG}", description 'Tag'),
+                        string(name: 'Role', value: 'master', description 'master'),
+                        string(name: 'IP', value: "${MASTER_IP}", description 'master IP'),
+                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                    ]
+                    build job: 'Install-DVD', parameters: [
+                        string(name: 'TAG', value: "${NEW_TAG}", description 'Tag'),
+                        string(name: 'Role', value: 'master', description 'master'),
+                        string(name: 'IP', value: "${MASTER_IP}", description 'master IP'),
+                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                    ]
+                }
+                post {
+                    //
+                }
+            }
+            stage('Install VQ') {
+                steps {
+                    build job: 'Install-DVD', parameters: [
+                        tring(name: 'TAG', value: "${OLD_TAG}", description 'Tag'),
+                        string(name: 'Role', value: 'VQ', description 'VQ'),
+                        string(name: 'IP', value: "${VQ_IP}", description 'VQ IP'),
+                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                    ]
+                    build job: 'Install-DVD', parameters: [
+                        tring(name: 'TAG', value: "${NEW_TAG}", description 'Tag'),
+                        string(name: 'Role', value: 'VQ', description 'VQ'),
+                        string(name: 'IP', value: "${VQ_IP}", description 'VQ IP'),
+                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                    ]
+                }
+                post {
+                    //
+                }
+            }
+            stage('Install PM') {
+                steps {
+                    build job: 'Install-DVD', parameters: [
+                        tring(name: 'TAG', value: "${OLD_TAG}", description 'Tag'),
+                        string(name: 'Role', value: 'PM', description 'PM'),
+                        string(name: 'IP', value: "${PM_IP}", description 'PM IP'),
+                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                    ]
+                    build job: 'Install-DVD', parameters: [
+                        tring(name: 'TAG', value: "${NEW_TAG}", description 'Tag'),
+                        string(name: 'Role', value: 'PM', description 'PM'),
+                        string(name: 'IP', value: "${PM_IP}", description 'PM IP'),
+                        string(name: 'RELEASE', value: "${RELEASE}", description 'DVD release')
+                    ]
+                }
+                post {
+                    //
+                }
+            }
+        }
+    }
 }</script>
-    <sandbox>true</sandbox>
+    <sandbox>false</sandbox>
   </definition>
   <triggers/>
   <disabled>false</disabled>
