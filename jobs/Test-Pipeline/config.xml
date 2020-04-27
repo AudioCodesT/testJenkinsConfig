@@ -122,7 +122,7 @@
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'master', description: 'master'),
+                            string(name: 'ServerRole', value: 'Master', description: 'master'),
                             string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
                             string(name: 'DeployISO', value: "${DeployISO}", description: 'DVD DeployDVD')
                         ]
