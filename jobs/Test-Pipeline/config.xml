@@ -166,14 +166,16 @@
             }
         }
         stage('Congigure and Sanity'){
-            build job: 'OVOC-Cluster-Config-and-Sanity', parameters: [
-                string(name: 'TAG', value: "${params.NEW_TAG}"),
-                string(name: 'Master_IP', value: "${params.MASTER_IP}"),
-                string(name: 'PM_VQ', value: "${params.VQ_IP}"),
-                string(name: 'PM_IP', value: "${params.PM_IP}"),
-                string(name: 'sanityType', value: "${params.sanityType}"),
-                string(name: 'installType', value: "${params.installType}")
-            ]
+            steps{
+                build job: 'OVOC-Cluster-Config-and-Sanity', parameters: [
+                    string(name: 'TAG', value: "${params.NEW_TAG}"),
+                    string(name: 'Master_IP', value: "${params.MASTER_IP}"),
+                    string(name: 'PM_VQ', value: "${params.VQ_IP}"),
+                    string(name: 'PM_IP', value: "${params.PM_IP}"),
+                    string(name: 'sanityType', value: "${params.sanityType}"),
+                    string(name: 'installType', value: "${params.installType}")
+                ]
+            }
         }
     }
 }</script>
