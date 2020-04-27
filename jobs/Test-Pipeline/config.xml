@@ -108,11 +108,12 @@
         string(name: 'MASTER_IP', defaultValue: '', description: '')
         string(name: 'VQ_IP', defaultValue: '', description: '')
         string(name: 'PM_IP', defaultValue: '', description: '')
-        string(name: 'installType', defaultValue: '', description: '')
-        string(name: 'sanityType', defaultValue: 'full', description: '')
+        choice(name: 'installType', choices: ['official_isonewInstall', 'upgradeSingle', 'upgradeCluster'], description: '')
+        string(name: 'sanityType', choices: ['full', 'short'], description: '')
     }
     stages {
         stage('Install Nodes'){
+            failFast true
             parallel {
                 stage('Install master') {
                     steps {
@@ -163,16 +164,16 @@
                     }
                 }
             }
-            stage('Congigure and Sanity'){
-                build job: 'OVOC-Cluster-Config-and-Sanity', parameters: [
-                    string(name: 'TAG', value: "${params.NEW_TAG}"),
-                    string(name: 'Master_IP', value: "${params.MASTER_IP}"),
-                    string(name: 'PM_VQ', value: "${params.VQ_IP}"),
-                    string(name: 'PM_IP', value: "${params.PM_IP}"),
-                    string(name: 'sanityType', value: "${params.sanityType}"),
-                    string(name: 'installType', value: "${params.installType}")
-                ]
-            }
+        }
+        stage('Congigure and Sanity'){
+            build job: 'OVOC-Cluster-Config-and-Sanity', parameters: [
+                string(name: 'TAG', value: "${params.NEW_TAG}"),
+                string(name: 'Master_IP', value: "${params.MASTER_IP}"),
+                string(name: 'PM_VQ', value: "${params.VQ_IP}"),
+                string(name: 'PM_IP', value: "${params.PM_IP}"),
+                string(name: 'sanityType', value: "${params.sanityType}"),
+                string(name: 'installType', value: "${params.installType}")
+            ]
         }
     }
 }</script>
