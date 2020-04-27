@@ -1,4 +1,5 @@
-<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -15,7 +16,7 @@
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description/>
+  <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -23,7 +24,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs/>
+      <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -38,6 +39,57 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NEW_TAG</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>OLD_TAG</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>DeployDVD</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MASTER_IP</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>VQ_IP</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PM_IP</name>
+          <description></description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>DeployISO</name>
+          <description>official_iso
+latest_iso</description>
+          <defaultValue></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -45,74 +97,74 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit/>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>pipeline {
     agent {
         node {
-            label 'ems-build'
-            customWorkspace '/jenkins/workspace'
+            label &apos;ems-build&apos;
+            customWorkspace &apos;/jenkins/workspace&apos;
         }
     }
     parameters {
-        string(name: 'NEW_TAG', defaultValue: '')
-        string(name: 'OLD_TAG', defaultValue: '')
-        choice(name: 'DeployDVD', choices: ['official_iso', 'latest_iso'])
-        string(name: 'MASTER_IP', defaultValue: '')
-        string(name: 'VQ_IP', defaultValue: '')
-        string(name: 'PM_IP', defaultValue: '')
+        string(name: &apos;NEW_TAG&apos;, defaultValue: &apos;&apos;)
+        string(name: &apos;OLD_TAG&apos;, defaultValue: &apos;&apos;)
+        choice(name: &apos;DeployDVD&apos;, choices: [&apos;official_iso&apos;, &apos;latest_iso&apos;])
+        string(name: &apos;MASTER_IP&apos;, defaultValue: &apos;&apos;)
+        string(name: &apos;VQ_IP&apos;, defaultValue: &apos;&apos;)
+        string(name: &apos;PM_IP&apos;, defaultValue: &apos;&apos;)
     }
     stages {
-        stage('Install Nodes'){
+        stage(&apos;Install Nodes&apos;){
             parallel {
-                stage('Install master') {
+                stage(&apos;Install master&apos;) {
                     steps {
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'Master', description: 'master'),
-                            string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
-                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        build job: &apos;OVOC-Cluster-DVD-Install&apos;, parameters: [
+                            string(name: &apos;TAG&apos;, value: &quot;${OLD_TAG}&quot;, description: &apos;Tag&apos;),
+                            string(name: &apos;ServerRole&apos;, value: &apos;Master&apos;, description: &apos;master&apos;),
+                            string(name: &apos;ServerIP&apos;, value: &quot;${MASTER_IP}&quot;, description: &apos;master IP&apos;),
+                            string(name: &apos;DeployDVD&apos;, value: &quot;${DeployDVD}&quot;, description: &apos;DVD DeployDVD&apos;)
                         ]
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'master', description: 'master'),
-                            string(name: 'ServerIP', value: "${MASTER_IP}", description: 'master IP'),
-                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        build job: &apos;OVOC-Cluster-DVD-Install&apos;, parameters: [
+                            string(name: &apos;TAG&apos;, value: &quot;${NEW_TAG}&quot;, description: &apos;Tag&apos;),
+                            string(name: &apos;ServerRole&apos;, value: &apos;master&apos;, description: &apos;master&apos;),
+                            string(name: &apos;ServerIP&apos;, value: &quot;${MASTER_IP}&quot;, description: &apos;master IP&apos;),
+                            string(name: &apos;DeployDVD&apos;, value: &quot;${DeployDVD}&quot;, description: &apos;DVD DeployDVD&apos;)
                         ]
                     }
                 }
-                stage('Install VQ') {
+                stage(&apos;Install VQ&apos;) {
                     steps {
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
-                            string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
-                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        build job: &apos;OVOC-Cluster-DVD-Install&apos;, parameters: [
+                            string(name: &apos;TAG&apos;, value: &quot;${OLD_TAG}&quot;, description: &apos;Tag&apos;),
+                            string(name: &apos;ServerRole&apos;, value: &apos;VQ&apos;, description: &apos;VQ&apos;),
+                            string(name: &apos;ServerIP&apos;, value: &quot;${VQ_IP}&quot;, description: &apos;VQ IP&apos;),
+                            string(name: &apos;DeployDVD&apos;, value: &quot;${DeployDVD}&quot;, description: &apos;DVD DeployDVD&apos;)
                         ]
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'VQ', description: 'VQ'),
-                            string(name: 'ServerIP', value: "${VQ_IP}", description: 'VQ IP'),
-                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        build job: &apos;OVOC-Cluster-DVD-Install&apos;, parameters: [
+                            string(name: &apos;TAG&apos;, value: &quot;${NEW_TAG}&quot;, description: &apos;Tag&apos;),
+                            string(name: &apos;ServerRole&apos;, value: &apos;VQ&apos;, description: &apos;VQ&apos;),
+                            string(name: &apos;ServerIP&apos;, value: &quot;${VQ_IP}&quot;, description: &apos;VQ IP&apos;),
+                            string(name: &apos;DeployDVD&apos;, value: &quot;${DeployDVD}&quot;, description: &apos;DVD DeployDVD&apos;)
                         ]
                     }
                 }
-                stage('Install PM') {
+                stage(&apos;Install PM&apos;) {
                     steps {
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${OLD_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'PM', description: 'PM'),
-                            string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
-                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        build job: &apos;OVOC-Cluster-DVD-Install&apos;, parameters: [
+                            string(name: &apos;TAG&apos;, value: &quot;${OLD_TAG}&quot;, description: &apos;Tag&apos;),
+                            string(name: &apos;ServerRole&apos;, value: &apos;PM&apos;, description: &apos;PM&apos;),
+                            string(name: &apos;ServerIP&apos;, value: &quot;${PM_IP}&quot;, description: &apos;PM IP&apos;),
+                            string(name: &apos;DeployDVD&apos;, value: &quot;${DeployDVD}&quot;, description: &apos;DVD DeployDVD&apos;)
                         ]
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${NEW_TAG}", description: 'Tag'),
-                            string(name: 'ServerRole', value: 'PM', description: 'PM'),
-                            string(name: 'ServerIP', value: "${PM_IP}", description: 'PM IP'),
-                            string(name: 'DeployDVD', value: "${DeployDVD}", description: 'DVD DeployDVD')
+                        build job: &apos;OVOC-Cluster-DVD-Install&apos;, parameters: [
+                            string(name: &apos;TAG&apos;, value: &quot;${NEW_TAG}&quot;, description: &apos;Tag&apos;),
+                            string(name: &apos;ServerRole&apos;, value: &apos;PM&apos;, description: &apos;PM&apos;),
+                            string(name: &apos;ServerIP&apos;, value: &quot;${PM_IP}&quot;, description: &apos;PM IP&apos;),
+                            string(name: &apos;DeployDVD&apos;, value: &quot;${DeployDVD}&quot;, description: &apos;DVD DeployDVD&apos;)
                         ]
                     }
                 }
