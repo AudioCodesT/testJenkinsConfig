@@ -58,12 +58,12 @@
         }
     }
     parameters {
-        string(name: 'NEW_TAG', defaultValue: '', description: '')
-        string(name: 'OLD_TAG', defaultValue: '', description: '')
-        choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
-        string(name: 'MASTER_IP', defaultValue: '', description: '')
-        string(name: 'VQ_IP', defaultValue: '', description: '')
-        string(name: 'PM_IP', defaultValue: '', description: '')
+        string name: 'NEW_TAG', defaultValue: '', description: ''
+        string name: 'OLD_TAG', defaultValue: '', description: ''
+        choice name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: ''
+        string name: 'MASTER_IP', defaultValue: '', description: ''
+        string name: 'VQ_IP', defaultValue: '', description: ''
+        string name: 'PM_IP', defaultValue: '', description: ''
     }
     stages {
         stage('Install Nodes'){
