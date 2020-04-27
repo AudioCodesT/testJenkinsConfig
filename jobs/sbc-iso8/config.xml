@@ -224,8 +224,8 @@ fi
 
 echo Deploy to Artifactory
 curl -ks -u $User -X PUT "https://$placeInArt/sbc-c8-F$NEWTAG.iso" -T $imageFile
-if [ -f "copyFiles_unix.sh" ]; then
-  curl -ks -u $User -X PUT "https://$placeInArt/copyFiles.sh" -T copyFiles_unix.sh
+if [ -f "../../copyFiles_unix.sh" ]; then
+  curl -ks -u $User -X PUT "https://$placeInArt/copyFiles.sh" -T ../../copyFiles_unix.sh
 fi
 </command>
       <unstableReturn>2</unstableReturn>
