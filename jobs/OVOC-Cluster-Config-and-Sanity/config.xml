@@ -5,7 +5,8 @@
 2. IP for master&#13;
 3. IP for VQ&#13;
 3. IP for PM&#13;
-4. Tests level&#13;
+4. Sanity type&#13;
+5. Installation type (New, Upgrade, ect.)&#13;
 &#13;
 Run configuration script&#13;
 run sanity tests</description>
