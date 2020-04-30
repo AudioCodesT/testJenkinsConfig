@@ -1685,9 +1685,9 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>MJ-OVOC-Cluster-New-Install</string>
         <string>MJ-OVOC-Cluster-Upgrade-7.8.2000</string>
+        <string>MJ-OVOC-Cluster-Upgrade-Pre-7.8.2000</string>
         <string>OVOC-Cluster-Config-and-Sanity</string>
         <string>OVOC-Cluster-DVD-Install</string>
-        <string>OVOC-Cluster-Upgrade-Pre-7.8.2000</string>
         <string>Test-Pipeline</string>
       </jobNames>
       <jobFilters/>
