@@ -1,24 +1,24 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>Job triggered by jenkins job: &quot;emsPublishAMI&quot; or manual.&#xd;
-This job creating new ovoc azure image and generating SAS URL (URL to download the vhd file)&#xd;
-1. get OVOC Tag as parameter&#xd;
-2. download ovoc_azure_image_update.py file from artifactory&#xd;
-3. creating new VM from the OVOC-Template base image (500GB)&#xd;
-4.run &quot;ovoc_azure_image_update.py&quot; on the new VM (running update-hosts-file and adding dns suffix to /etc/resolv.conf)&#xd;
-5.run sanityInstall on the new VM&#xd;
-6.run &quot;ovoc_azure_image_update.py&quot; again to delete all important information from the VM&#xd;
-7. Generate SAS URL&#xd;
-8. delete the VM&#xd;
+  <description>Job triggered by jenkins job: "emsPublishAMI" or manual.&#13;
+This job creating new ovoc azure image and generating SAS URL (URL to download the vhd file)&#13;
+1. get OVOC Tag as parameter&#13;
+2. download ovoc_azure_image_update.py file from artifactory&#13;
+3. creating new VM from the OVOC-Template base image (500GB)&#13;
+4.run "ovoc_azure_image_update.py" on the new VM (running update-hosts-file and adding dns suffix to /etc/resolv.conf)&#13;
+5.run sanityInstall on the new VM&#13;
+6.run "ovoc_azure_image_update.py" again to delete all important information from the VM&#13;
+7. Generate SAS URL&#13;
+8. delete the VM&#13;
 10. send an email with the SAS URL</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -31,8 +31,8 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -44,11 +44,11 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -64,11 +64,13 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference/>
         <depth>1</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -84,22 +86,22 @@ This job creating new ovoc azure image and generating SAS URL (URL to download t
   <builders>
     <hudson.tasks.Shell>
       <command>NEW_TAG_WithoutDots=${NEW_TAG//./}
-container_name=&quot;ovoc${NEW_TAG_WithoutDots}&quot;
-ISO_DEPLOY_DESTINATION=&quot;official_iso&quot;
-admin_username=&quot;acovoc&quot;
-base_image=&quot;https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd&quot;
-VmSize=&quot;Standard_D4s_v3&quot;
-vhd_storage_account=&quot;ciresourcegroupstorage&quot;
-subnet=&quot;Net_172.16.100.0&quot;
-vnet_name=&quot;CI_Resource_Group&quot;
-security_group=&quot;createOvocImageSG&quot;
-vhd_name=&quot;OVOC_${NEW_TAG}&quot;
-VmName=&quot;OVOC${NEW_TAG}&quot;
-ResourceGroupName=&quot;CI_Resource_Group&quot;
-echo &quot;vhd_name=${vhd_name}&quot; &gt; properties
+container_name="ovoc${NEW_TAG_WithoutDots}"
+ISO_DEPLOY_DESTINATION="official_iso"
+admin_username="acovoc"
+base_image="https://ciresourcegroupstorage.blob.core.windows.net/vhds/OVOC-Template.vhd"
+VmSize="Standard_D4s_v3"
+vhd_storage_account="ciresourcegroupstorage"
+subnet="Net_172.16.100.0"
+vnet_name="CI_Resource_Group"
+security_group="createOvocImageSG"
+vhd_name="OVOC_${NEW_TAG}"
+VmName="OVOC${NEW_TAG}"
+ResourceGroupName="CI_Resource_Group"
+echo "vhd_name=${vhd_name}" &gt; properties
 #details of service principal app (test-jenkins) to connect azure cli
-test_jenkins_app_id=&quot;666a283f-ae93-4069-8e2e-cb35cca51cfa&quot;
-test_jenkins_tenant_id=&quot;1911c65c-893b-42f9-83fa-66c1b86fdf85&quot;
+test_jenkins_app_id="666a283f-ae93-4069-8e2e-cb35cca51cfa"
+test_jenkins_tenant_id="1911c65c-893b-42f9-83fa-66c1b86fdf85"
 
 #connect to azure cli
 az login --service-principal -u ${test_jenkins_app_id} -p ${test_jenkins_secret_key} --tenant ${test_jenkins_tenant_id}
@@ -111,72 +113,72 @@ az vm create \
     --admin-username ${admin_username} \
     --admin-password ${admin_password} \
     --size ${VmSize} \
-	--public-ip-address &quot;&quot; \
+	--public-ip-address "" \
     --use-unmanaged-disk \
-	--storage-account &quot;${vhd_storage_account}&quot; \
+	--storage-account "${vhd_storage_account}" \
     --subnet ${subnet} \
     --vnet-name ${vnet_name} \
     --nsg ${security_group} \
     --os-type linux \
     --os-disk-name ${vhd_name} \
     --storage-container-name ${container_name} \
-    --tags &apos;Name=AzureOvocSanityInstall&apos; &apos;Creator=Jenkins&apos;
+    --tags 'Name=AzureOvocSanityInstall' 'Creator=Jenkins'
 #wait for VM will be created
 az vm wait -g ${ResourceGroupName} -n ${VmName} --created
 
 #get new VM IP
-vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName} --query &quot;[*].virtualMachine.network.privateIpAddresses[0]&quot; --output tsv)
+vmIP=$(az vm list-ip-addresses -g ${ResourceGroupName} -n ${VmName} --query "[*].virtualMachine.network.privateIpAddresses[0]" --output tsv)
 
 #wait for the vm to be running
-#az vm wait -g ${ResourceGroupName} -n ${VmName} --custom &quot;instanceView.statuses[1].[?code==&apos;PowerState/running&apos;]&quot;
+#az vm wait -g ${ResourceGroupName} -n ${VmName} --custom "instanceView.statuses[1].[?code=='PowerState/running']"
 current_status=$(az vm get-instance-view --name ${VmName} --resource-group ${ResourceGroupName} --query instanceView.statuses[1].[code] --output tsv)
-echo &quot;Wait until the VM is up&quot;
+echo "Wait until the VM is up"
 count=0
 while true
 do
 	sleep 20
 	current_status=$(az vm get-instance-view --name ${VmName} --resource-group ${ResourceGroupName} --query instanceView.statuses[1].[code] --output tsv)
 	((count+=1))
-	if [[ &quot;$current_status&quot; == &quot;PowerState/running&quot; ]]
+	if [[ "$current_status" == "PowerState/running" ]]
 	then
 		break
 	fi
     #if count=6 (wait 2 min) then exit the job with failure (some error with the VM that is not running)
-    if [[ $count == &quot;6&quot; ]]
+    if [[ $count == "6" ]]
     then
-    	echo &quot;Failed to start the VM... exiting the build&quot;
+    	echo "Failed to start the VM... exiting the build"
         exit 1
     fi
 done
-echo &quot;Wait until VM is fully loaded&quot;
+echo "Wait until VM is fully loaded"
 sleep 60
 
 
 cd EMS/VersionRelease
-#run script &quot;ovoc-Azure-image-update.py&quot; before installation to run  update-hosts-file script
+#run script "ovoc-Azure-image-update.py" before installation to run  update-hosts-file script
 python ovoc_azure_image_update.py $NEW_TAG $vmIP before_install
 #run SanityInstall
 python SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
 
-#run script &quot;ovoc-Azure-image-update.py&quot; before installation to run  update-hosts-file script
+#run script "ovoc-Azure-image-update.py" before installation to run  update-hosts-file script
 python ovoc_azure_image_update.py $NEW_TAG $vmIP after_install
 
 
 
 #create SAS URL to send
-start_date=$(date --utc +%FT%TZ -d &quot;-1 day&quot;)
-expire_date=$(date --utc +%FT%TZ -d &quot;+2 month&quot;)
-URL=$(az storage blob url --connection-string ${connection_string} -c ${container_name} -n &quot;${vhd_name}.vhd&quot; -o tsv)
-SAS_URL=$(az storage container generate-sas --connection-string ${connection_string} --name ${container_name} --permissions rl --start &quot;${start_date}&quot; --expiry &quot;${expire_date}&quot; -o tsv)
-download_URL=&quot;${URL}?${SAS_URL}&quot;
+start_date=$(date --utc +%FT%TZ -d "-1 day")
+expire_date=$(date --utc +%FT%TZ -d "+2 month")
+URL=$(az storage blob url --connection-string ${connection_string} -c ${container_name} -n "${vhd_name}.vhd" -o tsv)
+SAS_URL=$(az storage container generate-sas --connection-string ${connection_string} --name ${container_name} --permissions rl --start "${start_date}" --expiry "${expire_date}" -o tsv)
+download_URL="${URL}?${SAS_URL}"
 #delete VM the new security group and the nic
-az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)
+az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query "[].id" -otsv)
 
 cd ${WORKSPACE}
-echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
+echo "download_URL=${download_URL}" &gt;&gt; properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>properties</propertiesFilePath>
       </info>
@@ -198,17 +200,17 @@ echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query &quot;[].id&quot; -otsv)</script>
+          <script>az resource delete --ids $(az resource list --tag Name=AzureOvocSanityInstall -otable --query "[].id" -otsv)</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
+      <recipientList>Gal.Erez@audiocodes.com,Mark.Kemel@audiocodes.com,Liran.Badiri@audiocodes.com,cc:Ben.Magriso@audiocodes.com,cc:Shuky.Riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -217,7 +219,7 @@ echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -229,7 +231,7 @@ echo &quot;download_URL=${download_URL}&quot; &gt;&gt; properties
       <defaultSubject>OVOC ${NEW_TAG} image for azure is ready</defaultSubject>
       <defaultContent>OVOC_${NEW_TAG} vhd file can be downloaded here: 
 ${download_URL}</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -241,7 +243,7 @@ ${download_URL}</defaultContent>
   </publishers>
   <buildWrappers>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -253,56 +255,48 @@ ${download_URL}</defaultContent>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
 
-            &quot;pattern&quot;: &quot;Devops/Tools/Azure/ovoc/ovoc_azure_image_update.py&quot;,
-            &quot;target&quot;: &quot;${workspace}/EMS/VersionRelease/&quot;,
-            &quot;flat&quot;: &quot;true&quot;
+            "pattern": "Devops/Tools/Azure/ovoc/ovoc_azure_image_update.py",
+            "target": "${workspace}/EMS/VersionRelease/",
+            "flat": "true"
         }
     ]
 }</spec>
       </downloadSpec>
-      <deployPattern></deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <deployPattern/>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -322,6 +316,7 @@ ${download_URL}</defaultContent>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEW_TAG}</template>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
