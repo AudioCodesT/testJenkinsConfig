@@ -1,9 +1,8 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>trigger by VoiceAI-review&#xd;
-&#xd;
-add version number to UI and to Session-manager (and to MongoDB)&#xd;
+  <description>trigger by VoiceAI-review&#13;
+&#13;
+add version number to UI and to Session-manager (and to MongoDB)&#13;
 git archive 3 folders and upload to artifactory under tag folder</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -12,7 +11,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -22,9 +21,6 @@ git archive 3 folders and upload to artifactory under tag folder</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -39,12 +35,12 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -54,8 +50,9 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -72,9 +69,11 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -86,8 +85,8 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -113,131 +112,133 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>false</excludeNoCodeChange>
+          <excludePrivateState>false</excludePrivateState>
+          <excludeWipState>false</excludeWipState>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>## Create .netrc
 [[ -f ~/.netrc ]] &amp;&amp; rm ~/.netrc
-echo &quot;machine docker-voice-ai.artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
-echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
-echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
-echo &quot;machine docker-voice-ai.test-artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
-echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
-echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
+echo "machine docker-voice-ai.artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
+echo "login jenkins" &gt;&gt; ~/.netrc
+echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
+echo "machine docker-voice-ai.test-artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
+echo "login jenkins" &gt;&gt; ~/.netrc
+echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Runtime vars
-#BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+#BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
 #OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
-#NEWTAG=`echo ${commit_ID} | awk -F/ &apos;{print $NF}&apos;`
+#NEWTAG=`echo ${commit_ID} | awk -F/ '{print $NF}'`
 
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
+AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 description=$(git describe)
 
 ## change in some files some parameters to build number
 cd ${WORKSPACE}
-echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
+echo "{\"version\": \"${NEWTAG}\"}" &gt; version.json
+#sed -i -- "s/%version%/${BUILD_NUMBER}/g" ${WORKSPACE}/session-manager/config.ts
+#sed -i -- "s/%version%/${BUILD_NUMBER}/g" ${WORKSPACE}/ui/config.ts
 
 ### Build the project
 ## Set docker vars
-DOCKER_URL=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
-DOCKER_REG=&quot;${DOCKER_URL}&quot;
+DOCKER_URL="docker-voice-ai.artifactory.corp.audiocodes.com"
+DOCKER_REG="${DOCKER_URL}"
 # Used in build.sh
-export DOCKER_REG_PREFIX=&quot;${DOCKER_URL}/&quot;
+export DOCKER_REG_PREFIX="${DOCKER_URL}/"
 export GIT_BRANCH=${GERRIT_BRANCH}
 
 ## Login to docker registry on Artifactory
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 
 ## Pull latest images from Artifactory &amp; get their hashes
-echo &quot;Pull latest images from Artifactory (those that are tagged with \${GERRIT_BRANCH}).&quot;
-remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
+echo "Pull latest images from Artifactory (those that are tagged with \${GERRIT_BRANCH})."
+remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r '.[][]')
 echo $remoteImgs
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
-LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos; | sort | tail -n 1)
+LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r '.tags[]' | sort | tail -n 1)
 
-if [[ ( &quot;${GERRIT_BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
-    PULLBRANCH=&quot;${LATESTTAG}&quot;
+if [[ ( "${GERRIT_BRANCH}" != "${LATESTTAG}" ) ]]; then
+    PULLBRANCH="${LATESTTAG}"
 else
-    PULLBRANCH=&quot;${GERRIT_BRANCH}&quot;
+    PULLBRANCH="${GERRIT_BRANCH}"
 fi
 
-HASHES=&quot;&quot;
+HASHES=""
 
 for ri in ${remoteImgs}; do
     docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
     docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${GERRIT_BRANCH}
 
-    hash=$(docker images ${ri}:${GERRIT_BRANCH} --format &quot;{{.ID}}&quot;)
-    HASHES=&quot;${HASHES}${hash} &quot;
+    hash=$(docker images ${ri}:${GERRIT_BRANCH} --format "{{.ID}}")
+    HASHES="${HASHES}${hash} "
 done
 
 ## Run build script
-echo &quot;***** Steart build *****&quot;
+echo "***** Steart build *****"
 cd ${WORKSPACE}
 sh build.sh
 ret_value=$?
 
-echo &quot;script Return Value: $ret_value&quot;
+echo "script Return Value: $ret_value"
 
-if [[ &quot;$ret_value&quot; -ne &quot;0&quot; ]]
+if [[ "$ret_value" -ne "0" ]]
 then
 	exit 1
 fi
 
 ### Pushing docker images to Artifactory
-echo &quot;Pushing Docker images to Artifactory.&quot;
+echo "Pushing Docker images to Artifactory."
 
 ## Login to docker registry
-echo &quot;*** Step 1 - Login to docker registry.&quot;
+echo "*** Step 1 - Login to docker registry."
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
 ## Tagging &amp; pushing images to Artifactory
-echo &quot;*** Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
-for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}:{{.Tag}}:{{.ID}}&quot; | grep ${BRANCH} | grep -v vag-common); do
-    imageName=$(echo $outcomeImage | gawk -F: &apos;{print $1}&apos;)
-    imageID=$(echo $outcomeImage | gawk -F: &apos;{print $3}&apos;)
-    echo &quot;***************************************************&quot;
+echo "*** Step 2 - Tagging &amp; pushing images to Artifactory."
+for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep ${BRANCH} | grep -v vag-common); do
+    imageName=$(echo $outcomeImage | gawk -F: '{print $1}')
+    imageID=$(echo $outcomeImage | gawk -F: '{print $3}')
+    echo "***************************************************"
     
     if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${description}
         docker push ${DOCKER_REG}/${dockerImage}:${description}
     else
-        echo &quot;*** No change in docker image \&quot;${dockerImage}\&quot;. Image not pushed to repository. ***&quot;
+        echo "*** No change in docker image \"${dockerImage}\". Image not pushed to repository. ***"
     fi
 done
 
-echo &quot;Finished docker push to Artifactory.&quot;
+echo "Finished docker push to Artifactory."
 </command>
     </hudson.tasks.Shell>
   </builders>
@@ -252,7 +253,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -263,7 +264,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -272,19 +273,19 @@ echo &quot;Finished docker push to Artifactory.&quot;
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.16">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
           <credentialsId>centos</credentialsId>
-          <usernameVariable></usernameVariable>
-          <passwordVariable></passwordVariable>
+          <usernameVariable/>
+          <passwordVariable/>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
@@ -292,7 +293,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -304,49 +305,49 @@ echo &quot;Finished docker push to Artifactory.&quot;
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;docker-compose-vag-*-g???????.yml&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/&quot;
+            "pattern": "docker-compose-vag-*-g???????.yml",
+            "target": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/"
         }
     ]
 }
 </spec>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/docker-compose-*.yml=&gt;review
 
 </deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>true</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -358,7 +359,7 @@ echo &quot;Finished docker push to Artifactory.&quot;
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${description}__change:${GERRIT_CHANGE_NUMBER}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
