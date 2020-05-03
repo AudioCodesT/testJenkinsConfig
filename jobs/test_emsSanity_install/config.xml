@@ -323,8 +323,8 @@ fi
 
 #keep ip address into "vmIP"
 vmIP_1="172.16.132.160"
-vmIP_1="172.16.132.247"
-vmIP_1="172.16.132.34"
+vmIP_2="172.16.132.247"
+vmIP_3="172.16.132.34"
 #find what is the current branch
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
 if [ $BRANCH == master ]; then BRANCH="7.4"; fi
@@ -363,8 +363,12 @@ if [[ "$BRANCH" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" =~ "7.8" ]]; th
 else
 	#run sanityInstall and if sanity install fails then copy logs and exit with error
     echo "Running single script for install"
-    python2.7 SanityInstall.py $NEW_TAG $vmIP_1 $ISO_DEPLOY_DESTINATION \
+    python2.7 SanityInstall.py $NEW_TAG $vmIP_1 $ISO_DEPLOY_DESTINATION management \
     || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP_1 ; exit 1; }
+    python2.7 SanityInstall.py $NEW_TAG $vmIP_2 $ISO_DEPLOY_DESTINATION pm \
+    || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP_2 ; exit 1; }
+    python2.7 SanityInstall.py $NEW_TAG $vmIP_3 $ISO_DEPLOY_DESTINATION vqm \
+    || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP_3 ; exit 1; }
     
 fi
 
@@ -376,14 +380,14 @@ echo "Finish SanityInstall"
 if [[ "$BRANCH" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" =~ "7.8" ]]; then
     echo "Running 2 scripts SanityFK and SanityReboot"
     python2.7 SanityFK.py $vmIP_1 $NEW_TAG
-    python2.7 SanityReboot.py $vmIP_1 || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; }
+    python2.7 SanityReboot.py $vmIP_1 || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP_1 ; }
 
 fi
 
 # run sanity tests and log collect
 echo "Run sanity tests and log collect"
 if [[ "$BRANCH" == "7.4" || "$BRANCH" == "7.4.1000" || "$BRANCH" == "7.4.2000" ]]
-	then python2.7 SanityTest.py $NEW_TAG $vmIP
+	then python2.7 SanityTest.py $NEW_TAG $vmIP_1
 	# run sanity test and copy logs, and if sanity fails then copy logs and exit with error:
     else python2.7 SanityTest.py $NEW_TAG $vmIP_1 $FullTesting \
          &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP_1 \
@@ -391,7 +395,7 @@ if [[ "$BRANCH" == "7.4" || "$BRANCH" == "7.4.1000" || "$BRANCH" == "7.4.2000" ]
 fi
 
 if [[ "$BRANCH" == "7.8.1000" ]]; then 
-	python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP
+	python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP_1
 	python2.7 SanityTest.py $NEW_TAG $vmIP_1 $FullTesting
 
 fi
