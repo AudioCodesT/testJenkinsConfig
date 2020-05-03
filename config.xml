@@ -14,10 +14,10 @@
     <domains>
       <hudson.plugins.active__directory.ActiveDirectoryDomain>
         <name>corp.audiocodes.com</name>
-        <servers>aclads05.corp.audiocodes.com:3268</servers>
+        <servers>aclads05.corp.audiocodes.com:3269</servers>
         <bindName>ldap_bind</bindName>
         <bindPassword>{AQAAABAAAAAQJjKD3YV9f50a3iczN0OPc52afP1ewH4VzLEoFNYiiHo=}</bindPassword>
-        <tlsConfiguration>TRUST_ALL_CERTIFICATES</tlsConfiguration>
+        <tlsConfiguration>JDK_TRUSTSTORE</tlsConfiguration>
       </hudson.plugins.active__directory.ActiveDirectoryDomain>
     </domains>
     <startTls>true</startTls>
