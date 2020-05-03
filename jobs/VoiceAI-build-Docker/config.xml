@@ -1,9 +1,8 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>trigger by new tag&#xd;
-run and publish eslint&#xd;
-add version number to UI and to Session-manager (and to MongoDB)&#xd;
+  <description>trigger by new tag&#13;
+run and publish eslint&#13;
+add version number to UI and to Session-manager (and to MongoDB)&#13;
 git archive 3 folders and upload to artifactory under tag folder</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -12,7 +11,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -33,8 +32,8 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_REFNAME</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -46,10 +45,11 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -66,9 +66,11 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -80,8 +82,8 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -103,42 +105,42 @@ git archive 3 folders and upload to artifactory under tag folder</description>
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginRefUpdatedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>## Create .netrc
 [[ -f ~/.netrc ]] &amp;&amp; rm ~/.netrc
-echo &quot;machine docker-voice-ai.artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
-echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
-echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
-echo &quot;machine docker-voice-ai.test-artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
-echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
-echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
+echo "machine docker-voice-ai.artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
+echo "login jenkins" &gt;&gt; ~/.netrc
+echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
+echo "machine docker-voice-ai.test-artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
+echo "login jenkins" &gt;&gt; ~/.netrc
+echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -147,66 +149,66 @@ echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
 #git fetch --tags
 
 OLDTAG=$(git describe --first-parent --tags --abbrev=0 HEAD^)
-#BRANCH=$(git branch -r --contains  ${OLDTAG} | grep -v &quot;HEAD&quot; | awk -F/ &apos;{print $NF}&apos; | sort | tail -n 1)
-NEWTAG=$(echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;)
+#BRANCH=$(git branch -r --contains  ${OLDTAG} | grep -v "HEAD" | awk -F/ '{print $NF}' | sort | tail -n 1)
+NEWTAG=$(echo $GERRIT_REFNAME | awk -F/ '{print $NF}')
 TAGVER=${NEWTAG::3}
 
 ## Set branch by $version
 case $NEWTAG in
     1.1*|1.2*)
-    	BRANCH=&quot;1.2&quot;
+    	BRANCH="1.2"
         ;;
     1.3*|1.4*)
-    	BRANCH=&quot;1.4&quot;
+    	BRANCH="1.4"
         ;;
     1.5*|1.6*)
-        BRANCH=&quot;1.6&quot;
+        BRANCH="1.6"
         ;;
 esac
 
-AuthorCommitter=$(git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..HEAD | sort -u | sed s/$/\;/g)
+AuthorCommitter=$(git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD | sort -u | sed s/$/\;/g)
 
 ## change in some files some parameters to build number
 cd ${WORKSPACE}
-echo &quot;{\&quot;version\&quot;: \&quot;${NEWTAG}\&quot;}&quot; &gt; version.json
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/session-manager/config.ts
-#sed -i -- &quot;s/%version%/${BUILD_NUMBER}/g&quot; ${WORKSPACE}/ui/config.ts
+echo "{\"version\": \"${NEWTAG}\"}" &gt; version.json
+#sed -i -- "s/%version%/${BUILD_NUMBER}/g" ${WORKSPACE}/session-manager/config.ts
+#sed -i -- "s/%version%/${BUILD_NUMBER}/g" ${WORKSPACE}/ui/config.ts
 
 ### Build the project
 ## Set docker vars
-DOCKER_URL=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
-DOCKER_REG=&quot;${DOCKER_URL}&quot;
+DOCKER_URL="docker-voice-ai.artifactory.corp.audiocodes.com"
+DOCKER_REG="${DOCKER_URL}"
 # Used in build.sh
-export DOCKER_REG_PREFIX=&quot;${DOCKER_URL}/&quot;
+export DOCKER_REG_PREFIX="${DOCKER_URL}/"
 export GIT_BRANCH=$BRANCH
 
 ## Login to docker registry on Artifactory
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 
 ## Pull latest images from Artifactory &amp; get their hashes
-echo &quot;Pull latest images from Artifactory (those that are tagged with \${BRANCH}).&quot;
-remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r &apos;.[][]&apos;)
+echo "Pull latest images from Artifactory (those that are tagged with \${BRANCH})."
+remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r '.[][]')
 
 ## If there is no BRANCH tag yet on artifactory - use previous branch
-ARTITAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r &apos;.tags[]&apos;)
+ARTITAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r '.tags[]')
 LATESTTAG=$( echo $ARTITAGS | sort | tail -n 1)
 
-[[ &quot;$(echo $ARTITAGS | grep -q $BRANCH)&quot; == &quot;&quot; ]] &amp;&amp; PULLBRANCH=&quot;${BRANCH}&quot; || PULLBRANCH=&quot;${LATESTTAG}&quot;
+[[ "$(echo $ARTITAGS | grep -q $BRANCH)" == "" ]] &amp;&amp; PULLBRANCH="${BRANCH}" || PULLBRANCH="${LATESTTAG}"
 
-#if [[ $( &quot;${BRANCH}&quot; != &quot;${LATESTTAG}&quot; ) ]]; then
-#    PULLBRANCH=&quot;${LATESTTAG}&quot;
+#if [[ $( "${BRANCH}" != "${LATESTTAG}" ) ]]; then
+#    PULLBRANCH="${LATESTTAG}"
 #else
-#    PULLBRANCH=&quot;${BRANCH}&quot;
+#    PULLBRANCH="${BRANCH}"
 #fi
 
-HASHES=&quot;&quot;
+HASHES=""
 
 for ri in ${remoteImgs}; do
     docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
     docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${BRANCH}
 
-    hash=$(docker images ${ri}:${BRANCH} --format &quot;{{.ID}}&quot;)
-    HASHES=&quot;${HASHES}${hash} &quot;
+    hash=$(docker images ${ri}:${BRANCH} --format "{{.ID}}")
+    HASHES="${HASHES}${hash} "
 done
 
 ## Run build script
@@ -214,63 +216,63 @@ cd ${WORKSPACE}
 sh build.sh
 ret_value=$?
 
-echo &quot;script Return Value: $ret_value&quot;
+echo "script Return Value: $ret_value"
 
-if [[ &quot;$ret_value&quot; -ne &quot;0&quot; ]]
+if [[ "$ret_value" -ne "0" ]]
 then
 	exit 1
 fi
 
 ### Pushing docker images to Artifactory
-echo &quot;Pushing Docker images to Artifactory.&quot;
+echo "Pushing Docker images to Artifactory."
 
 ## Login to docker registry
-echo &quot;Step 1 - Login to docker registry.&quot;
+echo "Step 1 - Login to docker registry."
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
-echo &quot;Step 2 - Tagging &amp; pushing images to Artifactory.&quot;
+echo "Step 2 - Tagging &amp; pushing images to Artifactory."
 # only push images that are new (Were not pulled from Artifactory)
 ## Also push image with ${BRANCH} tag
 # Check if need to push with tag ${BRANCH} to Artifactory:
 # If highest tag on Artifactory is lower then ${NEWTAG},
 # we also push docker images with tag ${BRANCH}
-for outcomeImage in $(docker images vag-* --format &quot;{{.Repository}}:{{.Tag}}:{{.ID}}&quot; | grep ${BRANCH} | grep -v vag-common); do
-    imageName=$(echo $outcomeImage | gawk -F: &apos;{print $1}&apos;)
-    imageID=$(echo $outcomeImage | gawk -F: &apos;{print $3}&apos;)
-    echo &quot;***************************************************&quot;
+for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep ${BRANCH} | grep -v vag-common); do
+    imageName=$(echo $outcomeImage | gawk -F: '{print $1}')
+    imageID=$(echo $outcomeImage | gawk -F: '{print $3}')
+    echo "***************************************************"
     #docker images vag-*
-    #imageID=$(docker images vag-* | grep &quot;${BRANCH}&quot; | grep &quot;$dockerImage&quot; | gawk &apos;{print $3}&apos;)
+    #imageID=$(docker images vag-* | grep "${BRANCH}" | grep "$dockerImage" | gawk '{print $3}')
 
-    if [[ &quot;$(echo $HASHES | grep -q ${imageID})&quot; == &quot;&quot; ]]; then
+    if [[ "$(echo $HASHES | grep -q ${imageID})" == "" ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${imageName}:${NEWTAG}
         docker push ${DOCKER_REG}/${imageName}:${NEWTAG}
 
-        allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq &apos;.tags[]&apos;)
-        highTag=$(echo &quot;$allTags&quot; | grep -F ${TAGVER} | grep -v -e &quot;\-g.*&quot; | sort -t&apos;.&apos; -n -k3 | tail -n 1)
+        allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq '.tags[]')
+        highTag=$(echo "$allTags" | grep -F ${TAGVER} | grep -v -e "\-g.*" | sort -t'.' -n -k3 | tail -n 1)
         highTag=${highTag:1:-1}
-        higherTag=$(echo -e &quot;$highTag\n${NEWTAG}&quot; | sort -t&apos;.&apos; -n -k3 | tail -n 1)
-        if [[ &quot;$higherTag&quot; == &quot;${NEWTAG}&quot; ]]; then
+        higherTag=$(echo -e "$highTag\n${NEWTAG}" | sort -t'.' -n -k3 | tail -n 1)
+        if [[ "$higherTag" == "${NEWTAG}" ]]; then
             docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
             docker push ${DOCKER_REG}/${imageName}:${BRANCH}
         fi
     else
-        echo &quot;*** No change in docker image \&quot;${imageName}\&quot;. Image not pushed to repository. ***&quot;
+        echo "*** No change in docker image \"${imageName}\". Image not pushed to repository. ***"
     fi
 done
 
 # Clean ALL docker objects
-#echo &quot;Step 3 - Removing ALL Docker objects.&quot;
+#echo "Step 3 - Removing ALL Docker objects."
 #docker rm --force $(docker ps -a -q) &gt; /dev/null 2&gt;&amp;1 || true
 #docker system prune --all --volumes --force
 
-echo &quot;Finished docker push to Artifactory.&quot;
+echo "Finished docker push to Artifactory."
 
 
 ## Export env vars
 echo NEWTAG=${NEWTAG} &gt; VoiceAI.env
 echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>VoiceAI.env</propertiesFilePath>
       </info>
@@ -280,15 +282,15 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
     <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@7.3.0">
       <analysisTools>
         <io.jenkins.plugins.analysis.warnings.EsLint>
-          <id></id>
-          <name></name>
+          <id/>
+          <name/>
           <pattern>eslint.xml</pattern>
-          <reportEncoding></reportEncoding>
+          <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.EsLint>
       </analysisTools>
-      <sourceCodeEncoding></sourceCodeEncoding>
-      <sourceDirectory></sourceDirectory>
+      <sourceCodeEncoding/>
+      <sourceDirectory/>
       <ignoreQualityGate>false</ignoreQualityGate>
       <ignoreFailedBuilds>true</ignoreFailedBuilds>
       <referenceJobName>-</referenceJobName>
@@ -307,7 +309,7 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
       <trendChartType>AGGREGATION_TOOLS</trendChartType>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun></regexpForRerun>
+      <regexpForRerun/>
       <rerunIfUnstable>false</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>false</checkRegexp>
@@ -358,21 +360,21 @@ BRANCH=${BRANCH}</properties>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso yuvaly orgad.shaneh</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.16">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -384,62 +386,62 @@ BRANCH=${BRANCH}</properties>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;common/setup-cert.sh&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/&quot;
+            "pattern": "common/setup-cert.sh",
+            "target": "docker-voice-ai-files/"
         },
         {
-            &quot;pattern&quot;: &quot;docker-compose-*.yml&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/&quot;
+            "pattern": "docker-compose-*.yml",
+            "target": "docker-voice-ai-files/"
         },
         {
-            &quot;pattern&quot;: &quot;docker/setup-machine.sh&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/&quot;
+            "pattern": "docker/setup-machine.sh",
+            "target": "docker-voice-ai-files/"
         },
         {
-            &quot;pattern&quot;: &quot;utils/configLoader/config.sample.json&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files/&quot;
+            "pattern": "utils/configLoader/config.sample.json",
+            "target": "docker-voice-ai-files/"
         }
     ]
 }</spec>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/common/setup-cert.sh
 ${WORKSPACE}/docker-compose-*.yml
 ${WORKSPACE}/docker/setup-machine.sh
 ${WORKSPACE}/docker/config.json.sample
 </deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>true</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -451,7 +453,7 @@ ${WORKSPACE}/docker/config.json.sample
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEWTAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
