@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -22,7 +21,7 @@
       <parameterDefinitions>
         <hudson.model.ChoiceParameterDefinition>
           <name>BRANCH</name>
-          <description></description>
+          <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>7.4.3000</string>
@@ -36,7 +35,7 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>COMPANY</name>
-          <description></description>
+          <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>NEC</string>
@@ -46,8 +45,8 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -59,10 +58,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -78,11 +78,13 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference/>
         <depth>1</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -112,12 +114,12 @@ dvd3_iso=DVD3_EMS_$version.iso
 major=${BRANCH}
 company=${COMPANY}
 cd /home/centos
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-release/com/ac/ems/ovoc_server/&quot;$major&quot;/official_iso/&quot;$dvd3_iso&quot;?archiveType=iso &gt;&quot;$dvd3_iso&quot;
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/about_logo.png&gt;about_logo.png
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-release/com/ac/ems/ovoc_server/"$major"/official_iso/"$dvd3_iso"?archiveType=iso &gt;"$dvd3_iso"
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/about_logo.png&gt;about_logo.png
 
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/logo_login.png&gt;logo_login.png
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/logo_login.png&gt;logo_login.png
 
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/logo.png&gt;logo.png
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/logo.png&gt;logo.png
 
 chmod 755 about_logo.png
 chmod 755 logo_login.png
@@ -130,39 +132,40 @@ rm -rf /home/centos/original_iso
 
 mkdir /home/centos/original_iso
 
-sudo mount  -o rw,loop -t iso9660 &quot;$dvd3_iso&quot; /home/centos/original_iso
+sudo mount  -o rw,loop -t iso9660 "$dvd3_iso" /home/centos/original_iso
 cp -avr /home/centos/original_iso/ /home/centos/copy_original_iso/
 
-cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo.png
-cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/about_logo.png
-cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/assets/images/logo_login.png
-cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/web-ui-ovoc/images/about_logo.png
-echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_&quot;$version&quot;/emsFiles/conf/branding.txt
+cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo.png
+cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/about_logo.png
+cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo_login.png
+cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/images/about_logo.png
+mkdir -p /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/emsFiles/conf
+echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/emsFiles/conf/branding.txt
 
 if [ $COMPANY == Nuera ]; then
 mkdir Documentation
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-090-550 One Voice Operations Center Release Notes Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-090-550 One Voice Operations Center Release Notes Ver. 7.6.pdf&apos;
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-091-046 One Voice Operations Center User Manual Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-091-046 One Voice Operations Center User Manual Ver. 7.6.pdf&apos;
-curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/&quot;$company&quot;/Docs/&apos;299-094-168 One Voice Operations Center IOM Manual Ver. 7.6.pdf&apos;?archiveType=pdf&gt;Documentation/&apos;299-094-168 One Voice Operations Center IOM Manual Ver. 7.6.pdf&apos;
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/Docs/'299-090-550 One Voice Operations Center Release Notes Ver. 7.6.pdf'?archiveType=pdf&gt;Documentation/'299-090-550 One Voice Operations Center Release Notes Ver. 7.6.pdf'
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/Docs/'299-091-046 One Voice Operations Center User Manual Ver. 7.6.pdf'?archiveType=pdf&gt;Documentation/'299-091-046 One Voice Operations Center User Manual Ver. 7.6.pdf'
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/Docs/'299-094-168 One Voice Operations Center IOM Manual Ver. 7.6.pdf'?archiveType=pdf&gt;Documentation/'299-094-168 One Voice Operations Center IOM Manual Ver. 7.6.pdf'
 chmod -R 755 Documentation
 rm -rf /home/centos/copy_original_iso/Documentation
 cp -rf Documentation/ /home/centos/copy_original_iso/
 fi
 
-rm -rf DVD3_EMS_&quot;$version&quot;.iso
-mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy_original_iso
+rm -rf DVD3_EMS_"$version".iso
+mkisofs -V DVD3_EMS -o DVD3_EMS_"$version".iso -R -J -joliet-long copy_original_iso
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -174,50 +177,50 @@ mkisofs -V DVD3_EMS -o DVD3_EMS_&quot;$version&quot;.iso -R -J -joliet-long copy
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;/home/centos/*.iso&quot;,
-            &quot;target&quot;: &quot;ems-release/com/ac/ems/ovoc_server/${BRANCH}/branded_iso/${COMPANY}/&quot;,
-            &quot;props&quot;: &quot;type=iso;status=ready&quot;,
-             &quot;recursive&quot;: &quot;false&quot;
+            "pattern": "/home/centos/*.iso",
+            "target": "ems-release/com/ac/ems/ovoc_server/${BRANCH}/branded_iso/${COMPANY}/",
+            "props": "type=iso;status=ready",
+             "recursive": "false"
         }
     ]
 }</spec>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>/home/centos/*.iso=&gt;com/ac/ems/ovoc_server/${BRANCH}/branded_iso/${COMPANY}</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${TAG}__${COMPANY}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
