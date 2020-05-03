@@ -350,7 +350,11 @@ elif [[ "$BRANCH" == "7.4.3000" ]]
     # setNetwork.py was changed to fit vmware - subnet is a parameter
     then python2.7 setNetwork.py $vmIP_1 $netMask $DefaultGateway
 # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
-else python2.7 setNetwork.py $vmIP_1 $sanityOrAmi
+else 
+	python2.7 setNetwork.py $vmIP_1 $sanityOrAmi
+    python2.7 setNetwork.py $vmIP_2 $sanityOrAmi
+    python2.7 setNetwork.py $vmIP_3 $sanityOrAmi
+	
 fi
 
 echo "Finish SetNetwork Configuration"
