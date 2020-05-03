@@ -320,20 +320,11 @@ fi
 
 
 
-#keep instance ID
-INSTANCE_ID_1="i-009b610b9c24e01e7"
-INSTANCE_ID_2="i-009d174ad878b4df4"
-INSTANCE_ID_3="i-0555d0c42f3bda565"
 
-
-#set to its delete volume when instance will be terminated
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID_1} --block-device-mappings "{    \"DeviceName\": \"/dev/sda1\",    \"Ebs\": {      \"DeleteOnTermination\": false    }  } "
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID_2} --block-device-mappings "{    \"DeviceName\": \"/dev/sda1\",    \"Ebs\": {      \"DeleteOnTermination\": false    }  } "
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID_3} --block-device-mappings "{    \"DeviceName\": \"/dev/sda1\",    \"Ebs\": {      \"DeleteOnTermination\": false    }  } "
 #keep ip address into "vmIP"
-vmIP_1=$(aws ec2 describe-instances --instance-id ${INSTANCE_ID_1} --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
-vmIP_1=$(aws ec2 describe-instances --instance-id ${INSTANCE_ID_2} --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
-vmIP_1=$(aws ec2 describe-instances --instance-id ${INSTANCE_ID_3} --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
+vmIP_1="172.16.132.160"
+vmIP_1="172.16.132.247"
+vmIP_1="172.16.132.34"
 #find what is the current branch
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
 if [ $BRANCH == master ]; then BRANCH="7.4"; fi
