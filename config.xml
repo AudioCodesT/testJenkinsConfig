@@ -3,6 +3,7 @@
   <disabledAdministrativeMonitors>
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
     <string>jenkins.security.csrf.CSRFAdministrativeMonitor</string>
+    <string>OldData</string>
   </disabledAdministrativeMonitors>
   <version>2.204.6</version>
   <installStateName>RESTART</installStateName>
@@ -659,7 +660,18 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-046aca2ea278bf66d</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-046aca2ea278bf66d</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>mtr-Build-Label</requestedLabel>
+            <createdAt>2020-05-04 13:26:40.681 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
