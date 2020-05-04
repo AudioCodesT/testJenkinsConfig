@@ -43,7 +43,51 @@
       <emailAddress>Shay.Harel@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string># All 012 voip</string>
+        <string>AWS_Jira_Users</string>
+        <string>#  ovoc.firmware</string>
+        <string>Synagogue</string>
+        <string># All Cars</string>
+        <string>cc_users</string>
+        <string>365_Monday</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string># All Cellcom</string>
+        <string>Palo_Access_to_DMZ_IPP_Mgmt</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
+        <string># All manager Israel</string>
+        <string>Allow Office365 Groups</string>
+        <string>Jira leaders</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>CTI_R&amp;D</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string># Application Group Developers</string>
+        <string>365_Lucca</string>
+        <string># SW Applications Group</string>
+        <string># All ISRAEL</string>
+        <string># Support KB Editors</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># All Cellular</string>
+        <string>CTI_DB</string>
+        <string># MeetingRecorderAdmins</string>
+        <string>AudioCodes_VPN</string>
+        <string># SW Application Dev</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
+        <string>CTI</string>
+      </roles>
+      <timestamp>1588574130642</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
