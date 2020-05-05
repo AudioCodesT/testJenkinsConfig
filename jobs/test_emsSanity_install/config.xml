@@ -322,9 +322,9 @@ fi
 
 
 #keep ip address into "vmIP"
-vmIP_1="172.16.132.160"
+vmIP_1="172.16.132.34"
 vmIP_2="172.16.132.247"
-vmIP_3="172.16.132.34"
+vmIP_3="172.16.132.160"
 #find what is the current branch
 BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
 if [ $BRANCH == master ]; then BRANCH="7.4"; fi
