@@ -71,10 +71,13 @@
           <permission>hudson.model.Run.Update</permission>
         </permissions>
         <assignedSIDs>
-          <sid>yuvaly</sid>
+          <sid>Ben Magriso</sid>
           <sid>Shuky Riechard</sid>
           <sid>Yossi Merzbach</sid>
-          <sid>Ben Magriso</sid>
+          <sid>yuvaly</sid>
+          <sid>Ben.Magriso@audiocodes.com</sid>
+          <sid>Yossi.Merzbach@audiocodes.com</sid>
+          <sid>Shuky.Riechard@audiocodes.com</sid>
         </assignedSIDs>
       </role>
     </roleMap>
@@ -333,7 +336,18 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0beaab21d93ab7e2f</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0beaab21d93ab7e2f</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:15:05.119 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
