@@ -139,6 +139,56 @@
         </permissions>
         <assignedSIDs/>
       </role>
+      <role name="CI_MeetRec_Developers" pattern="(mtr.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Discover</permission>
+          <permission>hudson.model.Run.Update</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
+      <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|VoiceAI.*|VAG.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Discover</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
+      <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Discover</permission>
+          <permission>hudson.model.Run.Update</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
+      <role name="CI_VCN_Builders" pattern="(VocaNom.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
     </roleMap>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
@@ -405,23 +455,43 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-015ad04015675997c</string>
+          <string>i-087656e7506e05edd</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-015ad04015675997c</id>
+            <id>i-087656e7506e05edd</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:30:28.535 UTC</createdAt>
+            <createdAt>2020-05-05 14:39:29.856 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-03c66e2d44044c2c9</string>
+          <string>i-0a882b877900db42b</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-03c66e2d44044c2c9</id>
+            <id>i-0a882b877900db42b</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:29:04.945 UTC</createdAt>
+            <createdAt>2020-05-05 14:39:29.856 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-033fdfdea0be917db</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-033fdfdea0be917db</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:38:28.566 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0f31db72f49992931</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0f31db72f49992931</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:39:29.856 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
@@ -435,23 +505,13 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-0142b3bdeca6d244b</string>
+          <string>i-0168906bab96abb63</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0142b3bdeca6d244b</id>
+            <id>i-0168906bab96abb63</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:32:28.923 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0ee5b842c8ab9b594</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0ee5b842c8ab9b594</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:29:04.946 UTC</createdAt>
+            <createdAt>2020-05-05 14:41:06.416 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
