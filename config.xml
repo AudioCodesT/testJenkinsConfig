@@ -26,9 +26,7 @@
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
-        <assignedSIDs>
-          <sid># All AudioCodes</sid>
-        </assignedSIDs>
+        <assignedSIDs/>
       </role>
       <role name="admin" pattern=".*">
         <permissions>
@@ -507,6 +505,16 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
+          <string>i-0e8e8fc6fea30b954</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0e8e8fc6fea30b954</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 15:00:41.125 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
           <string>i-0ce50fb1ca8a8a0e3</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
             <id>i-0ce50fb1ca8a8a0e3</id>
@@ -527,13 +535,13 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-09896c6c1f7da33f4</string>
+          <string>i-0bd46338de69c2264</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-09896c6c1f7da33f4</id>
+            <id>i-0bd46338de69c2264</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:50:04.5 UTC</createdAt>
+            <createdAt>2020-05-05 15:03:10.824 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
@@ -544,6 +552,16 @@
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
             <createdAt>2020-05-05 14:57:38.983 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-041e603281b8b959d</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-041e603281b8b959d</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 15:00:41.125 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
@@ -567,23 +585,13 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-0b46033d3d57416c1</string>
+          <string>i-07c33fab1a91fa4fd</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0b46033d3d57416c1</id>
+            <id>i-07c33fab1a91fa4fd</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:50:06.892 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-02ff1bf090b8fd63d</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-02ff1bf090b8fd63d</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:50:06.898 UTC</createdAt>
+            <createdAt>2020-05-05 15:00:41.125 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
