@@ -188,11 +188,11 @@
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
+          <sid># R&amp;D Application Group</sid>
+          <sid># R&amp;D System Software</sid>
           <sid># SBC</sid>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
-          <sid># R&amp;D Application Group</sid>
-          <sid># R&amp;D System Software</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
@@ -207,7 +207,9 @@
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.Run.Update</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># AUDC - NJ Engineering Team</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_VCN_Builders" pattern="(VocaNom.*)">
         <permissions>
@@ -216,7 +218,9 @@
           <permission>hudson.model.Item.Workspace</permission>
           <permission>hudson.model.Item.Build</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>ronnya</sid>
+        </assignedSIDs>
       </role>
       <role name="Execute_DRT" pattern="(sbc-sanity-build)">
         <permissions>
@@ -224,14 +228,18 @@
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.Item.Build</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>anonymous</sid>
+        </assignedSIDs>
       </role>
       <role name="adminJobs" pattern="UpdateVI">
         <permissions>
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.Item.Build</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>compile</sid>
+        </assignedSIDs>
       </role>
     </roleMap>
   </authorizationStrategy>
@@ -489,6 +497,16 @@
       <groupId>sig-e20df392</groupId>
       <pendingInstances>
         <entry>
+          <string>i-0e74c8d2fcd2763e1</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0e74c8d2fcd2763e1</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:59:02.474 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
           <string>i-0ce50fb1ca8a8a0e3</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
             <id>i-0ce50fb1ca8a8a0e3</id>
@@ -516,26 +534,6 @@
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
             <createdAt>2020-05-05 14:50:04.5 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-03d6b7bc80d20ee06</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-03d6b7bc80d20ee06</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:48:28.322 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0bc38c18e3b1f326c</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0bc38c18e3b1f326c</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:49:03.235 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
