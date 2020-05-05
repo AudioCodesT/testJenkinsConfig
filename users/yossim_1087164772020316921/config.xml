@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash">
         <entry>
           <com.cloudbees.plugins.credentials.domains.Domain>
@@ -87,6 +87,7 @@
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>cc_nsc</string>
+        <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string>CatalogApps_Everyone</string>
@@ -103,9 +104,9 @@
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1582805767963</timestamp>
+      <timestamp>1588657920369</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Yossi.Merzbach@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -114,5 +115,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>ce0d95a8dd39b9da</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
