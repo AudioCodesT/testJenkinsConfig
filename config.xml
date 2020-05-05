@@ -21,7 +21,9 @@
           <permission>hudson.model.Run.Replay</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>#AllAudioCodes@audiocodes.com</sid>
+        </assignedSIDs>
       </role>
       <role name="admin" pattern=".*">
         <permissions>
