@@ -83,7 +83,12 @@
         </assignedSIDs>
       </role>
     </roleMap>
-    <roleMap type="slaveRoles"/>
+    <roleMap type="slaveRoles">
+      <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
+        <permissions/>
+        <assignedSIDs/>
+      </role>
+    </roleMap>
     <roleMap type="projectRoles">
       <role name="CI_CLM_developers" pattern="(clm.*)">
         <permissions>
@@ -97,6 +102,31 @@
         <assignedSIDs/>
       </role>
       <role name="CI_EMS_Admins" pattern="(ems.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Discover</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
+      <role name="CI_EMS_DEVELOPERS" pattern="(ems.*)">
+        <permissions>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Discover</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
+      <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
@@ -365,43 +395,63 @@
       <groupId>sig-e20df392</groupId>
       <pendingInstances>
         <entry>
-          <string>i-0b10b2b1e6bce5b97</string>
+          <string>i-0405670cdb5837b94</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0b10b2b1e6bce5b97</id>
+            <id>i-0405670cdb5837b94</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:20:14.135 UTC</createdAt>
+            <createdAt>2020-05-05 14:34:29.475 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-0727dd7b85af49a55</string>
+          <string>i-015ad04015675997c</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0727dd7b85af49a55</id>
+            <id>i-015ad04015675997c</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:18:38.318 UTC</createdAt>
+            <createdAt>2020-05-05 14:30:28.535 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-0552bfa3d51c927c1</string>
+          <string>i-03c66e2d44044c2c9</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0552bfa3d51c927c1</id>
+            <id>i-03c66e2d44044c2c9</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:17:38.891 UTC</createdAt>
+            <createdAt>2020-05-05 14:29:04.945 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-025024c41a24043cd</string>
+          <string>i-07207921ef6de5438</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-025024c41a24043cd</id>
+            <id>i-07207921ef6de5438</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:22:18.652 UTC</createdAt>
+            <createdAt>2020-05-05 14:33:38.656 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0142b3bdeca6d244b</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0142b3bdeca6d244b</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:32:28.923 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0ee5b842c8ab9b594</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0ee5b842c8ab9b594</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:29:04.946 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
