@@ -24,6 +24,7 @@
         <assignedSIDs>
           <sid>#AllAudioCodes@audiocodes.com</sid>
           <sid>#AllAudiocodes</sid>
+          <sid># All AudioCodes</sid>
         </assignedSIDs>
       </role>
       <role name="admin" pattern=".*">
