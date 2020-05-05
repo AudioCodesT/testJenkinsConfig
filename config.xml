@@ -15,15 +15,9 @@
       <role name="View &amp; Run All" pattern=".*">
         <permissions>
           <permission>hudson.model.Hudson.Read</permission>
-          <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
-          <permission>hudson.model.Item.Workspace</permission>
-          <permission>jenkins.metrics.api.Metrics.HealthCheck</permission>
           <permission>hudson.model.Item.Build</permission>
-          <permission>jenkins.metrics.api.Metrics.View</permission>
-          <permission>hudson.model.Run.Replay</permission>
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
-          <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
         <assignedSIDs>
@@ -497,6 +491,16 @@
       <groupId>sig-e20df392</groupId>
       <pendingInstances>
         <entry>
+          <string>i-089d5916a39115be0</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-089d5916a39115be0</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 15:30:28.313 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
           <string>i-0e7cba61980b08e4b</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
             <id>i-0e7cba61980b08e4b</id>
@@ -577,13 +581,23 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-0df3d093ffd775004</string>
+          <string>i-078737bbb73a537c5</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0df3d093ffd775004</id>
+            <id>i-078737bbb73a537c5</id>
             <status>INSTANCE_INITIATING</status>
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:20:07.282 UTC</createdAt>
+            <createdAt>2020-05-05 15:31:04.852 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0a8d47e240b5191af</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0a8d47e240b5191af</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 15:31:21.84 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
