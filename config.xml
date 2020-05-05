@@ -10,7 +10,9 @@
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
-  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+  <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
+    <denyAnonymousReadAccess>false</denyAnonymousReadAccess>
+  </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
     <domains>
       <hudson.plugins.active__directory.ActiveDirectoryDomain>
@@ -330,18 +332,7 @@
       <name>sig-8a99c992</name>
       <accountId></accountId>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-07f038282695be588</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-07f038282695be588</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>ems-build</requestedLabel>
-            <createdAt>2020-05-05 09:15:36.462 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
