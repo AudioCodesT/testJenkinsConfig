@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -54,6 +54,7 @@
         <string>Palo_Access_Aws_Azure-ssh</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string>Palo_Remote_desktop_access_support</string>
@@ -84,9 +85,9 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1582708484384</timestamp>
+      <timestamp>1588679618368</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Galit.Levi@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -95,5 +96,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>c84a956c55a71982</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
