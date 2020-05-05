@@ -141,8 +141,8 @@
         </permissions>
         <assignedSIDs>
           <sid># OVOC MGMT</sid>
-          <sid>CI_EMS_Developers</sid>
           <sid># OVOC Web UI</sid>
+          <sid>CI_EMS_Developers</sid>
         </assignedSIDs>
       </role>
       <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
@@ -188,11 +188,11 @@
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
+          <sid># SBC</sid>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
-          <sid># SBC</sid>
-          <sid># R&amp;amp;D Application Group</sid>
-          <sid># R&amp;amp;D System Software</sid>
+          <sid># R&amp;D Application Group</sid>
+          <sid># R&amp;D System Software</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
@@ -536,6 +536,16 @@
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
             <createdAt>2020-05-05 14:49:03.235 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-01356006208bda518</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-01356006208bda518</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:57:38.983 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
