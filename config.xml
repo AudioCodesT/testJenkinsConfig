@@ -18,9 +18,7 @@
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
-        <assignedSIDs>
-          <sid># All AudioCodes</sid>
-        </assignedSIDs>
+        <assignedSIDs/>
       </role>
       <role name="admin" pattern=".*">
         <permissions>
@@ -80,7 +78,9 @@
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># All AudioCodes</sid>
+        </assignedSIDs>
       </role>
       <role name="readOnly" pattern=".*">
         <permissions>
