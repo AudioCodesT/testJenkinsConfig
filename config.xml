@@ -110,7 +110,9 @@
           <permission>jenkins.metrics.api.Metrics.View</permission>
           <permission>hudson.model.Run.Replay</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>ramn</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_EMS_Admins" pattern="(ems.*)">
         <permissions>
@@ -123,7 +125,9 @@
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>CI_EMS_Admins</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_EMS_DEVELOPERS" pattern="(ems.*)">
         <permissions>
@@ -135,7 +139,11 @@
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># OVOC MGMT</sid>
+          <sid>CI_EMS_Developers</sid>
+          <sid># OVOC Web UI</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
         <permissions>
@@ -148,7 +156,9 @@
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>hadasat</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_MeetRec_Developers" pattern="(mtr.*)">
         <permissions>
@@ -481,16 +491,6 @@
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
-          <string>i-0ce76fafe7efe2a78</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0ce76fafe7efe2a78</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 14:44:01.468 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
           <string>i-09896c6c1f7da33f4</string>
           <hudson.plugins.spotinst.cloud.PendingInstance>
             <id>i-09896c6c1f7da33f4</id>
@@ -528,6 +528,16 @@
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
             <createdAt>2020-05-05 14:44:38.681 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-0612e758085145aef</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0612e758085145aef</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:54:28.385 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
         <entry>
