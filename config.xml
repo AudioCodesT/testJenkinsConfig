@@ -192,6 +192,13 @@
         </permissions>
         <assignedSIDs/>
       </role>
+      <role name="adminJobs" pattern="UpdateVI">
+        <permissions>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Build</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
     </roleMap>
   </authorizationStrategy>
   <securityRealm class="hudson.plugins.active_directory.ActiveDirectorySecurityRealm" plugin="active-directory@2.16">
@@ -515,6 +522,16 @@
             <numOfExecutors>1</numOfExecutors>
             <requestedLabel>sbc-linux-build</requestedLabel>
             <createdAt>2020-05-05 14:41:06.416 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-09eb453bf8e4cd1ca</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-09eb453bf8e4cd1ca</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-05 14:45:03.99 UTC</createdAt>
           </hudson.plugins.spotinst.cloud.PendingInstance>
         </entry>
       </pendingInstances>
