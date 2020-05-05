@@ -22,8 +22,6 @@
           <permission>hudson.model.View.Read</permission>
         </permissions>
         <assignedSIDs>
-          <sid>#AllAudioCodes@audiocodes.com</sid>
-          <sid>#AllAudiocodes</sid>
           <sid># All AudioCodes</sid>
         </assignedSIDs>
       </role>
