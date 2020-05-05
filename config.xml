@@ -23,6 +23,7 @@
         </permissions>
         <assignedSIDs>
           <sid>#AllAudioCodes@audiocodes.com</sid>
+          <sid>#AllAudiocodes</sid>
         </assignedSIDs>
       </role>
       <role name="admin" pattern=".*">
