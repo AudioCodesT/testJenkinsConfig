@@ -71,16 +71,10 @@
           <permission>hudson.model.Run.Update</permission>
         </permissions>
         <assignedSIDs>
-          <sid>Ben Magriso</sid>
-          <sid>Ben.Magriso@audiocodes.com</sid>
-          <sid>Shuky Riechard</sid>
-          <sid>Shuky.Riechard@audiocodes.com</sid>
-          <sid>Yossi Merzbach</sid>
-          <sid>Yossi.Merzbach@audiocodes.com</sid>
-          <sid>yuvaly</sid>
           <sid>benm</sid>
           <sid>shukyr</sid>
           <sid>yossim</sid>
+          <sid>yuvaly</sid>
         </assignedSIDs>
       </role>
     </roleMap>
