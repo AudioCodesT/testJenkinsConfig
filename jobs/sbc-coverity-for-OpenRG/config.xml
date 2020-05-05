@@ -89,7 +89,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>if "%GERRIT_BRANCH%" == "7.2.256" ( &#13;
+      <command>if "%GERRIT_BRANCH%" == "7.2.256_MSBR" ( &#13;
   set SERVER=10.4.6.69&#13;
   set COMMAND=coverity-git-256.sh&#13;
 ) else ( &#13;
