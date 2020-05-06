@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>trigger by new patchset&#xd;
+  <description>trigger by new patchset&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -10,7 +9,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -34,10 +33,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -54,9 +54,11 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -68,8 +70,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -95,27 +97,29 @@
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>true</excludeNoCodeChange>
+          <excludePrivateState>false</excludePrivateState>
+          <excludeWipState>false</excludeWipState>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -125,41 +129,41 @@
       <command>set -ex
 
 ## Coverage thresholds
-CVG_TH=&quot;0&quot;
-CVG_TH_Branches=&quot;0&quot;
+CVG_TH="0"
+CVG_TH_Branches="0"
 
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
-echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
+echo "{\"version\": \"${version}\"}" &gt; version.json
 
-git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
+git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo "ESLint command failed"
 
 sh common/build_all.sh
 ret_value=$?
-echo &quot;script Return Value: $ret_value&quot;
+echo "script Return Value: $ret_value"
 
-[ &quot;$ret_value&quot; -eq 0 ] || exit 1
+[ "$ret_value" -eq 0 ] || exit 1
 
 ## Get coverage Summary
-curl -k https://test-jenkins/view/VoiceAI/job/VoiceAI-review/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 &quot;Coverage summary&quot; &gt; summary.txt
+curl -ks -u compile:$jenkins_password https://test-jenkins/view/VoiceAI/job/VoiceAI-review/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 "Coverage summary" &gt; summary.txt
 
 ## Calculate coverage vote
 while read item; do
     case $item in
         Statements* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+            val=$(echo $item | gawk '{print $3}'); val=${val::-1}
             statementsRate=$val
             ;;
         Branches* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+            val=$(echo $item | gawk '{print $3}'); val=${val::-1}
             branchesRate=$val
             ;;
         Functions* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+            val=$(echo $item | gawk '{print $3}'); val=${val::-1}
             functionsRate=$val
             ;;
         Lines* )
-            val=$(echo $item | gawk &apos;{print $3}&apos;); val=${val::-1}
+            val=$(echo $item | gawk '{print $3}'); val=${val::-1}
             linesRate=$val
             ;;
     esac
@@ -167,31 +171,31 @@ done &lt; summary.txt
 
 ## Construct message
 message=$( \
-echo &quot;Coverage thresholds:&quot; &amp;&amp; \
-echo &quot;Statements: $CVG_TH%&quot; &amp;&amp; \
-echo &quot;Branchs:    $CVG_TH_Branches%&quot; &amp;&amp; \
-echo &quot;Functions:  $CVG_TH%&quot; &amp;&amp; \
-echo &quot;Lines:      $CVG_TH%&quot; &amp;&amp; \
-echo &quot;&quot; &amp;&amp; \
+echo "Coverage thresholds:" &amp;&amp; \
+echo "Statements: $CVG_TH%" &amp;&amp; \
+echo "Branchs:    $CVG_TH_Branches%" &amp;&amp; \
+echo "Functions:  $CVG_TH%" &amp;&amp; \
+echo "Lines:      $CVG_TH%" &amp;&amp; \
+echo "" &amp;&amp; \
 cat summary.txt )
 
-msg4json=$( echo &quot;$message&quot; | sed &apos;s/$/ /g&apos; )
+msg4json=$( echo "$message" | sed 's/$/ /g' )
 
-[[ $statementsRate &lt; $CVG_TH || $branchesRate &lt; $CVG_TH_Branches || $functionsRate &lt; $CVG_TH || $linesRate &lt; $CVG_TH ]] &amp;&amp; cvgVote=&quot;-1&quot; || cvgVote=&quot;+1&quot;
+[[ $statementsRate &lt; $CVG_TH || $branchesRate &lt; $CVG_TH_Branches || $functionsRate &lt; $CVG_TH || $linesRate &lt; $CVG_TH ]] &amp;&amp; cvgVote="-1" || cvgVote="+1"
 
-fullJson=&quot;{\&quot;tag\&quot;: \&quot;autogenerated:bot:coverage\&quot;, \&quot;labels\&quot;: {\&quot;Coverage\&quot;: $cvgVote }, \&quot;message\&quot;: \&quot;$msg4json\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;}&quot;
-curl -k -u codeanalyzer:AC@${GERRIT_HOST} --basic -X POST https://${GERRIT_HOST}/a/changes/${GERRIT_CHANGE_NUMBER}/revisions/${GERRIT_PATCHSET_REVISION}/review -d &quot;$fullJson&quot; -H &apos;Content-Type:application/json&apos;
+fullJson="{\"tag\": \"autogenerated:bot:coverage\", \"labels\": {\"Coverage\": $cvgVote }, \"message\": \"$msg4json\", \"notify\": \"NONE\"}"
+curl -k -u codeanalyzer:AC@${GERRIT_HOST} --basic -X POST https://${GERRIT_HOST}/a/changes/${GERRIT_CHANGE_NUMBER}/revisions/${GERRIT_PATCHSET_REVISION}/review -d "$fullJson" -H 'Content-Type:application/json'
 
 
 ## Compile &amp; create TAR
 for file in $(git ls-files \*package.json); do
-  npm -C $(dirname $file) version --allow-same-version $(echo $version | sed &apos;s/\.0*/./g&apos;) &gt; /dev/null
+  npm -C $(dirname $file) version --allow-same-version $(echo $version | sed 's/\.0*/./g') &gt; /dev/null
 done
 
 #########################################################################################
 # WE STOP TO PRODUCE TGZ FILE
 #########################################################################################
-#tar --exclude=&apos;ui/server&apos; --exclude=&apos;ui/client&apos; --exclude=&apos;common/node_modules&apos; --exclude=&apos;session-manager/node_modules&apos; -cvf VoiceAICo.tar *
+#tar --exclude='ui/server' --exclude='ui/client' --exclude='common/node_modules' --exclude='session-manager/node_modules' -cvf VoiceAICo.tar *
 #tar -rvf VoiceAICo.tar ui/server/mock_app ui/client/dist ui/server/dist ui/server/package.json ui/server/package-lock.json ui/server/ecosystem.config.js
 #folder_name=VoiceAICo-$version
 #if [[ -e ${folder_name} ]]
@@ -202,22 +206,22 @@ done
 #tar -xvf VoiceAICo.tar -C ${folder_name}
 #tar -cvzf ${folder_name}.tgz ${folder_name}/
 #
-#TARGET=`echo $GERRIT_REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
+#TARGET=`echo $GERRIT_REFSPEC | sed 's:refs/changes/../::; s:/:-:g'`
 #echo TARGET=${TARGET} &gt; voiceAI.properties
 #echo folder_name=${folder_name} &gt;&gt; voiceAI.properties
 #########################################################################################
 
 description=$(git describe)
-echo &quot;description=$description&quot; &gt; voiceAI.properties
-echo &quot;GERRIT_PATCHSET_REVISION=${GERRIT_PATCHSET_REVISION}&quot; &gt;&gt; voiceAI.properties
-echo &quot;BRANCH=${GERRIT_BRANCH}&quot; &gt;&gt; voiceAI.properties
-echo &quot;GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}&quot; &gt;&gt; voiceAI.properties
-echo &quot;GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}&quot; &gt;&gt; voiceAI.properties
+echo "description=$description" &gt; voiceAI.properties
+echo "GERRIT_PATCHSET_REVISION=${GERRIT_PATCHSET_REVISION}" &gt;&gt; voiceAI.properties
+echo "BRANCH=${GERRIT_BRANCH}" &gt;&gt; voiceAI.properties
+echo "GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}" &gt;&gt; voiceAI.properties
+echo "GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}" &gt;&gt; voiceAI.properties
 
 exit $ret_value
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>voiceAI.properties</propertiesFilePath>
       </info>
@@ -232,7 +236,7 @@ exit $ret_value
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.15">
+    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.16">
       <coberturaReportFile>**/coverage/*coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
       <failUnhealthy>false</failUnhealthy>
@@ -341,7 +345,7 @@ exit $ret_value
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -353,46 +357,56 @@ exit $ret_value
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;${WORKSPACE}/${folder_name}.tgz&quot;,
-            &quot;target&quot;: &quot;sbc-review/com/ac/sbc/VoiceAiConnector/${TARGET}/&quot;,
-            &quot;props&quot;: &quot;type=tar;status=ready&quot;,
-             &quot;recursive&quot;: &quot;false&quot;
+            "pattern": "${WORKSPACE}/${folder_name}.tgz",
+            "target": "sbc-review/com/ac/sbc/VoiceAiConnector/${TARGET}/",
+            "props": "type=tar;status=ready",
+             "recursive": "false"
         }
     ]
 }</spec>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
-      <deployPattern></deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <deployPattern/>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>jenkins_password</name>
+          <value>{AQAAABAAAAAQ9BZ/1NY9+2SISfWd/x2GBzWvCp230oN2gl2X8TkanmA=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
   </buildWrappers>
 </project>
