@@ -73,6 +73,7 @@
         </permissions>
         <assignedSIDs>
           <sid># All AudioCodes</sid>
+          <sid>compile</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -929,28 +930,7 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0d1d2b9856b45659a</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0d1d2b9856b45659a</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-05-06 10:29:38.563 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-008320367f5c4dd89</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-008320367f5c4dd89</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-05-06 10:29:10.863 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
