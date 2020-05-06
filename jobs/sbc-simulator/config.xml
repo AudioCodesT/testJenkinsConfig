@@ -355,7 +355,7 @@ echo "#${BUILD_NUMBER} ${GERRIT_BRANCH}: ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHS
                       </EnvInjectBuilder>
                       <hudson.tasks.Shell>
                         <command># sbc-basic-review or sbc-review is running Already?
-allRunning=$(curl -ks -u compile:$jenkins_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+allRunning=$(curl -ks -u compile:$compile_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]" | \
 sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep 'sbc-review\|sbc-basic-review' || echo Not found)
 if [ "$allRunning" != "Not found" ]; then
@@ -488,7 +488,7 @@ $change,$ps
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>jenkins_password</name>
+          <name>compile_password</name>
           <value>{AQAAABAAAAAQwgSPG4CbDK6SdilFazvWgDYIs5keAXvrqbr8pAg/DqU=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
