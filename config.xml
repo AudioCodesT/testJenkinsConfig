@@ -67,7 +67,9 @@
       <role name="readOnly" pattern=".*">
         <permissions>
           <permission>hudson.model.Hudson.Read</permission>
+          <permission>org.jenkins.plugins.lockableresources.LockableResourcesManager.View</permission>
           <permission>hudson.model.Item.Read</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
