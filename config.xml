@@ -218,7 +218,7 @@
           <sid>anonymous</sid>
         </assignedSIDs>
       </role>
-      <role name="adminJobs" pattern="&quot;(Update.*)&quot;">
+      <role name="adminJobs" pattern="(Update.*)">
         <permissions>
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.Item.Build</permission>
