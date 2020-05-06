@@ -131,7 +131,7 @@ if [ `ls $Target/*.cmp | wc -l` != 5 ]; then echo "Missing files, exiting job"; 
 # Check if sbc-drt-request job is in the queue or already running
 # to avoid more than one sbc-drt-request execution 
 for job in \
-  $(curl -ks https://test-jenkins/queue/api/json | \
+  $(curl -ks -u compile:$jenkins_password https://test-jenkins/queue/api/json | \
   sed -e 's/GERRIT_REFSPEC/\n/g' | grep sbc-drt-request); do
   if echo $job | grep -q $REFSPEC; then
     echo "DRT was executed and waiting in the queue"; 
@@ -140,7 +140,7 @@ for job in \
 done
 
 # sbc-drt-request is running Already?
-allRunning=$(curl -ks "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+allRunning=$(curl -ks -u compile:$jenkins_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]" | \
 sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep drt)
 
@@ -238,7 +238,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
                         <command>
 # They are sbc-drt-build that running now?
 echo "Check if they are sbc-drt-build that running now"
-for job in $(curl -ks "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+for job in $(curl -ks -u compile:$jenkins_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]" | \
 sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep sbc-drt-build); do
    if curl -ks "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
@@ -250,7 +250,7 @@ done
 # Or sbc-drt-copy-to-netapp1 in the queue?
 echo "Check if they are sbc-drt-copy-to-netapp1 in the queue"
 for job in \
-  $(curl -ks https://test-jenkins/queue/api/json | \
+  $(curl -ks -u compile:$jenkins_password https://test-jenkins/queue/api/json | \
   sed -e 's/GERRIT_REFSPEC/\n/g' | grep sbc-drt); do
   if echo $job | grep -q $REFSPEC; then
     echo "Not the last execution, $job is in the queue - exit without message"; 
@@ -340,6 +340,10 @@ CHANGES=${CHANGES}</properties>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
           <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+        </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>jenkins_password</name>
+          <value>{AQAAABAAAAAQSpKoLe26uUGlU1Z7QY4KZZewiddRNxgGNjekiUK1KvU=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
