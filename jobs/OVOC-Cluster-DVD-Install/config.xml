@@ -1,20 +1,19 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>############ This is work in progress  ################&#xd;
-############## Do NOT run this job #################&#xd;
-&#xd;
-This job accept the following parameters:&#xd;
-* New tag&#xd;
-* ISO to deploy&#xd;
-* OVOC server IP&#xd;
-* Server role (Master, VQ, PM)&#xd;
-* Test mode&#xd;
-&#xd;
-And does the following:&#xd;
-1. Connect to OVOC server by its IP address.&#xd;
-2. Install DVD3 according to given parameters.&#xd;
-&#xd;
+  <description>############ This is work in progress  ################&#13;
+############## Do NOT run this job #################&#13;
+&#13;
+This job accept the following parameters:&#13;
+* New tag&#13;
+* ISO to deploy&#13;
+* OVOC server IP&#13;
+* Server role (Master, VQ, PM)&#13;
+* Test mode&#13;
+&#13;
+And does the following:&#13;
+1. Connect to OVOC server by its IP address.&#13;
+2. Install DVD3 according to given parameters.&#13;
+&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -23,7 +22,7 @@ And does the following:&#xd;
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -45,12 +44,12 @@ And does the following:&#xd;
         <hudson.model.StringParameterDefinition>
           <name>TAG</name>
           <description>The tag to install</description>
-          <defaultValue></defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>DeployISO</name>
-          <description></description>
+          <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>latest_iso</string>
@@ -60,13 +59,13 @@ And does the following:&#xd;
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>ServerIP</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>ServerRole</name>
-          <description></description>
+          <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>Master</string>
@@ -77,7 +76,7 @@ And does the following:&#xd;
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>FullTests</name>
-          <description>this param is inherited from ovoc build</description>
+          <description>Run full sanity tests or not</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>1</string>
@@ -94,8 +93,9 @@ And does the following:&#xd;
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>ems-build</assignedNode>
@@ -108,10 +108,10 @@ And does the following:&#xd;
   <builders>
     <hudson.tasks.Shell>
       <command>###### Echo parameters for testing
-echo -e &quot;TAG:\t${TAG}&quot; &gt; sanity.properties
-echo -e &quot;ISO:\t${DeployISO}&quot; &gt;&gt; sanity.properties
-echo -e &quot;IP:\t${ServerIP}&quot; &gt;&gt; sanity.properties
-echo -e &quot;Role:\t${ServerRole}&quot; &gt;&gt; sanity.properties
+echo -e "TAG:\t${TAG}" &gt; sanity.properties
+echo -e "ISO:\t${DeployISO}" &gt;&gt; sanity.properties
+echo -e "IP:\t${ServerIP}" &gt;&gt; sanity.properties
+echo -e "Role:\t${ServerRole}" &gt;&gt; sanity.properties
 
 cat sanity.properties
 
@@ -120,7 +120,7 @@ if false; then
 # DO NOT RUN ANY OF THIS OLD CODE
 
 ## Get prerequisites for current branch
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
 
 cd ${WORKSPACE}/EMS
 [[ -d target ]] &amp;&amp; rm -rf target
@@ -143,12 +143,12 @@ cd ${WORKSPACE}
 
 
 # define a default GW - we need it to configure network of tested machine in case version in 7.4.3000 or older
-DefaultGateway=&quot;172.16.132.1&quot;
-netMask=&quot;24&quot;
+DefaultGateway="172.16.132.1"
+netMask="24"
 
 
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
-if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]
+if [[ "$DeployISO" == "official_iso" ]]
 then
 	AMI_ID=ami-03b07cb67f9a8730b # &lt;-- without ENA support
     #AMI_ID=ami-0264e23c55ba36c29 # &lt;-- with ENA support
@@ -158,49 +158,49 @@ else
 fi
 
 # Luanch instanc from given AMI. First try to use spot, else use on-demand.
-emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
+emsTestedVM="$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name "Jenkins &amp; App subnets machines key pair" --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name "Jenkins &amp; App subnets machines key pair" --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)"
 
 
 #keep instance ID
-INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; |grep InstanceId |cut -d &apos;&quot;&apos; -f 4)&quot;
+INSTANCE_ID="$(echo "${emsTestedVM}" |grep InstanceId |cut -d '"' -f 4)"
 
 #wait for aws instance to get to `running` status
 aws ec2 wait instance-running --instance-ids ${INSTANCE_ID}
 
-#add tag to this instans:  &quot;emsSanity&quot;
+#add tag to this instans:  "emsSanity"
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityInstall
-#add tag to this instans:  &quot;Spotinst&quot;
+#add tag to this instans:  "Spotinst"
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Creator,Value=Spotinst
 #set to its delete volume when instance will be terminated
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
-#keep ip address into &quot;vmIP&quot;
-vmIP=$(aws ec2 describe-instances --instance-id $INSTANCE_ID --output text --query &apos;Reservations[*].Instances[*].PrivateIpAddress&apos;)
+aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings "{    \"DeviceName\": \"/dev/sda1\",    \"Ebs\": {      \"DeleteOnTermination\": true    }  } "
+#keep ip address into "vmIP"
+vmIP=$(aws ec2 describe-instances --instance-id $INSTANCE_ID --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
 #find what is the current branch
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
+if [ $BRANCH == master ]; then BRANCH="7.4"; fi
 
-echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
-echo &quot;vmIP=${vmIP}&quot; &gt;&gt; sanity.properties
+echo "INSTANCE_ID=${INSTANCE_ID}" &gt; sanity.properties
+echo "vmIP=${vmIP}" &gt;&gt; sanity.properties
 #Wait for the instance to startup
-echo &quot;Wait until the instance is up&quot;
-OLD_STATE=&quot;&quot;
+echo "Wait until the instance is up"
+OLD_STATE=""
 while true; do
     sleep 10
-    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
+    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query "Reservations[0].Instances[0].State.Name")
     if [[ $STATE != $OLD_STATE ]]; then
         echo $STATE
         OLD_STATE=$STATE
     fi
-    if [[ $STATE == &quot;running&quot; ]]; then
+    if [[ $STATE == "running" ]]; then
         break
     fi
 done
-echo &quot;Wait until instance is fully loaded&quot;
+echo "Wait until instance is fully loaded"
 sleep 100
 
-# if this is a build for QA then configure the tested machine with &quot;ami&quot; - means we set TimeZone London (GMT+0)
-# but if this is a regular build then configure the tested machine with &quot;sanity&quot; - means we set TimeZone Israel
-if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]
+# if this is a build for QA then configure the tested machine with "ami" - means we set TimeZone London (GMT+0)
+# but if this is a regular build then configure the tested machine with "sanity" - means we set TimeZone Israel
+if [[ "$DeployISO" == "official_iso" ]]
 then
 	sanityOrAmi=ami
 else
@@ -212,21 +212,21 @@ cd EMS/VersionRelease
 # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
 python2.7 setNetwork.py $vmIP $sanityOrAmi
 
-echo &quot;Finish SetNetwork Configuration&quot;
+echo "Finish SetNetwork Configuration"
 
 #run sanityInstall and if sanity install fails then copy logs and exit with error
-echo &quot;Running single script for install&quot;
+echo "Running single script for install"
 python2.7 SanityInstall.py $TAG $vmIP $DeployISO || { python2.7 SanityCopyLogs.py $TAG $vmIP ; exit 1; }
-echo &quot;Finish SanityInstall&quot;
+echo "Finish SanityInstall"
 
 ## Create AMI
-if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
+if [[ "$DeployISO" == "official_iso" ]]; then
 	#check if the ami already exists
-	checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query &quot;Images[0].State&quot;)
-	if [[ &quot;$checkIfAmiExists&quot; == &quot;available&quot; ]]; then
-    	echo &quot;Deleting existing AMI of ovocAMI_${TAG}&quot;
+	checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query "Images[0].State")
+	if [[ "$checkIfAmiExists" == "available" ]]; then
+    	echo "Deleting existing AMI of ovocAMI_${TAG}"
         #get AmiId to delete it
-        AmiIDToDelete=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query &quot;Images[0].ImageId&quot;)
+        AmiIDToDelete=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query "Images[0].ImageId")
         
         #get Snapshot id - delete the Snapshot
         snapshotIdToDelete=$(aws ec2 describe-images --image-ids $AmiIDToDelete --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
@@ -237,22 +237,22 @@ if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
         sleep 60
 	fi
     
-	echo &quot;Creating New Ovoc Ami&quot;
+	echo "Creating New Ovoc Ami"
 	#create a new AMI After installation and keep ImageID value
-	AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name &quot;ovocAMI_${TAG}&quot; --description &quot;ovoc AMI ${TAG}&quot; --output text --query &quot;ImageId&quot;)
+	AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name "ovocAMI_${TAG}" --description "ovoc AMI ${TAG}" --output text --query "ImageId")
 	
     #check if image available
-    OLD_STATE=&quot;&quot;
+    OLD_STATE=""
     while true; do
     	sleep 100
-        STATE=$(aws ec2 describe-images --image-ids $AmiId --output text --query &quot;Images[0].State&quot;)
+        STATE=$(aws ec2 describe-images --image-ids $AmiId --output text --query "Images[0].State")
         
         if [[ $STATE != $OLD_STATE ]]; then
         	echo $STATE
             OLD_STATE=$STATE
         fi
         
-        if [[ $STATE == &quot;available&quot; ]]; then
+        if [[ $STATE == "available" ]]; then
         	break
         fi
     done
@@ -268,13 +268,13 @@ if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
 	aws ec2 create-tags --resources $AmiId --tags Key=Branch,Value=$BRANCH
 	
 	## share the new created AMI with dev and QA teams:
-	echo &quot;Sharing the new created AMI with Dev and QA teams:&quot;
+	echo "Sharing the new created AMI with Dev and QA teams:"
 	qaAccount=191324562914
 	devAccount=952166219867
 	#give permissions to ovoc QA Account to the AMI
-	aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$qaAccount\&quot;}]}&quot;
+	aws ec2 modify-image-attribute --image-id $AmiId --launch-permission "{\"Add\":[{\"UserId\":\"$qaAccount\"}]}"
 	#give permissions to ovoc DEV Account to the Ami
-	aws ec2 modify-image-attribute --image-id $AmiId --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;UserId\&quot;:\&quot;$devAccount\&quot;}]}&quot;
+	aws ec2 modify-image-attribute --image-id $AmiId --launch-permission "{\"Add\":[{\"UserId\":\"$devAccount\"}]}"
 	
 	#give permissions to ovoc QA Account to the SnapShot
 	aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $qaAccount
@@ -282,12 +282,12 @@ if [[ &quot;$DeployISO&quot; == &quot;official_iso&quot; ]]; then
 	aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $devAccount
 	
 	#check if shared
-	#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query &quot;LaunchPermissions[*]&quot;)
+	#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query "LaunchPermissions[*]")
 	#ImagePermissionsInArray=($checkImagePermissions)
-	#if [ ! { [&quot;${ImagePermissionsInArray[1]}&quot; == &quot;$qaAccount&quot;] &amp;&amp; [&quot;${ImagePermissionsInArray[0]}&quot; == &quot;$devAccount&quot;]; } ]; then
-	#    echo &quot;**************************************************************************&quot;
-	#    echo &quot;give Permissions Failed&quot;
-	#    echo &quot;**************************************************************************&quot;
+	#if [ ! { ["${ImagePermissionsInArray[1]}" == "$qaAccount"] &amp;&amp; ["${ImagePermissionsInArray[0]}" == "$devAccount"]; } ]; then
+	#    echo "**************************************************************************"
+	#    echo "give Permissions Failed"
+	#    echo "**************************************************************************"
 	#fi
 fi
 
@@ -297,7 +297,7 @@ fi
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>sanity.properties</propertiesFilePath>
       </info>
@@ -363,7 +363,7 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -375,7 +375,7 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${TAG}_${ServerRole}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
