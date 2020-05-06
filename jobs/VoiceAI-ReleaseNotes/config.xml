@@ -131,7 +131,7 @@ AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD
 ## Run build script for coverage report
 sh common/build_all.sh
 
-curl -ks -u compile:$jenkins_password https://test-jenkins/job/VoiceAI-ReleaseNotes/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 "Coverage summary" &gt; summary.txt
+curl -ks -u compile:$compile_password https://test-jenkins/job/VoiceAI-ReleaseNotes/${BUILD_ID}/consoleText 2&gt;/dev/null | grep -m1 -A5 "Coverage summary" &gt; summary.txt
 #sed -i "1s/^/${BUILD_URL}\n/" summary.txt
 sed "s/$/&lt;\/br&gt;/g" summary.txt &gt; summary.html
 Coverage_Summary=$(cat summary.html)
@@ -281,7 +281,7 @@ CALLER_URL=${JOB_URL}</properties>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>jenkins_password</name>
+          <name>compile_password</name>
           <value>{AQAAABAAAAAQPY50vRNvthCH7ggesYABcI96739w+VTBOPMAZnvNH1U=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
