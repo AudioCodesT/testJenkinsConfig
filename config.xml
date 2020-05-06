@@ -879,7 +879,18 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-08fc9f90ab8d11987</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-08fc9f90ab8d11987</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>mtr-Build-Label</requestedLabel>
+            <createdAt>2020-05-06 07:47:29.126 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1521,10 +1532,20 @@
         <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
         <string>test</string>
+        <string>TEST - openjdk11 slave with openjdk8 master</string>
+        <string>Test Artifactory</string>
+        <string>test-email</string>
+        <string>test-job</string>
+        <string>Test-Pipeline</string>
+        <string>test-sbc-compile</string>
         <string>Test-YY</string>
+        <string>test123</string>
+        <string>test_concurrent</string>
+        <string>test_createOvocImageAzure</string>
         <string>test_emsBuild_ovoc_server_7.8</string>
         <string>test_emsSanity_install</string>
         <string>test_emsSanity_upgrade</string>
+        <string>test_sbc-basic-review</string>
         <string>test_sbc-build-virtualSBC</string>
         <string>test_sbc-simulator</string>
         <string>Windows OpenJDK 11</string>
