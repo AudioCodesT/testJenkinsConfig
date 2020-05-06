@@ -73,7 +73,6 @@
         </permissions>
         <assignedSIDs>
           <sid># All AudioCodes</sid>
-          <sid>anonymous</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -879,18 +878,7 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-08fc9f90ab8d11987</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-08fc9f90ab8d11987</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2020-05-06 07:47:29.126 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -941,7 +929,28 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0d1d2b9856b45659a</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0d1d2b9856b45659a</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>VoiceAI-build</requestedLabel>
+            <createdAt>2020-05-06 10:29:38.563 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+        <entry>
+          <string>i-008320367f5c4dd89</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-008320367f5c4dd89</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>VoiceAI-build</requestedLabel>
+            <createdAt>2020-05-06 10:29:10.863 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
