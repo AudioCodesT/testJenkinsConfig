@@ -218,7 +218,7 @@
           <sid>anonymous</sid>
         </assignedSIDs>
       </role>
-      <role name="adminJobs" pattern="UpdateVI">
+      <role name="adminJobs" pattern="UpdateJira">
         <permissions>
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.Item.Build</permission>
@@ -481,128 +481,7 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-096354e81ee7202f7</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-096354e81ee7202f7</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:38:05.488 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-05b64df3a117707b6</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-05b64df3a117707b6</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:31:48.197 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0c861d8b96ff177f0</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0c861d8b96ff177f0</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:38:05.488 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0a8d47e240b5191af</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0a8d47e240b5191af</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:31:21.84 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0436be36ccfd9276d</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0436be36ccfd9276d</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:32:01.862 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-089d5916a39115be0</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-089d5916a39115be0</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:30:28.313 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-00e3d9ba7a23ddf69</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-00e3d9ba7a23ddf69</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:32:05.804 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0e08fefb0b380ce70</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0e08fefb0b380ce70</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:32:05.795 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-028cf53b86817520c</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-028cf53b86817520c</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:29:03.167 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-0b279a679b98ce397</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0b279a679b98ce397</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:32:19.486 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-078737bbb73a537c5</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-078737bbb73a537c5</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:31:04.852 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-041a9a48d277e42b6</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-041a9a48d277e42b6</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-05 15:33:18.368 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -999,7 +878,18 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-06a8c8833d87a2f98</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-06a8c8833d87a2f98</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>mtr-Build-Label</requestedLabel>
+            <createdAt>2020-05-06 06:06:08.858 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1050,38 +940,7 @@
       <name>sig-a252d010</name>
       <accountId></accountId>
       <groupId>sig-a252d010</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-04bbda5fc2af769e9</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-04bbda5fc2af769e9</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-05-05 15:37:29.962 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-02ad8e5ecde8129dc</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-02ad8e5ecde8129dc</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-05-05 15:37:04.448 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-        <entry>
-          <string>i-05f43c9837e26bcf0</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-05f43c9837e26bcf0</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>VoiceAI-build</requestedLabel>
-            <createdAt>2020-05-05 15:35:28.975 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>VoiceAI-build</labelString>
       <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
