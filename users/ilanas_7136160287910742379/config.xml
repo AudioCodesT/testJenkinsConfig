@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -45,7 +45,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Ilana.Shapiro@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
@@ -70,6 +70,7 @@
         <string>AI-ENG</string>
         <string># AUDC - HR - All USA</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string>MUSIC Telecom SDevel</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
@@ -80,6 +81,7 @@
         <string>Software Configuration Management</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
+        <string>365_MFA_Apps</string>
         <string>Agile users</string>
         <string>AWS_Jira_Users</string>
         <string>RDP-AISMARKLOCK</string>
@@ -87,6 +89,7 @@
         <string>BBL.Quality</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>AI-Tech Support</string>
+        <string>Allow Office365 Groups</string>
         <string>CatalogApps_Everyone</string>
         <string>AI-QA</string>
         <string>allusers</string>
@@ -106,7 +109,8 @@
         <string>AI-ClearCase</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1573501681070</timestamp>
+      <timestamp>1588802486684</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
