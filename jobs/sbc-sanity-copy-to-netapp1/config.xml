@@ -1,8 +1,7 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>Started by job &quot;sbc-sanity-build&quot; for each successful compiled board.&#xd;
-If the 3 requested boards were compiled, this job will trigger the job &quot;sbc-sanity-request&quot; </description>
+  <description>Started by job "sbc-sanity-build" for each successful compiled board.&#13;
+If the 3 requested boards were compiled, this job will trigger the job "sbc-sanity-request" </description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -10,7 +9,7 @@ If the 3 requested boards were compiled, this job will trigger the job &quot;sbc
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -31,44 +30,44 @@ If the 3 requested boards were compiled, this job will trigger the job &quot;sbc
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>REFSPEC</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>EMAIL</name>
-          <description></description>
+          <description/>
           <defaultValue>yossim@audiocodes.com</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>BOARD</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>REFTARGET</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CHANGES</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TestMode</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -82,6 +81,7 @@ If the 3 requested boards were compiled, this job will trigger the job &quot;sbc
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>copy2netapp</assignedNode>
@@ -93,15 +93,15 @@ If the 3 requested boards were compiled, this job will trigger the job &quot;sbc
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>User=&quot;$artifactory_user:$artifactory_password&quot;
-Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
-DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
-#REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
+      <command>User="$artifactory_user:$artifactory_password"
+Artifactory="https://artifactory/api/storage/sbc-review/com/ac/sbc"
+DOWNLOAD=$(echo $Artifactory | sed 's|api/storage/||')
+#REFTARGET=`echo $REFSPEC | sed 's:refs/changes/../::; s:/:-:g'`
+Target="/netapp1/CompilationResults/DRT/Firmware/$REFTARGET"
 
-# Create the folder in netapp1, in case it wasn&apos;t done already
-if ! [ -d &quot;$Target&quot; ]; then
-  mkdir &quot;$Target&quot;
+# Create the folder in netapp1, in case it wasn't done already
+if ! [ -d "$Target" ]; then
+  mkdir "$Target"
 fi
 
 # if file was compiled successfully but not yet deployed to artifactory, then wait 30 sec
@@ -115,38 +115,38 @@ if ! curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep -q $BO
 fi
 
 # Go over all cmp files in the Artifactory and copy them to netapp1 ($Target)
-curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep uri | grep cmp | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $REFTARGET.list
-if [ -s &quot;$REFTARGET.list&quot; ]; then
+curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep uri | grep cmp | cut -d'"' -f4 | cut -c 2- &gt; $REFTARGET.list
+if [ -s "$REFTARGET.list" ]; then
    while read -r FileName
    do
-     if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
+     if [ -e "$Target/$FileName" ]; then continue; fi
      echo Download $FileName to netapp1
-     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output &quot;$Target/$FileName&quot;
-   done &lt; &quot;$REFTARGET.list&quot;
+     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output "$Target/$FileName"
+   done &lt; "$REFTARGET.list"
 fi
 
-# Don&apos;t execute the next job in case you don&apos;t found 3 files
-if [ `ls $Target/*.cmp | wc -l` -lt 3 ]; then echo &quot;Missing files, exiting job&quot;; exit 2; fi
+# Don't execute the next job in case you don't found 3 files
+if [ `ls $Target/*.cmp | wc -l` -lt 3 ]; then echo "Missing files, exiting job"; exit 2; fi
 
 # Check if sbc-sanity-request job is in the queue or already running
 # to avoid more than one sbc-sanity-request execution 
 for job in \
-  $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-sanity-request); do
+  $(curl -ks -u compile:$jenkins_password https://test-jenkins/queue/api/json | \
+  sed -e 's/GERRIT_REFSPEC/\n/g' | grep sbc-sanity-request); do
   if echo $job | grep -q $REFSPEC; then
-    echo &quot;Sanity was executed and waiting in the queue&quot;; 
+    echo "Sanity was executed and waiting in the queue"; 
     exit 2
   fi
 done
 
 # sbc-sanity-request is running Already?
-allRunning=$(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
-oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sanity)
+allRunning=$(curl -ks -u compile:$jenkins_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+oneOffExecutors\[currentExecutable\[url\]\]\]" | \
+sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep sanity)
 
-for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-sanity-request); do
-  if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-    echo &quot;SANITY was executed already, job $job&quot;; 
+for job in $(echo $allRunning | sed 's: :\n:g' | grep sbc-sanity-request); do
+  if curl -ks "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
+    echo "SANITY was executed already, job $job"; 
     exit 2
   fi
 done
@@ -155,13 +155,13 @@ done
 for f in $Target/*.cmp; do
   checkSum1=$(curl -ks -u $User -X GET \
             $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
-            grep md5 | head -1 | cut -d\&quot; -f4)
-  checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
+            grep md5 | head -1 | cut -d\" -f4)
+  checkSum2=$(md5sum $f | cut -d" " -f1)
   if [ $checkSum1 != $checkSum2 ]; then
     # sbc-sanity-build is running now?
-    for job in $(echo $allRunning | sed &apos;s: :\n:g&apos; | grep sbc-sanity-build); do
-      if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-        echo &quot;sbc-sanity-build is running now, job $job, the files are not ready yet&quot;; 
+    for job in $(echo $allRunning | sed 's: :\n:g' | grep sbc-sanity-build); do
+      if curl -ks "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
+        echo "sbc-sanity-build is running now, job $job, the files are not ready yet"; 
         exit 2
       fi
     done
@@ -175,8 +175,8 @@ done
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.0"/>
-      <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.3"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
         <worstResult>
           <name>SUCCESS</name>
           <ordinal>0</ordinal>
@@ -192,12 +192,12 @@ done
       </runCondition>
       <conditionalbuilders>
         <hudson.tasks.Shell>
-          <command>echo &quot;Send a message regarding the compilation was completed&quot;
+          <command>echo "Send a message regarding the compilation was completed"
 exit 0
-revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed 's:/:/revisions/:')
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;$TestMode Sanity Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
--H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
+-d "{\"message\": \"$TestMode Sanity Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\",\"notify\": \"NONE\", \"tag\": \"SIP-Sanity\"}" \
+-H 'Content-Type: application/json' &gt; /dev/null</command>
         </hudson.tasks.Shell>
       </conditionalbuilders>
     </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
@@ -206,7 +206,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
             <worstResult>
               <name>ABORTED</name>
               <ordinal>4</ordinal>
@@ -237,32 +237,32 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
                       <hudson.tasks.Shell>
                         <command>
 # They are sbc-sanity-build that running now?
-echo &quot;Check if they are sbc-sanity-build that running now&quot;
-for job in $(curl -ks &quot;https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
-oneOffExecutors\[currentExecutable\[url\]\]\]&quot; | \
-sed -e &apos;s/&quot;url&quot;:&quot;/\n/g&apos; | sed &apos;s/&quot;}}.*//g&apos; | tail -n +2 | grep sbc-sanity-build); do
-   if curl -ks &quot;${job}api/json?tree=actions\[parameters\[value\]\]&quot; | grep -q $REFSPEC; then
-    echo &quot;Not the last execution, $job is in build processing - exit without message&quot;
+echo "Check if they are sbc-sanity-build that running now"
+for job in $(curl -ks -u compile:$jenkins_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+oneOffExecutors\[currentExecutable\[url\]\]\]" | \
+sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep sbc-sanity-build); do
+   if curl -ks "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
+    echo "Not the last execution, $job is in build processing - exit without message"
     exit 1
    fi
 done
 
 # Or sbc-sanity-copy-to-netapp1 in the queue?
-echo &quot;Check if they are sbc-sanity-copy-to-netapp1 in the queue&quot;
+echo "Check if they are sbc-sanity-copy-to-netapp1 in the queue"
 for job in \
-  $(curl -ks https://test-jenkins/queue/api/json | \
-  sed -e &apos;s/GERRIT_REFSPEC/\n/g&apos; | grep sbc-sanity); do
+  $(curl -ks -u compile:$jenkins_password https://test-jenkins/queue/api/json | \
+  sed -e 's/GERRIT_REFSPEC/\n/g' | grep sbc-sanity); do
   if echo $job | grep -q $REFSPEC; then
-    echo &quot;Not the last execution, $job is in the queue - exit without message&quot;; 
+    echo "Not the last execution, $job is in the queue - exit without message"; 
     exit 1
   fi
 done
 
-echo &quot;It is the last copy job, send a message to the user&quot;
-revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+echo "It is the last copy job, send a message to the user"
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed 's:/:/revisions/:')
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press Sanity again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
--H &apos;Content-Type: application/json&apos; &gt; /dev/null
+-d "{\"message\": \"There was a problem to copy compilation results to netapp1 storage, please press Sanity again later\",\"notify\": \"OWNER\", \"tag\": \"SIP-Sanity\"}" \
+-H 'Content-Type: application/json' &gt; /dev/null
 </command>
                       </hudson.tasks.Shell>
                     </buildSteps>
@@ -272,7 +272,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -306,7 +306,7 @@ TestMode=${TestMode}</properties>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <recipientProviders/>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -317,7 +317,7 @@ TestMode=${TestMode}</properties>
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -347,17 +347,17 @@ TestMode=${TestMode}</properties>
         <hudson.plugins.build__timeout.operations.AbortOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -365,11 +365,15 @@ TestMode=${TestMode}</properties>
           <name>artifactory_password</name>
           <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
         </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>jenkins_password</name>
+          <value>{AQAAABAAAAAQZLeE/GhBSTn/dVZ80PYPYR5DnC1YeFhwbxV+GR7juPs=}</value>
+        </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${REFSPEC}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
