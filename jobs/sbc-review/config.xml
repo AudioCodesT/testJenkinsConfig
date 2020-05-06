@@ -390,7 +390,7 @@ echo ps=$checkPS &gt;&gt; properties.txt
                       </EnvInjectBuilder>
                       <hudson.tasks.Shell>
                         <command># sbc-basic-review or sbc-review is running Already?
-allRunning=$(curl -ks -u compile:$jenkins_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
+allRunning=$(curl -ks -u compile:$compile_password "https://test-jenkins/computer/api/json?tree=computer\[executors\[currentExecutable\[url\]\],\
 oneOffExecutors\[currentExecutable\[url\]\]\]" | \
 sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep sbc-simulator || echo Not found)
 if [ "$allRunning" != "Not found" ]; then
@@ -546,7 +546,7 @@ $change,$ps
           <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkins_password</name>
+          <name>compile_password</name>
           <value>{AQAAABAAAAAQp8diqOkye2z4nsfB2qaHe6Cc/ha7rbrT7Qko3+pDoIM=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
