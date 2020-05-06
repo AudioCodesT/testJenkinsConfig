@@ -12,7 +12,6 @@
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
@@ -41,7 +40,64 @@
     </hudson.search.UserSearchProperty>
     <hudson.model.TimeZoneProperty/>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string># R&amp;D HDGW SYSTEM</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string>TG1000</string>
+        <string># R&amp;D HDGW SYSTEM SW</string>
+        <string>cc_users</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_ARM_access_BS_Internal_Users</string>
+        <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
+        <string># All Lunch</string>
+        <string>Logistics_maintenance</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># RnD Solutions SW group</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># All Cellular</string>
+        <string>AudioCodes_VPN</string>
+        <string># RnD Israel</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
+        <string>tgcustomersupport_forward</string>
+        <string>CI_ARM_developers</string>
+        <string>Agile users</string>
+        <string># All 012 voip</string>
+        <string># ARM</string>
+        <string>R&amp;D HDGW software</string>
+        <string>AWS_Jira_Users</string>
+        <string># RnD ARM</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Allow Office365 Groups</string>
+        <string># ClearCase R&amp;D</string>
+        <string># All R&amp;D</string>
+        <string>Jira leaders</string>
+        <string>CatalogApps_Everyone</string>
+        <string># Gym</string>
+        <string>365_Tas</string>
+        <string># Agile users</string>
+        <string># R&amp;D HDGW GROUP</string>
+        <string>FTP_default</string>
+        <string># RnD ARM Router</string>
+        <string># All HotMobile</string>
+        <string>Linuxusers</string>
+        <string>Domain Users</string>
+        <string>ARM-FC</string>
+      </roles>
+      <timestamp>1588762966208</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
+      <emailAddress>Moshe.Ben-Eliezer@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
   </properties>
 </user>
