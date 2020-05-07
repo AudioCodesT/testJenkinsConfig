@@ -1,8 +1,7 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>This job pulls VoiceAI docker images from the Artifactory repository and pushes them to ECR.&#xd;
-Fill in the tags for each image.&#xd;
+  <description>This job pulls VoiceAI docker images from the Artifactory repository and pushes them to ECR.&#13;
+Fill in the tags for each image.&#13;
 Images without tags will not be processed.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -11,11 +10,8 @@ Images without tags will not be processed.</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -29,7 +25,7 @@ Images without tags will not be processed.</description>
           <name>version</name>
           <description>The specific version to push to ECR.
 This is the tag the image on ECR will get.</description>
-          <defaultValue></defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -41,8 +37,9 @@ This is the tag the image on ECR will get.</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>VoiceAI-build</assignedNode>
@@ -57,17 +54,17 @@ This is the tag the image on ECR will get.</description>
     <hudson.tasks.Shell>
       <command>##
 ### Add AudioCodes Public certificate to local machine
-echo &quot;*** Verify AUDC certificate ***&quot;
+echo "*** Verify AUDC certificate ***"
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
 if ! curl -s -o /dev/null https://artifactory; then
-  echo &quot;Installing AudioCodes CA certificate.&quot;
-  dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
-  if [[ &quot;$dist&quot; == &quot;ubuntu&quot; ]]; then
+  echo "Installing AudioCodes CA certificate."
+  dist=$(cat /etc/*release* | grep -e "^ID=" | cut -d'=' -f2)
+  if [[ "$dist" == "ubuntu" ]]; then
     cert=/usr/local/share/ca-certificates/audc2016.crt
-    updtCAcmd=&quot;update-ca-certificates&quot;
-  elif [[ &quot;$dist&quot; =~ &quot;centos&quot; ]]; then
+    updtCAcmd="update-ca-certificates"
+  elif [[ "$dist" =~ "centos" ]]; then
     cert=/etc/pki/ca-trust/source/anchors/audc2016.crt
-    updtCAcmd=&quot;update-ca-trust&quot;
+    updtCAcmd="update-ca-trust"
   fi
   sudo rm -f $cert
   cat &lt;&lt;-EOL | sudo tee $cert &gt; /dev/null
@@ -109,17 +106,17 @@ EOL
   sleep 3
   sudo systemctl restart docker
 else
-  echo &quot;Skipped installing AudioCodes CA certificate.&quot;
+  echo "Skipped installing AudioCodes CA certificate."
 fi
 
 ## Create .netrc
 [[ -f ~/.netrc ]] &amp;&amp; rm ~/.netrc
-echo &quot;machine docker-voice-ai.artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
-echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
-echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
-echo &quot;machine docker-voice-ai.test-artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
-echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
-echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
+echo "machine docker-voice-ai.artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
+echo "login jenkins" &gt;&gt; ~/.netrc
+echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
+echo "machine docker-voice-ai.test-artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
+echo "login jenkins" &gt;&gt; ~/.netrc
+echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 
 ## Create AWS files
 [[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
@@ -149,22 +146,25 @@ cat /home/centos/.aws/credentials
 
 ## Set branch by $version
 case $version in
-	1.1*|1.2)
-    	BRANCH=&quot;1.2&quot;
+	1.1*|1.2*)
+    	BRANCH="1.2"
         ;;
-    1.3*|1.4)
-    	BRANCH=&quot;1.4&quot;
+    1.3*|1.4*)
+    	BRANCH="1.4"
         ;;
-    1.5*|1.6)
-        BRANCH=&quot;1.6&quot;
+    1.5*|1.6*)
+        BRANCH="1.6"
+        ;;
+    1.7*|1.8*)
+        BRANCH="1.8"
         ;;
 esac
 
 ### Build the project
 ## Set docker vars
-ART_DOCKER_REG=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
-ECR_DOCKER_REG=&quot;858367874798.dkr.ecr.eu-central-1.amazonaws.com&quot;
-ECR_DOCKER_PREFIX=&quot;voice-ai&quot;
+ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
+ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
+ECR_DOCKER_PREFIX="voice-ai"
 
 ## Login to docker registry on Artifactory
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
@@ -179,27 +179,27 @@ curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$versio
 #curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version-azure-mock.yml
 
 ## Get images and versions
-images=$(grep &quot;image: docker-voice-ai&quot; docker-compose-vag-$version.yml | cut -d/ -f2)
+images=$(grep "image: docker-voice-ai" docker-compose-vag-$version.yml | cut -d/ -f2)
 
 for img in ${images}; do
     image=$(echo $img | cut -d: -f1)
     tag=$(echo $img | cut -d: -f2)
     
     ## Create remote repository if not exist
-    awsCommand=&quot;aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}&quot;
+    awsCommand="aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}"
     if [[ ! $($awsCommand) ]]; then
-        echo &quot;*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}&quot;
-        aws ecr create-repository --repository-name &quot;${ECR_DOCKER_PREFIX}/${image}&quot;
+        echo "*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}"
+        aws ecr create-repository --repository-name "${ECR_DOCKER_PREFIX}/${image}"
     fi
     
     ## Pull, tag and push image to remote repository
     #  Image is pushed to ECR once with the tag it was pulled from Artifactory
     #  and once with YAML version tag
-    docker pull ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot;
-    docker tag ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
-    docker tag ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
-    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${tag}&quot;
-    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
+    docker pull ${ART_DOCKER_REG}/"${image}:${tag}"
+    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
+    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
+    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
+    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
 done
 
 ## Create YAMLs for ECR
@@ -212,11 +212,11 @@ done
 #
 cd ${WORKSPACE}
 git fetch &amp;&amp; git fetch --tags
-[[ &quot;$version&quot; != &quot;${BRANCH}&quot; ]] &amp;&amp; git checkout -f $version -- common/ECR-yaml-manipulation.sh
+[[ "$version" != "${BRANCH}" ]] &amp;&amp; git checkout -f $version -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
-aws s3 sync &quot;ecr&quot; s3://voice-ai/docker-compose/${version}
+aws s3 sync "ecr" s3://voice-ai/docker-compose/${version}
 
 
 ## Properties to export to environment
@@ -225,7 +225,7 @@ echo IMAGES=${images} &gt;&gt; VAG.properties
 cat VAG.properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>VAG.properties</propertiesFilePath>
       </info>
@@ -244,7 +244,7 @@ version: ${version}</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -260,7 +260,7 @@ version: ${version}</body>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -293,7 +293,7 @@ $BUILD_URL
 
 Regards,
 DevOps Team</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -302,14 +302,14 @@ DevOps Team</defaultContent>
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>shukyr yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -321,54 +321,54 @@ DevOps Team</defaultContent>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;docker-compose-vag-ecr-$version*.yml&quot;,
-            &quot;target&quot;: &quot;docker-voice-ai-files&quot;
+            "pattern": "docker-compose-vag-ecr-$version*.yml",
+            "target": "docker-voice-ai-files"
         }
     ]
 }</spec>
       </uploadSpec>
       <downloadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;docker-voice-ai-files/docker-compose-vag-$version*.yml&quot;
+            "pattern": "docker-voice-ai-files/docker-compose-vag-$version*.yml"
         }
     ]
 }
 
 </spec>
       </downloadSpec>
-      <deployPattern></deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <deployPattern/>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>true</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -388,7 +388,7 @@ DevOps Team</defaultContent>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${version}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
