@@ -1,14 +1,13 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>This job should be executed periodically at 21:00 every night and do the following:&#xd;
-a.	Takes last sbc 7.2.256&#xd;
-\\netapp01\CM\CompilationResults\7.4 Release\Firmware&#xd;
-b.	Copy to netapp1 folder named “SBC version_night”&#xd;
-\\netapp01\CM\CompilationResults\BR_Feature&#xd;
-If folder already exist – don’t call sbc-BR-request job&#xd;
-c.	Call sbc-BR-request&#xd;
-Send params: FOLDER_PATH , MODE =FULL&#xd;
+  <description>This job should be executed periodically at 21:00 every night and do the following:&#13;
+a.	Takes last sbc 7.2.256&#13;
+\\netapp01\CM\CompilationResults\7.4 Release\Firmware&#13;
+b.	Copy to netapp1 folder named “SBC version_night”&#13;
+\\netapp01\CM\CompilationResults\BR_Feature&#13;
+If folder already exist – don’t call sbc-BR-request job&#13;
+c.	Call sbc-BR-request&#13;
+Send params: FOLDER_PATH , MODE =FULL&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -17,7 +16,7 @@ Send params: FOLDER_PATH , MODE =FULL&#xd;
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -38,19 +37,19 @@ Send params: FOLDER_PATH , MODE =FULL&#xd;
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TP_DIR</name>
-          <description></description>
+          <description/>
           <defaultValue>/netapp1/CompilationResults/7.4 Release/Firmware</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TESTMODE</name>
-          <description></description>
+          <description/>
           <defaultValue>Full</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>MajorVersion</name>
-          <description></description>
+          <description/>
           <defaultValue>7.4</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -65,6 +64,7 @@ Send params: FOLDER_PATH , MODE =FULL&#xd;
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>copy2netapp</assignedNode>
@@ -74,7 +74,7 @@ Send params: FOLDER_PATH , MODE =FULL&#xd;
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.TimerTrigger>
-      <spec>H 21 * * 0-4</spec>
+      <spec>H 21 * * 0,2,4</spec>
     </hudson.triggers.TimerTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
@@ -82,18 +82,18 @@ Send params: FOLDER_PATH , MODE =FULL&#xd;
     <hudson.tasks.Shell>
       <command>
 # Find the latest TAG HostedTP in $TP_DIR
-TPLastTAG=$(ls -tr &quot;$TP_DIR&quot; | tail -1)
+TPLastTAG=$(ls -tr "$TP_DIR" | tail -1)
 
 if [ -z $TPLastTAG ]; then
   echo No last directory was found... exit with error
   exit 1
 fi
 
-TARGET=&quot;/netapp1/CompilationResults/BR_Feature/${TPLastTAG}_Night&quot;
-echo FOLDER_PATH=&quot;${TPLastTAG}_Night&quot; &gt; TP.properties
+TARGET="/netapp1/CompilationResults/BR_Feature/${TPLastTAG}_Night"
+echo FOLDER_PATH="${TPLastTAG}_Night" &gt; TP.properties
 
 # Create the folder in netapp1 but if exist, do not execute it again
-if [ -d &quot;$TARGET&quot; ]; then
+if [ -d "$TARGET" ]; then
   echo Was executed already, exit
   exit 2
 else
@@ -102,14 +102,14 @@ else
 fi
 
 # Copy the HostedTP and unzip it
-cd &quot;$TP_DIR/$TPLastTAG&quot;
-CmpList=(&quot;MP500_ESBC M1000_MSBG HostedTP&quot;)
+cd "$TP_DIR/$TPLastTAG"
+CmpList=("MP500_ESBC M1000_MSBG HostedTP")
 for eachImage in $CmpList; do
   unzip $(ls ${eachImage}_SIP* | grep -v LAB) -d $TARGET
 done
 
-# Don&apos;t execute the next job in case you don&apos;t found 2 files
-if [ `ls $TARGET/*.cmp | wc -l` != 3 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
+# Don't execute the next job in case you don't found 2 files
+if [ `ls $TARGET/*.cmp | wc -l` != 3 ]; then echo "Missing cmp file, exiting job"; exit 1; fi
 
 
 echo Execute sbc-BR-request ${TPLastTAG}
@@ -117,7 +117,7 @@ echo Execute sbc-BR-request ${TPLastTAG}
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>TP.properties</propertiesFilePath>
       </info>
@@ -142,7 +142,7 @@ MODE=${TESTMODE}</properties>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -159,7 +159,7 @@ MODE=${TESTMODE}</properties>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${TPLastTAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
