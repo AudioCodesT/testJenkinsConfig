@@ -71,7 +71,7 @@ python3 runner.py</command>
             </hudson.plugins.parameterizedtrigger.BooleanParameters>
           </configs>
           <projects>VoiceAI-Oneclick-Autotest-Starter</projects>
-          <condition>SUCCESS</condition>
+          <condition>ALWAYS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
