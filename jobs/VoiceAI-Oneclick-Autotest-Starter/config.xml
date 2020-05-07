@@ -54,7 +54,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>VoiceAI-build</assignedNode>
+  <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -72,12 +72,7 @@ if [ $SHUTDOWN = true ]; then
   SHUTDOWN_FLAG=--shutdown
 fi
 
-pip3 install azure-mgmt-compute --user
-pip3 install azure-mgmt-storage --user
-pip3 install azure-mgmt-resource --user
-pip3 install python-dotenv --user
-pip3 install paramiko --user
-pip3 install scp --user
+pip3 install --user -r requirements.txt
 python3 startVMs.py $SHUTDOWN_FLAG</command>
     </hudson.tasks.Shell>
   </builders>
