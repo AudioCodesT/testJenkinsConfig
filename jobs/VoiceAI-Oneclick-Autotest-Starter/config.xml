@@ -72,7 +72,9 @@ if [ $SHUTDOWN = true ]; then
   SHUTDOWN_FLAG=--shutdown
 fi
 
-pip3 install azure --user
+pip3 install azure-mgmt-compute --user
+pip3 install azure-mgmt-storage --user
+pip3 install azure-mgmt-resource --user
 python3 startVMs.py $SHUTDOWN_FLAG</command>
     </hudson.tasks.Shell>
   </builders>
