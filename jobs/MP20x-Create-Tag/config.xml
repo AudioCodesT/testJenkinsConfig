@@ -123,7 +123,7 @@ do
     createTag
   else
     echo Try again later after 300 seconds
-    createTag
+    exit 2
   fi
 done
 
