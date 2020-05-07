@@ -1,5 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>This job check every 10 minutes the Repository and create a new TAG by incrementing the last TAG in the build code   configured branches</description>
   <keepDependencies>false</keepDependencies>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -30,8 +29,8 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -43,10 +42,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -62,7 +62,9 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>test-Sanjer</assignedNode>
@@ -79,20 +81,20 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>git config --global user.name &quot;jenkins&quot;
+      <command>git config --global user.name "jenkins"
 git config --global user.email devops@audiocodes.com
 
 cd rg
 
 function createTag {
-  if git log --pretty=format:%B -n1 $LastSha1 | grep &quot;DevOps admin change&quot;; then
+  if git log --pretty=format:%B -n1 $LastSha1 | grep "DevOps admin change"; then
     return
   fi
-  FixNum=$(echo $LastTag | awk -F_ &apos;{print $NF}&apos;)
+  FixNum=$(echo $LastTag | awk -F_ '{print $NF}')
   if [ -z $FixNum ]; then FixNum=0; fi
   Fix=`expr 1 + $FixNum`
-  NEWTAG=$(echo $LastTag | sed &quot;s/[0-9]*$/$Fix/g&quot;)
-  git tag -a -m &quot;Jenkins auto tag after $LastUser commit&quot; $NEWTAG $LastSha1
+  NEWTAG=$(echo $LastTag | sed "s/[0-9]*$/$Fix/g")
+  git tag -a -m "Jenkins auto tag after $LastUser commit" $NEWTAG $LastSha1
   git push origin $NEWTAG
   LastTag=$NEWTAG
 }
@@ -104,14 +106,14 @@ do
   git checkout origin/$GERRIT_BRANCH
   echo Find the last TAG name...
   LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
-  LastUser=&quot;&quot;
+  LastUser=""
   while IFS=_ read -r Sha1 User When
   do
-    if [ &quot;$LastUser&quot; != &quot;&quot; ] &amp;&amp; [ &quot;$LastUser&quot; != &quot;$User&quot; ]; then createTag; fi
+    if [ "$LastUser" != "" ] &amp;&amp; [ "$LastUser" != "$User" ]; then createTag; fi
     LastUser=$User
     LastSha1=$Sha1
-    LastWhen=`echo $When | cut -d&quot; &quot; -f1`
-  done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --date=raw --pretty=format:&quot;%H_%cn_%cd&quot; $LastTag..origin/$GERRIT_BRANCH)&quot;
+    LastWhen=`echo $When | cut -d" " -f1`
+  done &lt;&lt;&lt; "$(git log --first-parent --reverse --date=raw --pretty=format:"%H_%cn_%cd" $LastTag..origin/$GERRIT_BRANCH)"
 
   if [ -z $LastWhen ]; then continue; fi
 
@@ -121,7 +123,7 @@ do
     createTag
   else
     echo Try again later after 300 seconds
-    exit 2
+    createTag
   fi
 done
 
@@ -131,7 +133,7 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>Shuky.Riechard yossim</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -150,8 +152,8 @@ done
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER} - ${BUILD_LOG_REGEX, regex=&quot;^.*NEWTAG=(\S*)&quot;,substText=&quot;$1&quot;,showTruncatedLines=false}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <template>#${BUILD_NUMBER} - ${BUILD_LOG_REGEX, regex="^.*NEWTAG=(\S*)",substText="$1",showTruncatedLines=false}</template>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
