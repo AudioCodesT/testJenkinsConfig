@@ -43,7 +43,30 @@
       <emailAddress>Eduard.Egorov@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>AWS_Jira_Users</string>
+        <string>365_Lucca</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string># SBC</string>
+        <string>Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>SSL_swosrc</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>Linuxusers</string>
+        <string>Allow Office365 Groups</string>
+        <string># SBC SIP Infra</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># R&amp;D Application Group</string>
+        <string># R&amp;D System Software</string>
+        <string>CatalogApps_Everyone</string>
+      </roles>
+      <timestamp>1588828899407</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
