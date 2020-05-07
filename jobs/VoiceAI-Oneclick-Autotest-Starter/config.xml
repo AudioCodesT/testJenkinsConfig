@@ -54,7 +54,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>VoiceAI-Test-Runner-Azure</assignedNode>
+  <assignedNode>VoiceAI-build</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
