@@ -21,7 +21,7 @@
         <hudson.model.BooleanParameterDefinition>
           <name>SHUTDOWN</name>
           <description/>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
