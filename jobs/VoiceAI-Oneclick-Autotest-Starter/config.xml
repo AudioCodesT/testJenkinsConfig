@@ -75,6 +75,7 @@ fi
 pip3 install azure-mgmt-compute --user
 pip3 install azure-mgmt-storage --user
 pip3 install azure-mgmt-resource --user
+pip3 install python-dotenv --user
 python3 startVMs.py $SHUTDOWN_FLAG</command>
     </hudson.tasks.Shell>
   </builders>
