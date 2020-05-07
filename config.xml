@@ -180,10 +180,12 @@
           <sid># R&amp;D Application Group</sid>
           <sid># R&amp;D System Software</sid>
           <sid># SBC</sid>
-          <sid>System_Software</sid>
-          <sid>cc_sys_users</sid>
           <sid># SBC SIP</sid>
           <sid># SBC SIP Infra</sid>
+          <sid>System_Software</sid>
+          <sid>cc_sys_users</sid>
+          <sid>maratk</sid>
+          <sid>eduarde</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
