@@ -61,6 +61,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>cd session-manager/test/e2e
