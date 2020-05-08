@@ -76,6 +76,8 @@
         <assignedSIDs>
           <sid># All AudioCodes</sid>
           <sid>compile</sid>
+          <sid># SBC SIP Infra</sid>
+          <sid># SBC SIP</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -184,8 +186,6 @@
           <sid># SBC SIP Infra</sid>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
-          <sid>maratk</sid>
-          <sid>eduarde</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
