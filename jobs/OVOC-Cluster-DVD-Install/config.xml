@@ -74,16 +74,6 @@ And does the following:&#13;
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>FullTests</name>
-          <description>Run full sanity tests or not</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>1</string>
-              <string>0</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -148,9 +138,6 @@ DefaultGateway="172.16.132.1"
 netMask="24"
 
 
-echo "INSTANCE_ID=${INSTANCE_ID}" &gt; sanity.properties
-echo "vmIP=${vmIP}" &gt;&gt; sanity.properties
-
 # if this is a build for QA then configure the tested machine with "ami" - means we set TimeZone London (GMT+0)
 # but if this is a regular build then configure the tested machine with "sanity" - means we set TimeZone Israel
 if [[ "$DeployISO" == "official_iso" ]]
@@ -163,13 +150,13 @@ fi
 #2. run python scripts: set network , install
 cd EMS/VersionRelease
 # from 7.6 and up we dont send default gateway because the script knows that this is AWS env and learn IP addresses from the machine
-python2.7 setNetwork.py $vmIP $sanityOrAmi
+python2.7 setNetwork.py $IP $sanityOrAmi
 
 echo "Finish SetNetwork Configuration"
 
 #run sanityInstall and if sanity install fails then copy logs and exit with error
 echo "Running single script for install"
-python2.7 SanityInstall.py $TAG $vmIP $DeployISO || { python2.7 SanityCopyLogs.py $TAG $vmIP ; exit 1; }
+python2.7 SanityInstall.py $TAG $vmIP $DeployISO $ServerRole || { python2.7 SanityCopyLogs.py $TAG $IP ; exit 1; }
 echo "Finish SanityInstall"
 
 ############################### End old Code ##########################
