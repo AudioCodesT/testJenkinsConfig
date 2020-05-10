@@ -120,7 +120,7 @@ if false; then
 # DO NOT RUN ANY OF THIS OLD CODE
 
 ## Get prerequisites for current branch
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
+BRANCH=${TAG%.*}
 
 cd ${WORKSPACE}/EMS
 [[ -d target ]] &amp;&amp; rm -rf target
@@ -147,56 +147,8 @@ DefaultGateway="172.16.132.1"
 netMask="24"
 
 
-#1. create a tested VM: launch new instance from sanity AMI and get its IP address
-if [[ "$DeployISO" == "official_iso" ]]
-then
-	AMI_ID=ami-03b07cb67f9a8730b # &lt;-- without ENA support
-    #AMI_ID=ami-0264e23c55ba36c29 # &lt;-- with ENA support
-else
-	AMI_ID=ami-097a30155f82688fb # &lt;-- without ENA support
-    #AMI_ID=ami-035a9df9f78df3db1 # &lt;-- with ENA support
-fi
-
-# Luanch instanc from given AMI. First try to use spot, else use on-demand.
-emsTestedVM="$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name "Jenkins &amp; App subnets machines key pair" --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name "Jenkins &amp; App subnets machines key pair" --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)"
-
-
-#keep instance ID
-INSTANCE_ID="$(echo "${emsTestedVM}" |grep InstanceId |cut -d '"' -f 4)"
-
-#wait for aws instance to get to `running` status
-aws ec2 wait instance-running --instance-ids ${INSTANCE_ID}
-
-#add tag to this instans:  "emsSanity"
-aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityInstall
-#add tag to this instans:  "Spotinst"
-aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Creator,Value=Spotinst
-#set to its delete volume when instance will be terminated
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings "{    \"DeviceName\": \"/dev/sda1\",    \"Ebs\": {      \"DeleteOnTermination\": true    }  } "
-#keep ip address into "vmIP"
-vmIP=$(aws ec2 describe-instances --instance-id $INSTANCE_ID --output text --query 'Reservations[*].Instances[*].PrivateIpAddress')
-#find what is the current branch
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [ $BRANCH == master ]; then BRANCH="7.4"; fi
-
 echo "INSTANCE_ID=${INSTANCE_ID}" &gt; sanity.properties
 echo "vmIP=${vmIP}" &gt;&gt; sanity.properties
-#Wait for the instance to startup
-echo "Wait until the instance is up"
-OLD_STATE=""
-while true; do
-    sleep 10
-    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query "Reservations[0].Instances[0].State.Name")
-    if [[ $STATE != $OLD_STATE ]]; then
-        echo $STATE
-        OLD_STATE=$STATE
-    fi
-    if [[ $STATE == "running" ]]; then
-        break
-    fi
-done
-echo "Wait until instance is fully loaded"
-sleep 100
 
 # if this is a build for QA then configure the tested machine with "ami" - means we set TimeZone London (GMT+0)
 # but if this is a regular build then configure the tested machine with "sanity" - means we set TimeZone Israel
