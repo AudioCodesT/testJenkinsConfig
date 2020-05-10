@@ -448,7 +448,7 @@ ${WORKSPACE}/docker/config.json.sample
       <template>#${BUILD_NUMBER}__${NEWTAG}</template>
       <descriptionTemplate/>
       <runAtStart>false</runAtStart>
-      <runAtEnd>true</runAtEnd>
+      <runAtEnd>false</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
 </project>
