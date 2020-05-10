@@ -444,11 +444,5 @@ ${WORKSPACE}/docker/config.json.sample
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
-      <descriptionTemplate/>
-      <runAtStart>false</runAtStart>
-      <runAtEnd>false</runAtEnd>
-    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
 </project>
