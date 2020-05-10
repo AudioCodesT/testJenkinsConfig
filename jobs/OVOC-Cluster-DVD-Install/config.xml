@@ -106,7 +106,7 @@ echo -e "Role:\t${ServerRole}" &gt;&gt; sanity.properties
 cat sanity.properties
 
 ############################### Begin old Code ##########################
-if false; then
+#if false; then
 # DO NOT RUN ANY OF THIS OLD CODE
 ############################### Begin old Code ##########################
 
@@ -160,7 +160,7 @@ python2.7 SanityInstall.py $TAG $IP $DeployISO $ServerRole || { python2.7 Sanity
 echo "Finish SanityInstall"
 
 ############################### End old Code ##########################
-fi
+#fi
 ############################### End old Code ##########################
 
 
