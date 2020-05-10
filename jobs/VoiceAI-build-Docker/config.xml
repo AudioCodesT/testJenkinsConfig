@@ -196,7 +196,7 @@ remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog
 ARTITAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r '.tags[]')
 LATESTTAG=$( echo $ARTITAGS | sort | tail -n 1)
 
-[[ "$(echo $ARTITAGS | grep -q $BRANCH)" == "" ]] &amp;&amp; PULLBRANCH="${BRANCH}" || PULLBRANCH="${LATESTTAG}"
+[[ "$(echo $ARTITAGS | grep -q $BRANCH)" == "" ]] &amp;&amp; PULLBRANCH="${LATESTTAG}" || PULLBRANCH="${BRANCH}"
 
 #if [[ $( "${BRANCH}" != "${LATESTTAG}" ) ]]; then
 #    PULLBRANCH="${LATESTTAG}"
@@ -364,7 +364,7 @@ BRANCH=${BRANCH}</properties>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
     <hudson.tasks.Mailer plugin="mailer@1.32">
-      <recipients>ben.magriso yuvaly orgad.shaneh shukyr</recipients>
+      <recipients>ben.magriso yuvaly orgad.shaneh</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
