@@ -267,7 +267,7 @@ echo "Finished docker push to Artifactory."
 # (i.e. from docker-compose-vag-1.7.001.yml to docker-compose-vag-1.8.yml)
 cd $WORKSPACE
 for yml in `ls *.yml`; do
-    newYml=$(echo $yml | sed "s|$TAG|$BRANCH|")
+    newYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
     cp $yml $newYml
 done
 
