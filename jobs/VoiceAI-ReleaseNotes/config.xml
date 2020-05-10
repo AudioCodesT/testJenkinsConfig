@@ -179,6 +179,31 @@ cat voiceAI.properties</command>
       </delay>
       <maxSchedule>3</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>NEWTAG=$NEWTAG
+RN=$RN
+GERRIT_HOST=$GERRIT_HOST
+EMAIL=$EMAIL
+PROJECT=$PROJECT
+DATE=$DATE
+GERRIT_BRANCH=$BRANCH
+AuthorCommitter=$AuthorCommitter
+Coverage_Summary=$Coverage_Summary
+CALLER_URL=${JOB_URL}</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>Update-Jira</projects>
+          <condition>UNSTABLE_OR_BETTER</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
     <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.16">
       <coberturaReportFile>**/coverage/*coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
@@ -248,31 +273,6 @@ cat voiceAI.properties</command>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
-    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
-      <configs>
-        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-          <configs>
-            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>NEWTAG=$NEWTAG
-RN=$RN
-GERRIT_HOST=$GERRIT_HOST
-EMAIL=$EMAIL
-PROJECT=$PROJECT
-DATE=$DATE
-GERRIT_BRANCH=$BRANCH
-AuthorCommitter=$AuthorCommitter
-Coverage_Summary=$Coverage_Summary
-CALLER_URL=${JOB_URL}</properties>
-              <textParamValueOnNewLine>false</textParamValueOnNewLine>
-            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-          </configs>
-          <projects>Update-Jira</projects>
-          <condition>UNSTABLE_OR_BETTER</condition>
-          <triggerWithNoParameters>false</triggerWithNoParameters>
-          <triggerFromChildProjects>false</triggerFromChildProjects>
-        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
-      </configs>
-    </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
