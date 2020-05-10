@@ -1,8 +1,7 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>1. trigger by submit&#xd;
-2. check if not last commit then exit 0&#xd;
+  <description>1. trigger by submit&#13;
+2. check if not last commit then exit 0&#13;
 3. if last commit - then tag all untagged commits (since last tagged commit) per user</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -11,7 +10,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -21,9 +20,6 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -38,10 +34,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -57,9 +54,11 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -71,16 +70,20 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
           <pattern>TP/Tools/VoiceAIConnector</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              <compareType>ANT</compareType>
-              <pattern>**</pattern>
+              <compareType>PLAIN</compareType>
+              <pattern>1.4</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>PLAIN</compareType>
+              <pattern>1.6</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
@@ -94,27 +97,27 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>true</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -122,7 +125,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#get premissions from id_rsa_gerrit to do git pull
-echo &quot;ALLTAGS=&quot; &gt; prop
+echo "ALLTAGS=" &gt; prop
 cat &lt;&lt; EOF &gt; ~/.ssh/config
 Host test-gerrit
     Port 29418
@@ -136,48 +139,48 @@ git pull origin ${GERRIT_BRANCH}
 
 # check if its not the last merged commit, exit the build
 LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
-if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]
+if [ "$LastGerritCommitHash" != "$GERRIT_PATCHSET_REVISION" ]
 then
-	echo &quot;Not the last merged commit, exiting the build&quot;
+	echo "Not the last merged commit, exiting the build"
 	exit 0
 else
 	# wait 2 minutes to check if another submit happend, if its not the last merged commit, exit the build
 	sleep 120
     git pull origin ${GERRIT_BRANCH}
 	LastGerritCommitHash=$( git ls-remote  | grep refs/heads/$GERRIT_BRANCH  | cut -f 1 | head -n 1 )
-	if [ &quot;$LastGerritCommitHash&quot; != &quot;$GERRIT_PATCHSET_REVISION&quot; ]
+	if [ "$LastGerritCommitHash" != "$GERRIT_PATCHSET_REVISION" ]
 	then
-		echo &quot;Not the last merged commit, exiting the build&quot;
+		echo "Not the last merged commit, exiting the build"
 		exit 0
 	fi
 fi
 
-if [ &quot;$LastGerritCommitHash&quot; == &quot;$GERRIT_PATCHSET_REVISION&quot; ]
+if [ "$LastGerritCommitHash" == "$GERRIT_PATCHSET_REVISION" ]
 then
 	#get Last Tag and all the commits since the last tag in reverse list
 	LastTag=$(git describe --tags --abbrev=0 --first-parent)
-	commits=($(git log --first-parent --reverse ${LastTag}..HEAD --pretty=format:&quot;%H&quot;))
+	commits=($(git log --first-parent --reverse ${LastTag}..HEAD --pretty=format:"%H"))
  	#iterate on all the commits list
   	array_index=0
-  	while [[ &quot;${array_index}&quot; != &quot;${#commits[@]}&quot; ]]
+  	while [[ "${array_index}" != "${#commits[@]}" ]]
   	do
     	#get commit hash and The User Name of that commit
 		commit_id=${commits[$array_index]}	
-     	User=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${commit_id})
+     	User=$(git log --pretty=format:"%cn" -n 1 ${commit_id})
         #get next commit user name (if there is not commit in the list then leave it empty)
         ((array_index+=1))
         next_commit_id=${commits[$array_index]}
-        if [[ ${next_commit_id} == &quot;&quot; ]]
+        if [[ ${next_commit_id} == "" ]]
         then
-        	next_commit_user=&quot;&quot;
+        	next_commit_user=""
         else
-        	next_commit_user=$(git log --pretty=format:&quot;%cn&quot; -n 1 ${next_commit_id})
+        	next_commit_user=$(git log --pretty=format:"%cn" -n 1 ${next_commit_id})
         fi
         #if the current user name  diffrent from the next commit user name then tag current commit
-     	if [[ &quot;${User}&quot; != &quot;${next_commit_user}&quot; ]]
+     	if [[ "${User}" != "${next_commit_user}" ]]
      	then
-        	NEWTAG=$(echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;).$(printf &quot;%03d&quot; $(echo $LastTag | awk -F. &apos;{print $NF+1}&apos;))
-     		git tag -a -m &quot;Jenkins auto tag after ${User} commit&quot; ${NEWTAG} ${commit_id}
+        	NEWTAG=$(echo $LastTag | sed -r 's/(.*)\.[^\d]+$/\1/').$(printf "%03d" $(echo $LastTag | awk -F. '{print $NF+1}'))
+     		git tag -a -m "Jenkins auto tag after ${User} commit" ${NEWTAG} ${commit_id}
             git push origin ${NEWTAG}
             LastTag=${NEWTAG}
             ALLTAGS=${ALLTAGS}_${NEWTAG}
@@ -185,18 +188,18 @@ then
   	done
 
 else
-	echo &quot;******   This is not the last commit. Exit without building  ******&quot;
+	echo "******   This is not the last commit. Exit without building  ******"
 fi
-echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
+echo "ALLTAGS=${ALLTAGS}" &gt; prop</command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>prop</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -205,7 +208,7 @@ echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
   <buildWrappers>
     <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
       <includes>id_rsa_gerrit</includes>
-      <excludes></excludes>
+      <excludes/>
       <flatten>false</flatten>
       <includeAntExcludes>false</includeAntExcludes>
       <hudsonHomeRelative>false</hudsonHomeRelative>
@@ -213,7 +216,7 @@ echo &quot;ALLTAGS=${ALLTAGS}&quot; &gt; prop</command>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${ALLTAGS}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
