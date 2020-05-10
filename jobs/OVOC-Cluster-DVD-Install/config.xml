@@ -118,6 +118,7 @@ cat sanity.properties
 ############################### Begin old Code ##########################
 if false; then
 # DO NOT RUN ANY OF THIS OLD CODE
+############################### Begin old Code ##########################
 
 ## Get prerequisites for current branch
 BRANCH=${TAG%.*}
@@ -171,78 +172,7 @@ echo "Running single script for install"
 python2.7 SanityInstall.py $TAG $vmIP $DeployISO || { python2.7 SanityCopyLogs.py $TAG $vmIP ; exit 1; }
 echo "Finish SanityInstall"
 
-## Create AMI
-if [[ "$DeployISO" == "official_iso" ]]; then
-	#check if the ami already exists
-	checkIfAmiExists=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query "Images[0].State")
-	if [[ "$checkIfAmiExists" == "available" ]]; then
-    	echo "Deleting existing AMI of ovocAMI_${TAG}"
-        #get AmiId to delete it
-        AmiIDToDelete=$(aws ec2 describe-images --filters Name=name,Values=ovocAMI_${TAG} --output text --query "Images[0].ImageId")
-        
-        #get Snapshot id - delete the Snapshot
-        snapshotIdToDelete=$(aws ec2 describe-images --image-ids $AmiIDToDelete --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
-        
-        #delete AMI and Snopshot ID
-        aws ec2 deregister-image --image-id ${AmiIDToDelete}
-        aws ec2 delete-snapshot --snapshot-id ${snapshotIdToDelete}
-        sleep 60
-	fi
-    
-	echo "Creating New Ovoc Ami"
-	#create a new AMI After installation and keep ImageID value
-	AmiId=$(aws ec2 create-image --instance-id ${INSTANCE_ID} --name "ovocAMI_${TAG}" --description "ovoc AMI ${TAG}" --output text --query "ImageId")
-	
-    #check if image available
-    OLD_STATE=""
-    while true; do
-    	sleep 100
-        STATE=$(aws ec2 describe-images --image-ids $AmiId --output text --query "Images[0].State")
-        
-        if [[ $STATE != $OLD_STATE ]]; then
-        	echo $STATE
-            OLD_STATE=$STATE
-        fi
-        
-        if [[ $STATE == "available" ]]; then
-        	break
-        fi
-    done
-            
-	#get Snapshot id -  we need it in order to tag the snapshot as well
-	snapshotId=$(aws ec2 describe-images --image-ids $AmiId --output text --query Images[*].BlockDeviceMappings[*].Ebs.SnapshotId)
-	
-	#give name to the AMI 
-	aws ec2 create-tags --resources $AmiId --tags Key=Name,Value=OvocAMI_${TAG}
-	#give name to the snapshot 
-	aws ec2 create-tags --resources $snapshotId --tags Key=Name,Value=OvocAMI_${TAG}
-	#give Branch name to the AMI 
-	aws ec2 create-tags --resources $AmiId --tags Key=Branch,Value=$BRANCH
-	
-	## share the new created AMI with dev and QA teams:
-	echo "Sharing the new created AMI with Dev and QA teams:"
-	qaAccount=191324562914
-	devAccount=952166219867
-	#give permissions to ovoc QA Account to the AMI
-	aws ec2 modify-image-attribute --image-id $AmiId --launch-permission "{\"Add\":[{\"UserId\":\"$qaAccount\"}]}"
-	#give permissions to ovoc DEV Account to the Ami
-	aws ec2 modify-image-attribute --image-id $AmiId --launch-permission "{\"Add\":[{\"UserId\":\"$devAccount\"}]}"
-	
-	#give permissions to ovoc QA Account to the SnapShot
-	aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $qaAccount
-	#give permissions to ovoc DEV Account to the SnapShot
-	aws ec2 modify-snapshot-attribute --snapshot-id $snapshotId --attribute createVolumePermission --operation-type add --user-ids $devAccount
-	
-	#check if shared
-	#checkImagePermissions=$(aws ec2 describe-image-attribute --image-id $AmiId --attribute launchPermission --output text --query "LaunchPermissions[*]")
-	#ImagePermissionsInArray=($checkImagePermissions)
-	#if [ ! { ["${ImagePermissionsInArray[1]}" == "$qaAccount"] &amp;&amp; ["${ImagePermissionsInArray[0]}" == "$devAccount"]; } ]; then
-	#    echo "**************************************************************************"
-	#    echo "give Permissions Failed"
-	#    echo "**************************************************************************"
-	#fi
-fi
-
+############################### End old Code ##########################
 fi
 ############################### End old Code ##########################
 
