@@ -95,6 +95,7 @@ And does the following:&#13;
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>true</concurrentBuild>
+  <customWorkspace>/home/centos/jenkinsslave/workspace/emsSanity_install</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
       <command>###### Echo parameters for testing
