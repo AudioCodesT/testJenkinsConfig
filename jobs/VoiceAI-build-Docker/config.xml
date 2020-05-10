@@ -244,15 +244,18 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
     if [[ "$(echo $HASHES | grep -q ${imageID})" == "" ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${imageName}:${NEWTAG}
         docker push ${DOCKER_REG}/${imageName}:${NEWTAG}
+        
+        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
+        docker push ${DOCKER_REG}/${imageName}:${BRANCH}
 
-        allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq '.tags[]')
-        highTag=$(echo "$allTags" | grep -F ${TAGVER} | grep -v -e "\-g.*" | sort -t'.' -n -k3 | tail -n 1)
-        highTag=${highTag:1:-1}
-        higherTag=$(echo -e "$highTag\n${NEWTAG}" | sort -t'.' -n -k3 | tail -n 1)
-        if [[ "$higherTag" == "${NEWTAG}" ]]; then
-            docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
-            docker push ${DOCKER_REG}/${imageName}:${BRANCH}
-        fi
+        #allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq '.tags[]')
+        #highTag=$(echo "$allTags" | grep -F ${TAGVER} | grep -v -e "\-g.*" | sort -t'.' -n -k3 | tail -n 1)
+        #highTag=${highTag:1:-1}
+        #higherTag=$(echo -e "$highTag\n${NEWTAG}" | sort -t'.' -n -k3 | tail -n 1)
+        #if [[ "$higherTag" == "${NEWTAG}" ]]; then
+        #    docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
+        #    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
+        #fi
     else
         echo "*** No change in docker image \"${imageName}\". Image not pushed to repository. ***"
     fi
