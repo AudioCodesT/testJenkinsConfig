@@ -156,7 +156,7 @@ echo "Finish SetNetwork Configuration"
 
 #run sanityInstall and if sanity install fails then copy logs and exit with error
 echo "Running single script for install"
-python2.7 SanityInstall.py $TAG $vmIP $DeployISO $ServerRole || { python2.7 SanityCopyLogs.py $TAG $IP ; exit 1; }
+python2.7 SanityInstall.py $TAG $IP $DeployISO $ServerRole || { python2.7 SanityCopyLogs.py $TAG $IP ; exit 1; }
 echo "Finish SanityInstall"
 
 ############################### End old Code ##########################
