@@ -37,9 +37,7 @@
       </views>
     </hudson.model.MyViewsProperty>
     <hudson.model.PaneStatusProperties>
-      <collapsed>
-        <string>buildQueue</string>
-      </collapsed>
+      <collapsed/>
     </hudson.model.PaneStatusProperties>
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>false</insensitiveSearch>
