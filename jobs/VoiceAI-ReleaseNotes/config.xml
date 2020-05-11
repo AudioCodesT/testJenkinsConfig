@@ -213,7 +213,7 @@ CALLER_URL=${JOB_URL}</properties>
       <autoUpdateStability>false</autoUpdateStability>
       <zoomCoverageChart>false</zoomCoverageChart>
       <maxNumberOfBuilds>0</maxNumberOfBuilds>
-      <failNoReports>true</failNoReports>
+      <failNoReports>false</failNoReports>
       <lineCoverageTargets>80, 0, 0</lineCoverageTargets>
       <methodCoverageTargets>80, 0, 0</methodCoverageTargets>
       <conditionalCoverageTargets>70, 0, 0</conditionalCoverageTargets>
