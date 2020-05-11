@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -30,26 +29,26 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TAGNAME</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>REPOSITORY</name>
-          <description></description>
+          <description/>
           <defaultValue>sbc-release</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Project</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -61,8 +60,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>copy2netapp</assignedNode>
@@ -75,130 +75,130 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-artifactory=&quot;https://artifactory&quot;
-User=&quot;$artifactory_user:$artifactory_password&quot;
+artifactory="https://artifactory"
+User="$artifactory_user:$artifactory_password"
 Branch=$GERRIT_BRANCH
 
 
-if [ &quot;$TAGNAME&quot; == &quot;&quot; ]; then
+if [ "$TAGNAME" == "" ]; then
   echo No valid TAG... exit
   exit 1
 else
   NEWTAG=$TAGNAME
 fi
 
-if [ &quot;$Project&quot; == &quot;GWApp&quot; ]; then
-  location=&quot;$REPOSITORY/com/ac/sbc/$Branch/Firmware&quot;
+if [ "$Project" == "GWApp" ]; then
+  location="$REPOSITORY/com/ac/sbc/$Branch/Firmware"
 
   BaseFirmware=Firmware
   # New split from NextGenCPE
-  if [[ $Branch =~ &quot;NextGenCPE_&quot; ]]; then
-    Branch=$(echo $Branch | sed &apos;s/_.*//&apos;)
+  if [[ $Branch =~ "NextGenCPE_" ]]; then
+    Branch=$(echo $Branch | sed 's/_.*//')
     BaseFirmware=7.2.$(echo $NEWTAG | cut -d. -f3)
   fi
 
-  Branch=$(echo $Branch | sed &apos;s/-.*//&apos;)
+  Branch=$(echo $Branch | sed 's/-.*//')
 
   # Remove the _ suffix in case of fix branches such as 7.2.204_jio
   if echo $Branch | grep -q _; then
     if echo $Branch | grep -q _MSBR; then 
       BaseFirmware=$Branch
     else 
-      BaseFirmware=$(echo $Branch | sed &apos;s/_.*//&apos;)
+      BaseFirmware=$(echo $Branch | sed 's/_.*//')
     fi
-    Branch=$(echo $Branch | sed &apos;s/_.*//; s/.$/0/&apos;)
+    Branch=$(echo $Branch | sed 's/_.*//; s/.$/0/')
   fi
 
-  # Feature branches should be copied to &quot;&lt;Main branch&gt; Release/Features/&lt;Sub main branch&gt;&quot;
-  if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; ]]; then
+  # Feature branches should be copied to "&lt;Main branch&gt; Release/Features/&lt;Sub main branch&gt;"
+  if [[ $GERRIT_BRANCH =~ "feature/" ]]; then
     # Find parent branch of this feature branch
-    if [[ &quot;$NEWTAG&quot; =~ &quot;7.30&quot; ]]; then
+    if [[ "$NEWTAG" =~ "7.30" ]]; then
       Branch=7.4
       BaseFirmware=Features
     else
       Branch=7.2.250
       BaseFirmware=Features/$(echo $Branch | cut -d. -f3)
     fi
-    if [[ $GERRIT_BRANCH =~ &quot;/voice-ai&quot; ]]; then 
+    if [[ $GERRIT_BRANCH =~ "/voice-ai" ]]; then 
       BaseFirmware=7.2.254_VoAI
     fi
   fi
 
-  Firmware=&quot;$Branch Release/$BaseFirmware&quot;
-  if [ $(echo $Branch | sed &apos;s:\.:\n:g&apos; | wc -l) -eq 3 ]; then
+  Firmware="$Branch Release/$BaseFirmware"
+  if [ $(echo $Branch | sed 's:\.:\n:g' | wc -l) -eq 3 ]; then
     if (( $(echo $Branch | cut -d. -f3) % 50 != 0 )); then
-      Firmware=&quot;$(echo $Branch | sed &apos;s/.$/0/; s:60$:50:&apos;) Release/$Branch&quot;
+      Firmware="$(echo $Branch | sed 's/.$/0/; s:60$:50:') Release/$Branch"
     fi  
   fi
 
-  Target=&quot;/netapp1/CompilationResults/$Firmware/F$NEWTAG&quot;
+  Target="/netapp1/CompilationResults/$Firmware/F$NEWTAG"
 
-elif [ &quot;$Project&quot; == &quot;MP-20x&quot; ]; then
+elif [ "$Project" == "MP-20x" ]; then
   # Rakefet ask from $Branch/$NEWTAG To $Branch/${Branch}_$NEWTAG
-  location=&quot;$REPOSITORY/com/ac/MP/$Branch&quot;
-  Target=&quot;/netapp1/CompilationResults/MP20x/$Branch/${Branch}_$NEWTAG&quot;
+  location="$REPOSITORY/com/ac/MP/$Branch"
+  Target="/netapp1/CompilationResults/MP20x/$Branch/${Branch}_$NEWTAG"
 
-elif [ &quot;$Project&quot; == &quot;VoiceAIConnector&quot; ]; then
-  location=&quot;$REPOSITORY/com/ac/sbc/VoiceAiConnector/$Branch&quot;
-  Target=&quot;/netapp1/CompilationResults/VoAI_Connector/$Branch/$NEWTAG&quot;
+elif [ "$Project" == "VoiceAIConnector" ]; then
+  location="$REPOSITORY/com/ac/sbc/VoiceAiConnector/$Branch"
+  Target="/netapp1/CompilationResults/VoAI_Connector/$Branch/$NEWTAG"
 else
   echo No valid repository... exit
   exit 1
 fi
 
-if ! [ -d &quot;$Target&quot; ]; then
-  mkdir -p &quot;$Target&quot;
+if ! [ -d "$Target" ]; then
+  mkdir -p "$Target"
 fi
 
 curl -k -s -u $User -X GET $artifactory/api/storage/$location/$NEWTAG | grep uri |\
-grep -v https | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $NEWTAG.list
-if [ -s &quot;$NEWTAG.list&quot; ]; then
+grep -v https | cut -d'"' -f4 | cut -c 2- &gt; $NEWTAG.list
+if [ -s "$NEWTAG.list" ]; then
    while read -r FileName
    do
      Extention=`echo ${FileName##*.}`
-     if [ $Extention == &quot;cmp&quot; ]; then
+     if [ $Extention == "cmp" ]; then
        BOARD=`echo $FileName | sed -r s/.cmp//`
        # For branch voice-ai copy HostedTP only!
-       if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;voice-ai&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;HostedTP&quot; ]]; then continue; fi
-       if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;NextGenCPE&quot; &amp;&amp; ! &quot;$BOARD&quot; =~ &quot;MP5&quot; ]]; then continue; fi   
-       if [ -e &quot;$Target/$BOARD.zip&quot; ]; then continue; fi
-       #if [ ! -e &quot;$Target/$FileName&quot; ]; then
-         echo Download $FileName into &quot;$Target/$FileName&quot;...
-         curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output &quot;$Target/$FileName&quot;
-         ArtSize=`curl -ks -u $User -X GET $artifactory/api/storage/$location/$NEWTAG/$FileName | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
-         DestSize=`wc -c &lt;$Target/$FileName`
+       if [[ "$GERRIT_BRANCH" =~ "voice-ai" &amp;&amp; ! "$BOARD" =~ "HostedTP" ]]; then continue; fi
+       if [[ "$GERRIT_BRANCH" =~ "NextGenCPE" &amp;&amp; ! "$BOARD" =~ "MP5" ]]; then continue; fi   
+       if [ -e "$Target/$BOARD.zip" ]; then continue; fi
+       #if [ ! -e "$Target/$FileName" ]; then
+         echo Download $FileName into "tmp/$FileName"...
+         curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output "tmp/$FileName"
+         ArtSize=`curl -ks -u $User -X GET $artifactory/api/storage/$location/$NEWTAG/$FileName | grep size | cut -d: -f2 | cut -d'"' -f2`
+         DestSize=`wc -c &lt;tmp/$FileName`
          if [ $ArtSize != $DestSize ]; then 
            echo $ArtSize--$DestSize: $file is differ, copy again in next execution...
-           rm -f $Target/$FileName
+           rm -f tmp/$FileName
            exit 1
          fi
        #fi
-       if [[ &quot;$FileName&quot; =~ &quot;M1000_ESBC&quot; ]]; then
+       if [[ "$FileName" =~ "M1000_ESBC" ]]; then
          echo Duplicate M1000_ESBC to M1000_MSBG
-         FileNameM1000MSBG=$(echo $FileName | sed &apos;s:ESBC:MSBG:g&apos;)
-         cp &quot;$Target/$FileName&quot; &quot;$Target/$FileNameM1000MSBG&quot;
-         zip -b /tmp -mj &quot;$Target/$(echo $FileNameM1000MSBG | sed -r s/.cmp//).zip&quot; &quot;$Target/$FileNameM1000MSBG&quot;
+         FileNameM1000MSBG=$(echo $FileName | sed 's:ESBC:MSBG:g')
+         cp "tmp/$FileName" "tmp/$FileNameM1000MSBG"
+         zip -b /tmp -mj "$Target/$(echo $FileNameM1000MSBG | sed -r s/.cmp//).zip" "tmp/$FileNameM1000MSBG"
        fi
        echo Create Zip from $FileName...
-       zip -b /tmp -mj &quot;$Target/$BOARD.zip&quot; &quot;$Target/$FileName&quot;
-     elif [ $Extention == &quot;zip&quot; ] || [ $Extention == &quot;txt&quot; ] || [ $Extention == &quot;rms&quot; ] || [ $Extention == &quot;tgz&quot; ]; then
-       if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
-       echo Download $FileName into &quot;$Target/$FileName&quot;...
-       curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output &quot;$Target/$FileName&quot;
+       zip -b /tmp -mj "$Target/$BOARD.zip" "tmp/$FileName"
+     elif [ $Extention == "zip" ] || [ $Extention == "txt" ] || [ $Extention == "rms" ] || [ $Extention == "tgz" ]; then
+       if [ -e "$Target/$FileName" ]; then continue; fi
+       echo Download $FileName into "$Target/$FileName"...
+       curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output "$Target/$FileName"
      fi
-   done &lt; &quot;$NEWTAG.list&quot;
+   done &lt; "$NEWTAG.list"
 fi
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yossim shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun></regexpForRerun>
+      <regexpForRerun/>
       <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>false</checkRegexp>
@@ -219,21 +219,21 @@ fi
       <cleanWhenAborted>true</cleanWhenAborted>
       <notFailBuild>false</notFailBuild>
       <cleanupMatrixParent>false</cleanupMatrixParent>
-      <externalDelete></externalDelete>
+      <externalDelete/>
     </hudson.plugins.ws__cleanup.WsCleanup>
   </publishers>
   <buildWrappers>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -245,7 +245,7 @@ fi
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${TAGNAME}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
