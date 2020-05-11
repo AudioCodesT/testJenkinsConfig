@@ -242,8 +242,10 @@
           <permission>hudson.model.Item.Workspace</permission>
           <permission>hudson.model.Item.Build</permission>
           <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
           <permission>hudson.model.Item.Configure</permission>
           <permission>hudson.model.Item.Discover</permission>
+          <permission>hudson.model.Run.Update</permission>
         </permissions>
         <assignedSIDs/>
       </role>
