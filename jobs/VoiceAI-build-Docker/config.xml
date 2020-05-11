@@ -148,8 +148,6 @@ echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 
 #git fetch --tags
 
-# Clean old yaml files
-rm -f *.yml
 
 OLDTAG=$(git describe --first-parent --tags --abbrev=0 HEAD^)
 #BRANCH=$(git branch -r --contains  ${OLDTAG} | grep -v "HEAD" | awk -F/ '{print $NF}' | sort | tail -n 1)
