@@ -135,12 +135,28 @@ mkdir /home/centos/original_iso
 sudo mount  -o rw,loop -t iso9660 "$dvd3_iso" /home/centos/original_iso
 cp -avr /home/centos/original_iso/ /home/centos/copy_original_iso/
 
-cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo.png
-cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/about_logo.png
-cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo_login.png
-cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/images/about_logo.png
+#for braches 7.4* and 7.6* copy these files
+if [[ "$BRANCH" =~ "7.4" || "$BRANCH" =~ "7.6" ]]
+then
+	cp -f /home/centos/logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo.png
+	cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/about_logo.png
+	cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo_login.png
+	cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/images/about_logo.png
+else
+	#for branches 7.8 and up copy these files
+	cp -f /home/centos/ovoc_logo_white.svg /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/svgs/ovoc_logo_white.svg
+	cp -f /home/centos/ovoc_logo.svg /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/svgs/ovoc_logo.svg
+	cp -f /home/centos/globalLogo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/externals/security/logo/globalLogo.png
+    rm -rf /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/svgs/audiocodes_logo.svg
+fi
+
+
 mkdir -p /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/emsFiles/conf
 echo ${COMPANY} &gt;/home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/emsFiles/conf/branding.txt
+
+
+
+
 
 if [ $COMPANY == Nuera ]; then
 mkdir Documentation
