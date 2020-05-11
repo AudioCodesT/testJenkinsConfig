@@ -75,9 +75,9 @@
         </permissions>
         <assignedSIDs>
           <sid># All AudioCodes</sid>
-          <sid>compile</sid>
-          <sid># SBC SIP Infra</sid>
           <sid># SBC SIP</sid>
+          <sid># SBC SIP Infra</sid>
+          <sid>compile</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -118,6 +118,7 @@
         </permissions>
         <assignedSIDs>
           <sid>CI_EMS_Admins</sid>
+          <sid>aliyap</sid>
         </assignedSIDs>
       </role>
       <role name="CI_EMS_DEVELOPERS" pattern="(ems.*)">
