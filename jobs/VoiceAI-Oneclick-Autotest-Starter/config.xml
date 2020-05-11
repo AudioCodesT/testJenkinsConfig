@@ -89,7 +89,7 @@ python3 startVMs.py $SHUTDOWN_FLAG</command>
               <onlyExactRuns>false</onlyExactRuns>
             </hudson.plugins.parameterizedtrigger.FileBuildParameters>
           </configs>
-          <projects>Oneclick-Autotest</projects>
+          <projects>VoiceAI-Oneclick-Autotest</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
