@@ -163,24 +163,24 @@ if [ -s "$NEWTAG.list" ]; then
        if [[ "$GERRIT_BRANCH" =~ "NextGenCPE" &amp;&amp; ! "$BOARD" =~ "MP5" ]]; then continue; fi   
        if [ -e "$Target/$BOARD.zip" ]; then continue; fi
        #if [ ! -e "$Target/$FileName" ]; then
-         echo Download $FileName into "tmp/$FileName"...
-         curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output "tmp/$FileName"
+         echo Download $FileName into "/tmp/$FileName"...
+         curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output "/tmp/$FileName"
          ArtSize=`curl -ks -u $User -X GET $artifactory/api/storage/$location/$NEWTAG/$FileName | grep size | cut -d: -f2 | cut -d'"' -f2`
-         DestSize=`wc -c &lt;tmp/$FileName`
+         DestSize=`wc -c &lt;/tmp/$FileName`
          if [ $ArtSize != $DestSize ]; then 
            echo $ArtSize--$DestSize: $file is differ, copy again in next execution...
-           rm -f tmp/$FileName
+           rm -f /tmp/$FileName
            exit 1
          fi
        #fi
        if [[ "$FileName" =~ "M1000_ESBC" ]]; then
          echo Duplicate M1000_ESBC to M1000_MSBG
          FileNameM1000MSBG=$(echo $FileName | sed 's:ESBC:MSBG:g')
-         cp "tmp/$FileName" "tmp/$FileNameM1000MSBG"
-         zip -b /tmp -mj "$Target/$(echo $FileNameM1000MSBG | sed -r s/.cmp//).zip" "tmp/$FileNameM1000MSBG"
+         cp "/tmp/$FileName" "/tmp/$FileNameM1000MSBG"
+         zip -b /tmp -mj "$Target/$(echo $FileNameM1000MSBG | sed -r s/.cmp//).zip" "/tmp/$FileNameM1000MSBG"
        fi
        echo Create Zip from $FileName...
-       zip -b /tmp -mj "$Target/$BOARD.zip" "tmp/$FileName"
+       zip -b /tmp -mj "$Target/$BOARD.zip" "/tmp/$FileName"
      elif [ $Extention == "zip" ] || [ $Extention == "txt" ] || [ $Extention == "rms" ] || [ $Extention == "tgz" ]; then
        if [ -e "$Target/$FileName" ]; then continue; fi
        echo Download $FileName into "$Target/$FileName"...
