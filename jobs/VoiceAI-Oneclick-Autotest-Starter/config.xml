@@ -83,7 +83,7 @@ python3 startVMs.py $SHUTDOWN_FLAG</command>
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
             <hudson.plugins.parameterizedtrigger.FileBuildParameters>
-              <propertiesFile>.build_version</propertiesFile>
+              <propertiesFile>session-manager/test/e2e/.build_version</propertiesFile>
               <failTriggerOnMissing>false</failTriggerOnMissing>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
               <useMatrixChild>false</useMatrixChild>
