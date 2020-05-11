@@ -1703,7 +1703,7 @@
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>OVOC-Tiered</name>
+      <name>OVOC-Elasticity</name>
       <filterExecutors>true</filterExecutors>
       <filterQueue>true</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
