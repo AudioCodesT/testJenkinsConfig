@@ -3,6 +3,10 @@
   <description>############ This is work in progress  ################&#13;
 ############## Do NOT run this job #################&#13;
 &#13;
+================ To Do ===============&#13;
+1. verify instance is from AMI matching the role.&#13;
+=====================================&#13;
+&#13;
 This job accept the following parameters:&#13;
 * New tag&#13;
 * ISO to deploy&#13;
