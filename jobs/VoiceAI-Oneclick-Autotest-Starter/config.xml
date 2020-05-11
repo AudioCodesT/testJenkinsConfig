@@ -10,14 +10,6 @@
       <scanQueueFor>DISABLED</scanQueueFor>
       <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
-    <jenkins.model.BuildDiscarderProperty>
-      <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>-1</daysToKeep>
-        <numToKeep>5</numToKeep>
-        <artifactDaysToKeep>-1</artifactDaysToKeep>
-        <artifactNumToKeep>-1</artifactNumToKeep>
-      </strategy>
-    </jenkins.model.BuildDiscarderProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -73,6 +65,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>cd session-manager/test/e2e
+chmod 600 id_rsa
 echo "VERSION=$(git describe --tags --abbrev=0 --first-parent)" &gt; .build_version
 echo "BRANCH=$(git branch -r --contains HEAD | sed 's:^.*/::')" &gt;&gt; .build_version
 export PYTHONUNBUFFERED=TRUE
