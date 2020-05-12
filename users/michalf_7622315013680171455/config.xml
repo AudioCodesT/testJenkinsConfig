@@ -43,7 +43,47 @@
       <emailAddress>Michal.Fedida@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string>AWS_Jira_Users</string>
+        <string>AI-Engineering</string>
+        <string># All__Beer_Sheva</string>
+        <string>365_Monday</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string># SmartTAP Support</string>
+        <string># All manager Israel</string>
+        <string>Allow Office365 Groups</string>
+        <string># R&amp;D Support Escalation</string>
+        <string>AI-ENG</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>AI-QA</string>
+        <string># All Beer Sheva</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># Oracle</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Palo_Access_To_AWS-Remote_Desktop</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string>AI-SmartTAP_Log</string>
+        <string>AudioCodes_VPN</string>
+        <string># SmartTAP</string>
+        <string># SmartTap-BS</string>
+        <string># AUDC - SmartWORKS</string>
+        <string># Oracle USA</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
+        <string>NewUser_Israel-BS</string>
+      </roles>
+      <timestamp>1589306756737</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
