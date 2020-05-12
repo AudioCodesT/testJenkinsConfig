@@ -153,6 +153,7 @@ else
 	cp -f /home/centos/ovoc_logo.svg /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/svgs/ovoc_logo.svg
 	cp -f /home/centos/globalLogo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/externals/security/logo/globalLogo.png
     rm -rf /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/svgs/audiocodes_logo.svg
+    rm -rf /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/ac_background.svg
 fi
 
 
