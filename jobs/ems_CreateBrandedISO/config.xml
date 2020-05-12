@@ -121,11 +121,16 @@ curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems
 
 curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/logo.png&gt;logo.png
 
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/ovoc_logo.svg&gt;ovoc_logo.svg
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/ovoc_logo_white.svg&gt;ovoc_logo_white.svg
+curl -k -u ems-build:emspass -X GET https://artifactory/ems-externals/com/ac/ems/branding/"$company"/globalLogo.png&gt;globalLogo.png
+
 chmod 755 about_logo.png
 chmod 755 logo_login.png
 chmod 755 logo.png
-
-
+chmod 755 ovoc_logo.svg
+chmod 755 ovoc_logo_white.svg
+chmod 755 globalLogo.png
 
 
 rm -rf /home/centos/original_iso
