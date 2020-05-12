@@ -234,21 +234,19 @@
           <sid>compile</sid>
         </assignedSIDs>
       </role>
-      <role name="ovocBrandedConf" pattern="(ems_Create.*)">
+      <role name="ems_Branded" pattern="ems_CreateBrandedISO">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.Item.Workspace</permission>
           <permission>hudson.model.Item.Build</permission>
+          <permission>hudson.plugins.jobConfigHistory.JobConfigHistory.DeleteEntry</permission>
           <permission>jenkins.metrics.api.Metrics.View</permission>
           <permission>hudson.model.Run.Replay</permission>
           <permission>hudson.model.Item.Configure</permission>
           <permission>hudson.model.Item.Discover</permission>
-          <permission>hudson.model.Run.Update</permission>
         </permissions>
-        <assignedSIDs>
-          <sid>aliyap</sid>
-        </assignedSIDs>
+        <assignedSIDs/>
       </role>
     </roleMap>
   </authorizationStrategy>
