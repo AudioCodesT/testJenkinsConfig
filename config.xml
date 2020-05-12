@@ -114,6 +114,7 @@
           <permission>jenkins.metrics.api.Metrics.View</permission>
           <permission>hudson.model.Run.Replay</permission>
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Configure</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
         <assignedSIDs>
