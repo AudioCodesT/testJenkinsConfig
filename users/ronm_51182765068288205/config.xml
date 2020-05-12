@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -36,7 +36,7 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
@@ -45,7 +45,7 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Ron.Miller@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
@@ -56,17 +56,21 @@
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
         <string># All Cars</string>
+        <string>365_Monday</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
+        <string>Allow Office365 Groups</string>
         <string>AI-QA_RO</string>
         <string>AI-ENG</string>
         <string># All Lunch</string>
         <string>CatalogApps_Everyone</string>
         <string>Logistics_maintenance</string>
         <string>AI-QA</string>
+        <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># Application Group Developers</string>
+        <string>365_Lucca</string>
         <string># SW Applications Group</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -80,11 +84,13 @@
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1555328735074</timestamp>
+      <timestamp>1589294887847</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>912b9ff49eb2893e</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
