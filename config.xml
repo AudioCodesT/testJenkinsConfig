@@ -235,7 +235,7 @@
           <sid>compile</sid>
         </assignedSIDs>
       </role>
-      <role name="ovocBrandedConf" pattern="ems_CreateBrandedISO">
+      <role name="ovocBrandedConf" pattern="(ems_Create.*)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
