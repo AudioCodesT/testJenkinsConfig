@@ -41,7 +41,26 @@
     <hudson.model.TimeZoneProperty/>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>authenticated</string>
+        <string>QA Group</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>WirelessUsers</string>
+        <string>Allow Office365 Groups</string>
+        <string>cc_sys_users</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
+        <string>EMS_RO_Access</string>
+        <string>CatalogApps_Everyone</string>
+      </roles>
+      <timestamp>1589282108308</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
