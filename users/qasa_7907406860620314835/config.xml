@@ -39,7 +39,6 @@
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
     <hudson.model.TimeZoneProperty/>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
@@ -62,5 +61,6 @@
       </roles>
       <timestamp>1589282108308</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
   </properties>
 </user>
