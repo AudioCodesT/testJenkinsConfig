@@ -40,5 +40,8 @@
     </hudson.search.UserSearchProperty>
     <hudson.model.TimeZoneProperty/>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <timestamp>0</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
