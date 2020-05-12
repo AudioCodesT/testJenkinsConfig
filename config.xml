@@ -585,18 +585,7 @@
       <name>sig-8a99c992</name>
       <accountId></accountId>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-0a7b655a7adff3c24</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-0a7b655a7adff3c24</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>ems-build</requestedLabel>
-            <createdAt>2020-05-12 11:57:07.736 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1565,6 +1554,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>emsReview_ovocServer_test</string>
+        <string>OVOC-Cluster-Upgrade-Cluster---TEST</string>
         <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
         <string>test</string>
@@ -1572,7 +1562,6 @@
         <string>Test Artifactory</string>
         <string>test-email</string>
         <string>test-job</string>
-        <string>Test-Pipeline</string>
         <string>test-sbc-compile</string>
         <string>Test-YY</string>
         <string>test123</string>
@@ -1755,7 +1744,7 @@
         <string>MJ-OVOC-Cluster-Upgrade-Pre-7.8.2000</string>
         <string>OVOC-Cluster-Config-and-Sanity</string>
         <string>OVOC-Cluster-DVD-Install</string>
-        <string>Test-Pipeline</string>
+        <string>OVOC-Cluster-Upgrade-Cluster---TEST</string>
       </jobNames>
       <jobFilters/>
       <columns>
