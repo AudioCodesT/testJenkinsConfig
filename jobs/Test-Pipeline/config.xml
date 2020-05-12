@@ -129,13 +129,13 @@
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
-                            string(name: 'ServerRole', value: 'Master'),
+                            string(name: 'ServerRole', value: 'management'),
                             string(name: 'ServerIP', value: "${params.MASTER_IP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'ServerRole', value: 'Master'),
+                            string(name: 'ServerRole', value: 'management'),
                             string(name: 'ServerIP', value: "${params.MASTER_IP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
@@ -145,13 +145,13 @@
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
-                            string(name: 'ServerRole', value: 'VQ'),
+                            string(name: 'ServerRole', value: 'vqm'),
                             string(name: 'ServerIP', value: "${params.VQ_IP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'ServerRole', value: 'VQ'),
+                            string(name: 'ServerRole', value: 'vqm'),
                             string(name: 'ServerIP', value: "${params.VQ_IP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
@@ -161,13 +161,13 @@
                     steps {
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
-                            string(name: 'ServerRole', value: 'PM'),
+                            string(name: 'ServerRole', value: 'pm'),
                             string(name: 'ServerIP', value: "${params.PM_IP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'ServerRole', value: 'PM'),
+                            string(name: 'ServerRole', value: 'pm'),
                             string(name: 'ServerIP', value: "${params.PM_IP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
