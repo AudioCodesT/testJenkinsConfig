@@ -72,9 +72,9 @@ And does the following:&#13;
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>Master</string>
-              <string>VQ</string>
-              <string>PM</string>
+              <string>master</string>
+              <string>vqm</string>
+              <string>pm</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
