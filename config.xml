@@ -246,7 +246,9 @@
           <permission>hudson.model.Item.Configure</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>aliyap</sid>
+        </assignedSIDs>
       </role>
     </roleMap>
   </authorizationStrategy>
