@@ -78,6 +78,7 @@
           <sid># SBC SIP</sid>
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
+          <sid>qasa</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -179,11 +180,7 @@
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs>
-          <sid># OVOC MGMT</sid>
-          <sid># OVOC Web UI</sid>
-          <sid>CI_EMS_Developers</sid>
-        </assignedSIDs>
+        <assignedSIDs/>
       </role>
       <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|VoiceAI.*|VAG.*)">
         <permissions>
@@ -588,7 +585,18 @@
       <name>sig-8a99c992</name>
       <accountId></accountId>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-0a7b655a7adff3c24</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-0a7b655a7adff3c24</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>ems-build</requestedLabel>
+            <createdAt>2020-05-12 11:57:07.736 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
