@@ -64,19 +64,19 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>MASTER_IP</name>
+          <name>mgmtIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>VQ_IP</name>
+          <name>vqmIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>PM_IP</name>
+          <name>pmIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
@@ -130,13 +130,13 @@
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'management'),
-                            string(name: 'ServerIP', value: "${params.MASTER_IP}"),
+                            string(name: 'ServerIP', value: "${params.mgmtIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'management'),
-                            string(name: 'ServerIP', value: "${params.MASTER_IP}"),
+                            string(name: 'ServerIP', value: "${params.mgmtIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                     }
@@ -146,13 +146,13 @@
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'vqm'),
-                            string(name: 'ServerIP', value: "${params.VQ_IP}"),
+                            string(name: 'ServerIP', value: "${params.vqmIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'vqm'),
-                            string(name: 'ServerIP', value: "${params.VQ_IP}"),
+                            string(name: 'ServerIP', value: "${params.vqmIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                     }
@@ -162,13 +162,13 @@
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'pm'),
-                            string(name: 'ServerIP', value: "${params.PM_IP}"),
+                            string(name: 'ServerIP', value: "${params.pmIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'pm'),
-                            string(name: 'ServerIP', value: "${params.PM_IP}"),
+                            string(name: 'ServerIP', value: "${params.pmIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
                         ]
                     }
