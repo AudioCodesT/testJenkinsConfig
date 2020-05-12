@@ -118,7 +118,6 @@
         </permissions>
         <assignedSIDs>
           <sid>CI_EMS_Admins</sid>
-          <sid>aliyap</sid>
         </assignedSIDs>
       </role>
       <role name="CI_EMS_DEVELOPERS" pattern="(ems.*)">
@@ -247,7 +246,9 @@
           <permission>hudson.model.Item.Discover</permission>
           <permission>hudson.model.Run.Update</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>aliyap</sid>
+        </assignedSIDs>
       </role>
     </roleMap>
   </authorizationStrategy>
