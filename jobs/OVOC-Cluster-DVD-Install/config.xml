@@ -72,7 +72,7 @@ And does the following:&#13;
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>master</string>
+              <string>management</string>
               <string>vqm</string>
               <string>pm</string>
             </a>
