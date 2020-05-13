@@ -168,7 +168,7 @@ while read -r FileName; do
       fi
     done
 
-    echo Abort - the CheckSum of $(basename $f) is differ, copy again
+    echo Abort - the CheckSum of $FileNameInTarget is differ, copy again
     rm -f $Target/$FileNameInTarget
     exit 1
   fi
