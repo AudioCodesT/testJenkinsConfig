@@ -119,9 +119,10 @@ curl -ks -u $User -X GET $Artifactory/DRT/Firmware/$REFTARGET | grep uri | grep 
 if [ -s "$REFTARGET.list" ]; then
    while read -r FileName
    do
-     if [ -e "$Target/$FileName" ]; then continue; fi
-     echo Download $FileName to netapp1
-     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output "$Target/$FileName"
+     FileNameInTarget=$(echo $FileName | sed 's:M1000_ESBC:M1000_MSBG:g')
+     if [ -e "$Target/$FileNameInTarget" ]; then continue; fi
+     echo Download $FileName to netapp1, name $FileNameInTarget
+     curl -ks -u $User -X GET $DOWNLOAD/DRT/Firmware/$REFTARGET/$FileName --output "$Target/$FileNameInTarget"
    done &lt; "$REFTARGET.list"
 fi
 
@@ -152,11 +153,12 @@ for job in $(echo $allRunning | sed 's: :\n:g' | grep sbc-sanity-request); do
 done
 
 # Check the checksum of the 3 cmp files before executing the SANITY itself
-for f in $Target/*.cmp; do
+while read -r FileName
+  FileNameInTarget=$(echo $FileName | sed 's:M1000_ESBC:M1000_MSBG:g')
   checkSum1=$(curl -ks -u $User -X GET \
-            $Artifactory/DRT/Firmware/$REFTARGET/$(basename $f) | \
+            $Artifactory/DRT/Firmware/$REFTARGET/$FileName | \
             grep md5 | head -1 | cut -d\" -f4)
-  checkSum2=$(md5sum $f | cut -d" " -f1)
+  checkSum2=$(md5sum $Target/$FileNameInTarget | cut -d" " -f1)
   if [ $checkSum1 != $checkSum2 ]; then
     # sbc-sanity-build is running now?
     for job in $(echo $allRunning | sed 's: :\n:g' | grep sbc-sanity-build); do
@@ -167,10 +169,10 @@ for f in $Target/*.cmp; do
     done
 
     echo Abort - the CheckSum of $(basename $f) is differ, copy again
-    rm -f $f
+    rm -f $Target/$FileNameInTarget
     exit 1
   fi
-done
+done &lt; "$REFTARGET.list"
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
