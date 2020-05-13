@@ -116,9 +116,9 @@
         string(name: 'NEW_TAG', defaultValue: '', description: '')
         string(name: 'OLD_TAG', defaultValue: '', description: '')
         choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
-        string(name: 'MASTER_IP', defaultValue: '', description: '')
-        string(name: 'VQ_IP', defaultValue: '', description: '')
-        string(name: 'PM_IP', defaultValue: '', description: '')
+        string(name: 'mgmtIP', defaultValue: '', description: '')
+        string(name: 'vqmIP', defaultValue: '', description: '')
+        string(name: 'pmIP', defaultValue: '', description: '')
         choice(name: 'sanityType', choices: ['full', 'short'], description: '')
     }
     stages {
@@ -179,9 +179,9 @@
             steps{
                 build job: 'OVOC-Cluster-Config-and-Sanity', parameters: [
                     string(name: 'TAG', value: "${params.NEW_TAG}"),
-                    string(name: 'Master_IP', value: "${params.MASTER_IP}"),
-                    string(name: 'VQ_IP', value: "${params.VQ_IP}"),
-                    string(name: 'PM_IP', value: "${params.PM_IP}"),
+                    string(name: 'mgmtIP', value: "${params.mgmtIP}"),
+                    string(name: 'vqmIP', value: "${params.vqmIP}"),
+                    string(name: 'pmIP', value: "${params.pmIP}"),
                     string(name: 'sanityType', value: "${params.sanityType}"),
                     string(name: 'installType', value: 'upgradeCluster')
                 ]
