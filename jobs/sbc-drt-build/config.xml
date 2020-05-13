@@ -1,14 +1,14 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<matrix-project plugin="matrix-project@1.14">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><matrix-project plugin="matrix-project@1.14">
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -29,26 +29,26 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>REFSPEC</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>EMAIL</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CHANGES</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -66,14 +66,14 @@
       </matrixOptions>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -83,8 +83,9 @@ PATH=/bin:$PATH</propertiesContent>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -101,9 +102,11 @@ PATH=/bin:$PATH</propertiesContent>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -144,7 +147,7 @@ PATH=/bin:$PATH</propertiesContent>
   <builders>
     <hudson.tasks.Shell>
       <command>artifactory_host=${ARTIFACTORY_HOST}
-User=&quot;$artifactory_user:$artifactory_password&quot;
+User="$artifactory_user:$artifactory_password"
 
 cd TrunkPackRam
 NEWTAG=`./MakeBrdVersion.sh`
@@ -152,40 +155,44 @@ git describe --tags
 git log -n10 --decorate --oneline
 head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
+if [ "$BOARDNAME" == "M1000_MSBG" ] &amp;&amp; \
+     ./buildAll.sh --help | grep board= | grep -q M1000_ESBC; then
+   BOARDNAME="M1000_ESBC"    
+fi
 echo BOARDNAME=${BOARDNAME} &gt; ../generated_sbc_version.properties
 
-#if [[ $GERRIT_BRANCH =~ &quot;collab/&quot; ]]; then
-#  GERRIT_BRANCH=`git branch -r --contains $(git describe --tag --abbrev=0) | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+#if [[ $GERRIT_BRANCH =~ "collab/" ]]; then
+#  GERRIT_BRANCH=`git branch -r --contains $(git describe --tag --abbrev=0) | head -1 | awk -F'/' '{print $NF}'`
 #fi
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
 # if the REFSPEC=&lt;Branch name&gt;
 # CHANGESNumbers = All the chnages that should be updated with DRT label
 if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
-  FirstRefs=$(echo $CHANGES | cut -d&quot; &quot; -f1 | cut -d: -f3)
+  FirstRefs=$(echo $CHANGES | cut -d" " -f1 | cut -d: -f3)
   REFSPEC=refs/changes/00/$FirstRefs
-  CHANGESNumbers=&quot;&quot;
+  CHANGESNumbers=""
   OnlySubModule=true
   TARGET=${NEWTAG}-$(echo $FirstRefs | cut -d/ -f1)
 else
-  CHANGESNumbers=&quot;$(echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;) &quot;
+  CHANGESNumbers="$(echo $REFSPEC | sed 's:refs/changes/../::') "
   OnlySubModule=false
-  TARGET=${NEWTAG}-$(echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;)
+  TARGET=${NEWTAG}-$(echo $REFSPEC | sed 's:refs/changes/../::; s:/:-:g')
 fi
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
 chmod 600 ../id_rsa_gerrit
 change=`echo $REFSPEC | cut -d/ -f4`
-ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $change | grep -m1 id: | cut -d: -f2 | sed 's: ::g')
 ls -l ../id_rsa_gerrit
 chmod 600 ../id_rsa_gerrit
 ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID branch:$GERRIT_BRANCH status:open | \
-  grep -A30 &apos;project: TP/OpenSource&apos; | grep &apos;project\|revision&apos; &gt; othersCommits.txt  || echo ChangeId not found
+  grep -A30 'project: TP/OpenSource' | grep 'project\|revision' &gt; othersCommits.txt  || echo ChangeId not found
 
 cat othersCommits.txt
 
 while IFS= read -r line; do
-   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
+   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed 's:TP/::; s: ::g');
    elif echo $line | grep -q revision; then
      revision=$(echo $line | cut -d: -f2)
      git ls-files --stage ../$path
@@ -194,16 +201,16 @@ while IFS= read -r line; do
    fi
 done &lt; othersCommits.txt
 
-if [[ $CHANGES != &quot;&quot; ]]; then 
+if [[ $CHANGES != "" ]]; then 
   for rep in $CHANGES; do 
-    path=$(echo $rep | cut -d: -f1 | sed &apos;s:TP/::&apos;)
+    path=$(echo $rep | cut -d: -f1 | sed 's:TP/::')
     revision=$(echo $rep | cut -d: -f2)
     echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
-    CHANGESNumbers=&quot;$CHANGESNumbers$(echo $rep | cut -d: -f3) &quot;
+    CHANGESNumbers="$CHANGESNumbers$(echo $rep | cut -d: -f3) "
     # Add to the Target name directory the first and last chars of each submodule and PS
     # Example, for OpenRG: _OG&lt;PatchSet number&gt;
-    TARGET=${TARGET}_$(echo $path | awk -F/ &apos;{print $NF}&apos; | sed &apos;s/.//2g&apos;)$(echo ${path: -1})$(echo ${rep: -1})
+    TARGET=${TARGET}_$(echo $path | awk -F/ '{print $NF}' | sed 's/.//2g')$(echo ${path: -1})$(echo ${rep: -1})
   done
 fi
 
@@ -218,29 +225,29 @@ echo CHANGESNumbers=${CHANGESNumbers} &gt;&gt; ../generated_sbc_version.properti
 # Download the Images from the Artifactory
 if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
 chmod +x GetImages.sh
-./GetImages.sh $BOARDNAME $artifactory_host $User &quot;&quot; &quot;-i ../id_rsa_gerrit jenkins@test-gerrit&quot;
+./GetImages.sh $BOARDNAME $artifactory_host $User "" "-i ../id_rsa_gerrit jenkins@test-gerrit"
 
 # Take the relevant TP/GWApp that corresponding to this Submodule change instead of using the branch
 # In case of no TP/GWApp change was added to this DRT
-if [ &quot;$OnlySubModule&quot; == true ]; then
-  tagTocompile=&quot;&quot;
+if [ "$OnlySubModule" == true ]; then
+  tagTocompile=""
   for rep in $CHANGES; do 
-    RepoName=$(echo $rep | cut -d: -f1 | sed &apos;s:.*/::&apos;) 
+    RepoName=$(echo $rep | cut -d: -f1 | sed 's:.*/::') 
     echo Check $RepoName............ Search it $BOARDNAME.deps 
     # $f will contain the the exact external_version_data.h name according the .deps file
-    f=$(grep &quot;/$RepoName &quot; ../OpenSource/$BOARDNAME.deps | grep data.h | sed &apos;s:.* ::&apos; || echo Not found)
+    f=$(grep "/$RepoName " ../OpenSource/$BOARDNAME.deps | grep data.h | sed 's:.* ::' || echo Not found)
     # The file exist?
     if [ -f TPApp/MPCBin/$f ]; then
-      t1=$(grep EXTERNAL_VERSION TPApp/MPCBin/$f | cut -d&apos;&quot;&apos; -f2 | cut -d- -f1 | cut -d_ -f1)
+      t1=$(grep EXTERNAL_VERSION TPApp/MPCBin/$f | cut -d'"' -f2 | cut -d- -f1 | cut -d_ -f1)
       echo Found TAG $t1 in file $f -- Check if this TAG is the most advanced TAG
       # This if is relevant if OpenRG and acLinux or Hosted02 and Hostedbl were choosen
-      if [ $(echo 0$t1 | sed &apos;s:.*\.::&apos;) -gt $(echo 0$tagTocompile | sed &apos;s:.*\.::&apos;) ]; then
+      if [ $(echo 0$t1 | sed 's:.*\.::') -gt $(echo 0$tagTocompile | sed 's:.*\.::') ]; then
         tagTocompile=$t1
         echo Change to TAG: $tagTocompile found in Submodule $RepoName
       fi    
     fi
   done
-  if [ ! -z &quot;$tagTocompile&quot; ]; then
+  if [ ! -z "$tagTocompile" ]; then
     #echo Do not nothing, need to involve the QA (Rekefet) if it is right to do it
     echo Checkout TP/GWApp compilation environment to $tagTocompile
     #git checkout -f $tagTocompile
@@ -257,16 +264,16 @@ cd TrunkPackRam
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
       <command>artifactory_host=${ARTIFACTORY_HOST}
-User=&quot;$artifactory_user:$artifactory_password&quot;
+User="$artifactory_user:$artifactory_password"
 
-if [ ! -d &quot;$WORKSPACE/CompilationResults&quot; ]; then
+if [ ! -d "$WORKSPACE/CompilationResults" ]; then
   rm -rf $WORKSPACE/CompilationResults
 fi
 
@@ -278,7 +285,7 @@ fi
 
 cd TrunkPackRam
 
-if [ $BOARDNAME == &quot;HostedTP&quot; ]; then SERVER=&quot;--server=localhost &quot;; else SERVER=&quot;&quot;; fi
+if [ $BOARDNAME == "HostedTP" ]; then SERVER="--server=localhost "; else SERVER=""; fi
 ./buildAll.sh --board=${BOARDNAME} --sip=yes --user=no --fast=yes $SERVER --custom-version=-d$BUILD_NUMBER
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin
@@ -289,7 +296,7 @@ zip -r ${BOARDNAME}_SIP.elf.zip ram${BOARDNAME}_SIP.elf
 </command>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.0">
+      <condition class="org.jenkins_ci.plugins.run_condition.core.ExpressionCondition" plugin="run-condition@1.3">
         <expression>^(?!collab).*</expression>
         <label>$GERRIT_BRANCH</label>
       </condition>
@@ -315,7 +322,7 @@ CHANGES=${CHANGESNumbers}</properties>
           </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
         </configs>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
   </builders>
   <publishers>
@@ -334,7 +341,7 @@ CHANGES=${CHANGESNumbers}</properties>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
             <worstResult>
               <name>FAILURE</name>
               <ordinal>2</ordinal>
@@ -360,7 +367,7 @@ CHANGES=${CHANGESNumbers}</properties>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.6">
+                      <EnvInjectBuilder plugin="envinject@2.3.0">
                         <info>
                           <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
                         </info>
@@ -376,10 +383,10 @@ for rep in $CHANGESNumbers; do
   
   echo Send faild message to Gerrit - $change,$ps
   ssh -p 29418  -i id_rsa_gerrit jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;Compilation Failed - $BUILD_URL&apos;&quot; \
+  --message "'Compilation Failed - $BUILD_URL'" \
   --notify OWNER \
   --label DRT=-1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --tag "'autogenerated:drt'" \
   $change,$ps
 
 done      
@@ -392,36 +399,36 @@ done
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
-      <script plugin="script-security@1.55">
+      <script plugin="script-security@1.71">
         <script>artfcty_pat = ~/Deploying artifact: https:\/\/(.+\/)([^\/\s]+\b)/
 
 // Adds artifacts from child build
 def add_artifacts(artifacts, build) {
-    // match &quot;Deploying artifact: (.+)&quot;
+    // match "Deploying artifact: (.+)"
     def matches = build.logFile.text =~ artfcty_pat
     matches.each {
-        if (!it[2].endsWith(&apos;.h&apos;)) // Ignore header files
-            artifacts.appendText(&quot;&lt;li&gt;&lt;a href=\&quot;https://sbc-read:sbc-read@${it[1]}${it[2]}\&quot;&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;&quot;, false)
+        if (!it[2].endsWith('.h')) // Ignore header files
+            artifacts.appendText("&lt;li&gt;&lt;a href=\"https://sbc-read:sbc-read@${it[1]}${it[2]}\"&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;", false)
     }
 }
 
 def isMatrix = manager.buildIsA(hudson.matrix.MatrixBuild.class)
-artifacts = manager.createSummary(&quot;package.png&quot;)
-targetArtifactory=&quot;user/Firmware/&quot; + manager.build.number
-artifacts.appendText(&quot;&lt;a href=\&quot;https://sbc-read:sbc-read@artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
+artifacts = manager.createSummary("package.png")
+targetArtifactory="user/Firmware/" + manager.build.number
+artifacts.appendText("&lt;a href=\"https://sbc-read:sbc-read@artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/" + targetArtifactory + "\"&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;", false)
 // For matrix build, collect artifacts from all child builds. For normal build collect from self
 if (isMatrix) {
     manager.build.exactRuns.each { run -&gt; add_artifacts(artifacts, run) }
 } else {
     add_artifacts(artifacts, manager.build);
 }
-artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
+artifacts.appendText("&lt;/ul&gt;", false)
 </script>
         <sandbox>false</sandbox>
       </script>
@@ -442,39 +449,39 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
       <includes>id_rsa_gerrit</includes>
-      <excludes></excludes>
+      <excludes/>
       <flatten>false</flatten>
       <includeAntExcludes>false</includeAntExcludes>
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <com.lookout.jenkins.EnvironmentScript plugin="environment-script@1.2.5">
-      <script>if [[ $CHANGES != &quot;&quot; ]]; then
+      <script>if [[ $CHANGES != "" ]]; then
   for rep in $CHANGES; do
-    revisions=$(echo $rep | cut -d: -f3 | sed &apos;s:/:/revisions/:&apos;)
+    revisions=$(echo $rep | cut -d: -f3 | sed 's:/:/revisions/:')
     curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
-    -d &quot;{\&quot;message\&quot;: \&quot;DRT compilation has started - $BUILD_URL\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;autogenerated:drt\&quot;}&quot; \
-    -H &apos;Content-Type: application/json&apos; &gt; /dev/null
+    -d "{\"message\": \"DRT compilation has started - $BUILD_URL\", \"notify\": \"NONE\", \"tag\": \"autogenerated:drt\"}" \
+    -H 'Content-Type: application/json' &gt; /dev/null
   done
 fi
 
 if [[ $REFSPEC != $GERRIT_BRANCH ]]; then
-  revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+  revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed 's:/:/revisions/:')
   curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
-  -d &quot;{\&quot;message\&quot;: \&quot;DRT compilation has started - $BUILD_URL\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;autogenerated:drt\&quot;}&quot; \
-  -H &apos;Content-Type: application/json&apos; &gt; /dev/null
+  -d "{\"message\": \"DRT compilation has started - $BUILD_URL\", \"notify\": \"NONE\", \"tag\": \"autogenerated:drt\"}" \
+  -H 'Content-Type: application/json' &gt; /dev/null
 fi
 </script>
       <scriptType>unixScript</scriptType>
       <runOnlyOnParent>true</runOnlyOnParent>
       <hideEnvironmentVariablesValues>false</hideEnvironmentVariablesValues>
     </com.lookout.jenkins.EnvironmentScript>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>sbc-review</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -486,59 +493,51 @@ fi
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.cmp=&gt;com/ac/sbc/DRT/Firmware/${TARGET}
 ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.*.zip=&gt;com/ac/sbc/DRT/Firmware/${TARGET}/map</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>true</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
-      <artifactoryCombinationFilter>label==&quot;sbc-linux-build&quot;</artifactoryCombinationFilter>
+      <artifactoryCombinationFilter>label=="sbc-linux-build"</artifactoryCombinationFilter>
       <multiConfProject>true</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
         <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -548,8 +547,9 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${REFSPEC}</template>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
