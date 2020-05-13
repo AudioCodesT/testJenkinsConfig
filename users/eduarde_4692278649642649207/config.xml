@@ -46,6 +46,7 @@
       <roles>
         <string>authenticated</string>
         <string>365_Tas</string>
+        <string>365_Comeet</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string>365_Lucca</string>
@@ -66,7 +67,7 @@
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1588828899407</timestamp>
+      <timestamp>1589372074329</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
