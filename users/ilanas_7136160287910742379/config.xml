@@ -83,6 +83,7 @@
         <string>Certificate Service DCOM Access</string>
         <string>365_MFA_Apps</string>
         <string>Agile users</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>RDP-AISMARKLOCK</string>
         <string>AI-Engineering</string>
@@ -109,7 +110,7 @@
         <string>AI-ClearCase</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1588802486684</timestamp>
+      <timestamp>1589407381839</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
