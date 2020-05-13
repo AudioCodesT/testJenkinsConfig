@@ -140,7 +140,7 @@ PATH=/bin:$PATH</propertiesContent>
       </values>
     </hudson.matrix.LabelAxis>
     <hudson.matrix.TextAxis>
-      <name>BOARDNAME</name>
+      <name>BOARD</name>
       <values>
         <string>MP500_ESBC</string>
         <string>M1000_MSBG</string>
@@ -159,6 +159,7 @@ git describe --tags
 git log -n10 --decorate --oneline
 head -12 Bsps/Common/Include/BrdVersion.h | tail -3
 
+BOARDNAME=$BOARD
 if [ "$BOARDNAME" == "M1000_MSBG" ] &amp;&amp; \
      ./buildAll.sh --help | grep board= | grep -q M1000_ESBC; then
    BOARDNAME="M1000_ESBC"    
