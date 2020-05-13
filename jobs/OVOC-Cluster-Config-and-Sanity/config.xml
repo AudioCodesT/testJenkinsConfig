@@ -2,9 +2,9 @@
   <actions/>
   <description>Take parameters:&#13;
 1.Tag&#13;
-2. IP for master&#13;
-3. IP for VQ&#13;
-3. IP for PM&#13;
+2. IP for management&#13;
+3. IP for vqm&#13;
+3. IP for pm&#13;
 4. Sanity type&#13;
 5. Installation type (New, Upgrade, ect.)&#13;
 &#13;
@@ -35,19 +35,19 @@ run sanity tests</description>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>Master_IP</name>
+          <name>mgmtIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>VQ_IP</name>
+          <name>vqmIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>PM_IP</name>
+          <name>pmIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
@@ -102,9 +102,9 @@ run sanity tests</description>
       <command>##
 
 echo "Running configuration and samity tests on OVOC cluster with tag ${TAG}"
-echo "Master IP is ${Master_IP}"
-echo "VQ slave IP is: ${VQ_IP}"
-echo "PM slave IP is ${PM_IP}"
+echo "Management IP is ${mgmtIP}"
+echo "VQ slave IP is: ${vqmIP}"
+echo "PM slave IP is ${pmIP}"
 echo "Cluster configuration is ${installType}"
 echo "Running ${sanityType} sanity tests"</command>
     </hudson.tasks.Shell>
