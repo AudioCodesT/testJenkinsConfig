@@ -181,7 +181,9 @@
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>CI_EMS_Admins</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_OVOC_Developers" pattern="(ems.*|OVOC.*)">
         <permissions>
@@ -193,7 +195,10 @@
           <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
           <permission>hudson.model.Item.Discover</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># OVOC MGMT</sid>
+          <sid>CI_EMS_Developers</sid>
+        </assignedSIDs>
       </role>
       <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|VoiceAI.*|VAG.*)">
         <permissions>
