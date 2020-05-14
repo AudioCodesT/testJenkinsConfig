@@ -574,7 +574,8 @@ fi</command>
 set -a
 source ${WORKSPACE}/sanity.properties
 set +a
-
+#run set +e to not fail and continue to terminate the machine if the SanityCopyLogs.py failing.
+set +e
 cd ${WORKSPACE}/EMS/VersionRelease
 #run copy logs
 if [[ "$BRANCH" == "7.4" || "$BRANCH" == "7.4.1000" || "$BRANCH" == "7.4.2000" ]]
