@@ -121,7 +121,7 @@ def pmIP = ""
 def pmId = ""
 
 
-def runInstance(string imageId, string role) {
+def runInstance(String imageId, String role) {
     try{
         def jsonSlurper = new JsonSlurper();
 
