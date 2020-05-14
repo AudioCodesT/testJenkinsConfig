@@ -105,7 +105,57 @@
     
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
-    <script>pipeline {
+    <script>import groovy.json.JsonSlurper;
+
+def ovocMgmtAMI = "ami-097a30155f82688fb"
+def ovocAppsAMI = "ami-005e7916df1f0ea46"
+def ec2SGId = "sg-77bce41e"
+def ec2SNId = "subnet-35295a5c"
+def ec2iTyp = "t2.2xlarge"
+def ec2Key = "AudioCodes-CICD-Apps"
+def mgmtIP = ""
+def mgmtId = ""
+def vqmIP = ""
+def vqmId = ""
+def pmIP = ""
+def pmId = ""
+
+
+def runInstance(string imageId, string role) {
+    try{
+        def jsonSlurper = new JsonSlurper();
+
+        sh 'aws ec2 run-instances --image-id ' + imageId + ' --instance-type ' + ec2iTyp + ' --count 1 --security-group-ids ' + ec2SGId + ' --subnet-id ' + ec2SNId + ' --key-name ' + ec2Key + '  2&gt;&amp;1 | tee run-inst.json'
+
+        def runJsonFile = new File("/home/yuval/run-inst.json");
+        def runJsonObj = jsonSlurper.parse(runJsonFile);
+        def instId = (runJsonObj['Instances']['InstanceId']).toString().replaceAll("\\[|\\]", "")
+
+        sh 'aws ec2 create-tags --resources ' + instId + ' --tags Key=Name,Value=OVOC_Elst_' + role + '_Sanity'
+        sh 'aws ec2 wait instance-status-ok --instance-ids ' + instId
+        sh 'aws ec2 describe-instances --instance-ids ' + instId + ' &gt; instance.json'
+
+        def instJsonFile = new File("/home/yuval/instance.json");
+        def instJsonObj = jsonSlurper.parse(instJsonFile);
+        def ipAddr = (instJsonObj['Reservations']['Instances']['NetworkInterfaces']['PrivateIpAddress']).toString().replaceAll("\\[|\\]", "")
+    }
+    finally {
+        switch(role) {
+            case management:
+                mgmtId = instId
+                mgmtIP = ipAddr
+            case vqm:
+                vqmId = instId
+                vqmIP = ipAddr
+            case pm:
+                pmId = instId
+                pmIP = ipAddr
+        }
+    }
+}
+
+
+pipeline {
     agent {
         node {
             label 'ems-build'
@@ -125,8 +175,9 @@
         stage('Install Nodes'){
             failFast true
             parallel {
-                stage('Install master') {
+                stage('Install management') {
                     steps {
+                        runInstance(ovocMgmtAMI, management)
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'management'),
@@ -141,8 +192,9 @@
                         ]
                     }
                 }
-                stage('Install VQ') {
+                stage('Install vqm') {
                     steps {
+                        runInstance(ovocAppsAMI, vqm)
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'vqm'),
@@ -157,8 +209,9 @@
                         ]
                     }
                 }
-                stage('Install PM') {
+                stage('Install pm') {
                     steps {
+                        runInstance(ovocAppsAMI, pm)
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'pm'),
@@ -188,7 +241,8 @@
             }
         }
     }
-}</script>
+}
+</script>
     <sandbox>false</sandbox>
   </definition>
   <triggers/>
