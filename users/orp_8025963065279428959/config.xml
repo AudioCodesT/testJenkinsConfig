@@ -51,6 +51,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string># SmartTAP Dev</string>
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
@@ -85,7 +86,7 @@
         <string>NewUser_Israel-BS</string>
         <string>sp365-smarttap-modify</string>
       </roles>
-      <timestamp>1588757861241</timestamp>
+      <timestamp>1589468008428</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>f5ef984c7696f77e</seed>
