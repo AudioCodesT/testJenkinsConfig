@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -46,6 +46,7 @@
       <roles>
         <string>Agile users</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>R&amp;D HDGW software</string>
         <string>TG1000</string>
         <string>AWS_Jira_Users</string>
@@ -89,9 +90,9 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1585307691912</timestamp>
+      <timestamp>1589447762308</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Gal.Erez@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -100,5 +101,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>4dd8a485a460b4e4</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
