@@ -170,6 +170,19 @@
           <sid># AUDC - NJ Engineering Team</sid>
         </assignedSIDs>
       </role>
+      <role name="CI_OVOC_Admins" pattern="(ems.*|OVOC.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
+          <permission>hudson.model.Item.Workspace</permission>
+          <permission>hudson.model.Item.Build</permission>
+          <permission>jenkins.metrics.api.Metrics.View</permission>
+          <permission>hudson.model.Run.Replay</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
+          <permission>hudson.model.Item.Discover</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
       <role name="CI_OVOC_Developers" pattern="(ems.*|OVOC.*)">
         <permissions>
           <permission>hudson.model.Item.Read</permission>
