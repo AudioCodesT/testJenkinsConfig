@@ -45,7 +45,7 @@ This is the tag the image on ECR will get.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>+refs/tags/$version:ref/remotes/tags/$version</refspec>
+        <refspec>+refs/tags/$version</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
