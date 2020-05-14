@@ -53,6 +53,7 @@
         <string># TRAVEL IL</string>
         <string>Agile users</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>TG1000</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
@@ -92,7 +93,7 @@
         <string>ARM-FC</string>
         <string>CI_ARM_developers</string>
       </roles>
-      <timestamp>1588243001888</timestamp>
+      <timestamp>1589463167449</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>927cdbf4ce2fc958</seed>
