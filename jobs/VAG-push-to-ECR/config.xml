@@ -211,8 +211,7 @@ done
 #4. Put the new file in `ecr` directory. 
 #
 cd ${WORKSPACE}
-git fetch &amp;&amp; git fetch --tags
-git checkout ${BRANCH}
+git fetch --all --tags
 [[ "$version" != "${BRANCH}" ]] &amp;&amp; git checkout -f $version -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 #
