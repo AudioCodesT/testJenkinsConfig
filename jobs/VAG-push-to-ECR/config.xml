@@ -21,13 +21,19 @@ Images without tags will not be processed.</description>
     </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
+        <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
           <name>version</name>
-          <description>The specific version to push to ECR.
-This is the tag the image on ECR will get.</description>
+          <description>The specific version to push to ECR. This is the tag the image on ECR will get.</description>
+          <uuid>b4a87f4c-b89b-4406-92c0-05f6643f0c15</uuid>
+          <type>PT_BRANCH_TAG</type>
+          <branch/>
+          <tagFilter>*</tagFilter>
+          <branchFilter>.*</branchFilter>
+          <sortMode>NONE</sortMode>
           <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
+          <selectedValue>NONE</selectedValue>
+          <quickFilterEnabled>false</quickFilterEnabled>
+        </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
