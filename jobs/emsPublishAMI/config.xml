@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,11 +8,8 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -25,8 +21,8 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -38,8 +34,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>ems-build</assignedNode>
@@ -51,47 +48,47 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>printf &quot;%-20s%10sami-id\n&quot; &quot;Region&quot; &quot; &quot; &gt; RegionsNameAndIds.txt
+      <command>printf "%-20s%10sami-id\n" "Region" " " &gt; RegionsNameAndIds.txt
 
 
 
-printf &quot;%s------------------------------------\n&quot; &gt;&gt; RegionsNameAndIds.txt
+printf "%s------------------------------------\n" &gt;&gt; RegionsNameAndIds.txt
 
 #list of other regions
-OTHER_REGIONS=&quot;eu-west-1 us-east-1 us-east-2 us-west-1 us-west-2 ap-southeast-1 ap-south-1&quot;
+OTHER_REGIONS="eu-west-1 us-east-1 us-east-2 us-west-1 us-west-2 ap-southeast-1 ap-south-1"
 OTHER_REGIONS=($OTHER_REGIONS) 
 
-currentRegion=&quot;eu-central-1&quot;
+currentRegion="eu-central-1"
 ImageName=ovocAMI_${NEW_TAG}
 
 BRANCH=${NEW_TAG:0:3}
-echo &quot;BRANCH=${BRANCH}&quot; &gt; prop
+echo "BRANCH=${BRANCH}" &gt; prop
 
 
 #Get Image Id
-ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query &apos;Images[*].ImageId&apos;)
+ImageId=$(aws ec2 describe-images --filters Name=name,Values=$ImageName --output text --query 'Images[*].ImageId')
 
-printf &quot;%-20s%-10s${ImageId}\n&quot; &quot;${currentRegion}&quot; &quot; &quot; &gt;&gt; RegionsNameAndIds.txt
+printf "%-20s%-10s${ImageId}\n" "${currentRegion}" " " &gt;&gt; RegionsNameAndIds.txt
 
 #make The Image Public
-aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
+aws ec2 modify-image-attribute --image-id ${ImageId} --launch-permission "{\"Add\":[{\"Group\":\"all\"}]}"
 #copy Image to other Regions
 for destRegionName in ${OTHER_REGIONS[@]}
 do
 	
-    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name &quot;ovocAmi_${NEW_TAG}&quot; --description &quot;ovoc AMI ${NEW_TAG}&quot; --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query &quot;ImageId&quot;)
+    	newRegionAmiId=$(aws ec2 copy-image --region ${destRegionName} --name "ovocAmi_${NEW_TAG}" --description "ovoc AMI ${NEW_TAG}" --source-image-id ${ImageId} --source-region ${currentRegion} --output text --query "ImageId")
         
         sleep 20
         #wait for The image to Create
-        OLD_STATE=&quot;&quot;
+        OLD_STATE=""
         while true; do
             sleep 100
-            STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query &quot;Images[0].State&quot;)
+            STATE=$(aws ec2 describe-images --region ${destRegionName} --image-ids ${newRegionAmiId} --output text --query "Images[0].State")
             if [[ $STATE != $OLD_STATE ]]; then
                 echo $STATE
                 OLD_STATE=$STATE
             fi
-            if [[ $STATE == &quot;available&quot; ]]; then
+            if [[ $STATE == "available" ]]; then
                 break
             fi
         done
@@ -101,17 +98,17 @@ do
         #give name to the snapshot 
         aws ec2 create-tags --region ${destRegionName} --resources $snapshotId --tags Key=Name,Value=OvocAMI_${NEW_TAG}
         # add public permissions to the rest of the regions
-        aws ec2 modify-image-attribute --region ${destRegionName} --image-id ${newRegionAmiId} --launch-permission &quot;{\&quot;Add\&quot;:[{\&quot;Group\&quot;:\&quot;all\&quot;}]}&quot;
-    	printf &quot;%-20s%-10s${newRegionAmiId}\n&quot; &quot;${destRegionName}&quot; &quot; &quot; &gt;&gt; RegionsNameAndIds.txt
+        aws ec2 modify-image-attribute --region ${destRegionName} --image-id ${newRegionAmiId} --launch-permission "{\"Add\":[{\"Group\":\"all\"}]}"
+    	printf "%-20s%-10s${newRegionAmiId}\n" "${destRegionName}" " " &gt;&gt; RegionsNameAndIds.txt
 done
 
-echo &quot;Region Name &amp; Id&quot;
+echo "Region Name &amp; Id"
 cat RegionsNameAndIds.txt
 
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>prop</propertiesFilePath>
       </info>
@@ -126,7 +123,7 @@ cat RegionsNameAndIds.txt
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -134,7 +131,7 @@ cat RegionsNameAndIds.txt
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.3"/>
           <publisherList>
             <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
               <recipientList>ben.magriso,Shuky.Riechard</recipientList>
@@ -146,7 +143,7 @@ cat RegionsNameAndIds.txt
                     <recipientProviders>
                       <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
                     </recipientProviders>
-                    <attachmentsPattern></attachmentsPattern>
+                    <attachmentsPattern/>
                     <attachBuildLog>false</attachBuildLog>
                     <compressBuildLog>false</compressBuildLog>
                     <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -156,10 +153,12 @@ cat RegionsNameAndIds.txt
               </configuredTriggers>
               <contentType>text/html</contentType>
               <defaultSubject>OVOC version ${NEW_TAG} is released</defaultSubject>
-              <defaultContent>edit &lt;a href=&quot;https://jenkins/view/admin/job/aws_deleteOvocAmi/&quot;&gt;aws_deleteOvocAmi&lt;/a&gt; jenkins job to not delete AMIs in version ${NEW_TAG}
+              <defaultContent>edit &lt;a href="https://jenkins/view/admin/job/aws_deleteOvocAmi/"&gt;aws_deleteOvocAmi&lt;/a&gt; jenkins job to not delete AMIs in version ${NEW_TAG}
+
+update &lt;a href="https://test-jenkins/view/EMS/job/emsReview_ovoc_server-fullRepo/"&gt;emsReview_ovoc-server-fullRepo&lt;/a&gt; job to run on the latest development branch
 
 send by ${BUILD_URL}</defaultContent>
-              <attachmentsPattern></attachmentsPattern>
+              <attachmentsPattern/>
               <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
               <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
               <attachBuildLog>false</attachBuildLog>
@@ -169,7 +168,7 @@ send by ${BUILD_URL}</defaultContent>
               <disabled>false</disabled>
             </hudson.plugins.emailext.ExtendedEmailPublisher>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -184,7 +183,7 @@ send by ${BUILD_URL}</defaultContent>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -195,11 +194,11 @@ send by ${BUILD_URL}</defaultContent>
       <contentType>text/html</contentType>
       <defaultSubject>OVOC_${NEW_TAG} AMIs</defaultSubject>
       <defaultContent>&lt;pre&gt;
-${FILE,path=&quot;RegionsNameAndIds.txt&quot;}
+${FILE,path="RegionsNameAndIds.txt"}
 &lt;/pre&gt;
 
 </defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -212,7 +211,7 @@ ${FILE,path=&quot;RegionsNameAndIds.txt&quot;}
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${NEW_TAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
