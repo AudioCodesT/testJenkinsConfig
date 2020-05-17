@@ -75,7 +75,12 @@ if [ $SHUTDOWN = true ]; then
 fi
 
 pip3 install --user -r requirements.txt
-python3 startVMs.py $SHUTDOWN_FLAG</command>
+python3 startVMs.py $SHUTDOWN_FLAG
+
+if [ $SHUTDOWN = false ]; then
+  jenkinsUserApiToken=$(curl 'https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken' --data 'newTokenName=myFoo' --user jenkins:$jenkinsPass | jq -r '.data.tokenValue')
+  curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
+fi</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -156,5 +161,15 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
+      <injectGlobalPasswords>false</injectGlobalPasswords>
+      <maskPasswordParameters>true</maskPasswordParameters>
+      <passwordEntries>
+        <EnvInjectPasswordEntry>
+          <name>jenkinsPass</name>
+          <value>{AQAAABAAAAAQuJueLOhusojTihlmSg1dXaxaN6DPNmzqPhfCpHF2ZEc=}</value>
+        </EnvInjectPasswordEntry>
+      </passwordEntries>
+    </EnvInjectPasswordWrapper>
   </buildWrappers>
 </project>
