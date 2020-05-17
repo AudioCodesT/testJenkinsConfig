@@ -21,19 +21,12 @@ Images without tags will not be processed.</description>
     </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.1">
+        <hudson.model.StringParameterDefinition>
           <name>version</name>
-          <description>The specific version to push to ECR. This is the tag the image on ECR will get.</description>
-          <uuid>b4a87f4c-b89b-4406-92c0-05f6643f0c15</uuid>
-          <type>PT_BRANCH_TAG</type>
-          <branch/>
-          <tagFilter>*</tagFilter>
-          <branchFilter>.*</branchFilter>
-          <sortMode>NONE</sortMode>
+          <description/>
           <defaultValue/>
-          <selectedValue>NONE</selectedValue>
-          <quickFilterEnabled>false</quickFilterEnabled>
-        </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -57,7 +50,7 @@ Images without tags will not be processed.</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/*</name>
+        <name>$version</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -327,7 +320,7 @@ DevOps Team</defaultContent>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>shukyr yuvaly</recipients>
