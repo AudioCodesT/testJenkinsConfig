@@ -127,14 +127,14 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
   <publishers>
     <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@7.3.0">
       <analysisTools>
-        <io.jenkins.plugins.analysis.warnings.FindBugs>
+        <io.jenkins.plugins.analysis.warnings.SpotBugs>
           <id/>
           <name/>
           <pattern>**/findbugs.xml</pattern>
           <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
           <useRankAsPriority>true</useRankAsPriority>
-        </io.jenkins.plugins.analysis.warnings.FindBugs>
+        </io.jenkins.plugins.analysis.warnings.SpotBugs>
         <io.jenkins.plugins.analysis.warnings.Pmd>
           <id/>
           <name/>
