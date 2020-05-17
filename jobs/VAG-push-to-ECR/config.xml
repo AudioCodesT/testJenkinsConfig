@@ -231,8 +231,7 @@ done
 #
 cd ${WORKSPACE}
 
-[[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- common/ECR-yaml-manipulation.sh || git checkout -f $version -- common/ECR-yaml-manipulation.sh
-git checkout -f $version -- common/ECR-yaml-manipulation.sh
+if [ "$version" == "${BRANCH}" ]; then &amp;&amp; git checkout -f origin/$version -- common/ECR-yaml-manipulation.sh || git checkout -f $version -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
