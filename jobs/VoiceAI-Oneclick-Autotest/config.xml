@@ -50,7 +50,11 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H 1 * 1-5,7 *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -61,7 +65,7 @@ python3 runner.py</command>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
+      <recipientList>Shmulik.Yudkovich,Yaakov.Bivas,Orgad.Shaneh,Yehoshua.Gev,Yafit.Shalom</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
@@ -78,9 +82,9 @@ python3 runner.py</command>
           </email>
         </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
       </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <contentType>text/html</contentType>
+      <defaultSubject>$BUILD_STATUS: Oneclick Auto Test Results</defaultSubject>
+      <defaultContent>${FILE,path="$HOME/e2e/report.html"}</defaultContent>
       <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
