@@ -78,8 +78,14 @@ pip3 install --user -r requirements.txt
 python3 startVMs.py $SHUTDOWN_FLAG
 
 if [ $SHUTDOWN = false ]; then
-  jenkinsUserApiToken=$(curl 'https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken' --data 'newTokenName=myFoo' --user jenkins:$jenkinsPass | jq -r '.data.tokenValue')
-  curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
+	## Need to start the slave agent on the remote slave
+	jenkinsUserApiToken=$(curl 'https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken' --data 'newTokenName=myFoo' --user jenkins:$jenkinsPass | jq -r '.data.tokenValue')
+	curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
+    
+    ## Check if node is online
+    offlineStatus=$(curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r '.offline')
+    temporarilyOfflineStatus=$(curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r '.temporarilyOfflineStatus')
+    
 fi</command>
     </hudson.tasks.Shell>
   </builders>
@@ -167,7 +173,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQuJueLOhusojTihlmSg1dXaxaN6DPNmzqPhfCpHF2ZEc=}</value>
+          <value>{AQAAABAAAAAQC90Tw+2FpmP7nMZEwD39Gu9CIX9PMD0wH/PU065FYfs=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
