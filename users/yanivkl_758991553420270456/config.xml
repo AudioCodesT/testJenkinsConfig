@@ -46,6 +46,7 @@
       <roles>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string># All__Beer_Sheva</string>
         <string>cc_users</string>
@@ -80,7 +81,7 @@
         <string>Domain Users</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1588016937852</timestamp>
+      <timestamp>1589718761251</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Yaniv.Klinger@audiocodes.com</emailAddress>
