@@ -1,16 +1,16 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>Static Code Analysis&#xd;
-java --&gt; pmd, findbugs&#xd;
+  <description>Static Code Analysis&#13;
+java --&gt; pmd, findbugs&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -34,10 +34,11 @@ java --&gt; pmd, findbugs&#xd;
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -47,17 +48,19 @@ java --&gt; pmd, findbugs&#xd;
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>7.6.2000</name>
+        <name>7.8.2000</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference/>
         <depth>10</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -81,7 +84,7 @@ java --&gt; pmd, findbugs&#xd;
       <mavenName>maven-for-ems</mavenName>
       <pom>pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
-      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@2.18">
+      <settings class="org.jenkinsci.plugins.configfiles.maven.job.MvnSettingsProvider" plugin="config-file-provider@3.6.2">
         <settingsConfigId>d857ddc2-8a40-475d-9641-da74b243c754</settingsConfigId>
       </settings>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
@@ -107,7 +110,7 @@ cd ${WORKSPACE}
 
 /opt/pmd/bin/run.sh pmd -d . -f xml -language java -R audc-ruleset.xml -encoding UTF-8 -failOnViolation false &gt; pmd.xml
 
-/usr/bin/sed -i -n &apos;/xml/,$p&apos; pmd.xml
+/usr/bin/sed -i -n '/xml/,$p' pmd.xml
 
 
 ## Run FindBugs on entire repository java files
@@ -122,31 +125,33 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@4.0.0">
+    <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@7.3.0">
       <analysisTools>
         <io.jenkins.plugins.analysis.warnings.FindBugs>
-          <id></id>
-          <name></name>
+          <id/>
+          <name/>
           <pattern>**/findbugs.xml</pattern>
-          <reportEncoding></reportEncoding>
+          <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
           <useRankAsPriority>true</useRankAsPriority>
         </io.jenkins.plugins.analysis.warnings.FindBugs>
         <io.jenkins.plugins.analysis.warnings.Pmd>
-          <id></id>
-          <name></name>
+          <id/>
+          <name/>
           <pattern>**/pmd.xml</pattern>
-          <reportEncoding></reportEncoding>
+          <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.Pmd>
       </analysisTools>
       <sourceCodeEncoding>UTF-8</sourceCodeEncoding>
+      <sourceDirectory/>
       <ignoreQualityGate>false</ignoreQualityGate>
       <ignoreFailedBuilds>true</ignoreFailedBuilds>
       <referenceJobName>-</referenceJobName>
+      <failOnError>false</failOnError>
       <healthy>0</healthy>
       <unhealthy>0</unhealthy>
-      <minimumSeverity plugin="analysis-model-api@4.0.0">
+      <minimumSeverity plugin="analysis-model-api@7.0.4">
         <name>LOW</name>
       </minimumSeverity>
       <filters>
@@ -157,15 +162,17 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
       <isEnabledForFailure>true</isEnabledForFailure>
       <isAggregatingResults>false</isAggregatingResults>
       <isBlameDisabled>false</isBlameDisabled>
+      <isForensicsDisabled>false</isForensicsDisabled>
       <qualityGates/>
+      <trendChartType>AGGREGATION_TOOLS</trendChartType>
     </io.jenkins.plugins.analysis.core.steps.IssuesRecorder>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>Shuky.Riechard@audiocodes.com yuval.yosha@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Shuky.Riechard@audiocodes.com,Marina.Risher@audiocodes.com,Natan.Merfish@audiocodes.com</recipientList>
+      <recipientList>Gal.Erez@audiocodes.com, Natan.Merfish@audiocodes.com, cc:Shuky.Riechard@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
           <email>
@@ -174,7 +181,7 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -190,7 +197,7 @@ $JOB_URL
 Regards,
 DevOps Team
 </defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -201,7 +208,7 @@ DevOps Team
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@2.18">
+    <org.jenkinsci.plugins.configfiles.buildwrapper.ConfigFileBuildWrapper plugin="config-file-provider@3.6.2">
       <managedFiles>
         <org.jenkinsci.plugins.configfiles.buildwrapper.ManagedFile>
           <fileId>d857ddc2-8a40-475d-9641-da74b243c754</fileId>
@@ -218,7 +225,7 @@ DevOps Team
         <hudson.plugins.build__timeout.operations.FailOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
