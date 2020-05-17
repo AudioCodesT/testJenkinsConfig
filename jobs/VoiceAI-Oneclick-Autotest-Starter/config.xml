@@ -85,8 +85,9 @@ if [ $SHUTDOWN = false ]; then
     ## Check if node is online
     offlineStatus=$(curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r '.offline')
     temporarilyOfflineStatus=$(curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r '.temporarilyOfflineStatus')
-    
+    [[ "$offlineStatus" || "$temporarilyOfflineStatus" ]] || (echo "Azure test node not ready!!" &amp;&amp; exit 1)
 fi</command>
+      <unstableReturn>1</unstableReturn>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -173,7 +174,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQC90Tw+2FpmP7nMZEwD39Gu9CIX9PMD0wH/PU065FYfs=}</value>
+          <value>{AQAAABAAAAAQ0UYSmT44RfIYGx1uKT3o0NS2XhyKFjL7faDazuC88ms=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
