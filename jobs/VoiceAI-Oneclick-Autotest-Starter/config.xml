@@ -79,7 +79,8 @@ python3 startVMs.py $SHUTDOWN_FLAG
 
 if [ $SHUTDOWN == false ]; then
 	## Need to start the slave agent on the remote slave
-	jenkinsUserApiToken=$(curl 'https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken' --data 'newTokenName=myFoo' --user jenkins:$jenkinsPass | tac | tac | jq -r '.data.tokenValue')
+    curl -o jenkinsToken 'https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken' --data 'newTokenName=myFoo' --user jenkins:$jenkinsPass
+	jenkinsUserApiToken=$(cat jenkinsToken | jq -r '.data.tokenValue')
 	curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
     
     ## Check if node is online
