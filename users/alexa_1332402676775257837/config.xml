@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -80,6 +80,7 @@
         <string>365_MFA_Apps</string>
         <string>Agile users</string>
         <string># All 012 voip</string>
+        <string>365_Comeet</string>
         <string>R&amp;D HDGW software</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
@@ -105,13 +106,14 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># SDN &amp; NFV</string>
       </roles>
-      <timestamp>1584536277476</timestamp>
+      <timestamp>1589725855000</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Alex.Agranov@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>585a86bb1ac5fac2</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
