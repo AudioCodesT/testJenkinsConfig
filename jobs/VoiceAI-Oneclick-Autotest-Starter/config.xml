@@ -174,7 +174,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ0UYSmT44RfIYGx1uKT3o0NS2XhyKFjL7faDazuC88ms=}</value>
+          <value>{AQAAABAAAAAQ+8yOzm6S+Bc//1+Kbgcq+l9xZTppaScF7kT5omDxq40=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
