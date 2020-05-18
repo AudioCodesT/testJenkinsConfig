@@ -80,7 +80,7 @@ python3 startVMs.py $SHUTDOWN_FLAG
 
 if [ $SHUTDOWN == false ]; then
 	## Need to start the slave agent on the remote slave
-    jenkinsUserApiToken=$( curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user jenkins:$jenkinsPass |  sed 's|.*Value":"||' | sed 's|".*$||')
+    jenkinsUserApiToken=$(curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user yuvaly:$jenkinsPass | jq -r '.data.tokenValue')
 	echo $jenkinsUserApiToken
 	curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
     
@@ -223,7 +223,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ+8yOzm6S+Bc//1+Kbgcq+l9xZTppaScF7kT5omDxq40=}</value>
+          <value>{AQAAABAAAAAQChPAAtYDocx/SDxphStTgp2hFVSGZml1Egq9cah/7Ew=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
