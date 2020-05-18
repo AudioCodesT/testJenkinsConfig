@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash">
         <entry>
           <com.cloudbees.plugins.credentials.domains.Domain>
@@ -53,6 +53,7 @@
       <roles>
         <string>authenticated</string>
         <string>365_Tas</string>
+        <string>365_Comeet</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string># OVOC QOE</string>
@@ -65,15 +66,16 @@
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
+        <string>Allow Office365 Groups</string>
         <string>SSL_RDP_Access</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string># OVOC</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1584963772257</timestamp>
+      <timestamp>1589804780050</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Maksym.Lifirenko@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -82,5 +84,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>eb2c8c68fbd8aa4b</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
