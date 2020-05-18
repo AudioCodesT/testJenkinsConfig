@@ -65,7 +65,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>## Set mode for build name
-[[ ${SHUTDOWN} ]] &amp;&amp; MODE="Start" || MODE="Stop"
+[[ $SHUTDOWN == true ]] &amp;&amp; MODE="Start" || MODE="Stop"
 
 cd session-manager/test/e2e
 chmod 640 id_rsa
@@ -225,7 +225,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQKUuFOQ8tpDqwA3dIIPJdxUcvHU7nNzE7V0UugspAgAo=}</value>
+          <value>{AQAAABAAAAAQgH8Votr4BuVqP28SYthdNKF3/o+2hVDbo+pGhxhZL5E=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
