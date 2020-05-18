@@ -41,6 +41,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>1.6</name>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -93,6 +94,11 @@ if [ $SHUTDOWN == false ]; then
 fi</command>
       <unstableReturn>1</unstableReturn>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.3.0">
+      <info>
+        <propertiesContent>MODE=${MODE}</propertiesContent>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
@@ -138,7 +144,7 @@ fi</command>
                       <onlyExactRuns>false</onlyExactRuns>
                     </hudson.plugins.parameterizedtrigger.FileBuildParameters>
                   </configs>
-                  <projects>VoiceAI-Oneclick-Autotest</projects>
+                  <projects>VoiceAI-Oneclick-Autotest-Starter</projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -225,7 +231,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQgH8Votr4BuVqP28SYthdNKF3/o+2hVDbo+pGhxhZL5E=}</value>
+          <value>{AQAAABAAAAAQrokMxZFC6OxoH67yAURNrGHlT20XYJtzKX6++Tt/Jro=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
