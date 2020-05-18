@@ -73,6 +73,7 @@ python3 runner.py</command>
             <body>${FILE,path="$HOME/e2e/report.html"}</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
             <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
