@@ -49,6 +49,7 @@
         <string># All Dinner</string>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -90,7 +91,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1588517663341</timestamp>
+      <timestamp>1589811869116</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Nurit.Shenhar@audiocodes.com</emailAddress>
