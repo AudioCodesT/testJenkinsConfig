@@ -75,11 +75,11 @@
         </permissions>
         <assignedSIDs>
           <sid># All AudioCodes</sid>
+          <sid># OVOC QOE</sid>
           <sid># SBC SIP</sid>
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
           <sid>qasa</sid>
-          <sid># OVOC QOE</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -138,6 +138,7 @@
           <sid># OVOC Web UI</sid>
           <sid>CI_EMS_Developers</sid>
           <sid>Maksyml</sid>
+          <sid>Andrii Pavliv</sid>
         </assignedSIDs>
       </role>
       <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
