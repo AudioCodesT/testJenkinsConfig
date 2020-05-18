@@ -232,13 +232,19 @@ else
   #zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
 fi
 
-if [ -f "../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json" ]; then
+PMTreeInfo="../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json"
+if [ -f $PMTreeInfo ]; then
   User="$artifactory_user:$artifactory_password"
   placeInArt="sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/PMTreeInfo.json"
   if ! curl -ks -u $User https://$ARTIFACTORY_HOST/api/storage/$placeInArt | grep -q uri; then
     echo Deploy PMTreeInfo.json to Artifactory
+    md5=$(md5sum $PMTreeInfo | cut -d" " -f1)
+    sha256=$(openssl dgst -sha256  $PMTreeInfo|sed 's/^SHA256.*= //')
+    sha1=$(openssl dgst -sha1  $PMTreeInfo|sed 's/^SHA.*= //')
     curl -ks -u $User -X PUT https://$ARTIFACTORY_HOST/$placeInArt \
-       -T "../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json"
+          -H "X-Checsum-MD5:$md5" \
+          -H "X-Checksum-Sha256:${sha256}" \
+          -H "X-Checksum-Sha1:${sha1}" -T "$PMTreeInfo"
   else 
     echo PMTreeInfo.json already exist in Artifactory.  Not deploying.
   fi
