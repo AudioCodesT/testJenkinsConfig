@@ -85,8 +85,8 @@ if [ $SHUTDOWN == false ]; then
 	curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
     
     ## Check if node is online
-    offlineStatus=$(curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".offline")
-    temporarilyOfflineStatus=$(curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".temporarilyOfflineStatus")
+    offlineStatus=$(curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".offline")
+    temporarilyOfflineStatus=$(curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".temporarilyOfflineStatus")
     [[ "$offlineStatus" || "$temporarilyOfflineStatus" ]] || (echo "Azure test node not ready!!" &amp;&amp; exit 1)
 fi</command>
       <unstableReturn>1</unstableReturn>
@@ -223,7 +223,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQChPAAtYDocx/SDxphStTgp2hFVSGZml1Egq9cah/7Ew=}</value>
+          <value>{AQAAABAAAAAQF0MheaweSjRPGL72+2eWWunWCGCezpVoGz1w/j70Aw0=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
