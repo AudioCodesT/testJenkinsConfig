@@ -67,7 +67,6 @@
     <hudson.tasks.Shell>
       <command>cd session-manager/test/e2e
 chmod 640 id_rsa
-cd ${WORKSPACE}
 
 echo "VERSION=$(git describe --tags --abbrev=0 --first-parent)" &gt; .build_version
 echo "BRANCH=$(git branch -r --contains HEAD | sed 's:^.*/::')" &gt;&gt; .build_version
