@@ -234,10 +234,10 @@ fi
 
 if [ -f "../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json" ]; then
   User="$artifactory_user:$artifactory_password"
-  placeInArt="sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}"
+  placeInArt="sbc-release/com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/PMTreeInfo.json"
   if ! curl -ks -u $User https://$ARTIFACTORY_HOST/api/storage/$placeInArt | grep -q uri; then
     echo Deploy PMTreeInfo.json to Artifactory
-    curl -ks -u $User -X PUT https://$ARTIFACTORY_HOST/$placeInArt/PMTreeInfo.json \
+    curl -ks -u $User -X PUT https://$ARTIFACTORY_HOST/$placeInArt \
        -T "../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json"
   fi
 fi
