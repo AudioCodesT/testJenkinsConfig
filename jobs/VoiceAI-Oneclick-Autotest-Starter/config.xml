@@ -41,6 +41,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>1.6</name>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -85,7 +86,7 @@ if [ $SHUTDOWN == false ]; then
 	## Need to start the slave agent on the remote slave
     jenkinsUserApiToken=$(curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user yuvaly:$jenkinsPass | jq -r '.data.tokenValue')
 	echo $jenkinsUserApiToken
-	curl -X POST https://jenkins:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
+	curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
     
     ## Check if node is online
     offlineStatus=$(curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".offline")
@@ -144,7 +145,7 @@ fi</command>
                       <onlyExactRuns>false</onlyExactRuns>
                     </hudson.plugins.parameterizedtrigger.FileBuildParameters>
                   </configs>
-                  <projects>VoiceAI-Oneclick-Autotest</projects>
+                  <projects>VoiceAI-Oneclick-Autotest-Starter</projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -231,7 +232,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQNQ8QYNaMd5uig/zvfEbNm5mHjinYkb9KrsBH9tSMiCI=}</value>
+          <value>{AQAAABAAAAAQG90x6R6JTDbBdPc2dNmU9+/Su4ul4RTAJUU9sha3cPA=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
