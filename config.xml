@@ -79,6 +79,7 @@
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
           <sid>qasa</sid>
+          <sid># OVOC QOE</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -932,18 +933,7 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-07e80237d9202f899</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-07e80237d9202f899</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2020-05-18 13:46:30.163 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
