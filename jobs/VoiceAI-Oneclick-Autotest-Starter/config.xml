@@ -41,6 +41,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>1.6</name>
         <refspec>+refs/heads/1.6:refs/remotes/origin/1.6</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
@@ -65,7 +66,10 @@
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd session-manager/test/e2e
+      <command>## Set mode for build name
+[[ ${SHUTDOWN} ]] &amp;&amp; MODE="Start" || MODE="Stop"
+
+cd session-manager/test/e2e
 chmod 640 id_rsa
 
 echo "VERSION=$(git describe --tags --abbrev=0 --first-parent)" &gt; .build_version
@@ -136,7 +140,7 @@ fi</command>
                       <onlyExactRuns>false</onlyExactRuns>
                     </hudson.plugins.parameterizedtrigger.FileBuildParameters>
                   </configs>
-                  <projects>VoiceAI-Oneclick-Autotest</projects>
+                  <projects>VoiceAI-Oneclick-Autotest-Starter</projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -223,9 +227,15 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQF0MheaweSjRPGL72+2eWWunWCGCezpVoGz1w/j70Aw0=}</value>
+          <value>{AQAAABAAAAAQ5KTZ/f2Qb6//wofPzRUJ5PMPUVm8otFUm1kJWhzoW8k=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}_${MODE}</template>
+      <descriptionTemplate/>
+      <runAtStart>false</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
 </project>
