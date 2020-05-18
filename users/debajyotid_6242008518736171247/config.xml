@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -50,6 +50,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string># SmartTAP Dev</string>
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
@@ -59,6 +60,7 @@
         <string>ActionBase Users</string>
         <string>BBL.ENGINEERING</string>
         <string>AI-TECHSUPP</string>
+        <string>Allow Office365 Groups</string>
         <string># AUDC - NJ office</string>
         <string># ACPortal - Finance_USA</string>
         <string>AI-ENG</string>
@@ -89,13 +91,14 @@
         <string># Audiocodes USA-Development</string>
         <string>AI-ClearCase</string>
       </roles>
-      <timestamp>1585009725308</timestamp>
+      <timestamp>1589838422655</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Debajyoti.Dutta@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>5f7b1c1bc0eb6f18</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
