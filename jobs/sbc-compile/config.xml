@@ -239,6 +239,8 @@ if [ -f "../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json"
     echo Deploy PMTreeInfo.json to Artifactory
     curl -ks -u $User -X PUT https://$ARTIFACTORY_HOST/$placeInArt \
        -T "../../acInfrastructure/PerformanceMonitoring/Generator/PMTreeInfo.json"
+  else 
+    echo PMTreeInfo.json already exist in Artifactory.  Not deploying.
   fi
 fi
 
