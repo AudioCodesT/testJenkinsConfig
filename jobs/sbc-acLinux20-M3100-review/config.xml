@@ -221,6 +221,14 @@ fi</command>
     </hudson.plugins.ws__cleanup.WsCleanup>
   </publishers>
   <buildWrappers>
+    <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
+      <includes>id_rsa_gerrit</includes>
+      <excludes/>
+      <flatten>false</flatten>
+      <includeAntExcludes>false</includeAntExcludes>
+      <hudsonHomeRelative>false</hudsonHomeRelative>
+      <relativeTo>userContent</relativeTo>
+    </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
