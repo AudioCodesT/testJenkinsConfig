@@ -45,6 +45,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -76,7 +77,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1588682030468</timestamp>
+      <timestamp>1589902353763</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Ilan.Kazin@audiocodes.com</emailAddress>
