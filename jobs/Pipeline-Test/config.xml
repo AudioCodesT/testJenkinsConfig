@@ -38,17 +38,17 @@
    agent {
        node {
             label 'test-Sanjer'
-            customWorkspace '/jenkins/workspace'
+            customWorkspace '/home/centos/jenkins/workspace'
        }
    }
 
-   stages {
-      stage('Hello') {
-         steps {
-            sh 'cat /etc/os-release'
-         }
-      }
-   }
+    stages {
+        stage('Hello') {
+            steps {
+                sh 'cat /etc/os-release'
+            }
+        }
+    }
 }</script>
     <sandbox>true</sandbox>
   </definition>
