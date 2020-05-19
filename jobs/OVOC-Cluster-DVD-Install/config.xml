@@ -46,13 +46,13 @@ And does the following:&#13;
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
+          <name>SHUTDOWN</name>
           <description>The tag to install</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
+          <name>SHUTDOWN</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -62,13 +62,13 @@ And does the following:&#13;
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>ServerIP</name>
+          <name>SHUTDOWN</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>ServerRole</name>
+          <name>SHUTDOWN</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -95,20 +95,21 @@ And does the following:&#13;
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>ssh://jenkins@test-gerrit:29418/EMS/ovoc_server.git</url>
+        <name>1.6</name>
+        <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>server_${TAG}</name>
+        <name>1.6</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ems-build</assignedNode>
+  <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -119,10 +120,10 @@ And does the following:&#13;
   <builders>
     <hudson.tasks.Shell>
       <command>###### Echo parameters for testing
-echo -e "TAG:\t${TAG}" &gt; sanity.properties
-echo -e "ISO:\t${DeployISO}" &gt;&gt; sanity.properties
-echo -e "IP:\t${ServerIP}" &gt;&gt; sanity.properties
-echo -e "Role:\t${ServerRole}" &gt;&gt; sanity.properties
+echo -e "TAG=${TAG}" &gt; sanity.properties
+echo -e "ISO=${DeployISO}" &gt;&gt; sanity.properties
+echo -e "IP=${ServerIP}" &gt;&gt; sanity.properties
+echo -e "Role=${ServerRole}" &gt;&gt; sanity.properties
 
 cat sanity.properties
 
@@ -258,13 +259,13 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>artiPass</name>
-          <value>{AQAAABAAAAAQT0A5kGH1euKydYIrJF5K0a/ovUyKPCPsOeyQ4h01qC0=}</value>
+          <name>jenkinsPass</name>
+          <value>{AQAAABAAAAAQ+Yl+7th3XSjV6j8lqGrrpJlhhm4J6co3M/0fB6cmPlA=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${TAG}_${ServerRole}</template>
+      <template>#${BUILD_NUMBER}_${MODE}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
