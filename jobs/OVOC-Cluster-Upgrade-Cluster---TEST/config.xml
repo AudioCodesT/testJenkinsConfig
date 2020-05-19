@@ -128,7 +128,7 @@ cat /home/centos/.aws/credentials</scriptContent>
     <script>pipeline {
     agent {
         node {
-            label 'ems-build'
+            label 'test-Sanjer'
             customWorkspace '/jenkins/workspace'
         }
     }
@@ -249,10 +249,12 @@ def runInstance(role) {
 			imageId = "ami-005e7916df1f0ea46";
             break;
 	}
+
+    println(imageId)
 	
     def jsonSlurper = new JsonSlurper();
 
-    sh 'aws ec2 run-instances --image-id ' + imageId + ' --instance-type ' + ec2iTyp + ' --count 1 --security-group-ids ' + ec2SGId + ' --subnet-id ' + ec2SNId + ' --key-name ' + ec2Key + '  2&gt;&amp;1 | tee run-inst.json'
+    sh 'aws ec2 run-instances --image-id ' + imageId + ' --instance-type ' + ec2iTyp + ' --count 1 --security-group-ids ' + ec2SGId + ' --subnet-id ' + ec2SNId + ' --key-name ' + ec2Key + ' &gt; run-inst.json'
 
     def runJsonFile = new File("run-inst.json");
     def runJsonObj = jsonSlurper.parse(runJsonFile);
