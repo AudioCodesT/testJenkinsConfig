@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -45,13 +45,14 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Daniel.Kochav@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string># SmartTAP Dev</string>
         <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
@@ -64,6 +65,7 @@
         <string>ActionBase Users</string>
         <string>Citrix_Allow_Visio</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
         <string>#All Breakfast</string>
         <string>AI-ENG</string>
         <string># All Lunch</string>
@@ -90,10 +92,11 @@
         <string>sp365-smarttap-modify</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1585642639120</timestamp>
+      <timestamp>1589888791201</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>4d1c15469e964704</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
