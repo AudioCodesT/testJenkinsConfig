@@ -234,11 +234,14 @@ while IFS= read -r line; do
    fi
 done &lt; othersCommits.txt
 
+depsName=$BOARDNAME
+# In case of "--centos=7" in the flag, the board dependencies should be "HostedTP7" instead of "HostedTP"
+if [[ "$BOARD" =~ "centos=" ]]; then depsName=$BOARDNAME$(echo ${BOARD} | sed 's:.*centos=::; s: .*::'); fi
 
-if [ -e ../OpenSource/$BOARDNAME.deps ]; then
+if [ -e ../OpenSource/$depsName.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
-  ./GetImages.sh $BOARDNAME $artifactory_host $User
+  ./GetImages.sh $depsName $artifactory_host $User
   if [ $? -eq 1 ]; then
     echo EXITFLAG=2 &gt;&gt; ../generated_sbc_version.properties
     exit 2; 
@@ -257,6 +260,7 @@ fi
 
 cd ..
 echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
+BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--centos=8.*/_CENTOS8/p`
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDNAME=${BOARDNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 echo BOARD=${BOARD} &gt;&gt; generated_sbc_version.properties
