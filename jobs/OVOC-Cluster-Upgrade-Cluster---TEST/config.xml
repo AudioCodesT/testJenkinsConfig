@@ -146,21 +146,8 @@ cat /home/centos/.aws/credentials</scriptContent>
             failFast true
             parallel {
                 stage('Install management') {
-                    steps {						
-						sh 'aws ec2 run-instances --image-id ' + imageId + ' --instance-type ' + ec2iTyp + ' --count 1 --security-group-ids ' + ec2SGId + ' --subnet-id ' + ec2SNId + ' --key-name ' + ec2Key + '  2&gt;&amp;1 | tee run-inst.json'
-						
-						def runJsonFile = new File("run-inst.json");
-						def runJsonObj = jsonSlurper.parse(runJsonFile);
-						def instId = (runJsonObj['Instances']['InstanceId']).toString().replaceAll("\\[|\\]", "")
-
-        				sh 'aws ec2 create-tags --resources ' + instId + ' --tags Key=Name,Value=OVOC_Elst_' + role + '_Sanity'
-        				sh 'aws ec2 wait instance-status-ok --instance-ids ' + instId
-        				sh 'aws ec2 describe-instances --instance-ids ' + instId + ' &gt; instance.json'
-
-        				def instJsonFile = new File("instance.json");
-        				def instJsonObj = jsonSlurper.parse(instJsonFile);
-        				def mgmtIP = (instJsonObj['Reservations']['Instances']['NetworkInterfaces']['PrivateIpAddress']).toString().replaceAll("\\[|\\]", "")
-
+                    steps {
+                        runInstanc 'management'
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.OLD_TAG}"),
                             string(name: 'ServerRole', value: 'management'),
@@ -284,10 +271,7 @@ def runInstance(role) {
             pmId = instId
             pmIP = ipAddr
     }
-}
-
-
-</script>
+}</script>
     <sandbox>false</sandbox>
   </definition>
   <triggers/>
