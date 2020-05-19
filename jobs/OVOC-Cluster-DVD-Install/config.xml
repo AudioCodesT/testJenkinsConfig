@@ -46,13 +46,13 @@ And does the following:&#13;
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>TAG</name>
           <description>The tag to install</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>DeployISO</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -62,13 +62,13 @@ And does the following:&#13;
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>ServerIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>ServerRole</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -190,7 +190,7 @@ echo "Finish SanityInstall"
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>sanity.properties</propertiesFilePath>
+        <propertiesFilePath>env.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -260,7 +260,7 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ+Yl+7th3XSjV6j8lqGrrpJlhhm4J6co3M/0fB6cmPlA=}</value>
+          <value>{AQAAABAAAAAQMD5gf1cecb3y8mRig5u8xE+cW39/XYGLYljZzF4tzM8=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
