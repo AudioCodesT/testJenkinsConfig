@@ -149,7 +149,7 @@ fi</command>
                       <onlyExactRuns>false</onlyExactRuns>
                     </hudson.plugins.parameterizedtrigger.FileBuildParameters>
                   </configs>
-                  <projects>VoiceAI-Oneclick-Autotest-Starter</projects>
+                  <projects>VoiceAI-Oneclick-Autotest</projects>
                   <condition>SUCCESS</condition>
                   <triggerWithNoParameters>false</triggerWithNoParameters>
                   <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -189,7 +189,7 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQV8fTEzT/fGGUvDS9dGclwd6pWE5oDrpfZT5Kics641U=}</value>
+          <value>{AQAAABAAAAAQLLbMAZc5pJ1Vt/GNll823LyXpca3CkfO3es7RhVzdrk=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
