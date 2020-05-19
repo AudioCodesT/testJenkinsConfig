@@ -259,9 +259,9 @@ def runInstance(role) {
     def runJsonObj = jsonSlurper.parse(runJsonFile);
     instId = (runJsonObj['Instances']['InstanceId']).toString().replaceAll("\\[|\\]", "")
 
-    sh 'aws ec2 create-tags --region eu-central-1 --resources ' + instId + ' --tags Key=Name,Value=OVOC_Elst_' + role + '_Sanity'
-    sh 'aws ec2 wait instance-status-ok --region eu-central-1 --instance-ids ' + instId
-    sh 'aws ec2 describe-instances --region eu-central-1 --instance-ids ' + instId + ' &gt; instance.json'
+    sh "aws ec2 create-tags --region eu-central-1 --resources ${instId} --tags Key=Name,Value=OVOC_Elst_${role}_Sanity"
+    sh "aws ec2 wait instance-status-ok --region eu-central-1 --instance-ids ${instId}"
+    sh "aws ec2 describe-instances --region eu-central-1 --instance-ids ${instId} &gt; instance.json"
 
     def instJsonFile = new File("instance.json");
     def instJsonObj = jsonSlurper.parse(instJsonFile);
