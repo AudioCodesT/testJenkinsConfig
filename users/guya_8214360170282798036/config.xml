@@ -19,7 +19,7 @@
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -52,6 +52,7 @@
         <string># All Dinner</string>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string># Guy Amit Team</string>
         <string># All Cars</string>
@@ -93,9 +94,9 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1584967633320</timestamp>
+      <timestamp>1589900158229</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Guy.Amit@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -104,5 +105,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>4d477863b06fca8b</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
