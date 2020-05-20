@@ -36,7 +36,7 @@
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <scriptContent>export PATH=$HOME/Utils:/usr/local/sbin:/usr/sbin:$PATH
+        <scriptContent>export PATH=$HOME/Utils:/usr/local/sbin:/usr/local/bin:/usr/sbin:$PATH
 (
   flock 200
   if ! [ -d $HOME/Utils ]; then
