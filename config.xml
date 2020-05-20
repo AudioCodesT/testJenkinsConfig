@@ -790,7 +790,18 @@
       <name>sig-d72cb55a</name>
       <accountId></accountId>
       <groupId>sig-d72cb55a</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-022bf9ba256e22188</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-022bf9ba256e22188</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>smt-codeanalysis</requestedLabel>
+            <createdAt>2020-05-20 12:49:12.72 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>smt-codeanalysis</labelString>
       <idleTerminationMinutes>7</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -935,7 +946,18 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-000a31786163f2978</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-000a31786163f2978</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>mtr-Build-Label</requestedLabel>
+            <createdAt>2020-05-20 12:49:15.850 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1573,7 +1595,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>emsReview_ovocServer_test</string>
-        <string>OVOC-Cluster-Upgrade-Cluster---TEST</string>
+        <string>OVOC-Cluster-Upgrade-Cluster</string>
         <string>Pipeline-Test</string>
         <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
@@ -1764,7 +1786,7 @@
         <string>MJ-OVOC-Cluster-Upgrade-Pre-7.8.2000</string>
         <string>OVOC-Cluster-Config</string>
         <string>OVOC-Cluster-DVD-Install</string>
-        <string>OVOC-Cluster-Upgrade-Cluster---TEST</string>
+        <string>OVOC-Cluster-Upgrade-Cluster</string>
       </jobNames>
       <jobFilters/>
       <columns>
