@@ -80,6 +80,7 @@
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
           <sid>qasa</sid>
+          <sid># SBC Infra System</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
@@ -136,9 +137,9 @@
         <assignedSIDs>
           <sid># OVOC MGMT</sid>
           <sid># OVOC Web UI</sid>
+          <sid>Andrii Pavliv</sid>
           <sid>CI_EMS_Developers</sid>
           <sid>Maksyml</sid>
-          <sid>Andrii Pavliv</sid>
         </assignedSIDs>
       </role>
       <role name="CI_EMS_TEMPORARY" pattern="(test_ems.*)">
