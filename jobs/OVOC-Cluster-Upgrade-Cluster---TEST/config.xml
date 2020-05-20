@@ -179,7 +179,8 @@ cat /home/centos/.aws/config</scriptContent>
                     }
                 }
             }
-        }stage('Configure Cluster'){
+        }
+        stage('Configure Cluster - Old Tags'){
             steps{
                 build job: 'OVOC-Cluster-Config', parameters: [
                     string(name: 'TAG', value: "${params.OLD_TAG}"),
@@ -247,7 +248,7 @@ cat /home/centos/.aws/config</scriptContent>
                 }
             }
         }
-        stage('Configure Cluster'){
+        stage('Configure Cluster - New Tags'){
             steps{
                 build job: 'OVOC-Cluster-Config', parameters: [
                     string(name: 'TAG', value: "${params.NEW_TAG}"),
