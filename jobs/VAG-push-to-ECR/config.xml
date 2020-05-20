@@ -393,7 +393,7 @@ DevOps Team</defaultContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQGck3uLZPwl3deExCas6uzhWCAB9yP3P7YJBTjDE0+Ys=}</value>
+          <value>{AQAAABAAAAAQ6rtTtv8r70ltBj28MYVLbLVTeS4ml43orT+2gD6O9VI=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSkey</name>
