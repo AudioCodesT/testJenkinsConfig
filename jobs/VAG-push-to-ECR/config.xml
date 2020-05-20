@@ -397,11 +397,11 @@ DevOps Team</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSkey</name>
-          <value>{AQAAABAAAAAgcm/7nSfJfWF+5RYczKzDx+Dd0xUmGV6ywDjtNJFxMBU3TL7ikImzDjt8OF/xrslu}</value>
+          <value>{AQAAABAAAAAgOHQ+FnGTnqCzo91JmbX91fV9w7bxM6ZojzmYWnyWgZUs86edpekeCBwi3NkXaA6f}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSsecret</name>
-          <value>{AQAAABAAAAAwVyFXUmd5mpI6v2CtRsf4/GwTFh1o4SArD3ntdeOiLv+oVqilFrn5hcAp4kBPwsiIpJmeMZv+NndfAWziHw+C7w==}</value>
+          <value>{AQAAABAAAAAwX2f2p41z6F9Up89quZKSI9m8FOW+SnJZdxYaSkXXfIRHJtN3fwYIbDf4gNGcPqzQaGRc3CA+EMKfdJEuVlMzvw==}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
