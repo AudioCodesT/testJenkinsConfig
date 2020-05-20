@@ -259,11 +259,6 @@ cat /home/centos/.aws/config</scriptContent>
                 ]
             }
         }
-        stage('Sanity Tests'){
-            steps{
-                
-            }
-        }
     }
 }
 
