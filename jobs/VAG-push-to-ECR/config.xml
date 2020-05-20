@@ -44,7 +44,6 @@ Images without tags will not be processed.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <name>1.6</name>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
@@ -394,15 +393,15 @@ DevOps Team</defaultContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQV+41br+vD0YPc4uS6RqcCu5MYkcNnvbSbUWyuuLZCgQ=}</value>
+          <value>{AQAAABAAAAAQGck3uLZPwl3deExCas6uzhWCAB9yP3P7YJBTjDE0+Ys=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQSDBTeF9TxCUxCw3EYjOLe5ewQKIh4qTbjVZDmGTHDEM=}</value>
+          <value>{AQAAABAAAAAQppNBwdu/nf8zsA666+yy3FVgJfqt5VfbdnkaKRrGnMw=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQOkwi4l1kYdgyYeuG/k/XCzAENwHfSb3wY7p+FsmTdFY=}</value>
+          <value>{AQAAABAAAAAQNOznaIlkpVhfWi6zyRrjK4uG/WuELP53e8ZSRO7TxpY=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
