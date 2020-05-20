@@ -44,13 +44,14 @@ Images without tags will not be processed.</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>1.6</name>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>$version</name>
+        <name>*/*</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -246,7 +247,7 @@ cat VAG.properties
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>VAG.properties</propertiesFilePath>
+        <propertiesFilePath>env.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -393,20 +394,20 @@ DevOps Team</defaultContent>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQOeD+AbXDOo0B0GhQbwBlinW2va2qC7PNuTqkFLsoh0w=}</value>
+          <value>{AQAAABAAAAAQV+41br+vD0YPc4uS6RqcCu5MYkcNnvbSbUWyuuLZCgQ=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkinsAWSkey</name>
-          <value>{AQAAABAAAAAgOWKX0XQZN2W3BbgNWwPHjiZ1k0uHcnYk8F2Bk4K3bXlzhbj9UfrZvyI4anVxFSWV}</value>
+          <name>jenkinsPass</name>
+          <value>{AQAAABAAAAAQSDBTeF9TxCUxCw3EYjOLe5ewQKIh4qTbjVZDmGTHDEM=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkinsAWSsecret</name>
-          <value>{AQAAABAAAAAw4zhqoFqH9YMurK9nyr76HdbimennD+IDsi4qJpZ6eZxN57KfWe+RrtUpGHeDC+FhigULLNOwpERCxh3TxTkr0g==}</value>
+          <name>jenkinsPass</name>
+          <value>{AQAAABAAAAAQOkwi4l1kYdgyYeuG/k/XCzAENwHfSb3wY7p+FsmTdFY=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${version}</template>
+      <template>#${BUILD_NUMBER}_${MODE}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
