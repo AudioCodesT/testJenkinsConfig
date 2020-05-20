@@ -93,13 +93,13 @@ python3 startVMs.py $SHUTDOWN_FLAG
 
 if [ $SHUTDOWN == false ]; then
 	## Need to start the slave agent on the remote slave
-    jenkinsUserApiToken=$(curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user yuvaly:$jenkinsPass | jq -r '.data.tokenValue')
+    jenkinsUserApiToken=$(curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user compile:$compilePass | jq -r '.data.tokenValue')
 	echo $jenkinsUserApiToken
-	curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
+	curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
     
     ## Check if node is online
-    offlineStatus=$(curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".offline")
-    temporarilyOfflineStatus=$(curl -X POST https://yuvaly:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".temporarilyOfflineStatus")
+    offlineStatus=$(curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".offline")
+    temporarilyOfflineStatus=$(curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".temporarilyOfflineStatus")
     [[ "$offlineStatus" || "$temporarilyOfflineStatus" ]] || (echo "Azure test node not ready!!" &amp;&amp; exit 1)
 fi</command>
       <unstableReturn>1</unstableReturn>
@@ -180,7 +180,8 @@ stckMngrVMName=staging-stack-mgr
 PCRGName=qa-yossib
 PCVMName=TestRunner
 PC_USER=tester
-PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
+PC_DNS=test-runner.westus2.cloudapp.azure.com
+MODE=######</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -193,8 +194,8 @@ PC_DNS=test-runner.westus2.cloudapp.azure.com</propertiesContent>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQLLbMAZc5pJ1Vt/GNll823LyXpca3CkfO3es7RhVzdrk=}</value>
+          <name>compilePass</name>
+          <value>{AQAAABAAAAAQNgB93Doh17ck84w4zJIfWUlb506iMewvh9RsimcC5iQ=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
