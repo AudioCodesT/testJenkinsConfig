@@ -396,17 +396,17 @@ DevOps Team</defaultContent>
           <value>{AQAAABAAAAAQGck3uLZPwl3deExCas6uzhWCAB9yP3P7YJBTjDE0+Ys=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQppNBwdu/nf8zsA666+yy3FVgJfqt5VfbdnkaKRrGnMw=}</value>
+          <name>jenkinsAWSkey</name>
+          <value>{AQAAABAAAAAgnspSs54Cgk1dR84SPkXvwgggFV8fVjQVC72pC4Hb+p+hbdOUDn0n/cAUt4GGGY8a}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQNOznaIlkpVhfWi6zyRrjK4uG/WuELP53e8ZSRO7TxpY=}</value>
+          <name>jenkinsAWSsecret</name>
+          <value>{AQAAABAAAAAwFBCFilqq0pBCpRPdGmvOPeJ8wqLXJqEKJVO8tHjgpfDoF+0QEKwWRl6uLBzTECqGAdk/YHHP0CgvHXA47RGKpA==}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${MODE}</template>
+      <template>#${BUILD_NUMBER}_${version}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
