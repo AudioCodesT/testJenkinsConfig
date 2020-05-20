@@ -169,7 +169,7 @@ date
 mv -f id_rsa_gerrit ..
 
 # When the instance is not from Spotinst, the PATH doesn't include /usr/sbin and the Simulator failed due to the ifconfig don't found
-export PATH=$HOME/Utils:/usr/local/sbin:/usr/sbin:$PATH
+export PATH=$HOME/Utils:/usr/local/bin:/usr/local/sbin:/usr/sbin:$PATH
 
 rm -f build-error.log
 if [ -e TrunkPackLib/.git ]; then
