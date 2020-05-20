@@ -264,7 +264,7 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${MODE}</template>
+      <template>#${BUILD_NUMBER}_${TAG}_${ServerRole}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
