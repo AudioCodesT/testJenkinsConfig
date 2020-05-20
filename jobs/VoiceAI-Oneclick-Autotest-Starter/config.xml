@@ -70,7 +70,12 @@
   <builders>
     <hudson.tasks.Shell>
       <command>## Set mode for build name
-[[ $SHUTDOWN == true ]] &amp;&amp; MODE="Stop" || MODE="Start"
+if [ $SHUTDOWN == true ]; then
+	MODE="Stop"
+else
+	MODE="Start"
+fi
+
 echo "MODE=${MODE}" &gt; env.properties
 
 cd session-manager/test/e2e
