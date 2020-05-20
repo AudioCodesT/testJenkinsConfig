@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <user>
   <version>10</version>
-  <id>VELJKOM</id>
+  <id>veljkom</id>
   <fullName>Veljko Mihailovic</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
@@ -9,7 +9,7 @@
         <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -26,7 +26,7 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
@@ -38,14 +38,17 @@
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Veljko.Mihailovic@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Tas</string>
+        <string>365_Comeet</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
+        <string>365_Lucca</string>
         <string>Allowed RODC Password Replication Group</string>
         <string># SBC</string>
         <string>Users</string>
@@ -54,11 +57,13 @@
         <string>Mailvision Branch Office Users</string>
         <string>Linuxusers</string>
         <string># SBC Infra System</string>
+        <string>Allow Office365 Groups</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1558110407893</timestamp>
+      <timestamp>1589964567348</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
