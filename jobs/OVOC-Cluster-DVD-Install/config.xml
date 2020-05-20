@@ -53,7 +53,7 @@ And does the following:&#13;
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>DeployISO</name>
-          <description/>
+          <description>ISO Type</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>latest_iso</string>
@@ -63,13 +63,13 @@ And does the following:&#13;
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>ServerIP</name>
-          <description/>
+          <description>OVOC Server IP</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>ServerRole</name>
-          <description/>
+          <description>OVOC Server Role</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>management</string>
