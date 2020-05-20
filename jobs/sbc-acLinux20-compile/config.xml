@@ -165,10 +165,7 @@ if [ ! -d .git ]; then
   mv GWApp/.git .
   rm -rf GWApp
 fi
-git checkout -f origin/$GERRIT_BRANCH -- \
-  TrunkPackRam/Bsps/Common \
-  TrunkPackRam/Bsps/BspOcteon/Include \
-  TrunkPackRam/PSTN/ph/PstnInt.h
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam
 git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
 git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps || true
 sudo chmod -R 755 TrunkPackRam OpenSource Modules
