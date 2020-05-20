@@ -181,9 +181,7 @@ fi
 git fetch
 if [ -z "$GERRIT_BRANCH" ]; then GERRIT_BRANCH="7.4"; fi
 
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/Common/Include/HAWatchdog.h
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/HWwatchdog.h
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/BspOcteon/Include/SPI_Driver.h
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/Bsps/Common TrunkPackRam/Bsps/BspOcteon
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam/PSTN/ph/PstnInt.h
 git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
 git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps || true
