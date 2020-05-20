@@ -189,7 +189,7 @@ echo "Finish SanityInstall"
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>env.properties</propertiesFilePath>
+        <propertiesFilePath>sanity.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -259,12 +259,12 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ61FqM3/hW4owEmDYtzygKckCJXkUty4cz8cVbzu1PL4=}</value>
+          <value>{AQAAABAAAAAQ8JcsYze+/3CK43QvbP5WzYlzFVwhhe0pI95VWe4+bbw=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${MODE}</template>
+      <template>#${BUILD_NUMBER}_${TAG}_${ServerRole}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
