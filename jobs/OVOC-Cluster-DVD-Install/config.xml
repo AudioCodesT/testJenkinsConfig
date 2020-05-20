@@ -259,7 +259,7 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ8JcsYze+/3CK43QvbP5WzYlzFVwhhe0pI95VWe4+bbw=}</value>
+          <value>{AQAAABAAAAAQDckYJtxH0EtSsxIC327WAhrsk15sXu+dC06LJ6xqb94=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
