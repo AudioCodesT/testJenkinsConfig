@@ -43,7 +43,54 @@
       <emailAddress>Alex.Shlachter@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string># AUDC - NJ Engineering Team Leads</string>
+        <string>authenticated</string>
+        <string>365_Comeet</string>
+        <string>AWS_Jira_Users</string>
+        <string># AUDC-HR-MGRS-NA-CAN-LATAM</string>
+        <string>AI-Engineering</string>
+        <string># All Cars</string>
+        <string># All__Beer_Sheva</string>
+        <string>365_Monday</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>FTP_2G</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Palo_Amazon_RnD_Users_Access</string>
+        <string># SmartTAP General</string>
+        <string>Allow Office365 Groups</string>
+        <string># R&amp;D Support Escalation</string>
+        <string>Jira leaders</string>
+        <string>Palo_Remote_desktop_access_support</string>
+        <string>AI-ENG</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>AI-QA</string>
+        <string># All Beer Sheva</string>
+        <string>365_Tas</string>
+        <string># All WeWork</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># All Cellular</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string># All HotMobile</string>
+        <string>AI-SmartTAP_Log</string>
+        <string>AI-QMS-RO</string>
+        <string>AudioCodes_VPN</string>
+        <string># SmartTAP</string>
+        <string># SmartTap-BS</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
+        <string>sp365-smarttap-modify</string>
+      </roles>
+      <timestamp>1589989009347</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
