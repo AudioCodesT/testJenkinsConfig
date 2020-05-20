@@ -46,13 +46,13 @@ And does the following:&#13;
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>TAG</name>
           <description>The tag to install</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>DeployISO</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -62,13 +62,13 @@ And does the following:&#13;
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>ServerIP</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>SHUTDOWN</name>
+          <name>ServerRole</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -95,14 +95,13 @@ And does the following:&#13;
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <name>1.6</name>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>1.6</name>
+        <name>server_${TAG}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
