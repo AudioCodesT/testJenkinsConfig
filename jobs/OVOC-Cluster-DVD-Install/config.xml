@@ -46,13 +46,13 @@ And does the following:&#13;
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>TAG</name>
+          <name>SHUTDOWN</name>
           <description>The tag to install</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
+          <name>SHUTDOWN</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -62,13 +62,13 @@ And does the following:&#13;
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>ServerIP</name>
+          <name>SHUTDOWN</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>ServerRole</name>
+          <name>SHUTDOWN</name>
           <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
@@ -95,13 +95,14 @@ And does the following:&#13;
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>1.6</name>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector.git</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>server_${TAG}</name>
+        <name>1.6</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -259,12 +260,12 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQDckYJtxH0EtSsxIC327WAhrsk15sXu+dC06LJ6xqb94=}</value>
+          <value>{AQAAABAAAAAQYapmY2c76AEN5i+PgFfCl/SmJ5zFg/89oy3cLi34X7U=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${TAG}_${ServerRole}</template>
+      <template>#${BUILD_NUMBER}_${MODE}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
