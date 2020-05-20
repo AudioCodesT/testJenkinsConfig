@@ -246,7 +246,7 @@ cat VAG.properties
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>env.properties</propertiesFilePath>
+        <propertiesFilePath>VAG.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -288,7 +288,7 @@ version: ${version}</body>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>VoiceAI ${version} - docker images pushed to ECR successfully</defaultSubject>
+      <defaultSubject>VoiceAI ${VERSION} - docker images pushed to ECR successfully</defaultSubject>
       <defaultContent>Pushed docker images $IMAGES to ECR.
 
 Deployed -
@@ -397,11 +397,11 @@ DevOps Team</defaultContent>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSkey</name>
-          <value>{AQAAABAAAAAgnspSs54Cgk1dR84SPkXvwgggFV8fVjQVC72pC4Hb+p+hbdOUDn0n/cAUt4GGGY8a}</value>
+          <value>{AQAAABAAAAAgcm/7nSfJfWF+5RYczKzDx+Dd0xUmGV6ywDjtNJFxMBU3TL7ikImzDjt8OF/xrslu}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>jenkinsAWSsecret</name>
-          <value>{AQAAABAAAAAwFBCFilqq0pBCpRPdGmvOPeJ8wqLXJqEKJVO8tHjgpfDoF+0QEKwWRl6uLBzTECqGAdk/YHHP0CgvHXA47RGKpA==}</value>
+          <value>{AQAAABAAAAAwVyFXUmd5mpI6v2CtRsf4/GwTFh1o4SArD3ntdeOiLv+oVqilFrn5hcAp4kBPwsiIpJmeMZv+NndfAWziHw+C7w==}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
