@@ -80,6 +80,20 @@ java --&gt; pmd, findbugs&#13;
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
+      <command>cd $HOMEDIR
+wget https://github.com/spotbugs/spotbugs/releases/download/4.0.3/spotbugs-4.0.3.tgz
+tar zxfv spotbugs-4.0.3.tgz
+sudo cp -R spotbugs-4.0.3 /opt/
+cd /opt
+sudo ln -s spotbugs-4.0.3 spotbugs
+cd spotbugs/bin
+sudo chmod +x *
+ls -lh
+cd ${WORKSPACE}
+/opt/spotbugs/bin/spotbugs
+echo -e "@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@ Done install SpotBugs"</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
       <command># copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
 #create emsFiles/Logs to enable maven to create logs
@@ -121,14 +135,22 @@ cd ${WORKSPACE}
 
 
 ## Run FindBugs on entire repository java files
-/opt/findbugs/bin/findbugs -textui -maxHeap 2048 -medium -xml -output findbugs.xml \
+#/opt/findbugs/bin/findbugs -textui -maxHeap 2048 -medium -xml -output findbugs.xml \
+#${WORKSPACE}/clm/target/*-SNAPSHOT.jar \
+#${WORKSPACE}/common/target/*-SNAPSHOT.jar \
+#${WORKSPACE}/database/target/*-SNAPSHOT.jar \
+#${WORKSPACE}/EMS/target/*-SNAPSHOT.jar \
+#${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar \
+#${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
+
+## Run SpotBugs on entire repository java files
+/opt/spotbugs/bin/spotbugs -textui -maxHeap 2048 -medium -xml -output findbugs.xml \
 ${WORKSPACE}/clm/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/EMS/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/oracle_triggers/target/*-SNAPSHOT.jar \
-${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
-</command>
+${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
