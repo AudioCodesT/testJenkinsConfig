@@ -1,16 +1,15 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>This job should be executed periodically at 21:00 every night and do the following:&#xd;
-a.	Takes last sbc 7.2.254_VoAI&#xd;
-\\netapp01\CM\CompilationResults\7.a Release&#xd;
-b.	takes last VoiceAI 1.4&#xd;
-\\netapp01\CM\CompilationResults\VoAI_Connector\1.4&#xd;
-c.	copy to netapp1 folder named “SBC version – VAI version”&#xd;
-\\netapp01\CM\CompilationResults\DRT\Firmware&#xd;
-If folder already exist – don’t call sbc-BR-request job&#xd;
-d.	Call sbc-BR-request&#xd;
-Send params: FOLDER_PATH , MODE&#xd;
+  <description>This job should be executed periodically at 21:00 every night and do the following:&#13;
+a.	Takes last sbc 7.2.254_VoAI&#13;
+\\netapp01\CM\CompilationResults\7.a Release&#13;
+b.	takes last VoiceAI 1.6&#13;
+\\netapp01\CM\CompilationResults\VoAI_Connector\1.6&#13;
+c.	copy to netapp1 folder named “SBC version – VAI version”&#13;
+\\netapp01\CM\CompilationResults\DRT\Firmware&#13;
+If folder already exist – don’t call sbc-BR-request job&#13;
+d.	Call sbc-BR-request&#13;
+Send params: FOLDER_PATH , MODE&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -19,7 +18,7 @@ Send params: FOLDER_PATH , MODE&#xd;
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -40,25 +39,25 @@ Send params: FOLDER_PATH , MODE&#xd;
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TP_DIR</name>
-          <description></description>
+          <description/>
           <defaultValue>/netapp1/CompilationResults/7.2.250 Release/7.2.256</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>VOICEAI_DIR</name>
-          <description></description>
-          <defaultValue>/netapp1/CompilationResults/VoAI_Connector/1.4</defaultValue>
+          <description/>
+          <defaultValue>/netapp1/CompilationResults/VoAI_Connector/1.6</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TESTMODE</name>
-          <description></description>
+          <description/>
           <defaultValue>VoiceAI</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>MajorVersion</name>
-          <description></description>
+          <description/>
           <defaultValue>7.2.250</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -72,8 +71,8 @@ Send params: FOLDER_PATH , MODE&#xd;
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
-      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>copy2netapp</assignedNode>
@@ -91,20 +90,20 @@ Send params: FOLDER_PATH , MODE&#xd;
     <hudson.tasks.Shell>
       <command>
 # Find the latest TAG HostedTP in $TP_DIR
-TPLastTAG=$(ls -tr &quot;$TP_DIR&quot; | tail -1)
+TPLastTAG=$(ls -tr "$TP_DIR" | tail -1)
 # Find the latest TAG VoiceAI in $VOICEAI_DIR
-VoiceLastTAG=$(ls -tr &quot;$VOICEAI_DIR&quot; | tail -1)
+VoiceLastTAG=$(ls -tr "$VOICEAI_DIR" | tail -1)
 if [[ -z $TPLastTAG || -z $VoiceLastTAG ]]; then
   echo No last directory was found... exit with error
   exit 1
 fi
 
-TARGET=&quot;/netapp1/CompilationResults/BR_Feature/${TPLastTAG}_${VoiceLastTAG}_Night&quot;
+TARGET="/netapp1/CompilationResults/BR_Feature/${TPLastTAG}_${VoiceLastTAG}_Night"
 echo FOLDER_PATH=${TPLastTAG}_${VoiceLastTAG}_Night &gt; VoiceAI.properties
 echo TPLastTAG=${TPLastTAG} &gt;&gt; VoiceAI.properties
 
 # Create the folder in netapp1 but if exist, do not execute it again
-if [ -d &quot;$TARGET&quot; ]; then
+if [ -d "$TARGET" ]; then
   echo Was executed already, execute it again
   exit 0
 else
@@ -113,15 +112,15 @@ else
 fi
 
 # Copy the HostedTP and unzip it
-cd &quot;$TP_DIR/$TPLastTAG&quot;
+cd "$TP_DIR/$TPLastTAG"
 unzip $(ls HostedTP* | grep -v LAB) -d $TARGET
 
 # Copy yml docker file
 cp -f $VOICEAI_DIR/$VoiceLastTAG/* $TARGET
 
-# Don&apos;t execute the next job in case you don&apos;t found 2 files
-if [ `ls $TARGET/*.cmp | wc -l` == 0 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
-if [ `ls $TARGET/*.yml | wc -l` == 0 ]; then echo &quot;Missing yml file, exiting job&quot;; exit 1; fi
+# Don't execute the next job in case you don't found 2 files
+if [ `ls $TARGET/*.cmp | wc -l` == 0 ]; then echo "Missing cmp file, exiting job"; exit 1; fi
+if [ `ls $TARGET/*.yml | wc -l` == 0 ]; then echo "Missing yml file, exiting job"; exit 1; fi
 
 echo Execute sbc-BR-request ${TPLastTAG}_${VoiceLastTAG}
 
@@ -170,7 +169,7 @@ MODE=${TESTMODE}</properties>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${TPLastTAG}_${VoiceLastTAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
