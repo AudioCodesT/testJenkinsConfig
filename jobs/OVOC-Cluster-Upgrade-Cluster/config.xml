@@ -130,7 +130,6 @@ cat /home/centos/.aws/config</scriptContent>
                     currentBuild.displayName = "${BUILD_NUMBER}_from_${OLD_TAG}_to_${NEW_TAG}"
                     currentBuild.description = "Start Azure tester slave"
                 }
-                ... do whatever.
             }
         }
         stage('Install Nodes - Old Tag'){
