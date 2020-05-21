@@ -80,22 +80,6 @@ java --&gt; pmd, findbugs&#13;
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd $HOMEDIR
-if [ ! -d /opt/spotbugs-4.0.3 ]; then
-	wget https://github.com/spotbugs/spotbugs/releases/download/4.0.3/spotbugs-4.0.3.tgz
-	tar zxfv spotbugs-4.0.3.tgz
-	sudo cp -R spotbugs-4.0.3 /opt/
-	cd /opt
-	sudo ln -s spotbugs-4.0.3 spotbugs
-	cd spotbugs/bin
-	sudo chmod +x *
-	ls -lh
-	cd ${WORKSPACE}
-fi
-/opt/spotbugs/bin/spotbugs -version
-echo -e "@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@ Done install SpotBugs"</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command># copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
 #create emsFiles/Logs to enable maven to create logs
