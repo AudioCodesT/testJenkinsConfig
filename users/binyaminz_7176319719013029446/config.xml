@@ -46,6 +46,7 @@
       <roles>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Synagogue</string>
         <string># All Cars</string>
@@ -82,7 +83,7 @@
         <string>Domain Users</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1588747117927</timestamp>
+      <timestamp>1590072037267</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Binyamin.Zax@audiocodes.com</emailAddress>
