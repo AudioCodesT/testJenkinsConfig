@@ -81,16 +81,18 @@ java --&gt; pmd, findbugs&#13;
   <builders>
     <hudson.tasks.Shell>
       <command>cd $HOMEDIR
-wget https://github.com/spotbugs/spotbugs/releases/download/4.0.3/spotbugs-4.0.3.tgz
-tar zxfv spotbugs-4.0.3.tgz
-sudo cp -R spotbugs-4.0.3 /opt/
-cd /opt
-sudo ln -s spotbugs-4.0.3 spotbugs
-cd spotbugs/bin
-sudo chmod +x *
-ls -lh
-cd ${WORKSPACE}
-/opt/spotbugs/bin/spotbugs
+if [ ! -d /opt/spotbugs-4.0.3 ]; then
+	wget https://github.com/spotbugs/spotbugs/releases/download/4.0.3/spotbugs-4.0.3.tgz
+	tar zxfv spotbugs-4.0.3.tgz
+	sudo cp -R spotbugs-4.0.3 /opt/
+	cd /opt
+	sudo ln -s spotbugs-4.0.3 spotbugs
+	cd spotbugs/bin
+	sudo chmod +x *
+	ls -lh
+	cd ${WORKSPACE}
+fi
+/opt/spotbugs/bin/spotbugs -version
 echo -e "@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@ Done install SpotBugs"</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
