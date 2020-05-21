@@ -146,7 +146,7 @@ cd ${WORKSPACE}
 #${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar \
 
 ## Run SpotBugs on entire repository java files
-/opt/spotbugs/bin/spotbugs -textui -maxHeap 2048 -medium -xml -output findbugs.xml \
+/opt/spotbugs/bin/spotbugs -textui -maxHeap 2048 -medium -xml -output spotbugs.xml \
 ${WORKSPACE}/clm/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/common/target/*-SNAPSHOT.jar \
 ${WORKSPACE}/database/target/*-SNAPSHOT.jar \
@@ -161,7 +161,7 @@ ${WORKSPACE}/rest-core/target/*-SNAPSHOT.jar</command>
         <io.jenkins.plugins.analysis.warnings.SpotBugs>
           <id/>
           <name/>
-          <pattern>**/findbugs.xml</pattern>
+          <pattern>**/spotbugs.xml</pattern>
           <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
           <useRankAsPriority>true</useRankAsPriority>
