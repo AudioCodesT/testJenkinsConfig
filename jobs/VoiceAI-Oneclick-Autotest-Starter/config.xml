@@ -202,7 +202,7 @@ MODE=######</propertiesContent>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${MODE}</template>
       <descriptionTemplate/>
-      <runAtStart>false</runAtStart>
+      <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
