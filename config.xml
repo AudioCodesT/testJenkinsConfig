@@ -538,7 +538,18 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-01b0cc8058e091189</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-01b0cc8058e091189</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>sbc-linux-build</requestedLabel>
+            <createdAt>2020-05-21 09:04:40.686 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -790,18 +801,7 @@
       <name>sig-d72cb55a</name>
       <accountId></accountId>
       <groupId>sig-d72cb55a</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-022bf9ba256e22188</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-022bf9ba256e22188</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>smt-codeanalysis</requestedLabel>
-            <createdAt>2020-05-20 12:49:12.72 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>smt-codeanalysis</labelString>
       <idleTerminationMinutes>7</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -946,18 +946,7 @@
       <name>sig-c751f889</name>
       <accountId></accountId>
       <groupId>sig-c751f889</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-000a31786163f2978</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-000a31786163f2978</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>mtr-Build-Label</requestedLabel>
-            <createdAt>2020-05-20 12:49:15.850 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>mtr-Build-Label</labelString>
       <idleTerminationMinutes>5</idleTerminationMinutes>
       <workspaceDir>c:\j\</workspaceDir>
@@ -1718,6 +1707,7 @@
         <string>VoiceAI-sanity-copy</string>
         <string>VoiceAI_nightSanity_1.2</string>
         <string>VoiceAI_nightSanity_1.4</string>
+        <string>VoiceAI_nightSanity_1.6</string>
       </jobNames>
       <jobFilters/>
       <columns>

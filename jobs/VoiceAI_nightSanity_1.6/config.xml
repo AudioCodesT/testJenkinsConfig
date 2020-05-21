@@ -1,0 +1,178 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>This job should be executed periodically at 21:00 every night and do the following:&#xd;
+a.	Takes last sbc 7.2.254_VoAI&#xd;
+\\netapp01\CM\CompilationResults\7.a Release&#xd;
+b.	takes last VoiceAI 1.4&#xd;
+\\netapp01\CM\CompilationResults\VoAI_Connector\1.4&#xd;
+c.	copy to netapp1 folder named “SBC version – VAI version”&#xd;
+\\netapp01\CM\CompilationResults\DRT\Firmware&#xd;
+If folder already exist – don’t call sbc-BR-request job&#xd;
+d.	Call sbc-BR-request&#xd;
+Send params: FOLDER_PATH , MODE&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>TP_DIR</name>
+          <description></description>
+          <defaultValue>/netapp1/CompilationResults/7.2.250 Release/7.2.256</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>VOICEAI_DIR</name>
+          <description></description>
+          <defaultValue>/netapp1/CompilationResults/VoAI_Connector/1.4</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TESTMODE</name>
+          <description></description>
+          <defaultValue>VoiceAI</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MajorVersion</name>
+          <description></description>
+          <defaultValue>7.2.250</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>copy2netapp</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>0 23 * * 0-4</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>
+# Find the latest TAG HostedTP in $TP_DIR
+TPLastTAG=$(ls -tr &quot;$TP_DIR&quot; | tail -1)
+# Find the latest TAG VoiceAI in $VOICEAI_DIR
+VoiceLastTAG=$(ls -tr &quot;$VOICEAI_DIR&quot; | tail -1)
+if [[ -z $TPLastTAG || -z $VoiceLastTAG ]]; then
+  echo No last directory was found... exit with error
+  exit 1
+fi
+
+TARGET=&quot;/netapp1/CompilationResults/BR_Feature/${TPLastTAG}_${VoiceLastTAG}_Night&quot;
+echo FOLDER_PATH=${TPLastTAG}_${VoiceLastTAG}_Night &gt; VoiceAI.properties
+echo TPLastTAG=${TPLastTAG} &gt;&gt; VoiceAI.properties
+
+# Create the folder in netapp1 but if exist, do not execute it again
+if [ -d &quot;$TARGET&quot; ]; then
+  echo Was executed already, execute it again
+  exit 0
+else
+  echo create directory $TARGET
+  mkdir $TARGET
+fi
+
+# Copy the HostedTP and unzip it
+cd &quot;$TP_DIR/$TPLastTAG&quot;
+unzip $(ls HostedTP* | grep -v LAB) -d $TARGET
+
+# Copy yml docker file
+cp -f $VOICEAI_DIR/$VoiceLastTAG/* $TARGET
+
+# Don&apos;t execute the next job in case you don&apos;t found 2 files
+if [ `ls $TARGET/*.cmp | wc -l` == 0 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
+if [ `ls $TARGET/*.yml | wc -l` == 0 ]; then echo &quot;Missing yml file, exiting job&quot;; exit 1; fi
+
+echo Execute sbc-BR-request ${TPLastTAG}_${VoiceLastTAG}
+
+</command>
+      <unstableReturn>2</unstableReturn>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.3.0">
+      <info>
+        <propertiesFilePath>VoiceAI.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+  </builders>
+  <publishers>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>MajorVersion=${MajorVersion}
+FOLDER_PATH=${FOLDER_PATH}
+MODE=${TESTMODE}</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>sbc-BR-request</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    <hudson.tasks.Mailer plugin="mailer@1.32">
+      <recipients>yossim@audiocodes.com shuky.riechard@audiocodes.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1200</timeoutSecondsString>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.AbortOperation/>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}_${TPLastTAG}_${VoiceLastTAG}</template>
+      <descriptionTemplate></descriptionTemplate>
+      <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>
