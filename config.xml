@@ -538,18 +538,7 @@
       <name>sig-e20df392</name>
       <accountId></accountId>
       <groupId>sig-e20df392</groupId>
-      <pendingInstances>
-        <entry>
-          <string>i-01b0cc8058e091189</string>
-          <hudson.plugins.spotinst.cloud.PendingInstance>
-            <id>i-01b0cc8058e091189</id>
-            <status>INSTANCE_INITIATING</status>
-            <numOfExecutors>1</numOfExecutors>
-            <requestedLabel>sbc-linux-build</requestedLabel>
-            <createdAt>2020-05-21 09:04:40.686 UTC</createdAt>
-          </hudson.plugins.spotinst.cloud.PendingInstance>
-        </entry>
-      </pendingInstances>
+      <pendingInstances/>
       <labelString>sbc-linux-build</labelString>
       <idleTerminationMinutes>2</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -618,7 +607,7 @@
       <groupId>sig-8a99c992</groupId>
       <pendingInstances/>
       <labelString>ems-build</labelString>
-      <idleTerminationMinutes>5</idleTerminationMinutes>
+      <idleTerminationMinutes>8</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
         <hudson.model.labels.LabelAtom>ems-build</hudson.model.labels.LabelAtom>
