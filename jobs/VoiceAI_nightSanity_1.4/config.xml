@@ -72,12 +72,13 @@ Send params: FOLDER_PATH , MODE&#xd;
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>copy2netapp</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -127,7 +128,7 @@ echo Execute sbc-BR-request ${TPLastTAG}_${VoiceLastTAG}
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>VoiceAI.properties</propertiesFilePath>
       </info>
@@ -152,7 +153,7 @@ MODE=${TESTMODE}</properties>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yossim@audiocodes.com shuky.riechard@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
