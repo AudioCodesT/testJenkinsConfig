@@ -124,8 +124,14 @@ cat /home/centos/.aws/config</scriptContent>
         choice(name: 'sanityType', choices: ['full', 'short'], description: '')
     }
     stages {
-        stage('Build Options') {
-            currentBuild.displayName = "${BUILD_NUMBER}_from_${OLD_TAG}_to_${NEW_TAG}"
+        stage('Build') {
+            steps {
+                script {
+                    currentBuild.displayName = "${BUILD_NUMBER}_from_${OLD_TAG}_to_${NEW_TAG}"
+                    currentBuild.description = "Start Azure tester slave"
+                }
+                ... do whatever.
+            }
         }
         stage('Install Nodes - Old Tag'){
             failFast true
