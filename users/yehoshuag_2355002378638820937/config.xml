@@ -45,6 +45,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Synagogue</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -81,7 +82,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1588840225360</timestamp>
+      <timestamp>1590050661233</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Yehoshua.Gev@audiocodes.com</emailAddress>
