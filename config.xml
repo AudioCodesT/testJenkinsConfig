@@ -4,6 +4,7 @@
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
     <string>jenkins.security.csrf.CSRFAdministrativeMonitor</string>
     <string>OldData</string>
+    <string>jenkins.security.QueueItemAuthenticatorMonitor</string>
   </disabledAdministrativeMonitors>
   <version>2.204.6</version>
   <installStateName>RESTART</installStateName>
