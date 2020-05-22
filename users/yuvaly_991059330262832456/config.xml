@@ -9,15 +9,6 @@
       <tokenStore>
         <tokenList>
           <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>854ae763-51e3-4cb4-b3ac-fa4f8c2dff4f</uuid>
-            <name>myFoo</name>
-            <creationDate>2020-05-19 08:56:05.785 UTC</creationDate>
-            <value>
-              <version>11</version>
-              <hash>1552fd34007ed04dae092924a7903051dec0bd7c5333a25d290d20f05137da18</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
             <uuid>41c1db81-d827-4ca3-b259-b1ab8788dd6a</uuid>
             <name>myFoo</name>
             <creationDate>2020-05-19 08:56:35.471 UTC</creationDate>
