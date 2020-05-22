@@ -7,17 +7,7 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>0edd1bb6-076a-4b38-9a9b-2d72ab70065c</uuid>
-            <name>myFoo</name>
-            <creationDate>2020-05-19 09:24:29.300 UTC</creationDate>
-            <value>
-              <version>11</version>
-              <hash>a00587b66e9d15c419bba1348bca5d3ff5b257c67fc8894dc58f1a0c6a90b608</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <hudson.plugins.greenballs.ColorBlindProperty plugin="greenballs@1.15">
