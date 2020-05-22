@@ -6,17 +6,7 @@
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>a7183070-6d31-44b3-a618-57da44dfe762</uuid>
-            <name>myFoo</name>
-            <creationDate>2020-05-21 11:33:11.57 UTC</creationDate>
-            <value>
-              <version>11</version>
-              <hash>72402f13282cdec074542621904359076a3c99d8e46ea5e7fd8e3ecdf01c26ff</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
