@@ -5,21 +5,11 @@
   <fullName>Alex Rodikov</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw3NRF+BWbPTRZqqjs+PgneYKNVHH4aaIML8qgcdiu22BySI808jaJjwm95Dk4fQG9B3OeyxrlQhRqwB0XoDZjbg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>90b00e9f-71e0-4f28-af75-3953979139d4</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>ee6c82db98b56a77ad0d293fa0b769dcd2c03074026066e33e81099d38cfbf7d</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -91,7 +81,7 @@
       </roles>
       <timestamp>1574158543056</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Alex.Rodikov@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -100,5 +90,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>488fb09ba16ca24d</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>

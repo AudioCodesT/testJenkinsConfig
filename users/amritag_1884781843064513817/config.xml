@@ -5,18 +5,8 @@
   <fullName>Amrita Garg</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwC23E4elyhstnxNjEDVFIz1cJFzfwEbmMDfdgnADbm2EYcsLK51Z7sA8NscqRTe7Zx2ICZBMoT1vhRbAcox7z0A==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>0f3f4f65-6c56-420f-8dd3-23174cc2dfbf</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>2316426d685c39b23076393c0ac03b3d8ef5f0a571519033d54a292ac9952ce2</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

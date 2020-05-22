@@ -5,18 +5,8 @@
   <fullName>LDAP AWS</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwKYJWTNNpX0Ewmy/8awIUIZQUIlDnD1IUJnsAqF8/PV2uCY2/VdJ9Ros19FU7lx8Ws0R7aWOVJOb9/WTB9SFZig==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>5b338b73-b707-4965-b62f-0fa5f0b0521b</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>db09c0b8b359871a598e08224c0f0a3e0dfff8ecaa647ba7f8eae563b71b5bfc</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

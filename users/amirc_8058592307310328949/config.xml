@@ -5,18 +5,8 @@
   <fullName>Amir Catran</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw93B9m1CRuQNITQd1NhJ9wMwJ54+nMT2nzvmkUGPYBUBAeb2U3yr3wmg67PrE4fYI1xgFFpE4x5UrKiCYZiElqg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>e3957ae5-6b21-4607-9e7c-5ec4dbb4d5d7</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>d55a86b985a1ae066ec05f7c161f00f6413c62b99fcd7110b2bada53c1e317b4</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

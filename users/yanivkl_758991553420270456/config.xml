@@ -5,18 +5,8 @@
   <fullName>Yaniv Klinger</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwSh+8BCT9y2MmBknuEORtq2r9DtggNA6KiYee+e9bU1bbye8fY4m2rQmUIZhvDDO1ulHKhG2oobfS+U6Eh84bWQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>c2b609d1-d687-4b7f-9999-d460d535a31e</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>4daee97fce65689fe3f060a951b7622067ef583237b6d0630323e878011f1f7f</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

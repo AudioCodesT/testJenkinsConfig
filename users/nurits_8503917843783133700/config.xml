@@ -5,18 +5,8 @@
   <fullName>Nurit Shenhar</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw987Xkybi54MAAXGk9LK7cAqGNHVNKSO4/T9YFXvQGlCSLGEAJAdcFIi9iHWSlOTj63ZXmsuXii2vXGUVF76zqQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>39320802-382e-4309-bf82-de9e9c30bce3</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>a892bdc26084b4c059d45053559fe1b3df4b0fae9f54dfa2926fb991308bc983</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

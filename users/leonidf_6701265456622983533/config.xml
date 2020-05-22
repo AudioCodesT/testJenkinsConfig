@@ -5,18 +5,8 @@
   <fullName>Leonid Fayngold</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwm7eqhRkZjSddoLy3YD8LYNPZTCvfdA0Esqim8VdtdQqUz6TrADvRNzuIwVahnCk3QlW0pwABToqq/m0NwoZKLw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>f1f31c72-13c8-4b65-af66-944f018197f6</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>815af6ed9c6d6967663cb503248760288188936c51ec620248603710bc9aa956</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

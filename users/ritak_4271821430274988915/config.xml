@@ -5,18 +5,8 @@
   <fullName>Rita Kaplinsky</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwoWcZO23ppynN+6TmHHMy+3JfukA5AYgdfFfbVGWSax1FaKB1WopKlQIhBPk3GyXyJweuH8LMpddS6W1Py8/QOw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>04667b30-fe91-40db-846d-3b3fcb56fb8b</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>d98c292427a554b7b3b37c591c2bb428264a21556ad2ef8092507fdb3ffcf2c7</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

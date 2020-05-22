@@ -5,18 +5,8 @@
   <fullName>John Vituli</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwzSaj2zbcC69JJt1mc8HD/JE9vFK3S5CXBEVCPf8qobrOI0pDwK+wwXEVaGjNvS7glpqB6nfzZGODgFYvtGtARQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>8c1bf966-f38e-452d-a4d1-23ea12b4a973</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>647ee1c1373511d3344be3ca6258a74245b97c511f60e43825008b7abf947c76</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

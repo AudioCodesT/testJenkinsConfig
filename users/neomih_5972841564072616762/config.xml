@@ -5,18 +5,8 @@
   <fullName>Neomi Hiddai</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw2dQmEieLSotXS7X8/EYKyqi9QdbQj2w4bQf+KwvZT2mRXsM/0aKs0ys6r/wPz2lR93J4L55gvxDXhsSTNTPh4Q==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>86f7aec7-3e30-46cc-b27c-7127e4c16cb3</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>dc8021be13a9663bfacea98b1b2b71e81b5b0e5fc25fc2717a330735765042a4</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

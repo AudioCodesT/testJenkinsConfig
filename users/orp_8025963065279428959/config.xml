@@ -5,18 +5,8 @@
   <fullName>Or Patael</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw4hoEwZn1U1uoTlUv2R1eoKFI4X818w0qhFrWTinPuN9Udvh7HBuXOUv+asMepLPF7weR7P0XRUzMbkA/tiz2gQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>0726d7cf-53f9-40f1-bb22-40ef30cbed30</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>d0c4c1e4848b4ad860b3ddb4e425c0e26a4e060b92743858683cf2ac4f3ebac4</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

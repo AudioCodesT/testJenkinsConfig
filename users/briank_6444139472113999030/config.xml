@@ -5,18 +5,8 @@
   <fullName>Brian Kling</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwwA1MlMjDVXWD2FTq9yxLZdN1B8mF4dXs+GxlPAro6NG4xUh80nWHt/5Ufb8eLiuYy3bT2IoLezfs11w8NsZ0Fw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>5786219d-c49b-4589-87c9-cb6be35edebe</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>cf724e46cf26b92b0fd1c3b5ebe60808f381adcd9a15942377907b833f962db5</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

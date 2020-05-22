@@ -5,18 +5,8 @@
   <fullName>Eliv Dahan</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwJRjyJonza8+wksYG8DnE3MAocoZ9zT1fevVhgSkN/q3KnurpP3cUlw0k4baxGMMud1UMsydfyxqzsM0PA+F95Q==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>d400cf78-00b6-483b-952c-71aea704dadc</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>725a60fa7f83e4d05ff4baf3c1614f5e3dfb3918d1f5052bcdef3e92123f068c</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

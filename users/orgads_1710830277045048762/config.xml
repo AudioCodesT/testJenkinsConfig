@@ -5,18 +5,8 @@
   <fullName>Orgad Shaneh</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwTMTwKO39ZeMBy8zC7sE1dNMph5jXB8i6y/7fcJO8wBofHyOn5dLHf3WBFOTUt72xA/n1p61XOmT1WoB3Ba/v6g==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>1cbf6e8f-b8a2-43a6-90f7-58de79a3c772</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>fee330f6dfa12df7d4337b06108477b669e9fc1045e310880999b8a669a6b640</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

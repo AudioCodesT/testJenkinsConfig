@@ -5,18 +5,8 @@
   <fullName>Gal Erez</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwJC/Zs4+7gHSCnsB6+fK50Uea6o5S7m7Gn7RcfjF06pEDG9Ucc12PY4RQafGw8lUnl+3YNEquwFZiTH9e28a3Sg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>c7c53f84-7b99-4001-adc4-947eceba4e9d</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>0d99f1f15e6ac61cfe98b8aa3254f4543738e884e7ef2bf62685a390dd2b24c4</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

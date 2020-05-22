@@ -5,18 +5,8 @@
   <fullName>Tomer Sharabi</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwrZzd/tyTSNz50udF5WO6hvvG/b+jpUcYjaW/COkpmCMfANAvYNfHHEttooMoEEIxs1W6cb+4F8h2w8QSGnQ4Xg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>73b85859-8ca8-4d37-a8d6-f1067fbf71ac</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>782d74185600ae0068032c9d6815ccc290ae41b2ee6c7b782a16acd77c600de6</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

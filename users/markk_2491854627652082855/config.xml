@@ -5,18 +5,8 @@
   <fullName>Mark Kemel</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwYmN9tbpAshpFgMPW9rSXRwhG1DrewfGA543B/+NCbgvGo3D+ZLrShahL2juWSJb8OMGM+uWSMw2BsWjIJt0o4w==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>7e4698e6-12aa-4b30-9b94-e5f96b3d0e3e</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>0c54d8960a42ebf11f7a7868978893555570d4d14ab3bf4e1547a6060c217111</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

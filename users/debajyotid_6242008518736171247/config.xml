@@ -5,18 +5,8 @@
   <fullName>Debajyoti Dutta</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwW23MdnUtyCZYEWAZTlXqN7HZcsarsd4KJN6vn0Nuc6H725ieVX7ae3HDpGyYMQ0PhzNnIPvQa3dy3raC4t0fEg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>fdfd2ab1-e9c9-4ac7-b802-5dbf659ca322</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>2327850638c67b48afd5f0af25b33ac45bc9fec1b71c0b24287355c58e67efdd</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

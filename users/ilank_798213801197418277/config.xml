@@ -5,18 +5,8 @@
   <fullName>Ilan Kazin</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwGx54GcVcCcUis5JNq3V+tqNgGgKY7+FrZjs1PN0HXfKcBAdv10uo0WBoFvzOaSYeeJSArwNKt5mOJl5BYqh7OA==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>c2842746-aeff-4a76-84ba-07ae18ea0809</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>8a3e6ebf5660a416313c273f77baff03552e8a1aae62d0ae23c343de45870868</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

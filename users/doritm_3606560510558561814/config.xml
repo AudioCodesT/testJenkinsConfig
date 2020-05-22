@@ -5,18 +5,8 @@
   <fullName>Dorit Mari</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwHzeqb+IGhuYwKshhuNtBJU0aGJhwdpUhZI4J8f37OnV/Jz5Ra94GO8nn8EJmQUDoMn6p1BNGCPmgwktv9jpXng==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>4788f30f-a4e2-4ddb-b34b-9abe7da22fce</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>3fe568d51f42ced9b9301c4751738299316751584da7d2edd31a1970e3efce2c</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

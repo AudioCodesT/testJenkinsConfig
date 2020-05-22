@@ -5,18 +5,8 @@
   <fullName>Eitan Zisman</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwnqO9+9XfPnLgPfbJgO1JHKR89V6JUnK5063pig6XCN3O64N8ivf4bqLd1Je5KWBFO9C2XFjxBys+p5JP5ZmQ9Q==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>745839c8-f7ee-4bac-9e2c-553c3e6964b2</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>874e70a6c0115dea01605519989125043d3c51e6db41da6f992bab59944a632d</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

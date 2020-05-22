@@ -5,18 +5,8 @@
   <fullName>Elad Simchi</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwRusOwQ6Gs2JGXBTSu8PTMy0TORnfoim7YlSaNKtXIcPpHI29PdEOo/8D4L+BrM6q/5h3gpNKPaaoL0/OJqrHiw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>d4abeb6a-8ade-48bd-ac6b-30735b3f2af9</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>eba4ae08b1089e8e3da638c8fcb82abb6d3f05d0eaabc6f0640cf5250dd9eb51</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

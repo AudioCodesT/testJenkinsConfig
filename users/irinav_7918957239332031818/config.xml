@@ -5,18 +5,8 @@
   <fullName>Irina Veisas</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwG5e1Tk5Ci0/u+t2nFf+EAQaggs8I/Xx9SyWHxNANyWj6C+ZJqVEbJyGTFUyasxd8f9P03494N5Cz+VHrwQsDfg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>5480d560-ceeb-4485-8613-472f5a37f596</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>26220ccd5b1e08b70c3d553779baa1b99b5b0059165d14184d06087ade9429f1</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

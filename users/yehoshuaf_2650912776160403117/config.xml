@@ -5,18 +5,8 @@
   <fullName>Yehoshua Froman</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwqN512RiDma4CoT+5kgEManxVGT5SGVGshA8/8tPOZ2gsxpr9BjUCFDaO1H1Sw/s7wPboOd9uQSdTvQqm2iQ+4g==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>dd47c4c7-2e87-49d2-9bc0-e5bbf8ff5f36</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>1c71e98f0a4fe344e336d1846f74337b16a1eebcc2ef345650df1d4e59706267</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

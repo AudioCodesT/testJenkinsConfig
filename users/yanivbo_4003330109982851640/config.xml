@@ -5,18 +5,8 @@
   <fullName>Yaniv Botner</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwzsRmLfO/bWAPrjTNF6fw2I8pb6W0ygh9sSYdqE/+aQLeQb6fW0u3aSJcNJ6sO1B2ex1qIP9/zDaxLWnxnrbnsQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>6bcbec5e-9e8b-4186-9aa6-fc1100a9cc56</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>7b2e09c5cf7cea3d263f63e248188297ca6116625dd7ddb114b19f3f724ea3a0</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

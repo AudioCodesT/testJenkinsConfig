@@ -5,18 +5,8 @@
   <fullName>Gary Dickman</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwNtJLDX00TMaP09O28pUdEPwoAt8sOHm+feApISL2fi6RYMqDJgIVnXJtjTK1PfcQ61nOg5O6m2mhKOtldK6Wcg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>bd6fffdb-a377-4aac-a68c-e4773e19e289</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>d0ced028ec4a5b2a5b84886725b5b7785c060818fa576cd4dad9772e2e66c285</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

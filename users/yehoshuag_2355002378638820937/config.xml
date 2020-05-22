@@ -5,18 +5,8 @@
   <fullName>Yehoshua Gev</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwBhgBFNKL/jmlYZOr4ACs4pywi8ogddkfqqKrn3xdxq3gCVh5eK1VksaCEOvKxMfiSZl6AmHRRVZlbvpkd4OHAQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>b2efdd69-acd6-4d9a-9ee2-28f4bc3ee0f7</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>6d585b20461856ae256e11281bbbb0a9eca5b9af4fda8ff72a60fd62059ffd51</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

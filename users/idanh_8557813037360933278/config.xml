@@ -5,18 +5,8 @@
   <fullName>Idan Hayon</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwMwkyK0johBVRe3TWk68Ytr4fDMWy12Lr1La49a0WVHwWr08S9fX1tmt/kcLlPHtsehWQTHWlwcuqrOul6hSs0A==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>abaced0f-c763-4dd7-a9de-c07a64bc52dd</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>8daf6f4eb150b628de0d8303658522773f16f7d1df93eafe331c36d6b372a9ba</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

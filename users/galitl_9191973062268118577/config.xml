@@ -5,18 +5,8 @@
   <fullName>Galit Levi</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwNVUf90o9YjxuVDjeIuQQOju7PJ9YRiPB2OkT4Ue9NO8937UGuFVsn4mtlbIYIKLKSnbK4nYRySmPE/l7oimDvQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>78e7f0dc-ee4f-46e9-be0b-631f218f27c8</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>49304c27a5c7210eecea072da74b74e7ec93a1edd1fd18b627a9f9d4276c2337</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

@@ -5,18 +5,8 @@
   <fullName>Moty Evroni</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwL+5Ctd+mO5vK1fn6JPq2DbRKxx/UjY1Vam7xXbMJCnXlClx2Wy6eq4kVO7w/pznKcb6NPNpdsnwtrZEgQ8Pjhg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>446648c6-cb87-4d62-9eda-67636a103352</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>49ddba6d31738f4ade879d1a2dd693e364bdc9c54362078ac06ff4de7d55fb8b</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

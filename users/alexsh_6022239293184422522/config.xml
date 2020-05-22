@@ -5,18 +5,8 @@
   <fullName>Alex Shlachter</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwENRuK/LBgDgCDI4rWefoANK1WqRx/wULJe4MDxuoIKQDMAOyqIUznp4khTkwIvm/COoFoIPmLzx51hjP/9O73w==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>602f1c57-135f-4cc2-ae36-ba0b9ed24f86</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>0913913fd22598b9817463431b391430833abee1075ff19243bc0393b784ada4</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

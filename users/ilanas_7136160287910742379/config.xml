@@ -5,18 +5,8 @@
   <fullName>Ilana Shapiro</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwkHGk22O+YSjYQRWtnvufSCx+pjBMOek3DnHyIuqBp9JdBlFqP1mLezM3UWOijyl2B01LRW39w42fsFkZEGs5ww==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>d068c2a0-1bd6-4439-a87c-77f95d921f1a</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>3cbb511890eeb3bdcfaacabbcbca63f8150c79eff5748e8d34c47e4295b58e28</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

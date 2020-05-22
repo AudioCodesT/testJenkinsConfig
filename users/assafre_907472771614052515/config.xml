@@ -5,18 +5,8 @@
   <fullName>Assaf Recu</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwdANN5MmeffCo0OlzfcFtnA2tjBxdAmFaAheS0UssuP9bTANMGsKbaAXkgxvaNldmzh3pBG1wlV2/hYB+kCfISA==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>2fd19fe8-31ef-45c5-9f73-755f9a12a9c6</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>89d3d5e0added82ed16d8de43431326b000650390d6f36dd9f1b52f0412e4120</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

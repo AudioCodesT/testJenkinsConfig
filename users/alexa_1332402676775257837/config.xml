@@ -5,18 +5,8 @@
   <fullName>Alex Agranov</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwjRoUI2om2+a0Er4PTJF0SaMsJfGWlBJba6gX39JnaYRc1UamuLs/zAeF2nTb0qkoZTCG3wuvcsL6ZVXSP9HTYw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>53be4fa9-4342-44c9-86f2-041d6f5d3298</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>933d529449c8789f93158e5b3d04bdb418629740fa1bf5ac6ace6000d6430843</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

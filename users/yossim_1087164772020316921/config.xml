@@ -5,18 +5,8 @@
   <fullName>Yossi Merzbach</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAweVrgd21LrRQzacKK3mJGNuzURNePrI6bH/WzQEPFNmz0Ykt5zU5Kr4VVHewKJVycxPJqBnB0zhNlT+OqBcEAcg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>f9b3fc11-a01c-4558-9655-d10384b12af4</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>841ab4591a6a3edd0886f01d45df1adec164d2bcb72e5ad101fd04410779c177</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

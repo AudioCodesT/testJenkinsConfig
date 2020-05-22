@@ -5,18 +5,8 @@
   <fullName>Ram Pinhasi</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwJMBK3ucpg3Bf2jMcgQisrCXP6nXT0Rxmy9bS5xJwcaFpdrROxTcAQ5cyLgVVv1PT49H3rAWRmme4LeLThN+9sw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>09f62713-e4f8-402a-88ce-2d125f759f4d</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>a954d198509231006d8aa1c01d8d98f3c63f07a5ae388e4ec6e3576dc695c1ce</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

@@ -5,21 +5,39 @@
   <fullName>Compile</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw6Yu6oC06FHzUHwfXOuLZILPQ60nR42YJwTnAwelqhyWLQLSxJ/vJrqtyik9E1Skk5BrbTKV/e398VpaevQ5BEw==}</apiToken>
       <tokenStore>
         <tokenList>
           <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>f66e53ee-0b22-47da-adc8-530680916a1f</uuid>
-            <name>Legacy Token</name>
+            <uuid>a8d6ae04-1f2a-4094-a340-35193458b3cc</uuid>
+            <name>myFoo</name>
+            <creationDate>2020-05-20 12:40:04.672 UTC</creationDate>
             <value>
-              <version>10</version>
-              <hash>86e13cf17fbc7179219bc74573627fb82063058a1d9c592c35310377f4364148</hash>
+              <version>11</version>
+              <hash>4c42546f6ef4d724b039b1821ea94a7e235e0bd08063ba24b94644134694db49</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>568e0034-29b7-4cd4-9317-e733d0b789f7</uuid>
+            <name>myFoo</name>
+            <creationDate>2020-05-20 15:12:04.492 UTC</creationDate>
+            <value>
+              <version>11</version>
+              <hash>07f84aa2e6476125358e42e0c2d1a839839924d0f4938d894eb9b6897a511cce</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>a7183070-6d31-44b3-a618-57da44dfe762</uuid>
+            <name>myFoo</name>
+            <creationDate>2020-05-21 11:33:11.57 UTC</creationDate>
+            <value>
+              <version>11</version>
+              <hash>72402f13282cdec074542621904359076a3c99d8e46ea5e7fd8e3ecdf01c26ff</hash>
             </value>
           </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -66,7 +84,7 @@
       </roles>
       <timestamp>1579672516295</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>compile@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -75,5 +93,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>67429fd6a82d3930</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>

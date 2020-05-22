@@ -5,18 +5,8 @@
   <fullName>Hadas Attal</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwdCO7Ig0MP+KBW9f7Sh64akMuOpXBpd6jPAeDphcOLvA7c/XKC6baV66XIrf4KAbDxSRVohEKeL0HCOsp4/DYiQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>fba89b0d-46cc-424e-9462-e852e1d82e38</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>43bfe6146cc08ee206132c4e586d32802e1a21d9a3df3722982fc8ee7ecc1acb</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

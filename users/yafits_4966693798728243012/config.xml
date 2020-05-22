@@ -5,18 +5,8 @@
   <fullName>Yafit Shalom</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw9wKoS1PCLguZzKSa6x60/LvtxYsy4/fHxsPTl4eu15iYc/qvd/m6TV0gTH+e4jW53R4B+YX1Yg40PuGFi7Sbiw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>408344ad-6605-40a9-9271-5141c13eee2b</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>4022e7226a599932ea3474cdfb8e454af38592998608f728437b0003b4f2479a</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

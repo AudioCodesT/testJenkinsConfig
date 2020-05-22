@@ -5,18 +5,8 @@
   <fullName>Ofer Novogrodtzki</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwcvJzYM9r7J0zO7ECLEmALPVNWHDh5RB+f1Y/Cjsl33a7jy1W9fKCOeQk1jpK1C+hbfQbHC4L7MvEh6PqySdd4Q==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>a2a4d907-8739-4922-94d2-ac9679f8e871</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>00548abc35ab349c73aa39725563ce5b818142120a17571ce757639ddeb9039b</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

@@ -5,18 +5,8 @@
   <fullName>Oren Uri</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw3Bste0TrZxvjmhwygsT29bDk/QunjK9RVcVcySgkfNslXBu4r+ipmy/gDp6JKKR0xE7lugPbzXr7+4PgzItNFg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>110ca3c2-e17e-4f7b-8d88-f0a0af61b3d6</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>a7b9be061e252e3efe59b1719d310a11d4062cd1fdc3751978bc98769229dfc8</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

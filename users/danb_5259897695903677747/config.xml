@@ -5,18 +5,8 @@
   <fullName>Dan Ben yosef</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwph+zODPzWtToTZjuxwY0aO6uThSfhzUBe01/tSGjR0J8QMjVGC2vB7nlzrPgJQaf3FDG9IvU7nWqYDdvO75A4A==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>b71e781f-e5d1-48bf-9ded-ba645c5018d6</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>27b9724850d166d75baa758d3adfa93c9cf12199f7915a45d5acc34738616d5e</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

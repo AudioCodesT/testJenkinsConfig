@@ -5,21 +5,11 @@
   <fullName>Yehiel Zohar</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw4KgavfZ70tJ+nxjRP/1Sr9KXAS/QK3YEU1eKyhA8qLgbYpeUq0uJyKWocaxE9YMZg2qi8pfhJzRR0D4I9ZH8XA==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>35aae672-58b9-4ab0-9659-4d1f2082cf37</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>08c508984eee4645fd0c8e1b1116ac35ac238d5d8c3a84b706b9e55073affb25</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -82,7 +72,7 @@
       </roles>
       <timestamp>1587914620904</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Yehiel.Zohar@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
@@ -91,5 +81,6 @@
     <jenkins.security.seed.UserSeedProperty>
       <seed>9c9d0b56dd737372</seed>
     </jenkins.security.seed.UserSeedProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>

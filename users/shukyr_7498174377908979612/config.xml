@@ -5,18 +5,8 @@
   <fullName>Shuky Riechard</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw0vPal8zRZ4uVHcfFWEWEL7vHeB9eInS7Vfu6V2cbSSrla6kC15pE3lbcO11CYew/1geus2W41WM86KB3MUY61w==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>4e2e80bb-9c8e-49c4-8c2b-72fd2d9321d7</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>afa45359349703438306bd6ac48614e7ac966fa65652d94a8736cbbf5b820e6f</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

@@ -5,18 +5,8 @@
   <fullName>Roni Pesach</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwFVTJ1R9ZSlcfZwWstF+M/ghx9MqJWLmkSemYVhWZ7U+6DeFdkzYy2dWapsLmWDS7oHJ5RqJQqsVrB9fu4ajdRg==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>7320d5a4-2a13-458a-8370-669851cebaac</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>13455cff83afbd204327deb47d14901a7453e539de2dfbbbc49aa283a481a328</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

@@ -5,18 +5,8 @@
   <fullName>Guy Amit</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwlfnM/2m6DTevYVQIv4/sF21MJ5RfV9LmJWgw6Hn9Ov79IdsKsLKXWba9vVNh8E5EzowH7XENuEcMFZY5YVpg+A==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>8f55788d-5627-4e59-92b9-82cc6d29f596</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>75d52721a59a83a40666bd44946c3699e941e97e124bf9d547fecc56e5d9d9d9</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

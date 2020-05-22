@@ -5,18 +5,8 @@
   <fullName>Binyamin Zax</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwkAg9R8LQAxcXEPidbNkc1bk0RAtHr09EGFz+SOeN30KQqbn9A9E0A3pFzN32kPcHaecihR4CSrkgG5VIcqbzow==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>1a44fed6-58e5-4b45-b9d9-ef3a7b227707</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>056c6e6d8c83218cfe10cf83374bce5f6e87afcef2f4be9efa94355a0544f96e</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

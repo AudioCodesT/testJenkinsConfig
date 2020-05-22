@@ -5,18 +5,8 @@
   <fullName>Amos Bublil</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw0/SKoAizJ177pVjxAdY9aLqDVYMQiHCv9q8QUyAmKDPsd9WTaWWEXSs6grm3LM26YnkOyfqXX8UqrxksPyJoYA==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>2e330302-c893-472c-8eb4-36985761885e</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>480f70a1a7d8cb2c7ab05a311ac0238156fae6203cb8e49a6050e52748436492</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

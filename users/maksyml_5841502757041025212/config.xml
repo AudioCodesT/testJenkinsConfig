@@ -5,18 +5,8 @@
   <fullName>Maksym Lifirenko</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwFzXmnzODPaHzJwjf/ZsR61Z4ExTg/tfSlGahncQR7tual8KSFGzEZV6aiNohiH1kUt3caJDams35tqx82rb8PA==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>170e4dd4-454a-4668-beac-8c4b8d1b1765</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>4203e11d41b6d6b14c15a39c0b76bba88ce475799a13aa54f329b7319e3acd0a</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

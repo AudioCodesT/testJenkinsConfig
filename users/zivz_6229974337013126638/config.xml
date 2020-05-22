@@ -5,18 +5,8 @@
   <fullName>Ziv Zviran</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwCf475oL2ag59nVRNI8Rc6saJm4MWXpq0vQ0k8NxgjwjO2vvzHmTXFw80DKyyOCzjslL4+nxOXit8LYJ/r/BfSQ==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>a35a9f4f-ba1b-4797-91a6-0d42086356ff</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>9b52ab373607ed0d9abb663439f04c0147caba1bc704353de370bf2273e4e8d3</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

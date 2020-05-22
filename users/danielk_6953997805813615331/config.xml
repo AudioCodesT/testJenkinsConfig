@@ -5,18 +5,8 @@
   <fullName>Daniel Kochav</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAw2gh0wVs4uWpB6BH/GCVbMYZFgBOHISJXoLBUeDVvz/Q7qt/cvtowdprhNMW1pYNugPztwWQG6td7yIasOzmpSA==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>85567c8b-3baa-448f-9033-a67743ca7b6f</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>3f84d8b3303c5dcbe8b3b70dfef62be46f55a787e6c6f0dce03a8e5c926b7b80</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

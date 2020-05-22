@@ -5,18 +5,8 @@
   <fullName>Gennady Tsiporkin</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwd2bul0Ab2tiEKndUPMIh/yPoZ3MJLa7ifC5Xzc/xEm7QroorfZ2n8X+LVZpnMkpBlzo33JUNOjj326fNHsy3Fw==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>42db628e-e515-4a6e-b421-9bcce32e9138</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>984ffc6f02cbdef34bfe878a10b18374ce8e08805467b19b62bdf10f639e7cc4</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">

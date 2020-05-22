@@ -5,18 +5,8 @@
   <fullName>Yakov Kravchenko</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
-      <apiToken>{AQAAABAAAAAwb72Bd81tWTxt1O+KOxHS8KADkYqn3LnsPXMMC6a9AmZSXMkxaLwX2VEMkGpgSZHF4DAJKMu1hr3Xc/MafoDv4w==}</apiToken>
       <tokenStore>
-        <tokenList>
-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-            <uuid>130f7292-0a0a-42f0-bda0-978c56884a31</uuid>
-            <name>Legacy Token</name>
-            <value>
-              <version>10</version>
-              <hash>95ad6940c1d6f0178e4aab1fb8bd2b6639cddfb91d2fe084fc90bae3632e492b</hash>
-            </value>
-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
-        </tokenList>
+        <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
