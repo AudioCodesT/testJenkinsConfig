@@ -167,9 +167,10 @@ if [ ! -d .git ]; then
 fi
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam
 git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
-git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps || true
-sudo chmod -R 755 TrunkPackRam OpenSource Modules
-sudo chown -R centos:centos TrunkPackRam OpenSource Modules
+git checkout -f origin/$GERRIT_BRANCH -- Modules || true
+git checkout -f origin/$GERRIT_BRANCH -- Shared || true
+sudo chmod -R 755 TrunkPackRam OpenSource Modules Shared
+sudo chown -R centos:centos TrunkPackRam OpenSource Modules Shared
 
 cd $CurrentPath
 
