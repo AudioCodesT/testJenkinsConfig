@@ -37,6 +37,7 @@
         <string>Agile users</string>
         <string># R&amp;D HDGW SYSTEM</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>TG1000</string>
         <string>AWS_Jira_Users</string>
         <string># R&amp;D HDGW SYSTEM SW</string>
@@ -76,7 +77,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1583306309505</timestamp>
+      <timestamp>1590328398403</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Doron.Nimrod@audiocodes.com</emailAddress>
