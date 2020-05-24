@@ -146,7 +146,7 @@ oneOffExecutors\[currentExecutable\[url\]\]\]" | \
 sed -e 's/"url":"/\n/g' | sed 's/"}}.*//g' | tail -n +2 | grep drt)
 
 for job in $(echo $allRunning | sed 's: :\n:g' | grep sbc-drt-request); do
-  if curl -ks "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
+  if curl -ks -u compile:$compile_password "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
     echo "DRT was executed already, job $job"; 
     exit 2
   fi
@@ -162,7 +162,7 @@ while read -r FileName; do
   if [ $checkSum1 != $checkSum2 ]; then
     # sbc-drt-build is running now?
     for job in $(echo $allRunning | sed 's: :\n:g' | grep sbc-drt-build); do
-      if curl -ks "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
+      if curl -ks -u compile:$compile_password "${job}api/json?tree=actions\[parameters\[value\]\]" | grep -q $REFSPEC; then
         echo "sbc-drt-build is running now, job $job, the files are not ready yet"; 
         exit 2
       fi
