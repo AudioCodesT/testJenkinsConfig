@@ -222,7 +222,7 @@ fi
   </builders>
   <publishers>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>JNLP</regexpForRerun>
+      <regexpForRerun>.*( ClosedChannel|no workspace from node|Workspace is not accessible|node is offline|Error fetching remote|JNLP4-connect connection).*</regexpForRerun>
       <rerunIfUnstable>false</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
@@ -231,7 +231,7 @@ fi
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
         <delay>300</delay>
       </delay>
-      <maxSchedule>0</maxSchedule>
+      <maxSchedule>2</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
