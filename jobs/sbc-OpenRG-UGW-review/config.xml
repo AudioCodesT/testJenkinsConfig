@@ -1,14 +1,14 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -32,13 +32,12 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <secureGroovyScript plugin="script-security@1.55">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -47,10 +46,10 @@
       <keepJenkinsSystemVariables>true</keepJenkinsSystemVariables>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
-      <contributors/>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -68,11 +67,13 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
@@ -81,8 +82,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>ANT</compareType>
@@ -104,32 +105,34 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>PLAIN</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
-      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Started &lt;BUILDS_STATS&gt;&apos; --notify=NONE</buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message 'Build Started &lt;BUILDS_STATS&gt;' --notify=NONE</buildStartMessage>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>true</excludeNoCodeChange>
+          <excludePrivateState>false</excludePrivateState>
+          <excludeWipState>false</excludeWipState>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -141,17 +144,17 @@
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
 
-echo &quot;#define EXTERNAL_VERSION \&quot;$BL\&quot;&quot; &gt; $WORKSPACE/include/external_version_data.h
+echo "#define EXTERNAL_VERSION \"$BL\"" &gt; $WORKSPACE/include/external_version_data.h
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>User=&quot;admin:$artifactory_password&quot;
-refs=&quot;&quot;
+      <command>User="admin:$artifactory_password"
+refs=""
 
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
@@ -165,7 +168,7 @@ function findOthersCommit() {
   echo foundChange: $refs
   # If no commit was found with the same change-id:
   # Find if this build should use another commit with the same Issue
-  if [[ -z &quot;$refs&quot; &amp;&amp; ! -z &quot;$ISSUE&quot; ]]; then 
+  if [[ -z "$refs" &amp;&amp; ! -z "$ISSUE" ]]; then 
     echo Search this Issue: $ISSUE...
     foundChanges=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
     --current-patch-set message:$ISSUE status:open \
@@ -176,7 +179,7 @@ function findOthersCommit() {
     for ref in $foundChanges; do
       change=$(echo $ref | cut -d/ -f4);
       echo Check if it the newer change, we need to use the newest in case of some changes
-      if [ &quot;$change&quot; -gt &quot;$lastChange&quot; ]; then 
+      if [ "$change" -gt "$lastChange" ]; then 
         lastChange=$change
         refs=$ref
         echo Set to $refs
@@ -191,7 +194,7 @@ function findOthersCommit() {
 chmod 600 id_rsa_gerrit
 change=`echo $GERRIT_REFSPEC | cut -d/ -f4`
 ID=${GERRIT_CHANGE_ID}
-ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed &apos;s/.*Issue: //g; s/ .*//g&apos;)
+ISSUE=$(echo $GERRIT_CHANGE_COMMIT_MESSAGE | grep Issue: | sed 's/.*Issue: //g; s/ .*//g')
 
 # Which MP5XXNG.kernel-headers.gz bring from Artifactory?
 echo Search of exist commits in TP/OpenSource/acLinuxUGW and use the oldest
@@ -199,10 +202,10 @@ findOthersCommit TP/OpenSource/acLinuxUGW
 echo acLinuxChange: $refs
 
 # If found, find the revision instead of the refspec
-if [ ! -z &quot;$refs&quot; ]; then
+if [ ! -z "$refs" ]; then
   rev=$(ssh -p 29418 -i id_rsa_gerrit jenkins@test-gerrit gerrit query \
      --current-patch-set $(echo $refs | cut -d/ -f4) | \
-     grep revision: | head -1 | cut -d: -f2 | sed &apos;s: ::g&apos;) || echo ChangeId not found
+     grep revision: | head -1 | cut -d: -f2 | sed 's: ::g') || echo ChangeId not found
   echo acLinuxChange: $rev
 fi
 
@@ -214,7 +217,7 @@ if [ ! -d acLinuxUGW ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/OpenSource/acLinuxUGW acLinuxUGW
 fi
 
-# from acLinuxUGW bring the file that is specified in the link in OpenRG-UGW: &apos;tunnels/gre/mgt/if_tunnel.h&apos;
+# from acLinuxUGW bring the file that is specified in the link in OpenRG-UGW: 'tunnels/gre/mgt/if_tunnel.h'
 cd acLinuxUGW
 git fetch origin $GERRIT_BRANCH
 git checkout -f origin/$GERRIT_BRANCH -- kernel/linux/include/uapi/linux/if_tunnel.h
@@ -236,7 +239,7 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
-if [ ! -z &quot;$refs&quot; ]; then
+if [ ! -z "$refs" ]; then
   git fetch origin $refs
 else
   git fetch origin $GERRIT_BRANCH
@@ -249,8 +252,8 @@ git checkout -f FETCH_HEAD -- TrunkPackRam/acInfrastructure/MCA \
     
 git checkout -f FETCH_HEAD -- Shared || true
 
-#In case you don&apos;t find the revision from another commit, take it from the last submitted commit
-if [ -z &quot;$rev&quot; ]; then rev=$(git ls-tree FETCH_HEAD -- OpenSource/acLinuxUGW | awk &apos;{print $3}&apos;); fi
+#In case you don't find the revision from another commit, take it from the last submitted commit
+if [ -z "$rev" ]; then rev=$(git ls-tree FETCH_HEAD -- OpenSource/acLinuxUGW | awk '{print $3}'); fi
 
 cd $WORKSPACE
 
@@ -259,17 +262,17 @@ if [ -d ../../Shared ]; then
   sudo chown -R centos:centos ../../Shared
   [ -f ../../Shared/Versioning/Utils/MakeBrdVersion.sh ] &amp;&amp; sh ../../Shared/Versioning/Utils/MakeBrdVersion.sh ../../ &gt; /dev/null
   if [ $? != 0 ]; then
-    echo &quot;MakeBrdVersion failed !!!&quot;
+    echo "MakeBrdVersion failed !!!"
     exit 1
   fi
-  echo &quot;MakeBrdVersion Succeesful&quot;
+  echo "MakeBrdVersion Succeesful"
 fi
 
-#Bring &apos;MP5XXNG.kernel-headers.gz&apos; the needed acLinuxUGW output for this compilation
-uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 | grep kernel | head -1)
-if [ &quot;$uri&quot; == &quot;&quot; ]; then
+#Bring 'MP5XXNG.kernel-headers.gz' the needed acLinuxUGW output for this compilation
+uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo" | grep uri | cut -d'"' -f4 | grep kernel | head -1)
+if [ "$uri" == "" ]; then
   echo Need waiting to kernel package...
-  if [ &quot;$NAGINATOR_COUNT&quot; == 2 ]; then
+  if [ "$NAGINATOR_COUNT" == 2 ]; then
     echo Give vote to Gerrit
     exit 1
   else
@@ -278,7 +281,7 @@ if [ &quot;$uri&quot; == &quot;&quot; ]; then
   fi
 fi
 
-downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
+downloadUri=$(curl -ks -u $User $uri | grep "downloadUri" | cut -d'"' -f4)
 rm -f MP5XXNG.kernel-headers.gz
 curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
 
@@ -287,12 +290,12 @@ curl -ks -u $User $downloadUri --output MP5XXNG.kernel-headers.gz
 cp  $WORKSPACE/include/external_version_data.h $WORKSPACE/OpenRG-UGW_external_version_data.h
 
 if [ ! -f MP5XXNG.OpenRG.img.gz ]; then
-  echo &quot;MP5XXNG.OpenRG.img.gz does not exist.. exit with error&quot;
+  echo "MP5XXNG.OpenRG.img.gz does not exist.. exit with error"
   exit -1
 fi
 
 if (( `du MP5XXNG.OpenRG.img.gz | cut -f1` &lt; 1500 )); then
-  echo &quot;MP5XXNG.OpenRG.img.gz Image is too small.. exit with error&quot;
+  echo "MP5XXNG.OpenRG.img.gz Image is too small.. exit with error"
   exit -1
 fi
 </command>
@@ -301,7 +304,7 @@ fi
   </builders>
   <publishers>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>Need waiting to kernel package</regexpForRerun>
+      <regexpForRerun>.*(Need waiting to kernel package|ClosedChannel|no workspace from node|Workspace is not accessible|node is offline|Error fetching remote|JNLP4-connect connection).*</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
@@ -315,18 +318,18 @@ fi
   <buildWrappers>
     <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
       <includes>id_rsa_gerrit</includes>
-      <excludes></excludes>
+      <excludes/>
       <flatten>false</flatten>
       <includeAntExcludes>false</includeAntExcludes>
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.1.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>sbc-review</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -338,48 +341,40 @@ fi
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentials>
-          <username></username>
-          <password></password>
-        </credentials>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/MP5XXNG.OpenRG.img.gz=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}
 $WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_VER}</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>true</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
