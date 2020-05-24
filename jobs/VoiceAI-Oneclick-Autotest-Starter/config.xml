@@ -181,17 +181,17 @@ fi</command>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>AZURE_CLIENT_ID=e32b122f-d106-4b57-b9db-bdc5dcd100d6
-AZURE_TENANT=1911c65c-893b-42f9-83fa-66c1b86fdf85
-AZURE_SECRET=iCej[xc6XDd6Bgn[sE_gCwSp6kRsq]F0
-PNCSubscriptionId=7d282254-36d2-4aaf-8e0c-4ba3439188fe
-stckMngrRGName=staging-stack-mgr
-stckMngrVMName=staging-stack-mgr
-PCRGName=qa-yossib
-PCVMName=TestRunner
-PC_USER=tester
-PC_DNS=test-runner.westus2.cloudapp.azure.com
-MODE=######</propertiesContent>
+        <propertiesContent>AZURE_CLIENT_ID="e32b122f-d106-4b57-b9db-bdc5dcd100d6"
+AZURE_TENANT="1911c65c-893b-42f9-83fa-66c1b86fdf85"
+AZURE_SECRET="iCej[xc6XDd6Bgn[sE_gCwSp6kRsq]F0"
+PNCSubscriptionId="7d282254-36d2-4aaf-8e0c-4ba3439188fe"
+stckMngrRGName="staging-stack-mgr"
+stckMngrVMName="staging-stack-mgr"
+PCRGName="qa-yossib"
+PCVMName="TestRunner"
+PC_USER="tester"
+PC_DNS="test-runner.westus2.cloudapp.azure.com"
+MODE="######"</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
