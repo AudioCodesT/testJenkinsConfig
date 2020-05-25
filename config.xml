@@ -606,7 +606,18 @@
       <name>sig-8a99c992</name>
       <accountId></accountId>
       <groupId>sig-8a99c992</groupId>
-      <pendingInstances/>
+      <pendingInstances>
+        <entry>
+          <string>i-083c34b9a8fe51e3c</string>
+          <hudson.plugins.spotinst.cloud.PendingInstance>
+            <id>i-083c34b9a8fe51e3c</id>
+            <status>INSTANCE_INITIATING</status>
+            <numOfExecutors>1</numOfExecutors>
+            <requestedLabel>ems-build</requestedLabel>
+            <createdAt>2020-05-25 11:03:35.543 UTC</createdAt>
+          </hudson.plugins.spotinst.cloud.PendingInstance>
+        </entry>
+      </pendingInstances>
       <labelString>ems-build</labelString>
       <idleTerminationMinutes>8</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
@@ -1768,6 +1779,7 @@
         <string>OVOC-Cluster-Config</string>
         <string>OVOC-Cluster-DVD-Install</string>
         <string>OVOC-Cluster-Upgrade-Cluster</string>
+        <string>OVOC-Cluster-Upgrade-Single</string>
       </jobNames>
       <jobFilters/>
       <columns>
