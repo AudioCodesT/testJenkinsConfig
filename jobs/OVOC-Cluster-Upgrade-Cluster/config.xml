@@ -110,234 +110,26 @@ cat /home/centos/.aws/config</scriptContent>
     </EnvInjectJobProperty>
     
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
-    <script>pipeline {
-    agent {
-        node {
-            label 'ems-build'
-        }
-    }
-    parameters {
-        string(name: 'NEW_TAG', defaultValue: '', description: '')
-        string(name: 'OLD_TAG', defaultValue: '', description: '')
-        choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
-        choice(name: 'sanityType', choices: ['full', 'short'], description: '')
-    }
-    stages {
-        stage('Build') {
-            steps {
-                script {
-                    currentBuild.displayName = "${BUILD_NUMBER}_from_${OLD_TAG}_to_${NEW_TAG}"
-                    currentBuild.description = ""
-                }
-            }
-        }
-        stage('Install Nodes - Old Tag'){
-            failFast true
-            parallel {
-                stage('Install management') {
-                    agent {
-                        node {
-                            label 'ems-build'
-                            customWorkspace "${JOB_NAME}_management"
-                        }
-                    }
-                    steps {
-                        runInstance('management')
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${params.OLD_TAG}"),
-                            string(name: 'ServerRole', value: 'management'),
-                            string(name: 'ServerIP', value: "${mgmtIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}")
-                        ]
-                    }
-                }
-                stage('Install vqm') {
-                    agent {
-                        node {
-                            label 'ems-build'
-                            customWorkspace "${JOB_NAME}_vqm"
-                        }
-                    }
-                    steps {
-                        runInstance('vqm')
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${params.OLD_TAG}"),
-                            string(name: 'ServerRole', value: 'vqm'),
-                            string(name: 'ServerIP', value: "${vqmIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}")
-                        ]
-                    }
-                }
-                stage('Install pm') {
-                    agent {
-                        node {
-                            label 'ems-build'
-                            customWorkspace "${JOB_NAME}_pm"
-                        }
-                    }
-                    steps {
-                        runInstance('pm')
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${params.OLD_TAG}"),
-                            string(name: 'ServerRole', value: 'pm'),
-                            string(name: 'ServerIP', value: "${pmIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}")
-                        ]
-                    }
-                }
-            }
-        }
-        stage('Configure Cluster - Old Tags'){
-            steps{
-                build job: 'OVOC-Cluster-Config', parameters: [
-                    string(name: 'TAG', value: "${params.OLD_TAG}"),
-                    string(name: 'mgmtIP', value: "${mgmtIP}"),
-                    string(name: 'vqmIP', value: "${vqmIP}"),
-                    string(name: 'pmIP', value: "${pmIP}"),
-                    string(name: 'sanityType', value: "${params.sanityType}"),
-                    string(name: 'installType', value: 'upgradeCluster')
-                ]
-            }
-        }
-        stage('Install Nodes - New Tag'){
-            failFast true
-            parallel {
-                stage('Install management') {
-                    agent {
-                        node {
-                            label 'ems-build'
-                            customWorkspace "${JOB_NAME}_management"
-                        }
-                    }
-                    steps {
-                        runInstance('management')
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'ServerRole', value: 'management'),
-                            string(name: 'ServerIP', value: "${mgmtIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}")
-                        ]
-                    }
-                }
-                stage('Install vqm') {
-                    agent {
-                        node {
-                            label 'ems-build'
-                            customWorkspace "${JOB_NAME}_vqm"
-                        }
-                    }
-                    steps {
-                        runInstance('vqm')
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'ServerRole', value: 'vqm'),
-                            string(name: 'ServerIP', value: "${vqmIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}")
-                        ]
-                    }
-                }
-                stage('Install pm') {
-                    agent {
-                        node {
-                            label 'ems-build'
-                            customWorkspace "${JOB_NAME}_pm"
-                        }
-                    }
-                    steps {
-                        runInstance('pm')
-                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
-                            string(name: 'TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'ServerRole', value: 'pm'),
-                            string(name: 'ServerIP', value: "${pmIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}")
-                        ]
-                    }
-                }
-            }
-        }
-        stage('Configure Cluster - New Tags'){
-            steps{
-                build job: 'OVOC-Cluster-Config', parameters: [
-                    string(name: 'TAG', value: "${params.NEW_TAG}"),
-                    string(name: 'mgmtIP', value: "${mgmtIP}"),
-                    string(name: 'vqmIP', value: "${vqmIP}"),
-                    string(name: 'pmIP', value: "${pmIP}"),
-                    string(name: 'sanityType', value: "${params.sanityType}"),
-                    string(name: 'installType', value: 'upgradeCluster')
-                ]
-            }
-        }
-    }
-}
-
-
-
-def mgmtIP = ""
-def mgmtId = ""
-def vqmIP = ""
-def vqmId = ""
-def pmIP = ""
-def pmId = ""
-
-
-def runInstance(role) {
-
-    println(role)
-
-    def ec2SGId = "sg-77bce41e"
-    def ec2SNId = "subnet-35295a5c"
-    def ec2iTyp = "t2.2xlarge"
-    def ec2Key = "AudioCodes-CICD-Apps"
-    def instId = ""
-    def ipAddr = ""
-    def imageId = ""
-
-	switch(role) {
-		case "management":
-			imageId = "ami-097a30155f82688fb";
-            break;
-		case "vqm":
-            imageId = "ami-005e7916df1f0ea46";
-            break;
-		case "pm":
-			imageId = "ami-005e7916df1f0ea46";
-            break;
-	}
-
-    println(imageId)
-
-    sh "aws ec2 run-instances --region eu-central-1 --image-id ${imageId} --instance-type ${ec2iTyp} --count 1 --security-group-ids ${ec2SGId} --subnet-id ${ec2SNId} --key-name ${ec2Key} &gt; ${WORKSPACE}/run-inst.json"
-
-    def runJsonFile = readJSON file: "${env.WORKSPACE}/run-inst.json";
-
-    instId = (runJsonFile.Instances.InstanceId).toString().replaceAll("\\[|\\]", "")
-    ipAddr = (runJsonFile.Instances.NetworkInterfaces.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
-
-    sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_${role}";
-    ebsAttr = "[{\\\"DeviceName\\\": \\\"/dev/sda1\\\",\\\"Ebs\\\":{\\\"DeleteOnTermination\\\":true}}]"
-    sh "aws ec2 modify-instance-attribute --instance-id ${instId} --block-device-mappings DeviceName=/dev/sda1,Ebs={DeleteOnTermination=true}"
-    sh "aws ec2 wait instance-status-ok --instance-ids ${instId}";
-
-    switch(role) {
-        case "management":
-            mgmtId = instId;
-            mgmtIP = ipAddr;
-            break;
-        case "vqm":
-            vqmId = instId;
-            vqmIP = ipAddr;
-            break;
-        case "pm":
-            pmId = instId;
-            pmIP = ipAddr;
-            break;
-    }
-}
-
-
-</script>
-    <sandbox>false</sandbox>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.78">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>ssh://jenkins@gerrit:29418/devops/tools.git</url>
+          <credentialsId>b6e992aa-66c8-4f99-b51f-4bb657ec4c53</credentialsId>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>jenkins-pipeline/OVOC-Elasticity/upgrade-cluster/Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>
