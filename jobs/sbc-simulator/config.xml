@@ -171,6 +171,13 @@ mv -f id_rsa_gerrit ..
 # When the instance is not from Spotinst, the PATH doesn't include /usr/sbin and the Simulator failed due to the ifconfig don't found
 export PATH=$HOME/Utils:/usr/local/bin:/usr/local/sbin:/usr/sbin:$PATH
 
+###############################################
+######               TEMP FIX FROM ELIV
+sed -i "s/''/'127.0.0.1'/g" TrunkPackRam/Management/WEBSERVER/UnitTest/MockApps/simple_http_server.py
+
+################################################
+################################################
+
 rm -f build-error.log
 if [ -e TrunkPackLib/.git ]; then
 (
