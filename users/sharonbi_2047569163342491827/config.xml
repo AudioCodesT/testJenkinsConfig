@@ -43,7 +43,47 @@
       <emailAddress>Sharon.Biner@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string>authenticated</string>
+        <string># All Mailvision</string>
+        <string>365_Comeet</string>
+        <string># SmartTAP Dev</string>
+        <string>AWS_Jira_Users</string>
+        <string>Citrix_Allow_Browsers</string>
+        <string>365_Monday</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>MV_Support_RO</string>
+        <string>MV_Public_RW</string>
+        <string># RnD Mobility</string>
+        <string># Mailvision-Development</string>
+        <string>Allow Office365 Groups</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string>MV_Dev_RW</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># mdevelopment_Android</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># Mobility Android</string>
+        <string>MV_Sales_RO</string>
+        <string># AUDC - NJ Engineering Team</string>
+        <string>AudioCodes_VPN</string>
+        <string># SmartTAP</string>
+        <string>MV_QA_RO</string>
+        <string># SmartTap-BS</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
+      </roles>
+      <timestamp>1590394019531</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
