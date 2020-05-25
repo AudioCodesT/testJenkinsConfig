@@ -44,6 +44,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string># All__Beer_Sheva</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -73,7 +74,7 @@
         <string>NewUser_Israel-BS</string>
         <string># SBC Infra Core</string>
       </roles>
-      <timestamp>1589109277185</timestamp>
+      <timestamp>1590405559292</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
