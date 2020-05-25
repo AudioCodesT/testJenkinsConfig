@@ -44,6 +44,7 @@
       <roles>
         <string>authenticated</string>
         <string>365_Tas</string>
+        <string>365_Comeet</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string>365_Lucca</string>
@@ -64,7 +65,7 @@
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1588768707284</timestamp>
+      <timestamp>1590387006780</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Marat.Khasanov@audiocodes.com</emailAddress>
