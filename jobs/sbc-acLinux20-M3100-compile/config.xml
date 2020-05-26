@@ -165,14 +165,13 @@ if [ ! -d .git ]; then
   mv GWApp/.git .
   rm -rf GWApp
 fi
-git checkout -f origin/$GERRIT_BRANCH -- \
-  TrunkPackRam/Bsps/Common \
-  TrunkPackRam/Bsps/BspOcteon \
-  TrunkPackRam/PSTN/ph/PstnInt.h
+
+git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam
 git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
-git checkout -f origin/$GERRIT_BRANCH -- Modules/Apps || true
-sudo chmod -R 755 OpenSource Modules TrunkPackRam
-sudo chown -R centos:centos OpenSource Modules TrunkPackRam
+git checkout -f origin/$GERRIT_BRANCH -- Modules || true
+git checkout -f origin/$GERRIT_BRANCH -- Shared || true
+sudo chmod -R 755 TrunkPackRam OpenSource Modules Shared
+sudo chown -R centos:centos TrunkPackRam OpenSource Modules Shared
 
 cd $CurrentPath
 
