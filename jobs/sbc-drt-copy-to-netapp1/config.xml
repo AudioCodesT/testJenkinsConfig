@@ -127,8 +127,10 @@ if [ -s "$REFTARGET.list" ]; then
 fi
 
 # Don't execute the next job in case you don't found 5 files
+echo Check if all needed files are in netapp1
 if [ `ls $Target/*.cmp | wc -l` != 5 ]; then echo "Missing files, exiting job"; exit 2; fi
 
+echo Check if already in queue
 # Check if sbc-drt-request job is in the queue or already running
 # to avoid more than one sbc-drt-request execution 
 for job in \
