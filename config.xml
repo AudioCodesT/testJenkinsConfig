@@ -79,7 +79,9 @@
           <permission>hudson.model.Run.Replay</permission>
           <permission>hudson.model.View.Read</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>compile</sid>
+        </assignedSIDs>
       </role>
       <role name="readOnly" pattern=".*">
         <permissions>
@@ -93,11 +95,11 @@
         <assignedSIDs>
           <sid># All AudioCodes</sid>
           <sid># OVOC QOE</sid>
+          <sid># SBC Infra System</sid>
           <sid># SBC SIP</sid>
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
           <sid>qasa</sid>
-          <sid># SBC Infra System</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
