@@ -45,6 +45,7 @@
       <roles>
         <string>authenticated</string>
         <string>365_Tas</string>
+        <string>365_Comeet</string>
         <string>Password Manager Apply</string>
         <string>AWS_Jira_Users</string>
         <string>365_Lucca</string>
@@ -67,7 +68,7 @@
         <string>EMS_RW_Access</string>
         <string>Logistics_maintenance</string>
       </roles>
-      <timestamp>1589265326380</timestamp>
+      <timestamp>1590495671579</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
