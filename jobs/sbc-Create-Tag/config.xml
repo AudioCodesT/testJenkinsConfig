@@ -177,12 +177,15 @@ do
     IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ '{print $NF}' | cut -c1-2)
     LastMergedMAJOR=$(echo $LastMergedTag | cut -c1-4)
     LastMAJOR=$(echo $LastTag | cut -c1-4)
-    if [[ (! "$LastTag" =~ $LastMergedMAJOR$IDs\. || "$LastMINOR" -ne "$LastMergedMINOR") \
-         &amp;&amp; ! "$LastMAJOR" &gt; "$LastMergedMAJOR" ]]; then
+    if [[ (! "$LastTag" =~ $LastMergedMAJOR$IDs\. || "$LastMINOR" -ne "$LastMergedMINOR") ]]; then
       # If it is the first TAG in this feature branch or a newer branch was merged to
       # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
       if [[ "$LastMergedTag" =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
-        PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
+        if [ "$LastMAJOR" &gt; "$LastMergedMAJOR" ]; then
+          PreLastTag=$LastMAJOR$IDs.$LastMergedMINOR
+        else
+          PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
+        fi
         if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
           echo TAG $PreLastTag.001 already exist, check this branch $GERRIT_BRANCH ... exit
           errorFlag=1
