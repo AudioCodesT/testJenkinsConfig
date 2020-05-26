@@ -182,7 +182,7 @@ do
       # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
       if [[ "$LastMergedTag" =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
         if [ "$LastMAJOR" &gt; "$LastMergedMAJOR" ]; then
-          PreLastTag=$LastMAJOR$IDs.$LastMergedMINOR
+          PreLastTag=$LastMAJOR$IDs.$LastMINOR
         else
           PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
         fi
