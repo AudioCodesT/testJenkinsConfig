@@ -376,7 +376,7 @@ echo "Finished docker push to Artifactory."
         <spec>{
     "files": [
         {
-            "pattern": "docker-compose-vag-*-g???????.yml",
+            "pattern": "docker-compose-vag-*-g*.yml",
             "target": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/"
         }
     ]
