@@ -190,7 +190,7 @@ if [ ! -z "$ISSUE" ]; then
     echo Search this Issue: $ISSUE...
     refs=$(ssh -p 29418 -i $CurrentPath/id_rsa_gerrit jenkins@test-gerrit gerrit query \
      --current-patch-set message:$ISSUE branch:$GERRIT_BRANCH \
-     owner:$GERRIT_CHANGE_OWNER_NAME project:TP/GWApp | \
+     owner:\"$GERRIT_CHANGE_OWNER_NAME\" status:open project:TP/GWApp | \
      grep ref: | head -1 | cut -d: -f2) || echo Other change not found
 fi
 
