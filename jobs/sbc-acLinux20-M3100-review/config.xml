@@ -184,14 +184,12 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
-git checkout -f FETCH_HEAD -- \
-  TrunkPackRam/Bsps/Common \
-  TrunkPackRam/Bsps/BspOcteon \
-  TrunkPackRam/PSTN/ph/PstnInt.h
+git checkout -f FETCH_HEAD -- TrunkPackRam
 git checkout -f FETCH_HEAD -- OpenSource/pkgs || true
-git checkout -f FETCH_HEAD -- Modules/Apps || true
-sudo chmod -R 755 TrunkPackRam OpenSource Modules
-sudo chown -R centos:centos TrunkPackRam OpenSource Modules
+git checkout -f FETCH_HEAD -- Modules || true
+git checkout -f FETCH_HEAD -- Shared || true
+sudo chmod -R 755 TrunkPackRam OpenSource Modules Shared
+sudo chown -R centos:centos TrunkPackRam OpenSource Modules Shared
 
 cd $CurrentPath
 
