@@ -35,6 +35,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -68,7 +69,7 @@
         <string>365_MFA_Apps</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1584610705378</timestamp>
+      <timestamp>1590479997789</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Avishai.Brandeis@audiocodes.com</emailAddress>
