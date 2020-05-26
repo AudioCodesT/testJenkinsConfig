@@ -40,6 +40,7 @@
         <string># TRAVEL IL</string>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -71,7 +72,7 @@
         <string>365_MFA_Apps</string>
         <string># MSBR ETAS</string>
       </roles>
-      <timestamp>1588687712787</timestamp>
+      <timestamp>1590484272976</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
