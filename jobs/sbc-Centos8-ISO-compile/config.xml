@@ -1,9 +1,8 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>1. trigger by a new tag in the repo: TP/OpenSource/Centos8-ISO&#xd;
-2. wait for HostedTP_CENTOS8  cmp on the same tag to be ready, and download it&#xd;
-3. compile iso&#xd;
+  <description>1. trigger by a new tag in the repo: TP/OpenSource/Centos8-ISO&#13;
+2. wait for HostedTP_CENTOS8  cmp on the same tag to be ready, and download it&#13;
+3. compile iso&#13;
 4. deploy iso to Artifactory</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -12,7 +11,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -36,12 +35,12 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -51,8 +50,9 @@
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -70,11 +70,13 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
@@ -83,8 +85,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>ANT</compareType>
@@ -106,27 +108,27 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
-      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Started &lt;BUILDS_STATS&gt;&apos; --notify=NONE</buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message 'Build Started &lt;BUILDS_STATS&gt;' --notify=NONE</buildStartMessage>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginRefUpdatedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -140,17 +142,17 @@ echo COMP_VER=${BL} &gt; generated_version.properties
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_version.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>User=&quot;admin:$artifactory_password&quot;
+      <command>User="admin:$artifactory_password"
 
-GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;origin/&apos; &apos;{print $NF}&apos;`
+GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'origin/' '{print $NF}'`
 CurrentPath=`pwd`
-#echo &quot;machine test-gerrit login jenkins password $jpass&quot; &gt;~/.netrc
+#echo "machine test-gerrit login jenkins password $jpass" &gt;~/.netrc
 cd ../..
 if [ ! -d .git ]; then
   git -c http.sslverify=false clone --depth 10 -n -b $GERRIT_BRANCH https://test-gerrit/TP/GWApp GWApp
@@ -164,12 +166,12 @@ rev=$(git rev-parse HEAD)
 cd $CurrentPath
 
 
-#Bring &apos;HostedTP_CENTOS8&apos; the needed cmp for this compilation
-uri=$(curl -ks -u $User &quot;https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo&quot; | grep uri | \
-      cut -d&apos;&quot;&apos; -f4 | grep HostedTP_CENTOS8 | grep -v LAB | grep .cmp  | head -1)
-if [ &quot;$uri&quot; == &quot;&quot; ]; then
+#Bring 'HostedTP_CENTOS8' the needed cmp for this compilation
+uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo" | grep uri | \
+      cut -d'"' -f4 | grep HostedTP_CENTOS8 | grep -v LAB | grep .cmp  | head -1)
+if [ "$uri" == "" ]; then
   echo Need waiting to HostedTP CENTOS8 compilation...
-  if [ &quot;$NAGINATOR_COUNT&quot; == 2 ]; then
+  if [ "$NAGINATOR_COUNT" == 2 ]; then
     echo Exit, no HostedTP was found
     exit 1
   else
@@ -178,7 +180,7 @@ if [ &quot;$uri&quot; == &quot;&quot; ]; then
   fi
 fi
 
-downloadUri=$(curl -ks -u $User $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4)
+downloadUri=$(curl -ks -u $User $uri | grep "downloadUri" | cut -d'"' -f4)
 rm -f centos8/isofiles/sbc.install
 curl -ks -u $User $downloadUri --output centos8/isofiles/sbc.install
 cp centos8/isofiles/sbc.install ./
@@ -193,8 +195,8 @@ sudo chown -R centos:centos .
 ls -l 
 
 imageFile=sbc8.iso
-if [ ! -f $imageFile ] || [ &quot;`du $imageFile | cut -f1`&quot; -lt 900000 ]; then
-  echo &quot;$imageFile Image too small.. exit with error&quot;
+if [ ! -f $imageFile ] || [ "`du $imageFile | cut -f1`" -lt 900000 ]; then
+  echo "$imageFile Image too small.. exit with error"
   exit -1
 fi</command>
       <unstableReturn>2</unstableReturn>
@@ -203,7 +205,7 @@ fi</command>
   <publishers>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>HostedTP is not ready</regexpForRerun>
-      <rerunIfUnstable>false</rerunIfUnstable>
+      <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
       <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
@@ -220,7 +222,7 @@ fi</command>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -237,40 +239,40 @@ fi</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/sbc8.iso=&gt;com/ac/sbc/Centos8/ISO/${COMP_VER}
 </deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>true</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -282,7 +284,7 @@ fi</command>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${GERRIT_REFNAME}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
