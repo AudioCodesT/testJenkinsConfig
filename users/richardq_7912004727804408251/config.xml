@@ -42,6 +42,7 @@
       <roles>
         <string># ROW employees</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Citrix_Allow_Browsers</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -73,7 +74,7 @@
         <string>Domain Users</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1588063560392</timestamp>
+      <timestamp>1590564593717</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Richard.Qian@audiocodes.com</emailAddress>
