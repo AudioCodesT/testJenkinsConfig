@@ -179,12 +179,11 @@ if [ ! -d .git ]; then
   rm -rf GWApp
 fi
 git fetch
-if [ -z "$GERRIT_BRANCH" ]; then GERRIT_BRANCH="7.4"; fi
 
-git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam
-git checkout -f origin/$GERRIT_BRANCH -- OpenSource/pkgs || true
-git checkout -f origin/$GERRIT_BRANCH -- Modules || true
-git checkout -f origin/$GERRIT_BRANCH -- Shared || true
+git checkout -f $COMP_VER -- TrunkPackRam
+git checkout -f $COMP_VER -- OpenSource/pkgs || true
+git checkout -f $COMP_VER -- Modules || true
+git checkout -f $COMP_VER -- Shared || true
 sudo chmod -R 755 TrunkPackRam OpenSource Modules Shared
 sudo chown -R centos:centos TrunkPackRam OpenSource Modules Shared
 
