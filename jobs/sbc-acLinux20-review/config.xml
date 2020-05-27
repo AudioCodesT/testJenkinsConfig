@@ -180,7 +180,7 @@ fi
 if [ ! -z "$refs" ]; then
   git fetch origin $refs
 else
-  git fetch origin $GERRIT_BRANCH
+  git fetch origin $(git describe --tags --abbrev=0)
 fi
 
 git checkout -f FETCH_HEAD -- TrunkPackRam
