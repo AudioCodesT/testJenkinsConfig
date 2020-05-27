@@ -178,12 +178,12 @@ if [ ! -d .git ]; then
   mv GWApp/.git .
   rm -rf GWApp
 fi
-git fetch
+git fetch origin $COMP_VER
 
-git checkout -f $COMP_VER -- TrunkPackRam
-git checkout -f $COMP_VER -- OpenSource/pkgs || true
-git checkout -f $COMP_VER -- Modules || true
-git checkout -f $COMP_VER -- Shared || true
+git checkout -f FETCH_HEAD -- TrunkPackRam
+git checkout -f FETCH_HEAD -- OpenSource/pkgs || true
+git checkout -f FETCH_HEAD -- Modules || true
+git checkout -f FETCH_HEAD -- Shared || true
 sudo chmod -R 755 TrunkPackRam OpenSource Modules Shared
 sudo chown -R centos:centos TrunkPackRam OpenSource Modules Shared
 
