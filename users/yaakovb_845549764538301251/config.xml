@@ -44,6 +44,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Synagogue</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -71,7 +72,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1589191661636</timestamp>
+      <timestamp>1590564099355</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
