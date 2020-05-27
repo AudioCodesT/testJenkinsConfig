@@ -77,7 +77,7 @@ fi
 
 echo "MODE=${MODE}" &gt; env.properties
 
-cd session-manager/test/e2e
+cd e2e
 chmod 640 id_rsa
 
 echo "VERSION=$(git describe --tags --abbrev=0 --first-parent)" &gt; .build_version
