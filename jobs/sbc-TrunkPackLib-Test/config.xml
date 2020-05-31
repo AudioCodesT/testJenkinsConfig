@@ -150,7 +150,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
+      <command>echi Hi&#13;
+set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
 cd ..&#13;
 IF NOT EXIST .git (&#13;
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#13;
