@@ -259,7 +259,7 @@ ${WORKSPACE}/tpncp_dat.zip=&gt;com/ac/sbc/WireShark/TPNCP_dat/${COMP_VER}</deplo
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
+      <template>#${BUILD_NUMBER} ${GERRIT_REFSPEC}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
