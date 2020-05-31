@@ -42,6 +42,7 @@
       <roles>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -62,6 +63,7 @@
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string># VAIG_AUTOMATION_RESULT</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP</string>
@@ -75,7 +77,7 @@
         <string># R&amp;D Application Group</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1589194780693</timestamp>
+      <timestamp>1590915190858</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Shmulik.Yudkovich@audiocodes.com</emailAddress>
