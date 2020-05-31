@@ -174,7 +174,7 @@ cd %WORKSPACE%&#13;
 &#13;
 git describe --tags &gt; TAG.txt&#13;
 set /P BL=&lt;TAG.txt&#13;
-echo COMP_VER=%BL% &gt; generated_version.properties&#13;
+echo COMP_VER=%BL% &gt; version.pro&#13;
 &#13;
 "C:\Program Files\Git\bin\bash.exe" --login -c "./Build_Host_Compilation %BL% 74"&#13;
 &#13;
@@ -182,7 +182,7 @@ echo COMP_VER=%BL% &gt; generated_version.properties&#13;
     </hudson.tasks.BatchFile>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>generated_version.properties</propertiesFilePath>
+        <propertiesFilePath>version.pro</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.BatchFile>
