@@ -175,10 +175,6 @@ echo COMP_VER=%BL% &gt; version.pro&#13;
 &#13;
 "C:\Program Files\Git\bin\bash.exe" --login -c "./Build_Host_Compilation %BL% 74"&#13;
 &#13;
-rem ------------ build tpncp.dat ---------------&#13;
-cd voplibtcl\voplibext\wireshark&#13;
-"C:\Program Files\Git\bin\bash.exe" --login -c ./wireshark.tcl&#13;
-set maxbytesize=300000&#13;
 &#13;
 </command>
     </hudson.tasks.BatchFile>
