@@ -237,7 +237,7 @@ $BUILD_URL</body>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>yossim@audiocodes.com</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>true</disabled>
+      <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>JNLP4-connect connection</regexpForRerun>
