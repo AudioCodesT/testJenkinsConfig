@@ -152,7 +152,7 @@
       <command>echo Hi</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
+      <command>set PATH=C:\Program Files\bin;%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
 cd ..&#13;
 IF NOT EXIST .git (&#13;
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#13;
