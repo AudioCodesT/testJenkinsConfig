@@ -33,6 +33,12 @@
           <defaultValue>7.2.256</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>GERRIT_REFSPEC</name>
+          <description/>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -64,14 +70,14 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>refs/changes/85/90585/2</refspec>
+        <refspec>${GERRIT_REFSPEC}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/TrunkPackLib</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/changes/85/90585/2</name>
+        <name>${GERRIT_REFSPEC}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -150,7 +156,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
+      <command>echo Hi&#13;
+&#13;
+set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
 cd ..&#13;
 IF NOT EXIST .git (&#13;
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#13;
@@ -238,7 +246,7 @@ ${WORKSPACE}/tpncp_dat.zip=&gt;com/ac/sbc/WireShark/TPNCP_dat/${COMP_VER}</deplo
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}</template>
+      <template>#${BUILD_NUMBER} ${GERRIT_REFSPEC}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
