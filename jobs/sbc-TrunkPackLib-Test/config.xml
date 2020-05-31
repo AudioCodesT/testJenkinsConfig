@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -30,7 +29,7 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TPRAM_BRANCH</name>
-          <description></description>
+          <description/>
           <defaultValue>7.2.256</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -43,14 +42,13 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
     <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
         <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
-          <script></script>
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -60,6 +58,7 @@
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
@@ -95,7 +94,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
-      <spec></spec>
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -117,21 +116,21 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
-      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Started &lt;BUILDS_STATS&gt;&apos; --notify=NONE</buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message 'Build Started &lt;BUILDS_STATS&gt;' --notify=NONE</buildStartMessage>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
@@ -144,55 +143,14 @@
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#xd;
-cd ..&#xd;
-IF NOT EXIST .git (&#xd;
-  git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#xd;
-  mkdir .git&#xd;
-  FOR /d %%i IN (GWApp\.git\*) DO move %%i .git&#xd;
-  move GWApp\.git\* .git&#xd;
-  rmdir /S /Q GWApp&#xd;
-)&#xd;
-&#xd;
-@set TPFILES=TrunkPackRam/PSTN/PSTN_Interface&#xd;
-@set TPFILES=%TPFILES% TrunkPackRam/TPApp&#xd;
-@set TPFILES=%TPFILES% TrunkPackRam/ControlProtocols/CommonResources/Include&#xd;
-@set TPFILES=%TPFILES% Modules/GWApp/Pkgs/Services/LDAP/LDAPService/Include&#xd;
-@echo Checking out TrunkPackRam linked files&#xd;
-git -c http.sslverify=false fetch&#xd;
-@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/$TPRAM_BRANCH -- %TPFILES%&#xd;
-cd %WORKSPACE%&#xd;
-&#xd;
-git describe --tags &gt; TAG.txt&#xd;
-set /P BL=&lt;TAG.txt&#xd;
-echo COMP_VER=%BL% &gt; generated_version.properties&#xd;
-&#xd;
-&quot;C:\Program Files\Git\bin\bash.exe&quot; --login -c &quot;./Build_Host_Compilation %BL% 74&quot;&#xd;
-&#xd;
-rem ------------ build tpncp.dat ---------------&#xd;
-cd voplibtcl\voplibext\wireshark&#xd;
-&quot;C:\Program Files\Git\bin\bash.exe&quot; --login -c ./wireshark.tcl&#xd;
-set maxbytesize=300000&#xd;
-FOR /F &quot;usebackq&quot; %%A IN (&apos;tpncp.dat&apos;) DO set size=%%~zA&#xd;
-if %size% LSS %maxbytesize% (&#xd;
-  echo &quot;Error: WireShark TPNCP dat PlugIn was failed, Image too small.. exit with error&quot;&#xd;
-  set errorlevel=1&#xd;
-) ELSE (&#xd;
-  mkdir c:\temp\%BL%\Utilities\WiresharkPlugins\shared&#xd;
-  copy tpncp.dat c:\temp\%BL%\Utilities\WiresharkPlugins\shared&#xd;
-  WZZIP -rp ..\..\..\tpncp_dat.zip tpncp.dat 2&gt; NUL&#xd;
-)&#xd;
-&#xd;
-cd ..\..\..&#xd;
-WZZIP -rp lib.zip build\%BL% &gt; NUL 2&gt;&amp;1&#xd;
-</command>
+      <command>echo Hi</command>
     </hudson.tasks.BatchFile>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
@@ -207,7 +165,7 @@ WZZIP -rp lib.zip build\%BL% &gt; NUL 2&gt;&amp;1&#xd;
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>sbc-review</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -219,43 +177,43 @@ WZZIP -rp lib.zip build\%BL% &gt; NUL 2&gt;&amp;1&#xd;
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/voplibtcl/voplibext/voplibcon/*=&gt;com/ac/sbc/TCL/${COMP_VER}
 ${WORKSPACE}/lib.zip=&gt;com/ac/sbc/Lib/${COMP_VER}
 ${WORKSPACE}/tpncp_dat.zip=&gt;com/ac/sbc/WireShark/TPNCP_dat/${COMP_VER}</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>true</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
