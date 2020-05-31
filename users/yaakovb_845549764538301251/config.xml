@@ -61,6 +61,7 @@
         <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>Mailvision Branch Office Users</string>
+        <string># VAIG_AUTOMATION_RESULT</string>
         <string>Linuxusers</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
@@ -72,7 +73,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1590564099355</timestamp>
+      <timestamp>1590941094785</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
