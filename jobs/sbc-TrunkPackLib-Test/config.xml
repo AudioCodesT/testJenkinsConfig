@@ -150,7 +150,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>echi Hi&#13;
+      <command>echo Hi&#13;
+&#13;
 set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
 cd ..&#13;
 IF NOT EXIST .git (&#13;
