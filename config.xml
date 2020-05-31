@@ -1255,7 +1255,6 @@
         <string>sbc-tpncp-compile</string>
         <string>sbc-TrunkPackLib-compile</string>
         <string>sbc-TrunkPackLib-Review</string>
-        <string>sbc-TrunkPackLib-Test</string>
         <string>sbc-Wireshark-compile</string>
       </jobNames>
       <jobFilters/>
