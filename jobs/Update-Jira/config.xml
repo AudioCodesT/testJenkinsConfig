@@ -1,8 +1,7 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>This job is a new variation for the &quot;UpdateVI&quot; job&#xd;
-it pairs VI/Issue with the relevant commit&#xd;
+  <description>This job is a new variation for the "UpdateVI" job&#13;
+it pairs VI/Issue with the relevant commit&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -11,7 +10,7 @@ it pairs VI/Issue with the relevant commit&#xd;
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -21,9 +20,6 @@ it pairs VI/Issue with the relevant commit&#xd;
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -35,68 +31,68 @@ it pairs VI/Issue with the relevant commit&#xd;
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEWTAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.TextParameterDefinition>
           <name>RN</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.TextParameterDefinition>
         <hudson.model.TextParameterDefinition>
           <name>GERRIT_HOST</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.TextParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>EMAIL</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>PROJECT</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>DATE</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>AuthorCommitter</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Destination</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Coverage_Summary</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CALLER_URL</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -108,8 +104,9 @@ it pairs VI/Issue with the relevant commit&#xd;
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>test-Sanjer</assignedNode>
@@ -123,13 +120,13 @@ it pairs VI/Issue with the relevant commit&#xd;
   <builders>
     <hudson.tasks.Shell>
       <command>## Who called us
-echo &quot;Job called by: ${CALLER_URL}&quot;
+echo "Job called by: ${CALLER_URL}"
 
 
 cd /opt/devops/tools/update-jira
 rm -f $WORKSPACE/index.html
 
-./update_after_new_tag.pl &quot;$NEWTAG&quot; &quot;$RN&quot; &quot;$GERRIT_HOST&quot; &quot;$PROJECT&quot; &quot;$DATE&quot; &quot;$GERRIT_BRANCH&quot; &quot;$Jirapass&quot; &quot;$AuthorCommitter&quot; &quot;$Destination&quot; &quot;$Coverage_Summary&quot; &quot;$CALLER_URL&quot;
+./update_after_new_tag.pl "$NEWTAG" "$RN" "$GERRIT_HOST" "$PROJECT" "$DATE" "$GERRIT_BRANCH" "$Jirapass" "$AuthorCommitter" "$Destination" "$Coverage_Summary" "$CALLER_URL"
 
 if [ -f log/$NEWTAG.html ]; then
   cp log/$NEWTAG.html $WORKSPACE/index.html
@@ -138,29 +135,29 @@ else
   exit 1
 fi
 
-./update_report_tags.pl $NEWTAG &quot;$GERRIT_BRANCH&quot; &quot;$PROJECT&quot;
+./update_report_tags.pl $NEWTAG "$GERRIT_BRANCH" "$PROJECT"
 
 cd $WORKSPACE
 
 
 case $PROJECT in
-	*&quot;GWApp&quot;*) SendTo=&quot;Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham&quot;;;
-    *&quot;VoiceAIConnector&quot;) SendTo=&quot;Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil&quot;;;
-    *&quot;IPP&quot;*) SendTo=IppSwReleases;;
-    *&quot;EMS&quot;*) SendTo=&quot;Gal.Erez, Gennady.Tsiporkin, Aliya.Peretz, Michael.Lallouz&quot;;;
-    *&quot;Backend/&quot;*) SendTo=&quot;Aahd.Said, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;MP&quot;*) SendTo=&quot;Hagayh, MP20xdeliveries&quot;;;
-    *&quot;Arm&quot;*) SendTo=&quot;RnD-ARM, _ARMQA, Eran.Feldman&quot;;;
-    *&quot;mediatech&quot;*) SendTo=&quot;Yishai.Gil, Maayan.Aharoni&quot;;;
-    *&quot;Smart&quot;*) SendTo=&quot;Brian.Kling, Alex.Shlachter&quot;;;
-    *&quot;AudioEngine&quot;*) SendTo=&quot;Ariel.Pessah,Bjorn.Meijer, Eyal.Peretz, Ben.Magriso&quot;;;
-    *&quot;WebRTC/Android&quot;*) SendTo=&quot;MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;WebRTC/iOS&quot;*) SendTo=&quot;MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso&quot;;;
-    *&quot;WebRTC/Web&quot;*) SendTo=&quot;Ariel.Pessah,sharon.biniashvili,Igor.Kolosov,Tomer.Landesman,Olga.Treibich,Moshe.Avrahami,Ben.Magriso&quot;;;
-    *&quot;MobilityPlus&quot;*) SendTo=&quot;Ariel.Pessah, Bjorn.Meijer, Eyal.Peretz, Sharon.Biniashvili, Ben.Magriso&quot;;;
-    *&quot;DSP/Gen5&quot;*) SendTo=&quot;DSP2, Ben.Magriso&quot;;;
-    *&quot;VocaNom&quot;*) SendTo=&quot;Ronny.Aruch&quot;;;
-    *) SendTo=&quot;yossim&quot;
+	*"GWApp"*) SendTo="Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham";;
+    *"VoiceAIConnector") SendTo="Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil";;
+    *"IPP"*) SendTo=IppSwReleases;;
+    *"EMS"*) SendTo="Gal.Erez, Gennady.Tsiporkin, Aliya.Peretz, Michael.Lallouz";;
+    *"Backend/"*) SendTo="Aahd.Said, Ariel.Pessah, Ben.Magriso";;
+    *"MP"*) SendTo="Hagayh, MP20xdeliveries";;
+    *"Arm"*) SendTo="RnD-ARM, _ARMQA, Eran.Feldman";;
+    *"mediatech"*) SendTo="Yishai.Gil, Maayan.Aharoni";;
+    *"Smart"*) SendTo="Brian.Kling, Alex.Shlachter";;
+    *"AudioEngine"*) SendTo="Ariel.Pessah,Bjorn.Meijer, Eyal.Peretz, Ben.Magriso";;
+    *"WebRTC/Android"*) SendTo="MobilityAndroid, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso";;
+    *"WebRTC/iOS"*) SendTo="MobilityiOS,Sharon.Biniashvili, Bjorn.Meijer, Ariel.Pessah, Ben.Magriso";;
+    *"WebRTC/Web"*) SendTo="Ariel.Pessah,sharon.biniashvili,Igor.Kolosov,Tomer.Landesman,Olga.Treibich,Moshe.Avrahami,Ben.Magriso";;
+    *"MobilityPlus"*) SendTo="Ariel.Pessah, Bjorn.Meijer, Eyal.Peretz, Sharon.Biniashvili, Ben.Magriso";;
+    *"DSP/Gen5"*) SendTo="DSP2, Ben.Magriso";;
+    *"VocaNom"*) SendTo="Ronny.Aruch";;
+    *) SendTo="yossim"
 esac
 
 echo SendTo: $SendTo
@@ -169,7 +166,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>SendTo.txt</propertiesFilePath>
       </info>
@@ -183,7 +180,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
           <reportDir>.</reportDir>
           <reportFiles>index.html</reportFiles>
           <alwaysLinkToLastBuild>false</alwaysLinkToLastBuild>
-          <reportTitles></reportTitles>
+          <reportTitles/>
           <keepAll>true</keepAll>
           <allowMissing>false</allowMissing>
           <includes>**/*</includes>
@@ -191,7 +188,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
         </htmlpublisher.HtmlPublisherTarget>
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yossim</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -207,7 +204,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -221,7 +218,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
             <body>Job failed!
 $BUILD_URL</body>
             <recipientProviders/>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -232,15 +229,15 @@ $BUILD_URL</body>
       </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>$PROJECT new TAG $NEWTAG</defaultSubject>
-      <defaultContent>${FILE, path=&quot;index.html&quot;}</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <defaultContent>${FILE, path="index.html"}</defaultContent>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
-      <postsendScript></postsendScript>
+      <postsendScript/>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>yossim@audiocodes.com</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>JNLP4-connect connection</regexpForRerun>
@@ -265,7 +262,7 @@ $BUILD_URL</body>
         </hudson.plugins.build__timeout.operations.AbortAndRestartOperation>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>false</maskPasswordParameters>
       <passwordEntries>
@@ -277,7 +274,7 @@ $BUILD_URL</body>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${PROJECT}__${NEWTAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
