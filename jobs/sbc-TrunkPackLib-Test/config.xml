@@ -150,9 +150,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>echo Hi&#13;
-&#13;
-set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
+      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
 cd ..&#13;
 IF NOT EXIST .git (&#13;
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#13;
@@ -179,20 +177,9 @@ echo COMP_VER=%BL% &gt; version.pro&#13;
 &#13;
 rem ------------ build tpncp.dat ---------------&#13;
 cd voplibtcl\voplibext\wireshark&#13;
-rem "C:\Program Files\Git\bin\bash.exe" --login -c ./wireshark.tcl&#13;
+"C:\Program Files\Git\bin\bash.exe" --login -c ./wireshark.tcl&#13;
 set maxbytesize=300000&#13;
 FOR /F "usebackq" %%A IN ('tpncp.dat') DO set size=%%~zA&#13;
-if %size% LSS %maxbytesize% (&#13;
-  echo "Error: WireShark TPNCP dat PlugIn was failed, Image too small.. exit with error"&#13;
-  set errorlevel=1&#13;
-) ELSE (&#13;
-  mkdir c:\temp\%BL%\Utilities\WiresharkPlugins\shared&#13;
-  copy tpncp.dat c:\temp\%BL%\Utilities\WiresharkPlugins\shared&#13;
-  WZZIP -rp ..\..\..\tpncp_dat.zip tpncp.dat 2&gt; NUL&#13;
-)&#13;
-&#13;
-cd ..\..\..&#13;
-WZZIP -rp lib.zip build\%BL% &gt; NUL 2&gt;&amp;1&#13;
 </command>
     </hudson.tasks.BatchFile>
     <EnvInjectBuilder plugin="envinject@2.3.0">
