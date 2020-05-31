@@ -214,7 +214,7 @@ echo SendTo=$SendTo &gt; SendTo.txt
         <hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
           <email>
             <recipientList>yossim,Shuky.Riechard, ben.magriso</recipientList>
-            <subject>UpdateVI job has failed - $PROJECT_DEFAULT_SUBJECT</subject>
+            <subject>Update-Jira job has failed - $PROJECT_DEFAULT_SUBJECT</subject>
             <body>Job failed!
 $BUILD_URL</body>
             <recipientProviders/>
