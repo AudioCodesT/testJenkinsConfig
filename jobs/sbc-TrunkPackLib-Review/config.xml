@@ -150,7 +150,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>rem set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
+      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\Program Files\WinZip&#13;
 cd ..&#13;
 IF NOT EXIST .git (&#13;
   git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#13;
@@ -173,7 +173,7 @@ git describe --tags &gt; TAG.txt&#13;
 set /P BL=&lt;TAG.txt&#13;
 echo COMP_VER=%BL% &gt; generated_version.properties&#13;
 &#13;
-"C:\Program Files\Git\bin\bash.exe" --login -c "./Build_Host_Compilation %BL% 74"&#13;
+rem "C:\Program Files\Git\bin\bash.exe" --login -c "./Build_Host_Compilation %BL% 74"&#13;
 &#13;
 rem ------------ build tpncp.dat ---------------&#13;
 cd voplibtcl\voplibext\wireshark&#13;
