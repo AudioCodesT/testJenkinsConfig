@@ -179,7 +179,7 @@ rem ------------ build tpncp.dat ---------------&#13;
 cd voplibtcl\voplibext\wireshark&#13;
 "C:\Program Files\Git\bin\bash.exe" --login -c ./wireshark.tcl&#13;
 set maxbytesize=300000&#13;
-FOR /F "usebackq" %%A IN ('tpncp.dat') DO set size=%%~zA&#13;
+&#13;
 </command>
     </hudson.tasks.BatchFile>
     <EnvInjectBuilder plugin="envinject@2.3.0">
