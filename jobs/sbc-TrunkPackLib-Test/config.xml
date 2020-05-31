@@ -64,7 +64,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <refspec>$GERRIT_REFSPEC</refspec>
+        <refspec>refs/changes/85/90585/2</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/TrunkPackLib</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
