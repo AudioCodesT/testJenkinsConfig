@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -22,7 +21,7 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_REFNAME</name>
-          <description></description>
+          <description/>
           <defaultValue>2.0</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -35,13 +34,12 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -51,8 +49,9 @@
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -70,7 +69,7 @@
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -82,8 +81,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -105,44 +104,44 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
-      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message &apos;Build Started &lt;BUILDS_STATS&gt;&apos; --notify=NONE</buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message 'Build Started &lt;BUILDS_STATS&gt;' --notify=NONE</buildStartMessage>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginRefUpdatedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>setup.rb&#xd;
-cd ACPlugins&#xd;
-git clean -df Release*&#xd;
-build_qbs.rb&#xd;
-&#xd;
-IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#xd;
-) ELSE ( net use z: &quot;\\netapp1\cm\CompilationResults\WireShark\_Latest&quot; )&#xd;
-&#xd;
-&#xd;
-&#xd;
-&#xd;
+      <command>setup.rb&#13;
+cd ACPlugins&#13;
+git clean -df Release*&#13;
+build_qbs.rb&#13;
+&#13;
+IF EXIST z:acWireShark.zip ( echo Z is already mapping to netapp&#13;
+) ELSE ( net use z: "\\netapp1\cm\CompilationResults\WireShark\_Latest" )&#13;
+&#13;
+&#13;
+&#13;
+&#13;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
@@ -156,7 +155,7 @@ cp -f README.VERSION.txt z:/plugins_x64
 cp -f Release/Release_Win32/*.dll z:/plugins
 cp -f Release/Release_x64/*.dll z:/plugins_x64
 
-TAG=$(echo $GERRIT_REFNAME | awk -F &quot;/&quot; &apos;{print $NF}&apos;)
+TAG=$(echo $GERRIT_REFNAME | awk -F "/" '{print $NF}')
 
 mkdir c:/temp/$TAG
 mkdir c:/temp/$TAG/plugins
@@ -169,25 +168,25 @@ zip -r Plugin.zip . &gt; /dev/null
 echo TAG=$TAG &gt; $WORKSPACE/Wireshark.properties
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>Wireshark.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.BatchFile>
-      <command>z:&#xd;
-del /F acWireShark.zip&#xd;
+      <command>z:&#13;
+del /F acWireShark.zip&#13;
 WZZIP -rpu acWireShark.zip</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>sbc-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -199,42 +198,42 @@ WZZIP -rpu acWireShark.zip</command>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>c:/temp/$TAG/Plugin.zip=&gt;com/ac/sbc/WireShark/${TAG}
 </deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>true</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${GERRIT_REFNAME}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
