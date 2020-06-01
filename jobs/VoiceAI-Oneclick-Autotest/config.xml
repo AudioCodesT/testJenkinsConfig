@@ -65,7 +65,7 @@ python3 runner.py</command>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Shmulik.Yudkovich,Yaakov.Bivas,Orgad.Shaneh,Yehoshua.Gev,Yafit.Shalom</recipientList>
+      <recipientList>VAIGAUTOMATIONRESULT@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
