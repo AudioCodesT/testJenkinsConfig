@@ -1594,7 +1594,6 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>emsReview_ovocServer_test</string>
         <string>OVOC-Cluster-Upgrade-Cluster</string>
-        <string>Pipeline-Test</string>
         <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
         <string>test</string>
