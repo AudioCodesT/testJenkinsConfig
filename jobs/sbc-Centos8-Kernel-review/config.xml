@@ -159,6 +159,7 @@ echo "#define EXTERNAL_VERSION \"$BL\"" &gt; $WORKSPACE/external_version_data.h
 echo Free space to this compile by deleting GWAPP compilation
 df -h .
 rm -rf ../../workspace/TP_GWApp ../../workspace/sbc_misc_compile ~/*.tar.xz
+sudo rm -rf /var/cache/* /tmp/*
 df -h .
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
