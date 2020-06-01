@@ -1,14 +1,14 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -21,7 +21,7 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
+          <description/>
           <defaultValue>7.2.204</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -34,13 +34,12 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.5">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>PATH=C:/Program Files/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -50,8 +49,9 @@
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -67,7 +67,9 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>TrunkPackLib</assignedNode>
@@ -76,8 +78,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -99,99 +101,99 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginRefUpdatedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#xd;
-cd ..&#xd;
-IF NOT EXIST .git (&#xd;
-  git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#xd;
-  mkdir .git&#xd;
-  FOR /d %%i IN (GWApp\.git\*) DO move %%i .git&#xd;
-  move GWApp\.git\* .git&#xd;
-  rmdir /S /Q GWApp&#xd;
-)&#xd;
-&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/PSTN/PSTN_Interface&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/Common/Include&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/Common/Source&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/PerformanceMonitoring/Include/PerformanceMonitoringDef.h&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/ControlProtocols/CommonResources/Include&#xd;
-git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/HA/Include/HAProtectedDef.h&#xd;
-cd %WORKSPACE%&#xd;
+      <command>set PATH=C:\Program Files\bin;%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#13;
+cd ..&#13;
+IF NOT EXIST .git (&#13;
+  git -c http.sslverify=false clone -n https://test-gerrit/TP/GWApp GWApp&#13;
+  mkdir .git&#13;
+  FOR /d %%i IN (GWApp\.git\*) DO move %%i .git&#13;
+  move GWApp\.git\* .git&#13;
+  rmdir /S /Q GWApp&#13;
+)&#13;
+&#13;
+git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/PSTN/PSTN_Interface&#13;
+git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/Common/Include&#13;
+git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/Common/Source&#13;
+git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/PerformanceMonitoring/Include/PerformanceMonitoringDef.h&#13;
+git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/ControlProtocols/CommonResources/Include&#13;
+git checkout -f origin/%GERRIT_BRANCH% -- TrunkPackRam/TPApp/HA/Include/HAProtectedDef.h&#13;
+cd %WORKSPACE%&#13;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>IF NOT exist &quot;CopyLinks.sh&quot; (&#xd;
-  echo Error: CopyLinks.sh doesn&apos;t exist&#xd;
-  exit 1;&#xd;
-)&#xd;
-&#xd;
-copy CopyLinks.sh c:\temp&#xd;
-C:\cygwin\bin\bash --login -i -c &quot;c:/temp/CopyLinks.sh %WORKSPACE:\=/%&quot;&#xd;
-&#xd;
-set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#xd;
-git describe --tags &gt; tpncp-ver.txt&#xd;
-&#xd;
-echo cd %WORKSPACE:\=/%/voplibtcl/voplibext/wireShark &gt;&gt; c:\temp\tpncp-dat-execute.sh&#xd;
-echo cp -fp C:/cygwin/usr/local/bin/new/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\tpncp-dat-execute.sh&#xd;
-echo ./wireShark.tcl &gt;&gt; c:\temp\tpncp-dat-execute.sh&#xd;
-echo cp -fp C:/cygwin/usr/local/bin/old/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\tpncp-dat-execute.sh&#xd;
-C:\cygwin\bin\bash --login -i -c c:/temp/tpncp-dat-execute.sh&#xd;
-&#xd;
-cd voplibtcl\voplibext\wireShark&#xd;
-set maxbytesize=300000&#xd;
-FOR /F &quot;usebackq&quot; %%A IN (&apos;tpncp.dat&apos;) DO set size=%%~zA&#xd;
-if %size% LSS %maxbytesize% (&#xd;
-  echo &quot;Error: WireShark TPNTP dat PlugIn was failed, Image too small.. exit with error&quot;&#xd;
-  set errorlevel=1&#xd;
-) ELSE (&#xd;
-  net use z: /DELETE&#xd;
-  net use z: \\netapp1\cm\CompilationResults\WireShark&#xd;
-  copy /Y tpncp.dat z:\_Latest\plugins&#xd;
-  copy /Y tpncp.dat z:\_Latest\Plugins_x64&#xd;
-  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest\plugins&#xd;
-  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest\Plugins_x64&#xd;
-  copy /Y tpncp.dat z:\_Latest_2.0.6\plugins&#xd;
-  copy /Y tpncp.dat z:\_Latest_2.0.6\Plugins_x64&#xd;
-  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest_2.0.6\plugins&#xd;
-  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest_2.0.6\Plugins_x64&#xd;
-  cd /D z:\_Latest&#xd;
-  del /F acWireShark.zip&#xd;
-  WZZIP -rpu acWireShark.zip&#xd;
-  cd /D z:\_Latest_2.0.6&#xd;
-  del /F acWireShark.zip&#xd;
-  WZZIP -rpu acWireShark.zip&#xd;
-)&#xd;
+      <command>IF NOT exist "CopyLinks.sh" (&#13;
+  echo Error: CopyLinks.sh doesn't exist&#13;
+  exit 1;&#13;
+)&#13;
+&#13;
+copy CopyLinks.sh c:\temp&#13;
+C:\cygwin\bin\bash --login -i -c "c:/temp/CopyLinks.sh %WORKSPACE:\=/%"&#13;
+&#13;
+set PATH=%PATH%;C:\Program Files\Git\bin;C:\cygwin\bin;C:\Program Files\WinZip&#13;
+git describe --tags &gt; tpncp-ver.txt&#13;
+&#13;
+echo cd %WORKSPACE:\=/%/voplibtcl/voplibext/wireShark &gt;&gt; c:\temp\tpncp-dat-execute.sh&#13;
+echo cp -fp C:/cygwin/usr/local/bin/new/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\tpncp-dat-execute.sh&#13;
+echo ./wireShark.tcl &gt;&gt; c:\temp\tpncp-dat-execute.sh&#13;
+echo cp -fp C:/cygwin/usr/local/bin/old/*.exe C:/cygwin/usr/local/bin &gt;&gt; c:\temp\tpncp-dat-execute.sh&#13;
+C:\cygwin\bin\bash --login -i -c c:/temp/tpncp-dat-execute.sh&#13;
+&#13;
+cd voplibtcl\voplibext\wireShark&#13;
+set maxbytesize=300000&#13;
+FOR /F "usebackq" %%A IN ('tpncp.dat') DO set size=%%~zA&#13;
+if %size% LSS %maxbytesize% (&#13;
+  echo "Error: WireShark TPNTP dat PlugIn was failed, Image too small.. exit with error"&#13;
+  set errorlevel=1&#13;
+) ELSE (&#13;
+  net use z: /DELETE&#13;
+  net use z: \\netapp1\cm\CompilationResults\WireShark&#13;
+  copy /Y tpncp.dat z:\_Latest\plugins&#13;
+  copy /Y tpncp.dat z:\_Latest\Plugins_x64&#13;
+  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest\plugins&#13;
+  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest\Plugins_x64&#13;
+  copy /Y tpncp.dat z:\_Latest_2.0.6\plugins&#13;
+  copy /Y tpncp.dat z:\_Latest_2.0.6\Plugins_x64&#13;
+  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest_2.0.6\plugins&#13;
+  copy /Y ..\..\..\tpncp-ver.txt z:\_Latest_2.0.6\Plugins_x64&#13;
+  cd /D z:\_Latest&#13;
+  del /F acWireShark.zip&#13;
+  WZZIP -rpu acWireShark.zip&#13;
+  cd /D z:\_Latest_2.0.6&#13;
+  del /F acWireShark.zip&#13;
+  WZZIP -rpu acWireShark.zip&#13;
+)&#13;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>alex.rodikov</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
