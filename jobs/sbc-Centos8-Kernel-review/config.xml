@@ -158,7 +158,8 @@ echo "#define EXTERNAL_VERSION \"$BL\"" &gt; $WORKSPACE/external_version_data.h
 #Clean the disk as possible as we can
 echo Free space to this compile by deleting GWAPP compilation
 df -h .
-rm -rf ../../workspace/TP_GWApp ../../workspace/sbc_misc_compile ~/*.tar.xz
+rm -rf ../../workspace/TP_GWApp ../../workspace/sbc_misc_compile
+rm -rf ~/sourceInstallations ~/*.tar.xz
 sudo rm -rf /var/cache/* /tmp/*
 df -h .
 
