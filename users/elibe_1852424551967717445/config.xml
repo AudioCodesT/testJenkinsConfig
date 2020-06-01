@@ -9,7 +9,7 @@
         <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -43,6 +43,7 @@
         <string># TRAVEL IL</string>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string># All Cars</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -76,10 +77,11 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1587648093130</timestamp>
+      <timestamp>1591024059003</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.30">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Eli.Berkover@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
