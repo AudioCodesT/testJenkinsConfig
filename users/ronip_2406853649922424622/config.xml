@@ -38,6 +38,7 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string># All 012 voip</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Synagogue</string>
         <string># All Cars</string>
@@ -77,7 +78,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1588838828057</timestamp>
+      <timestamp>1591082362643</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Roni.Pesach@audiocodes.com</emailAddress>
