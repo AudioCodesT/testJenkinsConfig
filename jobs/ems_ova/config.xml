@@ -1,5 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>Create ova for ovoc server official release</description>
   <keepDependencies>false</keepDependencies>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -22,8 +21,8 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -61,11 +60,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -80,16 +79,18 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
-      <url></url>
-      <projectName></projectName>
+      <url/>
+      <projectName/>
     </browser>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference/>
         <timeout>30</timeout>
         <depth>10</depth>
         <honorRefspec>false</honorRefspec>
@@ -128,35 +129,35 @@ if [[ ${#BLD} == 3 ]]; then
 else
 	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
 	MSD=${TAG:4:1}
-    BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
+    BRANCH="${TAG:0:3}.${MSD}XXX"
 fi
 
 rm  -f /tmp/noDest.err || true
 if [[ ! -d /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual ]]; then
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
-    echo &quot;$(date) : No destination folder for branch ${BRANCH} on NetApp !!!&quot; &gt; /tmp/noDest.err
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
+    echo "***********************************************************************"
+    echo "***********************************************************************"
+    echo "***********************************************************************"
+    echo "$(date) : No destination folder for branch ${BRANCH} on NetApp !!!" &gt; /tmp/noDest.err
+    echo "***********************************************************************"
+    echo "***********************************************************************"
+    echo "***********************************************************************"
     exit 1
 fi
 
 ## Check that TAG matches OVA version
-OVA_VER=`echo $OVA | cut -d&apos;-&apos; -f1 | gawk -v FS=. &apos;{ print $2&quot;.&quot;$3 }&apos;`
-#if [[ &quot;${TAG:0:3}&quot; != &quot;$OVA_VER&quot; ]]; then
+OVA_VER=`echo $OVA | cut -d'-' -f1 | gawk -v FS=. '{ print $2"."$3 }'`
+#if [[ "${TAG:0:3}" != "$OVA_VER" ]]; then
 #	exit -1
 #fi
 
-OVA=&quot;/home/centos/data/ovoc_base/ova/${OVA}.ova&quot;
+OVA="/home/centos/data/ovoc_base/ova/${OVA}.ova"
 
 # Set the following values to fit your need
-vmHostIP=&quot;10.7.10.107&quot;
-netMask=&quot;16&quot;
-DefaultGW=&quot;10.7.0.1&quot;
-ovocIP=&quot;10.7.10.77&quot;
-FullTesting=&quot;0&quot;
+vmHostIP="10.7.10.107"
+netMask="16"
+DefaultGW="10.7.0.1"
+ovocIP="10.7.10.77"
+FullTesting="0"
 
 # Get ESXi password from encrypted file
 cd ~/.ssl
@@ -165,22 +166,22 @@ vipw=$(openssl rsautl -decrypt -inkey private.pem -in pw.esxi)
 cd ${WORKSPACE}
 
 # Create a new log file
-now=`date +&quot;%Y%m%d-%H%M%S&quot;`
-logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
+now=`date +"%Y%m%d-%H%M%S"`
+logfile="${WORKSPACE}/ems_ovoc_ova_$now.log"
 [[ -f $logfile  ]] &amp;&amp; rm $logfile
 touch $logfile
 
-echo &quot;$(date) : *****************  START  ******************&quot; | tee -a $logfile
+echo "$(date) : *****************  START  ******************" | tee -a $logfile
 
 
 ###################################################################################################
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc_base_for_ vm`s
-vms=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_&quot; | gawk &apos;{print $1}&apos;`
-if [[ &quot;$vms&quot; -ne &quot;&quot; ]]; then
+vms=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep "ovoc_base_for_" | gawk '{print $1}'`
+if [[ "$vms" -ne "" ]]; then
     for vmid in $vms; do
-        echo &quot;$(date) : ovoc_base_for_${TAG} already exist. Deleting vm&quot; | tee -a $logfile
+        echo "$(date) : ovoc_base_for_${TAG} already exist. Deleting vm" | tee -a $logfile
         ( ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} ) || true | tee -a $logfile
         sleep 10
         ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
@@ -194,27 +195,27 @@ ssh root@${vmHostIP} rm -rf /vmfs/volumes/DataStore01/ovoc_base_for_*
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from ova
 
 # create a new VM from $OVA (ova file is located on jenkins slave /home/centos/data/ovoc_base/ova/)
-echo &quot;$(date) : creating new base ovoc server VM from $OVA&quot; | tee -a $logfile
-ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_base_for_${TAG}&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
+echo "$(date) : creating new base ovoc server VM from $OVA" | tee -a $logfile
+ovftool --disableVerification --noSSLVerify --name="ovoc_base_for_${TAG}" --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn $OVA vi://root:$vipw@${vmHostIP} | tee -a $logfile
 if [ $? -ne 0 ]; then
-    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot; | tee -a $logfile
+    echo "$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out" | tee -a $logfile
     exit
 fi
 
 # find new vm id
-vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_base_for_${TAG}&quot; | gawk &apos;{print $1}&apos;`
-echo &quot;$(date) : vm id is $vmid&quot; | tee -a $logfile
+vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep "ovoc_base_for_${TAG}" | gawk '{print $1}'`
+echo "$(date) : vm id is $vmid" | tee -a $logfile
 
 # Wait for ovoc server power on
 #isUp $vmHostIP $vmid || exit
-echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+echo "$(date) : sleep 5 min." | tee -a $logfile
 sleep 300
 
 # find new vm IPv4 address
-# YY vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 &quot;ipAddress&quot; | cut -d&apos;&quot;&apos; -f2`
-vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -E &quot;ipAddress.*\[$&quot; -m 1 -A 5 | grep -E -o &quot;([0-9]{1,3}[\.]){3}[0-9]{1,3}&quot;`
-ipcalc -cs $vmip || ( echo &quot;$(date) : Invalid IP for $vmid&quot; | tee -a $logfile &amp;&amp; exit)
-echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
+# YY vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -m 1 "ipAddress" | cut -d'"' -f2`
+vmip=`ssh root@${vmHostIP} vim-cmd vmsvc/get.guest $vmid | grep -E "ipAddress.*\[$" -m 1 -A 5 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}"`
+ipcalc -cs $vmip || ( echo "$(date) : Invalid IP for $vmid" | tee -a $logfile &amp;&amp; exit)
+echo "$(date) : vm IP is $vmip" | tee -a $logfile
 
 # Check ssh readiness
 #sshUp $vmip || exit -2
@@ -224,10 +225,10 @@ echo &quot;$(date) : vm IP is $vmip&quot; | tee -a $logfile
 # Install DVD 3 on basic vovoc server
 
 ## Create ovoc hardware minimal requirements workaround
-echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
-echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" | tee -a $logfile
+echo "$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@" | tee -a $logfile
 cd ${WORKSPACE}/EMS/VersionRelease
-python2.7 hwFlag.py ${vmip} &apos;on&apos; | tee -a $logfile
+python2.7 hwFlag.py ${vmip} 'on' | tee -a $logfile
 
 # if branch is 7.4 then we dont run this step
 # in branch is higher than 7.4 then we need to arrange the directory EMS/target
@@ -243,36 +244,36 @@ chmod 0775 *
 cd ${WORKSPACE}
 
 # Set Network
-echo &quot;$(date) : Applying DVD 3&quot; | tee -a $logfile
+echo "$(date) : Applying DVD 3" | tee -a $logfile
 cd EMS/VersionRelease
-if [[ &quot;$BRANCH&quot; == &quot;7.4.3XXX&quot; ]]; then
+if [[ "$BRANCH" == "7.4.3XXX" ]]; then
 	# We need to pass the netmask of the EMS server
-	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+	(python2.7 setNetwork.py $vmip $netMask $DefaultGW | tee -a $logfile) || (echo "$(date) : Failed network setting" | tee -a $logfile &amp;&amp; exit -1)
 else
 	# setNetwork.py for version 7.6 and later calculate netmask by itself
-	(python2.7 setNetwork.py $vmip sanity | tee -a $logfile) || (echo &quot;$(date) : Failed network setting&quot; | tee -a $logfile &amp;&amp; exit -1)
+	(python2.7 setNetwork.py $vmip sanity | tee -a $logfile) || (echo "$(date) : Failed network setting" | tee -a $logfile &amp;&amp; exit -1)
 fi
 cd ${WORKSPACE}
 
 # ovoc server was rebooted, so -
 # Wait for ovoc server power on
 #isUp ${vmHostIP} $vmid || exit -2
-echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+echo "$(date) : sleep 5 min." | tee -a $logfile
 sleep 300
 
 ## Sanity Install DVD-3
 #fetch DVD3 iso
-case &quot;$Brand&quot; in
+case "$Brand" in
     AudioCodes)
-        iso_dir=&quot;official_iso&quot;
-        Brand=&quot;&quot;
+        iso_dir="official_iso"
+        Brand=""
         ;;
     Nuera|NEC)
-        iso_dir=&quot;branded_iso/$Brand&quot;
-        Brand=&quot;$Brand&quot;_
+        iso_dir="branded_iso/$Brand"
+        Brand="$Brand"_
         ;;
     *)
-        echo &quot;Unknown iso brand $Brand!&quot;
+        echo "Unknown iso brand $Brand!"
         exit 1
 esac
 
@@ -281,8 +282,8 @@ esac
 ###############   Override ISO fetch from Artifactory   ################################################################################################
 ########################################################################################################################################################
 ########################################################################################################################################################
-#sed -i &apos;/^sendWait.*dvd3_iso)$/s/^/#/g&apos; EMS/VersionRelease/SanityInstall.py
-#sed -i &apos;/^sendWait.*3600.0)$/s/^/#/g&apos; EMS/VersionRelease/SanityInstall.py
+#sed -i '/^sendWait.*dvd3_iso)$/s/^/#/g' EMS/VersionRelease/SanityInstall.py
+#sed -i '/^sendWait.*3600.0)$/s/^/#/g' EMS/VersionRelease/SanityInstall.py
 #sshpass -p acems scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /home/centos/data/output/ISO_Files/OVOC_7.6.2XXX/DVD3_OVOC/7.6.2144/DVD3_EMS_7.6.2144.iso acems@${vmip}:
 ########################################################################################################################################################
 ########################################################################################################################################################
@@ -292,21 +293,21 @@ esac
 
 # Run install script
 cd EMS/VersionRelease
-(python2.7 SanityInstall.py ${TAG} ${vmip} ${iso_dir} | tee -a $logfile) || (echo &quot;$(date) : Failed sanity install&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 SanityInstall.py ${TAG} ${vmip} ${iso_dir} | tee -a $logfile) || (echo "$(date) : Failed sanity install" | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;$(date) : Done applying DVD 3&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "$(date) : Done applying DVD 3" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
 
 # ovoc server was rebooted during DVD 3 installation, so -
 # Wait for ovoc server power on
 #isUp ${vmHostIP} $vmid || exit -2
-echo &quot;$(date) : sleep 5 min.&quot; | tee -a $logfile
+echo "$(date) : sleep 5 min." | tee -a $logfile
 sleep 300
 
 ###################################################################################################
@@ -314,114 +315,114 @@ sleep 300
 
 ## Clean ovoc hardware minimal requirements workaround
 cd EMS/VersionRelease
-echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
-echo &quot;$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@&quot; | tee -a $logfile
-python2.7 hwFlag.py ${vmip} &apos;off&apos; | tee -a $logfile
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" | tee -a $logfile
+echo "$(date) : @@@@@@@@@@@@@@@@@@ Disable ovoc hardware minimal requirements @@@@@@@@@@@@@@@@@@" | tee -a $logfile
+python2.7 hwFlag.py ${vmip} 'off' | tee -a $logfile
 cd ${WORKSPACE}
 
-echo &quot;$(date) : ssh to clean installetion files&quot; | tee -a $logfile
+echo "$(date) : ssh to clean installetion files" | tee -a $logfile
 cd EMS/VersionRelease
-(python2.7 cleanBeforeOva.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed cleaning installation files&quot; | tee -a $logfile &amp;&amp; exit -1)
+(python2.7 cleanBeforeOva.py $vmip | tee -a $logfile) || (echo "$(date) : Failed cleaning installation files" | tee -a $logfile &amp;&amp; exit -1)
 cd ${WORKSPACE}
 sleep 30
 
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM
-echo &quot;$(date) : shutdown new VM&quot; | tee -a $logfile
+echo "$(date) : shutdown new VM" | tee -a $logfile
 ssh root@${vmHostIP} vim-cmd vmsvc/power.shutdown ${vmid} | tee -a $logfile
 sleep 30
 
 ###################################################################################################
 # export the new VM to an OVA file
-echo &quot;$(date) : export new VM to an OVA file&quot; | tee -a $logfile
+echo "$(date) : export new VM to an OVA file" | tee -a $logfile
 cd ${WORKSPACE}
-[[ -d &quot;${TAG}&quot; ]] &amp;&amp; rm -rf &quot;${TAG}&quot;
-mkdir -p &quot;${TAG}&quot; | tee -a $logfile
+[[ -d "${TAG}" ]] &amp;&amp; rm -rf "${TAG}"
+mkdir -p "${TAG}" | tee -a $logfile
 #ovftool -o --shaAlgorithm=SHA1 --compress=9 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova | tee -a $logfile
 #ovftool -o --shaAlgorithm=SHA1 --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova | tee -a $logfile
 ovftool -o --noSSLVerify --powerOffSource vi://root:$vipw@${vmHostIP}/ovoc_base_for_${TAG} ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova | tee -a $logfile
-ovfResult=`tail -1 $logfile | grep &quot;Completed&quot;`
-[[ &quot;${ovfResult}&quot; -eq &quot;Completed with errors&quot; ]] &amp;&amp; exit -1
+ovfResult=`tail -1 $logfile | grep "Completed"`
+[[ "${ovfResult}" -eq "Completed with errors" ]] &amp;&amp; exit -1
 cd ${WORKSPACE}/${TAG}
 md5sum OVOC_VMware_${Brand}${TAG}.ova &gt; OVOC_VMware_${Brand}${TAG}.ova.md5
 ls -l ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova
 cat OVOC_VMware_${Brand}${TAG}.ova.md5
 cd ${WORKSPACE}
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;$(date) : Done export new VM to an OVA file&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
-echo &quot;###################################################################################################&quot; | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "$(date) : Done export new VM to an OVA file" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
+echo "###################################################################################################" | tee -a $logfile
 
 ###################################################################################################
 # Delete ovoc server vm
-echo &quot;$(date) : Delete ovoc server VM from host&quot; | tee -a $logfile
+echo "$(date) : Delete ovoc server VM from host" | tee -a $logfile
 ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
     
 
 ###################################################################################################
 # Run Sanity Tests
-if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
-    echo &quot;$(date) : Running sanity on ovoc server&quot;
+if [[ "${RunSanity}" == "true" ]]; then
+    echo "$(date) : Running sanity on ovoc server"
     ###################################################################################################
     # Deploy ovoc server from newly created ova
-    echo &quot;$(date) : Deploy ovoc server from newly created ova&quot; | tee -a $logfile
-    ovftool --disableVerification --noSSLVerify --name=&quot;ovoc_server_${TAG}_Sanity&quot; --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
+    echo "$(date) : Deploy ovoc server from newly created ova" | tee -a $logfile
+    ovftool --disableVerification --noSSLVerify --name="ovoc_server_${TAG}_Sanity" --datastore=DataStore01 --diskMode=thin --acceptAllEulas --powerOn ${WORKSPACE}/${TAG}/OVOC_VMware_${Brand}${TAG}.ova vi://root:$vipw@${vmHostIP} | tee -a $logfile
     sleep 300
     
     ###################################################################################################
     # Generate and install FK
-    echo &quot;$(date) : Generate FK&quot; | tee -a $logfile
+    echo "$(date) : Generate FK" | tee -a $logfile
     cd EMS/VersionRelease
-    (python2.7 SanityFK.py $vmip $TAG | tee -a $logfile) || (echo &quot;$(date) : Failed FK&quot; | tee -a $logfile &amp;&amp; exit -1)
+    (python2.7 SanityFK.py $vmip $TAG | tee -a $logfile) || (echo "$(date) : Failed FK" | tee -a $logfile &amp;&amp; exit -1)
     cd ${WORKSPACE}
     
     ###################################################################################################
     # Reboot &amp; Verify services on ovoc_server after FK installation
-    echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot; | tee -a $logfile
+    echo "$(date) : Reboot &amp; Verify services on ovoc_server after FK installation" | tee -a $logfile
     cd EMS/VersionRelease
-    (python2.7 SanityReboot.py $vmip | tee -a $logfile) || (echo &quot;$(date) : Failed reboot after FK installation&quot; | tee -a $logfile &amp;&amp; exit -1)
+    (python2.7 SanityReboot.py $vmip | tee -a $logfile) || (echo "$(date) : Failed reboot after FK installation" | tee -a $logfile &amp;&amp; exit -1)
     cd ${WORKSPACE}
     
     ###################################################################################################
     # Run sanity tests on ovoc server
-    echo &quot;$(date) : Run sanity tests on ovoc server&quot; | tee -a $logfile
+    echo "$(date) : Run sanity tests on ovoc server" | tee -a $logfile
     cd EMS/VersionRelease
 
     python2.7 SanityTest.py ${TAG} $vmip $FullTesting | tee -a $logfile &amp;&amp; python2.7 SanityCopyLogs.py ${TAG} $vmip | tee -a $logfile || \
-    (python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile || echo &quot;$(date) : Failed to download logs&quot; | tee -a $logfile &amp;&amp; exit -1)
+    (python2.7 SanityCopyLogs.py $NEW_TAG $vmip | tee -a $logfile || echo "$(date) : Failed to download logs" | tee -a $logfile &amp;&amp; exit -1)
     cd ${WORKSPACE}
-    echo &quot;###################################################################################################&quot; | tee -a $logfile
-    echo &quot;###################################################################################################&quot; | tee -a $logfile
-    echo &quot;###################################################################################################&quot; | tee -a $logfile
-    echo &quot;${date} : Done Sanity Tests&quot; | tee -a $logfile
-    echo &quot;###################################################################################################&quot; | tee -a $logfile
-    echo &quot;###################################################################################################&quot; | tee -a $logfile
-    echo &quot;###################################################################################################&quot; | tee -a $logfile
+    echo "###################################################################################################" | tee -a $logfile
+    echo "###################################################################################################" | tee -a $logfile
+    echo "###################################################################################################" | tee -a $logfile
+    echo "${date} : Done Sanity Tests" | tee -a $logfile
+    echo "###################################################################################################" | tee -a $logfile
+    echo "###################################################################################################" | tee -a $logfile
+    echo "###################################################################################################" | tee -a $logfile
 
     ###################################################################################################
     # Delete new ovoc server vm
     
     # find new ovoc vmid
-    vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep &quot;ovoc_server_${TAG}_Sanity&quot; | gawk &apos;{print $1}&apos;`
-    echo &quot;$(date) : vmid is $vmid&quot; | tee -a $logfile
+    vmid=`ssh root@${vmHostIP} vim-cmd vmsvc/getallvms | grep "ovoc_server_${TAG}_Sanity" | gawk '{print $1}'`
+    echo "$(date) : vmid is $vmid" | tee -a $logfile
     
     # Power off &amp; delete ovoc server vm
-    echo &quot;$(date) : Delete new ovoc server VM from host&quot; | tee -a $logfile
+    echo "$(date) : Delete new ovoc server VM from host" | tee -a $logfile
     ssh root@${vmHostIP} vim-cmd vmsvc/power.off ${vmid} | tee -a $logfile
     ssh root@${vmHostIP} vim-cmd vmsvc/destroy ${vmid} | tee -a $logfile
 else
-    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
+    echo "$(date) : NOT running sanity on ovoc server"
 fi
 
 cd ${WORKSPACE}
-echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
-echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
-echo &quot;export OVA_NAME=OVOC_VMware_${Brand}${TAG}&quot; &gt;&gt; buildVars
+echo "export BR_DIR=OVOC_${TAG%???}XXX" &gt; buildVars
+echo "export BRANCH=$BRANCH" &gt;&gt; buildVars
+echo "export OVA_NAME=OVOC_VMware_${Brand}${TAG}" &gt;&gt; buildVars
 
-echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
+echo "$(date) : FINISH!!!" | tee -a $logfile
 </command>
     </hudson.tasks.Shell>
   </builders>
@@ -445,29 +446,29 @@ echo &quot;$(date) : FINISH!!!&quot; | tee -a $logfile
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
-          <script>. ${WORKSPACE}/buildVars&#xd;
-&#xd;
-# Move output to Netapp&#xd;
-echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
-&#xd;
-cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
-&#xd;
-if [[ -d ${TAG} ]]; then&#xd;
-    cd ${TAG}&#xd;
-    if [[ -f &quot;${HVM_NAME}&quot;.7z ]]; then&#xd;
-        last_mod=`date -r ${OVA_NAME}.ova +%Y-%m-%d--%H-%M`&#xd;
-        find . -name &quot;${OVA_NAME}.*&quot; -exec mv {} {}.${last_mod} \;&#xd;
-    fi&#xd;
-else&#xd;
-    mkdir ${TAG}&#xd;
-fi&#xd;
-&#xd;
-&#xd;
+          <script>. ${WORKSPACE}/buildVars&#13;
+&#13;
+# Move output to Netapp&#13;
+echo "Manipulated $TAG to directory name $BR_DIR"&#13;
+&#13;
+cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#13;
+&#13;
+if [[ -d ${TAG} ]]; then&#13;
+    cd ${TAG}&#13;
+    if [[ -f "${HVM_NAME}".7z ]]; then&#13;
+        last_mod=`date -r ${OVA_NAME}.ova +%Y-%m-%d--%H-%M`&#13;
+        find . -name "${OVA_NAME}.*" -exec mv {} {}.${last_mod} \;&#13;
+    fi&#13;
+else&#13;
+    mkdir ${TAG}&#13;
+fi&#13;
+&#13;
+&#13;
 mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yuval.yosha shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -482,7 +483,7 @@ mv -v $WORKSPACE/$TAG/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -499,7 +500,7 @@ Files are at -
 
 ESXi version: 6.5.0 Update 2 (Build 8294253)
 </defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
 if [[ -f /tmp/noDest.err ]]; then
@@ -508,9 +509,9 @@ else
     . ${WORKSPACE}/buildVars
 
     cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
-    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+    RESULT=${grep -A9 "Sanity Test Result:" /tmp/log}
 
-    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+    MSG=$(echo -e 'OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n'${RESULTS})
 fi</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -521,7 +522,7 @@ fi</presendScript>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -533,50 +534,50 @@ fi</presendScript>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*&quot;,
-            &quot;target&quot;: &quot;${workspace}/ovaPreRequisites/&quot;,
-            &quot;flat&quot;: &quot;true&quot;
+            "pattern": "ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*",
+            "target": "${workspace}/ovaPreRequisites/",
+            "flat": "true"
         }
     ]
 }</spec>
       </downloadSpec>
-      <deployPattern></deployPattern>
+      <deployPattern/>
       <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites
 ems-release:com/ac/ems/ovoc_server/Sanity_preReq/scripts/*.*=&gt;${workspace}/EMS/VersionRelease</resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${TAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <template>#${BUILD_NUMBER}__${TAG}_${Brand}</template>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
