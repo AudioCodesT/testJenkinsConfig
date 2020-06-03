@@ -63,6 +63,7 @@
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
+        <string># VAIG_AUTOMATION_RESULT</string>
         <string>Linuxusers</string>
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
@@ -77,7 +78,7 @@
         <string>CPE</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1589954062635</timestamp>
+      <timestamp>1591206249148</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Orgad.Shaneh@audiocodes.com</emailAddress>
