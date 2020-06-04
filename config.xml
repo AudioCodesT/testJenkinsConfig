@@ -1701,6 +1701,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>VAG-copy-to-NetApp</string>
+        <string>VAG-push-private-to-ECR</string>
         <string>VAG-push-to-ECR</string>
         <string>VoiceAI-build</string>
         <string>VoiceAI-build-Docker</string>
