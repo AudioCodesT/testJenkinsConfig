@@ -1,5 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>trigger by new patchset</description>
   <keepDependencies>false</keepDependencies>
@@ -9,19 +8,16 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>7</daysToKeep>
-        <numToKeep>15</numToKeep>
+        <numToKeep>-1</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -36,10 +32,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -56,9 +53,11 @@
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -70,8 +69,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -97,27 +96,29 @@
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>true</excludeNoCodeChange>
+          <excludePrivateState>false</excludePrivateState>
+          <excludeWipState>false</excludeWipState>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -131,80 +132,80 @@ set -ex
 
 #enter the location to run the script
 version=$(git describe --tags --abbrev=0)
-echo &quot;{\&quot;version\&quot;: \&quot;${version}\&quot;}&quot; &gt; version.json
+echo "{\"version\": \"${version}\"}" &gt; version.json
 
-git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo &quot;ESLint command failed&quot;
+git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo "ESLint command failed"
 
 sh common/build_all.sh
 ret_value=$?
-echo &quot;script Return Value: $ret_value&quot;
+echo "script Return Value: $ret_value"
 
-[ &quot;$ret_value&quot; -eq 0 ] || exit 1
+[ "$ret_value" -eq 0 ] || exit 1
 
 ## Collect all coverage reports to one place
 cd ${WORKSPACE}
 mkdir coverage
-find . -path ./misc -prune -o -name &quot;*coverage.xml&quot; -exec cp {} coverage/ \;
+find . -path ./misc -prune -o -name "*coverage.xml" -exec cp {} coverage/ \;
 
 ## Get thresholds &amp; blockings from json file
-arr_name=$(jq --raw-output &apos;.thresholds[].Name&apos; coverage.json)
+arr_name=$(jq --raw-output '.thresholds[].Name' coverage.json)
 arr_cat=(Statements Branches Functions Lines)
 
 ## Reset before comparisson
 [[ -f report ]] &amp;&amp; rm -f report
-cvgVote=&quot;+2&quot;
-msg=&quot;Coverage above threshold&quot;
+cvgVote="+2"
+msg="Coverage above threshold"
 
 ## Compare test with thresholds
 for n in ${arr_name[@]}; do
     ## Getting `blocking` value
-    bl_val=$(jq --raw-output &quot;.thresholds[] | select(.Name == \&quot;$n\&quot;) | .blocking&quot; coverage.json)
+    bl_val=$(jq --raw-output ".thresholds[] | select(.Name == \"$n\") | .blocking" coverage.json)
     
     ## Looping through categories thresholds
-    sumFile=&quot;$n/coverage/textsum.txt&quot;
+    sumFile="$n/coverage/textsum.txt"
     
     ## Initial coverage report
-    printf &quot;%s:\n&quot; &quot;$n&quot; &gt;&gt; report
-    printf &quot;Category\tCoverage\tThreshold\tBlocking\n&quot; &gt;&gt; report
+    printf "%s:\n" "$n" &gt;&gt; report
+    printf "Category\tCoverage\tThreshold\tBlocking\n" &gt;&gt; report
     
     ##
     for c in ${arr_cat[@]}; do
         failFlag=
-        th_val=$(jq --raw-output &quot;.thresholds[] | select(.Name==\&quot;$n\&quot;) | .\&quot;$c\&quot;&quot; coverage.json)
-        cat_val=$(grep &quot;$c&quot; $sumFile | gawk &apos;{print $3}&apos;); cat_val=${cat_val::-1}
+        th_val=$(jq --raw-output ".thresholds[] | select(.Name==\"$n\") | .\"$c\"" coverage.json)
+        cat_val=$(grep "$c" $sumFile | gawk '{print $3}'); cat_val=${cat_val::-1}
         
         [[ $cat_val &lt; $th_val ]] &amp;&amp; failFlag=1
         
         ## Create coverage report for current package\module
-        if [ &quot;$failFlag&quot; == &quot;1&quot; ]; then
-            printf &quot;%s:\t\t%s\t\t%s\t\t%s\n&quot; &quot;$c&quot; &quot;$cat_val&quot; &quot;$th_val&quot; &quot;$bl_val&quot; &gt;&gt; report
-            sed -e &quot;s|^$n:$|$n: \*\*\* Coverage is beneeth threshold \*\*\*|&quot; report
+        if [ "$failFlag" == "1" ]; then
+            printf "%s:\t\t%s\t\t%s\t\t%s\n" "$c" "$cat_val" "$th_val" "$bl_val" &gt;&gt; report
+            sed -e "s|^$n:$|$n: \*\*\* Coverage is beneeth threshold \*\*\*|" report
         else
-            printf &quot;%s:\t\t%s\t\t%s\n&quot; &quot;$c&quot; &quot;$cat_val&quot; &quot;$th_val&quot; &gt;&gt; report
+            printf "%s:\t\t%s\t\t%s\n" "$c" "$cat_val" "$th_val" &gt;&gt; report
         fi
     done
 done
 
 message=$(cat report)
-msg4json=$( echo &quot;$message&quot; | sed &apos;s/$/ /g&apos; )
+msg4json=$( echo "$message" | sed 's/$/ /g' )
 
 ## Set vote
-if grep -q &quot;false&quot; report; then cvgVote=&quot;-1&quot;; fi
-if grep -q &quot;true&quot; report; then cvgVote=&quot;-2&quot;; fi
+if grep -q "false" report; then cvgVote="-1"; fi
+if grep -q "true" report; then cvgVote="-2"; fi
 
 
 ## Voting
-fullJson=&quot;{\&quot;tag\&quot;: \&quot;autogenerated:bot:coverage\&quot;, \&quot;labels\&quot;: {\&quot;Coverage\&quot;: \&quot;$cvgVote\&quot; }, \&quot;message\&quot;: \&quot;$msg4json\&quot;, \&quot;notify\&quot;: \&quot;NONE\&quot;}&quot;
+fullJson="{\"tag\": \"autogenerated:bot:coverage\", \"labels\": {\"Coverage\": \"$cvgVote\" }, \"message\": \"$msg4json\", \"notify\": \"NONE\"}"
 echo $fullJson
-curl -k -u codeanalyzer:AC@${GERRIT_HOST} --basic -X POST https://${GERRIT_HOST}/a/changes/${GERRIT_CHANGE_NUMBER}/revisions/${GERRIT_PATCHSET_REVISION}/review -d &quot;$fullJson&quot; -H &apos;Content-Type:application/json&apos;
+curl -k -u codeanalyzer:AC@${GERRIT_HOST} --basic -X POST https://${GERRIT_HOST}/a/changes/${GERRIT_CHANGE_NUMBER}/revisions/${GERRIT_PATCHSET_REVISION}/review -d "$fullJson" -H 'Content-Type:application/json'
 
 
 description=$(git describe)
-echo &quot;description=$description&quot; &gt; voiceAI.properties
-echo &quot;GERRIT_PATCHSET_REVISION=${GERRIT_PATCHSET_REVISION}&quot; &gt;&gt; voiceAI.properties
-echo &quot;GERRIT_BRANCH=${GERRIT_BRANCH}&quot; &gt;&gt; voiceAI.properties
-echo &quot;GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}&quot; &gt;&gt; voiceAI.properties
-echo &quot;GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}&quot; &gt;&gt; voiceAI.properties
+echo "description=$description" &gt; voiceAI.properties
+echo "GERRIT_PATCHSET_REVISION=${GERRIT_PATCHSET_REVISION}" &gt;&gt; voiceAI.properties
+echo "GERRIT_BRANCH=${GERRIT_BRANCH}" &gt;&gt; voiceAI.properties
+echo "GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}" &gt;&gt; voiceAI.properties
+echo "GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}" &gt;&gt; voiceAI.properties
 
 
 
@@ -221,7 +222,7 @@ exit $ret_value
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.15">
+    <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.16">
       <coberturaReportFile>coverage/*coverage.xml</coberturaReportFile>
       <onlyStable>false</onlyStable>
       <failUnhealthy>false</failUnhealthy>
@@ -333,15 +334,15 @@ exit $ret_value
     <io.jenkins.plugins.analysis.core.steps.IssuesRecorder plugin="warnings-ng@7.3.0">
       <analysisTools>
         <io.jenkins.plugins.analysis.warnings.EsLint>
-          <id></id>
-          <name></name>
+          <id/>
+          <name/>
           <pattern>eslint.xml</pattern>
-          <reportEncoding></reportEncoding>
+          <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.EsLint>
       </analysisTools>
-      <sourceCodeEncoding></sourceCodeEncoding>
-      <sourceDirectory></sourceDirectory>
+      <sourceCodeEncoding/>
+      <sourceDirectory/>
       <ignoreQualityGate>false</ignoreQualityGate>
       <ignoreFailedBuilds>true</ignoreFailedBuilds>
       <referenceJobName>-</referenceJobName>
@@ -369,7 +370,7 @@ exit $ret_value
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -380,7 +381,7 @@ exit $ret_value
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>true</attachBuildLog>
@@ -389,14 +390,14 @@ exit $ret_value
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -408,36 +409,36 @@ exit $ret_value
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
-      <deployPattern></deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <deployPattern/>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
   </buildWrappers>
