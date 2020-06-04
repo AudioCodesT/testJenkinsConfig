@@ -43,7 +43,46 @@
       <emailAddress>Moshe.Lavie@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string>Agile users</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string>System_Software</string>
+        <string>365_Comeet</string>
+        <string># QA Load &amp; Integration</string>
+        <string>AWS_Jira_Users</string>
+        <string># SQA ALL</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
+        <string>SmartTap Recordings</string>
+        <string># All R&amp;D</string>
+        <string># All Lunch</string>
+        <string>CatalogApps_Everyone</string>
+        <string>Logistics_maintenance</string>
+        <string># QA SW</string>
+        <string>QA Group</string>
+        <string>365_Tas</string>
+        <string>Password Manager Apply</string>
+        <string># Agile users</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># SQA_SOLUTIONS</string>
+        <string>Linuxusers</string>
+        <string>AudioCodes_VPN</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
+      </roles>
+      <timestamp>1591277179768</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
