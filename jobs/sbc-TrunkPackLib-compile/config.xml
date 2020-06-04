@@ -150,7 +150,7 @@ IF NOT EXIST .git (&#13;
 @set TPFILES=%TPFILES% Modules/GWApp/Pkgs/Services/LDAP/LDAPService/Include&#13;
 @echo Checking out TrunkPackRam linked files&#13;
 git -c http.sslverify=false fetch&#13;
-@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/$TPRAM_BRANCH -- %TPFILES%&#13;
+@git checkout -f origin/%GERRIT_BRANCH% -- %TPFILES% || git checkout -f origin/%TPRAM_BRANCH% -- %TPFILES%&#13;
 cd %WORKSPACE%&#13;
 </command>
     </hudson.tasks.BatchFile>
