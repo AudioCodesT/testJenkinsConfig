@@ -219,7 +219,7 @@ echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 description=$(git describe)
 
-echo description=${description} &gt; env.properties
+echo "export description=${description}" &gt; env.properties
 
 ## change in some files some parameters to build number
 cd ${WORKSPACE}
