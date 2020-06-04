@@ -141,7 +141,7 @@ def runInstance(role) {
     def runJsonFile = readJSON file: "${env.WORKSPACE}/run-inst.json";
 
     instId = (runJsonFile.Instances.InstanceId).toString().replaceAll("\\[|\\]", "")
-    ipAddr = (runJsonFile.Instances.NetworkInterfaces.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
+    ipAddr = (runJsonFile.Instances.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
 
     sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_Elasticity_${JOB_NAME}_${role} Key=Creator,Value=Spotinst"
     sh "aws ec2 modify-instance-attribute --instance-id ${instId} --block-device-mappings DeviceName=/dev/sda1,Ebs={DeleteOnTermination=true}"
