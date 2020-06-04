@@ -288,10 +288,10 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
     echo "***************************************************"
     
     if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
-        docker tag ${imageID} ${DOCKER_REG}/${dockerImage}:${description}
-        docker push ${DOCKER_REG}/${dockerImage}:${description}
+        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${description}
+        docker push ${DOCKER_REG}/${imageName}:${description}
     else
-        echo "*** No change in docker image \"${dockerImage}\". Image not pushed to repository. ***"
+        echo "*** No change in docker image \"${imageName}\". Image not pushed to repository. ***"
     fi
 done
 
