@@ -219,6 +219,8 @@ echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 description=$(git describe)
 
+echo description=${description} &gt; env.properties
+
 ## change in some files some parameters to build number
 cd ${WORKSPACE}
 echo "{\"version\": \"${NEWTAG}\"}" &gt; version.json
@@ -298,6 +300,11 @@ done
 echo "Finished docker push to Artifactory."
 </command>
     </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@2.3.0">
+      <info>
+        <propertiesFilePath>env.properties</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
