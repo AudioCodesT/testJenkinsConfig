@@ -31,7 +31,6 @@
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
       <collapsed>
-        <string>executors</string>
         <string>buildQueue</string>
       </collapsed>
     </hudson.model.PaneStatusProperties>
