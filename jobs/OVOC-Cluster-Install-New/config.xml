@@ -121,7 +121,7 @@ cat /home/centos/.aws/config</scriptContent>
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>Jenkinsfile</scriptPath>
+    <scriptPath>OVOC-Elasticity/install-new/Jenkinsfile</scriptPath>
     <lightweight>true</lightweight>
   </definition>
   <triggers/>
