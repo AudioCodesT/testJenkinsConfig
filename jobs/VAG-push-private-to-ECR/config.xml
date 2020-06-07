@@ -218,12 +218,8 @@ for img in ${images}; do
     #  Image is pushed to ECR once with the tag it was pulled from Artifactory
     #  and once with YAML version tag
     docker pull ${ART_DOCKER_REG}/"${image}:${tag}"
-    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
     docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
-    echo ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
-    echo ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
-    #docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
-    #docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
+    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
 done
 
 ## Create YAMLs for ECR
@@ -241,7 +237,7 @@ git fetch "ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/chang
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
-#aws s3 sync "ecr" s3://voice-ai/docker-compose/${version}
+aws s3 sync "ecr" s3://voice-ai/docker-compose/${version}
 ls -l ecr
 
 ## Properties to export to environment
