@@ -151,8 +151,8 @@ cat /home/centos/.aws/credentials
 #         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
 #         sudo chmod +x /usr/local/bin/yq
 
-ymlFile=$(ls docker-compose-vag*.yml | grep -v central | grep -v sm)
 version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
+ymlFile=$(ls review/$version/VoiceAI/docker-compose-vag*.yml | grep -v central | grep -v sm)
 TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
 
 ## Set branch by $version
@@ -354,8 +354,7 @@ DevOps Team</defaultContent>
         <spec>{
     "files": [
         {
-            "pattern": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag-*.yml",
-            "target": "${WORKSPACE}"
+            "pattern": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag-*.yml"
         }
     ]
 }
