@@ -8,6 +8,7 @@
         <string>NEW_TAG</string>
         <string>DeployISO</string>
         <string>sanityType</string>
+        <string>FullTesting</string>
       </parameters>
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
@@ -96,6 +97,11 @@ cat /home/centos/.aws/config</scriptContent>
             <string>short</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>FullTesting</name>
+          <description/>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
