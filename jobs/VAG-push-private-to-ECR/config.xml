@@ -59,8 +59,6 @@ Images without tags will not be processed.</description>
     <hudson.tasks.Shell>
       <command>##
 
-set +x
-
 ### Add AudioCodes Public certificate to local machine
 echo "*** Verify AUDC certificate ***"
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
