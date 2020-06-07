@@ -228,6 +228,7 @@ done
 cd ${WORKSPACE}
 
 changeDir=${GERRIT_CHANGE_NUMBER: -2}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}
+git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 git fetch "ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/changes/$changeDir &amp;&amp; git checkout FETCH_HEAD
 . common/ECR-yaml-manipulation.sh
 #
