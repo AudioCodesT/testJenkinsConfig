@@ -153,7 +153,7 @@ cat /home/centos/.aws/credentials
 cd ${WORKSPACE}
 
 version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
-ymlFile=$(ls review/$version/VoiceAI/docker-compose-vag*.yml | grep -v central | grep -v sm)
+ymlFile=$(ls review/$version/docker-compose-vag*.yml | grep -v central | grep -v sm)
 TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
 
 ## Set branch by $version
