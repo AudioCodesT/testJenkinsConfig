@@ -237,7 +237,8 @@ done
 #
 cd ${WORKSPACE}
 
-gitcheckout -f origin/$version -- common/ECR-yaml-manipulation.sh
+changeDir=${GERRIT_CHANGE_NUMBER: -2}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}
+git -i $testGerritKey fetch "ssh://$testGerritUser@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/changes/$changeDir &amp;&amp; git checkout FETCH_HEAD
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
@@ -334,6 +335,16 @@ DevOps Team</defaultContent>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+          <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+          <keyFileVariable>testGerritKey</keyFileVariable>
+          <usernameVariable>testGerritUser</usernameVariable>
+          <passphraseVariable/>
+        </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+      </bindings>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
