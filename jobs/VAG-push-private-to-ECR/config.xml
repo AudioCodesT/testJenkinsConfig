@@ -354,7 +354,8 @@ DevOps Team</defaultContent>
         <spec>{
     "files": [
         {
-            "pattern": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag-*.yml"
+            "pattern": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag-*.yml",
+            "target": "${WORKSPACE}"
         }
     ]
 }
