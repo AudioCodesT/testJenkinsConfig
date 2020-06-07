@@ -161,11 +161,10 @@ EOD</command>
 #         sudo chmod +x /usr/local/bin/yq
 cd ${WORKSPACE}
 
-version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
-ymlPath=$(ls review/$version/docker-compose-vag*.yml | grep -v central | grep -v sm)
+ymlPath=$(ls review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag*.yml | grep -v central | grep -v sm)
 ymlFile=$(basename $ymlPath)
 cp $ymlPath ./$ymlFile
-
+version=$(echo $ymlFile | sed 's|docker-compose-vag-||' | sed 's|.yml||')
 TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
 
 ## Set branch by $version
