@@ -1,14 +1,13 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>trigger:&#xd;
-developer clicks gerrit UI button &quot;DRT&quot;&#xd;
-actions:&#xd;
-1. build all boards in &quot;boards2DRT.yml&quot;&#xd;
-2. deploy results to artifactory/sbc-review&#xd;
-2. download and share all results to \\netapp1 folder&#xd;
-3. send DRT request with major version and folder location&#xd;
-4. return the vote to gerrit label &quot;QA&quot;&#xd;
+  <description>trigger:&#13;
+developer clicks gerrit UI button "DRT"&#13;
+actions:&#13;
+1. build all boards in "boards2DRT.yml"&#13;
+2. deploy results to artifactory/sbc-review&#13;
+2. download and share all results to \\netapp1 folder&#13;
+3. send DRT request with major version and folder location&#13;
+4. return the vote to gerrit label "QA"&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -17,7 +16,7 @@ actions:&#xd;
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -38,38 +37,38 @@ actions:&#xd;
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>REFSPEC</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>EMAIL</name>
-          <description></description>
+          <description/>
           <defaultValue>yossim@audiocodes.com</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>REFTARGET</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CHANGES</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CurrentBatchID</name>
-          <description>In case you execute manually a DRT that was run and didn&apos;t finished, give to this job the batchID - you can find it in the &quot;Environment Variables&quot; of this build</description>
-          <defaultValue></defaultValue>
+          <description>In case you execute manually a DRT that was run and didn't finished, give to this job the batchID - you can find it in the "Environment Variables" of this build</description>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -83,6 +82,7 @@ actions:&#xd;
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>test-Sanjer</assignedNode>
@@ -95,51 +95,51 @@ actions:&#xd;
   <builders>
     <hudson.tasks.Shell>
       <command># send DRT request and keep the serial number from the response:
-#&quot;BatchId: batchName_636159240296404766_BTR&quot;
-#REFTARGET=`echo $REFSPEC | sed &apos;s:refs/changes/../::; s:/:-:g&apos;`
-Change=`echo $REFTARGET | sed &apos;s:-\|\.:_:g&apos;`
-echo -n &quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt; artifactory.url
+#"BatchId: batchName_636159240296404766_BTR"
+#REFTARGET=`echo $REFSPEC | sed 's:refs/changes/../::; s:/:-:g'`
+Change=`echo $REFTARGET | sed 's:-\|\.:_:g'`
+echo -n "https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET" &gt; artifactory.url
 
 # Can run with major version only: 7.2.150, 7.2.170
-GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:_.*::&apos;)
-if [[ $GERRIT_BRANCH =~ &quot;7.2.2&quot; ]]; then
-  GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed &apos;s:.$:0:; s:60$:50:&apos;)
+GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed 's:_.*::')
+if [[ $GERRIT_BRANCH =~ "7.2.2" ]]; then
+  GERRIT_BRANCH=$(echo $GERRIT_BRANCH | sed 's:.$:0:')
 fi
 
 if [ ! -z $CurrentBatchID ]; then
-  echo LinkToPage=&quot;---&quot; &gt; generated_drt.properties
+  echo LinkToPage="---" &gt; generated_drt.properties
   echo batchID=${CurrentBatchID} &gt;&gt; generated_drt.properties
-  echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+  echo url="https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET" &gt;&gt; generated_drt.properties
   exit 0
 fi
 
-#batchID=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&quot; --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed &apos;s/.*Black.&gt;//&apos; | sed &apos;s/&lt;.font&gt;.*//&apos;)&quot;
-Output=$(curl -s &quot;http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change&quot; --user qasa:cpelab --ntlm | grep -E &apos;span|class&apos;)
-batchID=`echo $Output | sed &apos;s:.*lblBatchIdValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::&apos;`
-LinkToPage=`echo $Output | sed &apos;s:.*lblBatchDetailsPathValue&quot;&gt;&lt;b&gt;&lt;font color=&quot;Black&quot;&gt;::; s:&lt;/font.*::; s:\\\\:/:g&apos;`
+#batchID="$(curl -s "http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH" --user qasa:cpelab --ntlm | grep lblBatchIdValue | sed 's/.*Black.&gt;//' | sed 's/&lt;.font&gt;.*//')"
+Output=$(curl -s "http://BatchRunner/AnonymousUser/RunDrtBatch.aspx?ModeType=SBC&amp;CompilationFolder=\\\\netapp1\\cm\\CompilationResults\\DRT\\Firmware\\$REFTARGET&amp;RunByUserEmail=$EMAIL&amp;MajorVersion=$GERRIT_BRANCH&amp;GerritChange=$Change" --user qasa:cpelab --ntlm | grep -E 'span|class')
+batchID=`echo $Output | sed 's:.*lblBatchIdValue"&gt;&lt;b&gt;&lt;font color="Black"&gt;::; s:&lt;/font.*::'`
+LinkToPage=`echo $Output | sed 's:.*lblBatchDetailsPathValue"&gt;&lt;b&gt;&lt;font color="Black"&gt;::; s:&lt;/font.*::; s:\\\\:/:g'`
 
 echo LinkToPage=${LinkToPage} &gt; generated_drt.properties
 echo batchID=${batchID} &gt;&gt; generated_drt.properties
-echo url=&quot;https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET&quot; &gt;&gt; generated_drt.properties
+echo url="https://artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/DRT/Firmware/$REFTARGET" &gt;&gt; generated_drt.properties
 
-if [ &quot;$LinkToPage&quot; == &quot;&quot; ]; then
-  echo $Output | grep &apos;BatchRunner Is Down&apos;
-  echo &quot;No Batch ID... exit with error&quot;
-  echo Output=&quot;No Batch ID&quot; &gt;&gt; generated_drt.properties
+if [ "$LinkToPage" == "" ]; then
+  echo $Output | grep 'BatchRunner Is Down'
+  echo "No Batch ID... exit with error"
+  echo Output="No Batch ID" &gt;&gt; generated_drt.properties
   exit 1;
 fi
 
-if [[ $Output =~ &quot;Down For Maintenance&quot; ]]; then
-  echo &quot;BatchRunner Is Down For Maintenance... exit with error&quot;
-  echo Output=&quot;BatchRunner Is Down For Maintenance&quot; &gt;&gt; generated_drt.properties
+if [[ $Output =~ "Down For Maintenance" ]]; then
+  echo "BatchRunner Is Down For Maintenance... exit with error"
+  echo Output="BatchRunner Is Down For Maintenance" &gt;&gt; generated_drt.properties
   exit 1;
 fi
 
-echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
+echo Output="Execution error" &gt;&gt; generated_drt.properties
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_drt.properties</propertiesFilePath>
       </info>
@@ -147,38 +147,38 @@ echo Output=&quot;Execution error&quot; &gt;&gt; generated_drt.properties
     <hudson.tasks.Shell>
       <command>#!/usr/bin/env ruby
 
-require &apos;json&apos;
-require &apos;uri&apos;
+require 'json'
+require 'uri'
 
-unless ENV[&apos;CurrentBatchID&apos;].to_s.empty?
-  puts &quot;Executed manually, no need a new message in the Gerrit&quot;
+unless ENV['CurrentBatchID'].to_s.empty?
+  puts "Executed manually, no need a new message in the Gerrit"
   exit 0
 end
 
-if ENV[&apos;REFSPEC&apos;].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
+if ENV['REFSPEC'].to_s =~ %r{refs/changes/\d\d/(\d+)/(\d+)$}
   change=$1
   ps=$2
 else
-  puts &apos;Invalid refspec&apos;
+  puts 'Invalid refspec'
   exit 0
 end
 
 data = {
-  message: &apos;DRT request was sent &apos; + ENV[&apos;BUILD_URL&apos;] + &quot;\n\nDRT status: &quot; + ENV[&apos;LinkToPage&apos;],
-  notify: &apos;NONE&apos;,
-  tag: &apos;autogenerated:drt&apos;,
+  message: 'DRT request was sent ' + ENV['BUILD_URL'] + "\n\nDRT status: " + ENV['LinkToPage'],
+  notify: 'NONE',
+  tag: 'autogenerated:drt',
 }
 
-require &apos;pp&apos;
+require 'pp'
 pp data
 
-system(&quot;curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review &quot; +
-       &quot;-d &apos;#{data.to_json}&apos; -H &apos;Content-Type: application/json&apos;&quot;)
+system("curl -kn --anyauth -X POST https://test-gerrit/a/changes/#{change}/revisions/#{ps}/review " +
+       "-d '#{data.to_json}' -H 'Content-Type: application/json'")
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command># check DRT status
-# &quot;BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed&quot;
+# "BatchId: DRT_7_2_150_636450404622178009_59399_1_BTR Status: Passed"
 # Status options: 
 #    1) Passed 2) Failed. 3) UserRequest. 4) WaitingForStations. 5) ConfiguringStations.
 #    6) Running. 7) Pending. 8) WaitingForStop. 9) Stopped.
@@ -186,16 +186,16 @@ count=0
 
 for i in {1..5000}
 do
-  Status=&quot;$(curl -s &quot;http://BatchRunner/AnonymousUser/GetDrtBatchStatus.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm | grep lblStatusValue | sed &apos;s/.*Black.&gt;//; s/&lt;.font&gt;.*//&apos;)&quot;
-  [ &quot;$Status&quot; == &quot;Passed&quot; ] &amp;&amp; exit 0
-  [ &quot;$Status&quot; == &quot;Failed&quot; -o &quot;$Status&quot; == &quot;WaitingForStop&quot; -o &quot;$Status&quot; == &quot;Stopped&quot; ] &amp;&amp; exit 1
-  [ &quot;$Status&quot; == &quot;&quot; ] &amp;&amp; count=$((count+1))
+  Status="$(curl -s "http://BatchRunner/AnonymousUser/GetDrtBatchStatus.aspx?BtrId=$batchID" --user qasa:cpelab --ntlm | grep lblStatusValue | sed 's/.*Black.&gt;//; s/&lt;.font&gt;.*//')"
+  [ "$Status" == "Passed" ] &amp;&amp; exit 0
+  [ "$Status" == "Failed" -o "$Status" == "WaitingForStop" -o "$Status" == "Stopped" ] &amp;&amp; exit 1
+  [ "$Status" == "" ] &amp;&amp; count=$((count+1))
   [ $count -eq 50 ] &amp;&amp; exit 1
   sleep 300s
 done
 
 echo Exit the while after some days
-curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+curl -s "http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID" --user qasa:cpelab --ntlm
 exit 1</command>
     </hudson.tasks.Shell>
   </builders>
@@ -203,7 +203,7 @@ exit 1</command>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
             <worstResult>
               <name>FAILURE</name>
               <ordinal>2</ordinal>
@@ -232,7 +232,7 @@ exit 1</command>
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.6">
+                      <EnvInjectBuilder plugin="envinject@2.3.0">
                         <info>
                           <propertiesFilePath>generated_drt.properties</propertiesFilePath>
                         </info>
@@ -258,28 +258,28 @@ exit 1</command>
 
 #Check if they are not a new PS - if yes, check if the code was changed
 #In case the code was not changed, give the score to the last PS - should be store in the checkPS variable. 
-  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; /tmp/$change.txt
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  'kind:\|number:' | tail -n +2 | sed 's/ //g' &gt; /tmp/$change.txt
 # $field Could be: number or kind
 # $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
   while IFS=: read -r field value; do   
-    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
+    if [ "$field" == "number" ]; then checkPS=$value;
     else
       echo Check PS $checkPS: $value;
-      if [[ &quot;$checkPS&quot; -gt &quot;$ps&quot; &amp;&amp; &quot;$value&quot; == &quot;REWORK&quot; ]]; then
+      if [[ "$checkPS" -gt "$ps" &amp;&amp; "$value" == "REWORK" ]]; then
         RunPhases=0
     fi; fi
   done &lt; /tmp/$change.txt
 
-  if [[ &quot;$RunPhases&quot; -eq 1 ]]; then ps=$checkPS; fi
+  if [[ "$RunPhases" -eq 1 ]]; then ps=$checkPS; fi
 
   echo Send OK message to Gerrit - $change,$ps
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT Passed successfully - $BUILD_URL \
+  --message "'DRT Passed successfully - $BUILD_URL \
       CMP files: $url \
-      DRT results: $LinkToPage&apos;&quot; \
+      DRT results: $LinkToPage'" \
   --notify OWNER \
   --label DRT=1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --tag "'autogenerated:drt'" \
   $change,$ps
 
 done
@@ -307,7 +307,7 @@ curl -ks -u $User -X DELETE https://artifactory/sbc-review/com/ac/sbc/DRT/Firmwa
                     </results>
                     <role>BOTH</role>
                     <buildSteps>
-                      <EnvInjectBuilder plugin="envinject@2.1.6">
+                      <EnvInjectBuilder plugin="envinject@2.3.0">
                         <info>
                           <propertiesFilePath>generated_drt.properties</propertiesFilePath>
                         </info>
@@ -320,13 +320,13 @@ curl -ks -u $User -X DELETE https://artifactory/sbc-review/com/ac/sbc/DRT/Firmwa
 
   echo Send failed message to Gerrit - $change,$ps
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT Failed - $BUILD_URL \
+  --message "'DRT Failed - $BUILD_URL \
       CMP files: $url \
       Error message: $Output \
-      DRT results: $LinkToPage&apos;&quot; \
+      DRT results: $LinkToPage'" \
   --notify OWNER \
   --label DRT=-1 \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --tag "'autogenerated:drt'" \
   $change,$ps
 
 done      
@@ -339,11 +339,11 @@ done
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
             <worstResult>
               <name>ABORTED</name>
               <ordinal>4</ordinal>
@@ -375,7 +375,7 @@ done
                     <buildSteps>
                       <hudson.tasks.Shell>
                         <command>echo ----------------- Stop it after it was aborted --------------------
-curl -s &quot;http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID&quot; --user qasa:cpelab --ntlm
+curl -s "http://BatchRunner/AnonymousUser/StopDrtBatch.aspx?BtrId=$batchID" --user qasa:cpelab --ntlm
 echo ----------------- Done ------------------------
 
 for rep in $CHANGES; do
@@ -384,9 +384,9 @@ for rep in $CHANGES; do
   ps=`echo $rep | cut -d/ -f2`
 
   ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit review \
-  --message &quot;&apos;DRT was aborted&apos;&quot; \
+  --message "'DRT was aborted'" \
   --notify OWNER \
-  --tag &quot;&apos;autogenerated:drt&apos;&quot; \
+  --tag "'autogenerated:drt'" \
   $change,$ps
 
 done
@@ -399,7 +399,7 @@ done
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -417,7 +417,7 @@ done
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -429,7 +429,7 @@ done
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} ${REFSPEC}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
