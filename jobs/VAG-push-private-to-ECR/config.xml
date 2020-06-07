@@ -56,7 +56,7 @@ Images without tags will not be processed.</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/*</name>
+        <name>refs/tags/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -165,7 +165,7 @@ cat /home/centos/.aws/credentials
 #         sudo chmod +x /usr/local/bin/yq
 
 ymlFile=$(ls docker-compose-vag*.yml | grep -v central | grep -v sm)
-
+version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
 TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
 
 ## Set branch by $version
@@ -221,8 +221,10 @@ for img in ${images}; do
     docker pull ${ART_DOCKER_REG}/"${image}:${tag}"
     docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
     docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
-    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
-    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
+    echo ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
+    echo ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
+    #docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
+    #docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
 done
 
 ## Create YAMLs for ECR
@@ -235,12 +237,12 @@ done
 #
 cd ${WORKSPACE}
 
-[[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- common/ECR-yaml-manipulation.sh || git checkout -f $version -- common/ECR-yaml-manipulation.sh
+gitcheckout -f origin/$version -- common/ECR-yaml-manipulation.sh
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
-aws s3 sync "ecr" s3://voice-ai/docker-compose/${version}
-
+aws #s3 sync "ecr" s3://voice-ai/docker-compose/${version}
+ll ecr
 
 ## Properties to export to environment
 echo VERSION=$version &gt; VAG.properties
