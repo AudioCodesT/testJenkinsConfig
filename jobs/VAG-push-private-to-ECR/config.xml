@@ -146,12 +146,13 @@ cat /home/centos/.aws/credentials
 ## Add private key for user jenkins on test-gerrit
 cat $TEST_GERRIT_KEY &gt; /home/centos/.ssh/id_rsa_test-gerrit
 chmod 600 /home/centos/.ssh/id_rsa_test-gerrit
-cat &lt;&lt;&lt;EOB &gt;&gt; /home/centos/.ssh/config
+
+cat &lt;&lt;-EOD &gt;&gt; /home/centos/.ssh/config
 Host your.hostname.com
     Hostname github.com
     User git
     IdentityFile ~/.ssh/id_rsa_test-gerrit
-EOB</command>
+EOD</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>### Install yq - this is temporary solution, should be installed in AMI!!!
