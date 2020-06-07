@@ -154,7 +154,7 @@ cd ${WORKSPACE}
 
 version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
 ymlFile=$(ls review/$version/docker-compose-vag*.yml | grep -v central | grep -v sm)
-ymlFile=$(basename $ymlFile)
+cp $ymlFile ./$(basename $ymlFile)
 TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
 
 ## Set branch by $version
