@@ -141,6 +141,7 @@ EOD
 cat /home/centos/.aws/credentials
 
 # Add private key for jenkins to loggin to test-gerrit
+echo $testGerritKey
 mv $testGerritKey /var/lib/jenkins/.ssh/id_rsa_test-gerrit
 chmod 600 /var/lib/jenkins/.ssh/id_rsa_test-gerrit
 
