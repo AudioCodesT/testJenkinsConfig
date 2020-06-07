@@ -155,7 +155,7 @@ cd ${WORKSPACE}
 version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
 ymlPath=$(ls review/$version/docker-compose-vag*.yml | grep -v central | grep -v sm)
 ymlFile=$(basename $ymlPath)
-cp $ymlPath ./ymlFile
+cp $ymlPath ./$ymlFile
 
 TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
 
