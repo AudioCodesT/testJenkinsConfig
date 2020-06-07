@@ -148,9 +148,9 @@ cat $TEST_GERRIT_KEY &gt; /home/centos/.ssh/id_rsa_test-gerrit
 chmod 600 /home/centos/.ssh/id_rsa_test-gerrit
 
 cat &lt;&lt;-EOD &gt;&gt; /home/centos/.ssh/config
-Host your.hostname.com
-    Hostname github.com
-    User git
+Host test-gerrit
+    Hostname test-gerrit
+    User jenkins
     IdentityFile ~/.ssh/id_rsa_test-gerrit
 EOD</command>
     </hudson.tasks.Shell>
