@@ -17,8 +17,8 @@
         <envVar></envVar>
       </triggers>
       <sonarLogin></sonarLogin>
-      <databaseSecret>{AQAAABAAAAAQKpyogpHSkm4IGDuEjFfCqGajEFhEYWLXfG+B3M6eclQ=}</databaseSecret>
-      <sonarSecret>{AQAAABAAAAAQpjfZm2JPvn+tSJmWbLgeN3fVzoDt818+MYJGyay952A=}</sonarSecret>
+      <databaseSecret>{AQAAABAAAAAQO9RJUh9PWwvf60PV8pNf6adNDnu1sJj20oyNh9rQtQc=}</databaseSecret>
+      <sonarSecret>{AQAAABAAAAAQVgXX0xXSyf1Pq+EuGw1wtkf8f1bqjxrotoSOTQ9z+i0=}</sonarSecret>
     </hudson.plugins.sonar.SonarInstallation>
     <hudson.plugins.sonar.SonarInstallation>
       <name>test-AC_sonar6</name>
@@ -36,8 +36,8 @@
         <envVar></envVar>
       </triggers>
       <sonarLogin></sonarLogin>
-      <databaseSecret>{AQAAABAAAAAQfX2prlKRCvuwO+6LUkdpEMFnnd6AYhGt2PlfuktPNJk=}</databaseSecret>
-      <sonarSecret>{AQAAABAAAAAQPK4ORMaTcip55nzlLcTgrjMdzZySWUfYYcSw5ngtI64=}</sonarSecret>
+      <databaseSecret>{AQAAABAAAAAQg+A4k5cB4990UYunvHS5eLVL385jn7yDLos3Iv056E4=}</databaseSecret>
+      <sonarSecret>{AQAAABAAAAAQjhNZhg9q+ZwXUSnHwX7aVOc87v9M23o2u4Rf+tmGmpU=}</sonarSecret>
     </hudson.plugins.sonar.SonarInstallation>
   </installations>
   <buildWrapperEnabled>false</buildWrapperEnabled>
