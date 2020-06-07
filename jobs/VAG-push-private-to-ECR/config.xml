@@ -143,11 +143,6 @@ EOD
 
 cat /home/centos/.aws/credentials
 
-# Add private key for jenkins to loggin to test-gerrit
-ls -l "$testGerritKey"
-mv $testGerritKey /var/lib/jenkins/.ssh/id_rsa_test-gerrit
-chmod 600 /var/lib/jenkins/.ssh/id_rsa_test-gerrit
-
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -230,7 +225,7 @@ done
 cd ${WORKSPACE}
 
 changeDir=${GERRIT_CHANGE_NUMBER: -2}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}
-git -i id_rsa_test-gerrit fetch "ssh://$testGerritUser@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/changes/$changeDir &amp;&amp; git checkout FETCH_HEAD
+git -i id_rsa_jenkins fetch "ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/changes/$changeDir &amp;&amp; git checkout FETCH_HEAD
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
