@@ -150,6 +150,7 @@ cat /home/centos/.aws/credentials
 #curl -sL -o https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64 &amp;&amp; \
 #         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
 #         sudo chmod +x /usr/local/bin/yq
+cd ${WORKSPACE}
 
 version=${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
 ymlFile=$(ls review/$version/VoiceAI/docker-compose-vag*.yml | grep -v central | grep -v sm)
