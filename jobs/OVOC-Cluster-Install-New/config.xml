@@ -7,7 +7,6 @@
       <parameters>
         <string>NEW_TAG</string>
         <string>DeployISO</string>
-        <string>sanityType</string>
         <string>FullTesting</string>
       </parameters>
       <options/>
@@ -87,14 +86,6 @@ cat /home/centos/.aws/config</scriptContent>
           <choices>
             <string>official_iso</string>
             <string>latest_iso</string>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>sanityType</name>
-          <description/>
-          <choices>
-            <string>full</string>
-            <string>short</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
