@@ -60,7 +60,7 @@
     <hudson.tasks.Shell>
       <command>cd $HOME/e2e
 export PYTHONUNBUFFERED=TRUE
-python3 runner.py</command>
+python3 infra/runner.py</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
