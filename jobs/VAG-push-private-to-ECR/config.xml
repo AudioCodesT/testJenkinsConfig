@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>This job pulls VoiceAI docker images from the Artifactory repository and pushes them to ECR.&#13;
-Fill in the tags for each image.&#13;
+Fill in the details for each image.&#13;
 Images without tags will not be processed.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -144,6 +144,7 @@ EOD
 cat /home/centos/.aws/credentials
 
 ## Add private key for user jenkins on test-gerrit
+#  A bound credential is used.
 cat $TEST_GERRIT_KEY &gt; /home/centos/.ssh/id_rsa_test-gerrit
 chmod 600 /home/centos/.ssh/id_rsa_test-gerrit
 
@@ -155,11 +156,7 @@ Host test-gerrit
 EOD</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>### Install yq - this is temporary solution, should be installed in AMI!!!
-#curl -sL -o https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64 &amp;&amp; \
-#         sudo mv yq_linux_amd64 /usr/local/bin/yq &amp;&amp; \
-#         sudo chmod +x /usr/local/bin/yq
-cd ${WORKSPACE}
+      <command>cd ${WORKSPACE}
 
 ymlPath=$(ls review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag*.yml | grep -v central | grep -v sm)
 ymlFile=$(basename $ymlPath)
@@ -321,7 +318,7 @@ DevOps Team</defaultContent>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>true</disabled>
+      <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>shukyr yuvaly</recipients>
