@@ -241,7 +241,7 @@ git fetch "ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/chang
 . common/ECR-yaml-manipulation.sh
 #
 ## Copy YAML files to S3
-aws #s3 sync "ecr" s3://voice-ai/docker-compose/${version}
+#aws s3 sync "ecr" s3://voice-ai/docker-compose/${version}
 ll ecr
 
 ## Properties to export to environment
