@@ -143,7 +143,15 @@ EOD
 
 cat /home/centos/.aws/credentials
 
-</command>
+## Add private key for user jenkins on test-gerrit
+cat $TEST_GERRIT_KEY &gt; /home/centos/.ssh/id_rsa_test-gerrit
+chmod 600 /home/centos/.ssh/id_rsa_test-gerrit
+cat &lt;&lt;&lt;EOB &gt;&gt; /home/centos/.ssh/config
+Host your.hostname.com
+    Hostname github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_test-gerrit
+EOB</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>### Install yq - this is temporary solution, should be installed in AMI!!!
@@ -327,7 +335,14 @@ DevOps Team</defaultContent>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
-      <bindings class="empty-list"/>
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+          <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+          <keyFileVariable>TEST_GERRIT_KEY</keyFileVariable>
+          <usernameVariable>TEST_GERRIT_USER</usernameVariable>
+          <passphraseVariable/>
+        </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+      </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
