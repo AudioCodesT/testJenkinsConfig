@@ -323,14 +323,7 @@ DevOps Team</defaultContent>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
-          <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
-          <keyFileVariable>testGerritKey</keyFileVariable>
-          <usernameVariable>testGerritUser</usernameVariable>
-          <passphraseVariable/>
-        </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
-      </bindings>
+      <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
