@@ -287,7 +287,9 @@ version: ${version}</body>
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>VoiceAI ${VERSION} - private docker images pushed to ECR successfully</defaultSubject>
-      <defaultContent>Pushed docker images $IMAGES to ECR.
+      <defaultContent>Private docker images $IMAGES
+from ${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
+pushed to ECR.
 
 Deployed -
 &gt; docker-compose-vag-ecr-$VERSION.yml
