@@ -167,7 +167,7 @@ echo GIT_BRANCH=%GIT_BRANCH% &gt;&gt; generated_version.properties&#13;
 &#13;
 rem ------------ build all LIB ---------------&#13;
 echo cd %WORKSPACE:\=/% &gt; c:\temp\BuildHost.sh&#13;
-echo Minor=`echo %BL% ^| cut -d. -f3` &gt;&gt; c:\temp\BuildHost.sh&#13;
+echo Minor=`echo %BL% ^| cut -d. -f3` | sed 's/^0*//'` &gt;&gt; c:\temp\BuildHost.sh&#13;
 echo sed -e "s/#define ACL_API_MINOR_VERSION.*/#define ACL_API_MINOR_VERSION $Minor/" VoPLib/include/VoIPver.h ^&gt; VoIPver.h &gt;&gt; c:\temp\BuildHost.sh&#13;
 echo cp -f VoIPver.h VoPLib/include/VoIPver.h &gt;&gt; c:\temp\BuildHost.sh&#13;
 "C:\Program Files\Git\bin\bash.exe" --login -c "c:/temp/BuildHost.sh"&#13;
