@@ -290,17 +290,8 @@ pipeline {
         stage('Run Sanity') {
             steps {
                 sh "cd ${WORKSPACE}/../ovoc/EMS/VersionRelease"
-                sh "python2.7 SanityTest.py $(params.NEW_TAG} ${mgmtIP} ${FullTesting} || \
-                    ( python2.7 ChangeOVOCModeToOneVoiceLive.py ${NEW_TAG} ${params.mgmtIP}; \
-                    python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting}; \
-                    python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP}; \
-                    exit 1; )"
-                    
-                    sh "python2.7 ChangeOVOCModeToOneVoiceLive.py ${params.NEW_TAG} ${mgmtIP} &amp;&amp; \
-                    python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting} &amp;&amp; \
-                    python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} || \
-                    ( python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} ; exit 1; )""
-                '''
+                sh "python2.7 SanityTest.py $(params.NEW_TAG} ${mgmtIP} ${FullTesting} || ( python2.7 ChangeOVOCModeToOneVoiceLive.py ${NEW_TAG} ${params.mgmtIP}; python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting}; python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP}; exit 1; )"
+                sh "python2.7 ChangeOVOCModeToOneVoiceLive.py ${params.NEW_TAG} ${mgmtIP} &amp;&amp; python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting} &amp;&amp; python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} || ( python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} ; exit 1; )"
             }
         }
     }
