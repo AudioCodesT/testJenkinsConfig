@@ -174,17 +174,17 @@ def runSanity() {
         cd ../ovoc/EMS/VersionRelease
 
         # Run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
-       	python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting} || \
-        { python2.7 ChangeOVOCModeToOneVoiceLive.py ${params.NEW_TAG} ${mgmtIP}; \
-         python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting}; \
-         python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP}; \
+       	python2.7 SanityTest.py ${NEW_TAG} ${mgmtIP} ${FullTesting} || \
+        { python2.7 ChangeOVOCModeToOneVoiceLive.py ${NEW_TAG} ${mgmtIP}; \
+         python2.7 SanityTest.py ${NEW_TAG} ${mgmtIP} ${FullTesting}; \
+         python2.7 SanityCopyLogs.py ${NEW_TAG} ${mgmtIP}; \
         exit 1; }
 
         # if SanityTest passed successfully change ovoc to one voice live mode and run sanity tests again, if failed copy logs and exit the build
-       	python2.7 ChangeOVOCModeToOneVoiceLive.py ${params.NEW_TAG} ${mgmtIP} &amp;&amp; \
-        python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting} &amp;&amp; \
-        python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} || \
-        { python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} ; exit 1; }
+       	python2.7 ChangeOVOCModeToOneVoiceLive.py ${NEW_TAG} ${mgmtIP} &amp;&amp; \
+        python2.7 SanityTest.py ${NEW_TAG} ${mgmtIP} ${FullTesting} &amp;&amp; \
+        python2.7 SanityCopyLogs.py ${NEW_TAG} ${mgmtIP} || \
+        { python2.7 SanityCopyLogs.py ${NEW_TAG} ${mgmtIP} ; exit 1; }
     '''
 }
 
