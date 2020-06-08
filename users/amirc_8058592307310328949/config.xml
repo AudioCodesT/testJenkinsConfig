@@ -52,6 +52,7 @@
         <string>Password Manager Apply</string>
         <string>365_Lucca</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
@@ -67,7 +68,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1590379096881</timestamp>
+      <timestamp>1591609987783</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Amir.Catran@audiocodes.com</emailAddress>
