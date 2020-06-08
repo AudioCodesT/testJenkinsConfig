@@ -33,7 +33,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_REFNAME</name>
           <description/>
-          <defaultValue/>
+          <defaultValue>refs/tags/</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -209,9 +209,9 @@ echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 OLDTAG=$(git describe --first-parent --tags --abbrev=0 HEAD^)
 #BRANCH=$(git branch -r --contains  ${OLDTAG} | grep -v "HEAD" | awk -F/ '{print $NF}' | sort | tail -n 1)
 NEWTAG=$(echo $GERRIT_REFNAME | awk -F/ '{print $NF}')
-TAGVER=${NEWTAG::3}
+#TAGVER=$(echo ${NEWTAG} | gawk -F. '{print $1"."$2}')
 
-## Set branch by $version
+## Set branch by $NEWTAG
 case $NEWTAG in
     1.1*|1.2*)
     	BRANCH="1.2"
@@ -436,7 +436,7 @@ BRANCH=${BRANCH}</properties>
             "target": "docker-voice-ai-files/"
         },
         {
-            "pattern": "docker-compose-*.yml",
+            "pattern": "docker-compose-vag-*.yml",
             "target": "docker-voice-ai-files/"
         },
         {
