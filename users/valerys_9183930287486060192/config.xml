@@ -36,6 +36,7 @@
       <roles>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -78,7 +79,7 @@
         <string>Domain Users</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1584709609391</timestamp>
+      <timestamp>1591649877516</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Valery.Sigalov@audiocodes.com</emailAddress>
