@@ -78,7 +78,7 @@ fi
 echo "MODE=${MODE}" &gt; env.properties
 
 cd e2e
-chmod 640 id_rsa
+chmod 640 static/id_rsa
 
 echo "VERSION=$(git describe --tags --abbrev=0 --first-parent)" &gt; .build_version
 echo "BRANCH=$(git branch -r --contains HEAD | sed 's:^.*/::')" &gt;&gt; .build_version
