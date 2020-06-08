@@ -59,6 +59,7 @@
         <string>Password Manager Apply</string>
         <string>365_Lucca</string>
         <string># All ISRAEL</string>
+        <string># SBC</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string># R&amp;D MEM</string>
@@ -75,7 +76,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Sys SW Team Leaders</string>
       </roles>
-      <timestamp>1589698431315</timestamp>
+      <timestamp>1591599106298</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Eitan.Zisman@audiocodes.com</emailAddress>
