@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -35,6 +35,31 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NEW_TAG</name>
+          <description/>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>DeployISO</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>FullTesting</name>
+          <description/>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -72,50 +97,206 @@ cat /home/centos/.aws/config</scriptContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
     
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>NEW_TAG</name>
-          <description/>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
-          <description/>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
-          <description/>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.78">
-    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
-      <configVersion>2</configVersion>
-      <userRemoteConfigs>
-        <hudson.plugins.git.UserRemoteConfig>
-          <url>ssh://jenkins@gerrit:29418/devops/Jenkins-Pipeline.git</url>
-          <credentialsId>b6e992aa-66c8-4f99-b51f-4bb657ec4c53</credentialsId>
-        </hudson.plugins.git.UserRemoteConfig>
-      </userRemoteConfigs>
-      <branches>
-        <hudson.plugins.git.BranchSpec>
-          <name>*/master</name>
-        </hudson.plugins.git.BranchSpec>
-      </branches>
-      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-      <submoduleCfg class="list"/>
-      <extensions/>
-    </scm>
-    <scriptPath>OVOC-Elasticity/install-new/Jenkinsfile</scriptPath>
-    <lightweight>true</lightweight>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
+    <script>def mgmtIP = ""
+def mgmtId = ""
+def vqmIP = ""
+def vqmId = ""
+def pmIP = ""
+def pmId = ""
+
+def runInstance(role) {
+
+    println(role)
+
+    def ec2SGId = "sg-77bce41e"
+    def ec2SNId = "subnet-35295a5c"
+    def ec2iTyp = "t2.2xlarge"
+    def ec2Key = "AudioCodes-CICD-Apps"
+    def instId = ""
+    def ipAddr = ""
+    def imageId = ""
+
+    switch(role) {
+        case "management":
+            imageId = "ami-07086aac097e65a53";
+            break;
+        case "vqm":
+            imageId = "ami-005e7916df1f0ea46";
+            break;
+        case "pm":
+            imageId = "ami-005e7916df1f0ea46";
+            break;
+    }
+
+    sh "aws ec2 run-instances --region eu-central-1 --image-id ${imageId} --instance-type ${ec2iTyp} --instance-market-options MarketType=spot --count 1 --security-group-ids ${ec2SGId} --subnet-id ${ec2SNId} --key-name ${ec2Key} &gt; ${WORKSPACE}/run-inst.json"
+    sh "cat ${WORKSPACE}/run-inst.json"
+
+    def runJsonFile = readJSON file: "${env.WORKSPACE}/run-inst.json";
+
+    instId = (runJsonFile.Instances.InstanceId).toString().replaceAll("\\[|\\]", "")
+    println(role + " " + instId)
+    ipAddr = (runJsonFile.Instances.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
+    println(role + " " + ipAddr)
+
+    sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_Elasticity_${JOB_NAME}_${role} Key=Creator,Value=Spotinst"
+    sh "aws ec2 modify-instance-attribute --instance-id ${instId} --block-device-mappings DeviceName=/dev/sda1,Ebs={DeleteOnTermination=true}"
+    sh "aws ec2 wait instance-status-ok --instance-ids ${instId}"
+
+
+    switch(role) {
+        case "management":
+            env.mgmtId = instId;
+            env.mgmtIP = ipAddr;
+            println(env.mgmtId);
+            println(env.mgmtIP);
+            break;
+        case "vqm":
+            env.vqmId = instId;
+            env.vqmIP = ipAddr;
+            println(env.vqmId);
+            println(env.vqmIP);
+            break;
+        case "pm":
+            env.pmId = instId;
+            env.pmIP = ipAddr;
+            println(env.pmId);
+            println(env.pmIP);
+            break;
+    }
+}
+
+
+def runSanity() {
+    sh '''
+        cd ${WORKSPACE}
+        cd ../ovoc/EMS/VersionRelease
+
+        # Run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
+       	python2.7 SanityTest.py $(params.NEW_TAG} ${mgmtIP} ${FullTesting} || \
+        { python2.7 ChangeOVOCModeToOneVoiceLive.py ${NEW_TAG} ${params.mgmtIP}; \
+         python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting}; \
+         python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP}; \
+        exit 1; }
+
+        # if SanityTest passed successfully change ovoc to one voice live mode and run sanity tests again, if failed copy logs and exit the build
+       	python2.7 ChangeOVOCModeToOneVoiceLive.py ${params.NEW_TAG} ${mgmtIP} &amp;&amp; \
+        python2.7 SanityTest.py ${params.NEW_TAG} ${mgmtIP} ${FullTesting} &amp;&amp; \
+        python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} || \
+        { python2.7 SanityCopyLogs.py ${params.NEW_TAG} ${mgmtIP} ; exit 1; }
+    '''
+}
+
+
+pipeline {
+    agent {
+        node {
+            label 'ems-build'
+        }
+    }
+    parameters {
+        string(name: 'NEW_TAG', defaultValue: '', description: '')
+        choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
+        booleanParam(name: 'FullTesting', defaultValue: false, description: '')
+    }
+    stages {
+        stage('Build Properties') {
+            steps {
+                script {
+                    currentBuild.displayName = "${BUILD_NUMBER}_new_${NEW_TAG}"
+                    currentBuild.description = ""
+                }
+            }
+        }
+        stage('Install Nodes - New Tag') {
+            failFast true
+            parallel {
+                stage('Install management') {
+                    agent {
+                        node {
+                            label 'ems-build'
+                            customWorkspace "${JOB_NAME}_management"
+                        }
+                    }
+                    steps {
+                        runInstance('management')
+                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
+                            string(name: 'ServerRole', value: 'management'),
+                            string(name: 'ServerIP', value: "${env.mgmtIP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
+                        ]
+                    }
+                }
+                stage('Install vqm') {
+                    agent {
+                        node {
+                            label 'ems-build'
+                            customWorkspace "${JOB_NAME}_vqm"
+                        }
+                    }
+                    steps {
+                        runInstance('vqm')
+                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
+                            string(name: 'ServerRole', value: 'vqm'),
+                            string(name: 'ServerIP', value: "${env.vqmIP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
+                        ]
+                    }
+                }
+                stage('Install pm') {
+                    agent {
+                        node {
+                            label 'ems-build'
+                            customWorkspace "${JOB_NAME}_pm"
+                        }
+                    }
+                    steps {
+                        runInstance('pm')
+                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
+                            string(name: 'ServerRole', value: 'pm'),
+                            string(name: 'ServerIP', value: "${env.pmIP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
+                        ]
+                    }
+                }
+            }
+        }
+        stage('GiT checkout') {
+            steps {
+                sh '''
+                    cd "${WORKSPACE}/.."
+                    [[ -d ovoc ]] &amp;&amp; rm -rf ovoc
+                    mkdir ovoc
+                '''
+                dir ("${env.WORKSPACE}/../ovoc") {
+                    checkout([$class: 'GitSCM', branches: [[name: "server_${NEW_TAG}"]], userRemoteConfigs: [[credentialsId: 'fef9964a-ddb7-4ce6-a445-a99a9e9802c0', url: 'ssh://jenkins@test-gerrit:29418/EMS/ovoc_server']]])
+                }
+            }
+        }
+        stage('Configure Cluster - New Tags') {
+            steps {
+                sh '''
+                    cd ${WORKSPACE}
+                    cd ../ovoc/EMS/VersionRelease
+                    python2.7 ConnectHighScaleSystem.py ${mgmtIP} ${vqmIP} VQM
+                    python2.7 ConnectHighScaleSystem.py ${mgmtIP} ${pmIP} PM
+                '''
+            }
+        }
+        stage('Run Sanity') {
+            steps {
+                runSanity()
+            }
+        }
+    }
+}
+
+</script>
+    <sandbox>true</sandbox>
   </definition>
   <triggers/>
   <disabled>false</disabled>
