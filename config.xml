@@ -1713,9 +1713,9 @@
         <string>VoiceAI-Review-Coverage</string>
         <string>VoiceAI-Review-Docker</string>
         <string>VoiceAI-sanity-copy</string>
+        <string>VoiceAI_nightSanity</string>
         <string>VoiceAI_nightSanity_1.2</string>
         <string>VoiceAI_nightSanity_1.4</string>
-        <string>VoiceAI_nightSanity_1.6</string>
       </jobNames>
       <jobFilters/>
       <columns>
