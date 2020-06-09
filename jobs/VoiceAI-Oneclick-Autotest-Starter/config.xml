@@ -161,7 +161,7 @@ fi</command>
                 <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
                   <configs>
                     <hudson.plugins.parameterizedtrigger.FileBuildParameters>
-                      <propertiesFile>session-manager/test/e2e/.build_version</propertiesFile>
+                      <propertiesFile>e2e/.build_version</propertiesFile>
                       <failTriggerOnMissing>false</failTriggerOnMissing>
                       <textParamValueOnNewLine>false</textParamValueOnNewLine>
                       <useMatrixChild>false</useMatrixChild>
