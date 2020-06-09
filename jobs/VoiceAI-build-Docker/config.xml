@@ -33,7 +33,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_REFNAME</name>
           <description/>
-          <defaultValue>refs/tags/</defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
