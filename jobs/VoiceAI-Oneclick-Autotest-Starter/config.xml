@@ -100,7 +100,7 @@ export PC_USER="tester"
 export PC_DNS="test-runner.westus2.cloudapp.azure.com"
 
 
-pip3 install --user -r requirements.txt
+pip3 install --user -r static/requirements.txt
 python3 infra/startVMs.py $SHUTDOWN_FLAG
 
 if [ $SHUTDOWN == false ]; then
