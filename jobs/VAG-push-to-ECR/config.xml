@@ -288,7 +288,7 @@ version: ${version}</body>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>VoiceAI ${VERSION} - docker images pushed to ECR successfully</defaultSubject>
+      <defaultSubject>VoiceAI ${VERSION} - SUCCESS - docker images pushed to ECR</defaultSubject>
       <defaultContent>Pushed docker images $IMAGES to ECR.
 
 Deployed -
