@@ -291,7 +291,7 @@ version: ${version}</body>
 from ${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}
 pushed to ECR.
 
-Deployed -
+YAML files deployed -
 &gt; docker-compose-vag-ecr-$VERSION.yml
 &gt; docker-compose-vag-ecr-$VERSION-sm.yml
 &gt; docker-compose-vag-ecr-$VERSION-central.yml
