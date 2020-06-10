@@ -58,7 +58,7 @@ Send params: FOLDER_PATH , MODE&#13;
         <hudson.model.StringParameterDefinition>
           <name>MajorVersion</name>
           <description/>
-          <defaultValue>7.2.250</defaultValue>
+          <defaultValue>7.2.260</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
