@@ -232,7 +232,7 @@ done
 cd ${WORKSPACE}
 
 [[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- docker/gen-ecr-files.sh || git checkout -f $version -- docker/gen-ecr-files.sh
-. gen-ecr-files.sh
+. docker/gen-ecr-files.sh
 #
 ## Copy YAML files to S3
 aws s3 sync "ecr" s3://voice-ai/docker-compose
