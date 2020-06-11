@@ -200,6 +200,9 @@ pipeline {
             label 'ems-build'
         }
     }
+    environment {
+        ARTI_CREDS = credentials('e7c58828-5cf7-40cb-9acd-00d9c7419212')
+    }
     parameters {
         string(name: 'NEW_TAG', defaultValue: '', description: '')
         choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
@@ -218,16 +221,19 @@ pipeline {
             steps {
                 sh '''
                     BRANCH=$(echo ${NEW_TAG} | sed 's:\.[[:digit:]]*$::')
+                    
                     cd ${WORKSPACE}/EMS
                     [[ -d target ]] &amp;&amp; rm -rf target
                     mkdir target
+                    chmod 0775 target
+                    cp FKGenerator.ini target
                     cd target
                     for f in common-${BRANCH}-SNAPSHOT.jar \
                         server-${BRANCH}-SNAPSHOT.jar \
                         rest-core-${BRANCH}-SNAPSHOT.jar \
                         oracle_trigger-${BRANCH}-SNAPSHOT.jar \
                         database-${BRANCH}-SNAPSHOT.jar
-                    do curl -O -k --user  https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}/${f}
+                    do curl -O -k --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PWD} https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}/${f}
                     done
                 '''
             }
