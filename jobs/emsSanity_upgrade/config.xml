@@ -408,7 +408,7 @@ if [[ "$FROM" == "master" || "$FROM" == "7.4" || "$FROM" == "7.4.1000" || "$FROM
 then
     echo "Running single script for install"
     python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
-elif [[ "$FROM" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" == "7.8" || "$BRANCH" == "7.8.1000" ]]; then
+elif [[ "$FROM" == "7.4.3000" || "$FROM" =~ "7.6" || "$FROM" == "7.8" || "$FROM" == "7.8.1000" ]]; then
     echo "Running 3 scripts SanityInstall, SanityFK and SanityReboot"
     python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
     python2.7 SanityFK.py $vmIP $NEW_TAG
