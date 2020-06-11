@@ -219,9 +219,10 @@ pipeline {
         }
         stage('Set Node') {
             steps {
+                script{
+                    BRANCH="${NEW_TAG}".split(".")[0]."${NEW_TAG}".split(".")[1]
+                }
                 sh '''
-                    BRANCH=$(echo ${NEW_TAG} | sed 's:\.[[:digit:]]*$::')
-                    
                     cd ${WORKSPACE}/EMS
                     [[ -d target ]] &amp;&amp; rm -rf target
                     mkdir target
@@ -237,7 +238,6 @@ pipeline {
                     done
                 '''
             }
-        }
         }
         stage('Install Nodes - New Tag') {
             failFast true
