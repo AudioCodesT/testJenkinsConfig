@@ -220,7 +220,7 @@ pipeline {
         stage('Set Node') {
             steps {
                 script{
-                    def env.BRANCH = "${NEW_TAG}".split(".")[0] + "." + "${NEW_TAG}".split(".")[1]
+                    env.BRANCH = '"${NEW_TAG}.split(".")[0]' + '.' + '"${NEW_TAG}".split(".")[1]'
                     println(env.BRANCH)
                 }
                 sh '''
