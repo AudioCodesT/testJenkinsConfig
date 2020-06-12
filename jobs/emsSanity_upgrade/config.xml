@@ -431,15 +431,15 @@ git checkout server_$NEW_TAG
 if [[ "$BRANCH" == "7.4" ||  "$BRANCH" == "7.4.1000" ||  "$BRANCH" == "7.4.2000" ]]
 then
     echo "Running single script for install"
-    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+    python2.7 SanityInstall.py $NEW_TAG $vmIP official_iso
 elif [[ "$BRANCH" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" == "7.8" || "$BRANCH" == "7.8.1000" ]]; then
     echo "Running 3 scripts SanityInstall, SanityFK and SanityReboot"
-    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+    python2.7 SanityInstall.py $NEW_TAG $vmIP official_iso
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP
 else
 	echo "Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp"
-    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+    python2.7 SanityInstall.py $NEW_TAG $vmIP official_iso
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP 
     python2.7 CheckAllProcessesUp.py $vmIP 
