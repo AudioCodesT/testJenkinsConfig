@@ -534,7 +534,7 @@ else
 	#for branch 7.8.1000 and up, run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
 	python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
     || { python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP; \
-    	 python2.7 CheckAllProcessesUp.py $vmIP \
+    	 python2.7 CheckAllProcessesUp.py $vmIP; \
     	 python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting; \
          python2.7 SanityCopyLogs.py $NEW_TAG $vmIP; \
          exit 1; }
