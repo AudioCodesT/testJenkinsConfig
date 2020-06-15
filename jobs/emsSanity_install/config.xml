@@ -519,7 +519,7 @@ then
     || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
 elif [[ "$BRANCH" == "7.8.1000" ]]
 then
-	#for branch 7.8.1000 and up, run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
+	#for branch 7.8.1000, run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
 	python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
     || { python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP; \
     	 python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting; \
@@ -531,7 +531,7 @@ then
     &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
     || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
 else
-	#for branch 7.8.1000 and up, run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
+	#for branch 7.8.2000 and up, run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
 	python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
     || { python2.7 ChangeOVOCModeToOneVoiceLive.py $NEW_TAG $vmIP; \
     	 python2.7 CheckAllProcessesUp.py $vmIP; \
