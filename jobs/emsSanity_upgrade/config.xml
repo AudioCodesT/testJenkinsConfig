@@ -410,12 +410,12 @@ then
     python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
 elif [[ "$FROM" == "7.4.3000" || "$FROM" =~ "7.6" || "$FROM" == "7.8" || "$FROM" == "7.8.1000" ]]; then
     echo "Running 3 scripts SanityInstall, SanityFK and SanityReboot"
-    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $LAST_OFFICIAL 
     python2.7 SanityReboot.py $vmIP
 else
 	echo "Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp"
-    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
+    python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $LAST_OFFICIAL 
     python2.7 SanityReboot.py $vmIP 
     python2.7 CheckAllProcessesUp.py $vmIP 
@@ -434,12 +434,12 @@ then
     python2.7 SanityInstall.py $NEW_TAG $vmIP official_iso
 elif [[ "$BRANCH" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" == "7.8" || "$BRANCH" == "7.8.1000" ]]; then
     echo "Running 3 scripts SanityInstall, SanityFK and SanityReboot"
-    python2.7 SanityInstall.py $NEW_TAG $vmIP official_iso
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP
 else
 	echo "Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp"
-    python2.7 SanityInstall.py $NEW_TAG $vmIP official_iso
+    python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP 
     python2.7 CheckAllProcessesUp.py $vmIP 
