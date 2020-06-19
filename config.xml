@@ -309,10 +309,10 @@
     <domains>
       <hudson.plugins.active__directory.ActiveDirectoryDomain>
         <name>corp.audiocodes.com</name>
-        <servers>aclads05.corp.audiocodes.com:3269</servers>
+        <servers>aclads05.corp.audiocodes.com:3269,awsads01.corp.audiocodes.com:3268</servers>
         <bindName>aws</bindName>
         <bindPassword>{AQAAABAAAAAQ34QCDQihSEHMdjkRraCxc4xane1a/1Z3+9AO9fvOgHw=}</bindPassword>
-        <tlsConfiguration>JDK_TRUSTSTORE</tlsConfiguration>
+        <tlsConfiguration>TRUST_ALL_CERTIFICATES</tlsConfiguration>
       </hudson.plugins.active__directory.ActiveDirectoryDomain>
     </domains>
     <startTls>true</startTls>
