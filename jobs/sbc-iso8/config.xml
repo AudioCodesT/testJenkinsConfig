@@ -4,9 +4,12 @@
       1. TAGof TP/GWAPP or Gerrit change&#13;
       2. The TAG name or the Gerrit commit ID, use: "copy full SHA to clipboard"               &#13;
       3. Customer (optional)&#13;
+      4. LI flag&#13;
 2. download  HostedTP_CENTOS8 of this tag or this Gerrit change&#13;
 3. use private labeling if customer != empty&#13;
-4. compile and deploy to artifactory&#13;
+4. If set, the ISO will use the special cmp compiled 'HostedTP_CENTOS8_SIP_LI'&#13;
+    You must before execute the following job to create it: 'sbc-LI-compile'&#13;
+5. compile and deploy to artifactory&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -51,6 +54,12 @@ If exist, all files under this customer folder will be copied from artifactory t
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>LI</name>
+          <description>If set, the ISO will use the special cmp compiled 'HostedTP_CENTOS8_SIP_LI'
+You must before execute the following job to create it: 'sbc-LI-compile'</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -138,9 +147,12 @@ else
 fi
 
 #Bring 'HostedTP_CENTOS8' the needed cmp for this compilation
+if [ $LI == true ]; then findLI=""; else findLI="-v"; fi
 User="admin:$artifactory_password"
-uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=$ArtifactoryRepo" | grep uri | \
-      cut -d'"' -f4 | grep HostedTP_CENTOS8 | grep -v LAB | grep .cmp  | head -1)
+uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo" | \
+    grep uri | cut -d'"' -f4 | grep HostedTP_CENTOS8 | grep $findLI _LI | \
+    grep -v LAB | grep .cmp  | head -1)
+
 if [ "$uri" == "" ]; then
   echo Need waiting to HostedTP CENTOS8 compilation...
   if [ "$NAGINATOR_COUNT" == 3 ]; then
