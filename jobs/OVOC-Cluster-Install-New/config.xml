@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -35,6 +35,31 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NEW_TAG</name>
+          <description/>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>DeployISO</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>FullTesting</name>
+          <description/>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -72,29 +97,6 @@ cat /home/centos/.aws/config</scriptContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
     
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>NEW_TAG</name>
-          <description/>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
-          <description/>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
-          <description/>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>def mgmtIP = ""
@@ -168,13 +170,18 @@ def runInstance(role) {
 
 def runSanity() {
     sh '''
-        cd ${WORKSPACE}
-        cd ../ovoc/EMS/VersionRelease
+        echo "Waiting 60s for system to stabilize."
+        sleep 600
+        
+        cd ${WORKSPACE}/../ovoc/EMS/VersionRelease
         
         # Running 2 scripts SanityFK and SanityReboot
         python2.7 SanityFK.py ${mgmtIP} ${NEW_TAG}
-        python2.7 SanityReboot.py ${mgmtIP} \
-        &amp;&amp; python2.7 CheckAllProcessesUp.py ${mgmtIP} || { python2.7 SanityCopyLogs.py ${NEW_TAG} ${mgmtIP} ; exit 1; }
+        python2.7 SanityReboot.py ${mgmtIP} &amp;
+        python2.7 SanityReboot.py ${vqmIP} &amp;
+        python2.7 SanityReboot.py ${pmIP} &amp;
+        sleep 180
+        python2.7 CheckAllProcessesUp.py ${mgmtIP} || { python2.7 SanityCopyLogs.py ${NEW_TAG} ${mgmtIP} ; exit 1; }
 
         # Run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
        	python2.7 SanityTest.py ${NEW_TAG} ${mgmtIP} ${FullTesting} || \
@@ -223,6 +230,7 @@ pipeline {
                     MINORMINOR = "${NEW_TAG}".split("\\.")[2].substring(0,1) + "000"
                     env.BRANCH = "${MAJOR}.${MINOR}.${MINORMINOR}"
                     println("BRANCH: " + env.BRANCH)
+                    println ("Build slaveIP: " + "ifconfig".execute().text)
                 }
                 sh '''
                     cd "${WORKSPACE}/.."
@@ -244,7 +252,7 @@ pipeline {
                         rest-core-${BRANCH}-SNAPSHOT.jar \
                         oracle_trigger-${BRANCH}-SNAPSHOT.jar \
                         database-${BRANCH}-SNAPSHOT.jar
-                    do curl -O -k --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PWD} https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}/${f}
+                    do curl -O -k --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${NEW_TAG}/${f}
                     done
                 '''
             }
