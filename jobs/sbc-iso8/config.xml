@@ -140,16 +140,18 @@ echo GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;
 if [ "$Build_ISO_From" == "TAG" ]; then
   rev=$(git rev-parse --verify $Tag_Or_GerritChange_Value^{commit})
   placeInArt="artifactory/sbc-release/com/ac/sbc/ISO/Centos8/${GERRIT_BRANCH}/${NEWTAG}"
+  ArtifactoryRepo="sbc-release"
   #rev=$(git rev-parse HEAD)
 else
   rev=${Tag_Or_GerritChange_Value}
   placeInArt="artifactory/sbc-review/com/ac/sbc/ISO/${BUILD_NUMBER}"
+  ArtifactoryRepo="sbc-repo"
 fi
 
 #Bring 'HostedTP_CENTOS8' the needed cmp for this compilation
 if [ $LI == true ]; then findLI=""; else findLI="-v"; fi
 User="admin:$artifactory_password"
-uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=sbc-repo" | \
+uri=$(curl -ks -u $User "https://artifactory/api/search/prop?vcs.revision=$rev&amp;repos=$ArtifactoryRepo" | \
     grep uri | cut -d'"' -f4 | grep HostedTP_CENTOS8 | grep $findLI _LI | \
     grep -v LAB | grep .cmp  | head -1)
 
