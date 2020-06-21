@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -35,6 +35,31 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NEW_TAG</name>
+          <description/>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>DeployISO</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>FullTesting</name>
+          <description/>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -72,29 +97,6 @@ cat /home/centos/.aws/config</scriptContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
     
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>NEW_TAG</name>
-          <description/>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
-          <description/>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
-          <description/>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>def mgmtIP = ""
@@ -134,9 +136,9 @@ def runInstance(role) {
     def runJsonFile = readJSON file: "${env.WORKSPACE}/run-inst.json";
 
     instId = (runJsonFile.Instances.InstanceId).toString().replaceAll("\\[|\\]", "")
-    println(role + " " + instId)
+    println("--- " + role + " " + instId)
     ipAddr = (runJsonFile.Instances.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
-    println(role + " " + ipAddr)
+    println("--- " + role + " " + ipAddr)
 
     sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_Elasticity_${JOB_NAME}_${role} Key=Creator,Value=Spotinst"
     sh "aws ec2 modify-instance-attribute --instance-id ${instId} --block-device-mappings DeviceName=/dev/sda1,Ebs={DeleteOnTermination=true}"
@@ -147,20 +149,20 @@ def runInstance(role) {
         case "management":
             env.mgmtId = instId;
             env.mgmtIP = ipAddr;
-            println(env.mgmtId);
-            println(env.mgmtIP);
+            println("--- " + env.mgmtId);
+            println("--- " + env.mgmtIP);
             break;
         case "vqm":
             env.vqmId = instId;
             env.vqmIP = ipAddr;
-            println(env.vqmId);
-            println(env.vqmIP);
+            println("--- " + env.vqmId);
+            println("--- " + env.vqmIP);
             break;
         case "pm":
             env.pmId = instId;
             env.pmIP = ipAddr;
-            println(env.pmId);
-            println(env.pmIP);
+            println("--- " + env.pmId);
+            println("--- " + env.pmIP);
             break;
     }
 }
@@ -227,7 +229,7 @@ pipeline {
                     MINOR = "${NEW_TAG}".split("\\.")[1]
                     MINORMINOR = "${NEW_TAG}".split("\\.")[2].substring(0,1) + "000"
                     env.BRANCH = "${MAJOR}.${MINOR}.${MINORMINOR}"
-                    println("BRANCH: " + env.BRANCH)
+                    println("--- BRANCH: " + env.BRANCH)
                 }
                 sh '''
                     gw=$(ip route | grep default | grep -oE "([0-9]{1,3}\\.){3}[0-9]{1,3}")
