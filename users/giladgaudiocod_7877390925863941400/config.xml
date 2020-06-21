@@ -44,6 +44,7 @@
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string># SmartTAP Dev</string>
         <string>AWS_Jira_Users</string>
         <string># All__Beer_Sheva</string>
@@ -70,7 +71,7 @@
         <string>365_MFA_Apps</string>
         <string>NewUser_Israel-BS</string>
       </roles>
-      <timestamp>1589105773415</timestamp>
+      <timestamp>1592737064386</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
