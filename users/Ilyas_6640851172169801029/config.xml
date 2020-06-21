@@ -45,6 +45,7 @@
       <roles>
         <string>authenticated</string>
         <string>System_Software</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
@@ -74,7 +75,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1588225455656</timestamp>
+      <timestamp>1592752335075</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
