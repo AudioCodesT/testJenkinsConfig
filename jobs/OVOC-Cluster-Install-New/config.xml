@@ -232,8 +232,8 @@ pipeline {
                     println("BRANCH: " + env.BRANCH)
                 }
                 sh '''
-                    gw=$(ip route | grep default | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-                    hostIp=$(ip addr | grep ${gw%.*} | grep -oE -m 1 "([0-9]{1,3}\.){3}[0-9]{1,3}" | head -n 1)
+                    gw=$(ip route | grep default | grep -oE "([0-9]{1,3}\\.){3}[0-9]{1,3}")
+                    hostIp=$(ip addr | grep ${gw%.*} | grep -oE -m 1 "([0-9]{1,3}\\.){3}[0-9]{1,3}" | head -n 1)
                     echo "--- Build slave IP: $hostIp"
                     cd "${WORKSPACE}/.."
                     [[ -d ovoc ]] &amp;&amp; rm -rf ovoc
