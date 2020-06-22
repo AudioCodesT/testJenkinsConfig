@@ -1,7 +1,99 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
+  <description/>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs/>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit/>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
+    <script>pipeline {
+    agent {
+        node {
+            label 'ems-build'
+        }
+    }
+    environment {
+        ARTI_CREDS = credentials('e7c58828-5cf7-40cb-9acd-00d9c7419212')
+    }
+    parameters {
+        string(name: 'NEW_TAG', defaultValue: '', description: '')
+        string(name: 'OLD_TAG', defaultValue: '', description: '')
+        choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
+        booleanParam(name: 'FullTesting', defaultValue: false, description: '')
+    }
+    stages {
+        stage('Verify Params') {
+            steps{
+                script{
+                    def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
+                    def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
+                    assert NEW_VER &gt; OLD_VER
+                }
+            }
+        }
+        stage('Build Properties') {
+            steps {
+                script {
+                    currentBuild.displayName = "${BUILD_NUMBER}_${NEW_TAG}"
+                    currentBuild.description = ""
+                }
+            }
+        }
+        stage('Run Tests') {
+            parallel {
+                stage('Run Install New') {
+                    steps {
+                        build job: 'OVOC-Cluster-Install-New', parameters: [
+                            string(name: 'TAG', value: "${params.NEW_TAG}"),
+                            choice(name: 'DeployISO', value: "${params.DeployISO}"),
+                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}")
+                        ]
+                    }
+                }
+                stage('Run Upgrade Single') {
+                    steps {
+                        build job: 'OVOC-Cluster-Install-New', parameters: [
+                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
+                            string(name: 'OLD_TAG', value: "${params.OLD_TAG}"),
+                            choice(name: 'DeployISO', value: "${params.DeployISO}"),
+                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}")
+                        ]
+                    }
+                }
+                stage('Run Upgrade Cluster') {
+                    steps {
+                        build job: 'OVOC-Cluster-Install-New', parameters: [
+                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
+                            string(name: 'OLD_TAG', value: "${params.OLD_TAG}"),
+                            string(name: 'ServerIP', value: "${env.mgmtIP}"),
+                            choice(name: 'DeployISO', value: "${params.DeployISO}"),
+                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}")
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
   <triggers/>
   <disabled>false</disabled>
 </flow-definition>
