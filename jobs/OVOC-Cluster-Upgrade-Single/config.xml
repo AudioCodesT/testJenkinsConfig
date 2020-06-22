@@ -238,11 +238,13 @@ pipeline {
     }
     stages {
         stage('Verify Params') {
-            catchError(buildResult: 'ABORTED') {
-                script{
-                    def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
-                    def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
-                    assert NEW_VER &gt; OLD_VER
+            steps {
+                catchError(buildResult: 'ABORTED') {
+                   script{
+                        def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
+                        def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
+                        assert NEW_VER &gt; OLD_VER
+                    }
                 }
             }
         }
