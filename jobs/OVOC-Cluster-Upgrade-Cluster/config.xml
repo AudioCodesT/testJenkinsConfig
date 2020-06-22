@@ -361,6 +361,7 @@ pipeline {
                     python2.7 ConnectHighScaleSystem.py ${mgmtIP} ${pmIP} PM
                 '''
             }
+        }
         stage('Install Nodes - New Tag') {
             failFast true
             parallel {
