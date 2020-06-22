@@ -1784,6 +1784,7 @@
         <string>OVOC-Cluster-Config</string>
         <string>OVOC-Cluster-DVD-Install</string>
         <string>OVOC-Cluster-Install-New</string>
+        <string>OVOC-Cluster-Top-Job</string>
         <string>OVOC-Cluster-Upgrade-Cluster</string>
         <string>OVOC-Cluster-Upgrade-Single</string>
       </jobNames>
