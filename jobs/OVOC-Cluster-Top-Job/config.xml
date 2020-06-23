@@ -26,8 +26,9 @@
     
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
-    <script>def get-latest(branch) {
+    <script>def getLatest(branch) {
     println("--- Setting env.LATEST to latest official ISO in: " + branch)
+
     sh '''
         LATEST=$(curl -O -k --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} -X POST -k https://artifactory/api/search/aql -H "content-type: text/plain" -d "items.find({\"repo\": {\"\$eq\": \"ems-release\"},\"name\": {\"\$match\": \"*.iso\"}})" | jq -r '.results[] | select(.path == "com/ac/ems/ovoc_server/${branch}/official_iso") | .name' | sort | tail -n 1)
 
@@ -76,10 +77,10 @@ pipeline {
         }
         stage('Get latest') {
             steps {
-                env.LATEST_7_6_2000 = get-latest('7.6.2000')
-                env.LATEST_7_8      = get-latest('7.8')
-                env.LATEST_7_8_1000 = get-latest('7.8.1000')
-                env.LATEST_7_8_2000 = get-latest('7.8.2000')
+                env.LATEST_7_6_2000 = getLatest('7.6.2000')
+                env.LATEST_7_8      = getLatest('7.8')
+                env.LATEST_7_8_1000 = getLatest('7.8.1000')
+                env.LATEST_7_8_2000 = getLatest('7.8.2000')
             }
         }
 //        stage('Run Test Senarios') {
