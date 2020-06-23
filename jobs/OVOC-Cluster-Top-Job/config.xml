@@ -63,12 +63,9 @@
     
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
-    <script>def env.LATEST
-def env.BRANCH
+    <script>def getLatest(branch) {
 
-def getLatest(branch) {
-
-    env.BRANCH = branch
+    env.BRANCH = "${branch}"
     echo "env.BRANCH = ${env.BRANCH}"
 
     println("--- Setting env.LATEST to latest official ISO in: " + branch)
