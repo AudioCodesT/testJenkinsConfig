@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -26,16 +26,6 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
-    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
-      <maxConcurrentPerNode>0</maxConcurrentPerNode>
-      <maxConcurrentTotal>0</maxConcurrentTotal>
-      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
-      <throttleEnabled>false</throttleEnabled>
-      <throttleOption>project</throttleOption>
-      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit/>
-    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
@@ -47,9 +37,11 @@
         <hudson.model.ChoiceParameterDefinition>
           <name>DeployISO</name>
           <description/>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -59,19 +51,29 @@
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit/>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>def getLatest(branch) {
 
     env.BRANCH = "${branch}"
-    echo "env.BRANCH = ${env.BRANCH}"
-
-    println("--- Setting env.LATEST to latest official ISO in: " + branch)
+    
+    //echo "env.BRANCH = ${env.BRANCH}"
+    //println("--- Setting env.LATEST to latest official ISO in: " + branch)
 
     sh '''
         ARTIFACTORY="https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/${BRANCH}/official_iso"
 
-        if [[ "$branch" == "$NEW_TAG" ]]; then
+        if [[ ${#NEW_TAG} == ${#BRANCH} &amp;&amp; "${NEW_TAG::5}" == "${BRANCH::5}" ]]; then
             LATEST="$(curl --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
         else
             LATEST="$(curl --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
@@ -107,10 +109,10 @@ pipeline {
         stage('Get latest') {
             steps {
                 script {
-                    env.LATEST_7_6_2000 = "${getLatest('7.6.2000')}"
-                    env.LATEST_7_8      = "${getLatest('7.8')}"
-                    env.LATEST_7_8_1000 = "${getLatest('7.8.1000')}"
-                    env.LATEST_7_8_2000 = "${getLatest('7.8.2000')}"
+                    env.LATEST_7_6_2000 = getLatest('7.6.2000')
+                    env.LATEST_7_8      = getLatest('7.8')
+                    env.LATEST_7_8_1000 = getLatest('7.8.1000')
+                    env.LATEST_7_8_2000 = getLatest('7.8.2000')
                 }
             }
         }
