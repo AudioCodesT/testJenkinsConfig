@@ -136,9 +136,9 @@ def runInstance(role) {
     def runJsonFile = readJSON file: "${env.WORKSPACE}/run-inst.json";
 
     instId = (runJsonFile.Instances.InstanceId).toString().replaceAll("\\[|\\]", "")
-    println("--- " + role + " " + instId)
+    println(role + " " + instId)
     ipAddr = (runJsonFile.Instances.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
-    println("--- " + role + " " + ipAddr)
+    println(role + " " + ipAddr)
 
     sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_Elasticity_${JOB_NAME}_${BUILD_NUMBER}_${NEW_TAG}_${role} Key=Creator,Value=Spotinst"
     sh "aws ec2 modify-instance-attribute --instance-id ${instId} --block-device-mappings DeviceName=/dev/sda1,Ebs={DeleteOnTermination=true}"
@@ -149,30 +149,31 @@ def runInstance(role) {
         case "management":
             env.mgmtId = instId;
             env.mgmtIP = ipAddr;
-            println("--- " + env.mgmtId);
-            println("--- " + env.mgmtIP);
+            println(env.mgmtId);
+            println(env.mgmtIP);
             break;
         case "vqm":
             env.vqmId = instId;
             env.vqmIP = ipAddr;
-            println("--- " + env.vqmId);
-            println("--- " + env.vqmIP);
+            println(env.vqmId);
+            println(env.vqmIP);
             break;
         case "pm":
             env.pmId = instId;
             env.pmIP = ipAddr;
-            println("--- " + env.pmId);
-            println("--- " + env.pmIP);
+            println(env.pmId);
+            println(env.pmIP);
             break;
     }
 }
+
 
 def installFK() {
     sh '''
         cd ${WORKSPACE}/../ovoc/EMS/VersionRelease
         
         # Running 2 scripts SanityFK and SanityReboot
-        python2.7 SanityFK.py ${mgmtIP} ${NEW_TAG}
+        python2.7 SanityFK.py ${mgmtIP} ${OLD_TAG}
         python2.7 SanityReboot.py ${mgmtIP}
         
         echo "Waiting 300s for system to stabilize."
@@ -216,15 +217,25 @@ pipeline {
     }
     parameters {
         string(name: 'NEW_TAG', defaultValue: '', description: '')
+        string(name: 'OLD_TAG', defaultValue: '', description: '')
         choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
         booleanParam(name: 'FullTesting', defaultValue: false, description: '')
         string(name: 'TJ_BuildNumber', defaultValue: 'None', description: '')
     }
     stages {
+        stage('Verify Params') {
+            steps{
+                script{
+                    def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
+                    def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
+                    assert NEW_VER &gt; OLD_VER
+                }
+            }
+        }
         stage('Build Properties') {
             steps {
                 script {
-                    currentBuild.displayName = "${BUILD_NUMBER}_TJ-${TJ_BuildNumber}_new_${NEW_TAG}"
+                    currentBuild.displayName = "${env.BUILD_NUMBER}_TJ-${TJ_BuildNumber}_from_${params.OLD_TAG}_to_${params.NEW_TAG}"
                     currentBuild.description = ""
                 }
             }
@@ -232,9 +243,9 @@ pipeline {
         stage('Set Node') {
             steps {
                 script{
-                    MAJOR = "${NEW_TAG}".split("\\.")[0]
-                    MINOR = "${NEW_TAG}".split("\\.")[1]
-                    MINORMINOR = "${NEW_TAG}".split("\\.")[2].substring(0,1) + "000"
+                    MAJOR = "${params.NEW_TAG}".split("\\.")[0]
+                    MINOR = "${params.NEW_TAG}".split("\\.")[1]
+                    MINORMINOR = "${params.NEW_TAG}".split("\\.")[2].substring(0,1) + "000"
                     env.BRANCH = "${MAJOR}.${MINOR}.${MINORMINOR}"
                     println("--- BRANCH: " + env.BRANCH)
                 }
@@ -247,7 +258,7 @@ pipeline {
                     mkdir ovoc
                 '''
                 dir ("${env.WORKSPACE}/../ovoc") {
-                    checkout([$class: 'GitSCM', branches: [[name: "server_${NEW_TAG}"]], userRemoteConfigs: [[credentialsId: 'fef9964a-ddb7-4ce6-a445-a99a9e9802c0', url: 'ssh://jenkins@test-gerrit:29418/EMS/ovoc_server']]])
+                    checkout([$class: 'GitSCM', branches: [[name: "server_${params.NEW_TAG}"]], userRemoteConfigs: [[credentialsId: 'fef9964a-ddb7-4ce6-a445-a99a9e9802c0', url: 'ssh://jenkins@test-gerrit:29418/EMS/ovoc_server']]])
                 }
                 sh '''
                     cd ${WORKSPACE}/../ovoc/EMS
@@ -266,24 +277,44 @@ pipeline {
                 '''
             }
         }
-        stage('Install Nodes - New Tag') {
+        stage('Install Nodes - Old Tag') {
             failFast true
             parallel {
                 stage('Install management') {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_management"
+                            customWorkspace "${env.JOB_NAME}_management"
                         }
                     }
                     steps {
                         runInstance('management')
                         build job: 'OVOC-Cluster-DVD-Install', parameters: [
+                            string(name: 'TAG', value: "${params.OLD_TAG}"),
+                            string(name: 'ServerRole', value: 'none'),
+                            string(name: 'ServerIP', value: "${env.mgmtIP}"),
+                            string(name: 'DeployISO', value: "${params.DeployISO}")
+                        ]
+                    }
+                }
+            }
+        }
+        stage('Install Nodes - New Tag') {
+            failFast true
+            parallel {
+                stage('Upgrade management') {
+                    agent {
+                        node {
+                            label 'ems-build'
+                            customWorkspace "${env.JOB_NAME}_management"
+                        }
+                    }
+                    steps {
+                        build job: 'OVOC-Cluster-DVD-Install', parameters: [
                             string(name: 'TAG', value: "${params.NEW_TAG}"),
                             string(name: 'ServerRole', value: 'management'),
                             string(name: 'ServerIP', value: "${env.mgmtIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
-                            string(name: 'TJ_BuildNumber', defaultValue: 'None', description: '')
                         ]
                     }
                 }
@@ -291,7 +322,7 @@ pipeline {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_vqm"
+                            customWorkspace "${env.JOB_NAME}_vqm"
                         }
                     }
                     steps {
@@ -308,7 +339,7 @@ pipeline {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_pm"
+                            customWorkspace "${env.JOB_NAME}_pm"
                         }
                     }
                     steps {
@@ -328,7 +359,7 @@ pipeline {
                 installFK()
             }
         }
-        stage('Configure Cluster') {
+        stage('Configure Cluster - New Tags') {
             steps {
                 sh '''
                     cd ${WORKSPACE}
@@ -345,7 +376,6 @@ pipeline {
         }
     }
 }
-
 </script>
     <sandbox>true</sandbox>
   </definition>
