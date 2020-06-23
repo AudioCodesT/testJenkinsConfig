@@ -227,23 +227,22 @@ pipeline {
         string(name: 'OLD_TAG', defaultValue: '', description: '')
         choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
         booleanParam(name: 'FullTesting', defaultValue: false, description: '')
+        string(name: 'TJ_BuildNumber', defaultValue: 'None', description: '')
     }
     stages {
         stage('Verify Params') {
-            steps {
-                catchError(buildResult: 'ABORTED') {
-                   script{
-                        def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
-                        def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
-                        assert NEW_VER &gt; OLD_VER
-                    }
+            steps{
+                script{
+                    def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
+                    def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
+                    assert NEW_VER &gt; OLD_VER
                 }
             }
         }
         stage('Build Properties') {
             steps {
                 script {
-                    currentBuild.displayName = "${BUILD_NUMBER}_from_${OLD_TAG}_to_${NEW_TAG}"
+                    currentBuild.displayName = "${BUILD_NUMBER}_TJ-${TJ_BuildNumber}_from_${OLD_TAG}_to_${NEW_TAG}"
                     currentBuild.description = ""
                 }
             }
