@@ -169,9 +169,6 @@ def runInstance(role) {
 
 def installFK() {
     sh '''
-        echo "Waiting 300s for system to stabilize."
-        sleep 300
-        
         cd ${WORKSPACE}/../ovoc/EMS/VersionRelease
         
         # Running 2 scripts SanityFK and SanityReboot
@@ -221,12 +218,13 @@ pipeline {
         string(name: 'NEW_TAG', defaultValue: '', description: '')
         choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
         booleanParam(name: 'FullTesting', defaultValue: false, description: '')
+        string(name: 'TJ_BuildNumber', defaultValue: 'None', description: '')
     }
     stages {
         stage('Build Properties') {
             steps {
                 script {
-                    currentBuild.displayName = "${BUILD_NUMBER}_new_${NEW_TAG}"
+                    currentBuild.displayName = "${BUILD_NUMBER}_TJ-${TJ_BuildNumber}_new_${NEW_TAG}"
                     currentBuild.description = ""
                 }
             }
@@ -285,6 +283,7 @@ pipeline {
                             string(name: 'ServerRole', value: 'management'),
                             string(name: 'ServerIP', value: "${env.mgmtIP}"),
                             string(name: 'DeployISO', value: "${params.DeployISO}")
+                            string(name: 'TJ_BuildNumber', defaultValue: 'None', description: '')
                         ]
                     }
                 }
