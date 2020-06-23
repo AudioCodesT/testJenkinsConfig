@@ -96,7 +96,7 @@ pipeline {
         stage('Build Properties') {
             steps {
                 script {
-                    currentBuild.displayName = "${BUILD_NUMBER}_${NEW_TAG}"
+                    currentBuild.displayName = "${env.BUILD_NUMBER}_${params.NEW_TAG}"
                     currentBuild.description = ""
                 }
             }
