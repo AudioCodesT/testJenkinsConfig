@@ -73,7 +73,7 @@
         else
             curl --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev
         fi
-        ''', returnStdout: true).trim()
+        ''').trim()
 
     println('Latest: ' + env.LATEST)
 }
