@@ -39,6 +39,7 @@
       <roles>
         <string>Agile users</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>R&amp;D HDGW software</string>
         <string>TG1000</string>
         <string>AWS_Jira_Users</string>
@@ -77,7 +78,7 @@
         <string># OVOC</string>
         <string>EMS_RW_Access</string>
       </roles>
-      <timestamp>1589370036487</timestamp>
+      <timestamp>1592915564935</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
