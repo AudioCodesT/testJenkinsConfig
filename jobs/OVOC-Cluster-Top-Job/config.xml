@@ -39,7 +39,7 @@
         fi
     '''
 
-    return env.LATEST
+    echo "${env.LATEST}"
 }
 
 pipeline {
