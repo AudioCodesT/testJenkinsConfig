@@ -114,10 +114,12 @@ pipeline {
         }
         stage('Get latest') {
             steps {
-                env.LATEST_7_6_2000 = "${getLatest('7.6.2000')}"
-                env.LATEST_7_8      = "${getLatest('7.8')}"
-                env.LATEST_7_8_1000 = "${getLatest('7.8.1000')}"
-                env.LATEST_7_8_2000 = "${getLatest('7.8.2000')}"
+                script {
+                    env.LATEST_7_6_2000 = "${getLatest('7.6.2000')}"
+                    env.LATEST_7_8      = "${getLatest('7.8')}"
+                    env.LATEST_7_8_1000 = "${getLatest('7.8.1000')}"
+                    env.LATEST_7_8_2000 = "${getLatest('7.8.2000')}"
+                }
             }
         }
 //        stage('Run Test Senarios') {
