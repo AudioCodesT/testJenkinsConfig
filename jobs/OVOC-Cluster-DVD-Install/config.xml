@@ -75,6 +75,7 @@ And does the following:&#13;
               <string>management</string>
               <string>vqm</string>
               <string>pm</string>
+              <string>none</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -170,9 +171,15 @@ python2.7 setNetwork.py $ServerIP $sanityOrAmi
 
 echo "Finish SetNetwork Configuration"
 
-#run sanityInstall and if sanity install fails then copy logs and exit with error
+# Run sanityInstall and if sanity install fails then copy logs and exit with error
+# If `ServerRole` is "none" we are installing none cluster version of OVOC,
+# so there is no `ServerRole` argument in the SanityInstall command.
 echo "Running single script for install"
-python2.7 SanityInstall.py $TAG $ServerIP $DeployISO $ServerRole || { python2.7 SanityCopyLogs.py $TAG $ServerIP ; exit 1; }
+if [[ "$ServerRole" == "none" ]]; then
+	python2.7 SanityInstall.py $TAG $ServerIP $DeployISO || { python2.7 SanityCopyLogs.py $TAG $ServerIP ; exit 1; }
+else
+	python2.7 SanityInstall.py $TAG $ServerIP $DeployISO $ServerRole || { python2.7 SanityCopyLogs.py $TAG $ServerIP ; exit 1; }
+fi
 echo "Finish SanityInstall"
 
 
