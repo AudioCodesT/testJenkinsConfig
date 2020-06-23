@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -37,6 +37,43 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NEW_TAG</name>
+          <description/>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>OLD_TAG</name>
+          <description/>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>DeployISO</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>FullTesting</name>
+          <description/>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TJ_BuildNumber</name>
+          <description/>
+          <defaultValue>None</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
       <maxConcurrentPerNode>0</maxConcurrentPerNode>
       <maxConcurrentTotal>0</maxConcurrentTotal>
@@ -74,41 +111,6 @@ cat /home/centos/.aws/config</scriptContent>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
     
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>NEW_TAG</name>
-          <description/>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>OLD_TAG</name>
-          <description/>
-          <defaultValue/>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>DeployISO</name>
-          <description/>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>FullTesting</name>
-          <description/>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>TJ_BuildNumber</name>
-          <description/>
-          <defaultValue>None</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
     <script>def mgmtIP = ""
@@ -238,16 +240,14 @@ pipeline {
         stage('Verify Params') {
             steps{
                 script{
-                    def NEW_VER = "${params.NEW_TAG}".split("\\.")[2]
-                    def OLD_VER = "${params.OLD_TAG}".split("\\.")[2]
-                    assert NEW_VER &gt; OLD_VER
+                    assert params.NEW_TAG &gt; params.OLD_TAG
                 }
             }
         }
         stage('Build Properties') {
             steps {
                 script {
-                    currentBuild.displayName = "${BUILD_NUMBER}_TJ-${TJ_BuildNumber}_from_${OLD_TAG}_to_${NEW_TAG}"
+                    currentBuild.displayName = "${env.BUILD_NUMBER}_TJ-${TJ_BuildNumber}_from_${params.OLD_TAG}_to_${params.NEW_TAG}"
                     currentBuild.description = ""
                 }
             }
@@ -255,9 +255,9 @@ pipeline {
         stage('Set Node') {
             steps {
                 script{
-                    MAJOR = "${NEW_TAG}".split("\\.")[0]
-                    MINOR = "${NEW_TAG}".split("\\.")[1]
-                    MINORMINOR = "${NEW_TAG}".split("\\.")[2].substring(0,1) + "000"
+                    MAJOR = "${params.NEW_TAG}".split("\\.")[0]
+                    MINOR = "${params.NEW_TAG}".split("\\.")[1]
+                    MINORMINOR = "${params.NEW_TAG}".split("\\.")[2].substring(0,1) + "000"
                     env.BRANCH = "${MAJOR}.${MINOR}.${MINORMINOR}"
                     println("--- BRANCH: " + env.BRANCH)
                 }
@@ -270,7 +270,7 @@ pipeline {
                     mkdir ovoc
                 '''
                 dir ("${env.WORKSPACE}/../ovoc") {
-                    checkout([$class: 'GitSCM', branches: [[name: "server_${NEW_TAG}"]], userRemoteConfigs: [[credentialsId: 'fef9964a-ddb7-4ce6-a445-a99a9e9802c0', url: 'ssh://jenkins@test-gerrit:29418/EMS/ovoc_server']]])
+                    checkout([$class: 'GitSCM', branches: [[name: "server_${params.NEW_TAG}"]], userRemoteConfigs: [[credentialsId: 'fef9964a-ddb7-4ce6-a445-a99a9e9802c0', url: 'ssh://jenkins@test-gerrit:29418/EMS/ovoc_server']]])
                 }
                 sh '''
                     cd ${WORKSPACE}/../ovoc/EMS
@@ -296,7 +296,7 @@ pipeline {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_management"
+                            customWorkspace "${env.JOB_NAME}_management"
                         }
                     }
                     steps {
@@ -318,7 +318,7 @@ pipeline {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_management"
+                            customWorkspace "${env.JOB_NAME}_management"
                         }
                     }
                     steps {
@@ -334,7 +334,7 @@ pipeline {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_vqm"
+                            customWorkspace "${env.JOB_NAME}_vqm"
                         }
                     }
                     steps {
@@ -351,7 +351,7 @@ pipeline {
                     agent {
                         node {
                             label 'ems-build'
-                            customWorkspace "${JOB_NAME}_pm"
+                            customWorkspace "${env.JOB_NAME}_pm"
                         }
                     }
                     steps {
