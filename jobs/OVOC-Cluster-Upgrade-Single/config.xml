@@ -147,7 +147,7 @@ def runInstance(role) {
     ipAddr = (runJsonFile.Instances.PrivateIpAddress).toString().replaceAll("\\[|\\]", "")
     println(role + " " + ipAddr)
 
-    sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_Elasticity_${JOB_NAME}_${role} Key=Creator,Value=Spotinst"
+    sh "aws ec2 create-tags --resources ${instId} --tags Key=Name,Value=OVOC_Elasticity_${JOB_NAME}_${BUILD_NUMBER}_${NEW_TAG}_${role} Key=Creator,Value=Spotinst"
     sh "aws ec2 modify-instance-attribute --instance-id ${instId} --block-device-mappings DeviceName=/dev/sda1,Ebs={DeleteOnTermination=true}"
     sh "aws ec2 wait instance-status-ok --instance-ids ${instId}"
 
