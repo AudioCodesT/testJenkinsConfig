@@ -325,9 +325,11 @@ echo "Finished docker push to Artifactory."
           </email>
         </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
       </configuredTriggers>
-      <contentType>default</contentType>
+      <contentType>text/html</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <defaultContent>$DEFAULT_CONTENT
+
+${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$"}</defaultContent>
       <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
@@ -337,11 +339,6 @@ echo "Finished docker push to Artifactory."
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.32">
-      <recipients>yuvaly</recipients>
-      <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
