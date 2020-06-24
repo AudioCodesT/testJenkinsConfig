@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><flow-definition plugin="workflow-job@2.38">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><flow-definition plugin="workflow-job@2.38">
   <actions>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.6.0"/>
     <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.6.0">
@@ -26,16 +26,6 @@
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
-    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
-      <maxConcurrentPerNode>0</maxConcurrentPerNode>
-      <maxConcurrentTotal>0</maxConcurrentTotal>
-      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
-      <throttleEnabled>false</throttleEnabled>
-      <throttleOption>project</throttleOption>
-      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit/>
-    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
@@ -47,9 +37,11 @@
         <hudson.model.ChoiceParameterDefinition>
           <name>DeployISO</name>
           <description/>
-          <choices>
-            <string>official_iso</string>
-            <string>latest_iso</string>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>official_iso</string>
+              <string>latest_iso</string>
+            </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -59,133 +51,37 @@
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit/>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.78">
-    <script>def getLatest(branch) {
-
-    env.BRANCH = "${branch}"
-    env.LATEST = sh(returnStdout: true, script: '''
-        ARTIFACTORY="https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/${BRANCH}/official_iso"
-        if [[ ${#NEW_TAG} == ${#BRANCH} &amp;&amp; "${NEW_TAG::5}" == "${BRANCH::5}" ]]; then
-            curl --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev
-        else
-            curl --user ${ARTI_CREDS_USR}:${ARTI_CREDS_PSW} -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev
-        fi
-        ''').trim()
-
-    println('Latest: ' + env.LATEST)
-}
-
-pipeline {
-    agent {
-        node {
-            label 'ems-build'
-        }
-    }
-    environment {
-        ARTI_CREDS = credentials('e7c58828-5cf7-40cb-9acd-00d9c7419212')
-    }
-    parameters {
-        string(name: 'NEW_TAG', defaultValue: '', description: '')
-        choice(name: 'DeployISO', choices: ['official_iso', 'latest_iso'], description: '')
-        booleanParam(name: 'FullTesting', defaultValue: false, description: '')
-    }
-    stages {
-        stage('Build Properties') {
-            steps {
-                script {
-                    currentBuild.displayName = "${env.BUILD_NUMBER}_${params.NEW_TAG}"
-                    currentBuild.description = ""
-                }
-            }
-        }
-        stage('Get latest') {
-            steps {
-                script {
-                    getLatest('7.6.2000')
-                    env.LATEST_7_6_2000 = "${env.LATEST}"
-                    println('Latest 7.6.2000: ' + env.LATEST_7_6_2000)
-                    getLatest('7.8')
-                    env.LATEST_7_8 = "${env.LATEST}"
-                    println('Latest 7.8: ' + env.LATEST_7_8)
-                    getLatest('7.8.1000')
-                    env.LATEST_7_8_1000 = "${env.LATEST}"
-                    println('Latest 7.8.1000: ' + env.LATEST_7_8_1000)
-                    getLatest('7.8.2000')
-                    env.LATEST_7_8_2000 = "${env.LATEST}"
-                    println('Latest 7.8.2000: ' + env.LATEST_7_8_2000)
-                }
-            }
-        }
-        stage('Verify Params') {
-            steps{
-                script{
-                    assert params.NEW_TAG &gt; env.LATEST_7_8_2000
-                }
-            }
-        }
-        stage('Run Test Senarios') {
-            parallel {
-                stage('Run Install New') {
-                    steps {
-                        build job: 'OVOC-Cluster-Install-New', parameters: [
-                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}"),
-                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}"),
-                            string(name: 'TJ_BuildNumber', value: "${env.BUILD_NUMBER}")
-                        ]
-                    }
-                }
-                stage('Run Upgrade Single 7.6.2000') {
-                    steps {
-                        build job: 'OVOC-Cluster-Upgrade-Single', parameters: [
-                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'OLD_TAG', value: "${env.LATEST_7_6_2000}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}"),
-                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}"),
-                            string(name: 'TJ_BuildNumber', value: "${env.BUILD_NUMBER}")
-                        ]
-                    }
-                }
-                stage('Run Upgrade Single 7.8') {
-                    steps {
-                        build job: 'OVOC-Cluster-Upgrade-Single', parameters: [
-                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'OLD_TAG', value: "${env.LATEST_7_8}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}"),
-                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}"),
-                            string(name: 'TJ_BuildNumber', value: "${env.BUILD_NUMBER}")
-                        ]
-                    }
-                }
-                stage('Run Upgrade Single 7.8.1000') {
-                    steps {
-                        build job: 'OVOC-Cluster-Upgrade-Single', parameters: [
-                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'OLD_TAG', value: "${env.LATEST_7_8_1000}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}"),
-                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}"),
-                            string(name: 'TJ_BuildNumber', value: "${env.BUILD_NUMBER}")
-                        ]
-                    }
-                }
-                stage('Run Upgrade Cluster 7.8.2000') {
-                    steps {
-                        build job: 'OVOC-Cluster-Upgrade-Cluster', parameters: [
-                            string(name: 'NEW_TAG', value: "${params.NEW_TAG}"),
-                            string(name: 'OLD_TAG', value: "${env.LATEST_7_8_2000}"),
-                            string(name: 'ServerIP', value: "${env.mgmtIP}"),
-                            string(name: 'DeployISO', value: "${params.DeployISO}"),
-                            booleanParam(name: 'FullTesting', value: "${params.FullTesting}"),
-                            string(name: 'TJ_BuildNumber', value: "${env.BUILD_NUMBER}")
-                        ]
-                    }
-                }
-            }
-        }
-    }
-}</script>
-    <sandbox>true</sandbox>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.78">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>ssh://jenkins@gerrit:29418/devops/Jenkins-Pipeline.git</url>
+          <credentialsId>b6e992aa-66c8-4f99-b51f-4bb657ec4c53</credentialsId>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>OVOC-Elasticity/Top-Job/Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>
