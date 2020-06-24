@@ -143,7 +143,8 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>cat &lt;&lt; 'EOF' &gt; script.sh
+      <command>echo "received unexpected HTTP status: 500 Internal Server Error"
+cat &lt;&lt; 'EOF' &gt; script.sh
 exit 1
 EOF
 
