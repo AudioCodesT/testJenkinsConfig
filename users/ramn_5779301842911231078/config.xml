@@ -70,7 +70,6 @@
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
-        <string># VAIG_AUTOMATION_RESULT</string>
         <string>AudioCodes_VPN</string>
         <string># SBC SIP Infra</string>
         <string># RnD Israel</string>
@@ -84,7 +83,7 @@
         <string>ARM-FC</string>
         <string>CI_ARM_developers</string>
       </roles>
-      <timestamp>1591008525572</timestamp>
+      <timestamp>1592998713211</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>927cdbf4ce2fc958</seed>
