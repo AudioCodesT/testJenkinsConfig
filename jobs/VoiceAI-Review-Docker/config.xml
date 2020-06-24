@@ -143,8 +143,16 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>exit 1</command>
-      <unstableReturn>1</unstableReturn>
+      <command>cat &lt;&lt; 'EOF' &gt; script.sh
+exit 1
+EOF
+
+chmod +x script.sh
+
+sh script.sh
+
+
+</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>##
