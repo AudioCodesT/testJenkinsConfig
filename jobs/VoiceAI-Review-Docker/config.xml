@@ -216,7 +216,7 @@ cat &lt;&lt;EOF &gt; ~/.muttrc
 # About Me
 set from = "jenkins@audiocodes.com"
 set realname = "Jenkins DevOps"
-set smtp_url = "smtp://aclmail.corp.audiocodes.com/"
+#set smtp_url = "smtp://aclmail.corp.audiocodes.com/"
 
 # Where to put the stuff
 set header_cache = "~/.mutt/cache/headers"
