@@ -208,7 +208,23 @@ echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 echo "machine docker-voice-ai.test-artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
 echo "login jenkins" &gt;&gt; ~/.netrc
 echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
-</command>
+
+## Install &amp; configure mutt
+sudo yum -y install mutt
+
+cat &lt;&lt;EOF &gt; ~/.muttrc
+# About Me
+set from = "jenkins@audiocodes.com"
+set realname = "Jenkins DevOps"
+set smtp_url = "smtp://aclmail.corp.audiocodes.com/"
+
+# Where to put the stuff
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = "~/.mutt/certificates"
+EOF
+
+mutt -s "TEST 1" yuvaly@audiocodes.com</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>## Runtime vars
@@ -318,8 +334,8 @@ echo "Finished docker push to Artifactory."
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>sudo yum -y install mutt&#13;
-mutt -s "docker push failed ${BUILD_URL}" shukyr@audiocodes.com,yuvaly@audiocodes.com</script>
+          <script>#sudo yum -y install mutt&#13;
+#mutt -s "docker push failed ${BUILD_URL}" #shukyr@audiocodes.com,yuvaly@audiocodes.com</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
