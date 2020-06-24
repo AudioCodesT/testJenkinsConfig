@@ -130,7 +130,7 @@ cat /home/centos/.aws/config</scriptContent>
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>OVOC-Elasticity/update-cluster/Jenkinsfile</scriptPath>
+    <scriptPath>OVOC-Elasticity/upgrade-cluster/Jenkinsfile</scriptPath>
     <lightweight>true</lightweight>
   </definition>
   <triggers/>
