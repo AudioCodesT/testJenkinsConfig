@@ -328,7 +328,8 @@ echo "Finished docker push to Artifactory."
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT
 
-${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$"}</body>
+
+${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$", showTruncatedLines=false, escapeHtml=true}</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
@@ -336,7 +337,7 @@ ${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$"}</body>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
+            <contentType>text/html</contentType>
           </email>
         </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
       </configuredTriggers>
