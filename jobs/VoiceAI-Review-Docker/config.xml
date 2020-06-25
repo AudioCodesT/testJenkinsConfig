@@ -143,19 +143,6 @@ git archive 3 folders and upload to artifactory under tag folder</description>
   <customWorkspace>/home/centos/jenkinsslave/workspace/VoiceAI</customWorkspace>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo "received unexpected HTTP status: 500 Internal Server Error"
-cat &lt;&lt; 'EOF' &gt; script.sh
-exit 1
-EOF
-
-chmod +x script.sh
-
-sh script.sh
-
-
-</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command>##
 ### Add AudioCodes Public certificate to local machine
 echo "*** Verify AUDC certificate ***"
