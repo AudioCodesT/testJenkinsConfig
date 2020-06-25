@@ -41,7 +41,7 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Tag_Or_GerritChange_Value</name>
-          <description>If you build ISO from a Tag then insert the desired tag
+          <description>If you build ISO from a Tag then insert the desired tag (without the initial 'F')
 If from an open gerrit change then insert here the commit ID (sha1) - you can copy from the gerrit change web page - there is a button of "copy full SHA to clipboard"</description>
           <defaultValue>7.20CE.255.067</defaultValue>
           <trim>false</trim>
@@ -56,8 +56,9 @@ If exist, all files under this customer folder will be copied from artifactory t
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>LI</name>
-          <description>If set, the ISO will use the special cmp compiled 'HostedTP_CENTOS8_SIP_LI'
-You must before execute the following job to create it: 'sbc-LI-compile'</description>
+          <description>If chosen, the ISO build will use the special cmp compiled 'HostedTP_CENTOS8_SIP_LI'
+BEFORE running this job you must execute the following job to create CMP first: 'sbc-LI-compile'
+</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
