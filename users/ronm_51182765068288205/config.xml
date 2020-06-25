@@ -42,6 +42,7 @@
       <roles>
         <string># All Dinner</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string># SmartTAP Dev</string>
         <string>AWS_Jira_Users</string>
         <string>AI-Engineering</string>
@@ -76,7 +77,7 @@
         <string># All Airport City</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1589294887847</timestamp>
+      <timestamp>1593068376839</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <jenkins.security.seed.UserSeedProperty>
       <seed>912b9ff49eb2893e</seed>
