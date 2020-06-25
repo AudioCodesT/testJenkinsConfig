@@ -425,7 +425,7 @@ ${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$", showTruncatedLines
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
-      <recipients>benm yuvaly orgads</recipients>
+      <recipients>yuvaly orgads shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
