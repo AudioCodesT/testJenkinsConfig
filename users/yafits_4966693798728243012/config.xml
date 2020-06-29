@@ -62,6 +62,7 @@
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
         <string>Mailvision Branch Office Users</string>
+        <string># VAIG_AUTOMATION_RESULT</string>
         <string>Linuxusers</string>
         <string># BatchRunnerBlockStream</string>
         <string>AudioCodes_VPN</string>
@@ -77,7 +78,7 @@
         <string># R&amp;D Sys SW Team Leaders</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1589473605849</timestamp>
+      <timestamp>1593437741944</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Yafit.Shalom@audiocodes.com</emailAddress>
