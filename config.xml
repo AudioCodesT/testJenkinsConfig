@@ -100,6 +100,7 @@
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
           <sid>qasa</sid>
+          <sid># SBC MGMT QA</sid>
         </assignedSIDs>
       </role>
       <role name="spotinst" pattern=".*">
