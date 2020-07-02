@@ -60,10 +60,11 @@
         <string>SSL_RDP_Access</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string># OVOC</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1589804353259</timestamp>
+      <timestamp>1593686906636</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
