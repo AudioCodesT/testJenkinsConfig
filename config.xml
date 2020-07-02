@@ -241,6 +241,7 @@
           <sid># SBC SIP Infra</sid>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
+          <sid>gitii</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
