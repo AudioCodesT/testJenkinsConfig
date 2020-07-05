@@ -244,7 +244,7 @@ CheckFolder sbc-release/com/ac/sbc/7.2.256/Firmware "7.2.250 Release/7.2.256"
 CheckFolder sbc-release/com/ac/sbc/7.2.256_2/Firmware "7.2.250 Release/7.2.256_2"
 CheckFolder sbc-release/com/ac/sbc/7.2.256_MSBR/Firmware "7.2.250 Release/7.2.256_MSBR"
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware "NextGenCPE Release/Firmware"
-CheckFolder sbc-release/com/ac/sbc/NextGenCPE_R1/Firmware/Firmware "NextGenCPE Release/NextGenCPE_R1"
+CheckFolder sbc-release/com/ac/sbc/NextGenCPE_R1/Firmware "NextGenCPE Release/NextGenCPE_R1"
 CheckFolder sbc-release/com/ac/sbc/7.4/Firmware "7.4 Release/7.4"
 #All Feature branches
 CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware "feature/centos7/Firmware" 
