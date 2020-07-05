@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>This job go over all the folders in the Artifactory and move the old version to aclnas03.&#xd;
+  <description>This job go over all the folders in the Artifactory and move the old version to aclnas03.&#13;
 Executed periodically every night.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -10,7 +9,7 @@ Executed periodically every night.</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -37,7 +36,7 @@ Executed periodically every night.</description>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>DESTINATION</name>
-          <description></description>
+          <description/>
           <defaultValue>\\aclnas03\Versions\CompilationResults</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -50,8 +49,9 @@ Executed periodically every night.</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>AclnasArtifactory-Update</assignedNode>
@@ -67,9 +67,9 @@ Executed periodically every night.</description>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>net use T: /delete&#xd;
-net use T: &quot;%DESTINATION%&quot;&#xd;
-&#xd;
+      <command>net use T: /delete&#13;
+net use T: "%DESTINATION%"&#13;
+&#13;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
@@ -78,7 +78,7 @@ net use T: &quot;%DESTINATION%&quot;&#xd;
 User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
 # Calculate the date we are going to delete
-oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
+oldThan=$(date +"%Y%m%d" -d "-$OLD days")
 moveDone=0
 
 
@@ -94,52 +94,52 @@ function RemoveEachFolder() {
   do
   	copy_to_local_storage=True
   	#uri = file/folder name
-    uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
+    uri=`echo $line | cut -d'"' -f4`
     DestSize=0; ArtSize=0
-    ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \&quot;size\&quot; | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
+    ArtSize=`$curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep \"size\" | cut -d: -f2 | cut -d'"' -f2`
     #check if there is size to the artifacts --- its a file to copy from artifactory to local storage
-    if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
+    if [ "$ArtSize" != "" ]; then
     	#check if file already exists in the destination path, if he exists delete him
         if [[ -e ${DESTINATION}/${TargetPath}$uri ]]
         then
-        	echo &quot;deleting ${DESTINATION}/${TargetPath}$uri before copy him from artifactory&quot;
-        	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        	echo "deleting ${DESTINATION}/${TargetPath}$uri before copy him from artifactory"
+        	rm -rf "${DESTINATION}/${TargetPath}$uri"
         fi
-        #check if its from SFB or Non-lync and not from &quot;release&quot; branch then copy only .csv and .img files to local storage
-        if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;SFB&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;non_lync&quot;* ]]
+        #check if its from SFB or Non-lync and not from "release" branch then copy only .csv and .img files to local storage
+        if [[ "${RemoveFolder}$uri" == *"SFB"* || "${RemoveFolder}$uri" == *"non_lync"* ]]
         then
-        	if [[ &quot;${RemoveFolder}$uri&quot; != *&quot;SFB/release&quot;* &amp;&amp; &quot;${RemoveFolder}$uri&quot; != *&quot;non_lync/release&quot;* ]]
+        	if [[ "${RemoveFolder}$uri" != *"SFB/release"* &amp;&amp; "${RemoveFolder}$uri" != *"non_lync/release"* ]]
             then
-            	if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;.csv&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;.img&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;build.tgz&quot;* ]]
+            	if [[ "${RemoveFolder}$uri" == *".csv"* || "${RemoveFolder}$uri" == *".img"* || "${RemoveFolder}$uri" == *"build.tgz"* ]]
                 then
-                	echo &quot;The file is From SFB or non_lync and with .csv or .img type or build.tgz&quot;
-                elif [[ &quot;${RemoveFolder}$uri&quot; == *&quot;C450HD&quot;* ]]
+                	echo "The file is From SFB or non_lync and with .csv or .img type or build.tgz"
+                elif [[ "${RemoveFolder}$uri" == *"C450HD"* ]]
                 then
                     #if the model is C450HD copy also env.bin, logo_image, rootfs.ext4, phone.bin
-                    if [[ &quot;${RemoveFolder}$uri&quot; == *&quot;env.bin&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;logo_image&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;rootfs.ext4&quot;* || &quot;${RemoveFolder}$uri&quot; == *&quot;phone.bin&quot;* ]]
+                    if [[ "${RemoveFolder}$uri" == *"env.bin"* || "${RemoveFolder}$uri" == *"logo_image"* || "${RemoveFolder}$uri" == *"rootfs.ext4"* || "${RemoveFolder}$uri" == *"phone.bin"* ]]
                     then
-                    	echo &quot;The Model is C450HD, and the file is for dualBin (env.bin, logo_image, rootfs.ext4, phone.bin)&quot;
+                    	echo "The Model is C450HD, and the file is for dualBin (env.bin, logo_image, rootfs.ext4, phone.bin)"
                     else
                     	copy_to_local_storage=False
-                		echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri...&quot;
+                		echo "Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri..."
           				$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
                     fi
                 else
                 	copy_to_local_storage=False
-                	echo &quot;Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri...&quot;
+                	echo "Not downloading to local storage the file is not .csv or .img type, Deleting file from artifactory ${RemoveFolder}$uri..."
           			$curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
                 fi
             fi
         fi
-        if [[ &quot;$copy_to_local_storage&quot; == &quot;True&quot; ]]
+        if [[ "$copy_to_local_storage" == "True" ]]
         then       
           	#copy file from artifactory to aclnas03
-      		echo Download file ${RemoveFolder}$uri to &quot;${DESTINATION}/${TargetPath}$uri&quot;...
-        	$curl -R -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output &quot;${DESTINATION}/${TargetPath}$uri&quot; || echo &quot;failed to download ${RemoveFolder}$uri&quot;
-          	DestSize=`wc -c &lt;&quot;${DESTINATION}/${TargetPath}$uri&quot;`
-            local_md5=$(md5sum &quot;${DESTINATION}/${TargetPath}$uri&quot; | cut -d&apos; &apos; -f1)
-            remote_md5=$($curl -ks -u $User -X GET -I https://$ARTIFACTORY/${RemoveFolder}$uri 2&gt;/dev/null | grep X-Checksum-Md5 | cut -d&apos; &apos; -f2 | cut -c 1-32)
-          	if [ &quot;$local_md5&quot; != &quot;$remote_md5&quot; ]; then
+      		echo Download file ${RemoveFolder}$uri to "${DESTINATION}/${TargetPath}$uri"...
+        	$curl -R -ks -u $User -X GET https://$ARTIFACTORY/${RemoveFolder}$uri --output "${DESTINATION}/${TargetPath}$uri" || echo "failed to download ${RemoveFolder}$uri"
+          	DestSize=`wc -c &lt;"${DESTINATION}/${TargetPath}$uri"`
+            local_md5=$(md5sum "${DESTINATION}/${TargetPath}$uri" | cut -d' ' -f1)
+            remote_md5=$($curl -ks -u $User -X GET -I https://$ARTIFACTORY/${RemoveFolder}$uri 2&gt;/dev/null | grep X-Checksum-Md5 | cut -d' ' -f2 | cut -c 1-32)
+          	if [ "$local_md5" != "$remote_md5" ]; then
                 echo local md5: $local_md5 and remote md5 $remote_md5: $uri is different - No delete and exit......
             	exit 1
           	else
@@ -150,15 +150,15 @@ function RemoveEachFolder() {
     # because there is no size = its a folder (its creating a new folder in the local storage)     
     else
     	#check if already exists file with the same name of the directory that we will create (mkdir ${DESTINATION}/${TargetPath}$uri) delete the file 
-    	if [[ -f &quot;${DESTINATION}/${TargetPath}$uri&quot; ]]
+    	if [[ -f "${DESTINATION}/${TargetPath}$uri" ]]
         then
-        	echo &quot;Deleting ${DESTINATION}/${TargetPath}$uri because its a file and we creating Folder with the same name&quot;
-        	rm -rf &quot;${DESTINATION}/${TargetPath}$uri&quot;
+        	echo "Deleting ${DESTINATION}/${TargetPath}$uri because its a file and we creating Folder with the same name"
+        	rm -rf "${DESTINATION}/${TargetPath}$uri"
         fi
-        echo -- mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot;
-        mkdir &quot;${DESTINATION}/${TargetPath}$uri&quot; || true
-        RemoveEachFolder ${RemoveFolder}$uri &quot;${TargetPath}$uri&quot;
-        if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+        echo -- mkdir "${DESTINATION}/${TargetPath}$uri"
+        mkdir "${DESTINATION}/${TargetPath}$uri" || true
+        RemoveEachFolder ${RemoveFolder}$uri "${TargetPath}$uri"
+        if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/${RemoveFolder}$uri | grep -qF '"children" : [ ],'; then 
           echo ----- Delete the empty directory from Artifactory ${RemoveFolder}$uri...
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${RemoveFolder}$uri
         fi
@@ -173,17 +173,17 @@ function CheckFolder() {
   local Folder=$1
   local Target=$2
   # The date format is: YYYYMMDD (Y=the year, M=Month, D=Day  - Example: 8 Jan 2018 should be 20180108
-  lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d&apos;&quot;&apos; -f4 | cut -dT -f1 | sed s:-::g)
+  lastModified=$($curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder?lastModified | grep lastModified | cut -d'"' -f4 | cut -dT -f1 | sed s:-::g)
 
-  if [ &quot;$lastModified&quot; == &quot;&quot; ]; then return 0; fi
-  echo &quot;$lastModified -le $oldThan&quot;
-  if [ &quot;$lastModified&quot; -le &quot;$oldThan&quot; ]; then
+  if [ "$lastModified" == "" ]; then return 0; fi
+  echo "$lastModified -le $oldThan"
+  if [ "$lastModified" -le "$oldThan" ]; then
     echo move $Folder
     echo ---------------------
-    echo &quot;mkdir -p ${DESTINATION}/$Target&quot;
-    mkdir -p &quot;${DESTINATION}/$Target&quot; || true
-    RemoveEachFolder $Folder &quot;$Target&quot;
-    if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+    echo "mkdir -p ${DESTINATION}/$Target"
+    mkdir -p "${DESTINATION}/$Target" || true
+    RemoveEachFolder $Folder "$Target"
+    if $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -qF '"children" : [ ],'; then 
       echo ----- Delete the empty directory from Artifactory $Folder...
       $curl -ks -u $User -X DELETE https://$ARTIFACTORY/$Folder
     fi
@@ -192,11 +192,11 @@ function CheckFolder() {
     return 1
   else
     echo $Folder is not old - check its sub folders
-    $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E &apos;folder.*true&apos; | grep uri | cut -d&apos;&quot;&apos; -f4 | sort -V | while read uri
+    $curl -ks -u $User -X GET https://$ARTIFACTORY/api/storage/$Folder | grep -B 1 -E 'folder.*true' | grep uri | cut -d'"' -f4 | sort -V | while read uri
     do
       echo Execute this function again to check the following directory: ${Folder}$uri
       lastMovedone=$moveDone
-      CheckFolder ${Folder}$uri &quot;${Target}$uri&quot;
+      CheckFolder ${Folder}$uri "${Target}$uri"
       moveDone=$?
       echo Deep: $deep *******
       if [[ $moveDone -eq 0 &amp;&amp; $deep -gt 2 ]]
@@ -218,106 +218,106 @@ function CheckFolder() {
 }
 
 countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
-DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
+DESTINATION=$(echo $DESTINATION | sed -e 's:\\:/:g')
 deep=2
 
 ARTIFACTORY=artifactory
 # SBC 
-CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware &quot;7.2.150 Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware &quot;7.2.150 Release/7.2.154&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.156/Firmware &quot;7.2.150 Release/7.2.156&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.158/Firmware &quot;7.2.150 Release/7.2.158&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.162/Firmware &quot;7.2.150 Release/7.2.162&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.170/Firmware &quot;7.2.170 Release/7.2.170&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware &quot;7.2.200 Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware &quot;7.2.200 Release/7.2.202&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware &quot;7.2.200 Release/7.2.204&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.204_4jio/Firmware &quot;7.2.200 Release/7.2.204_4jio&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware &quot;7.2.250 Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware &quot;7.2.250 Release/7.2.250_MSBR&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware &quot;7.2.250 Release/7.2.252&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.252_MSBR/Firmware &quot;7.2.250 Release/7.2.252_MSBR&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.254/Firmware &quot;7.2.250 Release/7.2.254&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.254_MSBR/Firmware &quot;7.2.250 Release/7.2.254_MSBR&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.254_MSBR_IKEV2/Firmwar &quot;7.2.250 Release/7.2.254_MSBR_IKEV2&quot; 
-CheckFolder sbc-release/com/ac/sbc/7.2.256/Firmware &quot;7.2.250 Release/7.2.256&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.256_2/Firmware &quot;7.2.250 Release/7.2.256_2&quot;
-CheckFolder sbc-release/com/ac/sbc/7.2.256_MSBR/Firmware/Firmware &quot;7.2.250 Release/7.2.256_MSBR&quot;
-CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware &quot;NextGenCPE Release/Firmware&quot;
-CheckFolder sbc-release/com/ac/sbc/NextGenCPE_R1/Firmware/Firmware &quot;NextGenCPE Release/NextGenCPE_R1&quot;
-CheckFolder sbc-release/com/ac/sbc/7.4/Firmware &quot;7.4 Release/7.4&quot;
+CheckFolder sbc-release/com/ac/sbc/7.2.150/Firmware "7.2.150 Release/Firmware"
+CheckFolder sbc-release/com/ac/sbc/7.2.154/Firmware "7.2.150 Release/7.2.154"
+CheckFolder sbc-release/com/ac/sbc/7.2.156/Firmware "7.2.150 Release/7.2.156"
+CheckFolder sbc-release/com/ac/sbc/7.2.158/Firmware "7.2.150 Release/7.2.158"
+CheckFolder sbc-release/com/ac/sbc/7.2.162/Firmware "7.2.150 Release/7.2.162"
+CheckFolder sbc-release/com/ac/sbc/7.2.170/Firmware "7.2.170 Release/7.2.170"
+CheckFolder sbc-release/com/ac/sbc/7.2.200/Firmware "7.2.200 Release/Firmware"
+CheckFolder sbc-release/com/ac/sbc/7.2.202/Firmware "7.2.200 Release/7.2.202"
+CheckFolder sbc-release/com/ac/sbc/7.2.204/Firmware "7.2.200 Release/7.2.204"
+CheckFolder sbc-release/com/ac/sbc/7.2.204_4jio/Firmware "7.2.200 Release/7.2.204_4jio"
+CheckFolder sbc-release/com/ac/sbc/7.2.250/Firmware "7.2.250 Release/Firmware"
+CheckFolder sbc-release/com/ac/sbc/7.2.250_MSBR/Firmware "7.2.250 Release/7.2.250_MSBR"
+CheckFolder sbc-release/com/ac/sbc/7.2.252/Firmware "7.2.250 Release/7.2.252"
+CheckFolder sbc-release/com/ac/sbc/7.2.252_MSBR/Firmware "7.2.250 Release/7.2.252_MSBR"
+CheckFolder sbc-release/com/ac/sbc/7.2.254/Firmware "7.2.250 Release/7.2.254"
+CheckFolder sbc-release/com/ac/sbc/7.2.254_MSBR/Firmware "7.2.250 Release/7.2.254_MSBR"
+CheckFolder sbc-release/com/ac/sbc/7.2.254_MSBR_IKEV2/Firmwar "7.2.250 Release/7.2.254_MSBR_IKEV2" 
+CheckFolder sbc-release/com/ac/sbc/7.2.256/Firmware "7.2.250 Release/7.2.256"
+CheckFolder sbc-release/com/ac/sbc/7.2.256_2/Firmware "7.2.250 Release/7.2.256_2"
+CheckFolder sbc-release/com/ac/sbc/7.2.256_MSBR/Firmware "7.2.250 Release/7.2.256_MSBR"
+CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware "NextGenCPE Release/Firmware"
+CheckFolder sbc-release/com/ac/sbc/NextGenCPE_R1/Firmware/Firmware "NextGenCPE Release/NextGenCPE_R1"
+CheckFolder sbc-release/com/ac/sbc/7.4/Firmware "7.4 Release/7.4"
 #All Feature branches
-CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware &quot;feature/centos7/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/fips/Firmware &quot;feature/fips/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/PM/Firmware &quot;feature/PM/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/voice-ai/Firmware &quot;feature/voice-ai/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/websocket/Firmware &quot;feature/websocket/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware "feature/centos7/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/fips/Firmware "feature/fips/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/PM/Firmware "feature/PM/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/voice-ai/Firmware "feature/voice-ai/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/websocket/Firmware "feature/websocket/Firmware" 
 
-CheckFolder sbc-release/com/ac/sbc/feature/GRXInternalDSP/Firmware &quot;feature/GRXInternalDSP/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/IndianArmyPOC/Firmware &quot;feature/IndianArmyPOC/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/JSUpgrades/Firmware &quot;feature/JSUpgrades/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/LI/Firmware &quot;feature/LI/Firmware&quot; 
-CheckFolder sbc-release/com/ac/sbc/feature/centOS8-7.4/Firmware &quot;feature/centOS8-7.4/Firmware&quot; 
-#CheckFolder sbc-release/com/ac/sbc/feature/M3100/Firmware &quot;feature/M3100/Firmware&quot; 
+CheckFolder sbc-release/com/ac/sbc/feature/GRXInternalDSP/Firmware "feature/GRXInternalDSP/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/IndianArmyPOC/Firmware "feature/IndianArmyPOC/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/JSUpgrades/Firmware "feature/JSUpgrades/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/LI/Firmware "feature/LI/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/centOS8-7.4/Firmware "feature/centOS8-7.4/Firmware" 
+#CheckFolder sbc-release/com/ac/sbc/feature/M3100/Firmware "feature/M3100/Firmware" 
 
 #All ISO
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.150 &quot;ISO/7.2.150&quot;
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.152 &quot;ISO/7.2.152&quot;
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.154 &quot;ISO/7.2.154&quot;
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.156 &quot;ISO/7.2.156&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.158 &quot;ISO/7.2.158&quot;
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.162 &quot;ISO/7.2.162&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.170 &quot;ISO/7.2.170&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.200 &quot;ISO/7.2.200&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.202 &quot;ISO/7.2.202&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.250 &quot;ISO/7.2.250&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_1 &quot;ISO/7.2.252_1&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_AWS &quot;ISO/7.2.252_AWS&quot;  
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252 &quot;ISO/7.2.252&quot; 
-CheckFolder sbc-release/com/ac/sbc/ISO/7.2.254 &quot;ISO/7.2.254&quot; 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.150 "ISO/7.2.150"
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.152 "ISO/7.2.152"
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.154 "ISO/7.2.154"
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.156 "ISO/7.2.156" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.158 "ISO/7.2.158"
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.162 "ISO/7.2.162" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.170 "ISO/7.2.170" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.200 "ISO/7.2.200" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.202 "ISO/7.2.202" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.250 "ISO/7.2.250" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_1 "ISO/7.2.252_1" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252_AWS "ISO/7.2.252_AWS"  
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.252 "ISO/7.2.252" 
+CheckFolder sbc-release/com/ac/sbc/ISO/7.2.254 "ISO/7.2.254" 
 #All VSSBC
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.156 &quot;VSSBC/7.2.156&quot; 
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.204 &quot;VSSBC/7.2.204&quot;
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.250 &quot;VSSBC/7.2.250&quot;
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_1 &quot;VSSBC/7.2.252_1&quot; 
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_AWS &quot;VSSBC/7.2.252_AWS&quot;  
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252 &quot;VSSBC/7.2.252&quot; 
-CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 &quot;VSSBC/7.2.254&quot; 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.156 "VSSBC/7.2.156" 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.204 "VSSBC/7.2.204"
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.250 "VSSBC/7.2.250"
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_1 "VSSBC/7.2.252_1" 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252_AWS "VSSBC/7.2.252_AWS"  
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.252 "VSSBC/7.2.252" 
+CheckFolder sbc-release/com/ac/sbc/VSSBC/7.2.254 "VSSBC/7.2.254" 
 # Other Projects
-CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector &quot;VoiceAiConnector&quot;
-CheckFolder dsp-release/com/ac/dsp/Gen5/710 &quot;DSP/Gen5/710&quot;
-CheckFolder dsp-release/com/ac/dsp/Gen5/722 &quot;DSP/Gen5/722&quot;
-CheckFolder dsp-release/com/ac/dsp/Gen5/723 &quot;DSP/Gen5/723&quot;
+CheckFolder sbc-release/com/ac/sbc/VoiceAiConnector "VoiceAiConnector"
+CheckFolder dsp-release/com/ac/dsp/Gen5/710 "DSP/Gen5/710"
+CheckFolder dsp-release/com/ac/dsp/Gen5/722 "DSP/Gen5/722"
+CheckFolder dsp-release/com/ac/dsp/Gen5/723 "DSP/Gen5/723"
 # Calculate the date we are going to delete for IPPPhone (only 30 days)
 countExtraFolderCheck=(0 0 0 0 0 0 0 0 0 0)
 deep=1
 OLD=30
-oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
-CheckFolder ipp-release/com/ac/ipp/non_lync &quot;IPP/non_lync&quot; 
-CheckFolder ipp-release/com/ac/ipp/SFB &quot;IPP/SFB&quot; 
-CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot; 
+oldThan=$(date +"%Y%m%d" -d "-$OLD days")
+CheckFolder ipp-release/com/ac/ipp/non_lync "IPP/non_lync" 
+CheckFolder ipp-release/com/ac/ipp/SFB "IPP/SFB" 
+CheckFolder ipp-release/com/ac/ipp/Android/ "IPP/Android" 
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
         <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -329,7 +329,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ &quot;IPP/Android&quot;
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
