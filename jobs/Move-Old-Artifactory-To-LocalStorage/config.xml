@@ -245,6 +245,9 @@ CheckFolder sbc-release/com/ac/sbc/7.2.256_2/Firmware "7.2.250 Release/7.2.256_2
 CheckFolder sbc-release/com/ac/sbc/7.2.256_MSBR/Firmware "7.2.250 Release/7.2.256_MSBR"
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE/Firmware "NextGenCPE Release/Firmware"
 CheckFolder sbc-release/com/ac/sbc/NextGenCPE_R1/Firmware "NextGenCPE Release/NextGenCPE_R1"
+CheckFolder sbc-release/com/ac/sbc/NextGenCPE_R3/Firmware "NextGenCPE Release/NextGenCPE_R3"
+CheckFolder sbc-release/com/ac/sbc/7.2.258/Firmware "7.2.250 Release/7.2.258"
+CheckFolder sbc-release/com/ac/sbc/7.2.260/Firmware "7.2.260 Release/7.2.260"
 CheckFolder sbc-release/com/ac/sbc/7.4/Firmware "7.4 Release/7.4"
 #All Feature branches
 CheckFolder sbc-release/com/ac/sbc/feature/centos7/Firmware "feature/centos7/Firmware" 
@@ -258,7 +261,10 @@ CheckFolder sbc-release/com/ac/sbc/feature/IndianArmyPOC/Firmware "feature/India
 CheckFolder sbc-release/com/ac/sbc/feature/JSUpgrades/Firmware "feature/JSUpgrades/Firmware" 
 CheckFolder sbc-release/com/ac/sbc/feature/LI/Firmware "feature/LI/Firmware" 
 CheckFolder sbc-release/com/ac/sbc/feature/centOS8-7.4/Firmware "feature/centOS8-7.4/Firmware" 
+CheckFolder sbc-release/com/ac/sbc/feature/http-client/Firmware "feature/http-client/Firmware" 
 #CheckFolder sbc-release/com/ac/sbc/feature/M3100/Firmware "feature/M3100/Firmware" 
+
+
 
 #All ISO
 CheckFolder sbc-release/com/ac/sbc/ISO/7.2.150 "ISO/7.2.150"
