@@ -181,7 +181,7 @@ if [ -s "$NEWTAG.list" ]; then
        fi
        echo Create Zip from $FileName...
        zip -b /tmp -mj "$Target/$BOARD.zip" "/tmp/$FileName"
-     elif [ $Extention == "zip" ] || [ $Extention == "txt" ] || [ $Extention == "rms" ] || [ $Extention == "tgz" ]; then
+     elif [[ "zip txt rms tgz json" =~ "$Extention" ]]; then
        if [ -e "$Target/$FileName" ]; then continue; fi
        echo Download $FileName into "$Target/$FileName"...
        curl -ks -u $User -X GET $artifactory/$location/$NEWTAG/$FileName --output "$Target/$FileName"
