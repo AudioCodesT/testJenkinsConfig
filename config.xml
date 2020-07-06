@@ -222,7 +222,7 @@
           <sid>CI_EMS_Developers</sid>
         </assignedSIDs>
       </role>
-      <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|VoiceAI.*|VAG.*)">
+      <role name="CI_SBC_DEVELOPERS" pattern="(sbc.*|VoiceAI.*|VAG.*|sbc-LI-compile)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Read</permission>
