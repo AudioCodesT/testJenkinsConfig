@@ -289,6 +289,11 @@ cd TrunkPackRam
 
 ( ./buildAll.sh ${BOARD} --fast=yes --user=no --custom-version=-d${BUILD_NUMBER} 2&gt;&amp;1 1&gt;&amp;3 | tee ../build-error.log; ) 3&gt;&amp;1 1&gt;&amp;2
 
+if [[ $BOARDNAME =~ "HostedTP" ]]; then
+  cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
+  bzip2 DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer
+fi
+
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 mv ram${BOARDNAME}.cmp ${BOARDNAME}.cmp
 #rename ram${BOARDNAME} ${BOARDNAME}_$NEWTAG-j${BUILD_NUMBER} ram${BOARDNAME}.*
@@ -489,7 +494,10 @@ $change,$ps
       <downloadSpec>
         <spec/>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/CompilationResults/ram$BOARDNAME/TPApp/MPCBin/${BOARDNAME}.cmp=&gt;com/ac/sbc/Firmware/${TARGET}</deployPattern>
+      <deployPattern>${WORKSPACE}/CompilationResults/ram$BOARDNAME/TPApp/MPCBin/${BOARDNAME}.cmp=&gt;com/ac/sbc/Firmware/${TARGET}
+${WORKSPACE}/CompilationResults/ram$BOARDNAME/Apps/DRLogger/MPCBin/DRLogger.bz2=&gt;com/ac/sbc/Firmware/${TARGET}
+${WORKSPACE}/CompilationResults/ram$BOARDNAME/Apps/DTLS/MPCBin/DTLS.bz2=&gt;com/ac/sbc/Firmware/${TARGET}
+${WORKSPACE}/CompilationResults/ram$BOARDNAME/Apps/HTTPStreamer/MPCBin/HTTPStreamer.bz2=&gt;com/ac/sbc/Firmware/${TARGET}</deployPattern>
       <resolvePattern/>
       <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
