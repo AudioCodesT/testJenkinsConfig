@@ -96,7 +96,6 @@
           <sid># All AudioCodes</sid>
           <sid># OVOC QOE</sid>
           <sid># SBC Infra System</sid>
-          <sid># SBC MGMT QA</sid>
           <sid># SBC SIP</sid>
           <sid># SBC SIP Infra</sid>
           <sid>compile</sid>
@@ -238,11 +237,11 @@
           <sid># R&amp;D Application Group</sid>
           <sid># R&amp;D System Software</sid>
           <sid># SBC</sid>
+          <sid># SBC MGMT QA</sid>
           <sid># SBC SIP</sid>
           <sid># SBC SIP Infra</sid>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
-          <sid># SBC MGMT QA</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
