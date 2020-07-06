@@ -242,6 +242,7 @@
           <sid># SBC SIP Infra</sid>
           <sid>System_Software</sid>
           <sid>cc_sys_users</sid>
+          <sid># SBC MGMT QA</sid>
         </assignedSIDs>
       </role>
       <role name="CI_SmartTAP_Developers" pattern="(smt.*)">
@@ -1599,8 +1600,6 @@
         <string>sbc_misc_compile_test</string>
         <string>smt-CodeAnalysis-Test-Gerrit-Update</string>
         <string>test</string>
-        <string>TEST - openjdk11 slave with openjdk8 master</string>
-        <string>Test Artifactory</string>
         <string>test-email</string>
         <string>test-job</string>
         <string>test-pipeline-YY</string>
@@ -1647,7 +1646,6 @@
         <string>sbc-iso7</string>
         <string>sbc-simulator-2.15</string>
         <string>SmartTAP-UpdateVI</string>
-        <string>Test Artifactory</string>
         <string>test-email</string>
         <string>test_concurrent</string>
         <string>test_createOvocImageAzure</string>
