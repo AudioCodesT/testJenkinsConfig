@@ -213,6 +213,11 @@ if [ "$EXITFLAG" == 2 ]; then exit 2; fi
 cd TrunkPackRam
 ./buildAll.sh ${BOARD} --fast=yes --user=no
 
+if [[ $BOARDNAME =~ "HostedTP" ]]; then
+  cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
+  bzip2 DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer
+fi
+
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
 
 echo Delete all output that not needed in Artitactory at all
@@ -389,7 +394,9 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
 ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 ${WORKSPACE}/TrunkPackRam/Networking/ApplicationsAndProtocols/CLI/adsl_vrx_ext_version_data.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
-</deployPattern>
+${WORKSPACE}/CompilationResults/ram$BOARDNAME/Apps/DRLogger/MPCBin/DRLogger.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
+${WORKSPACE}/CompilationResults/ram$BOARDNAME/Apps/DTLS/MPCBin/DTLS.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
+${WORKSPACE}/CompilationResults/ram$BOARDNAME/Apps/HTTPStreamer/MPCBin/HTTPStreamer.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}</deployPattern>
       <resolvePattern/>
       <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
