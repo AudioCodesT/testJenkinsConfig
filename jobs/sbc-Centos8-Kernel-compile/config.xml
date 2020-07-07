@@ -175,6 +175,10 @@ else
   git fetch origin $GERRIT_BRANCH
 fi
 
+echo ----------------------- Disk space ---------------------------
+du -sh *
+echo ----------------------- End -----------------------------------
+
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam OpenSource 
 git checkout -f origin/$GERRIT_BRANCH -- Shared || true    
 cd $WORKSPACE
