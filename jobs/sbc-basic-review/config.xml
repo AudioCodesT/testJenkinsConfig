@@ -291,7 +291,9 @@ cd TrunkPackRam
 
 if [[ $BOARDNAME =~ "HostedTP" ]]; then
   cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
-  bzip2 DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer
+  if [ -f DRLogger/MPCBin/DRLogger ]; then
+    bzip2 DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer
+  fi
 fi
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
