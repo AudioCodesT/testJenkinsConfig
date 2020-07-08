@@ -4,7 +4,7 @@
     <hudson.plugins.s3.S3Profile>
       <name>AWS-Jenkins</name>
       <accessKey>AKIAJCKG7DTRMESAY52A</accessKey>
-      <secretKey>{AQAAABAAAAAwPqDotFrj2d1t7a5AK52Mii/IQIRzgQ6X+SRyfExpHakAjJx2jQToHw68DGNjkHVPiErsCpPpSLChIMw+cmYnRQ==}</secretKey>
+      <secretKey>{AQAAABAAAAAwrb9mrzlhBjQYZuFZJhpI+ULtDVOHD01ZwALcLkZDB5jsRRI4TLIe/QVS0a4785rlzZ7PCxO4CoQKNJcqKk+zJw==}</secretKey>
       <maxUploadRetries>5</maxUploadRetries>
       <uploadRetryTime>5</uploadRetryTime>
       <maxDownloadRetries>5</maxDownloadRetries>
