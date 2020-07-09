@@ -140,6 +140,7 @@ BOARDFINALNAME=${BOARDNAME}
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--centos=7.*/_CENTOS7/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--centos=8.*/_CENTOS8/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
+BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--li=yes.*/_LI/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
@@ -213,7 +214,7 @@ if [ "$EXITFLAG" == 2 ]; then exit 2; fi
 cd TrunkPackRam
 ./buildAll.sh ${BOARD} --fast=yes --user=no
 
-if [[ $BOARDNAME =~ "HostedTP" ]]; then
+if [ $BOARDNAME == "HostedTP_CENTOS8_SIP" ]; then
   cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
   if [[ -f DRLogger/MPCBin/DRLogger &amp;&amp; -f DTLS/MPCBin/DTLS &amp;&amp; -f HTTPStreamer/MPCBin/HTTPStreamer ]]; then
     bzip2 DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer
