@@ -61,11 +61,12 @@
         <string># RnD Israel</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
         <string># R&amp;D System Software</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1590387006780</timestamp>
+      <timestamp>1594309097763</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Marat.Khasanov@audiocodes.com</emailAddress>
