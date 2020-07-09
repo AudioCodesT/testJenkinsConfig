@@ -39,6 +39,7 @@
         <string>Palo_AWS-RND-BKP_NTWS</string>
         <string>TG1000</string>
         <string>cc_users</string>
+        <string>365_Monday</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Sp365-Devops-Read</string>
@@ -87,7 +88,7 @@
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1589880302078</timestamp>
+      <timestamp>1594279660313</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Shuky.Riechard@audiocodes.com</emailAddress>
