@@ -112,9 +112,9 @@ PATH=/bin:$PATH</propertiesContent>
     <hudson.matrix.TextAxis>
       <name>BOARD</name>
       <values>
-        <string>HostedTP_SIP_LI</string>
-        <string>HostedTP_CENTOS8_SIP_LI</string>
-        <string>M4000_SIP_LI</string>
+        <string>HostedTP_LI_SIP</string>
+        <string>HostedTP_CENTOS8_LI_SIP</string>
+        <string>M4000_LI_SIP</string>
       </values>
     </hudson.matrix.TextAxis>
     <hudson.matrix.LabelAxis>
@@ -195,8 +195,8 @@ if [ "$EXITFLAG" == 2 ]; then exit 2; fi
 
 cd TrunkPackRam
 if echo $BOARD | grep -q CENTOS8; then PARAM="--centos=8"; fi
-if echo $BOARD | grep -q SIP; then PARAM="$PARAM --sip=yes"; fi
 if echo $BOARD | grep -q LI; then PARAM="$PARAM --li=yes"; fi
+if echo $BOARD | grep -q SIP; then PARAM="$PARAM --sip=yes"; fi
 ./buildAll.sh --board=$(echo $BOARD | cut -d_ -f1) $PARAM --lab=no --fast=yes --user=no
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
