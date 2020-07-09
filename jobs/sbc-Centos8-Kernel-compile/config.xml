@@ -177,6 +177,7 @@ fi
 
 echo ----------------------- Disk space ---------------------------
 du -sh *
+du -sh workspace/*
 echo ----------------------- End -----------------------------------
 
 git checkout -f origin/$GERRIT_BRANCH -- TrunkPackRam OpenSource 
