@@ -139,8 +139,8 @@ BOARDNAME=`echo ${BOARD} | cut -f1 -d ' ' | cut -f2 -d=`
 BOARDFINALNAME=${BOARDNAME}
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--centos=7.*/_CENTOS7/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--centos=8.*/_CENTOS8/p`
-BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--li=yes.*/_LI/p`
+BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--sip=yes.*/_SIP/p`
 BOARDFINALNAME=${BOARDFINALNAME}`echo ${BOARD} | sed -rn s/.*--lab=yes.*/_LAB/p`
 
 cd TrunkPackRam
