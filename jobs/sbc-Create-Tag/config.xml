@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -30,8 +29,8 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>Branches</name>
-          <description></description>
-          <defaultValue>NextGenCPE NextGenCPE_R1 NextGenCPE_R3 7.2.204 7.2.204_6jio 7.2.254 7.2.252_MSBR 7.2.254_MSBR 7.2.256 7.2.256_2 7.2.256_MSBR 7.2.256_MSBR_M1 7.2.258 7.2.260 7.4</defaultValue>
+          <description/>
+          <defaultValue>NextGenCPE NextGenCPE_R1 NextGenCPE_R3 7.2.204 7.2.204_6jio 7.2.254 7.2.252_MSBR 7.2.254_MSBR 7.2.256 7.2.256_2 7.2.256_MSBR 7.2.256_MSBR_M1 7.2.258 7.2.260 7.4 7.4.100</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -43,9 +42,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
@@ -76,7 +75,7 @@
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
         <noTags>true</noTags>
-        <reference></reference>
+        <reference/>
         <depth>0</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
@@ -96,7 +95,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>git config --global user.name &quot;Jenkins&quot;
+      <command>git config --global user.name "Jenkins"
 git config --global user.email devops@audiocodes.com
 Artifact=artifactory
 Repo=sbc-release
@@ -107,38 +106,38 @@ function createSubModuleTag() {
   NEWTAGsub=$2
   if [ `git submodule status OpenSource/$SubModule | wc -l` == 1 ]; then
     NEWTAG=$NEWTAGsub
-    commit_sha1=`git ls-files --stage OpenSource/$SubModule | cut -f2 -d &apos; &apos;`
+    commit_sha1=`git ls-files --stage OpenSource/$SubModule | cut -f2 -d ' '`
     echo Check if this Images existing in the Artifactory already - if not, create a TAG
-    if ! curl -ks &quot;https://$Artifact/api/search/prop?vcs.revision=$commit_sha1&amp;repos=$Repo&quot; | grep -q uri; then
-      curl -nk --anyauth -X PUT --header &quot;Content-Type: application/json;charset=UTF-8&quot; \
+    if ! curl -ks "https://$Artifact/api/search/prop?vcs.revision=$commit_sha1&amp;repos=$Repo" | grep -q uri; then
+      curl -nk --anyauth -X PUT --header "Content-Type: application/json;charset=UTF-8" \
         https://test-gerrit/a/projects/TP%2fOpenSource%2f$SubModule/tags/$NEWTAG \
-        -d &quot;
+        -d "
         {
-          \&quot;message\&quot;: \&quot;Jenkins auto tag after $LastUser commit\&quot;,
-          \&quot;revision\&quot;: \&quot;$commit_sha1\&quot;
-        }&quot;
+          \"message\": \"Jenkins auto tag after $LastUser commit\",
+          \"revision\": \"$commit_sha1\"
+        }"
     fi
   fi
 }
 
 function createTag {
-  if git log --pretty=format:%B -n1 $LastSha1 | grep &quot;DevOps admin change&quot;; then
+  if git log --pretty=format:%B -n1 $LastSha1 | grep "DevOps admin change"; then
     return
   fi
   
   RealLastTag=$LastTag
   # If this is a first TAG in Feature branch
-  if [ ! -z $PreLastTag ]; then LastTag=$PreLastTag; PreLastTag=&quot;&quot;; fi
+  if [ ! -z $PreLastTag ]; then LastTag=$PreLastTag; PreLastTag=""; fi
 
   FixNum=`echo $LastTag | cut -d. -f4`
   if [ -z $FixNum ]; then FixNum=0; fi
   Fix=`expr 1 + $FixNum`
-  NEWTAG=`echo $LastTag | cut -d. -f1-3`.`printf &quot;%03d&quot; $Fix`
-  #NEWTAG=`echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $LastTag | awk -F. &apos;{print $NF+1}&apos;`
-  git tag -a -m &quot;Jenkins auto tag after $LastUser commit&quot; $NEWTAG $LastSha1
+  NEWTAG=`echo $LastTag | cut -d. -f1-3`.`printf "%03d" $Fix`
+  #NEWTAG=`echo $LastTag | sed -r 's/(.*)\.[^\d]+$/\1/'`.`echo $LastTag | awk -F. '{print $NF+1}'`
+  git tag -a -m "Jenkins auto tag after $LastUser commit" $NEWTAG $LastSha1
   git push origin $NEWTAG
-  curl -k &quot;https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG&quot; || echo Access Rebaser failed
-  SubModules=`git diff --name-only $RealLastTag $LastSha1 -- OpenSource | sed &apos;s:OpenSource/::; s:/.*::&apos; | sort -u`
+  curl -k "https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG" || echo Access Rebaser failed
+  SubModules=`git diff --name-only $RealLastTag $LastSha1 -- OpenSource | sed 's:OpenSource/::; s:/.*::' | sort -u`
   LastTag=$NEWTAG
   for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
 }
@@ -148,7 +147,7 @@ git fetch origin +refs/notes/review:refs/notes/review
 
 errorFlag=0
 # Check every branch if they are a new commit after the last created TAG
-for GERRIT_BRANCH in $Branches $(git branch --list -a */feature/* | sed &apos;s:.*/origin/::&apos;)
+for GERRIT_BRANCH in $Branches $(git branch --list -a */feature/* | sed 's:.*/origin/::')
 do
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
@@ -157,13 +156,13 @@ do
   LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
   #LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
 
-  LastUser=&quot;&quot;
-  PreLastTag=&quot;&quot;
+  LastUser=""
+  PreLastTag=""
 
-  if [[ $GERRIT_BRANCH =~ &quot;feature&quot; ]]; then
+  if [[ $GERRIT_BRANCH =~ "feature" ]]; then
     LastMergedTag=`git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1`
     # If no last merged TAG exist, give the last TAG found in this branch
-    if [ -z &quot;$LastMergedTag&quot; ]; then
+    if [ -z "$LastMergedTag" ]; then
       echo No last merged TAG exist ......
       LastMergedTag=$LastTag
     fi
@@ -171,24 +170,24 @@ do
     LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
     LastMINOR=$(echo $LastTag | cut -d. -f3)
     echo Last merged TAG is $LastMergedTag and last TAG is $LastTag 
-    if [ &quot;$LastMINOR&quot; -gt &quot;$LastMergedMINOR&quot; ]; then LastMergedMINOR=$LastMINOR; fi
+    if [ "$LastMINOR" -gt "$LastMergedMINOR" ]; then LastMergedMINOR=$LastMINOR; fi
     echo Use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
 
     # Find the first 2 characters of the feature name - change them to uppercase
-    IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ &apos;{print $NF}&apos; | cut -c1-2)
+    IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ '{print $NF}' | cut -c1-2)
     LastMergedMAJOR=$(echo $LastMergedTag | cut -c1-4)
     LastMAJOR=$(echo $LastTag | cut -c1-4)
-    if [[ (! &quot;$LastTag&quot; =~ $LastMergedMAJOR$IDs\. || &quot;$LastMINOR&quot; -ne &quot;$LastMergedMINOR&quot;) ]]; then
+    if [[ (! "$LastTag" =~ $LastMergedMAJOR$IDs\. || "$LastMINOR" -ne "$LastMergedMINOR") ]]; then
       # If it is the first TAG in this feature branch or a newer branch was merged to
       # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
-      if [[ &quot;$LastMergedTag&quot; =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
-        if [ &quot;$LastMAJOR&quot; &gt; &quot;$LastMergedMAJOR&quot; ]; then
+      if [[ "$LastMergedTag" =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
+        if [ "$LastMAJOR" &gt; "$LastMergedMAJOR" ]; then
           PreLastTag=$LastMAJOR$IDs.$LastMINOR
-          if [[ &quot;$LastTag&quot; =~ &quot;$IDs&quot; ]]; then PreLastTag=&quot;&quot;; fi
+          if [[ "$LastTag" =~ "$IDs" ]]; then PreLastTag=""; fi
         else
           PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
         fi
-        if [ -n &quot;$PreLastTag&quot; ]; then
+        if [ -n "$PreLastTag" ]; then
           if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
             echo TAG $PreLastTag.001 already exist, check this branch $GERRIT_BRANCH ... exit
             errorFlag=1
@@ -202,17 +201,17 @@ do
       fi
     fi
   fi
-  # Check every new commit - if the user was changed, create a new TAG by executing &apos;createTag&apos;
+  # Check every new commit - if the user was changed, create a new TAG by executing 'createTag'
   while IFS=_ read -r Sha1 User When
   do
-    LastSubmitter=$(git show refs/notes/review:${Sha1:0:2}/${Sha1:2} | sed -nE &apos;s/^Submitted-by: (.*) &lt;.*$/\1/p&apos;)
-    if [ &quot;$LastSubmitter&quot; != &quot;$User&quot; ]; then echo ----------------- $LastSubmitter not equel $User -----------------------; fi
-    if [ &quot;$LastSubmitter&quot; != &quot;&quot; ]; then User=$LastSubmitter; fi
-    if [ &quot;$LastUser&quot; != &quot;&quot; ] &amp;&amp; [ &quot;$LastUser&quot; != &quot;$User&quot; ]; then createTag; fi
+    LastSubmitter=$(git show refs/notes/review:${Sha1:0:2}/${Sha1:2} | sed -nE 's/^Submitted-by: (.*) &lt;.*$/\1/p')
+    if [ "$LastSubmitter" != "$User" ]; then echo ----------------- $LastSubmitter not equel $User -----------------------; fi
+    if [ "$LastSubmitter" != "" ]; then User=$LastSubmitter; fi
+    if [ "$LastUser" != "" ] &amp;&amp; [ "$LastUser" != "$User" ]; then createTag; fi
     LastUser=$User
     LastSha1=$Sha1
-    LastWhen=`echo $When | cut -d&quot; &quot; -f1`
-  done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --date=raw --pretty=format:&quot;%H_%cn_%cd&quot; $LastTag..origin/$GERRIT_BRANCH)&quot;
+    LastWhen=`echo $When | cut -d" " -f1`
+  done &lt;&lt;&lt; "$(git log --first-parent --reverse --date=raw --pretty=format:"%H_%cn_%cd" $LastTag..origin/$GERRIT_BRANCH)"
 
   # If $LastWhen was not found, go to the next branch
   if [ -z $LastWhen ]; then continue; fi
@@ -243,7 +242,7 @@ exit $errorFlag
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <recipientProviders/>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>true</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -254,7 +253,7 @@ exit $errorFlag
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -277,8 +276,8 @@ exit $errorFlag
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}, ${BUILD_LOG_REGEX, regex=&quot;^.*NEWTAG=(\S*)&quot;,substText=&quot;$1&quot;,showTruncatedLines=false}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <template>#${BUILD_NUMBER}, ${BUILD_LOG_REGEX, regex="^.*NEWTAG=(\S*)",substText="$1",showTruncatedLines=false}</template>
+      <descriptionTemplate/>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
