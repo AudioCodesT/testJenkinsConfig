@@ -133,6 +133,8 @@ BRANCH=${TAG%.*}
 cd ${WORKSPACE}/EMS
 [[ -d target ]] &amp;&amp; rm -rf target
 mkdir target
+chmod 0775 target
+cp FKGenerator.ini target
 cd target
 for f in common-${BRANCH}-SNAPSHOT.jar \
 	server-${BRANCH}-SNAPSHOT.jar \
