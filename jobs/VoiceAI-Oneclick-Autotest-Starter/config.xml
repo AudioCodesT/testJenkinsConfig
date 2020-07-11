@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -22,7 +21,7 @@
       <parameterDefinitions>
         <hudson.model.BooleanParameterDefinition>
           <name>SHUTDOWN</name>
-          <description></description>
+          <description/>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -34,9 +33,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
@@ -71,34 +70,36 @@
     <hudson.tasks.Shell>
       <command>## Set mode for build name
 if [ $SHUTDOWN == true ]; then
-	MODE=&quot;Stop&quot;
+	MODE="Stop"
 else
-	MODE=&quot;Start&quot;
+	MODE="Start"
 fi
 
-echo &quot;MODE=${MODE}&quot; &gt; env.properties
+echo "MODE=${MODE}" &gt; env.properties
 
 cd e2e
 chmod 640 static/id_rsa
 
-echo &quot;VERSION=$(git describe --tags --abbrev=0 --first-parent)&quot; &gt; .build_version
-echo &quot;BRANCH=$(git branch -r --contains HEAD | sed &apos;s:^.*/::&apos;)&quot; &gt;&gt; .build_version
+echo "VERSION=$(git describe --tags --abbrev=0 --first-parent)" &gt; .build_version
+echo "BRANCH=$(git branch -r --contains HEAD | sed 's:^.*/::')" &gt;&gt; .build_version
 export PYTHONUNBUFFERED=TRUE
 if [ $SHUTDOWN == true ]; then
   SHUTDOWN_FLAG=--shutdown
 fi
 
 ## Set environment vars:
-export AZURE_CLIENT_ID=&quot;e32b122f-d106-4b57-b9db-bdc5dcd100d6&quot;
-export AZURE_TENANT=&quot;1911c65c-893b-42f9-83fa-66c1b86fdf85&quot;
-export AZURE_SECRET=&quot;iCej[xc6XDd6Bgn[sE_gCwSp6kRsq]F0&quot;
-export PNCSubscriptionId=&quot;7d282254-36d2-4aaf-8e0c-4ba3439188fe&quot;
-export stckMngrRGName=&quot;staging-stack-mgr&quot;
-export stckMngrVMName=&quot;staging-stack-mgr&quot;
-export PCRGName=&quot;qa-yossib&quot;
-export PCVMName=&quot;TestRunner&quot;
-export PC_USER=&quot;tester&quot;
-export PC_DNS=&quot;test-runner.westus2.cloudapp.azure.com&quot;
+export AZURE_CLIENT_ID="e32b122f-d106-4b57-b9db-bdc5dcd100d6"
+export AZURE_TENANT="1911c65c-893b-42f9-83fa-66c1b86fdf85"
+export AZURE_SECRET="iCej[xc6XDd6Bgn[sE_gCwSp6kRsq]F0"
+export PNCSubscriptionId="7d282254-36d2-4aaf-8e0c-4ba3439188fe"
+export stckMngrRGName="staging-stack-mgr"
+export stckMngrVMName="staging-stack-mgr"
+export PCRGName="qa-yossib"
+export PCVMName="TestRunner"
+export PC_USER="tester"
+export PC_DNS="test-runner.westus2.cloudapp.azure.com"
+export LOGS_RG_NAME="staging-rg"
+export LOGS_VM_NAME="staging-logs"
 
 
 pip3 install --user -r static/requirements.txt
@@ -108,14 +109,14 @@ if [ $SHUTDOWN == false ]; then
 	## Need to start the slave agent on the remote slave
     
     #This line was replaced with credential secret text binding:
-    #jenkinsUserApiToken=$(curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user compile:$compilePass | jq -r &apos;.data.tokenValue&apos;)
+    #jenkinsUserApiToken=$(curl https://test-jenkins/me/descriptorByName/jenkins.security.ApiTokenProperty/generateNewToken --data newTokenName=myFoo --user compile:$compilePass | jq -r '.data.tokenValue')
 
 	curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/launchSlaveAgent
     
     ## Check if node is online
-    offlineStatus=$(curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r &quot;.offline&quot;)
-    temporarilyOfflineStatus=$(curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r &quot;.temporarilyOfflineStatus&quot;)
-    [[ &quot;$offlineStatus&quot; || &quot;$temporarilyOfflineStatus&quot; ]] || (echo &quot;Azure test node not ready!!&quot; &amp;&amp; exit 1)
+    offlineStatus=$(curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".offline")
+    temporarilyOfflineStatus=$(curl -X POST https://compile:$jenkinsUserApiToken@test-jenkins/computer/VoiceAI-Test-Runner-Azure/api/json | jq -r ".temporarilyOfflineStatus")
+    [[ "$offlineStatus" || "$temporarilyOfflineStatus" ]] || (echo "Azure test node not ready!!" &amp;&amp; exit 1)
 fi</command>
       <unstableReturn>1</unstableReturn>
     </hudson.tasks.Shell>
@@ -150,7 +151,7 @@ fi</command>
               <org.jenkins__ci.plugins.run__condition.logic.ConditionContainer>
                 <condition class="org.jenkins_ci.plugins.run_condition.logic.Not">
                   <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition">
-                    <token>${ENV,var=&quot;SHUTDOWN&quot;}</token>
+                    <token>${ENV,var="SHUTDOWN"}</token>
                   </condition>
                 </condition>
               </org.jenkins__ci.plugins.run__condition.logic.ConditionContainer>
@@ -204,7 +205,7 @@ fi</command>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}_${MODE}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
