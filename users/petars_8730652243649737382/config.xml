@@ -60,9 +60,10 @@
         <string>Allow Office365 Groups</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
         <string>CatalogApps_Everyone</string>
       </roles>
-      <timestamp>1591268490566</timestamp>
+      <timestamp>1594592909116</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.model.TimeZoneProperty/>
   </properties>
