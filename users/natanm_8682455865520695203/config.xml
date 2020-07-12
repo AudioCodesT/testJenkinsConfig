@@ -34,23 +34,27 @@
     </hudson.search.UserSearchProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
       <roles>
+        <string># R&amp;D HDGW SYSTEM</string>
         <string>authenticated</string>
         <string>System_Software</string>
         <string>TG1000</string>
         <string># All__Beer_Sheva</string>
         <string>cc_users</string>
+        <string>365_Monday</string>
         <string>Users</string>
         <string>ActionBase Users</string>
         <string>Palo_ARM_access_BS_Internal_Users</string>
         <string>Citrix_Allow_Visio</string>
         <string>WirelessUsers</string>
         <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
         <string># R&amp;D Support Escalation</string>
         <string># All Lunch</string>
         <string>Logistics_maintenance</string>
         <string># All Beer Sheva</string>
         <string># All Managers</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string># RnD Solutions SW group</string>
         <string>Offer Remote Assistance Helpers</string>
@@ -62,10 +66,12 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string>Sp365-DevOps-modify</string>
         <string>EMS_RW_Access</string>
         <string>CI_ARM_developers</string>
         <string>Agile users</string>
+        <string>365_Comeet</string>
         <string># ARM</string>
         <string>R&amp;D HDGW software</string>
         <string>AWS_Jira_Users</string>
@@ -80,6 +86,8 @@
         <string># ClearCase R&amp;D</string>
         <string># All R&amp;D</string>
         <string>CatalogApps_Everyone</string>
+        <string>365_Tas</string>
+        <string># Agile users</string>
         <string># R&amp;D HDGW GROUP</string>
         <string>FTP_default</string>
         <string>Domain Users</string>
@@ -88,7 +96,7 @@
         <string>Palo_Access_To_Amazon_RnD_Admins</string>
         <string># R&amp;D DevOps</string>
       </roles>
-      <timestamp>1567505147694</timestamp>
+      <timestamp>1594527523458</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Natan.Merfish@audiocodes.com</emailAddress>
