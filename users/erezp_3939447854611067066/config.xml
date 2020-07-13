@@ -43,7 +43,59 @@
       <emailAddress>Erez.Pion@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string># TRAVEL IL</string>
+        <string># All Dinner</string>
+        <string>authenticated</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>WirelessUsers</string>
+        <string>Sp365-Devops-Read</string>
+        <string># All manager Israel</string>
+        <string># R&amp;D Support Escalation</string>
+        <string># All Lunch</string>
+        <string>Logistics_maintenance</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># All ISRAEL</string>
+        <string># Support KB Editors</string>
+        <string># SBC</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>Mailvision Branch Office Users</string>
+        <string># All Cellular</string>
+        <string># BatchRunnerBlockStream</string>
+        <string>AudioCodes_VPN</string>
+        <string>cc_sys_users</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
+        <string>365_Comeet</string>
+        <string>AWS_Jira_Users</string>
+        <string># AUDC-HR-MGRS-NA-CAN-LATAM</string>
+        <string># All Support</string>
+        <string># All Cars</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>FTP_2G</string>
+        <string>Allow Office365 Groups</string>
+        <string># All R&amp;D</string>
+        <string>BIS Service</string>
+        <string># SBC version release</string>
+        <string># Oracle Israel-From</string>
+        <string># Al Volunteers</string>
+        <string>CatalogApps_Everyone</string>
+        <string>365_Tas</string>
+        <string># AUDC - actiTIME</string>
+        <string># SBC ETAS</string>
+        <string># Oracle</string>
+        <string># AUDC - EMS (RTP)</string>
+        <string># Israel FAE Group</string>
+        <string># All HotMobile</string>
+        <string>Linuxusers</string>
+        <string>Domain Users</string>
+        <string># SP365 - GlobalServices-modify</string>
+      </roles>
+      <timestamp>1594632238117</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
   </properties>
 </user>
