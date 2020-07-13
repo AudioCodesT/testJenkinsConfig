@@ -1,8 +1,7 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>triggered by:  ems_sanity_multijob (only when branch = 7.6.1000  &amp;&amp; ISO_deploy_destination = official_iso)&#xd;
-start parallel upgrade to both servers (172.17.118.91 - UITests Server , 172.17.118.95 - Ovoc UI Server) &#xd;
+  <description>triggered by:  ems_sanity_multijob (only when branch = 7.6.1000  &amp;&amp; ISO_deploy_destination = official_iso)&#13;
+start parallel upgrade to both servers (172.17.118.91 - UITests Server , 172.17.118.95 - Ovoc UI Server) &#13;
 only when the ems_sanity_multijob succeeded </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -11,7 +10,7 @@ only when the ems_sanity_multijob succeeded </description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -25,7 +24,7 @@ only when the ems_sanity_multijob succeeded </description>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
           <description>if job is executed manually the provided tag must be official_iso</description>
-          <defaultValue></defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -53,10 +52,11 @@ only when the ems_sanity_multijob succeeded </description>
       <throttleEnabled>true</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -72,7 +72,9 @@ only when the ems_sanity_multijob succeeded </description>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>ems-build</assignedNode>
@@ -84,9 +86,9 @@ only when the ems_sanity_multijob succeeded </description>
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.6.2000&quot; ]]; then exit 0; else exit 1; fi
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
+if [[ "$BRANCH" == "7.6.2000" ]]; then exit 0; else exit 1; fi
 </command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
@@ -99,14 +101,14 @@ server-7.6.2000-SNAPSHOT.jar \
 rest-core-7.6.2000-SNAPSHOT.jar \
 oracle_trigger-7.6.2000-SNAPSHOT.jar \
 database-7.6.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
-if [[ &quot;$BRANCH&quot; == &quot;7.8&quot; ]]; then exit 0; else exit 1; fi
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
+if [[ "$BRANCH" == "7.8" ]]; then exit 0; else exit 1; fi
 </command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
@@ -119,9 +121,9 @@ server-7.8-SNAPSHOT.jar \
 rest-core-7.8-SNAPSHOT.jar \
 oracle_trigger-7.8-SNAPSHOT.jar \
 database-7.8-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>#We configured all $serverToUpgrade to resolve artifactory:
@@ -137,9 +139,9 @@ cd ${WORKSPACE}/EMS
 chmod 0755 target
 cp FKGenerator.ini target
 chmod -R 0755 target
-echo &quot;############################################&quot;
+echo "############################################"
 ls -lr target
-echo &quot;############################################&quot;
+echo "############################################"
 cd ${WORKSPACE}
 
 
@@ -148,18 +150,18 @@ artifactory_url=https://$artifactory_host/ems-externals/com/ac/ems/OvocUIServer
 cd EMS/VersionRelease
 
 #get the OLD Versions Remove Script to delete them from the OVOC servers
-curl -k -u admin:$artiPass --insecure -fO &quot;${artifactory_url}/RemoveOldVersions.py&quot;
+curl -k -u jenkins:$artiPass --insecure -fO "${artifactory_url}/RemoveOldVersions.py"
 
 #change time out from 5 minits to 30 minits because ISO download time in BSH is longer than in AWS cloud
-perl -pi -e &apos;s/&quot;.iso&quot;,300.0/&quot;.iso&quot;,2300.0/g&apos; SanityInstall.py || true
+perl -pi -e 's/".iso",300.0/".iso",2300.0/g' SanityInstall.py || true
 #change md5sum command to timout only after 30 seconds instead of 20 seconds
-line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;)&quot;
-replace_line=&quot;local_md5=sendWait(\&quot;md5sum \&quot;+dvd3_iso+\&quot; | cut -d&apos; &apos; -f1\&quot;,30.0)&quot;
-sed -i &quot;s/${line}/${replace_line}/g&quot; SanityInstall.py
+line="local_md5=sendWait(\"md5sum \"+dvd3_iso+\" | cut -d' ' -f1\")"
+replace_line="local_md5=sendWait(\"md5sum \"+dvd3_iso+\" | cut -d' ' -f1\",30.0)"
+sed -i "s/${line}/${replace_line}/g" SanityInstall.py
 #change in sanity reboot sleeping time from 500 to 750
-line=&quot;time.sleep(500)&quot;
-replace_line=&quot;time.sleep(750)&quot;
-#sed -i &quot;s/${line}/${replace_line}/g&quot; SanityReboot.py
+line="time.sleep(500)"
+replace_line="time.sleep(750)"
+#sed -i "s/${line}/${replace_line}/g" SanityReboot.py
 
 #start upgrade
 python2.7 SanityInstall.py $NEW_TAG $serverToUpgrade official_iso
@@ -167,16 +169,16 @@ python2.7 RemoveOldVersions.py $NEW_TAG $serverToUpgrade
 python2.7 SanityReboot.py $serverToUpgrade
 
 
-echo &quot;*****************************************************************&quot;
-echo &quot;*************** Server Upgrade has been finished ****************&quot;
-echo &quot;*****************************************************************&quot;
+echo "*****************************************************************"
+echo "*************** Server Upgrade has been finished ****************"
+echo "*****************************************************************"
 
 #
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso,Shuky.Riechard,Michael.Lallouz</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -191,7 +193,7 @@ echo &quot;*****************************************************************&quo
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -202,7 +204,7 @@ echo &quot;*****************************************************************&quo
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -217,19 +219,19 @@ echo &quot;*****************************************************************&quo
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artiPass</name>
-          <value>{AQAAABAAAAAQTfZvHjfWYx5ck2tYq44EB2vOrsgZLjdjptf8q9HDbg8=}</value>
+          <value>{AQAAABAAAAAQdqF06GE50PiTfUyyWR5DgQ6d390QiGJA9wFNWuvNjIA=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEW_TAG}__server-${serverToUpgrade}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
