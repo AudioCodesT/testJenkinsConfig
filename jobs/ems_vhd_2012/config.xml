@@ -219,7 +219,7 @@ grep -v "ecdsa-sha2-nistp256" .ssh/known_hosts &gt; /tmp/known_hosts &amp;&amp; 
 sshpass -p "$ems_pass" ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
 $su_pass
 #cp /etc/hosts /etc/hosts.keep
-#echo -e "172.16.133.170\tartifactory\n172.16.143.99\test-artifactory\n172.16.146.146\tjenkins\n172.16.143.181\ttest-jenkins" &gt;&gt; /etc/hosts
+#echo -e "172.16.133.170\tartifactory\n172.16.143.99\ttest-artifactory\n172.16.146.146\tjenkins\n172.16.143.181\ttest-jenkins" &gt;&gt; /etc/hosts
 echo -e "search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6" &gt; /etc/resolv.conf
 EOF
 
