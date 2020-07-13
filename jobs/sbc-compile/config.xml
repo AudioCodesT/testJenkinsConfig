@@ -219,7 +219,7 @@ if [[ $BOARDNAME =~ "HostedTP" ]]; then
   suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
   for app in DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer; do
     if [ -f $app ]; then
-      bzip2 -c $app &gt; $WORKSPACE/$app$suffix.bz2
+      bzip2 -c $app &gt; $WORKSPACE/$(echo $app | awk -F/ '{print $NF}')$suffix.bz2
     fi
   done
 fi
