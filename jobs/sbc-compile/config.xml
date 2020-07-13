@@ -214,11 +214,14 @@ if [ "$EXITFLAG" == 2 ]; then exit 2; fi
 cd TrunkPackRam
 ./buildAll.sh ${BOARD} --fast=yes --user=no
 
-if [ $BOARDNAME == "HostedTP_CENTOS8_SIP" ]; then
+if [[ $BOARDNAME =~ "HostedTP" ]]; then
   cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
-  if [[ -f DRLogger/MPCBin/DRLogger &amp;&amp; -f DTLS/MPCBin/DTLS &amp;&amp; -f HTTPStreamer/MPCBin/HTTPStreamer ]]; then
-    bzip2 DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer
-  fi
+  suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
+  for app in DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer; do
+    if [ -f $app ]; fi
+      bzip2 -c $app &gt; $app$suffix.bz2
+    fi
+  done
 fi
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
