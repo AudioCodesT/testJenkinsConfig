@@ -1,5 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>Create Hyper-V 2012 VM for ovoc server official release</description>
   <keepDependencies>false</keepDependencies>
@@ -9,11 +8,8 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -25,13 +21,13 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>TAG</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>BaseVM</name>
-          <description></description>
+          <description/>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>ovoc-7.6-base</string>
@@ -52,10 +48,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -70,16 +67,18 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <browser class="hudson.plugins.git.browser.GitBlitRepositoryBrowser">
-      <url></url>
-      <projectName></projectName>
+      <url/>
+      <projectName/>
     </browser>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>true</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference/>
         <timeout>30</timeout>
         <depth>10</depth>
         <honorRefspec>false</honorRefspec>
@@ -98,8 +97,8 @@
       <command>##################### Fixing Sanity scripts to fit Hyper-V build ######################
 cd ${WORKSPACE}
 
-sed -i &apos;s/Waiting 300/Waiting 500/g&apos; EMS/VersionRelease/SanityReboot.py
-sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/SanityReboot.py
+sed -i 's/Waiting 300/Waiting 500/g' EMS/VersionRelease/SanityReboot.py
+sed -i 's/time.sleep(300)/time.sleep(500)/g' EMS/VersionRelease/SanityReboot.py
 #######################################################################################
 
 
@@ -109,18 +108,18 @@ sed -i &apos;s/time.sleep(300)/time.sleep(500)/g&apos; EMS/VersionRelease/Sanity
 # the ssh command.
 #    The solution is to create a variable that holds the full ssh command -
 #    (When using Windows path, the back-slashes must be escaped with a back-slash
-#    SSHCMD=&quot;powershell -c &apos;Some-PScommand ${local_var} C:\\windows\\path\\${local_var}&quot;
+#    SSHCMD="powershell -c 'Some-PScommand ${local_var} C:\\windows\\path\\${local_var}"
 #    echo $SSHCMD | ssh centos@${HostIP}
 #######################################################################################
 #######################################################################################
 
 # Set the following values to fit your need
-vmHostIP=&quot;10.7.10.177&quot;
-netMask=&quot;16&quot;
-DefaultGW=&quot;10.7.0.1&quot;
-vmip=&quot;10.7.10.77&quot;
-HyperV=&quot;2012&quot;
-FullTesting=&quot;0&quot;
+vmHostIP="10.7.10.177"
+netMask="16"
+DefaultGW="10.7.0.1"
+vmip="10.7.10.77"
+HyperV="2012"
+FullTesting="0"
 
 ## Get current branch
 # Get the build from the TAG
@@ -131,42 +130,42 @@ if [[ ${#BLD} == 3 ]]; then
 else
 	# Build is 4 digits. We set the branch according to the most significant digit (thousends) - MSD
 	MSD=${TAG:4:1}
-    BRANCH=&quot;${TAG:0:3}.${MSD}XXX&quot;
+    BRANCH="${TAG:0:3}.${MSD}XXX"
 fi
 
 rm  -f /tmp/noDest.err || true
 if [[ ! -d /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual ]]; then
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
-    echo &quot;$(date) : No destination folder for branch ${BRANCH} on NetApp !!!&quot; &gt; /tmp/noDest.err
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
-    echo &quot;***********************************************************************&quot;
+    echo "***********************************************************************"
+    echo "***********************************************************************"
+    echo "***********************************************************************"
+    echo "$(date) : No destination folder for branch ${BRANCH} on NetApp !!!" &gt; /tmp/noDest.err
+    echo "***********************************************************************"
+    echo "***********************************************************************"
+    echo "***********************************************************************"
     exit 1
 fi
 
 ## Check that TAG matches BaseVM version
-BaseVM_VER=`echo $BaseVM | cut -d&apos;-&apos; -f2 | gawk -v FS=. &apos;{ print $1&quot;.&quot;$2 }&apos;`
-#if [[ &quot;${TAG:0:3}&quot; != &quot;$BaseVM_VER&quot; ]]; then
+BaseVM_VER=`echo $BaseVM | cut -d'-' -f2 | gawk -v FS=. '{ print $1"."$2 }'`
+#if [[ "${TAG:0:3}" != "$BaseVM_VER" ]]; then
 #	exit -1
 #fi
 
 cd ${WORKSPACE}
 
 # Create a new log file
-now=`date +&quot;%Y%m%d-%H%M%S&quot;`
-logfile=&quot;${WORKSPACE}/ems_ovoc_ova_$now.log&quot;
+now=`date +"%Y%m%d-%H%M%S"`
+logfile="${WORKSPACE}/ems_ovoc_ova_$now.log"
 [[ -f $logfile  ]] &amp;&amp; rm $logfile
 touch $logfile
 
 
-echo &quot;$(date) : *****************  START  ******************&quot;
+echo "$(date) : *****************  START  ******************"
 echo
 echo
-echo &quot;$(date) : Check if this version exists on NetApp&quot;
+echo "$(date) : Check if this version exists on NetApp"
 if [[ -f /home/centos/data/output/ISO_Files/OVOC_${BRANCH}/DVD5_Virtual/${TAG}/OVOC_HyperV-${HyperV}_${TAG}.7z ]]; then
-	echo &quot;$(date) : Archived Hyper-V VM already exists on NetApp&quot;
+	echo "$(date) : Archived Hyper-V VM already exists on NetApp"
     exit -1
 fi
 
@@ -174,17 +173,17 @@ fi
 # Check &amp; delete old ovoc servers
 
 # check and delete old ovoc server vm`s
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;&quot;
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | %{Stop-VM \$_}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Remove-VM -f \$_}&apos;&quot;
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | %{Remove-VM -f \$_}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Delete old remnants from hypervisor host
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
+SSHCMD="powershell -c 'Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\Exports\\*&apos;&quot;
+SSHCMD="powershell -c 'Remove-Item -Force -Recurse V:\\Exports\\*'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\Versions\\*&apos;&quot;
+SSHCMD="powershell -c 'Remove-Item -Force -Recurse V:\\Versions\\*'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 
@@ -192,36 +191,36 @@ echo $SSHCMD | ssh centos@${vmHostIP}
 # Prepare basic ovoc server (DVD 1 &amp; 2)VM from BaseVM
 
 # UnZip archived base vm
-SSHCMD=&quot;powershell -c &apos;Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\${TAG}&apos;&quot;
+SSHCMD="powershell -c 'Expand-7zip -ArchiveFileName V:\\baseVMs\\$BaseVM.7z -TargetPath V:\\HVWORKSPACE\\${TAG}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # create a new VM from $BaseVM (VM files are under v:\base (/cygdrive/v/base))
-echo &quot;$(date) : creating new base ovoc server VM from $BaseVM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.XML | Select -ExpandProperty FullName | Import-VM -Register&apos;&quot;
+echo "$(date) : creating new base ovoc server VM from $BaseVM"
+SSHCMD="powershell -c 'Get-ChildItem -Recurse V:\\HVWORKSPACE\\${TAG} -Filter *.XML | Select -ExpandProperty FullName | Import-VM -Register'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Start-VM&apos;&quot;
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | Start-VM'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 
 if [ $? -ne 0 ]; then
-    echo &quot;$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out&quot;
+    echo "$(date) : Deploy new VM has failed - check ems_ovoc_vm_log.out"
     exit
 fi
 
 # Wait for ovoc server power on
 #isUp $vmHostIP $vmid || exit
-echo &quot;$(date) : sleep 2 min.&quot;
+echo "$(date) : sleep 2 min."
 sleep 120
 
 # Delete `StrictHostKeyChecking=no` entries from known_hosts
-grep -v &quot;ecdsa-sha2-nistp256&quot; .ssh/known_hosts &gt; /tmp/known_hosts &amp;&amp; cat /tmp/known_hosts &gt; .ssh/known_hosts
+grep -v "ecdsa-sha2-nistp256" .ssh/known_hosts &gt; /tmp/known_hosts &amp;&amp; cat /tmp/known_hosts &gt; .ssh/known_hosts
 
 # Update ovoc server /etc/hosts file with DevOps servers
-sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
+sshpass -p "$ems_pass" ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
 $su_pass
 #cp /etc/hosts /etc/hosts.keep
-#echo -e &quot;172.16.133.170\tartifactory\n172.16.143.99\ttest-artifactory\n172.16.146.146\tjenkins\n172.16.143.181\ttest-jenkins&quot; &gt;&gt; /etc/hosts
-echo -e &quot;search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6&quot; &gt; /etc/resolv.conf
+#echo -e "172.16.133.170\tartifactory\n172.16.143.99\test-artifactory\n172.16.146.146\tjenkins\n172.16.143.181\ttest-jenkins" &gt;&gt; /etc/hosts
+echo -e "search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6" &gt; /etc/resolv.conf
 EOF
 
 ###################################################################################################
@@ -241,172 +240,172 @@ chmod 0775 *
 cd ${WORKSPACE}
 
 # Set Network
-echo &quot;$(date) : Applying DVD 3&quot;
+echo "$(date) : Applying DVD 3"
 cd EMS/VersionRelease
 
 # setNetwork.py for version 7.6 and later calculate netmask by itself
-(python2.7 setNetwork.py $vmip sanity) || (echo &quot;$(date) : Failed network setting&quot; &amp;&amp; exit -1)
+(python2.7 setNetwork.py $vmip sanity) || (echo "$(date) : Failed network setting" &amp;&amp; exit -1)
 
 cd ${WORKSPACE}
 
 # ovoc server was rebooted, so -
 # Wait for ovoc server power on
 #isUp ${vmHostIP} $vmid || exit -2
-echo &quot;$(date) : sleep 5 min.&quot;
+echo "$(date) : sleep 5 min."
 sleep 300
 
 # Sanity Install DVD-3
 cd EMS/VersionRelease
-(python2.7 SanityInstall.py ${TAG} $vmip official_iso) || (echo &quot;$(date) : Failed sanity install&quot; &amp;&amp; exit -1)
+(python2.7 SanityInstall.py ${TAG} $vmip official_iso) || (echo "$(date) : Failed sanity install" &amp;&amp; exit -1)
 cd ${WORKSPACE}
-echo &quot;$(date) : Sleep 30&quot;
+echo "$(date) : Sleep 30"
 sleep 30
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;$(date) : Done applying DVD 3&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
+echo "###################################################################################################"
+echo "###################################################################################################"
+echo "###################################################################################################"
+echo "$(date) : Done applying DVD 3"
+echo "###################################################################################################"
+echo "###################################################################################################"
+echo "###################################################################################################"
 
 # ovoc server was rebooted during DVD 3 installation, so -
 # Wait for ovoc server power on
 #isUp ${vmHostIP} $vmid || exit -2
-echo &quot;$(date) : sleep 5 min.&quot;
+echo "$(date) : sleep 5 min."
 sleep 300
 
 ###################################################################################################
 # clean before export
-echo &quot;$(date) : ssh to clean installetion files&quot;
+echo "$(date) : ssh to clean installetion files"
 
-sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
+sshpass -p "$ems_pass" ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
 $su_pass
-echo &quot;&quot; &gt; /etc/resolv.conf
+echo "" &gt; /etc/resolv.conf
 EOF
 
 cd EMS/VersionRelease
-(python2.7 cleanBeforeOva.py $vmip) || (echo &quot;$(date) : Failed cleaning installation files&quot; &amp;&amp; exit -1)
+(python2.7 cleanBeforeOva.py $vmip) || (echo "$(date) : Failed cleaning installation files" &amp;&amp; exit -1)
 cd ${WORKSPACE}
-echo &quot;$(date) : Sleep 30&quot;
+echo "$(date) : Sleep 30"
 sleep 30
 
 ###################################################################################################
 # graceful shutdouwn this new full ovoc server VM and rename with TAG
-echo &quot;$(date) : shutdown new VM&quot;
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Stop-VM&apos;&quot;
+echo "$(date) : shutdown new VM"
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | Stop-VM'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Rename-VM -NewName ovoc-${TAG}&apos;&quot;
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | Rename-VM -NewName ovoc-${TAG}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-echo &quot;$(date) : Sleep 30&quot;
+echo "$(date) : Sleep 30"
 sleep 30
 
 ###################################################################################################
 # export the new VM and compress
-echo &quot;$(date) : Verify no version ${TAG} exists&quot;
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}}&apos;&quot;
+echo "$(date) : Verify no version ${TAG} exists"
+SSHCMD="powershell -c 'if (Test-Path V:\\Exports\\${TAG}) {Remove-Item -Recurse V:\\Exports\\${TAG}}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;if (Test-Path V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z) {Remove-Item V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z}&apos;&quot;
-echo $SSHCMD | ssh centos@${vmHostIP}
-
-echo &quot;$(date) : export new VM&quot;
-#SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | Export-VM -Path V:\\Exports\\${TAG}&apos;&quot;
-SSHCMD=&quot;powershell -c &apos;Copy-Item -Recurse V:\\HVWORKSPACE\\${TAG} V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+SSHCMD="powershell -c 'if (Test-Path V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z) {Remove-Item V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
-echo &quot;$(date) : Compress exported VM&quot;
-SSHCMD=&quot;powershell -c &apos;Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}&apos;&quot;
+echo "$(date) : export new VM"
+#SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | Export-VM -Path V:\\Exports\\${TAG}'"
+SSHCMD="powershell -c 'Copy-Item -Recurse V:\\HVWORKSPACE\\${TAG} V:\\Exports\\${TAG}\\ovoc-${TAG}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
-echo &quot;$(date) : Calculate md5&quot;
-SSHCMD=&quot;powershell -c &apos;Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z.md5&apos;&quot;
+echo "$(date) : Compress exported VM"
+SSHCMD="powershell -c 'Compress-7Zip -ArchiveFileName V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z -Path V:\\Exports\\${TAG}\\ovoc-${TAG}'"
+echo $SSHCMD | ssh centos@${vmHostIP}
+
+echo "$(date) : Calculate md5"
+SSHCMD="powershell -c 'Get-FileHash -Algorithm md5 V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z | select -ExpandProperty Hash &gt; V:\\Versions\\OVOC_HyperV-${HyperV}_${TAG}.7z.md5'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 #[[ ! -f /cygdrive/v/Exports/OVOC_HyperV-${HyperV}_${TAG}.7z ]] &amp;&amp; exit
 
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;$(date) : Done export new VM&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
-echo &quot;###################################################################################################&quot;
+echo "###################################################################################################"
+echo "###################################################################################################"
+echo "###################################################################################################"
+echo "$(date) : Done export new VM"
+echo "###################################################################################################"
+echo "###################################################################################################"
+echo "###################################################################################################"
 
 
 ###################################################################################################
 # Run Sanity Tests
-if [[ &quot;${RunSanity}&quot; == &quot;true&quot; ]]; then
-    echo &quot;$(date) : Running sanity on ovoc server&quot;
+if [[ "${RunSanity}" == "true" ]]; then
+    echo "$(date) : Running sanity on ovoc server"
     ###################################################################################################
     # Restart ovoc-server
-    echo &quot;$(date) : Starting ovoc server&quot;
-    SSHCMD=&quot;powershell -c &apos;Start-VM -Name ovoc-${TAG}&apos;&quot;
+    echo "$(date) : Starting ovoc server"
+    SSHCMD="powershell -c 'Start-VM -Name ovoc-${TAG}'"
     echo $SSHCMD | ssh centos@${vmHostIP}
-    echo &quot;$(date) : Sleep 300&quot;
+    echo "$(date) : Sleep 300"
     sleep 300
     
     # Update ovoc server /etc/hosts file with DevOps servers (Here document must not be indented)
-sshpass -p &quot;$ems_pass&quot; ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
+sshpass -p "$ems_pass" ssh -o StrictHostKeyChecking=no acems@${vmip} su - &lt;&lt; EOF
 $su_pass
-echo -e &quot;search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6&quot; &gt; /etc/resolv.conf
+echo -e "search corp.audiocodes.com\nnameserver 10.1.1.10\nnameserver 10.1.1.6" &gt; /etc/resolv.conf
 EOF
     
     ###################################################################################################
     # Generate and install FK
-    echo &quot;$(date) : Generate FK&quot;
+    echo "$(date) : Generate FK"
     cd EMS/VersionRelease
-    (python2.7 SanityFK.py $vmip $TAG) || (echo &quot;$(date) : Failed FK&quot; &amp;&amp; exit -1)
+    (python2.7 SanityFK.py $vmip $TAG) || (echo "$(date) : Failed FK" &amp;&amp; exit -1)
     cd ${WORKSPACE}
     
     ###################################################################################################
     # Reboot &amp; Verify services on ovoc_server after FK installation
-    echo &quot;$(date) : Reboot &amp; Verify services on ovoc_server after FK installation&quot;
+    echo "$(date) : Reboot &amp; Verify services on ovoc_server after FK installation"
     cd EMS/VersionRelease
-    (python2.7 SanityReboot.py $vmip) || (echo &quot;$(date) : Failed reboot after FK installation&quot; &amp;&amp; exit -1)
+    (python2.7 SanityReboot.py $vmip) || (echo "$(date) : Failed reboot after FK installation" &amp;&amp; exit -1)
     cd ${WORKSPACE}
-    echo &quot;$(date) : Sleep 300&quot;
+    echo "$(date) : Sleep 300"
     sleep 300
     
     ###################################################################################################
     # Run sanity tests on ovoc server
-    echo &quot;$(date) : Run sanity tests on ovoc server&quot;
+    echo "$(date) : Run sanity tests on ovoc server"
     cd EMS/VersionRelease
-    FullTesting=&quot;1&quot;
-    python2.7 SanityTest.py ${TAG} $vmip $FullTesting || echo &quot;$(date) : Failed to execute SanityTest&quot;
-    python2.7 SanityCopyLogs.py ${TAG} $vmip || (echo &quot;$(date) : Failed to copy logs&quot; &amp;&amp; exit -1)
+    FullTesting="1"
+    python2.7 SanityTest.py ${TAG} $vmip $FullTesting || echo "$(date) : Failed to execute SanityTest"
+    python2.7 SanityCopyLogs.py ${TAG} $vmip || (echo "$(date) : Failed to copy logs" &amp;&amp; exit -1)
     
     cd ${WORKSPACE}
     
-    echo &quot;###################################################################################################&quot;
-    echo &quot;###################################################################################################&quot;
-    echo &quot;###################################################################################################&quot;
-    echo &quot;${date} : Done Sanity Tests&quot;
-    echo &quot;###################################################################################################&quot;
-    echo &quot;###################################################################################################&quot;
-    echo &quot;###################################################################################################&quot;
+    echo "###################################################################################################"
+    echo "###################################################################################################"
+    echo "###################################################################################################"
+    echo "${date} : Done Sanity Tests"
+    echo "###################################################################################################"
+    echo "###################################################################################################"
+    echo "###################################################################################################"
 else
-    echo &quot;$(date) : NOT running sanity on ovoc server&quot;
+    echo "$(date) : NOT running sanity on ovoc server"
 fi
 
 ###################################################################################################
 # Stop and Delete ovoc server vm
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Stop-VM \$_}&apos;&quot;
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | %{Stop-VM \$_}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
-SSHCMD=&quot;powershell -c &apos;Get-VM -VMName \&quot;*ovoc*\&quot; | %{Remove-VM -f \$_}&apos;&quot;
+SSHCMD="powershell -c 'Get-VM -VMName \"*ovoc*\" | %{Remove-VM -f \$_}'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Delete old remanents from hypervisor host
-SSHCMD=&quot;powershell -c &apos;Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*&apos;&quot;
+SSHCMD="powershell -c 'Remove-Item -Force -Recurse V:\\HVWORKSPACE\\*'"
 echo $SSHCMD | ssh centos@${vmHostIP}
 
 # Prepare variables for export
 cd ${WORKSPACE}
-echo &quot;export BR_DIR=OVOC_${TAG%???}XXX&quot; &gt; buildVars
-echo &quot;export BRANCH=$BRANCH&quot; &gt;&gt; buildVars
-echo &quot;export HVM_NAME=OVOC_HyperV-2012-${TAG}&quot; &gt;&gt; buildVars
-echo &quot;export RESULT=${RESULT}&quot; &gt;&gt; buildVars
-echo &quot;export BRANCH=${BRANCH}&quot; &gt;&gt; buildVars
+echo "export BR_DIR=OVOC_${TAG%???}XXX" &gt; buildVars
+echo "export BRANCH=$BRANCH" &gt;&gt; buildVars
+echo "export HVM_NAME=OVOC_HyperV-2012-${TAG}" &gt;&gt; buildVars
+echo "export RESULT=${RESULT}" &gt;&gt; buildVars
+echo "export BRANCH=${BRANCH}" &gt;&gt; buildVars
 
-echo &quot;$(date) : FINISH!!!&quot;
+echo "$(date) : FINISH!!!"
 </command>
     </hudson.tasks.Shell>
   </builders>
@@ -430,28 +429,28 @@ echo &quot;$(date) : FINISH!!!&quot;
           </logTexts>
           <EscalateStatus>true</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>. ${WORKSPACE}/buildVars&#xd;
-&#xd;
-# Move output to Netapp&#xd;
-echo &quot;Manipulated $TAG to directory name $BR_DIR&quot;&#xd;
-&#xd;
-cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#xd;
-&#xd;
-if [[ -d ${TAG} ]]; then&#xd;
-    cd ${TAG}&#xd;
-    if [[ -f &quot;${HVM_NAME}&quot;.7z ]]; then&#xd;
-        last_mod=`date -r &quot;${HVM_NAME}&quot;.7z +%Y-%m-%d--%H-%M`&#xd;
-        find . -name &quot;${HVM_NAME}&quot;.* -exec mv {} {}.${last_mod} \;&#xd;
-    fi&#xd;
-else&#xd;
-    mkdir ${TAG}&#xd;
-fi&#xd;
-&#xd;
+          <script>. ${WORKSPACE}/buildVars&#13;
+&#13;
+# Move output to Netapp&#13;
+echo "Manipulated $TAG to directory name $BR_DIR"&#13;
+&#13;
+cd /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual&#13;
+&#13;
+if [[ -d ${TAG} ]]; then&#13;
+    cd ${TAG}&#13;
+    if [[ -f "${HVM_NAME}".7z ]]; then&#13;
+        last_mod=`date -r "${HVM_NAME}".7z +%Y-%m-%d--%H-%M`&#13;
+        find . -name "${HVM_NAME}".* -exec mv {} {}.${last_mod} \;&#13;
+    fi&#13;
+else&#13;
+    mkdir ${TAG}&#13;
+fi&#13;
+&#13;
 scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Files/$BR_DIR/DVD5_Virtual/${TAG}/</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>Shuky.Riechard@audiocodes.com yuvaly@audiocodes.com,ben.magriso@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -466,7 +465,7 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -478,7 +477,7 @@ scp -r centos@10.7.10.177:/cygdrive/v/Versions/* /home/centos/data/output/ISO_Fi
       <defaultSubject>OVOC Hyper-V 2012 image is ready</defaultSubject>
       <defaultContent>OVOC ${TAG} Hyper-V 2012 image is here:
 \\netapp01\EMS\Versions\ISO_Files\OVOC_${BRANCH}\DVD5_Virtual\${TAG}\OVOC_HyperV-${HyperV}_${TAG}.7z</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT
 
 if [[ -f /tmp/noDest.err ]]; then
@@ -487,9 +486,9 @@ else
     . ${WORKSPACE}/buildVars
 
     cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log &gt; /tmp/log
-    RESULT=${grep -A9 &quot;Sanity Test Result:&quot; /tmp/log}
+    RESULT=${grep -A9 "Sanity Test Result:" /tmp/log}
 
-    MSG=$(echo -e &apos;OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n&apos;${RESULTS})
+    MSG=$(echo -e 'OVOC for Hyper-V 2016 completed.\n\nFiles can be found on Netapp: \n\\\\netapp01\\\ems\\Versions\\ISO_Files \n\nTests results: \n'${RESULTS})
 fi</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -500,7 +499,7 @@ fi</presendScript>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
@@ -512,58 +511,58 @@ fi</presendScript>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
         <spec>{
-    &quot;files&quot;: [
+    "files": [
         {
-            &quot;pattern&quot;: &quot;ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*&quot;,
-            &quot;target&quot;: &quot;${workspace}/ovaPreRequisites/&quot;,
-            &quot;flat&quot;: &quot;true&quot;
+            "pattern": "ems-release/com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*",
+            "target": "${workspace}/ovaPreRequisites/",
+            "flat": "true"
         }
     ]
 }</spec>
       </downloadSpec>
-      <deployPattern></deployPattern>
+      <deployPattern/>
       <resolvePattern>ems-release:com/ac/ems/ovoc_server/Sanity_preReq/${TAG}/*.*=&gt;${workspace}/ovaPreRequisites</resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>vmHostIP=&quot;10.7.10.177&quot;
-HyperV=&quot;2012&quot;</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <propertiesContent>vmHostIP="10.7.10.177"
+HyperV="2012"</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -579,7 +578,7 @@ HyperV=&quot;2012&quot;</propertiesContent>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${TAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
