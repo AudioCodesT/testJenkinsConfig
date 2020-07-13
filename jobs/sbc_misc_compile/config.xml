@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -30,13 +29,13 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_REFNAME</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_PROJECT</name>
-          <description></description>
+          <description/>
           <defaultValue>TP/GWApp</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -49,14 +48,14 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
         <propertiesContent>BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 ARTIFACTORY=artifactory</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.55">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -66,8 +65,9 @@ ARTIFACTORY=artifactory</propertiesContent>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -83,7 +83,9 @@ ARTIFACTORY=artifactory</propertiesContent>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>sbc-linux-build</assignedNode>
@@ -92,8 +94,8 @@ ARTIFACTORY=artifactory</propertiesContent>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -101,15 +103,15 @@ ARTIFACTORY=artifactory</propertiesContent>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/7.40*.*</pattern>
+              <pattern>refs/tags/7.4*.*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/7.30*.*</pattern>
+              <pattern>refs/tags/7.3*.*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>refs/tags/7.20*.*</pattern>
+              <pattern>refs/tags/7.2*.*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
@@ -123,27 +125,27 @@ ARTIFACTORY=artifactory</propertiesContent>
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginRefUpdatedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -153,20 +155,20 @@ ARTIFACTORY=artifactory</propertiesContent>
       <command>#!/bin/bash -x
 
 artifactory_host=${ARTIFACTORY}
-ArtUser=&quot;admin:$artifactory_password&quot;
+ArtUser="admin:$artifactory_password"
 cd TrunkPackRam
 
-NEWTAG=`echo $GERRIT_REFNAME | awk -F/ &apos;{print $NF}&apos;`
+NEWTAG=`echo $GERRIT_REFNAME | awk -F/ '{print $NF}'`
 
 echo NEWTAG=${NEWTAG} &gt; ../generated_sbc_version.properties
 
-GERRIT_BRANCH=$(git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | sed &apos;s:.*origin/::&apos;)
+GERRIT_BRANCH=$(git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | sed 's:.*origin/::')
 if [ $(echo $GERRIT_BRANCH | wc -w) -gt 1 ]; then
     header=$(git log -1 --pretty=format:%d)
     if echo $header | grep -q origin/; then
-      GERRIT_BRANCH=$(echo $header | sed &apos;s:.* origin/::; s:\()\|,\).*::&apos; | cut -d&quot; &quot; -f1)
+      GERRIT_BRANCH=$(echo $header | sed 's:.* origin/::; s:\()\|,\).*::' | cut -d" " -f1)
     else
-      GERRIT_BRANCH=$(echo $GERRIT_BRANCH | cut -d&quot; &quot; -f1)
+      GERRIT_BRANCH=$(echo $GERRIT_BRANCH | cut -d" " -f1)
     fi
 fi
 if [ -z $GERRIT_BRANCH ]; then
@@ -174,7 +176,7 @@ if [ -z $GERRIT_BRANCH ]; then
   exit 1
 fi
 
-#TEST_GERRIT_BRANCH=$(git for-each-ref --format=&apos;%(objectname) %(refname:short)&apos; refs/heads | awk &quot;/^$(git rev-parse HEAD)/ {print \$2}&quot;)
+#TEST_GERRIT_BRANCH=$(git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$(git rev-parse HEAD)/ {print \$2}")
 
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
@@ -196,90 +198,90 @@ FixNum=`echo $NEWTAG | cut -d. -f4`
 if [ $FixNum &gt; 1 ]; then
   echo List of MIBs that were changed in Tag $NEWTAG: &gt; ChangedMibs.txt
   OldFix=`expr $FixNum - 1`
-  OLDTAG=`echo $NEWTAG | cut -d. -f1-3`.`printf &quot;%03d&quot; $OldFix`
+  OLDTAG=`echo $NEWTAG | cut -d. -f1-3`.`printf "%03d" $OldFix`
   OLDTAGTest=`git describe --first-parent --tags --abbrev=0 HEAD^`
-  if [[ &quot;`git tag -l $OLDTAG`&quot; == &quot;&quot; ]]; then
+  if [[ "`git tag -l $OLDTAG`" == "" ]]; then
     echo Previous TAG was not found
     OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
   fi
   git diff --name-only $OLDTAG $NEWTAG | grep .my &gt;&gt; ChangedMibs.txt
   zip -gj Mibs.zip ChangedMibs.txt
-  User=`git log --first-parent --pretty=format:&quot;%cN&quot; $OLDTAG..$NEWTAG | head -1 | sed s/\ /_/g`
+  User=`git log --first-parent --pretty=format:"%cN" $OLDTAG..$NEWTAG | head -1 | sed s/\ /_/g`
   git log --decorate --no-color $OLDTAG..$NEWTAG &gt; ${User}_ReleaseNote.txt
   echo User=${User} &gt;&gt; ../generated_sbc_version.properties
-  AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; $OLDTAG..$NEWTAG | sort -u | sed s/$/\;/g`
+  AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..$NEWTAG | sort -u | sed s/$/\;/g`
   # Commits in first parent should be in the commits list only
-  firstParent=$(git log --oneline --first-parent --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)
-  RN=&quot;&quot;
-  VI=&quot;&quot;
+  firstParent=$(git log --oneline --first-parent --pretty=format:"%h" $OLDTAG..$NEWTAG)
+  RN=""
+  VI=""
   while read -r hash; do
-    Jira=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep ^Issue: | sed &apos;s/Issue: \(VI\|\)//g&apos;)
+    Jira=$(git log --pretty=format:"%B" $hash -n1 | grep ^Issue: | sed 's/Issue: \(VI\|\)//g')
     # Remove all unreadable characters
-    Jira=$(echo $Jira | tr -dc &apos;[:alnum:]- &apos;)
+    Jira=$(echo $Jira | tr -dc '[:alnum:]- ')
     VI+=$Jira
     # Add all issues to the commit in the first parent, includes issues in all others commits
     if [[ $firstParent =~ $hash ]]; then
-      subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
-      if [[ $GERRIT_BRANCH =~ &quot;feature/&quot; &amp;&amp; $subject =~ &quot;Merge remote-tracking&quot; ]]; then VI=$Jira; fi
+      subject=$(git log --pretty=format:"%s" $hash -n1 | sed 's/\"/`/g; s/---/_/g; s/::/;/g')
+      if [[ $GERRIT_BRANCH =~ "feature/" &amp;&amp; $subject =~ "Merge remote-tracking" ]]; then VI=$Jira; fi
       RN+=---$subject::$hash::$VI
-      VI=&quot;&quot;
+      VI=""
     else
-      VI+=&quot; &quot;
+      VI+=" "
     fi
-  done &lt;&lt;&lt; &quot;$(git log --reverse --pretty=format:&quot;%h&quot; $OLDTAG..$NEWTAG)&quot;
+  done &lt;&lt;&lt; "$(git log --reverse --pretty=format:"%h" $OLDTAG..$NEWTAG)"
   
   # Add to the last commit all issues that not in first parent
-  if [ ! -z &quot;$VI&quot; ]; then RN+=&quot; $VI&quot;; fi
+  if [ ! -z "$VI" ]; then RN+=" $VI"; fi
   
   echo GERRIT_HOST=${GERRIT_NAME} &gt;&gt; ../generated_sbc_version.properties
 
-  #RN=`git log --first-parent --pretty=format:&quot;&lt;a href=&apos;https://test-gerrit/r/%h&apos;&gt;%h&lt;/a&gt; - %s&quot; $OLDTAG..$NEWTAG | sed s/\&quot;/\&apos;/g`
-  #VIS=`git log --pretty=format:&quot;%B&quot; $OLDTAG..$NEWTAG | grep ^Issue | sed &apos;s/^Issue: \(VI\|\)//g; s/ .*//g&apos; | sort -u`
-  EMAIL=`git log --first-parent --pretty=format:&quot;%ae%n%ce&quot; $OLDTAG..$NEWTAG | sort -u`
-  echo RN=&quot;${RN}&quot; &gt;&gt; ../generated_sbc_version.properties
+  #RN=`git log --first-parent --pretty=format:"&lt;a href='https://test-gerrit/r/%h'&gt;%h&lt;/a&gt; - %s" $OLDTAG..$NEWTAG | sed s/\"/\'/g`
+  #VIS=`git log --pretty=format:"%B" $OLDTAG..$NEWTAG | grep ^Issue | sed 's/^Issue: \(VI\|\)//g; s/ .*//g' | sort -u`
+  EMAIL=`git log --first-parent --pretty=format:"%ae%n%ce" $OLDTAG..$NEWTAG | sort -u`
+  echo RN="${RN}" &gt;&gt; ../generated_sbc_version.properties
   #echo VIS=${VIS} &gt;&gt; ../generated_sbc_version.properties
   echo EMAIL=${EMAIL} &gt;&gt; ../generated_sbc_version.properties
   echo PROJECT=${GERRIT_PROJECT} &gt;&gt; ../generated_sbc_version.properties
-  DATE=`git for-each-ref --format &apos;%(taggerdate)&apos; refs/tags/$NEWTAG`
+  DATE=`git for-each-ref --format '%(taggerdate)' refs/tags/$NEWTAG`
   echo DATE=${DATE} &gt;&gt; ../generated_sbc_version.properties
   echo AuthorCommitter=${AuthorCommitter} &gt;&gt; ../generated_sbc_version.properties
 fi
 
-git submodule--helper list | cut -d&apos; &apos; -f2 | \
+git submodule--helper list | cut -d' ' -f2 | \
 while read -r sha1
 do 
-  SubComps=$(curl -u $ArtUser -ks &quot;https://$artifactory_host/api/search/prop?vcs.revision=$sha1&amp;repos=sbc-release&quot; | grep uri | cut -d&apos;&quot;&apos; -f4)
+  SubComps=$(curl -u $ArtUser -ks "https://$artifactory_host/api/search/prop?vcs.revision=$sha1&amp;repos=sbc-release" | grep uri | cut -d'"' -f4)
   if [[ $SubComps =~ .*/.* ]]; then 
-    HttpsSubLoc=`echo $SubComps | cut -d&apos; &apos; -f1`
+    HttpsSubLoc=`echo $SubComps | cut -d' ' -f1`
     HttpsSubLoc=`dirname $HttpsSubLoc`
     SubLoc=`echo $HttpsSubLoc | sed s/.*\\\/sbc\\\///`
     mkdir -p OpensourceVersions/$SubLoc
-    downloadUri=`curl -u $ArtUser -ks $HttpsSubLoc/Versions.txt | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`
+    downloadUri=`curl -u $ArtUser -ks $HttpsSubLoc/Versions.txt | grep "downloadUri" | cut -d'"' -f4`
     if [[ $downloadUri =~ https.* ]]; then
        curl -u $ArtUser -ks $downloadUri --output OpensourceVersions/$SubLoc/Versions.txt
     fi
-    echo -e &quot;$NEWTAG\n&quot; &gt;&gt; OpensourceVersions/$SubLoc/Versions.txt
+    echo -e "$NEWTAG\n" &gt;&gt; OpensourceVersions/$SubLoc/Versions.txt
   fi
 done
 
-commit_sha1=`git ls-files --stage ../OpenSource/VRX | cut -f2 -d &apos; &apos;`
-curl -u $ArtUser -ks &quot;https://$artifactory_host/api/search/prop?vcs.revision=$commit_sha1&amp;repos=sbc-repo&quot; | grep uri | cut -d&apos;&quot;&apos; -f4 &gt; files.list
+commit_sha1=`git ls-files --stage ../OpenSource/VRX | cut -f2 -d ' '`
+curl -u $ArtUser -ks "https://$artifactory_host/api/search/prop?vcs.revision=$commit_sha1&amp;repos=sbc-repo" | grep uri | cut -d'"' -f4 &gt; files.list
 while read -r uri
 do
-   downloadUri=`curl -u $ArtUser -ks $uri | grep &quot;downloadUri&quot; | cut -d&apos;&quot;&apos; -f4`
+   downloadUri=`curl -u $ArtUser -ks $uri | grep "downloadUri" | cut -d'"' -f4`
    outputFile=${downloadUri##*/}
           
-   if [[ &quot;fullimage_A.img&quot; == &quot;$outputFile&quot; ]]; then curl -u $ArtUser -ks $downloadUri --output ADSL_A_F${NEWTAG}.img; fi
-   if [[ &quot;fullimage_B.img&quot; == &quot;$outputFile&quot; ]]; then curl -u $ArtUser -ks $downloadUri --output ADSL_B_F${NEWTAG}.img; fi
-done &lt; &quot;files.list&quot;
+   if [[ "fullimage_A.img" == "$outputFile" ]]; then curl -u $ArtUser -ks $downloadUri --output ADSL_A_F${NEWTAG}.img; fi
+   if [[ "fullimage_B.img" == "$outputFile" ]]; then curl -u $ArtUser -ks $downloadUri --output ADSL_B_F${NEWTAG}.img; fi
+done &lt; "files.list"
 
 #replace backslash with space, because it is not a valid properties file if it includes a backslash char
-#it save a &quot;&lt;name&gt;.bak&quot; backup file for debug if we will encounter problems
-sed -i.bak &apos;s/\\/ /g&apos; ../generated_sbc_version.properties
+#it save a "&lt;name&gt;.bak" backup file for debug if we will encounter problems
+sed -i.bak 's/\\/ /g' ../generated_sbc_version.properties
 
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -289,8 +291,8 @@ sed -i.bak &apos;s/\\/ /g&apos; ../generated_sbc_version.properties
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
-            <command>if [[ &quot;$GERRIT_REFNAME&quot; == &quot;refs/tags/7.20N.&quot;* ]]; then exit 1; fi
+          <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
+            <command>if [[ "$GERRIT_REFNAME" == "refs/tags/7.20N."* ]]; then exit 1; fi
 </command>
           </condition>
           <publisherList>
@@ -312,7 +314,7 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
               </configs>
             </hudson.plugins.parameterizedtrigger.BuildTrigger>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -336,13 +338,13 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>shuky.riechard@audiocodes.com yossim@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun></regexpForRerun>
+      <regexpForRerun/>
       <rerunIfUnstable>false</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>false</checkRegexp>
@@ -354,12 +356,12 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.4.1">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>sbc-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -371,21 +373,21 @@ GERRIT_BRANCH=${GERRIT_BRANCH}</properties>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>$WORKSPACE/${BRDVERSION}=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 $WORKSPACE/TrunkPackRam/ADSL_*.img=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
@@ -393,22 +395,22 @@ $WORKSPACE/TrunkPackRam/ConfGenerator.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmwa
 $WORKSPACE/TrunkPackRam/Mibs.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 $WORKSPACE/TrunkPackRam/*ReleaseNote.txt=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 $WORKSPACE/TrunkPackRam/OpensourceVersions/**/Versions.txt=&gt;com/ac/sbc</deployPattern>
-      <resolvePattern></resolvePattern>
+      <resolvePattern/>
       <deploymentProperties>User=$User;</deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
@@ -420,7 +422,7 @@ $WORKSPACE/TrunkPackRam/OpensourceVersions/**/Versions.txt=&gt;com/ac/sbc</deplo
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} - ${NEWTAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
