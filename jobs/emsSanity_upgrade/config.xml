@@ -158,7 +158,7 @@ server-7.4.3000-SNAPSHOT.jar \
 rest-core-7.4.3000-SNAPSHOT.jar \
 oracle_trigger-7.4.3000-SNAPSHOT.jar \
 database-7.4.3000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -178,7 +178,7 @@ server-7.6-SNAPSHOT.jar \
 rest-core-7.6-SNAPSHOT.jar \
 oracle_trigger-7.6-SNAPSHOT.jar \
 database-7.6-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -197,7 +197,7 @@ server-7.6.1000-SNAPSHOT.jar \
 rest-core-7.6.1000-SNAPSHOT.jar \
 oracle_trigger-7.6.1000-SNAPSHOT.jar \
 database-7.6.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -216,7 +216,7 @@ server-7.6.2000-SNAPSHOT.jar \
 rest-core-7.6.2000-SNAPSHOT.jar \
 oracle_trigger-7.6.2000-SNAPSHOT.jar \
 database-7.6.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -235,7 +235,7 @@ server-7.8-SNAPSHOT.jar \
 rest-core-7.8-SNAPSHOT.jar \
 oracle_trigger-7.8-SNAPSHOT.jar \
 database-7.8-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -254,7 +254,7 @@ server-7.8.1000-SNAPSHOT.jar \
 rest-core-7.8.1000-SNAPSHOT.jar \
 oracle_trigger-7.8.1000-SNAPSHOT.jar \
 database-7.8.1000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -273,7 +273,7 @@ server-7.8.2000-SNAPSHOT.jar \
 rest-core-7.8.2000-SNAPSHOT.jar \
 oracle_trigger-7.8.2000-SNAPSHOT.jar \
 database-7.8.2000-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$NEW_TAG/$f; done</command>
       </buildStep>
       <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
@@ -373,9 +373,9 @@ sleep 100
 ARTIFACTORY="https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/$UPGRADE_FROM/official_iso"
 
 if [[ "$ISO_DEPLOY_DESTINATION" == "official_iso" &amp;&amp; "$BRANCH" == "$UPGRADE_FROM" ]]; then
-LAST_OFFICIAL="$(curl --user admin:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
+LAST_OFFICIAL="$(curl --user jenkins:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
 else
-LAST_OFFICIAL="$(curl --user admin:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
+LAST_OFFICIAL="$(curl --user jenkins:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
 fi
 
 #first, check out the branch that we want to upgrade from
@@ -570,7 +570,7 @@ aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#13;
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artiPass</name>
-          <value>{AQAAABAAAAAQBGlks0O8MWI51b3Udjfxum+Ea7rJIqV6juSEui8E73o=}</value>
+          <value>{AQAAABAAAAAQpnjQ1+kGkt0g0uenCmJRGSHA65s0ywg90M6PZUm1ww0=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
