@@ -1,5 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>SmartTAP Code Review job</description>
   <keepDependencies>false</keepDependencies>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -33,15 +32,15 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
-        <scriptContent>REM echo &quot;Renaming local repository from SmartTAP to SmtCRV&quot;
+        <scriptContent>REM echo "Renaming local repository from SmartTAP to SmtCRV"
 REM cd c:\j\workspace\
 REM rename SmartTAP smtCRV</scriptContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -51,8 +50,9 @@ REM rename SmartTAP smtCRV</scriptContent>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -69,16 +69,18 @@ REM rename SmartTAP smtCRV</scriptContent>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
         <noTags>false</noTags>
-        <reference></reference>
+        <reference/>
         <timeout>20</timeout>
         <depth>0</depth>
         <honorRefspec>false</honorRefspec>
@@ -94,8 +96,8 @@ REM rename SmartTAP smtCRV</scriptContent>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -117,31 +119,33 @@ REM rename SmartTAP smtCRV</scriptContent>
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>true</excludeNoCodeChange>
+          <excludePrivateState>false</excludePrivateState>
+          <excludeWipState>false</excludeWipState>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -149,24 +153,24 @@ REM rename SmartTAP smtCRV</scriptContent>
   <builders>
     <hudson.plugins.powershell.PowerShell plugin="powershell@1.3">
       <command># Fix: Set environment variable `TERM` to something `git` can handle
-[Environment]::SetEnvironmentVariable(&quot;TERM&quot;, &quot;xterm&quot;, &quot;Machine&quot;)
+[Environment]::SetEnvironmentVariable("TERM", "xterm", "Machine")
 
-$FILES = git show --pretty=&quot;format:&quot; --name-only $GERRIT_PATCHSET_REVISION
+$FILES = git show --pretty="format:" --name-only $GERRIT_PATCHSET_REVISION
 
-Write-Host &quot;*** Files in this commit:&quot;
+Write-Host "*** Files in this commit:"
 $FILES
-Write-Host &quot;***&quot;
+Write-Host "***"
 
 $SKIP = 1 # In review we start with 1 for skipping installers
-if ( -Not ( $FILES -Match &quot;.cpp&quot; -AND $FILES -Match &quot;.c&quot; -AND $FILES -Match &quot;.h&quot; ) ) { $SKIP+=2; Write-Host &quot;*** No .cpp .c .h files found.&quot; }
-if ( -Not ( $FILES -Match &quot;.java&quot; ) ) { $SKIP+=4; Write-Host &quot;*** No .java files found.&quot; }
-if ( -Not ( $FILES -Match &quot;.cs&quot; ) ) { $SKIP+=8; Write-Host &quot;*** No .cs files found.&quot; }
-#if ( -Not ($FILES -Match &quot;.pl&quot; ) ) { $SKIP+=16; Write-Host &quot;*** No .pl files found.&quot; }
+if ( -Not ( $FILES -Match ".cpp" -AND $FILES -Match ".c" -AND $FILES -Match ".h" ) ) { $SKIP+=2; Write-Host "*** No .cpp .c .h files found." }
+if ( -Not ( $FILES -Match ".java" ) ) { $SKIP+=4; Write-Host "*** No .java files found." }
+if ( -Not ( $FILES -Match ".cs" ) ) { $SKIP+=8; Write-Host "*** No .cs files found." }
+#if ( -Not ($FILES -Match ".pl" ) ) { $SKIP+=16; Write-Host "*** No .pl files found." }
 
-echo &quot;Skip code is: $SKIP&quot;
+echo "Skip code is: $SKIP"
 
 cd ACU\NGP\Build
-echo &quot;Running build batch with skip code $SKIP and with Build number 0000&quot;
+echo "Running build batch with skip code $SKIP and with Build number 0000"
 .\LaunchOneTouchEx.bat 0000 $SKIP
 
 </command>
@@ -176,7 +180,7 @@ echo &quot;Running build batch with skip code $SKIP and with Build number 0000&q
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.3"/>
           <publisherList>
             <hudson.tasks.ArtifactArchiver>
               <artifacts>ACU\NGP\Build\Release\raw\BuildLogs\*.*</artifacts>
@@ -196,7 +200,7 @@ echo &quot;Running build batch with skip code $SKIP and with Build number 0000&q
               <caseSensitive>false</caseSensitive>
             </hudson.tasks.ArtifactArchiver>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -214,19 +218,9 @@ echo &quot;Running build batch with skip code $SKIP and with Build number 0000&q
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
-      <injectGlobalPasswords>false</injectGlobalPasswords>
-      <maskPasswordParameters>true</maskPasswordParameters>
-      <passwordEntries>
-        <EnvInjectPasswordEntry>
-          <name>jpass</name>
-          <value>{AQAAABAAAAAQV9J+8UYIKFuXVldeRd9CxRxx11zu0jaKY7zw4Qxmbig=}</value>
-        </EnvInjectPasswordEntry>
-      </passwordEntries>
-    </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER} - ${GERRIT_BRANCH} - ${GERRIT_CHANGE_OWNER_NAME}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
