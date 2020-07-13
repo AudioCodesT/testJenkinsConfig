@@ -355,7 +355,7 @@ TestMode=${TestMode}</properties>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQAvYiJ5Po9kgjGKqNahRf5Ni+NgJ0BACxUB8uoyB7Lm4=}</value>
+          <value>{AQAAABAAAAAQhbdCzJRRmvryuJwP7mgT8VdMtqrby2rpxZcBN/G4vU4=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
