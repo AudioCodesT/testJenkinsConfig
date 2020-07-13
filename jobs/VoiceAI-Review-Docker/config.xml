@@ -312,7 +312,6 @@ echo "Finished docker push to Artifactory."
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
-            <recipientList>cc:yuvaly@audiocodes.com,cc:shukyr@audiocodes.com</recipientList>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT
 
