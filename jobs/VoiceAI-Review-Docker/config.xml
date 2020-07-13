@@ -216,6 +216,9 @@ echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
 #OLDTAG=`git describe --first-parent --tags --abbrev=0 HEAD^`
 #NEWTAG=`echo ${commit_ID} | awk -F/ '{print $NF}'`
 
+## Check - If all changed files are from e2e,then exit with "0"
+[[ -z $(git diff --name-only HEAD~1 HEAD | grep -vE "e2e") ]] &amp;&amp; echo "All changed files are in e2e" &amp;&amp; exit 0
+
 AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD | sort -u | sed s/$/\;/g`
 description=$(git describe)
 
