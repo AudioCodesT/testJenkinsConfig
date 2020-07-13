@@ -230,80 +230,82 @@ echo "{\"version\": \"${NEWTAG}\"}" &gt; version.json
 ### Build the project
 
 ## Check - If all changed files are from e2e,then exit with "0"
-[[ -z $(git diff --name-only HEAD~1 HEAD | grep -vE "^e2e/") ]] &amp;&amp; echo "All changed files are in e2e" &amp;&amp; exit 0
+if [[ -z $(git diff --name-only HEAD~1 HEAD | grep -vE "^e2e/") ]]; then
+	echo "All changed files are in e2e" &amp;&amp; exit 0
 
+	## Set docker vars
+	DOCKER_URL="docker-voice-ai.artifactory.corp.audiocodes.com"
+	DOCKER_REG="${DOCKER_URL}"
+	# Used in build.sh
+	export DOCKER_REG_PREFIX="${DOCKER_URL}/"
+	export GIT_BRANCH=${GERRIT_BRANCH}
 
-## Set docker vars
-DOCKER_URL="docker-voice-ai.artifactory.corp.audiocodes.com"
-DOCKER_REG="${DOCKER_URL}"
-# Used in build.sh
-export DOCKER_REG_PREFIX="${DOCKER_URL}/"
-export GIT_BRANCH=${GERRIT_BRANCH}
+	## Login to docker registry on Artifactory
+	echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
 
-## Login to docker registry on Artifactory
-echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_REG}
+	## Pull latest images from Artifactory &amp; get their hashes
+	echo "Pull latest images from Artifactory (those that are tagged with \${GERRIT_BRANCH})."
+	remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r '.[][]')
+	echo $remoteImgs
 
-## Pull latest images from Artifactory &amp; get their hashes
-echo "Pull latest images from Artifactory (those that are tagged with \${GERRIT_BRANCH})."
-remoteImgs=$(curl -u jenkins:${jenkinsPass} -k https://${DOCKER_URL}/v2/_catalog | jq -r '.[][]')
-echo $remoteImgs
+	## If there is no BRANCH tag yet on artifactory - use previous branch
+	LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r '.tags[]' | egrep ^[[:digit:]]+\.[[:digit:]]+$ | sort | tail -n 1)
 
-## If there is no BRANCH tag yet on artifactory - use previous branch
-LATESTTAG=$(curl -k -u jenkins:${jenkinsPass} https://docker-voice-ai.artifactory.corp.audiocodes.com/v2/vag-version/tags/list | jq -r '.tags[]' | egrep ^[[:digit:]]+\.[[:digit:]]+$ | sort | tail -n 1)
+	if [[ ( "${GERRIT_BRANCH}" &gt; "${LATESTTAG}" ) ]]; then
+    	PULLBRANCH="${LATESTTAG}"
+	else
+	    PULLBRANCH="${GERRIT_BRANCH}"
+	fi
 
-if [[ ( "${GERRIT_BRANCH}" &gt; "${LATESTTAG}" ) ]]; then
-    PULLBRANCH="${LATESTTAG}"
-else
-    PULLBRANCH="${GERRIT_BRANCH}"
-fi
+	HASHES=""
 
-HASHES=""
+	for ri in ${remoteImgs}; do
+	    docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
+	    docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${GERRIT_BRANCH}
 
-for ri in ${remoteImgs}; do
-    docker pull ${DOCKER_REG}/${ri}:${PULLBRANCH}
-    docker tag ${DOCKER_REG}/${ri}:${PULLBRANCH} ${ri}:${GERRIT_BRANCH}
+	    hash=$(docker images ${ri}:${GERRIT_BRANCH} --format "{{.ID}}")
+	    HASHES="${HASHES}${hash} "
+	done
 
-    hash=$(docker images ${ri}:${GERRIT_BRANCH} --format "{{.ID}}")
-    HASHES="${HASHES}${hash} "
-done
+	## Run build script
+	echo "***** Steart build *****"
+	cd ${WORKSPACE}
+	sh build.sh
+	ret_value=$?
 
-## Run build script
-echo "***** Steart build *****"
-cd ${WORKSPACE}
-sh build.sh
-ret_value=$?
+	echo "script Return Value: $ret_value"
 
-echo "script Return Value: $ret_value"
+	if [[ "$ret_value" -ne "0" ]]
+	then
+		exit 1
+	fi
 
-if [[ "$ret_value" -ne "0" ]]
-then
-	exit 1
-fi
+	### Pushing docker images to Artifactory
+	echo "Pushing Docker images to Artifactory."
 
-### Pushing docker images to Artifactory
-echo "Pushing Docker images to Artifactory."
+	## Login to docker registry
+	echo "*** Step 1 - Login to docker registry."
+	echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
-## Login to docker registry
-echo "*** Step 1 - Login to docker registry."
-echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
+	## Tagging &amp; pushing images to Artifactory
+	echo "*** Step 2 - Tagging &amp; pushing images to Artifactory."
+	for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep "${BRANCH}" | grep -v "vag-common"); do
+	    imageName=$(echo $outcomeImage | gawk -F: '{print $1}')
+	    imageID=$(echo $outcomeImage | gawk -F: '{print $3}')
+	    echo "***************************************************"
 
-## Tagging &amp; pushing images to Artifactory
-echo "*** Step 2 - Tagging &amp; pushing images to Artifactory."
-for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep "${BRANCH}" | grep -v "vag-common"); do
-    imageName=$(echo $outcomeImage | gawk -F: '{print $1}')
-    imageID=$(echo $outcomeImage | gawk -F: '{print $3}')
-    echo "***************************************************"
-    
-    if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
-        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${description}
-        docker push ${DOCKER_REG}/${imageName}:${description}
-    else
-        echo "*** No change in docker image \"${imageName}\". Image not pushed to repository. ***"
-    fi
-done
+	    if [[ ! $(echo $HASHES | grep ${imageID}) ]]; then
+	        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${description}
+	        docker push ${DOCKER_REG}/${imageName}:${description}
+	    else
+	        echo "*** No change in docker image \"${imageName}\". Image not pushed to repository. ***"
+	    fi
+	done
 
-echo "Finished docker push to Artifactory."
-</command>
+	echo "Finished docker push to Artifactory."
+
+## End condition on e2e files
+fi</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
