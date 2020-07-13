@@ -217,9 +217,9 @@ cd TrunkPackRam
 if [[ $BOARDNAME =~ "HostedTP" ]]; then
   cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
   suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
-  for app in DRLogger/MPCBin/DRLogger DTLS/MPCBin/DTLS HTTPStreamer/MPCBin/HTTPStreamer; do
-    if [ -f $app ]; then
-      bzip2 -c $app &gt; $WORKSPACE/$(echo $app | awk -F/ '{print $NF}')$suffix.bz2
+  for app in DRLogger DTLS HTTPStreamer; do
+    if [ -f "$app/MPCBin/$app" ]; then
+      bzip2 -c $app/MPCBin/$app &gt; $WORKSPACE/$app$suffix.bz2
     fi
   done
 fi
