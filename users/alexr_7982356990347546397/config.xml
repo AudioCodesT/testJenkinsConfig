@@ -40,6 +40,7 @@
         <string>authenticated</string>
         <string>System_Software</string>
         <string># All 012 voip</string>
+        <string>365_Comeet</string>
         <string># QA Load &amp; Integration</string>
         <string>AWS_Jira_Users</string>
         <string># SQA ALL</string>
@@ -50,6 +51,7 @@
         <string># All Friday</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
         <string>Sp365-Devops-Read</string>
+        <string>Allow Office365 Groups</string>
         <string># All R&amp;D</string>
         <string># VoipLib</string>
         <string>Palo_Remote_desktop_access_support</string>
@@ -61,6 +63,7 @@
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
         <string># Agile users</string>
+        <string>365_Lucca</string>
         <string># All ISRAEL</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -76,10 +79,11 @@
         <string>Domain Users</string>
         <string># SQA_Team_Leaders</string>
         <string># All Airport City</string>
+        <string>365_MFA_Apps</string>
         <string># QA PSTN</string>
         <string># SBC WireShark</string>
       </roles>
-      <timestamp>1574158543056</timestamp>
+      <timestamp>1594645610010</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Alex.Rodikov@audiocodes.com</emailAddress>
