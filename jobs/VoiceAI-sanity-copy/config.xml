@@ -1,8 +1,7 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>Started by Sanity button in test-gerrit.&#xd;
-This job will trigger the job &quot;sbc-sanity-request&quot; </description>
+  <description>Started by Sanity button in test-gerrit.&#13;
+This job will trigger the job "sbc-sanity-request" </description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -10,7 +9,7 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -20,9 +19,6 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -34,26 +30,26 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>REFSPEC</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_BRANCH</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>EMAIL</name>
-          <description></description>
+          <description/>
           <defaultValue>yossim@audiocodes.com</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TestMode</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -67,6 +63,7 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
       <limitOneJobWithMatchingParams>true</limitOneJobWithMatchingParams>
       <paramsToUseForLimit>REFSPEC</paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>copy2netapp</assignedNode>
@@ -78,72 +75,72 @@ This job will trigger the job &quot;sbc-sanity-request&quot; </description>
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>User=&quot;$artifactory_user:$artifactory_password&quot;
-CHANGES=`echo $REFSPEC | sed &apos;s:refs/changes/../::&apos;`
+      <command>User="$artifactory_user:$artifactory_password"
+CHANGES=`echo $REFSPEC | sed 's:refs/changes/../::'`
 
 # Find the last TAG in GWApp branch
-HostedLocation=&quot;/netapp1/CompilationResults/7.2.250 Release/7.2.256&quot;
-TPLastVoiceAI=$(ls -tr &quot;$HostedLocation&quot; | tail -1)
+HostedLocation="/netapp1/CompilationResults/7.2.250 Release/7.2.256"
+TPLastVoiceAI=$(ls -tr "$HostedLocation" | tail -1)
 # Find the last TAG in voiceAI branch
-voiceAILocation=&quot;/netapp1/CompilationResults/VoAI_Connector/1.6&quot;
-LastVoiceAI=$(ls -tr &quot;$voiceAILocation&quot; | tail -1)
-# Remove the &apos;F&apos; character
+voiceAILocation="/netapp1/CompilationResults/VoAI_Connector/1.6"
+LastVoiceAI=$(ls -tr "$voiceAILocation" | tail -1)
+# Remove the 'F' character
 TAG=$(echo $TPLastVoiceAI | cut -c2-)
-ChangeWithHyphen=$(echo $CHANGES | sed &apos;s:/:-:g&apos;)
+ChangeWithHyphen=$(echo $CHANGES | sed 's:/:-:g')
 REFTARGET=${TAG}-${LastVoiceAI}-${ChangeWithHyphen}
-Target=&quot;/netapp1/CompilationResults/DRT/Firmware/$REFTARGET&quot;
+Target="/netapp1/CompilationResults/DRT/Firmware/$REFTARGET"
 
-# Create the folder in netapp1, in case it wasn&apos;t done already
-if ! [ -d &quot;$Target&quot; ]; then
-  mkdir &quot;$Target&quot;
+# Create the folder in netapp1, in case it wasn't done already
+if ! [ -d "$Target" ]; then
+  mkdir "$Target"
 fi
 
-if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;1\..&quot; ]]; then
-  Artifactory=&quot;https://artifactory/api/storage/docker-voice-ai-files/review&quot;
+if [[ "$GERRIT_BRANCH" =~ "1\.." ]]; then
+  Artifactory="https://artifactory/api/storage/docker-voice-ai-files/review"
   DirChangeName=$ChangeWithHyphen
-  extention=&quot;.yml&quot;
+  extention=".yml"
   # Find the latest HostedTP in feature/voice-ai branch
   if [ `ls $Target/*.cmp | wc -l` == 0 ]; then
-    cd &quot;$HostedLocation/$TPLastVoiceAI/&quot;
+    cd "$HostedLocation/$TPLastVoiceAI/"
     unzip $(ls HostedTP* | grep -v LAB) -d $Target
   fi
 else
-  Artifactory=&quot;https://artifactory/api/storage/sbc-review/com/ac/sbc&quot;
+  Artifactory="https://artifactory/api/storage/sbc-review/com/ac/sbc"
   DirChangeName=Firmware/$ChangeWithHyphen
-  extention=&quot;.cmp&quot;
+  extention=".cmp"
   if [ `ls $Target/*.yml | wc -l` == 0 ]; then
-    cd &quot;$voiceAILocation/$LastVoiceAI/&quot;
+    cd "$voiceAILocation/$LastVoiceAI/"
     cp *.yml $Target
   fi
 fi
 
-DOWNLOAD=$(echo $Artifactory | sed &apos;s|api/storage/||&apos;)
+DOWNLOAD=$(echo $Artifactory | sed 's|api/storage/||')
 
 # if file was compiled successfully but not yet deployed to artifactory, then wait 30 sec
 if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; then
   echo $extention was not found, check if this patch-set will be compiled or no code was changed
   change=`echo $CHANGES | cut -d/ -f1`
   ps=`echo $CHANGES | cut -d/ -f2`
-  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  &apos;kind:\|number:&apos; | tail -n +2 | sed &apos;s/ //g&apos; &gt; /tmp/$change.txt
+  ssh -p 29418  -i ~/.ssh/id_rsa_jenkins jenkins@test-gerrit gerrit query --patch-sets $change | grep  'kind:\|number:' | tail -n +2 | sed 's/ //g' &gt; /tmp/$change.txt
 # $field Could be: number or kind
 # $kind could be: REWORK, TRIVIAL_REBASE, MERGE_FIRST_PARENT_UPDATE, NO_CODE_CHANGE or NO_CHANGE
   lastREWORK=$ps;
   if grep -q number: /tmp/$change.txt; then lastREWORK=1; fi
 
   while IFS=: read -r field value; do   
-    if [ &quot;$field&quot; == &quot;number&quot; ]; then checkPS=$value;
+    if [ "$field" == "number" ]; then checkPS=$value;
     else
       echo Check PS $checkPS: $value;
-      if [[ ! &quot;$value&quot; =~ &quot;NO_&quot; ]]; then lastREWORK=$checkPS; fi
+      if [[ ! "$value" =~ "NO_" ]]; then lastREWORK=$checkPS; fi
     fi
   done &lt; /tmp/$change.txt
 
-  if [ &quot;$ps&quot; -eq &quot;$lastREWORK&quot; ]; then
+  if [ "$ps" -eq "$lastREWORK" ]; then
     echo $extention file not ready, will try again automatically, please wait...
     exit 2
   fi
 
-  DirChangeName=$(echo $DirChangeName | sed &quot;s:\-$ps:\-$lastREWORK:&quot;)
+  DirChangeName=$(echo $DirChangeName | sed "s:\-$ps:\-$lastREWORK:")
   if ! curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep -q $extention; then
     echo $extention for patch-set $lastREWORK file not ready, will try again automatically, please wait...
     exit 2
@@ -156,26 +153,26 @@ echo REFTARGET=${REFTARGET} &gt;&gt; VoiceAI.properties
 echo SBC_GERRIT_BRANCH=7.2.250 &gt;&gt; VoiceAI.properties
 
 # Go over all cmp files in the Artifactory and copy them to netapp1 ($Target)
-curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep uri | grep $extention | cut -d&apos;&quot;&apos; -f4 | cut -c 2- &gt; $ChangeWithHyphen.list
-if [ -s &quot;$ChangeWithHyphen.list&quot; ]; then
+curl -ks -u $User -X GET $Artifactory/$DirChangeName | grep uri | grep $extention | cut -d'"' -f4 | cut -c 2- &gt; $ChangeWithHyphen.list
+if [ -s "$ChangeWithHyphen.list" ]; then
    while read -r FileName
    do
-     if [ -e &quot;$Target/$FileName&quot; ]; then continue; fi
+     if [ -e "$Target/$FileName" ]; then continue; fi
      echo Download $FileName to netapp1
-     curl -ks -u $User -X GET $DOWNLOAD/$DirChangeName/$FileName --output &quot;$Target/$FileName&quot;
-   done &lt; &quot;$ChangeWithHyphen.list&quot;
+     curl -ks -u $User -X GET $DOWNLOAD/$DirChangeName/$FileName --output "$Target/$FileName"
+   done &lt; "$ChangeWithHyphen.list"
 fi
 
-# Don&apos;t execute the next job in case you don&apos;t found 2 files
-if [ `ls $Target/*.cmp | wc -l` != 1 ]; then echo &quot;Missing cmp file, exiting job&quot;; exit 1; fi
-if [ `ls $Target/*.yml | wc -l` != 1 ]; then echo &quot;Missing yml file, exiting job&quot;; exit 1; fi
+# Don't execute the next job in case you don't found 2 files
+if [ `ls $Target/*.cmp | wc -l` != 1 ]; then echo "Missing cmp file, exiting job"; exit 1; fi
+if [ `ls $Target/*.yml | wc -l` != 1 ]; then echo "Missing yml file, exiting job"; exit 1; fi
 
 # Check the checksum of the 1 $extention file before executing the SANITY itself
 for f in $Target/*$extention; do
   checkSum1=$(curl -ks -u $User -X GET \
             $Artifactory/$DirChangeName/$(basename $f) | \
-            grep md5 | head -1 | cut -d\&quot; -f4)
-  checkSum2=$(md5sum $f | cut -d&quot; &quot; -f1)
+            grep md5 | head -1 | cut -d\" -f4)
+  checkSum2=$(md5sum $f | cut -d" " -f1)
   if [ $checkSum1 != $checkSum2 ]; then
     echo Abort - the CheckSum of $(basename $f) is differ, copy again
     rm -f $f
@@ -186,8 +183,8 @@ done
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.0"/>
-      <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Run" plugin="run-condition@1.3"/>
+      <runCondition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
         <worstResult>
           <name>SUCCESS</name>
           <ordinal>0</ordinal>
@@ -203,16 +200,16 @@ done
       </runCondition>
       <conditionalbuilders>
         <hudson.tasks.Shell>
-          <command>echo &quot;Send a message regarding the compilation was completed&quot;
+          <command>echo "Send a message regarding the compilation was completed"
 exit 0
-revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed 's:/:/revisions/:')
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;$TestMode Sanity Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\&quot;,\&quot;notify\&quot;: \&quot;NONE\&quot;, \&quot;tag\&quot;: \&quot;voicAI-Sanity\&quot;}&quot; \
--H &apos;Content-Type: application/json&apos; &gt; /dev/null</command>
+-d "{\"message\": \"$TestMode Sanity Compilation was completed, and was sent to BatchRunner https://test-jenkins/view/SBC-GWApp/job/sbc-sanity-request\",\"notify\": \"NONE\", \"tag\": \"voicAI-Sanity\"}" \
+-H 'Content-Type: application/json' &gt; /dev/null</command>
         </hudson.tasks.Shell>
       </conditionalbuilders>
     </org.jenkinsci.plugins.conditionalbuildstep.ConditionalBuilder>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>VoiceAI.properties</propertiesFilePath>
       </info>
@@ -222,7 +219,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.0">
+          <condition class="org.jenkins_ci.plugins.run_condition.core.StatusCondition" plugin="run-condition@1.3">
             <worstResult>
               <name>ABORTED</name>
               <ordinal>4</ordinal>
@@ -253,11 +250,11 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
                       <hudson.tasks.Shell>
                         <command>
 
-echo &quot;It is the last copy job, send a message to the user&quot;
-revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed &apos;s:/:/revisions/:&apos;)
+echo "It is the last copy job, send a message to the user"
+revisions=$(echo $REFSPEC | cut -d/ -f4,5 | sed 's:/:/revisions/:')
 curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
--d &quot;{\&quot;message\&quot;: \&quot;There was a problem to copy compilation results to netapp1 storage, please press Sanity again later\&quot;,\&quot;notify\&quot;: \&quot;OWNER\&quot;, \&quot;tag\&quot;: \&quot;SIP-Sanity\&quot;}&quot; \
--H &apos;Content-Type: application/json&apos; &gt; /dev/null
+-d "{\"message\": \"There was a problem to copy compilation results to netapp1 storage, please press Sanity again later\",\"notify\": \"OWNER\", \"tag\": \"SIP-Sanity\"}" \
+-H 'Content-Type: application/json' &gt; /dev/null
 </command>
                       </hudson.tasks.Shell>
                     </buildSteps>
@@ -267,7 +264,7 @@ curl -kns --anyauth -X POST https://test-gerrit/a/changes/$revisions/review \
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
@@ -301,7 +298,7 @@ TestMode=${TestMode}</properties>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <recipientProviders/>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -312,7 +309,7 @@ TestMode=${TestMode}</properties>
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -342,29 +339,29 @@ TestMode=${TestMode}</properties>
         <hudson.plugins.build__timeout.operations.AbortOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+          <value>{AQAAABAAAAAQAvYiJ5Po9kgjGKqNahRf5Ni+NgJ0BACxUB8uoyB7Lm4=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${REFSPEC}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
