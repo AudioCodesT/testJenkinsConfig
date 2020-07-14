@@ -162,10 +162,14 @@ if [ "$BOARDNAME" == "M1000_MSBG" ] &amp;&amp; \
 fi
 echo BOARDNAME=${BOARDNAME} &gt; ../generated_sbc_version.properties
 
-#if [[ $GERRIT_BRANCH =~ "collab/" ]]; then
-#  GERRIT_BRANCH=`git branch -r --contains $(git describe --tag --abbrev=0) | head -1 | awk -F'/' '{print $NF}'`
-#fi
-echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
+MAIN_BRANCH=${GERRIT_BRANCH}
+if [[ $MAIN_BRANCH =~ "feature" ]]; then
+ echo Find the main branch
+ TAGMERGEDFROM=$(git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1)
+ MAIN_BRANCH="7.4"
+ # MAIN_BRANCH=$(git  branch -r --contains $TAGMERGEDFROM | awk -F'/' '{print $NF}' | grep ^[0-9]\.[0-9]*)
+fi
+echo MAIN_BRANCH=${MAIN_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
 # if the REFSPEC=&lt;Branch name&gt;
 # CHANGESNumbers = All the chnages that should be updated with DRT label
@@ -289,6 +293,16 @@ cd TrunkPackRam
 if [ $BOARDNAME == "HostedTP" ]; then SERVER="--server=localhost "; else SERVER=""; fi
 ./buildAll.sh --board=${BOARDNAME} --sip=yes --user=no --fast=yes $SERVER --custom-version=-d$BUILD_NUMBER
 
+if [[ $BOARDNAME =~ "HostedTP" ]]; then
+  cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/Apps
+  suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
+  for app in DRLogger DTLS HTTPStreamer; do
+    if [ -f "$app/MPCBin/$app" ]; then
+      bzip2 -c $app/MPCBin/$app &gt; $WORKSPACE/$app$suffix.bz2
+    fi
+  done
+fi
+
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin
 mv ram${BOARDNAME}_SIP.cmp ${BOARDNAME}_SIP.cmp
 
@@ -307,7 +321,7 @@ zip -r ${BOARDNAME}_SIP.elf.zip ram${BOARDNAME}_SIP.elf
             <configs>
               <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                 <properties>REFSPEC=${REFSPEC}
-GERRIT_BRANCH=${GERRIT_BRANCH}
+GERRIT_BRANCH=${MAIN_BRANCH}
 EMAIL=${EMAIL}
 BOARD=${BOARDNAME}_SIP.cmp
 REFTARGET=${TARGET}
@@ -511,7 +525,8 @@ fi
         <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.cmp=&gt;com/ac/sbc/DRT/Firmware/${TARGET}
-${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.*.zip=&gt;com/ac/sbc/DRT/Firmware/${TARGET}/map</deployPattern>
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SIP.*.zip=&gt;com/ac/sbc/DRT/Firmware/${TARGET}/map
+${WORKSPACE}/*.bz2=&gt;com/ac/sbc/DRT/Firmware/${TARGET}</deployPattern>
       <resolvePattern/>
       <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
