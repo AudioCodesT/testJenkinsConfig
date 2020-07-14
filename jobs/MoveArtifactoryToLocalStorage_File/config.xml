@@ -1,14 +1,14 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>the new revision for the old job: download file by file (not one ZIP file)</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -29,31 +29,31 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>ARTIFACTORY</name>
-          <description></description>
+          <description/>
           <defaultValue>test-artifactory</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>SOURCE</name>
-          <description></description>
+          <description/>
           <defaultValue>sbc-release/com/ac/sbc/7.2.150/Firmware</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>DESTINATION</name>
-          <description></description>
+          <description/>
           <defaultValue>\\aclnas03\Versions\CompilationResults\7.2.150 Release\7.2.154</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>FROMDIR</name>
-          <description></description>
+          <description/>
           <defaultValue>7.20A.153.000</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>TODIR</name>
-          <description></description>
+          <description/>
           <defaultValue>7.20A.153.241</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -65,7 +65,7 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DELETE_ELF</name>
-          <description></description>
+          <description/>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -77,8 +77,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>compile3</assignedNode>
@@ -90,10 +91,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>mkdir -p &quot;%DESTINATION%&quot;&#xd;
-net use T: /delete&#xd;
-net use T: &quot;%DESTINATION%&quot;&#xd;
-&#xd;
+      <command>mkdir -p "%DESTINATION%"&#13;
+net use T: /delete&#13;
+net use T: "%DESTINATION%"&#13;
+&#13;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
@@ -103,7 +104,7 @@ User=$ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD
 curl=c:/curl/curl
 
 cd $WORKSPACE
-DirList=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE | grep uri | cut -d&apos;&quot;&apos; -f4 | cut -c 2- | sort -V | grep -A $MAX $FROMDIR | grep -B $MAX $TODIR -m1`
+DirList=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/$SOURCE | grep uri | cut -d'"' -f4 | cut -c 2- | sort -V | grep -A $MAX $FROMDIR | grep -B $MAX $TODIR -m1`
 if [ $(echo $DirList | wc -w) -gt $MAX ]; then 
    echo Over the max range... abort; 
    exit 1;
@@ -111,11 +112,11 @@ fi
 
 function DeleteELF() {
   local Folder=$1
-  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep &apos;uri\|folder&apos; | while read line
+  $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep 'uri\|folder' | while read line
   do
     if echo $line | grep folder | grep -q true; then DeleteELF ${Folder}$uri;
     else
-      uri=`echo $line | cut -d&apos;&quot;&apos; -f4`;
+      uri=`echo $line | cut -d'"' -f4`;
       if echo $line | grep -q .\\.elf; then
         echo Delete file ${Folder}$uri
         $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
@@ -130,14 +131,14 @@ function EachFolder() {
   local TargetPath=$(echo $Folder | sed s:$SOURCE::)
   $curl -ks -X GET https://$ARTIFACTORY/api/storage/$Folder | grep uri | grep -v https: | sort -V | while read line
   do
-    uri=`echo $line | cut -d&apos;&quot;&apos; -f4`
+    uri=`echo $line | cut -d'"' -f4`
     DestSize=0; ArtSize=0
-    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d&apos;&quot;&apos; -f2`
-    if [ &quot;$ArtSize&quot; != &quot;&quot; ]; then
+    ArtSize=`$curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep size | cut -d: -f2 | cut -d'"' -f2`
+    if [ "$ArtSize" != "" ]; then
         echo Download file ${Folder}$uri...
-        $curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output &quot;${DESTINATION}${TargetPath}$uri&quot;
-        DestSize=`wc -c &lt;&quot;${DESTINATION}${TargetPath}$uri&quot;`
-        if [ &quot;$ArtSize&quot; != &quot;$DestSize&quot; ]; then 
+        $curl -ks -u $User -X GET https://$ARTIFACTORY/${Folder}$uri --output "${DESTINATION}${TargetPath}$uri"
+        DestSize=`wc -c &lt;"${DESTINATION}${TargetPath}$uri"`
+        if [ "$ArtSize" != "$DestSize" ]; then 
           echo $ArtSize--$DestSize: $file is differ - No delete and exit......
           exit 1
         else
@@ -145,9 +146,9 @@ function EachFolder() {
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
          fi
     else
-        mkdir &quot;${DESTINATION}${TargetPath}$uri&quot;
-        EachFolder &quot;${Folder}$uri&quot;;
-        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+        mkdir "${DESTINATION}${TargetPath}$uri"
+        EachFolder "${Folder}$uri";
+        if $curl -ks -X GET https://$ARTIFACTORY/api/storage/${Folder}$uri | grep -qF '"children" : [ ],'; then 
           echo ----- Delete the empty directory from Artifactory ${Folder}$uri...
           $curl -ks -u $User -X DELETE https://$ARTIFACTORY/${Folder}$uri
         fi
@@ -155,22 +156,22 @@ function EachFolder() {
   done
 }
 
-echo Going to download: &quot;$DirList&quot; into &quot;$DESTINATION&quot;
-GROUP=$(echo $SOURCE | awk -F/ &apos;{ print $NF }&apos;)
+echo Going to download: "$DirList" into "$DESTINATION"
+GROUP=$(echo $SOURCE | awk -F/ '{ print $NF }')
 
-DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
+DESTINATION=$(echo $DESTINATION | sed -e 's:\\:/:g')
 
 for Dir in $DirList; do
    echo --------------------------------- Start $Dir
    
-   if [ &quot;$DELETE_ELF&quot; = &quot;true&quot; ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
+   if [ "$DELETE_ELF" = "true" ]; then echo Delete ELF files; DeleteELF $SOURCE/$Dir; fi
 
    echo Download $Dir
-   mkdir &quot;${DESTINATION}/$Dir&quot;
+   mkdir "${DESTINATION}/$Dir"
    EachFolder $SOURCE/$Dir
-   if $curl -ks -X GET &quot;https://$ARTIFACTORY/api/storage/$SOURCE/$Dir&quot; | grep -qF &apos;&quot;children&quot; : [ ],&apos;; then 
+   if $curl -ks -X GET "https://$ARTIFACTORY/api/storage/$SOURCE/$Dir" | grep -qF '"children" : [ ],'; then 
      echo ----------------- Delete the empty directory from Artifactory $SOURCE/$Dir...
-     $curl -ks -u $User -X DELETE &quot;https://$ARTIFACTORY/$SOURCE/$Dir&quot;
+     $curl -ks -u $User -X DELETE "https://$ARTIFACTORY/$SOURCE/$Dir"
    fi  
 done
 
@@ -178,35 +179,36 @@ done
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yossim shukyr</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.5">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.42">
-          <script></script>
+        <propertiesContent>ARTIFACTORY_USER=jenkins</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>ARTIFACTORY_PASSWORD</name>
-          <value>{AQAAABAAAAAQP7YB5qfoH7d77gN7dK0t6aE7KnTasaJzn7I1RwqhBGw=}</value>
+          <value>{AQAAABAAAAAQd0y1a9O+zzuMjF54BIYkqo9b8F6XRyV5j2KddG9ug8s=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
-    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.9">
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}, $SOURCE: $FROMDIR -- $TODIR</template>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
