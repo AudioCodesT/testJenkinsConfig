@@ -148,7 +148,7 @@ echo "#define EXTERNAL_VERSION \"$BL\"" &gt; $WORKSPACE/include/external_version
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>User="admin:$artifactory_password"
+      <command>User="jenkins:$artifactory_password"
 
 sudo chmod -R 755 .
 sudo chown -R centos:centos .
@@ -302,7 +302,7 @@ $WORKSPACE/OpenRG-UGW_external_version_data.h=&gt;com/ac/sbc/OpenRG-UGW/${COMP_V
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQiTYTRSTYCaDNoRV/H6Z7uR9nvU1/n5HQGah49rjkEU0=}</value>
+          <value>{AQAAABAAAAAQ7XMhoaHnxL4wVNGV2Jwp5HLkgNQsSEoSaL5jEgv6gXs=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
