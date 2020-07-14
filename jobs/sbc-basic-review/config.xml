@@ -508,7 +508,7 @@ $change,$ps
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -522,7 +522,7 @@ $change,$ps
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQcXp8K6tX6x8BkS7EU1sZNv/onvrNPBx4Fwnn9gH85c8=}</value>
+          <value>{AQAAABAAAAAQSQIKJ7cWSYzQAOqPZW+GSjyXofbeM+lSQbU+X3dwdng=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
           <name>compile_password</name>
