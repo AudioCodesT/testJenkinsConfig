@@ -148,7 +148,7 @@ echo COMP_VER=${BL} &gt; generated_version.properties
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>User="admin:$artifactory_password"
+      <command>User="jenkins:$artifactory_password"
 
 GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'origin/' '{print $NF}'`
 CurrentPath=`pwd`
@@ -278,7 +278,7 @@ fi</command>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQW9+i63LYqtvZElXVt+uF18lkpsVzEMcLOjdVc7Z5M+E=}</value>
+          <value>{AQAAABAAAAAQrCPqqnwvLbNkBc85SwqhADNWSJ9/ahBoqlHACXii9aU=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
