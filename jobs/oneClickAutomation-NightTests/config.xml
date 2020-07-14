@@ -62,7 +62,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>pip3 install -r requirements.txt
+      <command>sudo pip3 install -r requirements.txt
 cd Tests
 python3 -m pytest -v</command>
     </hudson.tasks.Shell>
