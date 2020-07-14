@@ -152,7 +152,7 @@ echo COMP_VER=${BL} &gt; generated_version.properties
       </info>
     </EnvInjectBuilder>
     <hudson.tasks.Shell>
-      <command>User="admin:$artifactory_password"
+      <command>User="jenkins:$artifactory_password"
 refs=""
 
 # Find if this build should use another Opensorce Images with the same Commit change-ID
@@ -329,7 +329,7 @@ fi</command>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQW9+i63LYqtvZElXVt+uF18lkpsVzEMcLOjdVc7Z5M+E=}</value>
+          <value>{AQAAABAAAAAQQElkzZi3XqwSLSFYqqmvxaNlWw+JMrE0e2lejovshUs=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
