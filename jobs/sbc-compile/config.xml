@@ -400,7 +400,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
 ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 ${WORKSPACE}/TrunkPackRam/Networking/ApplicationsAndProtocols/CLI/adsl_vrx_ext_version_data.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
-${WORKSPACE}/*.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
+${WORKSPACE}/*.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
 </deployPattern>
       <resolvePattern/>
       <deploymentProperties/>
