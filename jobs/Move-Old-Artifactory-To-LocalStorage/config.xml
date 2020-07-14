@@ -315,7 +315,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ "IPP/Android"
   <buildWrappers>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>ARTIFACTORY_USER=admin</propertiesContent>
+        <propertiesContent>ARTIFACTORY_USER=jenkins</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -329,7 +329,7 @@ CheckFolder ipp-release/com/ac/ipp/Android/ "IPP/Android"
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>ARTIFACTORY_PASSWORD</name>
-          <value>{AQAAABAAAAAQP7YB5qfoH7d77gN7dK0t6aE7KnTasaJzn7I1RwqhBGw=}</value>
+          <value>{AQAAABAAAAAQpsaYQTBiXD/Z9zz1QoupOisfS7yZIvZo+qlYu2q5f2U=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
