@@ -148,7 +148,7 @@ then
 	cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/about_logo.png
 	cp -f /home/centos/logo_login.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/images/logo_login.png
 	cp -f /home/centos/about_logo.png /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/images/about_logo.png
-elif [[ "$BRANCH" =~ "7.8" || "$BRANCH" =~ "7.8.1000" ]]
+elif [[ "$BRANCH" == "7.8" || "$BRANCH" == "7.8.1000" ]]
 then
 	#for branches 7.8 and 7.8.1000 copy these files
 	cp -f /home/centos/ovoc_logo_white.svg /home/centos/copy_original_iso/EmsServerInstall/ac_ems_deploy/server_"$version"/web-ui-ovoc/assets/svgs/ovoc_logo_white.svg
