@@ -1820,6 +1820,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>oneClickAutomation-NightTests</string>
       </jobNames>
       <jobFilters/>
       <columns>
