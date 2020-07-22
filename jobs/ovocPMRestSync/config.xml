@@ -72,7 +72,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>#
-git fetch "ssh://jenkins@test-gerrit:29418/EMS/ovoc_server" refs/changes/59/93859/1 &amp;&amp; git checkout FETCH_HEAD
+git fetch "ssh://jenkins@test-gerrit:29418/EMS/ovoc_server" refs/changes/59/93859/2 &amp;&amp; git checkout FETCH_HEAD
 # copy externals folder from ac_ems_deploy_server 1 level up to enable Unit-tests
 cp -R ${WORKSPACE}/EMS/ac_ems_deploy_server/externals ${WORKSPACE}/EMS
 #create emsFiles/Logs to enable maven to create logs
