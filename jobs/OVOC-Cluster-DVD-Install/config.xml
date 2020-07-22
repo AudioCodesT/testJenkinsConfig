@@ -139,7 +139,7 @@ case $TAG in
     	BRANCH=7.8.1000
         ;;
 	7.8.2*)
-    	BRANCH=7.6.2000
+    	BRANCH=7.8.2000
         ;;
 esac
         
