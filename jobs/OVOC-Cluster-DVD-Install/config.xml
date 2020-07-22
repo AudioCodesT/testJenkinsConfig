@@ -128,8 +128,18 @@ echo -e "Role=${ServerRole}" &gt;&gt; sanity.properties
 cat sanity.properties
 
 ## Get prerequisites for current branch
-BRANCH=${TAG%.*}
-
+case TAG in:
+	7.6.2*)
+    	BRANCH=7.6.2000
+	7.8)
+    	BRANCH=7.8
+	7.8.1*)
+    	BRANCH=7.8.1000
+	7.8.2*)
+    	BRANCH=7.6.2000
+esac
+        
+        
 cd ${WORKSPACE}/EMS
 [[ -d target ]] &amp;&amp; rm -rf target
 mkdir target
@@ -141,7 +151,7 @@ for f in common-${BRANCH}-SNAPSHOT.jar \
 	rest-core-${BRANCH}-SNAPSHOT.jar \
 	oracle_trigger-${BRANCH}-SNAPSHOT.jar \
 	database-${BRANCH}-SNAPSHOT.jar
-do curl -O -k --user admin:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done
+do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/ems/ovoc_server/Sanity_preReq/$TAG/$f; done
 
 
 # Copy FKGenerator.ini &amp; Change prerequisite files permissions
@@ -259,8 +269,8 @@ python2.7 SanityCopyLogs.py $TAG $vmIP
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQzofOB3vtW4LlUCNwZYyg+CZs/hMtp29E3pMiY9Y4jzw=}</value>
+          <name>artiPass</name>
+          <value>{AQAAABAAAAAQRaEJBQgdpAy3vbMgOWbfksQVc8vecLRdoEf+oZsMVKQ=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
