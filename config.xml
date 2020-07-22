@@ -628,7 +628,7 @@
       <groupId>sig-8a99c992</groupId>
       <pendingInstances/>
       <labelString>ems-build</labelString>
-      <idleTerminationMinutes>1</idleTerminationMinutes>
+      <idleTerminationMinutes>15</idleTerminationMinutes>
       <workspaceDir>/home/centos/jenkinsslave</workspaceDir>
       <labelSet class="sorted-set">
         <hudson.model.labels.LabelAtom>ems-build</hudson.model.labels.LabelAtom>
