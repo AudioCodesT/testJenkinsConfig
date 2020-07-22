@@ -128,7 +128,7 @@ echo -e "Role=${ServerRole}" &gt;&gt; sanity.properties
 cat sanity.properties
 
 ## Get prerequisites for current branch
-case TAG in:
+case TAG in
 	7.6.2*)
     	BRANCH=7.6.2000
         ;;
