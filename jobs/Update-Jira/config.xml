@@ -140,7 +140,7 @@ fi
 case $PROJECT in
 	*"GWApp"*) SendTo="Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham";;
     *"VoiceAIConnector") SendTo="Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil";;
-    *"IPP"*) SendTo="IppSwReleases, IPPQA_Israel";;
+    *"IPP"*) SendTo="IppSwReleases, IPPQA_Israel, IPPhoneAutomation,IPPQA_SZ ";;
     *"EMS"*) SendTo="Gal.Erez, Gennady.Tsiporkin, Aliya.Peretz, Michael.Lallouz";;
     *"Backend/"*) SendTo="Aahd.Said, Ariel.Pessah, Ben.Magriso";;
     *"MP"*) SendTo="Hagayh, MP20xdeliveries";;
