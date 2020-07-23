@@ -64,7 +64,16 @@
     <hudson.tasks.Shell>
       <command>cat $voice_ai_sshkey &gt; ~/.ssh/id_rsa
 chmod 0600 ~/.ssh/id_rsa
+cat &gt; ~/.ssh/config &lt;&lt; EOF
+Host test-runner
+        Hostname test-runner.westus2.cloudapp.azure.com
+        User tester
+        IdentityFile ~/.ssh/id_rsa
+        ServerAliveInterval 120
+        ServerAliveCountMax 2
 
+EOF
+chmod 0600 ~/.ssh/config
 sudo yum install -y python3-devel
 pip3 install --user -r requirements.txt
 cd Tests
