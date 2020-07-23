@@ -143,7 +143,7 @@ case $PROJECT in
     *"IPP"*) SendTo="IppSwReleases, IPPQA_Israel, IPPhoneAutomation,IPPQA_SZ";;
     *"EMS"*) SendTo="Gal.Erez, Gennady.Tsiporkin, Aliya.Peretz, Michael.Lallouz";;
     *"Backend/"*) SendTo="Aahd.Said, Ariel.Pessah, Ben.Magriso";;
-    *"MP"*) SendTo="Hagayh, MP20xdeliveries";;
+    *"MP"*) SendTo="Hagayh, MP20xdeliveries, MP20xSupport";;
     *"Arm"*) SendTo="RnD-ARM, _ARMQA, Eran.Feldman";;
     *"mediatech"*) SendTo="Yishai.Gil, Maayan.Aharoni";;
     *"Smart"*) SendTo="Brian.Kling, Alex.Shlachter";;
