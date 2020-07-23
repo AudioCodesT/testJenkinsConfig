@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -25,9 +24,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
-      <configVersion>1</configVersion>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
@@ -44,7 +43,11 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+    </extensions>
   </scm>
   <assignedNode>oneclick</assignedNode>
   <canRoam>false</canRoam>
@@ -78,14 +81,14 @@ python3 -m pytest -v</command>
   <buildWrappers>
     <org.jenkinsci.plugins.xvfb.Xvfb plugin="xvfb@1.1.3">
       <installationName>default</installationName>
-      <screen></screen>
+      <screen/>
       <debug>false</debug>
       <timeout>0</timeout>
       <displayNameOffset>0</displayNameOffset>
-      <additionalOptions></additionalOptions>
+      <additionalOptions/>
       <shutdownWithBuild>false</shutdownWithBuild>
       <autoDisplayName>false</autoDisplayName>
-      <assignedLabels></assignedLabels>
+      <assignedLabels/>
       <parallelBuild>false</parallelBuild>
     </org.jenkinsci.plugins.xvfb.Xvfb>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
@@ -93,8 +96,8 @@ python3 -m pytest -v</command>
         <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
           <credentialsId>45ee3c4a-b176-4de9-a707-dd4abe940594</credentialsId>
           <keyFileVariable>voice_ai_sshkey</keyFileVariable>
-          <usernameVariable></usernameVariable>
-          <passphraseVariable></passphraseVariable>
+          <usernameVariable/>
+          <passphraseVariable/>
         </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
