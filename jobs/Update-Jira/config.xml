@@ -137,13 +137,10 @@ fi
 
 ./update_report_tags.pl $NEWTAG "$GERRIT_BRANCH" "$PROJECT"
 
-cd $WORKSPACE
-
-
 case $PROJECT in
 	*"GWApp"*) SendTo="Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham";;
     *"VoiceAIConnector") SendTo="Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil";;
-    *"IPP"*) SendTo=IppSwReleases;;
+    *"IPP"*) SendTo="IppSwReleases, IPPQA";;
     *"EMS"*) SendTo="Gal.Erez, Gennady.Tsiporkin, Aliya.Peretz, Michael.Lallouz";;
     *"Backend/"*) SendTo="Aahd.Said, Ariel.Pessah, Ben.Magriso";;
     *"MP"*) SendTo="Hagayh, MP20xdeliveries";;
@@ -161,9 +158,9 @@ case $PROJECT in
 esac
 
 echo SendTo: $SendTo
-echo SendTo=$SendTo &gt; SendTo.txt
+echo SendTo=$SendTo &gt; $WORKSPACE/SendTo.txt
 
-
+./Send_Email.pl $WORKSPACE/index.html "$EMAIL" "$SendTo,yossim,Shuky.Riechard"
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
@@ -237,7 +234,7 @@ $BUILD_URL</body>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>yossim@audiocodes.com</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>JNLP4-connect connection</regexpForRerun>
