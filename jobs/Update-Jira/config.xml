@@ -140,10 +140,10 @@ fi
 case $PROJECT in
 	*"GWApp"*) SendTo="Benny.Lavi, amos.bublil, Shmulik.Yudkovich, Tova.Shoham";;
     *"VoiceAIConnector") SendTo="Ben.Magriso, Benny.Lavi, Shmulik.Yudkovich, amos.bublil";;
-    *"IPP"*) SendTo="IppSwReleases, IPPQA_Israel, IPPhoneAutomation,IPPQA_SZ";;
+    *"IPP"*) SendTo="IppSwReleases";;
     *"EMS"*) SendTo="Gal.Erez, Gennady.Tsiporkin, Aliya.Peretz, Michael.Lallouz";;
     *"Backend/"*) SendTo="Aahd.Said, Ariel.Pessah, Ben.Magriso";;
-    *"MP"*) SendTo="Hagayh, MP20xdeliveries, MP20xSupport";;
+    *"MP"*) SendTo="Hagayh, MP20xdeliveries";;
     *"Arm"*) SendTo="RnD-ARM, _ARMQA, Eran.Feldman";;
     *"mediatech"*) SendTo="Yishai.Gil, Maayan.Aharoni";;
     *"Smart"*) SendTo="Brian.Kling, Alex.Shlachter";;
@@ -160,7 +160,7 @@ esac
 echo SendTo: $SendTo
 echo SendTo=$SendTo &gt; $WORKSPACE/SendTo.txt
 
-#./Send_Email.pl $WORKSPACE/index.html "$EMAIL" "$SendTo, yossim,Shuky.Riechard"
+#./Send_Email.pl $WORKSPACE/index.html "$SendTo, $EMAIL" "yossim,Shuky.Riechard"
 </command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
