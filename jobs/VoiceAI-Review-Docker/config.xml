@@ -229,7 +229,7 @@ echo "{\"version\": \"${NEWTAG}\"}" &gt; version.json
 ### Build the project
 
 ## Check - If all changed files are from e2e,then exit with "0"
-if [[ -z $(git diff --name-only HEAD~1 HEAD | grep -vE "^e2e/") ]]; then
+if [[ $(git diff --name-only HEAD~1 HEAD | grep -vE "^e2e/" | wc -l) &gt; 0 ]]; then
 	echo "All changed files are in e2e" &amp;&amp; exit 0
 
 	## Set docker vars
