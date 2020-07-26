@@ -1734,6 +1734,7 @@
         <string>VAG-copy-to-NetApp</string>
         <string>VAG-push-private-to-ECR</string>
         <string>VAG-push-to-ECR</string>
+        <string>VAG-push-to-Jfrog</string>
         <string>VoiceAI-build</string>
         <string>VoiceAI-build-Docker</string>
         <string>VoiceAI-create-tag</string>
