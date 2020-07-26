@@ -71,6 +71,7 @@ Host test-runner
         IdentityFile ~/.ssh/id_rsa
         ServerAliveInterval 120
         ServerAliveCountMax 2
+        StrictHostKeyChecking no
 
 EOF
 chmod 0600 ~/.ssh/config
