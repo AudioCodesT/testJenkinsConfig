@@ -339,7 +339,7 @@ exit $ret_value
         <io.jenkins.plugins.analysis.warnings.EsLint>
           <id/>
           <name/>
-          <pattern>eslint.xml</pattern>
+          <pattern>**/eslint.xml</pattern>
           <reportEncoding/>
           <skipSymbolicLinks>false</skipSymbolicLinks>
         </io.jenkins.plugins.analysis.warnings.EsLint>
