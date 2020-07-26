@@ -1,0 +1,286 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs></blockingJobs>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>60</daysToKeep>
+        <numToKeep>200</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>Branches</name>
+          <description></description>
+          <defaultValue>NextGenCPE NextGenCPE_R1 NextGenCPE_R3 7.2.204 7.2.204_6jio 7.2.254 7.2.252_MSBR 7.2.254_MSBR 7.2.256 7.2.256_2 7.2.256_MSBR 7.2.256_MSBR_M1 7.2.258 7.2.260 7.4 7.4.100</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <refspec>+refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +refs/notes/review:refs/notes/review</refspec>
+        <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
+        <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>origin/7.*</name>
+      </hudson.plugins.git.BranchSpec>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/NextGenCPE*</name>
+      </hudson.plugins.git.BranchSpec>
+      <hudson.plugins.git.BranchSpec>
+        <name>origin/feature/*</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.BuildChooserSetting>
+        <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+      </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>true</noTags>
+        <reference></reference>
+        <depth>0</depth>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+    </extensions>
+  </scm>
+  <assignedNode>test-Sanjer</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H/10 * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>git config --global user.name &quot;Jenkins&quot;
+git config --global user.email devops@audiocodes.com
+Artifact=artifactory
+Repo=sbc-release
+
+function createSubModuleTag() {
+  echo create a new TAG for the $SubModule submodule too
+  SubModule=$1
+  NEWTAGsub=$2
+  if [ `git submodule status OpenSource/$SubModule | wc -l` == 1 ]; then
+    NEWTAG=$NEWTAGsub
+    commit_sha1=`git ls-files --stage OpenSource/$SubModule | cut -f2 -d &apos; &apos;`
+    echo Check if this Images existing in the Artifactory already - if not, create a TAG
+    if ! curl -ks &quot;https://$Artifact/api/search/prop?vcs.revision=$commit_sha1&amp;repos=$Repo&quot; | grep -q uri; then
+      curl -nk --anyauth -X PUT --header &quot;Content-Type: application/json;charset=UTF-8&quot; \
+        https://test-gerrit/a/projects/TP%2fOpenSource%2f$SubModule/tags/$NEWTAG \
+        -d &quot;
+        {
+          \&quot;message\&quot;: \&quot;Jenkins auto tag after $LastUser commit\&quot;,
+          \&quot;revision\&quot;: \&quot;$commit_sha1\&quot;
+        }&quot;
+    fi
+  fi
+}
+
+function createTag {
+  if git log --pretty=format:%B -n1 $LastSha1 | grep &quot;DevOps admin change&quot;; then
+    return
+  fi
+  
+  RealLastTag=$LastTag
+  # If this is a first TAG in Feature branch
+  if [ ! -z $PreLastTag ]; then LastTag=$PreLastTag; PreLastTag=&quot;&quot;; fi
+
+  FixNum=`echo $LastTag | cut -d. -f4`
+  if [ -z $FixNum ]; then FixNum=0; fi
+  Fix=`expr 1 + $FixNum`
+  NEWTAG=`echo $LastTag | cut -d. -f1-3`.`printf &quot;%03d&quot; $Fix`
+  #NEWTAG=`echo $LastTag | sed -r &apos;s/(.*)\.[^\d]+$/\1/&apos;`.`echo $LastTag | awk -F. &apos;{print $NF+1}&apos;`
+  git tag -a -m &quot;Jenkins auto tag after $LastUser commit&quot; $NEWTAG $LastSha1
+  git push origin $NEWTAG
+  curl -k &quot;https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG&quot; || echo Access Rebaser failed
+  SubModules=`git diff --name-only $RealLastTag $LastSha1 -- OpenSource | sed &apos;s:OpenSource/::; s:/.*::&apos; | sort -u`
+  LastTag=$NEWTAG
+  for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
+}
+
+git fetch
+git fetch origin +refs/notes/review:refs/notes/review
+
+errorFlag=0
+# Check every branch if they are a new commit after the last created TAG
+for GERRIT_BRANCH in $Branches $(git branch --list -a */feature/* | sed &apos;s:.*/origin/::&apos;)
+do
+  echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
+  if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
+  git checkout -f origin/$GERRIT_BRANCH
+  echo Find the last TAG name...
+  LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
+  #LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
+
+  LastUser=&quot;&quot;
+  PreLastTag=&quot;&quot;
+
+  if [[ $GERRIT_BRANCH =~ &quot;feature&quot; ]]; then
+    LastMergedTag=`git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1`
+    # If no last merged TAG exist, give the last TAG found in this branch
+    if [ -z &quot;$LastMergedTag&quot; ]; then
+      echo No last merged TAG exist ......
+      LastMergedTag=$LastTag
+    fi
+
+    LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
+    LastMINOR=$(echo $LastTag | cut -d. -f3)
+    echo Last merged TAG is $LastMergedTag and last TAG is $LastTag 
+    if [ &quot;$LastMINOR&quot; -gt &quot;$LastMergedMINOR&quot; ]; then LastMergedMINOR=$LastMINOR; fi
+    echo Use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
+
+    # Find the first 2 characters of the feature name - change them to uppercase
+    IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ &apos;{print $NF}&apos; | cut -c1-2)
+    LastMergedMAJOR=$(echo $LastMergedTag | cut -c1-4)
+    LastMAJOR=$(echo $LastTag | cut -c1-4)
+    if [[ (! &quot;$LastTag&quot; =~ $LastMergedMAJOR$IDs\. || &quot;$LastMINOR&quot; -ne &quot;$LastMergedMINOR&quot;) ]]; then
+      # If it is the first TAG in this feature branch or a newer branch was merged to
+      # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
+      if [[ &quot;$LastMergedTag&quot; =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
+        if [ &quot;$LastMAJOR&quot; &gt; &quot;$LastMergedMAJOR&quot; ]; then
+          PreLastTag=$LastMAJOR$IDs.$LastMINOR
+          if [[ &quot;$LastTag&quot; =~ &quot;$IDs&quot; ]]; then PreLastTag=&quot;&quot;; fi
+        else
+          PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
+        fi
+        if [ -n &quot;$PreLastTag&quot; ]; then
+          if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
+            echo TAG $PreLastTag.001 already exist, check this branch $GERRIT_BRANCH ... exit
+            errorFlag=1
+            continue
+          fi
+        fi
+      else
+        echo Found last merged TAG: $LastMergedTag, is not in the right format, check this branch $GERRIT_BRANCH ... exit
+        errorFlag=1
+        continue
+      fi
+    fi
+  fi
+  # Check every new commit - if the user was changed, create a new TAG by executing &apos;createTag&apos;
+  while IFS=_ read -r Sha1 User When
+  do
+    LastSubmitter=$(git show refs/notes/review:${Sha1:0:2}/${Sha1:2} | sed -nE &apos;s/^Submitted-by: (.*) &lt;.*$/\1/p&apos;)
+    if [ &quot;$LastSubmitter&quot; != &quot;$User&quot; ]; then echo ----------------- $LastSubmitter not equel $User -----------------------; fi
+    if [ &quot;$LastSubmitter&quot; != &quot;&quot; ]; then User=$LastSubmitter; fi
+    if [ &quot;$LastUser&quot; != &quot;&quot; ] &amp;&amp; [ &quot;$LastUser&quot; != &quot;$User&quot; ]; then createTag; fi
+    LastUser=$User
+    LastSha1=$Sha1
+    LastWhen=`echo $When | cut -d&quot; &quot; -f1`
+  done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --date=raw --pretty=format:&quot;%H_%cn_%cd&quot; $LastTag..origin/$GERRIT_BRANCH)&quot;
+
+  # If $LastWhen was not found, go to the next branch
+  if [ -z $LastWhen ]; then continue; fi
+
+  # Check the last commit if - if 5 minutes was passed, create a TAG else excute this job again by the Neginator
+  echo Check the last commit if 5 minutes passed...
+  CurrentTime=`date +%s`
+  if [ `expr $CurrentTime - $LastWhen` -gt 300 ]; then
+    createTag
+  else
+    echo Try again later after 300 seconds
+    exit 2
+  fi
+done
+
+exit $errorFlag
+</command>
+      <unstableReturn>2</unstableReturn>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <recipientList>yossim shuky.riechard</recipientList>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders/>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>true</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+    <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
+      <regexpForRerun>Try again later after 300 seconds</regexpForRerun>
+      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunMatrixPart>false</rerunMatrixPart>
+      <checkRegexp>true</checkRegexp>
+      <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
+      <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
+        <delay>300</delay>
+      </delay>
+      <maxSchedule>4</maxSchedule>
+    </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+  </publishers>
+  <buildWrappers>
+    <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
+      <template>#${BUILD_NUMBER}, ${BUILD_LOG_REGEX, regex=&quot;^.*NEWTAG=(\S*)&quot;,substText=&quot;$1&quot;,showTruncatedLines=false}</template>
+      <descriptionTemplate></descriptionTemplate>
+      <runAtStart>false</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
+  </buildWrappers>
+</project>

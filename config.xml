@@ -1518,6 +1518,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>MP20x-Create-Tag</string>
         <string>sbc-Create-Tag</string>
+        <string>sbc-New-Create-Tag</string>
         <string>TPlib-Create-Tag_7.2.170</string>
       </jobNames>
       <jobFilters/>
