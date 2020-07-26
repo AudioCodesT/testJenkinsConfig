@@ -73,7 +73,6 @@ Host test-runner
         ServerAliveCountMax 2
 
 EOF
-alias ssh='ssh -oStrictHostKeyChecking=no'
 chmod 0600 ~/.ssh/config
 pip3 install --user -r requirements.txt
 cd Tests
