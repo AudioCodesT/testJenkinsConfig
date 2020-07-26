@@ -86,7 +86,62 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
+      <gerritProjects>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+          <compareType>PLAIN</compareType>
+          <pattern>TP/GWApp</pattern>
+          <branches>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>ANT</compareType>
+              <pattern>7.*</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>ANT</compareType>
+              <pattern>NextGenCPE/*</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>ANT</compareType>
+              <pattern>feature/*</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+          </branches>
+          <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
+        </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+      </gerritProjects>
+      <dynamicGerritProjects class="empty-list"/>
+      <skipVote>
+        <onSuccessful>false</onSuccessful>
+        <onFailed>false</onFailed>
+        <onUnstable>false</onUnstable>
+        <onNotBuilt>false</onNotBuilt>
+      </skipVote>
+      <silentMode>false</silentMode>
+      <notificationLevel/>
+      <silentStartMode>false</silentStartMode>
+      <escapeQuotes>true</escapeQuotes>
+      <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
+      <dependencyJobsNames/>
+      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
+      <commentTextParameterMode>BASE64</commentTextParameterMode>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
+      <serverName>test-gerrit</serverName>
+      <triggerOnEvents>
+        <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent/>
+      </triggerOnEvents>
+      <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
+      <triggerConfigURL/>
+      <triggerInformationAction/>
+    </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
@@ -129,12 +184,12 @@ function createTag {
   Fix=`expr 1 + $FixNum`
   NEWTAG=`echo $LastTag | cut -d. -f1-3`.`printf "%03d" $Fix`
   #NEWTAG=`echo $LastTag | sed -r 's/(.*)\.[^\d]+$/\1/'`.`echo $LastTag | awk -F. '{print $NF+1}'`
-  git tag -a -m "Jenkins auto tag after $LastUser commit" $NEWTAG $LastSha1
-  git push origin $NEWTAG
-  curl -k "https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG" || echo Access Rebaser failed
+  ##git tag -a -m "Jenkins auto tag after $LastUser commit" $NEWTAG $LastSha1
+  ##git push origin $NEWTAG
+  ##curl -k "https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG" || echo Access Rebaser failed
   SubModules=`git diff --name-only $RealLastTag $LastSha1 -- OpenSource | sed 's:OpenSource/::; s:/.*::' | sort -u`
   LastTag=$NEWTAG
-  for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
+  ##for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
 }
 
 git fetch
@@ -142,8 +197,7 @@ git fetch origin +refs/notes/review:refs/notes/review
 
 errorFlag=0
 # Check every branch if they are a new commit after the last created TAG
-for GERRIT_BRANCH in $Branches $(git branch --list -a */feature/* | sed 's:.*/origin/::')
-do
+
   echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
   if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
   git checkout -f origin/$GERRIT_BRANCH
@@ -220,7 +274,6 @@ do
     echo Try again later after 300 seconds
     exit 2
   fi
-done
 
 exit $errorFlag
 </command>
