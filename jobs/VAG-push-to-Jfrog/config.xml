@@ -150,6 +150,8 @@ EOD
 
 cat /home/centos/.aws/credentials
 
+
+
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -236,6 +238,9 @@ cd ${WORKSPACE}
 
 [[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- docker/gen-ecr-files.sh || git checkout -f $version -- docker/gen-ecr-files.sh
 . docker/gen-jfrog-files.sh
+
+sed -iE '/image: docker-voice-ai/ s/docker-voice-ai.artifactory.corp.audiocodes.com/audiocodes-voice-ai.jfrog.io/g; /image: audiocodes-voice-ai/ s/:[^:]*$/:1.8.005/g' docker-compose-vag-1.8.002.yml
+
 #
 ## Copy YAML files to S3
 aws s3 sync "ecr" s3://voice-ai/docker-compose
