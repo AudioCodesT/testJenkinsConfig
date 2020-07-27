@@ -379,7 +379,7 @@ version: ${version}</body>
       <defaultContent>Pushed docker images $IMAGES to Jfrog Artifactory.
 
 Deployed -
-&gt; docker-compose-vag-ecr-$VERSION.yml
+&gt; docker-compose-vag-$VERSION.yml
 
 to Jfrog Artifactory
 
