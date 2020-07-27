@@ -261,7 +261,7 @@ esac
 ## Set docker vars
 ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
 JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
-JFROG_DOCKER_PREFIX="voice-ai"
+JFROG_DOCKER_PREFIX="${version}"
 
 ## Login to docker registry on Artifactory
 echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
@@ -287,10 +287,10 @@ for img in ${images}; do
     #  Image is pushed to ECR once with the tag it was pulled from Artifactory
     #  and once with YAML version tag
     docker pull ${ART_DOCKER_REG}/"${image}:${tag}"
-    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${tag}"
-    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${version}"
-    docker push ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${tag}"
-    docker push ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${version}"
+    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${JFROG_DOCKER_REG}/"${image}:${tag}"
+    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${JFROG_DOCKER_REG}/"${image}:${version}"
+    docker push ${JFROG_DOCKER_REG}/"${image}:${tag}"
+    docker push ${JFROG_DOCKER_REG}/"${image}:${version}"
 done
 
 ## Create YAMLs for ECR
