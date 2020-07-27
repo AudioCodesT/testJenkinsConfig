@@ -321,7 +321,7 @@ ls -1 jfrog
 #
 ## Deploy files to Jfrog Cloud Artifactory
 for f in `ls jfrog`; do
-	./artiDeployFile.sh jfrog/$f https://audiocodes.jfrog.io/artifactory/voice-ai-files/
+	curl -i -X PUT -u "$jfrogUser":"$jfrogPass" -T jfrog/$f https://audiocodes.jfrog.io/artifactory/voice-ai-files/$f
 done
 
 
