@@ -307,14 +307,14 @@ rm -rf jfrog
 jfrog=jfrog/$version
 mkdir -p $jfrog
 
-[[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- docker/gen-ecr-files.sh || git checkout -f $version -- docker/gen-ecr-files.sh
+###[[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- docker/gen-ecr-files.sh || git checkout -f $version -- docker/gen-ecr-files.sh
 
 # Modify yaml files fro Jfrog Cloud Artifactory
 sed -iE "/image: docker-voice-ai/ s/docker-voice-ai.artifactory.corp.audiocodes.com/audiocodes-voice-ai.jfrog.io/g; /image: audiocodes-voice-ai/ s/:[^:]*$/:$version/g" docker-compose-vag-$version.yml
 cp docker-compose-vag-$version.yml jfrog/
 
 # Add docker/setup-machine.sh
-cp docker/setup-machine.sh jfrog/
+###cp docker/setup-machine.sh jfrog/
 
 #
 ## Deploy files to Jfrog Cloud Artifactory
