@@ -375,23 +375,13 @@ version: ${version}</body>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>VoiceAI ${VERSION} - SUCCESS - docker images pushed to ECR</defaultSubject>
-      <defaultContent>Pushed docker images $IMAGES to ECR.
+      <defaultSubject>VoiceAI ${VERSION} - SUCCESS - docker images pushed to Jfrog Artifactory</defaultSubject>
+      <defaultContent>Pushed docker images $IMAGES to Jfrog Artifactory.
 
 Deployed -
 &gt; docker-compose-vag-ecr-$VERSION.yml
-&gt; docker-compose-vag-ecr-$VERSION-sm.yml
-&gt; docker-compose-vag-ecr-$VERSION-central.yml
-&gt; docker-compose-vag-$VERSION-azure-mock.yml
-to Artifactory &amp; S3
 
-On Artifactory
-https://artifactory:443/docker-voice-ai-files/
-
-On AWS s3:
-https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION.yml
-https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION-sm.yml
-https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION-central.yml
+to Jfrog Artifactory
 
 
 BUILD URL:
