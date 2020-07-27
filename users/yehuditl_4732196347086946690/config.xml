@@ -69,12 +69,13 @@
         <string># AUDC - NJ Engineering Team</string>
         <string>AudioCodes_VPN</string>
         <string># SmartTAP</string>
+        <string># SmartTap-BS</string>
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
         <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1589957961608</timestamp>
+      <timestamp>1595831177479</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Yehudit.Lubling@audiocodes.com</emailAddress>
