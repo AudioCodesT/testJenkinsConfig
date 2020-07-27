@@ -223,7 +223,7 @@ curl -i -X PUT -u "$artifactoryUser":"$artifactoryPassword" \
  -H "X-Checksum-Sha256: $sha256Value" \
  -T "$localFilePath" \
  "$targetFolder/$fileName"
- EOF
+EOF
  
  chmod +x artiDeployFile.sh</command>
     </hudson.tasks.Shell>
