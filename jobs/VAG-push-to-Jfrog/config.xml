@@ -320,7 +320,7 @@ ls -1 jfrog
 #
 ## Deploy files to Jfrog Cloud Artifactory
 for f in `ls jfrog`; do
-	./artiDeployFile.sh $f https://audiocodes.jfrog.io/voice-ai-files
+	./artiDeployFile.sh $f https://audiocodes.jfrog.io/artifactory/voice-ai-files
 done
 
 
