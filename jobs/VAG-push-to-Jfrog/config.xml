@@ -264,10 +264,10 @@ JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
 JFROG_DOCKER_PREFIX="voice-ai"
 
 ## Login to docker registry on Artifactory
-echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
+echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
 
-## Login to ECR
-$(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
+## Login to Jfrog Cloud Artifactory
+echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
 
 ## Download version YAML file
 ## !!!!!! Deprecated! Using Artifactory plugin!!
@@ -420,6 +420,11 @@ DevOps Team</defaultContent>
           <credentialsId>jenkins-for-jfrog-cloud-artifactory</credentialsId>
           <usernameVariable>jfrogUser</usernameVariable>
           <passwordVariable>jfrogPass</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
+          <usernameVariable>artiUser</usernameVariable>
+          <passwordVariable>artiPass</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
