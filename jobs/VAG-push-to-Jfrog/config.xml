@@ -188,7 +188,7 @@ esac
 ## Set docker vars
 ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
 JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
-ECR_DOCKER_PREFIX="voice-ai"
+JFROG_DOCKER_PREFIX="voice-ai"
 
 ## Login to docker registry on Artifactory
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
@@ -209,21 +209,14 @@ for img in ${images}; do
     image=$(echo $img | cut -d: -f1)
     tag=$(echo $img | cut -d: -f2)
     
-    ## Create remote repository if not exist
-    awsCommand="aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}"
-    if [[ ! $($awsCommand) ]]; then
-        echo "*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}"
-        aws ecr create-repository --repository-name "${ECR_DOCKER_PREFIX}/${image}"
-    fi
-    
     ## Pull, tag and push image to remote repository
     #  Image is pushed to ECR once with the tag it was pulled from Artifactory
     #  and once with YAML version tag
     docker pull ${ART_DOCKER_REG}/"${image}:${tag}"
-    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
-    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
-    docker push ${JFROG_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${tag}"
-    docker push ${JFROG_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
+    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${tag}"
+    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${version}"
+    docker push ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${tag}"
+    docker push ${JFROG_DOCKER_REG}/${JFROG_DOCKER_PREFIX}/"${image}:${version}"
 done
 
 ## Create YAMLs for ECR
@@ -236,14 +229,23 @@ done
 #
 cd ${WORKSPACE}
 
-[[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- docker/gen-ecr-files.sh || git checkout -f $version -- docker/gen-ecr-files.sh
-. docker/gen-jfrog-files.sh
+# If ecr folder already exist then delete it before creating a new one
+rm -rf jfrog
+jfrog=jfrog/$version
+mkdir -p $jfrog
 
-sed -iE '/image: docker-voice-ai/ s/docker-voice-ai.artifactory.corp.audiocodes.com/audiocodes-voice-ai.jfrog.io/g; /image: audiocodes-voice-ai/ s/:[^:]*$/:1.8.005/g' docker-compose-vag-1.8.002.yml
+[[ "$version" == "${BRANCH}" ]] &amp;&amp; git checkout -f origin/$version -- docker/gen-ecr-files.sh || git checkout -f $version -- docker/gen-ecr-files.sh
+
+# Modify yaml files fro Jfrog Cloud Artifactory
+sed -iE "/image: docker-voice-ai/ s/docker-voice-ai.artifactory.corp.audiocodes.com/audiocodes-voice-ai.jfrog.io/g; /image: audiocodes-voice-ai/ s/:[^:]*$/:$version/g" docker-compose-vag-$version.yml
+cp docker-compose-vag-$version.yml jfrog/
+
+# Add docker/setup-machine.sh
+cp docker/setup-machine.sh jfrog/
 
 #
-## Copy YAML files to S3
-aws s3 sync "ecr" s3://voice-ai/docker-compose
+## Deploy files to Jfrog Cloud Artifactory
+
 
 
 ## Properties to export to environment
