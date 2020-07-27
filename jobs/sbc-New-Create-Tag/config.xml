@@ -186,6 +186,7 @@ function createTag {
   ##for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
 }
 
+if [ -z "$GERRIT_BRANCH" ]; then exit 0; fi
 git clean -fdx
 sleep 20
 git fetch --tags --progress $shortRepoName
