@@ -311,6 +311,7 @@ mkdir jfrog
 
 # Modify yaml files fro Jfrog Cloud Artifactory
 sed -iE "/image: docker-voice-ai/ s/docker-voice-ai.artifactory.corp.audiocodes.com/audiocodes-voice-ai.jfrog.io/g; /image: audiocodes-voice-ai/ s/:[^:]*$/:$version/g" docker-compose-vag-$version.yml
+cat docker-compose-vag-$version.yml
 cp docker-compose-vag-$version.yml jfrog/
 ls -1 jfrog
 
@@ -319,7 +320,8 @@ ls -1 jfrog
 
 #
 ## Deploy files to Jfrog Cloud Artifactory
-for f in `ls jfrog`; do
+cd jfrog
+for f in `ls`; do
 	./artiDeployFile.sh $f https://audiocodes.jfrog.io/artifactory/voice-ai-files
 done
 
