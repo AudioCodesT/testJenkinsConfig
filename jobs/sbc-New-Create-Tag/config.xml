@@ -57,13 +57,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>origin/7.*</name>
-      </hudson.plugins.git.BranchSpec>
-      <hudson.plugins.git.BranchSpec>
-        <name>*/NextGenCPE*</name>
-      </hudson.plugins.git.BranchSpec>
-      <hudson.plugins.git.BranchSpec>
-        <name>origin/feature/*</name>
+        <name>*/master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -192,8 +186,18 @@ function createTag {
   ##for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
 }
 
-git fetch
+git clean -fdx
+sleep 20
+git fetch --tags --progress $shortRepoName
 git fetch origin +refs/notes/review:refs/notes/review
+git log -4 --decorate --oneline $GERRIT_BRANCH
+if git log --decorate --oneline --no-color -1 $GERRIT_BRANCH | grep -q tag:; then
+  echo This change was done ... exit without error
+  exit 0
+fi
+
+echo Wait 5 minutes before you create a TAG
+sleep 300
 
 errorFlag=0
 # Check every branch if they are a new commit after the last created TAG
