@@ -30,9 +30,7 @@
       <providerId>default</providerId>
     </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
     <hudson.model.PaneStatusProperties>
-      <collapsed>
-        <string>buildHistory</string>
-      </collapsed>
+      <collapsed/>
     </hudson.model.PaneStatusProperties>
     <jenkins.security.seed.UserSeedProperty>
       <seed>c62ddf0d9a32d8a0</seed>
