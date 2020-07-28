@@ -354,7 +354,7 @@ ${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$", showTruncatedLines
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
         <delay>600</delay>
       </delay>
-      <maxSchedule>3</maxSchedule>
+      <maxSchedule>2</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
