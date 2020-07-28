@@ -82,8 +82,20 @@ ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 ## Login to docker registries
 echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
 echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
-aws ecr get-login-password --no-include-email --region eu-central-1 | docker login --username jenkins --password-stdin 858367874798.dkr.ecr.eu-central-1.amazonaws.com
+aws ecr get-login-password --region eu-central-1 | docker login --username jenkins --password-stdin 858367874798.dkr.ecr.eu-central-1.amazonaws.com
 $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
+
+case Repository in
+	"Artifactory")
+    	curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
+    	;;
+    "ECR")
+    	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/1.8.005/docker-compose-vag-ecr-$version.yml
+    	;;
+    "Jfrog")
+    	curl -u ${jfrogUser}:${jfrogPass} -O https://audiocodes.jfrog.io/artifactory/voice-ai-files/docker-compose-vag-$version.yml
+    	;;
+sac
 
 docker system prune --all --volumes --force
 
@@ -99,7 +111,16 @@ for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do trivy image $i
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>*.log</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
       <bindings>
@@ -120,55 +141,5 @@ for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do trivy image $i
         </com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
-      <deployerDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <stagingPlugin/>
-      </deployerDetails>
-      <resolverDetails>
-        <artifactoryName>artifactory2-pro</artifactoryName>
-        <artifactoryUrl>https://artifactory</artifactoryUrl>
-        <stagingPlugin/>
-      </resolverDetails>
-      <deployerCredentialsConfig>
-        <credentialsId/>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </deployerCredentialsConfig>
-      <resolverCredentialsConfig>
-        <credentialsId/>
-        <overridingCredentials>false</overridingCredentials>
-        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
-      </resolverCredentialsConfig>
-      <useSpecs>true</useSpecs>
-      <uploadSpec>
-        <spec/>
-      </uploadSpec>
-      <downloadSpec>
-        <spec>{
-    "files": [
-        {
-            "pattern": "docker-voice-ai-files/docker-compose-vag-$version*.yml"
-        }
-    ]
-}</spec>
-      </downloadSpec>
-      <deployPattern/>
-      <resolvePattern/>
-      <deploymentProperties/>
-      <deployBuildInfo>true</deployBuildInfo>
-      <includeEnvVars>false</includeEnvVars>
-      <envVarsPatterns>
-        <includePatterns/>
-        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
-      </envVarsPatterns>
-      <discardOldBuilds>false</discardOldBuilds>
-      <discardBuildArtifacts>true</discardBuildArtifacts>
-      <asyncBuildRetention>false</asyncBuildRetention>
-      <multiConfProject>false</multiConfProject>
-      <customBuildName/>
-      <overrideBuildName>false</overrideBuildName>
-    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
   </buildWrappers>
 </project>
