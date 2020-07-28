@@ -101,6 +101,9 @@ docker system prune --all --volumes --force
 
 docker-compose -f docker-compose-vag-${version}.yml pull
 
+docker images
+ exit 0;
+
 ## snyk
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export SNYK_TOKEN= 450cd42c-36cf-4986-baf7-8ba57b60abe1
