@@ -282,6 +282,13 @@
           <sid>anonymous</sid>
         </assignedSIDs>
       </role>
+      <role name="OneClick_Developers" pattern="(one.*)">
+        <permissions>
+          <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Build</permission>
+        </permissions>
+        <assignedSIDs/>
+      </role>
       <role name="adminJobs" pattern="(Update.*)">
         <permissions>
           <permission>hudson.model.Item.Read</permission>
