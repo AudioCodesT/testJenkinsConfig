@@ -89,7 +89,8 @@ case "$repository" in
     	;;
     "ECR")
     	echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
-    	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/1.8.005/docker-compose-vag-ecr-$version.yml
+    	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
+        cp docker-compose-vag-ecr-$version.yml docker-compose-vag-$version.yml
     	;;
     "Jfrog")
     	$(aws ecr get-login --no-include-email --region eu-central-1)
