@@ -81,6 +81,9 @@ ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
 JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
 ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 
+## Delete old docker config.json
+rm -f .docker/config.json
+
 ## Login to registry &amp; fetch yaml file
 case "$repository" in
 	"Artifactory")
