@@ -82,6 +82,7 @@ case "$repository" in
 		aws_access_key_id = ${AWS_ACCESS_KEY_ID}
 		aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
 		EOD
+        #
     	$(aws ecr get-login --no-include-email --region eu-central-1)
     	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
         cp docker-compose-vag-ecr-$version.yml docker-compose-vag-$version.yml
