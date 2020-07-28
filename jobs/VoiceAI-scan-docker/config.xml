@@ -102,13 +102,15 @@ docker-compose -f docker-compose-vag-${version}.yml pull
 docker images
 
 ## snyk
+echo "***** Start Snyk"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export SNYK_TOKEN=450cd42c-36cf-4986-baf7-8ba57b60abe1
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do snyk test --docker $i; done &gt; snyk.log
-
+echo "***** End Snyk"
 ## trivy
+echo "***** Start Trivy"
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do trivy image $i; done &gt; trivy.log
-</command>
+echo "***** End Privy"</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
