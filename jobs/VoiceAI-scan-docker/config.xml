@@ -1,15 +1,174 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
+  <actions/>
+  <description/>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.buildblocker.BuildBlockerProperty plugin="build-blocker-plugin@1.7.3">
+      <useBuildBlocker>false</useBuildBlocker>
+      <blockLevel>GLOBAL</blockLevel>
+      <scanQueueFor>DISABLED</scanQueueFor>
+      <blockingJobs/>
+    </hudson.plugins.buildblocker.BuildBlockerProperty>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>version</name>
+          <description/>
+          <defaultValue/>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>repository</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Artifactory</string>
+              <string>ECR</string>
+              <string>Jfrog</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit/>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
+  </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <canRoam>true</canRoam>
+  <assignedNode>VoiceAI-build</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>
+## Create AWS files
+[[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
+cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
+[default]
+region = eu-central-1
+EOD
+
+cat /home/centos/.aws/config
+
+cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
+[default]
+aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+EOD</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>## Set docker vars
+ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
+JFROG_DOCKER_REG="Audiocodes-voice-ai.jfgor.io"
+ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
+
+## Login to docker registries
+echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
+echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
+aws ecr get-login-password --no-include-email --region eu-central-1 | docker login --username jenkins --password-stdin 858367874798.dkr.ecr.eu-central-1.amazonaws.com
+$(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
+
+docker system prune --all --volumes --force
+
+docker-compose -f docker-compose-vag-${version}.yml pull
+
+## snyk
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+export SNYK_TOKEN= 450cd42c-36cf-4986-baf7-8ba57b60abe1
+for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do snyk test --docker $i; done &gt; snyk.log
+
+## trivy
+for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do trivy image $i; done &gt; trivy.log
+</command>
+    </hudson.tasks.Shell>
+  </builders>
   <publishers/>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
+          <usernameVariable>artiUser</usernameVariable>
+          <passwordVariable>artiPass</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>jenkins-for-jfrog-cloud-artifactory</credentialsId>
+          <usernameVariable>jfrogUser</usernameVariable>
+          <passwordVariable>jfrogPass</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+        <com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding plugin="aws-credentials@1.28">
+          <credentialsId>e26ebef3-9d54-4910-8686-9989f959e8db</credentialsId>
+          <accessKeyVariable>AWS_ACCESS_KEY_ID</accessKeyVariable>
+          <secretKeyVariable>AWS_SECRET_ACCESS_KEY</secretKeyVariable>
+        </com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>
+      </bindings>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
+      <deployerDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </deployerDetails>
+      <resolverDetails>
+        <artifactoryName>artifactory2-pro</artifactoryName>
+        <artifactoryUrl>https://artifactory</artifactoryUrl>
+        <stagingPlugin/>
+      </resolverDetails>
+      <deployerCredentialsConfig>
+        <credentialsId/>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </deployerCredentialsConfig>
+      <resolverCredentialsConfig>
+        <credentialsId/>
+        <overridingCredentials>false</overridingCredentials>
+        <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
+      </resolverCredentialsConfig>
+      <useSpecs>true</useSpecs>
+      <uploadSpec>
+        <spec/>
+      </uploadSpec>
+      <downloadSpec>
+        <spec>{
+    "files": [
+        {
+            "pattern": "docker-voice-ai-files/docker-compose-vag-$version*.yml"
+        }
+    ]
+}</spec>
+      </downloadSpec>
+      <deployPattern/>
+      <resolvePattern/>
+      <deploymentProperties/>
+      <deployBuildInfo>true</deployBuildInfo>
+      <includeEnvVars>false</includeEnvVars>
+      <envVarsPatterns>
+        <includePatterns/>
+        <excludePatterns>*password*,*secret*,*key*</excludePatterns>
+      </envVarsPatterns>
+      <discardOldBuilds>false</discardOldBuilds>
+      <discardBuildArtifacts>true</discardBuildArtifacts>
+      <asyncBuildRetention>false</asyncBuildRetention>
+      <multiConfProject>false</multiConfProject>
+      <customBuildName/>
+      <overrideBuildName>false</overrideBuildName>
+    </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
+  </buildWrappers>
 </project>
