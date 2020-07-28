@@ -177,10 +177,9 @@ function createTag {
 if [ -z "$GERRIT_BRANCH" ]; then exit 0; fi
 git clean -fdx
 sleep 20
-git fetch --tags --progress $shortRepoName
 git fetch origin +refs/notes/review:refs/notes/review
-git log -4 --decorate --oneline $GERRIT_BRANCH
-if git log --decorate --oneline --no-color -1 $GERRIT_BRANCH | grep -q tag:; then
+git log -4 --decorate --oneline origin/$GERRIT_BRANCH
+if git log --decorate --oneline --no-color -1 origin/$GERRIT_BRANCH | grep -q tag:; then
   echo This change was done ... exit without error
   exit 0
 fi
