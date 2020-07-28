@@ -84,8 +84,7 @@ ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 ## Login to docker registries
 echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
 echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
-aws ecr get-login-password --region eu-central-1 | docker login --username jenkins --password-stdin 858367874798.dkr.ecr.eu-central-1.amazonaws.com
-$(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
+$(aws ecr get-login --no-include-email --region eu-central-1)
 
 case Repository in
 	"Artifactory")
