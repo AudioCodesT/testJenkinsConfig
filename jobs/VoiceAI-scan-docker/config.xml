@@ -110,7 +110,7 @@ echo "***** End Snyk"
 ## trivy
 echo "***** Start Trivy"
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do trivy image $i; done &gt; trivy.log
-echo "***** End Privy"</command>
+echo "***** End Trivy"</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
