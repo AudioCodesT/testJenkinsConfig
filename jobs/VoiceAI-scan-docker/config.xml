@@ -81,19 +81,18 @@ ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
 JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
 ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 
-## Login to docker registries
-echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
-echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
-$(aws ecr get-login --no-include-email --region eu-central-1)
-
+## Login to registry &amp; fetch yaml file
 case "$repository" in
 	"Artifactory")
+    	echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
     	curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
     	;;
     "ECR")
+    	echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
     	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/1.8.005/docker-compose-vag-ecr-$version.yml
     	;;
     "Jfrog")
+    	$(aws ecr get-login --no-include-email --region eu-central-1)
     	curl -u ${jfrogUser}:${jfrogPass} -O https://audiocodes.jfrog.io/artifactory/voice-ai-files/docker-compose-vag-$version.yml
     	;;
 esac
