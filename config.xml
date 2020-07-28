@@ -287,7 +287,9 @@
           <permission>hudson.model.Item.Cancel</permission>
           <permission>hudson.model.Item.Build</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid># RnD ARM</sid>
+        </assignedSIDs>
       </role>
       <role name="adminJobs" pattern="(Update.*)">
         <permissions>
