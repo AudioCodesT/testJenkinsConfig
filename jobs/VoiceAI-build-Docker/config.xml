@@ -36,6 +36,11 @@ git archive 3 folders and upload to artifactory under tag folder</description>
           <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>COMPILE_ALL_IMAGES</name>
+          <description>check this only if running this job manually and you want to force to compile all images</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -269,8 +274,15 @@ for ri in ${remoteImgs}; do
 done
 
 ## Run build script
+if [ "$COMPILE_ALL_IMAGES" = true ] ; then
+    echo '**********    We force to compile all images   *************'
+    FULL="full"
+else
+	FULL=""
+fi
+
 cd ${WORKSPACE}
-sh build.sh
+sh build.sh $FULL
 ret_value=$?
 
 echo "script Return Value: $ret_value"
