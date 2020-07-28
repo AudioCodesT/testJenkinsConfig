@@ -285,7 +285,9 @@
       <role name="OneClick_Developers" pattern="(one.*)">
         <permissions>
           <permission>hudson.model.Item.Cancel</permission>
+          <permission>hudson.model.Item.Read</permission>
           <permission>hudson.model.Item.Build</permission>
+          <permission>com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl.Retrigger</permission>
         </permissions>
         <assignedSIDs>
           <sid># RnD ARM</sid>
