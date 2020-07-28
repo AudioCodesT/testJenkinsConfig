@@ -103,7 +103,7 @@ docker images
 
 ## snyk
 export NODE_TLS_REJECT_UNAUTHORIZED=0
-export SNYK_TOKEN= 450cd42c-36cf-4986-baf7-8ba57b60abe1
+export SNYK_TOKEN=450cd42c-36cf-4986-baf7-8ba57b60abe1
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do snyk test --docker $i; done &gt; snyk.log
 
 ## trivy
