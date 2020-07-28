@@ -59,23 +59,6 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>
-## Create AWS files
-[[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
-cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
-[default]
-region = eu-central-1
-EOD
-
-cat /home/centos/.aws/config
-
-cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
-[default]
-aws_access_key_id = ${AWS_ACCESS_KEY_ID}
-aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
-EOD</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
       <command>## Set docker vars
 ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
 JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
