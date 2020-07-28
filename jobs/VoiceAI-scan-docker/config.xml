@@ -132,7 +132,7 @@ echo "***** End Privy"</command>
           <passwordVariable>artiPass</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-          <credentialsId>jenkins-for-jfrog-cloud-artifactory</credentialsId>
+          <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
           <usernameVariable>jfrogUser</usernameVariable>
           <passwordVariable>jfrogPass</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
