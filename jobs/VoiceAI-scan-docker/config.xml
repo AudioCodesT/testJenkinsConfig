@@ -117,7 +117,6 @@ cat docker-compose-vag-$version.yml
 docker-compose -f docker-compose-vag-${version}.yml pull
 
 docker images
-exit 0;
 
 ## snyk
 export NODE_TLS_REJECT_UNAUTHORIZED=0
