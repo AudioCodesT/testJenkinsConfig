@@ -86,7 +86,7 @@ echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG
 echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
 $(aws ecr get-login --no-include-email --region eu-central-1)
 
-case Repository in
+case $repository in
 	"Artifactory")
     	curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
     	;;
