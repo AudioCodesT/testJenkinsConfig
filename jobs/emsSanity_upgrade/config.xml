@@ -1,12 +1,13 @@
-<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
   <actions/>
-  <description>Triggered by a finished ovoc_server night build and performs:&#13;
-1. create a tested VM: launch new instance from sanity AMI and get its IP address&#13;
-2. run python script which ssh to the tested VM and download the latest DVD3.iso&#13;
-3. tests: install latest official iso, upgrade to latest iso,  integration tests&#13;
-4. python script copies all logs from tested VM to the jenkins slave&#13;
-5. archive the logs&#13;
-6.if build passed then terminate the tested machine&#13;
+  <description>Triggered by a finished ovoc_server night build and performs:&#xd;
+1. create a tested VM: launch new instance from sanity AMI and get its IP address&#xd;
+2. run python script which ssh to the tested VM and download the latest DVD3.iso&#xd;
+3. tests: install latest official iso, upgrade to latest iso,  integration tests&#xd;
+4. python script copies all logs from tested VM to the jenkins slave&#xd;
+5. archive the logs&#xd;
+6.if build passed then terminate the tested machine&#xd;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -15,7 +16,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs/>
+      <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -36,13 +37,13 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>NEW_TAG</name>
-          <description/>
-          <defaultValue/>
+          <description></description>
+          <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>ISO_DEPLOY_DESTINATION</name>
-          <description/>
+          <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>latest_iso</string>
@@ -52,8 +53,8 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>UPGRADE_FROM</name>
-          <description/>
-          <defaultValue/>
+          <description></description>
+          <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -75,9 +76,9 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit/>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
@@ -108,13 +109,13 @@
   <builders>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.4.1000" ]]; then exit 0; else exit 1; fi
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.4.1000&quot; ]]; then exit 0; else exit 1; fi
 </command>
       </condition>
       <buildStep class="hudson.plugins.copyartifact.CopyArtifact" plugin="copyartifact@1.39">
         <project>emsBuild_ovoc_server_7.4.1000</project>
-        <filter/>
+        <filter></filter>
         <target>EMS/target</target>
         <excludes>mkiso.log</excludes>
         <selector class="hudson.plugins.copyartifact.StatusBuildSelector">
@@ -126,13 +127,13 @@ if [[ "$BRANCH" == "7.4.1000" ]]; then exit 0; else exit 1; fi
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.4.2000" ]]; then exit 0; else exit 1; fi
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]; then exit 0; else exit 1; fi
 </command>
       </condition>
       <buildStep class="hudson.plugins.copyartifact.CopyArtifact" plugin="copyartifact@1.39">
         <project>emsBuild_ovoc_server_7.4.2000</project>
-        <filter/>
+        <filter></filter>
         <target>EMS/target</target>
         <excludes>mkiso.log</excludes>
         <selector class="hudson.plugins.copyartifact.StatusBuildSelector">
@@ -144,8 +145,8 @@ if [[ "$BRANCH" == "7.4.2000" ]]; then exit 0; else exit 1; fi
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.4.3000" ]]; then exit 0; else exit 1; fi
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; ]]; then exit 0; else exit 1; fi
 </command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
@@ -164,8 +165,8 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.6" ]]; then exit 0; else exit 1; fi
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.6&quot; ]]; then exit 0; else exit 1; fi
 </command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
@@ -184,8 +185,8 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.6.1000" ]]; then exit 0; else exit 1; fi</command>
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.6.1000&quot; ]]; then exit 0; else exit 1; fi</command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>cd ${WORKSPACE}/EMS
@@ -203,8 +204,8 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.6.2000" ]]; then exit 0; else exit 1; fi</command>
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.6.2000&quot; ]]; then exit 0; else exit 1; fi</command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>cd ${WORKSPACE}/EMS
@@ -222,8 +223,8 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.8" ]]; then exit 0; else exit 1; fi</command>
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.8&quot; ]]; then exit 0; else exit 1; fi</command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>cd ${WORKSPACE}/EMS
@@ -241,8 +242,8 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.8.1000" ]]; then exit 0; else exit 1; fi</command>
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]; then exit 0; else exit 1; fi</command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>cd ${WORKSPACE}/EMS
@@ -260,8 +261,8 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.8.2000" ]]; then exit 0; else exit 1; fi</command>
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.8.2000&quot; ]]; then exit 0; else exit 1; fi</command>
       </condition>
       <buildStep class="hudson.tasks.Shell">
         <command>cd ${WORKSPACE}/EMS
@@ -279,12 +280,12 @@ do curl -O -k --user jenkins:$artiPass https://artifactory/ems-release/com/ac/em
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
       <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
-        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [[ "$BRANCH" == "7.4.1000" || "$BRANCH" == "7.4.2000" ]]; then
-    echo "Pre-Req files retrieved from Jenkins job."
+        <command>BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [[ &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]; then
+    echo &quot;Pre-Req files retrieved from Jenkins job.&quot;
     exit 0
 else
-    echo "Prerequisite files retrieved from Artifactory (7.4.3000 and newer)\n or no prerequisites (7.4)"
+    echo &quot;Prerequisite files retrieved from Artifactory (7.4.3000 and newer)\n or no prerequisites (7.4)&quot;
     exit 1
 fi
 </command>
@@ -320,67 +321,67 @@ cd ${WORKSPACE}/EMS
 chmod 0755 target
 cp FKGenerator.ini target
 chmod -R 0755 target
-echo "############################################"
+echo &quot;############################################&quot;
 ls -lr target
-echo "############################################"
+echo &quot;############################################&quot;
 cd ${WORKSPACE}
 
 # define a default GW - we need it to configure network of tested machine in case version in 7.4.3000 or older
-DefaultGateway="172.16.132.1"
+DefaultGateway=&quot;172.16.132.1&quot;
 
 #1. create a tested VM: launch new instance from sanity AMI and get its IP address
 AMI_ID=ami-09fa7e24939b99be4
-emsTestedVM="$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name "Jenkins &amp; App subnets machines key pair" --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name "Jenkins &amp; App subnets machines key pair" --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)"
+emsTestedVM=&quot;$(aws ec2 run-instances --image-id ${AMI_ID} --instance-market-options MarketType=spot --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c || aws ec2 run-instances --image-id ${AMI_ID} --count 1 --instance-type m4.2xlarge --key-name &quot;Jenkins &amp; App subnets machines key pair&quot; --security-group-ids sg-77bce41e --subnet-id subnet-35295a5c)&quot;
 
 
 #keep instance ID
-INSTANCE_ID="$(echo "${emsTestedVM}" | grep InstanceId | cut -d '"' -f 4)"
-#add tag to this instans:  "emsSanity"
+INSTANCE_ID=&quot;$(echo &quot;${emsTestedVM}&quot; | grep InstanceId | cut -d &apos;&quot;&apos; -f 4)&quot;
+#add tag to this instans:  &quot;emsSanity&quot;
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Name,Value=emsSanityUpgrade
-#add tag to this instans "Spotinst" 
+#add tag to this instans &quot;Spotinst&quot; 
 aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=Creator,Value=Spotinst
 #set to its delete volume when instance will be terminated
-aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings "{    \"DeviceName\": \"/dev/sda1\",    \"Ebs\": {      \"DeleteOnTermination\": true    }  } "
-#keep ip address into "vmIP"
-vmIP="$(echo "${emsTestedVM}" |grep PrivateIpAddress |tail -1 |cut -d '"' -f 4)"
+aws ec2 modify-instance-attribute --instance-id ${INSTANCE_ID} --block-device-mappings &quot;{    \&quot;DeviceName\&quot;: \&quot;/dev/sda1\&quot;,    \&quot;Ebs\&quot;: {      \&quot;DeleteOnTermination\&quot;: true    }  } &quot;
+#keep ip address into &quot;vmIP&quot;
+vmIP=&quot;$(echo &quot;${emsTestedVM}&quot; |grep PrivateIpAddress |tail -1 |cut -d &apos;&quot;&apos; -f 4)&quot;
 
 # find what branch is it?
-BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
-if [ $BRANCH == master ]; then BRANCH="7.4"; fi
+BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1 | awk -F&apos;/&apos; &apos;{print $NF}&apos;`
+if [ $BRANCH == master ]; then BRANCH=&quot;7.4&quot;; fi
 
-echo "INSTANCE_ID=${INSTANCE_ID}" &gt; sanity.properties
+echo &quot;INSTANCE_ID=${INSTANCE_ID}&quot; &gt; sanity.properties
 
 #Wait for the instance to startup
-echo "Wait until the instance is up"
-OLD_STATE=""
+echo &quot;Wait until the instance is up&quot;
+OLD_STATE=&quot;&quot;
 while true; do
     sleep 10
-    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query "Reservations[0].Instances[0].State.Name")
+    STATE=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --output text --query &quot;Reservations[0].Instances[0].State.Name&quot;)
     if [[ $STATE != $OLD_STATE ]]; then
         echo $STATE
         OLD_STATE=$STATE
     fi
-    if [[ $STATE == "running" ]]; then
+    if [[ $STATE == &quot;running&quot; ]]; then
         break
     fi
 done
-echo "Wait until instance is fully loaded"
+echo &quot;Wait until instance is fully loaded&quot;
 sleep 100
 
 #find the latest official tag
 #if the current new ISO is official (ISO_DEPLOY_DESTINATION==official_iso) and (current branch == upgrade_from)
 #then we need to find not the latest official, but the one before latest.
-ARTIFACTORY="https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/$UPGRADE_FROM/official_iso"
+ARTIFACTORY=&quot;https://artifactory/api/storage/ems-release/com/ac/ems/ovoc_server/$UPGRADE_FROM/official_iso&quot;
 
-if [[ "$ISO_DEPLOY_DESTINATION" == "official_iso" &amp;&amp; "$BRANCH" == "$UPGRADE_FROM" ]]; then
-LAST_OFFICIAL="$(curl --user jenkins:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
+if [[ &quot;$ISO_DEPLOY_DESTINATION&quot; == &quot;official_iso&quot; &amp;&amp; &quot;$BRANCH&quot; == &quot;$UPGRADE_FROM&quot; ]]; then
+LAST_OFFICIAL=&quot;$(curl --user jenkins:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -2 | head -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
 else
-LAST_OFFICIAL="$(curl --user jenkins:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d '"' -f 4 | cut -c 11- | rev | cut -c 5- | rev)"
+LAST_OFFICIAL=&quot;$(curl --user jenkins:$artiPass -k -s -X GET $ARTIFACTORY | grep uri | grep -v artifactory | sort -V | tail -1 | cut -d &apos;&quot;&apos; -f 4 | cut -c 11- | rev | cut -c 5- | rev)&quot;
 fi
 
 #first, check out the branch that we want to upgrade from
-echo "*** first, check out the branch that we want to upgrade from ***"
-if [ $UPGRADE_FROM == "7.4" ]; then FROM="master"; else FROM=$UPGRADE_FROM; fi
+echo &quot;*** first, check out the branch that we want to upgrade from ***&quot;
+if [ $UPGRADE_FROM == &quot;7.4&quot; ]; then FROM=&quot;master&quot;; else FROM=$UPGRADE_FROM; fi
 if [ $BRANCH != $UPGRADE_FROM ]; then
 	git fetch
     git fetch --tags
@@ -390,76 +391,76 @@ fi
 
 #2. run python scripts. install, integration tests
 cd EMS/VersionRelease
-echo "*** Start Network Configuration ***"
+echo &quot;*** Start Network Configuration ***&quot;
 # $FROM = the branch we want to upgrade from
-if [[ "$FROM" == "master" || "$FROM" == "7.4.1000" || "$FROM" == "7.4.2000" ]]
+if [[ &quot;$FROM&quot; == &quot;master&quot; || &quot;$FROM&quot; == &quot;7.4.1000&quot; || &quot;$FROM&quot; == &quot;7.4.2000&quot; ]]
 	# in old versions we send default gateway
 	then	python2.7 setNetwork.py $vmIP $DefaultGateway
-elif [[ "$FROM" == "7.4.3000" ]]
+elif [[ &quot;$FROM&quot; == &quot;7.4.3000&quot; ]]
     then python2.7 setNetwork.py $vmIP 24 $DefaultGateway
 else
     python2.7 setNetwork.py $vmIP sanity
 fi
 
-echo "*** Finish Network Configuration ***"
+echo &quot;*** Finish Network Configuration ***&quot;
 
 #install the latest official
-if [[ "$FROM" == "master" || "$FROM" == "7.4" || "$FROM" == "7.4.1000" || "$FROM" == "7.4.2000" ]]
+if [[ &quot;$FROM&quot; == &quot;master&quot; || &quot;$FROM&quot; == &quot;7.4&quot; || &quot;$FROM&quot; == &quot;7.4.1000&quot; || &quot;$FROM&quot; == &quot;7.4.2000&quot; ]]
 then
-    echo "Running single script for install"
+    echo &quot;Running single script for install&quot;
     python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
-elif [[ "$FROM" == "7.4.3000" || "$FROM" =~ "7.6" || "$FROM" == "7.8" || "$FROM" == "7.8.1000" ]]; then
-    echo "Running 3 scripts SanityInstall, SanityFK and SanityReboot"
+elif [[ &quot;$FROM&quot; == &quot;7.4.3000&quot; || &quot;$FROM&quot; =~ &quot;7.6&quot; || &quot;$FROM&quot; == &quot;7.8&quot; || &quot;$FROM&quot; == &quot;7.8.1000&quot; ]]; then
+    echo &quot;Running 3 scripts SanityInstall, SanityFK and SanityReboot&quot;
     python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
     python2.7 SanityFK.py $vmIP $LAST_OFFICIAL 
     python2.7 SanityReboot.py $vmIP
 else
-	echo "Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp"
+	echo &quot;Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp&quot;
     python2.7 SanityInstall.py $LAST_OFFICIAL $vmIP official_iso
     python2.7 SanityFK.py $vmIP $LAST_OFFICIAL 
     python2.7 SanityReboot.py $vmIP 
     python2.7 CheckAllProcessesUp.py $vmIP 
 fi
-echo "***********************************************"
-echo "*** Finish SanityInstall of the old version ***"
-echo "***********************************************"
+echo &quot;***********************************************&quot;
+echo &quot;*** Finish SanityInstall of the old version ***&quot;
+echo &quot;***********************************************&quot;
 
 #upgrade to the latest
 #first, check out the tag of the latest that we want to upgrade to
-echo "*** first, check out the tag of the latest that we want to upgrade to ***"
+echo &quot;*** first, check out the tag of the latest that we want to upgrade to ***&quot;
 git checkout server_$NEW_TAG
-if [[ "$BRANCH" == "7.4" ||  "$BRANCH" == "7.4.1000" ||  "$BRANCH" == "7.4.2000" ]]
+if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; ||  &quot;$BRANCH&quot; == &quot;7.4.1000&quot; ||  &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 then
-    echo "Running single script for install"
+    echo &quot;Running single script for install&quot;
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
-elif [[ "$BRANCH" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" == "7.8" || "$BRANCH" == "7.8.1000" ]]; then
-    echo "Running 3 scripts SanityInstall, SanityFK and SanityReboot"
+elif [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; || &quot;$BRANCH&quot; == &quot;7.8&quot; || &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]; then
+    echo &quot;Running 3 scripts SanityInstall, SanityFK and SanityReboot&quot;
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP
 else
-	echo "Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp"
+	echo &quot;Running 4 scripts SanityInstall, SanityFK, SanityReboot and CheckAllProcessesUp&quot;
     python2.7 SanityInstall.py $NEW_TAG $vmIP $ISO_DEPLOY_DESTINATION
     python2.7 SanityFK.py $vmIP $NEW_TAG
     python2.7 SanityReboot.py $vmIP 
     python2.7 CheckAllProcessesUp.py $vmIP 
 fi
-echo "***********************************************"
-echo "*** Upgrade has been finished *****************"
-echo "***********************************************"
+echo &quot;***********************************************&quot;
+echo &quot;*** Upgrade has been finished *****************&quot;
+echo &quot;***********************************************&quot;
 
 # run sanity tests and log collect
-echo "Run sanity tests and log collect"
-if [[ "$BRANCH" == "7.4" || "$BRANCH" == "7.4.1000" || "$BRANCH" == "7.4.2000" ]]
+echo &quot;Run sanity tests and log collect&quot;
+if [[ &quot;$BRANCH&quot; == &quot;7.4&quot; || &quot;$BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$BRANCH&quot; == &quot;7.4.2000&quot; ]]
 then 
 	python2.7 SanityTest.py $NEW_TAG $vmIP
 	# run sanity test and copy logs, and if sanity fails then copy logs and exit with error:
-elif [[ "$BRANCH" == "7.4.3000" || "$BRANCH" =~ "7.6" || "$BRANCH" == "7.8" ]]
+elif [[ &quot;$BRANCH&quot; == &quot;7.4.3000&quot; || &quot;$BRANCH&quot; =~ &quot;7.6&quot; || &quot;$BRANCH&quot; == &quot;7.8&quot; ]]
 then
     python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
     &amp;&amp; python2.7 SanityCopyLogs.py $NEW_TAG $vmIP \
     || { python2.7 SanityCopyLogs.py $NEW_TAG $vmIP ; exit 1; }
-elif [[ "$BRANCH" == "7.8.1000" ]]
+elif [[ &quot;$BRANCH&quot; == &quot;7.8.1000&quot; ]]
 then
 	#for branch 7.8.1000 , run SanityTest, if failed change ovoc to one voice live mode run sanity tests again and exit the build
 	python2.7 SanityTest.py $NEW_TAG $vmIP $FullTesting \
@@ -490,7 +491,7 @@ else
 fi
 
 #3. if tests pass then terminate the tested machine
-#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 </command>
     </hudson.tasks.Shell>
@@ -515,6 +516,7 @@ fi
               <string>UNSTABLE</string>
             </results>
             <role>SLAVE</role>
+            <executeOn>BOTH</executeOn>
             <buildSteps>
               <hudson.tasks.Shell>
                 <command>if [[ -d  ${WORKSPACE}/EMS/VersionRelease/logs/ems/tester/rest/PMTemplateTest ]]; then
@@ -551,8 +553,8 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>#export "$(cat sanity.properties)"&#13;
-#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#13;
+          <script>export &quot;$(cat sanity.properties)&quot;&#xd;
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#xd;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
@@ -576,7 +578,7 @@ fi</command>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}__${NEW_TAG}_fromLast_${UPGRADE_FROM}</template>
-      <descriptionTemplate/>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
