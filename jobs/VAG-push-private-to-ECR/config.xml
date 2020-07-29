@@ -179,6 +179,9 @@ case $TAG in
     1.9*|2.0*)
         BRANCH="2.0"
         ;;
+   2.1*|2.2*)
+        BRANCH="2.2"
+        ;;
     *)
     	echo "Could not resolve TAG from yml file!!"
         exit 1
