@@ -490,7 +490,7 @@ else
 fi
 
 #3. if tests pass then terminate the tested machine
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 
 </command>
     </hudson.tasks.Shell>
@@ -551,8 +551,8 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>export "$(cat sanity.properties)"&#13;
-aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#13;
+          <script>#export "$(cat sanity.properties)"&#13;
+#aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}&#13;
 </script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
