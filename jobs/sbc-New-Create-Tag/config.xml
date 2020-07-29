@@ -198,82 +198,73 @@ git fetch --tags
 errorFlag=0
 # Check every branch if they are a new commit after the last created TAG
 
-  echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
-  if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
-  git checkout -f origin/$GERRIT_BRANCH
-  echo Find the last TAG name...
-  LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
-  #LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
+echo Check branch $GERRIT_BRANCH if exist a new commit after the last TAG...
+if [ $(git describe --tags --first-parent origin/$GERRIT_BRANCH | grep - | wc -l) == 0 ]; then continue; fi
+git checkout -f origin/$GERRIT_BRANCH
+echo Find the last TAG name...
+LastTag=`git tag --points-at $(git rev-list -n1 $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH)) --sort=-taggerdate | head -1`
+#LastTag=`git tag --points-at $(git describe --tags --abbrev=0 --first-parent origin/$GERRIT_BRANCH) --sort=-taggerdate`
 
-  LastUser=""
-  PreLastTag=""
+PreLastTag=""
 
-  if [[ $GERRIT_BRANCH =~ "feature" ]]; then
-    LastMergedTag=`git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1`
-    # If no last merged TAG exist, give the last TAG found in this branch
-    if [ -z "$LastMergedTag" ]; then
-      echo No last merged TAG exist ......
-      LastMergedTag=$LastTag
-    fi
+if [[ $GERRIT_BRANCH =~ "feature" ]]; then
+  LastMergedTag=`git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1`
+  # If no last merged TAG exist, give the last TAG found in this branch
+  if [ -z "$LastMergedTag" ]; then
+    echo No last merged TAG exist ......
+    LastMergedTag=$LastTag
+  fi
 
-    LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
-    LastMINOR=$(echo $LastTag | cut -d. -f3)
-    echo Last merged TAG is $LastMergedTag and last TAG is $LastTag 
-    if [ "$LastMINOR" -gt "$LastMergedMINOR" ]; then LastMergedMINOR=$LastMINOR; fi
-    echo Use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
+  LastMergedMINOR=$(echo $LastMergedTag | cut -d. -f3)
+  LastMINOR=$(echo $LastTag | cut -d. -f3)
+  echo Last merged TAG is $LastMergedTag and last TAG is $LastTag 
+  if [ "$LastMINOR" -gt "$LastMergedMINOR" ]; then LastMergedMINOR=$LastMINOR; fi
+  echo Use this MINOR for the next TAG $LastMergedMINOR in case no TAG exist for this feature branch yet
 
-    # Find the first 2 characters of the feature name - change them to uppercase
-    IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ '{print $NF}' | cut -c1-2)
-    LastMergedMAJOR=$(echo $LastMergedTag | cut -c1-4)
-    LastMAJOR=$(echo $LastTag | cut -c1-4)
-    if [[ (! "$LastTag" =~ $LastMergedMAJOR$IDs\. || "$LastMINOR" -ne "$LastMergedMINOR") ]]; then
-      # If it is the first TAG in this feature branch or a newer branch was merged to
-      # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
-      if [[ "$LastMergedTag" =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
-        if [ "$LastMAJOR" &gt; "$LastMergedMAJOR" ]; then
-          PreLastTag=$LastMAJOR$IDs.$LastMINOR
-          if [[ "$LastTag" =~ "$IDs" ]]; then PreLastTag=""; fi
-        else
-          PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
-        fi
-        if [ -n "$PreLastTag" ]; then
-          if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
-            echo TAG $PreLastTag.001 already exist, check this branch $GERRIT_BRANCH ... exit
-            errorFlag=1
-            continue
-          fi
-        fi
+  # Find the first 2 characters of the feature name - change them to uppercase
+  IDs=$(echo ${GERRIT_BRANCH^^} | awk -F/ '{print $NF}' | cut -c1-2)
+  LastMergedMAJOR=$(echo $LastMergedTag | cut -c1-4)
+  LastMAJOR=$(echo $LastTag | cut -c1-4)
+  if [[ (! "$LastTag" =~ $LastMergedMAJOR$IDs\. || "$LastMINOR" -ne "$LastMergedMINOR") ]]; then
+    # If it is the first TAG in this feature branch or a newer branch was merged to
+    # Example: 7.20A.252.123 --&gt; 7.20FI.252.001 (For Fips)
+    if [[ "$LastMergedTag" =~  [0-9]\.[0-9][0-9].*\.[0-9]+\.[0-9]+ ]]; then
+      if [ "$LastMAJOR" &gt; "$LastMergedMAJOR" ]; then
+        PreLastTag=$LastMAJOR$IDs.$LastMINOR
+        if [[ "$LastTag" =~ "$IDs" ]]; then PreLastTag=""; fi
       else
-        echo Found last merged TAG: $LastMergedTag, is not in the right format, check this branch $GERRIT_BRANCH ... exit
-        errorFlag=1
-        continue
+        PreLastTag=$LastMergedMAJOR$IDs.$LastMergedMINOR
       fi
+      if [ -n "$PreLastTag" ]; then
+        if git rev-parse $PreLastTag.001 &gt;/dev/null 2&gt;&amp;1; then
+          echo TAG $PreLastTag.001 already exist, check this branch $GERRIT_BRANCH ... exit
+          errorFlag=1
+          continue
+        fi
+      fi
+    else
+      echo Found last merged TAG: $LastMergedTag, is not in the right format, check this branch $GERRIT_BRANCH ... exit
+      errorFlag=1
+      continue
     fi
   fi
-  # Check every new commit - if the user was changed, create a new TAG by executing 'createTag'
-  while IFS=_ read -r Sha1 User When
-  do
-    LastSubmitter=$(git show refs/notes/review:${Sha1:0:2}/${Sha1:2} | sed -nE 's/^Submitted-by: (.*) &lt;.*$/\1/p')
-    if [ "$LastSubmitter" != "$User" ]; then echo ----------------- $LastSubmitter not equel $User -----------------------; fi
-    if [ "$LastSubmitter" != "" ]; then User=$LastSubmitter; fi
-    if [ "$LastUser" != "" ] &amp;&amp; [ "$LastUser" != "$User" ]; then createTag; fi
-    LastUser=$User
-    LastSha1=$Sha1
-    LastWhen=`echo $When | cut -d" " -f1`
-  done &lt;&lt;&lt; "$(git log --first-parent --reverse --date=raw --pretty=format:"%H_%cn_%cd" $LastTag..origin/$GERRIT_BRANCH)"
+fi
 
-  # If $LastWhen was not found, go to the next branch
-  if [ -z $LastWhen ]; then continue; fi
+# Check every new commit - if the user was changed, create a new TAG by executing 'createTag'
+LastUser=""
+while IFS=_ read -r Sha1 User When
+do
+  LastSubmitter=$(git show refs/notes/review:${Sha1:0:2}/${Sha1:2} | sed -nE 's/^Submitted-by: (.*) &lt;.*$/\1/p')
+  if [ "$LastSubmitter" != "$User" ]; then echo ----------------- $LastSubmitter not equel $User -----------------------; fi
+  if [ "$LastSubmitter" != "" ]; then User=$LastSubmitter; fi
+  if [ "$LastUser" != "" ] &amp;&amp; [ "$LastUser" != "$User" ]; then createTag; fi
+  LastUser=$User
+  LastSha1=$Sha1
+  LastWhen=`echo $When | cut -d" " -f1`
+done &lt;&lt;&lt; "$(git log --first-parent --reverse --date=raw --pretty=format:"%H_%cn_%cd" $LastTag..origin/$GERRIT_BRANCH)"
 
-  # Check the last commit if - if 5 minutes was passed, create a TAG else excute this job again by the Neginator
-  echo Check the last commit if 5 minutes passed...
-  CurrentTime=`date +%s`
-  if [ `expr $CurrentTime - $LastWhen` -gt 300 ]; then
-    createTag
-  else
-    echo Try again later after 300 seconds
-    exit 2
-  fi
+# If $LastWhen was not found, go to the next branch
+if [ -n $LastWhen &amp;&amp; -n $LastSha1 ]; then createTag; fi
 
 exit $errorFlag
 </command>
