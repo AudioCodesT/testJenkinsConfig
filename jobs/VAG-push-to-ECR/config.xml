@@ -175,7 +175,10 @@ case $version in
         ;;
     1.9*|2.0*)
         BRANCH="2.0"
-        ;;        
+        ;;
+    2.1*|2.2*)
+        BRANCH="2.2"
+        ;;
     *)
     	echo "Missing version parameter!!"
         exit 1
