@@ -229,6 +229,9 @@ case $NEWTAG in
     1.9*|2.0*)
         BRANCH="2.0"
         ;;
+   2.1*|2.2*)
+        BRANCH="2.2"
+        ;;
 esac
 
 AuthorCommitter=$(git log --first-parent --pretty=format:"%aN%n%cN" $OLDTAG..HEAD | sort -u | sed s/$/\;/g)
