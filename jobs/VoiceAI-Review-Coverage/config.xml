@@ -319,7 +319,7 @@ exit $ret_value
       <adapters>
         <io.jenkins.plugins.coverage.adapter.IstanbulCoberturaReportAdapter>
           <path>coverage/*coverage.xml</path>
-          <mergeToOneReport>false</mergeToOneReport>
+          <mergeToOneReport>true</mergeToOneReport>
           <thresholds class="linked-list"/>
         </io.jenkins.plugins.coverage.adapter.IstanbulCoberturaReportAdapter>
       </adapters>
@@ -356,7 +356,7 @@ exit $ret_value
         <name>LOW</name>
       </minimumSeverity>
       <filters/>
-      <isEnabledForFailure>false</isEnabledForFailure>
+      <isEnabledForFailure>true</isEnabledForFailure>
       <isAggregatingResults>false</isAggregatingResults>
       <isBlameDisabled>false</isBlameDisabled>
       <isForensicsDisabled>false</isForensicsDisabled>
