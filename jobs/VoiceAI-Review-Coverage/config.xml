@@ -137,7 +137,8 @@ set -ex
 version=$(git describe --tags --abbrev=0)
 echo "{\"version\": \"${version}\"}" &gt; version.json
 
-git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo "ESLint command failed"
+## aslant is now in build_all.sh
+# git ls-files session-manager/\*js | grep -v grpc | xargs eslint --report-unused-disable-directives -f checkstyle &gt; eslint.xml || echo "ESLint command failed"
 
 sh common/build_all.sh
 ret_value=$?
