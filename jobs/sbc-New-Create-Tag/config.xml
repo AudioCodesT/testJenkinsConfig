@@ -264,7 +264,7 @@ do
 done &lt;&lt;&lt; "$(git log --first-parent --reverse --date=raw --pretty=format:"%H_%cn_%cd" $LastTag..origin/$GERRIT_BRANCH)"
 
 # If $LastWhen was not found, go to the next branch
-if [ -n $LastWhen &amp;&amp; -n $LastSha1 ]; then createTag; fi
+if [[ -n $LastWhen &amp;&amp; -n $LastSha1 ]]; then createTag; fi
 
 exit $errorFlag
 </command>
