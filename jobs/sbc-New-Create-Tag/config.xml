@@ -90,7 +90,7 @@
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
-              <pattern>NextGenCPE/*</pattern>
+              <pattern>NextGenCPE*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -194,6 +194,7 @@ fi
 echo Wait 5 minutes before you create a TAG
 sleep 300
 
+git fetch --tags
 errorFlag=0
 # Check every branch if they are a new commit after the last created TAG
 
