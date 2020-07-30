@@ -167,7 +167,7 @@ if [[ "${GERRIT_BRANCH}" == "master" ]]; then
     if [[ -z $(echo $LAST_TAG | grep -E '^([0-9]*\.){3}[0-9]*$') ]]; then
         export NEW_TAG="ABORTED"
         echo "Wrong tag pattern recieved from GiT!!"
-        exit -1
+        exit 2
     fi
     
     # We are building a submit on branch `master`
@@ -291,7 +291,7 @@ echo "**************************************************************"
 echo "**************************************************************"
 echo "**************************************************************"
 </command>
-      <unstableReturn>-1</unstableReturn>
+      <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
