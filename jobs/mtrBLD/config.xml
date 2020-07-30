@@ -224,7 +224,7 @@ if [[ ${GERRIT_BRANCH} == *"/"* ]]; then
     fi
 else
     # Overcome GiT error when getting commit tag from non-master branch.
-    # If LAST_TAG does not match pattern x.x.x.x then exit job with -1
+    # If LAST_TAG does not match pattern x.x.x.x then exit job with '2'
     if [[ -z $(echo $LAST_TAG | grep -E '^([0-9]*\.){3}[0-9]*$') ]]; then
         export NEW_TAG="ABORTED"
         echo "Wrong tag pattern recieved from GiT!!"
@@ -288,6 +288,7 @@ echo "**************************************************************"
 echo "**************************************************************"
 echo "**************************************************************"
 </command>
+      <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
