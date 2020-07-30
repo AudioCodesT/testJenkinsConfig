@@ -1,5 +1,4 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
   <description>MeetingRecorder build server - run nightly</description>
   <keepDependencies>false</keepDependencies>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -33,10 +32,11 @@
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -56,7 +56,9 @@
     </browser>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
     </extensions>
   </scm>
   <assignedNode>mtr-Build-Label</assignedNode>
@@ -65,8 +67,8 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -88,27 +90,27 @@
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent/>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -125,27 +127,27 @@ cd $WORKSPACE
 
 # we build only if jenkins checked out on the last commit in branch, else exit 0
 LastGerritCommitHash=$(git ls-remote | grep refs/heads/${GERRIT_BRANCH} | cut -f 1 | head -n 1 )
-echo &quot;Last commit on Gerrit: ${LastGerritCommitHash}&quot;
-echo &quot;Current commit: ${GERRIT_PATCHSET_REVISION}&quot;
-if [[ &quot;${LastGerritCommitHash}&quot; != &quot;${GERRIT_PATCHSET_REVISION}&quot; ]]; then
-    echo &quot;*******************************************************************&quot;
-    echo &quot;*******************************************************************&quot;
-    echo &quot;*******************************************************************&quot;
-    echo &quot;******   This is not the last commit. Exit without building  ******&quot;
+echo "Last commit on Gerrit: ${LastGerritCommitHash}"
+echo "Current commit: ${GERRIT_PATCHSET_REVISION}"
+if [[ "${LastGerritCommitHash}" != "${GERRIT_PATCHSET_REVISION}" ]]; then
+    echo "*******************************************************************"
+    echo "*******************************************************************"
+    echo "*******************************************************************"
+    echo "******   This is not the last commit. Exit without building  ******"
     echo ABORT_BUILD=TRUE &gt; release.prop
     echo NEWTAG=ABORTED &gt;&gt; release.prop
-    echo &quot;*******************************************************************&quot;
-    echo &quot;*******************************************************************&quot;
-    echo &quot;*******************************************************************&quot;
+    echo "*******************************************************************"
+    echo "*******************************************************************"
+    echo "*******************************************************************"
     exit 0
 fi
 
 # Build HEAD
-#fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e &apos;-&gt;&apos; | head -1`
-#BRANCH=`echo $(echo $fullBranch | sed &apos;s:.*origin.::&apos;)`
+#fullBranch=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1`
+#BRANCH=`echo $(echo $fullBranch | sed 's:.*origin.::')`
 
 LAST_TAG=$(git describe --abbrev=0 --tags --first-parent origin/${GERRIT_BRANCH})
-echo &quot;Last tag: ${LAST_TAG}&quot;
+echo "Last tag: ${LAST_TAG}"
 DATE=`date`
 
 #calculate new tag
@@ -159,33 +161,33 @@ DATE=`date`
 
 # Define new tag
 
-if [[ &quot;${GERRIT_BRANCH}&quot; == &quot;master&quot; ]]; then
+if [[ "${GERRIT_BRANCH}" == "master" ]]; then
     # Overcome GiT error when getting commit tag from non-master branch.
     # If LAST_TAG does not match pattern x.x.x.x then exit job with -1
-    if [[ -z $(echo $LAST_TAG | grep -E &apos;^([0-9]*\.){3}[0-9]*$&apos;) ]]; then
-        export NEW_TAG=&quot;ABORTED&quot;
-        echo &quot;Wrong tag pattern recieved from GiT!!&quot;
+    if [[ -z $(echo $LAST_TAG | grep -E '^([0-9]*\.){3}[0-9]*$') ]]; then
+        export NEW_TAG="ABORTED"
+        echo "Wrong tag pattern recieved from GiT!!"
         exit -1
     fi
     
     # We are building a submit on branch `master`
-    MAJOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $1}&apos;`
-    MINOR=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $2}&apos;`
-    POINT=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $3}&apos;`
-    TAG_BUILD=`echo ${LAST_TAG} | gawk -F&apos;.&apos; &apos;{print $NF}&apos;`
-    OLD_BUILD=`echo ${TAG_BUILD} | sed &apos;{s/[^0-9]//g}&apos;`
-    #SUFFIX=`[[ ${#TAG_BUILD} &gt; 4 ]] &amp;&amp; echo ${TAG_BUILD:4} || echo &quot;&quot;`
-    NEW_BUILD=`echo ${OLD_BUILD} | gawk &apos;{print $1+1}&apos;`
+    MAJOR=`echo ${LAST_TAG} | gawk -F'.' '{print $1}'`
+    MINOR=`echo ${LAST_TAG} | gawk -F'.' '{print $2}'`
+    POINT=`echo ${LAST_TAG} | gawk -F'.' '{print $3}'`
+    TAG_BUILD=`echo ${LAST_TAG} | gawk -F'.' '{print $NF}'`
+    OLD_BUILD=`echo ${TAG_BUILD} | sed '{s/[^0-9]//g}'`
+    #SUFFIX=`[[ ${#TAG_BUILD} &gt; 4 ]] &amp;&amp; echo ${TAG_BUILD:4} || echo ""`
+    NEW_BUILD=`echo ${OLD_BUILD} | gawk '{print $1+1}'`
     #NEWTAG=$MAJOR.$MINOR.$POINT.$NEW_BUILD$SUFFIX
     NEWTAG=${MAJOR}.${MINOR}.${POINT}.${NEW_BUILD}
     VERNUM=${MAJOR}.${MINOR}.${POINT}
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;TAG_BUILD:        ${TAG_BUILD}&quot;
-    echo &quot;NEW_BUILD:        ${NEW_BUILD}&quot;
-    echo &quot;NEWTAG:           ${NEWTAG}&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    echo "TAG_BUILD:        ${TAG_BUILD}"
+    echo "NEW_BUILD:        ${NEW_BUILD}"
+    echo "NEWTAG:           ${NEWTAG}"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 else
     # Extract the branch name from the branch path on Gerrit
     CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
@@ -193,27 +195,27 @@ else
     # remove trailing `/`
     GERRIT_PATH=${GERRIT_PATH::-1}
 
-    array=(&quot;collab&quot; &quot;feature&quot; &quot;sprint&quot;)
+    array=("collab" "feature" "sprint")
     # We mark the tag with the first letter of the branch family:
     # c --&gt; collab
     # f --&gt; feature
     # s --&gt; sprint
     FAMILY=${GERRIT_PATH:0:1}
     
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;CURRENT_BR_NAME: ${CURRENT_BR_NAME}&quot;
-    echo &quot;GERRIT_PATH:     ${GERRIT_PATH}&quot;
-    echo &quot;FAMILY:          ${FAMILY}&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
-    echo &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    echo "CURRENT_BR_NAME: ${CURRENT_BR_NAME}"
+    echo "GERRIT_PATH:     ${GERRIT_PATH}"
+    echo "FAMILY:          ${FAMILY}"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     
     if [[ ${array[@]} =~ ${GERRIT_PATH} ]] &amp;&amp; [[ ${LAST_TAG} != *_* ]]; then
         # We are on a branch that is NOT master and this is the first build
         # on the branch (No branch tag yet).
         # The new tag is the master tag with a tail consists of
         # the current branch name dot build number 1 (first build on this branch)
-        NEWTAG=&quot;${LAST_TAG}&quot;_&quot;${FAMILY}&quot;-&quot;${CURRENT_BR_NAME}&quot;.1
+        NEWTAG="${LAST_TAG}"_"${FAMILY}"-"${CURRENT_BR_NAME}".1
     elif [[ $LAST_TAG == *_* ]]; then
         # We are on a branch that is NOT master and this is the first build
         # on the branch (Last tag is a branch tag).
@@ -221,45 +223,45 @@ else
         #
         # TAG_TAIL is everything after the first `_`
         TAG_TAIL=${LAST_TAG#*_}
-        LAST_BR_TAG=$(echo ${TAG_TAIL} | gawk -F&apos;_&apos; &apos;{print $NF}&apos;)
-        LAST_BR_NAME=$(echo ${LAST_BR_TAG} | gawk -F&apos;.&apos; &apos;{print $1}&apos;)
-        LAST_BR_BUILD=$(echo ${LAST_BR_TAG} | gawk -F&apos;.&apos; &apos;{print $2}&apos;)
+        LAST_BR_TAG=$(echo ${TAG_TAIL} | gawk -F'_' '{print $NF}')
+        LAST_BR_NAME=$(echo ${LAST_BR_TAG} | gawk -F'.' '{print $1}')
+        LAST_BR_BUILD=$(echo ${LAST_BR_TAG} | gawk -F'.' '{print $2}')
         # MASTER_TAG is LAST_TAG without TAG_TAIL
-        MASTER_TAG=${LAST_TAG%&quot;$TAG_TAIL&quot;}
+        MASTER_TAG=${LAST_TAG%"$TAG_TAIL"}
         # But need to drop the trailing `_`
         MASTER_TAG=${MASTER_TAG::-1}
 
-        NEW_BUILD=$(echo ${LAST_BR_BUILD} | gawk &apos;{print $1+1}&apos;)
+        NEW_BUILD=$(echo ${LAST_BR_BUILD} | gawk '{print $1+1}')
     
-        NEWTAG_TAIL=$(echo ${TAG_TAIL} | sed &quot;{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}&quot;)
-        NEWTAG=&quot;${MASTER_TAG}&quot;_&quot;${NEWTAG_TAIL}&quot;
+        NEWTAG_TAIL=$(echo ${TAG_TAIL} | sed "{s/${LAST_BR_TAG}/${LAST_BR_NAME}\.${NEW_BUILD}/g}")
+        NEWTAG="${MASTER_TAG}"_"${NEWTAG_TAIL}"
     else
-        echo &quot;**************************************************************&quot;
-        echo &quot;**************************************************************&quot;
-        echo &quot;**************************************************************&quot;
-        echo &quot;Branch not in list for build. Aborting job!!!&quot;
+        echo "**************************************************************"
+        echo "**************************************************************"
+        echo "**************************************************************"
+        echo "Branch not in list for build. Aborting job!!!"
         echo ABORT_BUILD=TRUE &gt; release.prop
         echo NEWTAG=ABORTED &gt;&gt; release.prop
-        echo &quot;**************************************************************&quot;
-        echo &quot;**************************************************************&quot;
-        echo &quot;**************************************************************&quot;        
+        echo "**************************************************************"
+        echo "**************************************************************"
+        echo "**************************************************************"        
         exit 0
     fi
 fi
 
 
 # Need these details for the UpdateVI job
-AuthorCommitter=`git log --first-parent --pretty=format:&quot;%aN%n%cN&quot; ${LAST_TAG}..origin/${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
-RN=&quot;&quot;
+AuthorCommitter=`git log --first-parent --pretty=format:"%aN%n%cN" ${LAST_TAG}..origin/${GERRIT_BRANCH} | grep -v Jenkins | sort -u | sed s/$/\;/g`
+RN=""
 while read -r hash; do 
-    subject=$(git log --pretty=format:&quot;%s&quot; $hash -n1 | sed &apos;s/\&quot;/`/g; s/---/_/g; s/::/;/g&apos;)
-    VI=$(git log --pretty=format:&quot;%B&quot; $hash -n1 | grep Issue | sed &apos;s/.*Issue: //g&apos;)
+    subject=$(git log --pretty=format:"%s" $hash -n1 | sed 's/\"/`/g; s/---/_/g; s/::/;/g')
+    VI=$(git log --pretty=format:"%B" $hash -n1 | grep Issue | sed 's/.*Issue: //g')
     RN+=---$subject::$hash::$VI
-done &lt;&lt;&lt; &quot;$(git log --first-parent --reverse --pretty=format:&quot;%h&quot; ${LAST_TAG}..origin/${GERRIT_BRANCH})&quot;
+done &lt;&lt;&lt; "$(git log --first-parent --reverse --pretty=format:"%h" ${LAST_TAG}..origin/${GERRIT_BRANCH})"
 
-EMAIL=`git log --pretty=format:&quot;%ae%n%ce&quot; ${LAST_TAG}..origin/${GERRIT_BRANCH} | sort -u`
-GERRIT_PROJECT=`echo ${GIT_URL} | cut -d/ -f4,5 | sed &apos;s:\.git::&apos;`
-#User=`git log --first-parent --pretty=format:&quot;%cN&quot; $LAST_TAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
+EMAIL=`git log --pretty=format:"%ae%n%ce" ${LAST_TAG}..origin/${GERRIT_BRANCH} | sort -u`
+GERRIT_PROJECT=`echo ${GIT_URL} | cut -d/ -f4,5 | sed 's:\.git::'`
+#User=`git log --first-parent --pretty=format:"%cN" $LAST_TAG..$GERRIT_BRANCH | head -1 | sed s/\ /_/g`
 
 # Prepare job`s envirinment variables
 echo ABORT_BUILD=FALSE &gt; release.prop
@@ -276,16 +278,16 @@ echo DATE=${DATE} &gt;&gt; release.prop
 echo AuthorCommitter=${AuthorCommitter} &gt;&gt; release.prop
 echo WTB=${WTB} &gt;&gt; release.prop
 
-echo &quot;**************************************************************&quot;
-echo &quot;******************** Exported Variables **********************&quot;
-echo &quot;**************************************************************&quot;
+echo "**************************************************************"
+echo "******************** Exported Variables **********************"
+echo "**************************************************************"
 cat release.prop
-echo &quot;**************************************************************&quot;
-echo &quot;**************************************************************&quot;
-echo &quot;**************************************************************&quot;
+echo "**************************************************************"
+echo "**************************************************************"
+echo "**************************************************************"
 </command>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>release.prop</propertiesFilePath>
       </info>
@@ -299,7 +301,7 @@ echo &quot;**************************************************************&quot;
     Runs the specified command in an elevated context. This is useful on Windows
     systems where the user account control is enabled. Input object and result
     objects are serialized using XML.
-    It&apos;s important, the command does use the current user context. This means,
+    It's important, the command does use the current user context. This means,
     the current user needs administrative permissions on the local system.
     If no file path or script block is specified, the current running process
     will be run as administrator.
@@ -316,7 +318,7 @@ echo &quot;**************************************************************&quot;
     elevated session as Administrator.
 
     .EXAMPLE
-    PS C:\&gt; Invoke-Elevated -FilePath &apos;C:\Temp\script.ps1&apos;
+    PS C:\&gt; Invoke-Elevated -FilePath 'C:\Temp\script.ps1'
     Start the script in an elevated session and return the result.
 
     .EXAMPLE
@@ -324,7 +326,7 @@ echo &quot;**************************************************************&quot;
     Start the script in an elevated session and return the result.
 
     .EXAMPLE
-    PS C:\&gt; Invoke-Elevated -ScriptBlock { param ($Path) Remove-Item -Path $Path } -ArgumentList &apos;C:\Windows\test.txt&apos;
+    PS C:\&gt; Invoke-Elevated -ScriptBlock { param ($Path) Remove-Item -Path $Path } -ArgumentList 'C:\Windows\test.txt'
     Delete a file from the program files folder with elevated permission,
     beacuse a normal user account has no permissions.
 
@@ -338,19 +340,19 @@ echo &quot;**************************************************************&quot;
 
 function Invoke-Elevated
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute(&apos;PSShouldProcess&apos;, &apos;&apos;, Scope=&apos;Function&apos;, Target=&apos;Invoke-Elevated&apos;)]
-    [CmdletBinding(DefaultParameterSetName = &apos;None&apos;)]
-    [Alias(&apos;sudo&apos;)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Scope='Function', Target='Invoke-Elevated')]
+    [CmdletBinding(DefaultParameterSetName = 'None')]
+    [Alias('sudo')]
     param
     (
         # The path to an executable program.
-        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = &apos;FilePath&apos;)]
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'FilePath')]
         [ValidateScript({Test-Path -Path $_})]
         [System.String]
         $FilePath,
 
         # The script block to execute in an elevated context.
-        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = &apos;ScriptBlock&apos;)]
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'ScriptBlock')]
         [System.Management.Automation.ScriptBlock]
         $ScriptBlock,
 
@@ -360,7 +362,7 @@ function Invoke-Elevated
         $ArgumentList
     )
 
-    if ($PSCmdlet.ParameterSetName -eq &apos;None&apos;)
+    if ($PSCmdlet.ParameterSetName -eq 'None')
     {
         # If no file path and script block was specified, just elevate the
         # current session for interactive use. For this, use the start info
@@ -369,31 +371,31 @@ function Invoke-Elevated
 
         $processStart = $currentProcess.StartInfo
         $processStart.FileName         = $currentProcess.Path
-        $processStart.Verb             = &apos;RunAs&apos;
+        $processStart.Verb             = 'RunAs'
 
         $process = New-Object -TypeName System.Diagnostics.Process
         $process.StartInfo = $processStart
         $process.Start() | Out-Null
     }
 
-    if ($PSCmdlet.ParameterSetName -eq &apos;FilePath&apos;)
+    if ($PSCmdlet.ParameterSetName -eq 'FilePath')
     {
         # If a file path instead of a script block was specified, just load the
         # file content and parse it as script block.
         $ScriptBlock = [System.Management.Automation.ScriptBlock]::Create((Get-Content -Path $FilePath -ErrorAction Stop -Raw))
     }
 
-    if ($PSCmdlet.ParameterSetName -eq &apos;FilePath&apos; -or $PSCmdlet.ParameterSetName -eq &apos;ScriptBlock&apos;)
+    if ($PSCmdlet.ParameterSetName -eq 'FilePath' -or $PSCmdlet.ParameterSetName -eq 'ScriptBlock')
     {
         try
         {
             # To transport the parameters, script outputs and the errors, we use
             # the CliXml object serialization and temporary files. This is
             # necessary because the elevated process runs in an elevated context
-            $scriptBlockFile   = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
-            $argumentListFile  = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
-            $commandOutputFile = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
-            $commandErrorFile  = [System.IO.Path]::GetTempFileName() + &apos;.xml&apos;
+            $scriptBlockFile   = [System.IO.Path]::GetTempFileName() + '.xml'
+            $argumentListFile  = [System.IO.Path]::GetTempFileName() + '.xml'
+            $commandOutputFile = [System.IO.Path]::GetTempFileName() + '.xml'
+            $commandErrorFile  = [System.IO.Path]::GetTempFileName() + '.xml'
 
             $ScriptBlock  | Export-Clixml -Path $scriptBlockFile
             $ArgumentList | Export-Clixml -Path $argumentListFile
@@ -401,30 +403,30 @@ function Invoke-Elevated
             # Create a command string which contains all command executed in the
             # elevated session. The wrapper of the script block is needed to
             # pass the parameters and return all outputs objects and errors.
-            $commandString = &apos;&apos;
-            $commandString += &apos;Set-Location -Path &quot;{0}&quot;;&apos; -f $pwd.Path
-            $commandString += &apos;$scriptBlock = [System.Management.Automation.ScriptBlock]::Create((Import-Clixml -Path &quot;{0}&quot;));&apos; -f $scriptBlockFile
-            $commandString += &apos;$argumentList = [System.Object[]] (Import-Clixml -Path &quot;{0}&quot;);&apos; -f $argumentListFile
-            $commandString += &apos;$output = Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $argumentList;&apos;
-            $commandString += &apos;$error | Export-Clixml -Path &quot;{0}&quot;;&apos; -f $commandErrorFile
-            $commandString += &apos;$output | Export-Clixml -Path &quot;{0}&quot;;&apos; -f $commandOutputFile
+            $commandString = ''
+            $commandString += 'Set-Location -Path "{0}";' -f $pwd.Path
+            $commandString += '$scriptBlock = [System.Management.Automation.ScriptBlock]::Create((Import-Clixml -Path "{0}"));' -f $scriptBlockFile
+            $commandString += '$argumentList = [System.Object[]] (Import-Clixml -Path "{0}");' -f $argumentListFile
+            $commandString += '$output = Invoke-Command -ScriptBlock $scriptBlock -ArgumentList $argumentList;'
+            $commandString += '$error | Export-Clixml -Path "{0}";' -f $commandErrorFile
+            $commandString += '$output | Export-Clixml -Path "{0}";' -f $commandOutputFile
 
             $commandEncoded = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($commandString))
 
-            $processStart = New-Object -TypeName System.Diagnostics.ProcessStartInfo -ArgumentList &apos;C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe&apos;
-            $processStart.Arguments   = &apos;-NoProfile -NonInteractive -EncodedCommand {0}&apos; -f $commandEncoded
-            $processStart.Verb        = &apos;RunAs&apos;
-            $processStart.WindowStyle = &apos;Hidden&apos;
+            $processStart = New-Object -TypeName System.Diagnostics.ProcessStartInfo -ArgumentList 'C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe'
+            $processStart.Arguments   = '-NoProfile -NonInteractive -EncodedCommand {0}' -f $commandEncoded
+            $processStart.Verb        = 'RunAs'
+            $processStart.WindowStyle = 'Hidden'
 
             $process = New-Object -TypeName System.Diagnostics.Process
             $process.StartInfo = $processStart
             $process.Start() | Out-Null
 
-            Write-Verbose &quot;Elevated powershell.exe process started with id $($process.Id).&quot;
+            Write-Verbose "Elevated powershell.exe process started with id $($process.Id)."
 
             $process.WaitForExit()
 
-            Write-Verbose &quot;Elevated powershell.exe process stopped with exit code $($process.ExitCode).&quot;
+            Write-Verbose "Elevated powershell.exe process stopped with exit code $($process.ExitCode)."
 
             if ((Test-Path -Path $commandErrorFile))
             {
@@ -457,46 +459,46 @@ function Invoke-Elevated
 
 Invoke-Elevated -ScriptBlock {
 	foreach($line in Get-Content .\release.prop) {
-		if(-Not $line.startswith(&quot;#&quot;)){
-			$data = $line.split(&apos;=&apos;)
+		if(-Not $line.startswith("#")){
+			$data = $line.split('=')
 			$var = $data[0]
-			$val = $data[1].replace(&apos;&quot;&apos;,&apos;&apos;)
-			[Environment]::SetEnvironmentVariable($var, $val, &quot;Machine&quot;)
+			$val = $data[1].replace('"','')
+			[Environment]::SetEnvironmentVariable($var, $val, "Machine")
 		}
 	}
 }</command>
     </hudson.plugins.powershell.PowerShell>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.logic.Not" plugin="run-condition@1.0">
+      <condition class="org.jenkins_ci.plugins.run_condition.logic.Not" plugin="run-condition@1.3">
         <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition">
           <token>${ABORT_BUILD}</token>
         </condition>
       </condition>
       <buildStep class="hudson.tasks.BatchFile">
-        <command>echo &quot;Running build batch with build number (%NEW_BUILD%)&quot;&#xd;
-cd Build&#xd;
-call build.bat %NEW_BUILD%&#xd;
-&#xd;
-IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; /s&#xd;
-&#xd;
-&quot;C:\Program Files\7-Zip\7z.exe&quot; a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\&#xd;
-&#xd;
+        <command>echo "Running build batch with build number (%NEW_BUILD%)"&#13;
+cd Build&#13;
+call build.bat %NEW_BUILD%&#13;
+&#13;
+IF EXIST "%WORKSPACE%\Deployment\Release\*.7z" DEL "%WORKSPACE%\Deployment\Release\*.7z" /s&#13;
+&#13;
+"C:\Program Files\7-Zip\7z.exe" a C:\j\workspace\mtrBLD\Deployment\Release\%NEWTAG%.7z C:\j\workspace\mtrBLD\Deployment\Release\&#13;
+&#13;
 </command>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
   </builders>
   <publishers>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.logic.Not" plugin="run-condition@1.0">
+          <condition class="org.jenkins_ci.plugins.run_condition.logic.Not" plugin="run-condition@1.3">
             <condition class="org.jenkins_ci.plugins.run_condition.core.BooleanCondition">
               <token>${ABORT_BUILD}</token>
             </condition>
           </condition>
           <publisherList>
-            <hudson.plugins.git.GitPublisher plugin="git@4.0.0">
+            <hudson.plugins.git.GitPublisher plugin="git@4.2.2">
               <configVersion>2</configVersion>
               <pushMerge>false</pushMerge>
               <pushOnlyIfSuccess>true</pushOnlyIfSuccess>
@@ -539,12 +541,12 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
               <caseSensitive>true</caseSensitive>
             </hudson.tasks.ArtifactArchiver>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yuval.yosha@audiocodes.com shuky.riechard@audiocodes.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -559,7 +561,7 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -570,7 +572,7 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
+      <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -580,7 +582,7 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
       <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun></regexpForRerun>
+      <regexpForRerun/>
       <rerunIfUnstable>false</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
       <checkRegexp>false</checkRegexp>
@@ -592,12 +594,12 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>mtr-release</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -609,41 +611,41 @@ IF EXIST &quot;%WORKSPACE%\Deployment\Release\*.7z&quot; DEL &quot;%WORKSPACE%\D
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>C:\j\workspace\mtrBLD\Deployment\Release\${NEWTAG}.7z=&gt;MeetingRecorder/${GERRIT_BRANCH}/${VERNUM}/</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <template>#${BUILD_NUMBER}__${GERRIT_BRANCH}__${NEWTAG}</template>
+      <descriptionTemplate/>
       <runAtStart>false</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
