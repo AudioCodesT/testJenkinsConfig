@@ -139,7 +139,7 @@ if [[ "${LastGerritCommitHash}" != "${GERRIT_PATCHSET_REVISION}" ]]; then
     echo "*******************************************************************"
     echo "*******************************************************************"
     echo "*******************************************************************"
-    exit 0
+    exit 2
 fi
 
 # Build HEAD
@@ -162,6 +162,8 @@ DATE=`date`
 # Define new tag
 
 if [[ ${GERRIT_BRANCH} == *"/"* ]]; then
+	echo "We are on \"collab\" \"feature\" \"sprint\" branch"
+    
     # Extract the branch name from the branch path on Gerrit
     CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
     GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
