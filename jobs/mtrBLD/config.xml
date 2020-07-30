@@ -189,11 +189,16 @@ if [[ "${GERRIT_BRANCH}" == "master" ]]; then
     echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 else
-    # Extract the branch name from the branch path on Gerrit
-    CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
-    GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
-    # remove trailing `/`
-    GERRIT_PATH=${GERRIT_PATH::-1}
+	## Manage branch names with '/'
+	if [[ ${GERRIT_BRANCH} =~ */* ]]; then
+    	# Extract the branch name from the branch path on Gerrit
+    	CURRENT_BR_NAME=${GERRIT_BRANCH##*/}
+    	GERRIT_PATH=${GERRIT_BRANCH%$CURRENT_BR_NAME*}
+    	# remove trailing `/`
+    	GERRIT_PATH=${GERRIT_PATH::-1}
+    else
+    	GERRIT_PATH=${GERRIT_BRANCH}
+    fi
 
     array=("collab" "feature" "sprint")
     # We mark the tag with the first letter of the branch family:
