@@ -106,6 +106,7 @@ docker images
 echo "***** Start Snyk"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export SNYK_TOKEN=450cd42c-36cf-4986-baf7-8ba57b60abe1
+snyk config set disableSuggestions=true
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}'); do snyk test --docker $i; done &gt; snyk.log
 echo "***** End Snyk"
 ## trivy
