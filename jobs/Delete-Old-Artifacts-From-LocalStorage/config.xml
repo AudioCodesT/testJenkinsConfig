@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>This job go over all the folders in the aclnas and delete the old versions&#xd;
+  <description>This job go over all the folders in the aclnas and delete the old versions&#13;
 Executed periodically every night.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -10,7 +9,7 @@ Executed periodically every night.</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -20,9 +19,6 @@ Executed periodically every night.</description>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -40,7 +36,7 @@ Executed periodically every night.</description>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>DESTINATION</name>
-          <description></description>
+          <description/>
           <defaultValue>\\aclnas03\Versions\CompilationResults</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
@@ -53,8 +49,9 @@ Executed periodically every night.</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>AclnasArtifactory-Update</assignedNode>
@@ -64,40 +61,40 @@ Executed periodically every night.</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.SCMTrigger>
-      <spec>H 18 * * 0</spec>
+      <spec>H 22 * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>net use T: /delete&#xd;
-net use T: &quot;%DESTINATION%&quot;&#xd;
-&#xd;
+      <command>net use T: /delete&#13;
+net use T: "%DESTINATION%"&#13;
+&#13;
 </command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.Shell>
       <command>#!c:\cygwin64\bin\bash --login
 ###!c:\cygwin_aclnas03\bin\bash --login
 set -xe
-DESTINATION=$(echo $DESTINATION | sed -e &apos;s:\\:/:g&apos;)
+DESTINATION=$(echo $DESTINATION | sed -e 's:\\:/:g')
 # Calculate the date we are going to delete
-oldThan=$(date +&quot;%Y%m%d&quot; -d &quot;-$OLD days&quot;)
+oldThan=$(date +"%Y%m%d" -d "-$OLD days")
 
 cd $WORKSPACE
 
 function RemoveFiles() {
 	FolderToCheck=$1
     filesToDelete=()
-    allArgs=(&quot;${@}&quot;)
+    allArgs=("${@}")
     args_len=${#@}
 	for ((i=1;i &lt; ${args_len};i++))
 	do
-    	filesToDelete+=(&quot;${allArgs[$i]}&quot;)
+    	filesToDelete+=("${allArgs[$i]}")
   	done
     for file in ${filesToDelete[@]}
     do
-    	find ${DESTINATION}/${FolderToCheck} -name &quot;${file}&quot; -ctime +${OLD} -exec rm -rv {} \; 2&gt;/dev/null 
+    	find ${DESTINATION}/${FolderToCheck} -name "${file}" -ctime +${OLD} -exec rm -rv {} \; 2&gt;/dev/null 
     done
 }
 
@@ -107,7 +104,7 @@ RemoveFiles IPP/SFB build_tgz</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
+    <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>ben.magriso</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -117,7 +114,7 @@ RemoveFiles IPP/SFB build_tgz</command>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
       <template>#${BUILD_NUMBER}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
