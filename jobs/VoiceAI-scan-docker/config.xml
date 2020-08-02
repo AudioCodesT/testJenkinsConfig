@@ -147,8 +147,8 @@ echo "***** End Trivy"</command>
       </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>$BUILD_STATUS: Docker Scan</defaultSubject>
-      <defaultContent>${FILE,path="$HOME/jenkinsslave/workspace/VoiceAI-scan-docker/*.log"}</defaultContent>
-      <attachmentsPattern/>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern>**/*.log</attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
