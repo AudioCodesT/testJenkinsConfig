@@ -110,7 +110,7 @@
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
       <dependencyJobsNames/>
-      <commitMessageParameterMode>BASE64</commitMessageParameterMode>
+      <commitMessageParameterMode>PLAIN</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>PLAIN</commentTextParameterMode>
       <buildStartMessage>gerrit review &lt;CHANGE&gt;,&lt;PATCHSET&gt; --message 'Build Started &lt;BUILDS_STATS&gt;' --notify=NONE</buildStartMessage>
