@@ -58,6 +58,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>${GERRIT_REFNAME}</name>
         <refspec>${GERRIT_REFNAME}</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
@@ -92,7 +93,7 @@ git archive 3 folders and upload to artifactory under tag folder</description>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
-          <pattern>TP/Tools/VoiceAIConnector</pattern>
+          <pattern>refs/tags/**</pattern>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>ANT</compareType>
@@ -229,7 +230,7 @@ case $NEWTAG in
     1.9*|2.0*)
         BRANCH="2.0"
         ;;
-   2.1*|2.2*)
+    2.1*|2.2*)
         BRANCH="2.2"
         ;;
 esac
@@ -352,7 +353,7 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>VoiceAI.env</propertiesFilePath>
+        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -364,7 +365,7 @@ echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.env</command>
       <checkRegexp>false</checkRegexp>
       <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
-        <delay>5</delay>
+        <delay>120</delay>
       </delay>
       <maxSchedule>1</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
@@ -378,7 +379,7 @@ BRANCH=${BRANCH}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>VAG-copy-to-NetApp</projects>
+          <projects>Update-Jira</projects>
           <condition>UNSTABLE_OR_BETTER</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -390,7 +391,7 @@ BRANCH=${BRANCH}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>VAG-push-to-ECR</projects>
+          <projects>Update-Jira</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -402,7 +403,7 @@ BRANCH=${BRANCH}</properties>
               <textParamValueOnNewLine>false</textParamValueOnNewLine>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
           </configs>
-          <projects>VAG-push-to-ECR</projects>
+          <projects>Update-Jira</projects>
           <condition>SUCCESS</condition>
           <triggerWithNoParameters>false</triggerWithNoParameters>
           <triggerFromChildProjects>false</triggerFromChildProjects>
@@ -443,7 +444,7 @@ ${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$", showTruncatedLines
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
-      <recipients>yuvaly orgads shuky.riechard</recipients>
+      <recipients>ben.magriso, yuval.yosha shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
@@ -528,13 +529,13 @@ ${WORKSPACE}/docker/config.json.sample
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ++kJRV5maC2YJoCuRtXyswO7XT//+YXz+Ce2rMAV+JQ=}</value>
+          <name>compile_password</name>
+          <value>{AQAAABAAAAAQPY50vRNvthCH7ggesYABcI96739w+VTBOPMAZnvNH1U=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${NEWTAG}</template>
+      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
