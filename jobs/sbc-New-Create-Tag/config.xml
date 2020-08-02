@@ -186,6 +186,11 @@ function createTag {
 }
 
 if [ -z "$GERRIT_BRANCH" ]; then exit 0; fi
+if [[ "$Branch" =~ "$GERRIT_BRANCH" ]]; then
+  echo Skip this branch $GERRIT_BRANCH, do it manually
+  exit 2;
+fi
+
 git clean -fdx
 sleep 20
 git log -4 --decorate --oneline origin/$GERRIT_BRANCH
@@ -306,14 +311,14 @@ exit $errorFlag
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
       <regexpForRerun>Try again later after 300 seconds</regexpForRerun>
-      <rerunIfUnstable>true</rerunIfUnstable>
+      <rerunIfUnstable>false</rerunIfUnstable>
       <rerunMatrixPart>false</rerunMatrixPart>
-      <checkRegexp>true</checkRegexp>
+      <checkRegexp>false</checkRegexp>
       <regexpForMatrixStrategy>TestParent</regexpForMatrixStrategy>
       <delay class="com.chikli.hudson.plugin.naginator.FixedDelay">
         <delay>300</delay>
       </delay>
-      <maxSchedule>4</maxSchedule>
+      <maxSchedule>2</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
   </publishers>
   <buildWrappers>
