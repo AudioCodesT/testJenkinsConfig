@@ -50,6 +50,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <refspec>+refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +refs/notes/review:refs/notes/review</refspec>
         <url>ssh://jenkins@test-gerrit:29418/TP/GWApp</url>
         <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
