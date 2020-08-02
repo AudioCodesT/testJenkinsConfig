@@ -109,11 +109,11 @@ echo "***** Start Snyk"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
 #snyk config set disableSuggestions=true
-for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do snyk test --docker $i; done &gt; snyk.log
+for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk.log
 echo "***** End Snyk"
 ## trivy
 echo "***** Start Trivy"
-for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do trivy image $i; done &gt; trivy.log
+for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/local/bin/trivy image $i; done &gt; trivy.log
 echo "***** End Trivy"</command>
     </hudson.tasks.Shell>
   </builders>
