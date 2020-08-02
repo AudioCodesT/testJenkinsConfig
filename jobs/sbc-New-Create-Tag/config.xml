@@ -1,6 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description/>
+  <description>Create a new TAG after Submit&#13;
+This job wake up after every Submit in the main branches in SBC.&#13;
+In case the branch missing a TAG, the job will create it for each user after 5 minutes</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
