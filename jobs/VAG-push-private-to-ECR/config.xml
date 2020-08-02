@@ -179,7 +179,7 @@ case $TAG in
     1.9*|2.0*)
         BRANCH="2.0"
         ;;
-   2.1*|2.2*)
+    2.1*|2.2*)
         BRANCH="2.2"
         ;;
     *)
@@ -250,7 +250,7 @@ cat VAG.properties
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>VAG.properties</propertiesFilePath>
+        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -328,7 +328,7 @@ DevOps Team</defaultContent>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
-      <recipients>shuky.riechard yuvaly</recipients>
+      <recipients>ben.magriso, yuval.yosha shuky.riechard</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
@@ -411,21 +411,21 @@ DevOps Team</defaultContent>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>jenkinsPass</name>
-          <value>{AQAAABAAAAAQ6rtTtv8r70ltBj28MYVLbLVTeS4ml43orT+2gD6O9VI=}</value>
+          <name>compile_password</name>
+          <value>{AQAAABAAAAAQPY50vRNvthCH7ggesYABcI96739w+VTBOPMAZnvNH1U=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkinsAWSkey</name>
-          <value>{AQAAABAAAAAgOHQ+FnGTnqCzo91JmbX91fV9w7bxM6ZojzmYWnyWgZUs86edpekeCBwi3NkXaA6f}</value>
+          <name>compile_password</name>
+          <value>{AQAAABAAAAAQPY50vRNvthCH7ggesYABcI96739w+VTBOPMAZnvNH1U=}</value>
         </EnvInjectPasswordEntry>
         <EnvInjectPasswordEntry>
-          <name>jenkinsAWSsecret</name>
-          <value>{AQAAABAAAAAwX2f2p41z6F9Up89quZKSI9m8FOW+SnJZdxYaSkXXfIRHJtN3fwYIbDf4gNGcPqzQaGRc3CA+EMKfdJEuVlMzvw==}</value>
+          <name>compile_password</name>
+          <value>{AQAAABAAAAAQPY50vRNvthCH7ggesYABcI96739w+VTBOPMAZnvNH1U=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}_${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}</template>
+      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
       <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
