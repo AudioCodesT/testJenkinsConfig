@@ -329,7 +329,7 @@ fi</command>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQQElkzZi3XqwSLSFYqqmvxaNlWw+JMrE0e2lejovshUs=}</value>
+          <value>{AQAAABAAAAAQqlD90MCiLZdguknVwB9lp62G1tVCXP257vdwP4qt2BU=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
