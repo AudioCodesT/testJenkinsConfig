@@ -59,7 +59,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>## Set docker vars
+      <command>set +e
+
+## Set docker vars
 ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
 JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
 ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
