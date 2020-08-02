@@ -105,7 +105,7 @@ docker images
 ## snyk
 echo "***** Start Snyk"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
-export SNYK_TOKEN=450cd42c-36cf-4986-baf7-8ba57b60abe1
+export SNYK_TOKEN=0203484c-21c4-463d-9994-c9b9eafccad7
 snyk config set disableSuggestions=true
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do snyk test --docker $i; done &gt; snyk.log
 echo "***** End Snyk"
