@@ -56,7 +56,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>set +e
+      <command>sudo yum remove -y awscli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+set +e
 
 ## Set docker vars
 ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
@@ -82,7 +87,7 @@ ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 #		aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
 #		EOD
 #        #
-#    	$(aws ecr get-login --no-include-email --region eu-central-1)
+#    	$(/usr/local/bin/aws ecr get-login --no-include-email --region eu-central-1)
 #    	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
 #        cp docker-compose-vag-ecr-$version.yml docker-compose-vag-$version.yml
 #    	;;
@@ -127,6 +132,7 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
 #snyk config set disableSuggestions=true
 # for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk.log
+echo "Yuval skipping snaky" &gt; snyk.log
 echo "***** End Snyk"
 
 ## trivy
@@ -136,7 +142,7 @@ echo "***** End Trivy"
 
 ## ECR Clair
 echo "***** Start Retrieve ECR"
-for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version &gt; $image.json; done
+for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version &gt; $image.json; done
 echo "***** End Retrieve ECR"
 </command>
     </hudson.tasks.Shell>
