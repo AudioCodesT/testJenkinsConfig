@@ -163,7 +163,7 @@ echo "***** End Retrieve ECR"
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>orgads@audiocodes.com,shmuliky@audiocodes.com</recipientList>
+      <recipientList>orgads@audiocodes.com,shmuliky@audiocodes.com,shukyr@audiocodes.com,yuvaly@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
