@@ -347,8 +347,8 @@ done
 
 
 ## Export env vars
-echo NEWTAG=${NEWTAG} &gt; VoiceAI.properties
-echo BRANCH=${BRANCH} &gt;&gt; VoiceAI.properties</command>
+echo NEWTAG=${NEWTAG} &gt; voiceAI.properties
+echo BRANCH=${BRANCH} &gt;&gt; voiceAI.properties</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
