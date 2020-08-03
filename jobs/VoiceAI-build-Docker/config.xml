@@ -337,11 +337,10 @@ echo "Finished docker push to Artifactory."
 # If 
 cd $WORKSPACE
 for yml in `ls docker-compose-vag-*.yml | grep ${NEWTAG}`; do
-	branchYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
-    
 	if [[ NEWTAG &gt; BRANCH ]]; then
     	sed -I "/image: / s/[^:]*$/$NEWTAG/" $yml
     else
+    	branchYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
     	cp $yml $branchYml
     fi
 done
