@@ -315,8 +315,10 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
         docker tag ${imageID} ${DOCKER_REG}/${imageName}:${NEWTAG}
         docker push ${DOCKER_REG}/${imageName}:${NEWTAG}
         
-        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
-        docker push ${DOCKER_REG}/${imageName}:${BRANCH}
+        if [[ NEWTAG &lt; BRANCH ]]; then
+	        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
+    	    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
+        fi
 
         #allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq '.tags[]')
         #highTag=$(echo "$allTags" | grep -F ${TAGVER} | grep -v -e "\-g.*" | sort -t'.' -n -k3 | tail -n 1)
@@ -330,12 +332,18 @@ done
 
 echo "Finished docker push to Artifactory."
 
-# Copy yaml files from $TAG to $BRANCH
-# (i.e. from docker-compose-vag-1.7.001.yml to docker-compose-vag-1.8.yml)
+# Copy yaml files from $NEWTAG to $BRANCH
+# (i.e. from docker-compose-vag-1.7.011.yml to docker-compose-vag-1.8.yml)
+# If 
 cd $WORKSPACE
 for yml in `ls docker-compose-vag-*.yml | grep ${NEWTAG}`; do
-    newYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
-    cp $yml $newYml
+	branchYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
+    
+	if [[ NEWTAG &gt; BRANCH ]]; then
+    	sed -I "/image: / s/[^:]*$/$NEWTAG/" $yml
+    else
+    	cp $yml $branchYml
+    fi
 done
 
 
