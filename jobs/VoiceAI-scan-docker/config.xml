@@ -33,17 +33,6 @@
           <defaultValue/>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
-          <name>repository</name>
-          <description/>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>Artifactory</string>
-              <string>ECR</string>
-              <string>Jfrog</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -147,7 +136,7 @@ echo "***** End Trivy"
 
 ## ECR Clair
 echo "***** Start Retrieve ECR"
-for r in $(grep "image: " docker-compose-vag-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version &gt; $image.json; done
+for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version &gt; $image.json; done
 echo "***** End Retrieve ECR"
 </command>
     </hudson.tasks.Shell>
