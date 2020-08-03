@@ -242,7 +242,7 @@ else
 
   zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map ${BOARDNAME}_DspVersions.txt
   #zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
-  xz -T ${BOARDNAME}_F$NEWTAG.elf
+  xz -T 0 ${BOARDNAME}_F$NEWTAG.elf
   #zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
 fi
 
