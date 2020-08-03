@@ -304,11 +304,7 @@ echo "Step 1 - Login to docker registry."
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
 echo "Step 2 - Tagging &amp; pushing images to Artifactory."
-# only push images that are new (Were not pulled from Artifactory)
-## Also push image with ${BRANCH} tag
-# Check if need to push with tag ${BRANCH} to Artifactory:
-# If highest tag on Artifactory is lower then ${NEWTAG},
-# we also push docker images with tag ${BRANCH}
+## Tag images with NEWTAG &amp; BRANCH and push to Artifactory
 for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep ${BRANCH} | grep -v vag-common); do
     imageName=$(echo $outcomeImage | gawk -F: '{print $1}')
     imageID=$(echo $outcomeImage | gawk -F: '{print $3}')
@@ -316,7 +312,6 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
     #docker images vag-*
     #imageID=$(docker images vag-* | grep "${BRANCH}" | grep "$dockerImage" | gawk '{print $3}')
 
-    if [[ "$(echo $HASHES | grep -q ${imageID})" == "" ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${imageName}:${NEWTAG}
         docker push ${DOCKER_REG}/${imageName}:${NEWTAG}
         
@@ -331,9 +326,6 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
         #    docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
         #    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
         #fi
-    else
-        echo "*** No change in docker image \"${imageName}\". Image not pushed to repository. ***"
-    fi
 done
 
 echo "Finished docker push to Artifactory."
