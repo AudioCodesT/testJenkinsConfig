@@ -137,6 +137,9 @@ echo "***** End Trivy"
 
 ## ECR Clair
 echo "***** Start Retrieve ECR"
+# No need to run scan on ECR because all repositories have 'scanOnPush' option.
+# BUT, if it is needed, use following line:
+# for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr start-image-scan --repository-name voice/$image --image-id imageTag=$version; done
 for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version &gt; $image.json; done
 echo "***** End Retrieve ECR"
 </command>
