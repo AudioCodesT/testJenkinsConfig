@@ -70,38 +70,41 @@
       <command>set +e
 
 ## Set docker vars
-ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
-JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
-ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
+#ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
+#JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
+#ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 
 ## Login to registry &amp; fetch yaml file
-case "$repository" in
-	"Artifactory")
-    	echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
-    	curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
-    	;;
-    "ECR")
-    	## Create AWS files
-		[[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
-		cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
-		[default]
-		region = eu-central-1
-		EOD
-		cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
-		[default]
-		aws_access_key_id = ${AWS_ACCESS_KEY_ID}
-		aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
-		EOD
-        #
-    	$(aws ecr get-login --no-include-email --region eu-central-1)
-    	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
-        cp docker-compose-vag-ecr-$version.yml docker-compose-vag-$version.yml
-    	;;
-    "Jfrog")
-    	echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
-    	curl -u ${jfrogUser}:${jfrogPass} -O https://audiocodes.jfrog.io/artifactory/voice-ai-files/docker-compose-vag-$version.yml
-    	;;
-esac
+#case "$repository" in
+#	"Artifactory")
+#    	echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
+#    	curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
+#    	;;
+#    "ECR")
+#    	## Create AWS files
+#		[[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
+#		cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
+#		[default]
+#		region = eu-central-1
+#		EOD
+#		cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
+#		[default]
+#		aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+#		aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+#		EOD
+#        #
+#    	$(aws ecr get-login --no-include-email --region eu-central-1)
+#    	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
+#        cp docker-compose-vag-ecr-$version.yml docker-compose-vag-$version.yml
+#    	;;
+#    "Jfrog")
+#    	echo ${jfrogPass} | docker login -u ${jfrogUser} --password-stdin ${JFROG_DOCKER_REG}
+#    	curl -u ${jfrogUser}:${jfrogPass} -O https://audiocodes.jfrog.io/artifactory/voice-ai-files/docker-compose-vag-$version.yml
+#    	;;
+#esac
+
+echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
+curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
 
 docker system prune --all --volumes --force
 
@@ -119,15 +122,22 @@ export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
 #snyk config set disableSuggestions=true
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk.log
 echo "***** End Snyk"
+
 ## trivy
 echo "***** Start Trivy"
 for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/local/bin/trivy image $i; done &gt; trivy.log
-echo "***** End Trivy"</command>
+echo "***** End Trivy"
+
+## ECR Clair
+echo "***** Start Retrieve ECR"
+for r in $(aws ecr describe-repositories | jq -r '.repositories[].repositoryName'); do aws ecr describe-image-scan-findings --repository-name $r --image-id imageTag=$version &gt; ${r##*/}.json; done
+echo "***** End Retrieve ECR"
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>*.log</artifacts>
+      <artifacts>*.log,*.json</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
