@@ -294,13 +294,15 @@ if [ $BOARDNAME == "HostedTP" ]; then SERVER="--server=localhost "; else SERVER=
 ./buildAll.sh --board=${BOARDNAME} --sip=yes --user=no --fast=yes $SERVER --custom-version=-d$BUILD_NUMBER
 
 if [[ $BOARDNAME =~ "HostedTP" ]]; then
-  cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/Apps
-  suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
-  for app in DRLogger DTLS HTTPStreamer; do
-    if [ -f "$app/MPCBin/$app" ]; then
-      bzip2 -c $app/MPCBin/$app &gt; $WORKSPACE/$app$suffix.bz2
-    fi
-  done
+  if [ -d "${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/Apps" ]; then
+    cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/Apps
+    suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
+    for app in DRLogger DTLS HTTPStreamer; do
+      if [ -f "$app/MPCBin/$app" ]; then
+        bzip2 -c $app/MPCBin/$app &gt; $WORKSPACE/$app$suffix.bz2
+      fi
+    done
+  fi
 fi
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin
@@ -353,6 +355,48 @@ CHANGES=${CHANGESNumbers}</properties>
       </delay>
       <maxSchedule>3</maxSchedule>
     </com.chikli.hudson.plugin.naginator.NaginatorPublisher>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>ben.magriso@audiocodes.com,Shuky.Riechard@audiocodes.com,Yossi.Merzbach@audiocodes.com,Yuval.Yosha@audiocodes.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern/>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>***ERROR**** SBC Jobs are failing because of the sbc-slave-for-matrix-parents ***ERROR****</defaultSubject>
+      <defaultContent>The SBC matrix parent slave is failing.
+you can see here:
+${BUILD_URL}
+
+Please reboot the slave</defaultContent>
+      <attachmentsPattern/>
+      <presendScript>def logFilePath = build.getLogFile().getPath();
+String logContent = new File(logFilePath).text;
+ if (logContent.find(/NoClassDefFoundError: Could not initialize class hudson.slaves.SlaveComputer/)) 
+{
+cancel=false;
+} else {
+cancel=true;
+}</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+      <matrixTriggerMode>ONLY_PARENT</matrixTriggerMode>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
@@ -545,7 +589,7 @@ ${WORKSPACE}/*.bz2=&gt;com/ac/sbc/DRT/Firmware/${TARGET}</deployPattern>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -559,7 +603,7 @@ ${WORKSPACE}/*.bz2=&gt;com/ac/sbc/DRT/Firmware/${TARGET}</deployPattern>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+          <value>{AQAAABAAAAAQzXe+TeMti/M5nVPnVWNqeXjMKDEzu95EpC2D/FENMEM=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
