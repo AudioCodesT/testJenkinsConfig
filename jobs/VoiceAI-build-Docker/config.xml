@@ -409,7 +409,13 @@ ${BUILD_LOG_REGEX, regex="^.*?500 Internal Server Error.*?$", showTruncatedLines
   </publishers>
   <buildWrappers>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
-      <bindings class="empty-list"/>
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
+          <usernameVariable>jenkinsUser</usernameVariable>
+          <passwordVariable>jenkinsPass</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+      </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
