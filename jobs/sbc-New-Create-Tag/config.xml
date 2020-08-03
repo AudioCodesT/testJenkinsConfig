@@ -67,9 +67,9 @@ In case the branch missing a TAG, the job will create it for each user after 5 m
     <extensions>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
-        <noTags>false</noTags>
+        <noTags>true</noTags>
         <reference/>
-        <depth>20</depth>
+        <depth>0</depth>
         <honorRefspec>false</honorRefspec>
       </hudson.plugins.git.extensions.impl.CloneOption>
     </extensions>
