@@ -215,13 +215,15 @@ cd TrunkPackRam
 ./buildAll.sh ${BOARD} --fast=yes --user=no
 
 if [[ $BOARDNAME =~ "HostedTP" ]]; then
-  cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/Apps
-  suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
-  for app in DRLogger DTLS HTTPStreamer; do
-    if [ -f "$app/MPCBin/$app" ]; then
-      bzip2 -c $app/MPCBin/$app &gt; $WORKSPACE/$app$suffix.bz2
-    fi
-  done
+  if [ -d "${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/Apps" ]; then
+    cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/Apps
+    suffix=$(echo $BOARDNAME | sed 's:HostedTP\|_SIP::g')
+    for app in DRLogger DTLS HTTPStreamer; do
+      if [ -f "$app/MPCBin/$app" ]; then
+        bzip2 -c $app/MPCBin/$app &gt; $WORKSPACE/$app$suffix.bz2
+      fi
+    done
+  fi
 fi
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
@@ -239,7 +241,8 @@ else
   find ../../Media/m5eEngine/MPCBin  ../../VoiceEngines/MPCBin -name "DL*.c" | ( xargs grep Descriptor.VersionNumber || true ) &gt; ${BOARDNAME}_DspVersions.txt
 
   zip -r ${BOARDNAME}_F$NEWTAG.map.zip ${BOARDNAME}_F$NEWTAG.map ${BOARDNAME}_DspVersions.txt
-  zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
+  #zip -r ${BOARDNAME}_F$NEWTAG.elf.zip ${BOARDNAME}_F$NEWTAG.elf
+  xz -T ${BOARDNAME}_F$NEWTAG.elf
   #zip -r ${BOARDNAME}_F$NEWTAG.zip ${BOARDNAME}_F$NEWTAG.cmp
 fi
 
@@ -332,6 +335,57 @@ Project=GWApp</properties>
           <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+        <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.3"/>
+          <publisherList>
+            <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+              <recipientList>ben.magriso@audiocodes.com,Shuky.Riechard@audiocodes.com,Yossi.Merzbach@audiocodes.com,Yuval.Yosha@audiocodes.com</recipientList>
+              <configuredTriggers>
+                <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+                  <email>
+                    <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                    <body>$PROJECT_DEFAULT_CONTENT</body>
+                    <recipientProviders>
+                      <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+                    </recipientProviders>
+                    <attachmentsPattern/>
+                    <attachBuildLog>false</attachBuildLog>
+                    <compressBuildLog>false</compressBuildLog>
+                    <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                    <contentType>project</contentType>
+                  </email>
+                </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+              </configuredTriggers>
+              <contentType>default</contentType>
+              <defaultSubject>***ERROR**** SBC Jobs are failing because of the sbc-slave-for-matrix-parents ***ERROR****</defaultSubject>
+              <defaultContent>The SBC matrix parent slave is failing.
+you can see here:
+${BUILD_URL}
+
+Please reboot the slave</defaultContent>
+              <attachmentsPattern/>
+              <presendScript>def logFilePath = build.getLogFile().getPath();
+String logContent = new File(logFilePath).text;
+ if (logContent.find(/NoClassDefFoundError: Could not initialize class hudson.slaves.SlaveComputer/)) 
+{
+cancel=false;
+} else {
+cancel=true;
+}</presendScript>
+              <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+              <attachBuildLog>false</attachBuildLog>
+              <compressBuildLog>false</compressBuildLog>
+              <replyTo>$DEFAULT_REPLYTO</replyTo>
+              <saveOutput>false</saveOutput>
+              <disabled>false</disabled>
+              <matrixTriggerMode>ONLY_PARENT</matrixTriggerMode>
+            </hudson.plugins.emailext.ExtendedEmailPublisher>
+          </publisherList>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.3"/>
+          <aggregationCondition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.3"/>
+          <aggregationRunner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$DontRun" plugin="run-condition@1.3"/>
+          <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
+        </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
@@ -400,6 +454,7 @@ echo GERRIT_BRANCH=${GERRIT_BRANCH}
 ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 ${WORKSPACE}/TrunkPackRam/Networking/ApplicationsAndProtocols/CLI/adsl_vrx_ext_version_data.h=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}
 ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.zip=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_F$NEWTAG.*.xz=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
 ${WORKSPACE}/*.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
 </deployPattern>
       <resolvePattern/>
@@ -420,7 +475,7 @@ ${WORKSPACE}/*.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -434,7 +489,7 @@ ${WORKSPACE}/*.bz2=&gt;com/ac/sbc/${GERRIT_BRANCH}/Firmware/${NEWTAG}/map
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+          <value>{AQAAABAAAAAQ/T8SzjhYJP/IuAI2R6LszIQYYGzT6RoICz3BYIPemR0=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
