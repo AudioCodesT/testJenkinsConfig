@@ -44,6 +44,7 @@
         <string>authenticated</string>
         <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
+        <string>365_Monday</string>
         <string>Allowed RODC Password Replication Group</string>
         <string>Users</string>
         <string>ActionBase Users</string>
@@ -77,7 +78,7 @@
         <string># R&amp;D Application Group</string>
         <string>Citrix_Allow_Project</string>
       </roles>
-      <timestamp>1590915190858</timestamp>
+      <timestamp>1596527960946</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Shmulik.Yudkovich@audiocodes.com</emailAddress>
