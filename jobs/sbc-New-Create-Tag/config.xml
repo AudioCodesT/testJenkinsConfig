@@ -76,7 +76,7 @@ In case the branch missing a TAG, the job will create it for each user after 5 m
   </scm>
   <assignedNode>test-Sanjer</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
