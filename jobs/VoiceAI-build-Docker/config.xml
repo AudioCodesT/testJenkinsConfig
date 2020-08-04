@@ -339,7 +339,7 @@ cd $WORKSPACE
 for yml in `ls docker-compose-vag-${NEWTAG}*.yml`; do
 	if [[ NEWTAG &gt; BRANCH ]]; then
     	echo "***** Release build"
-    	sed -i "/image: / s/[^:]*$/$NEWTAG/" $yml
+    	sed -i "/docker-voice-ai.artifactory.corp.audiocodes.com\/vag/ s/[^:]*$/$NEWTAG/" $yml
     else
     	echo "***** Development build"
     	branchYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
