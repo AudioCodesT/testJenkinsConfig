@@ -40,7 +40,7 @@
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>GERRIT_BRANCH</name>
+          <name>BRANCH</name>
           <description/>
           <defaultValue/>
           <trim>false</trim>
@@ -158,6 +158,14 @@
       <command>BL=`git describe --tags | cut -d - -f1,2 | sed s/-/./g`
 echo BL ver is: ${BL}
 echo COMP_VER=${BL} &gt; generated_version.properties
+if [ -z "$BRANCH" ]; then
+  GERRIT_BRANCH=`git branch --no-color -r --contains HEAD | grep -v -e '-&gt;' | head -1 | awk -F'/' '{print $NF}'`
+else
+  GERRIT_BRANCH=$BRANCH
+fi
+
+echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; generated_version.properties
+
 
 # Check if a previous TAG exist - if not, take all the entire log
 PreTAG=$(git describe --tags --abbrev=0 HEAD^) || echo No previous TAG
