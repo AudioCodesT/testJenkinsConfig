@@ -336,7 +336,7 @@ echo "Finished docker push to Artifactory."
 # (i.e. from docker-compose-vag-1.7.011.yml to docker-compose-vag-1.8.yml)
 # If 
 cd $WORKSPACE
-for yml in `ls docker-compose-vag-${NEWTAG}*.yml`; do
+for yml in `ls docker-compose-vag-*.yml`; do
 	if [[ NEWTAG &gt; BRANCH ]]; then
     	echo "***** Release build"
     	sed -i "/docker-voice-ai.artifactory.corp.audiocodes.com\/vag/ s/[^:]*$/$NEWTAG/" $yml
