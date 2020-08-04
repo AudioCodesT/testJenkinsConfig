@@ -195,7 +195,7 @@ ECR_DOCKER_PREFIX="voice-ai"
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
 
 ## Login to ECR
-$(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
+$(aws ecr get-login-password --region eu-central-1) || exit 1
 
 ## Download version YAML file
 curl -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
