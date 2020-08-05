@@ -171,6 +171,15 @@ echo BOARDNAME=${BOARDNAME} &gt; ../generated_sbc_version.properties
 #fi
 echo GERRIT_BRANCH=${GERRIT_BRANCH} &gt;&gt; ../generated_sbc_version.properties
 
+MAIN_BRANCH=${GERRIT_BRANCH}
+if [[ $MAIN_BRANCH =~ "feature" ]]; then
+ echo Find the main branch
+ TAGMERGEDFROM=$(git tag --points-at $(git log --merges -n1 --pretty=format:%H)^2 --sort=-taggerdate 2&gt;/dev/null | head -1)
+ MAIN_BRANCH="7.4"
+ # MAIN_BRANCH=$(git  branch -r --contains $TAGMERGEDFROM | awk -F'/' '{print $NF}' | grep ^[0-9]\.[0-9]*)
+fi
+echo MAIN_BRANCH=${MAIN_BRANCH} &gt;&gt; ../generated_sbc_version.properties
+
 # if the REFSPEC=&lt;Branch name&gt;
 # CHANGESNumbers = All the chnages that should be updated with DRT label
 if [[ $REFSPEC == $GERRIT_BRANCH ]]; then
@@ -309,7 +318,7 @@ zip -r ${BOARDNAME}_SIP.elf.zip ram${BOARDNAME}_SIP.elf
             <configs>
               <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
                 <properties>REFSPEC=${REFSPEC}
-GERRIT_BRANCH=${GERRIT_BRANCH}
+GERRIT_BRANCH=${MAIN_BRANCH}
 EMAIL=${EMAIL}
 BOARD=${BOARDNAME}_SIP.cmp
 REFTARGET=${TARGET}
@@ -502,7 +511,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -516,7 +525,7 @@ ${WORKSPACE}/CompilationResults/ram${BOARDNAME}_SIP/TPApp/MPCBin/${BOARDNAME}_SI
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+          <value>{AQAAABAAAAAQAMt9IZ0BTxDtEYfR+Pbm/m6gpQ/1BwGLBdBNz0qgfms=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
