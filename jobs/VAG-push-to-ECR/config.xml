@@ -296,7 +296,7 @@ version: ${version}</body>
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>VoiceAI ${VERSION} - SUCCESS - docker images pushed to ECR</defaultSubject>
-      <defaultContent>Pushed docker images "${IMAGES}" to ECR.
+      <defaultContent>Pushed docker images ${IMAGES} to ECR.
 
 Deployed -
 &gt; docker-compose-vag-ecr-$VERSION.yml
