@@ -389,7 +389,7 @@ cancel=true;
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <com.chikli.hudson.plugin.naginator.NaginatorPublisher plugin="naginator@1.17.2">
-      <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|wait for dependent artifact|Error fetching remote repo|UnknownHostException|JNLP4-connect connection).*</regexpForRerun>
+      <regexpForRerun>.*(ClosedChannel|no workspace from node|Workspace is not accessible|wait for dependent artifact|Error fetching remote repo|UnknownHostException|JNLP4-connect connection|ERROR: Could not publish build-info).*</regexpForRerun>
       <rerunIfUnstable>true</rerunIfUnstable>
       <rerunMatrixPart>true</rerunMatrixPart>
       <checkRegexp>true</checkRegexp>
