@@ -327,31 +327,9 @@ version: ${version}</body>
           </email>
         </hudson.plugins.emailext.plugins.trigger.SuccessTrigger>
       </configuredTriggers>
-      <contentType>default</contentType>
+      <contentType>text/html</contentType>
       <defaultSubject>VoiceAI ${VERSION} - SUCCESS - docker images pushed to ECR</defaultSubject>
-      <defaultContent>Pushed docker images ${IMAGES} to ECR.
-
-Deployed -
-&gt; docker-compose-vag-ecr-$VERSION.yml
-&gt; docker-compose-vag-ecr-$VERSION-sm.yml
-&gt; docker-compose-vag-ecr-$VERSION-central.yml
-&gt; docker-compose-vag-$VERSION-azure-mock.yml
-to Artifactory &amp; S3
-
-On Artifactory
-https://artifactory:443/docker-voice-ai-files/
-
-On AWS s3:
-https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION.yml
-https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION-sm.yml
-https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$VERSION/docker-compose-vag-ecr-$VERSION-central.yml
-
-
-BUILD URL:
-$BUILD_URL
-
-Regards,
-DevOps Team</defaultContent>
+      <defaultContent>${FILE,path="message.html"}</defaultContent>
       <attachmentsPattern/>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
