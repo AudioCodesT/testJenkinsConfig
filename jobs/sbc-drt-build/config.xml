@@ -310,6 +310,7 @@ mv ram${BOARDNAME}_SIP.cmp ${BOARDNAME}_SIP.cmp
 
 xz -T 0 ram${BOARDNAME}_SIP.map
 xz -T 0 ram${BOARDNAME}_SIP.elf
+rename ram${BOARDNAME} ${BOARDNAME} *.xz *.cmp
 </command>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
