@@ -257,8 +257,7 @@ cat &lt;&lt;EOF &gt; message.html
         &lt;body&gt;
                 &lt;p&gt;
 	                &lt;H3&gt;Docker images pushed to ECR:&lt;/H3&gt;&lt;/br&gt;
-    	            ${IMAGES}
-        	        &lt;/br&gt;
+    	            ${IMAGES}&lt;/br&gt;
 
             	    &lt;H3&gt;YAML files uploaded to Artifactory &amp; S3:&lt;/H3&gt;&lt;/br&gt;
 
@@ -268,9 +267,8 @@ cat &lt;&lt;EOF &gt; message.html
 	                &gt; docker-compose-vag-${version}-azure-mock.yml"
                 &lt;/p&gt;
                 &lt;p&gt;
-	                on &lt;a href="https://artifactory:443/docker-voice-ai-files/"&gt;Artifactory&lt;/a&gt;"
-	                &lt;/br&gt;
-	                On AWS s3:
+	                on &lt;a href="https://artifactory:443/docker-voice-ai-files/"&gt;Artifactory&lt;/a&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
+	                On AWS S3:
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}.yml"&gt;docker-compose-vag-ecr-${version}.yml&lt;/a&gt;&lt;/br&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}-sm.yml"&gt;docker-compose-vag-ecr-${version}-sm.yml&lt;/a&gt;&lt;/br&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}-central.yml"&gt;docker-compose-vag-ecr-${version}-central.yml&lt;/a&gt;&lt;/br&gt;
