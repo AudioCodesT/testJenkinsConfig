@@ -337,19 +337,19 @@ echo "Finished docker push to Artifactory."
 # If 
 cd $WORKSPACE
 ls docker-compose-vag-*.yml
-for yml in `ls docker-compose-vag-*.yml`; do
-	if [[ NEWTAG &gt; BRANCH ]]; then
-    	echo "***** Release build"
-    	sed -i "/docker-voice-ai.artifactory.corp.audiocodes.com\/vag/ s/[^:]*$/$NEWTAG/" $yml
-        newtagYaml=$(echo $yml | sed "s|$BRANCH|$NEWTAG|")
-    	mv $yml $newtagYaml
-    else
-    	echo "***** Development build"
-    	#branchYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
-        newtagYaml=$(echo $yml | sed "s|$BRANCH|$NEWTAG|")
-    	cp $yml $newtagYaml
-    fi
-done
+#for yml in `ls docker-compose-vag-*.yml`; do
+#	if [[ NEWTAG &gt; BRANCH ]]; then
+#    	echo "***** Release build"
+#    	sed -i "/docker-voice-ai.artifactory.corp.audiocodes.com\/vag/ s/[^:]*$/$NEWTAG/" $yml
+#        newtagYaml=$(echo $yml | sed "s|$BRANCH|$NEWTAG|")
+#    	mv $yml $newtagYaml
+#    else
+#    	echo "***** Development build"
+#    	#branchYml=$(echo $yml | sed "s|$NEWTAG|$BRANCH|")
+#        newtagYaml=$(echo $yml | sed "s|$BRANCH|$NEWTAG|")
+#    	cp $yml $newtagYaml
+#    fi
+#done
 
 
 ## Export env vars
