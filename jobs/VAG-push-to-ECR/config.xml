@@ -244,12 +244,45 @@ cd ${WORKSPACE}
 ## Copy YAML files to S3
 aws s3 sync "ecr" s3://voice-ai/docker-compose
 
-
 ## Properties to export to environment
 echo VERSION=${version} &gt; VAG.properties
 echo IMAGES=${images} &gt;&gt; VAG.properties
 cat VAG.properties
-</command>
+
+## Generate message html
+VERSION=${version}
+
+export IMAGES=$(echo -e ${images//[[:space:]]/&lt;\/br&gt;\\n\\t\\t})
+
+cat &lt;&lt;EOF &gt; message.html
+&lt;html&gt;
+        &lt;body&gt;
+                &lt;p&gt;
+                &lt;H3&gt;Docker images pushed to ECR:&lt;/H3&gt;&lt;/br&gt;
+                ${IMAGES}
+                &lt;/br&gt;
+
+                &lt;H3&gt;YAML files uploaded to Artifactory &amp; S3:&lt;/H3&gt;&lt;/br&gt;
+
+                &gt; docker-compose-vag-ecr-${version}.yml&lt;/br&gt;
+                &gt; docker-compose-vag-ecr-${version}-sm.yml&lt;/br&gt;
+                &gt; docker-compose-vag-ecr-${version}-central.yml&lt;/br&gt;
+                &gt; docker-compose-vag-${version}-azure-mock.yml"
+                &lt;/P&gt;
+                &lt;p&gt;
+                on &lt;a href="https://artifactory:443/docker-voice-ai-files/"&gt;Artifactory&lt;/a&gt;"
+                &lt;/br&gt;
+                On &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}"&gt;AWS s3&lt;/a&gt;
+                &lt;/p&gt;
+                &lt;p&gt;
+                &lt;a href="${BUILD_URL}"&gt;BUILD URL&lt;/a&gt;
+                &lt;/p&gt;
+                Regards,&lt;/br&gt;
+                &lt;H3&gt;DevOps Team&lt;/H3&gt;
+
+        &lt;/body&gt;
+&lt;/html&gt;
+EOF</command>
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
