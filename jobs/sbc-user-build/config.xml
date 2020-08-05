@@ -309,8 +309,8 @@ if [ "$DEBUG_VERSION" = "true" ]; then
 else
   fullname=${BOARDNAME}_${NEWTAG}-u${BUILD_NUMBER}
 fi
-xz -T 0  ram${BOARDNAME}.map
-xz -T 0  ram${BOARDNAME}.elf
+xz -T 0 ram${BOARDNAME}.map
+xz -T 0 ram${BOARDNAME}.elf
 rename ram${BOARDNAME} ${fullname} *.xz *.cmp</command>
     </hudson.tasks.Shell>
   </builders>
