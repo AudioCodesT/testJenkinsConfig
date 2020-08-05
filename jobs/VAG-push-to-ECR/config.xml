@@ -292,7 +292,7 @@ EOF</command>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Shmulik.Yudkovich@audiocodes.com, shuky.riechard@audiocodes.com</recipientList>
+      <recipientList>Shmulik.Yudkovich@audiocodes.com, shuky.riechard@audiocodes.com,yuvaly@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
           <email>
