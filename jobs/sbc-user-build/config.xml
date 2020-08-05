@@ -1,7 +1,6 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<matrix-project plugin="matrix-project@1.14">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><matrix-project plugin="matrix-project@1.14">
   <actions/>
-  <description></description>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -9,7 +8,7 @@
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -19,9 +18,6 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
     </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
@@ -33,8 +29,8 @@
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>BUILD_NAME</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -43,6 +39,11 @@
           <defaultValue>MP500_MSBG</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>LI</name>
+          <description>Build li version</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>SIP</name>
           <description>Build SIP</description>
@@ -60,31 +61,31 @@
   &lt;li&gt;Branch (6.6, 6.8)&lt;/li&gt;
   &lt;li&gt;Baseline (6.70A.005)&lt;/li&gt;
   &lt;li&gt;Tag (my-compilation-test)&lt;/li&gt;
-  &lt;li&gt;refs/changes/... from gerrit&apos;s Download link (e.g. refs/changes/78/1078/1)&lt;/li&gt;
+  &lt;li&gt;refs/changes/... from gerrit's Download link (e.g. refs/changes/78/1078/1)&lt;/li&gt;
 &lt;/ul&gt;</description>
-          <defaultValue></defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>EXTRA_RECIPIENTS</name>
           <description>Comma-separated list of &lt;b&gt;additional&lt;/b&gt; recipients on build success/failure (requester always receives an email).</description>
-          <defaultValue></defaultValue>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>USE_GIT_VER</name>
-          <description></description>
+          <description/>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DEBUG_VERSION</name>
-          <description></description>
+          <description/>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>CHANGES</name>
-          <description></description>
-          <defaultValue></defaultValue>
+          <description/>
+          <defaultValue/>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -100,16 +101,16 @@
         <throttleMatrixBuilds>false</throttleMatrixBuilds>
         <throttleMatrixConfigurations>true</throttleMatrixConfigurations>
       </matrixOptions>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <EnvInjectJobProperty plugin="envinject@2.1.6">
+    <EnvInjectJobProperty plugin="envinject@2.3.0">
       <info>
         <propertiesContent>ARTIFACTORY_HOST=artifactory
 DEPENDENCIES_FOLDER=TrunkPackRam/TPApp/MPCBin
 BRDVERSION=TrunkPackRam/Bsps/Common/Include/BrdVersion.h
 PATH=/bin:$PATH</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -119,8 +120,9 @@ PATH=/bin:$PATH</propertiesContent>
       <keepBuildVariables>true</keepBuildVariables>
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -138,11 +140,13 @@ PATH=/bin:$PATH</propertiesContent>
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.CloneOption>
         <shallow>false</shallow>
         <noTags>false</noTags>
@@ -183,7 +187,7 @@ PATH=/bin:$PATH</propertiesContent>
 
 artifactory_host=${ARTIFACTORY_HOST}
 output_folder=${DEPENDENCIES_FOLDER}
-User=&quot;$artifactory_user:$artifactory_password&quot;
+User="$artifactory_user:$artifactory_password"
 TargetArtifactory=user/Firmware/${BUILD_NUMBER}
 
 # find the board that need to be compiled
@@ -200,13 +204,13 @@ cd TrunkPackRam
 chmod 600 ../id_rsa_gerrit
 &gt; othersCommits.txt
 if ! git show-branch --list | grep -q $GERRIT_REFSPEC; then
-  ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $GERRIT_REFSPEC | grep -m1 id: | cut -d: -f2 | sed &apos;s: ::g&apos;)
+  ID=$(ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query $GERRIT_REFSPEC | grep -m1 id: | cut -d: -f2 | sed 's: ::g')
   ssh -p 29418 -i ../id_rsa_gerrit jenkins@test-gerrit gerrit query --current-patch-set change:$ID status:open | \
-     grep -A30 OpenSource | grep &apos;project\|revision&apos; &gt; othersCommits.txt || echo ChangeId not found
+     grep -A30 OpenSource | grep 'project\|revision' &gt; othersCommits.txt || echo ChangeId not found
 fi
 
 while IFS= read -r line; do
-   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed &apos;s:TP/::; s: ::g&apos;);
+   if echo $line | grep -q project; then path=$(echo $line | cut -d: -f2 | sed 's:TP/::; s: ::g');
    elif echo $line | grep -q revision; then
      revision=$(echo $line | cut -d: -f2)
      git ls-files --stage ../$path
@@ -215,9 +219,9 @@ while IFS= read -r line; do
    fi
 done &lt; othersCommits.txt
 
-if [[ $CHANGES != &quot;&quot; ]]; then 
+if [[ $CHANGES != "" ]]; then 
   for rep in $CHANGES; do 
-    path=$(echo $rep | cut -d: -f1 | sed &apos;s:TP/::&apos;)
+    path=$(echo $rep | cut -d: -f1 | sed 's:TP/::')
     revision=$(echo $rep | cut -d: -f2)
     echo update $path to revision $revision
     git update-index --cacheinfo 160000 $revision $path
@@ -228,7 +232,7 @@ depsName=$BOARD
 if [ -e ../OpenSource/$depsName.deps ]; then
   if [ ! -e GetImages.sh ]; then  curl -ks https://test-gerrit/static/GetImages.sh --output GetImages.sh; fi
   chmod +x GetImages.sh
-  ./GetImages.sh $depsName $artifactory_host $User &quot;&quot; &quot;-i ../id_rsa_gerrit jenkins@test-gerrit&quot;
+  ./GetImages.sh $depsName $artifactory_host $User "" "-i ../id_rsa_gerrit jenkins@test-gerrit"
   if [ $? -eq 1 ]; then exit 2; fi
 fi
 
@@ -249,27 +253,28 @@ echo TAG Found $NEWTAG
 
 cd ..
 realBOARD=$BOARD
-SIPLAB=&quot;&quot;
-[ &quot;$BOARD&quot; = &quot;HostedTP8&quot; ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS8 &amp;&amp; realBOARD=&quot;HostedTP&quot;
-[ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_SIP
-[ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
+SIPLAB=""
+[ "$BOARD" = "HostedTP8" ] &amp;&amp; SIPLAB=${SIPLAB}_CENTOS8 &amp;&amp; realBOARD="HostedTP"
+[ "$LI" = 'true' ] &amp;&amp; SIPLAB=${SIPLAB}_LI
+[ "$SIP" = 'true' ] &amp;&amp; SIPLAB=${SIPLAB}_SIP
+[ "$LAB" = 'true' ] &amp;&amp; SIPLAB=${SIPLAB}_LAB
 echo BOARDNAME=${realBOARD}${SIPLAB} &gt;&gt; generated_sbc_version.properties
 
-if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
+if [ "$DEBUG_VERSION" = "true" ]; then
   Fix=$(echo ${BUILD_NAME}: | cut -d: -f2)
   BUILD_NAME=${BUILD_NAME/:*/}
   # If Fix is not a number, clear it
-  [ &quot;$Fix&quot; -eq &quot;$Fix&quot; ] || Fix=
+  [ "$Fix" -eq "$Fix" ] || Fix=
   if echo $BUILD_NAME | grep -q /; then BUILD_NAME=AudioCodes; fi
-  if [ -z &quot;$Fix&quot; ]; then
-    Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
-    if [ -n &quot;$Fix&quot; ] &amp;&amp; [ &quot;$Fix&quot; -eq &quot;$Fix&quot; ] 2&gt;/dev/null; then
-      # Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r &apos;s/^0*//&apos;)
+  if [ -z "$Fix" ]; then
+    Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r 's/^0*//')
+    if [ -n "$Fix" ] &amp;&amp; [ "$Fix" -eq "$Fix" ] 2&gt;/dev/null; then
+      # Fix=$(echo $NEWTAG | cut -d. -f4 | sed -r 's/^0*//')
       for i in {1..5}; do Fix=$(( $Fix + 100 )); if [ $Fix -gt 900 ]; then break; fi done
     fi
   fi
   NEWTAG=$(echo $NEWTAG | cut -d. -f1-3).$Fix
-  sed -i &quot;s/#define FIX_TRUNKPACK_SOFTWARE_VERSION.*$/#define FIX_TRUNKPACK_SOFTWARE_VERSION			$Fix/&quot; TrunkPackRam/Bsps/Common/Include/BrdVersion.h
+  sed -i "s/#define FIX_TRUNKPACK_SOFTWARE_VERSION.*$/#define FIX_TRUNKPACK_SOFTWARE_VERSION			$Fix/" TrunkPackRam/Bsps/Common/Include/BrdVersion.h
   TargetArtifactory=debug/${BUILD_NAME}/${BUILD_NUMBER}
 fi
 
@@ -278,7 +283,7 @@ echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
 </command>
       <unstableReturn>2</unstableReturn>
     </hudson.tasks.Shell>
-    <EnvInjectBuilder plugin="envinject@2.1.6">
+    <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
         <propertiesFilePath>generated_sbc_version.properties</propertiesFilePath>
       </info>
@@ -288,30 +293,32 @@ echo NEWTAG=${NEWTAG} &gt;&gt; generated_sbc_version.properties
 
 cd TrunkPackRam
 
-[ &quot;${BOARD}&quot; = &quot;HostedTP8&quot; ] &amp;&amp; FLAGS=&quot;$FLAGS --centos=8&quot; &amp;&amp; BOARD=&quot;HostedTP&quot;
-[ &quot;$SIP&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --sip=yes&quot;
-[ &quot;$LAB&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --lab=yes&quot;
-[ &quot;$USE_GIT_VER&quot; = &apos;true&apos; ] &amp;&amp; FLAGS=&quot;$FLAGS --custom-version=-u${BUILD_NUMBER}&quot;
+FLAGS=""
+[ "${BOARD}" = "HostedTP8" ] &amp;&amp; FLAGS="$FLAGS --centos=8" &amp;&amp; BOARD="HostedTP"
+[ "$LI" = 'true' ] &amp;&amp; FLAGS="$FLAGS --li=yes"
+[ "$SIP" = 'true' ] &amp;&amp; FLAGS="$FLAGS --sip=yes"
+[ "$LAB" = 'true' ] &amp;&amp; FLAGS="$FLAGS --lab=yes"
+[ "$USE_GIT_VER" = 'true' ] &amp;&amp; FLAGS="$FLAGS --custom-version=-u${BUILD_NUMBER}"
 ./buildAll.sh --board=${BOARD} $FLAGS --user=no --fast=yes --server=localhost
 
 cd ${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin
-if [ &quot;$DEBUG_VERSION&quot; = &quot;true&quot; ]; then
+if [ "$DEBUG_VERSION" = "true" ]; then
   if echo $BUILD_NAME | grep -q /; then BUILD_NAME=AudioCodes; fi
   BUILD_NAME=${BUILD_NAME/:*/}
   fullname=${BOARDNAME}_${NEWTAG}-u${BUILD_NUMBER}-${BUILD_NAME/\//-}
 else
   fullname=${BOARDNAME}_${NEWTAG}-u${BUILD_NUMBER}
 fi
-bzip2 ram${BOARDNAME}.map
-bzip2 ram${BOARDNAME}.elf
-rename ram${BOARDNAME} ${fullname} *.bz2 *.cmp</command>
+xz -T 0  ram${BOARDNAME}.map
+xz -T 0  ram${BOARDNAME}.elf
+rename ram${BOARDNAME} ${fullname} *.xz *.cmp</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher plugin="flexible-publish@0.15.2">
       <publishers>
         <org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
-          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.0"/>
+          <condition class="org.jenkins_ci.plugins.run_condition.core.AlwaysRun" plugin="run-condition@1.3"/>
           <publisherList>
             <org.jenkinsci.plugins.postbuildscript.PostBuildScript plugin="postbuildscript@2.5.1">
               <config>
@@ -327,7 +334,7 @@ rename ram${BOARDNAME} ${fullname} *.bz2 *.cmp</command>
                       <hudson.tasks.Shell>
                         <command>export PATH=$HOME/Utils:$PATH
 #if in rare case update-utils failed - we just continue without it
-git update-utils || echo &quot;*****  update-utils failed, we don&apos;t care  *****&quot;
+git update-utils || echo "*****  update-utils failed, we don't care  *****"
 git jenkins-report 0
 </command>
                       </hudson.tasks.Shell>
@@ -351,7 +358,7 @@ git jenkins-report 0
                       <hudson.tasks.Shell>
                         <command>export PATH=$HOME/Utils:$PATH
 #if in rare case update-utils failed - we just continue without it
-git update-utils || echo &quot;*****  update-utils failed, we don&apos;t care  *****&quot;
+git update-utils || echo "*****  update-utils failed, we don't care  *****"
 git jenkins-report 1
 </command>
                       </hudson.tasks.Shell>
@@ -362,27 +369,27 @@ git jenkins-report 1
               </config>
             </org.jenkinsci.plugins.postbuildscript.PostBuildScript>
           </publisherList>
-          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+          <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
           <executionStrategy class="org.jenkins_ci.plugins.flexible_publish.strategy.FailAtEndExecutionStrategy"/>
         </org.jenkins__ci.plugins.flexible__publish.ConditionalPublisher>
       </publishers>
     </org.jenkins__ci.plugins.flexible__publish.FlexiblePublisher>
     <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4.3">
-      <script plugin="script-security@1.68">
+      <script plugin="script-security@1.71">
         <script>artfcty_pat = ~/Deploying artifact: https:\/\/(.+\/)([^\/\s]+\b)/
 
 // Adds artifacts from child build
 def add_artifacts(artifacts, build) {
-    // match &quot;Deploying artifact: (.+)&quot;
+    // match "Deploying artifact: (.+)"
     def matches = build.logFile.text =~ artfcty_pat
     matches.each {
-        if (!it[2].endsWith(&apos;.h&apos;)) // Ignore header files
-            artifacts.appendText(&quot;&lt;li&gt;&lt;a href=\&quot;https://sbc-read:sbc-read@${it[1]}${it[2]}\&quot;&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;&quot;, false)
+        if (!it[2].endsWith('.h')) // Ignore header files
+            artifacts.appendText("&lt;li&gt;&lt;a href=\"https://sbc-read:sbc-read@${it[1]}${it[2]}\"&gt;${it[2]}&lt;/a&gt;&lt;/li&gt;", false)
     }
 }
 
 def isMatrix = manager.buildIsA(hudson.matrix.MatrixBuild.class)
-// Change pattern is an optional &apos;I&apos; followed by 7-10 hexadecimal chars, tab, author, tab, subject
+// Change pattern is an optional 'I' followed by 7-10 hexadecimal chars, tab, author, tab, subject
 def change_pattern = ~/(?m)^(I?[0-9a-f]{7,10})\t([^\t]*)\t(.*)$/
 def change_build = manager.build
 // For matrix build, read the changes from the first child
@@ -390,32 +397,32 @@ if (isMatrix &amp;&amp; change_build.exactRuns.size() &gt; 0)
     change_build = change_build.exactRuns.get(0)
 def m = change_build.logFile.text =~ change_pattern
 if (m.count &gt; 0) {
-    summary = manager.createSummary(&quot;notepad.png&quot;)
-    summary.appendText(&quot;Changes:&lt;ul&gt;&quot;, false)
+    summary = manager.createSummary("notepad.png")
+    summary.appendText("Changes:&lt;ul&gt;", false)
     // Write the changes, linked to gerrit
     m.each {
-        summary.appendText(&quot;&lt;li&gt;&lt;a href=\&quot;https://test-gerrit/r/${it[1]}\&quot;&gt;${it[1]}&lt;/a&gt; - ${it[2]} - ${it[3]}&lt;/li&gt;&quot;, false)
+        summary.appendText("&lt;li&gt;&lt;a href=\"https://test-gerrit/r/${it[1]}\"&gt;${it[1]}&lt;/a&gt; - ${it[2]} - ${it[3]}&lt;/li&gt;", false)
     }
-    summary.appendText(&quot;&lt;/ul&gt;&quot;, false)
+    summary.appendText("&lt;/ul&gt;", false)
 }
 
-artifacts = manager.createSummary(&quot;package.png&quot;)
-targetArtifactory=&quot;user/Firmware/&quot; + manager.build.number
+artifacts = manager.createSummary("package.png")
+targetArtifactory="user/Firmware/" + manager.build.number
 variables = manager.build.buildVariableResolver
 // If this is a debug version, write it in large font (h2) and keep forever
-if (variables.resolve(&quot;DEBUG_VERSION&quot;) == &quot;true&quot;) {
-    artifacts.appendText(&quot;&lt;h2&gt;Customer Version&lt;/h2&gt;&lt;p /&gt;&quot;, false)
+if (variables.resolve("DEBUG_VERSION") == "true") {
+    artifacts.appendText("&lt;h2&gt;Customer Version&lt;/h2&gt;&lt;p /&gt;", false)
     manager.build.keepLog(true) // Keep this build forever
-    targetArtifactory=&quot;debug/&quot; + variables.resolve(&quot;BUILD_NAME&quot;).replace(/:.*$/, &quot;&quot;) + &quot;/&quot; + manager.build.number
+    targetArtifactory="debug/" + variables.resolve("BUILD_NAME").replace(/:.*$/, "") + "/" + manager.build.number
 }
-artifacts.appendText(&quot;&lt;a href=\&quot;https://sbc-read:sbc-read@artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/&quot; + targetArtifactory + &quot;\&quot;&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;&quot;, false)
+artifacts.appendText("&lt;a href=\"https://sbc-read:sbc-read@artifactory/webapp/#/artifacts/browse/tree/General/sbc-review/com/ac/sbc/" + targetArtifactory + "\"&gt;Build Artifacts:&lt;/a&gt;&lt;ul&gt;", false)
 // For matrix build, collect artifacts from all child builds. For normal build collect from self
 if (isMatrix) {
     manager.build.exactRuns.each { run -&gt; add_artifacts(artifacts, run) }
 } else {
     add_artifacts(artifacts, manager.build);
 }
-artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
+artifacts.appendText("&lt;/ul&gt;", false)
 </script>
         <sandbox>false</sandbox>
       </script>
@@ -433,7 +440,7 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <contentType>project</contentType>
@@ -447,7 +454,7 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern></attachmentsPattern>
+            <attachmentsPattern/>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -457,13 +464,13 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
       </configuredTriggers>
       <contentType>text/html</contentType>
       <defaultSubject>$DEFAULT_SUBJECT - $BUILD_NAME</defaultSubject>
-      <defaultContent>${SCRIPT, template=&quot;groovy-gwapp.template&quot;}</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript></presendScript>
-      <postsendScript></postsendScript>
+      <defaultContent>${SCRIPT, template="groovy-gwapp.template"}</defaultContent>
+      <attachmentsPattern/>
+      <presendScript/>
+      <postsendScript/>
       <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
-      <replyTo></replyTo>
+      <replyTo/>
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
       <matrixTriggerMode>ONLY_PARENT</matrixTriggerMode>
@@ -484,18 +491,18 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
   <buildWrappers>
     <com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper plugin="copy-to-slave@1.4.4">
       <includes>id_rsa_gerrit</includes>
-      <excludes></excludes>
+      <excludes/>
       <flatten>false</flatten>
       <includeAntExcludes>false</includeAntExcludes>
       <hudsonHomeRelative>false</hudsonHomeRelative>
       <relativeTo>userContent</relativeTo>
     </com.michelin.cio.hudson.plugins.copytoslave.CopyToSlaveBuildWrapper>
-    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.5.0">
+    <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
       <deployerDetails>
         <artifactoryName>artifactory2-pro</artifactoryName>
         <artifactoryUrl>https://artifactory</artifactoryUrl>
         <deployReleaseRepository>
-          <keyFromText></keyFromText>
+          <keyFromText/>
           <keyFromSelect>sbc-review</keyFromSelect>
           <dynamicMode>false</dynamicMode>
         </deployReleaseRepository>
@@ -507,65 +514,65 @@ artifacts.appendText(&quot;&lt;/ul&gt;&quot;, false)
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId></credentialsId>
+        <credentialsId/>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>false</useSpecs>
       <uploadSpec>
-        <spec></spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
-        <spec></spec>
+        <spec/>
       </downloadSpec>
       <deployPattern>${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_*.cmp=&gt;com/ac/sbc/${TargetArtifactory}
-${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_*.bz2=&gt;com/ac/sbc/${TargetArtifactory}/map
+${WORKSPACE}/CompilationResults/ram${BOARDNAME}/TPApp/MPCBin/${BOARDNAME}_*.xz=&gt;com/ac/sbc/${TargetArtifactory}/map
 $WORKSPACE/${BRDVERSION}=&gt;com/ac/sbc/${TargetArtifactory}
 ${WORKSPACE}/TrunkPackRam/TPApp/MPCBin/*external*.h=&gt;com/ac/sbc/${TargetArtifactory}</deployPattern>
-      <resolvePattern></resolvePattern>
-      <deploymentProperties></deploymentProperties>
+      <resolvePattern/>
+      <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>true</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns></includePatterns>
+        <includePatterns/>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>true</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
-      <artifactoryCombinationFilter>label==&quot;sbc-linux-build&quot;</artifactoryCombinationFilter>
+      <artifactoryCombinationFilter>label=="sbc-linux-build"</artifactoryCombinationFilter>
       <multiConfProject>true</multiConfProject>
-      <customBuildName></customBuildName>
+      <customBuildName/>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
-    <EnvInjectBuildWrapper plugin="envinject@2.1.6">
+    <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.68">
-          <script></script>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.71">
+          <script/>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQ/Z16eV23kQXIlUv6dAzm0LHLTY5FDozrelSS/k1TQ7s=}</value>
+          <value>{AQAAABAAAAAQTTro5aLKXq8uSWqNRyvBqggyop7FAmIU91nIzhKIHkE=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER},${ENV,var=&quot;BUILD_NAME&quot;}</template>
-      <descriptionTemplate></descriptionTemplate>
+      <template>#${BUILD_NUMBER},${ENV,var="BUILD_NAME"}</template>
+      <descriptionTemplate/>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
