@@ -250,8 +250,6 @@ echo IMAGES=${images} &gt;&gt; VAG.properties
 cat VAG.properties
 
 ## Generate message html
-VERSION=${version}
-
 export IMAGES=$(echo -e ${images//[[:space:]]/&lt;\/br&gt;\\n\\t\\t})
 
 cat &lt;&lt;EOF &gt; message.html
