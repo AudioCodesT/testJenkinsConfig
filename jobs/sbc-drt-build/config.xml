@@ -150,6 +150,7 @@ PATH=/bin:$PATH</propertiesContent>
 User="$artifactory_user:$artifactory_password"
 
 cd TrunkPackRam
+ls -l
 NEWTAG=`./MakeBrdVersion.sh`
 git describe --tags
 git log -n10 --decorate --oneline
