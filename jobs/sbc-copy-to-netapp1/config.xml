@@ -78,7 +78,10 @@
 artifactory="https://artifactory"
 User="$artifactory_user:$artifactory_password"
 Branch=$GERRIT_BRANCH
-
+if echo $GERRIT_BRANCH | grep -q "\\\$"; then
+  echo No valid branch, exit
+  exit 0;
+fi
 
 if [ "$TAGNAME" == "" ]; then
   echo No valid TAG... exit
@@ -171,7 +174,9 @@ if [ -s "$NEWTAG.list" ]; then
            echo $ArtSize--$DestSize: $file is differ, copy again in next execution...
            rm -f /tmp/$FileName
            exit 1
-         fi
+         else if [ $FileName =~ "_LAB" ]; then
+           curl -ks -u $User -X DELETE $artifactory/$location/$NEWTAG/$FileName
+         fi; fi
        #fi
        if [[ "$FileName" =~ "M1000_ESBC" ]]; then
          echo Duplicate M1000_ESBC to M1000_MSBG
@@ -225,7 +230,7 @@ fi
   <buildWrappers>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
-        <propertiesContent>artifactory_user=admin</propertiesContent>
+        <propertiesContent>artifactory_user=jenkins</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
           <script/>
           <sandbox>false</sandbox>
@@ -239,7 +244,7 @@ fi
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>artifactory_password</name>
-          <value>{AQAAABAAAAAQC9Q9eeTsh0/7+AtlIDNhOldFHEwRntJsY/b1oiztPUQ=}</value>
+          <value>{AQAAABAAAAAQPZChR1lplD3KJfvcaI6wBqWIo/n8t+qBV6seOCtBe4E=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
