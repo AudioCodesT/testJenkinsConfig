@@ -12,7 +12,6 @@
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32"/>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
@@ -41,7 +40,36 @@
     </hudson.search.UserSearchProperty>
     <hudson.model.TimeZoneProperty/>
     <jenkins.security.LastGrantedAuthoritiesProperty>
-      <timestamp>0</timestamp>
+      <roles>
+        <string># ROW employees</string>
+        <string>authenticated</string>
+        <string>365_Tas</string>
+        <string>365_Comeet</string>
+        <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
+        <string># Abroad</string>
+        <string>Allowed RODC Password Replication Group</string>
+        <string>Users</string>
+        <string>ActionBase Users</string>
+        <string>Offer Remote Assistance Helpers</string>
+        <string>SSL_swosrc</string>
+        <string>FTP_default</string>
+        <string>Mailvision Branch Office Users</string>
+        <string>Linuxusers</string>
+        <string># ClearCase R&amp;D</string>
+        <string># RnD Israel</string>
+        <string># All AudioCodes</string>
+        <string>Certificate Service DCOM Access</string>
+        <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
+        <string># R&amp;D System Software</string>
+        <string>NewUser_Ukraine</string>
+        <string>CatalogApps_Everyone</string>
+      </roles>
+      <timestamp>1596745598289</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
+      <emailAddress>Aleksandar.Radjen@audiocodes.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
   </properties>
 </user>
