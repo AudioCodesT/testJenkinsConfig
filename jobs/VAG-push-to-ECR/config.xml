@@ -264,7 +264,7 @@ cat &lt;&lt;EOF &gt; message.html
 	                &gt; docker-compose-vag-ecr-${version}.yml&lt;/br&gt;
 	                &gt; docker-compose-vag-ecr-${version}-sm.yml&lt;/br&gt;
 	                &gt; docker-compose-vag-ecr-${version}-central.yml&lt;/br&gt;
-	                &gt; docker-compose-vag-${version}-azure-mock.yml"
+	                &gt; docker-compose-vag-${version}-azure-mock.yml
                 &lt;/p&gt;
                 &lt;p&gt;
 	                &lt;H3&gt;YAML files uploaded to S3:&lt;/H3&gt;&lt;/br&gt;
