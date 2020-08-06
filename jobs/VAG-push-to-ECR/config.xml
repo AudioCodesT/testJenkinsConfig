@@ -260,11 +260,11 @@ cat &lt;&lt;EOF &gt; message.html
     	            ${IMAGES}&lt;/br&gt;
                 &lt;/p&gt;
                 &lt;p&gt;
-            	    &lt;a href="https://artifactory:443/docker-voice-ai-files/"&gt;&lt;H3&gt;YAML files uploaded to Artifactory:&lt;/H3&gt;&lt;/a&gt;&lt;/br&gt;&lt;/br&gt;
-	                &gt; docker-compose-vag-ecr-${version}.yml&lt;/br&gt;
-	                &gt; docker-compose-vag-ecr-${version}-sm.yml&lt;/br&gt;
-	                &gt; docker-compose-vag-ecr-${version}-central.yml&lt;/br&gt;
-	                &gt; docker-compose-vag-${version}-azure-mock.yml
+            	    &lt;H3&gt;YAML files uploaded to Artifactory:&lt;/H3&gt;&lt;/a&gt;&lt;/br&gt;
+	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-ecr-${version}.yml"&gt;&gt; docker-compose-vag-ecr-${version}.yml&lt;/a&gt;&lt;/br&gt;
+	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-ecr-${version}-sm.yml"&gt;&gt; docker-compose-vag-ecr-${version}-sm.yml&lt;/a&gt;&lt;/br&gt;
+	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-ecr-${version}-central.yml"&gt;&gt; docker-compose-vag-ecr-${version}-central.yml&lt;/a&gt;&lt;/br&gt;
+	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-${version}-azure-mock.yml"&gt;&gt; docker-compose-vag-${version}-azure-mock.yml&lt;/a&gt;
                 &lt;/p&gt;
                 &lt;p&gt;
 	                &lt;H3&gt;YAML files uploaded to S3:&lt;/H3&gt;&lt;/br&gt;
