@@ -260,13 +260,6 @@ cat &lt;&lt;EOF &gt; message.html
     	            ${IMAGES}&lt;/br&gt;
                 &lt;/p&gt;
                 &lt;p&gt;
-            	    &lt;H3&gt;YAML files uploaded to Artifactory:&lt;/H3&gt;&lt;/a&gt;&lt;/br&gt;
-	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-ecr-${version}.yml"&gt;&gt; docker-compose-vag-ecr-${version}.yml&lt;/a&gt;&lt;/br&gt;
-	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-ecr-${version}-sm.yml"&gt;&gt; docker-compose-vag-ecr-${version}-sm.yml&lt;/a&gt;&lt;/br&gt;
-	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-ecr-${version}-central.yml"&gt;&gt; docker-compose-vag-ecr-${version}-central.yml&lt;/a&gt;&lt;/br&gt;
-	                &lt;a href="https://artifactory:443/docker-voice-ai-files/docker-compose-vag-${version}-azure-mock.yml"&gt;&gt; docker-compose-vag-${version}-azure-mock.yml&lt;/a&gt;
-                &lt;/p&gt;
-                &lt;p&gt;
 	                &lt;H3&gt;YAML files uploaded to S3:&lt;/H3&gt;&lt;/br&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}.yml"&gt;docker-compose-vag-ecr-${version}.yml&lt;/a&gt;&lt;/br&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}-sm.yml"&gt;docker-compose-vag-ecr-${version}-sm.yml&lt;/a&gt;&lt;/br&gt;
@@ -387,14 +380,7 @@ version: ${version}</body>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec>{
-    "files": [
-        {
-            "pattern": "docker-compose-vag-ecr-$version*.yml",
-            "target": "docker-voice-ai-files"
-        }
-    ]
-}</spec>
+        <spec/>
       </uploadSpec>
       <downloadSpec>
         <spec>{
