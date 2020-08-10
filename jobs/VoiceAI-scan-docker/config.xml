@@ -1,6 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description/>
+  <description>1. Scan docker images of given version from Artifactory with snyk and trivy&#13;
+2. Get ECR scan for given version</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
@@ -61,7 +62,7 @@ set +e
 
 ## Set docker vars
 ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
-JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
+#JFROG_DOCKER_REG="Audiocodes-voice-ai.jfrog.io"
 ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 
 ## Login to registry &amp; fetch yaml file
