@@ -163,7 +163,7 @@ if [[ "$do_snyk_docker" == "true" || "$do_snyk_security" == "true" || "$do_trivy
 		## snyk
 		echo "***** Start Snyk Docker"
 		export NODE_TLS_REJECT_UNAUTHORIZED=0
-		export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
+		export SNYK_TOKEN=$snykToken
 		#snyk config set disableSuggestions=true
 		for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk_docker.log
 		echo "***** End Snyk Docker"
@@ -275,6 +275,10 @@ fi
           <accessKeyVariable>AWS_ACCESS_KEY_ID</accessKeyVariable>
           <secretKeyVariable>AWS_SECRET_ACCESS_KEY</secretKeyVariable>
         </com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+          <credentialsId>b9b31af5-7c6c-4c60-9b7b-ab8e6551194e</credentialsId>
+          <variable>snykToken</variable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
