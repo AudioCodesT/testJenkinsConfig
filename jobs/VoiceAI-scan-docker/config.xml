@@ -34,6 +34,26 @@
           <defaultValue/>
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>do_snyk_docker</name>
+          <description/>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>do_snyk_security</name>
+          <description/>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>do_trivy</name>
+          <description/>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>do_ecr</name>
+          <description/>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@2.0.1">
@@ -120,60 +140,70 @@ ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 #    	;;
 #esac
 
-## Create AWS files
-[[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
-cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
-[default]
-region = eu-central-1
-EOD
-cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
-[default]
-aws_access_key_id = ${AWS_ACCESS_KEY_ID}
-aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
-EOD
+if [[ "$do_snyk_docker" == "true" || "$do_snyk_security" == "true" || "$do_trivy" == "true" ]]; then
+	# Login to Artifactory docker &amp; get yaml file for Artifactory
+	echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
+	curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
+	
+	# Clean docker environment
+	docker system prune --all --volumes --force
+	
+	echo "*****************"
+	cat docker-compose-vag-$version.yml
+	
+	docker-compose -f docker-compose-vag-${version}.yml pull
+	
+	docker images
+	
+	if [[ "$do_snyk_docker" == "true" ]]; then
+		## snyk
+		echo "***** Start Snyk Docker"
+		export NODE_TLS_REJECT_UNAUTHORIZED=0
+		export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
+		#snyk config set disableSuggestions=true
+		for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk_docker.log
+		echo "***** End Snyk Docker"
+	fi
+	
+	if [[ "$do_snyk_security" == "true" ]]; then
+		echo "***** Start Snyk Security"
+		cd ${WORKSPACE}
+		for dir in common session-manager services-mngr; do ( echo "Scanning $dir"; cd $dir; snyk test ); done &gt; snyk_security.log
+		echo "***** End Snyk Security"
+	fi
+	
+	if [[ "$do_trivy" == "true" ]]; then
+		## trivy
+		echo "***** Start Trivy"
+		for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/local/bin/trivy image $i; done &gt; trivy.log
+		echo "***** End Trivy"
+	fi
+fi
 
-# Get yaml file for ECR from S3
-curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
-
-# Login to Artifactory docker &amp; get yaml file for Artifactory
-echo ${artiPass} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
-curl -u ${artiUser}:${artiPass} -O https://artifactory:443/docker-voice-ai-files/docker-compose-vag-$version.yml
-
-# Clean docker environment
-docker system prune --all --volumes --force
-
-echo "*****************"
-cat docker-compose-vag-$version.yml
-
-docker-compose -f docker-compose-vag-${version}.yml pull
-
-docker images
-
-## snyk
-echo "***** Start Snyk Docker"
-export NODE_TLS_REJECT_UNAUTHORIZED=0
-export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
-#snyk config set disableSuggestions=true
-#for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk_docker.log
-echo "***** End Snyk Docker"
-
-echo "***** Start Snyk Security"
-cd ${WORKSPACE}
-for dir in common session-manager services-mngr; do ( echo "Scanning $dir"; cd $dir; snyk test ); done &gt; snyk_security.log
-echo "***** End Snyk Security"
-
-## trivy
-echo "***** Start Trivy"
-for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/local/bin/trivy image $i; done &gt; trivy.log
-echo "***** End Trivy"
-
-## ECR Clair
-echo "***** Start Retrieve ECR"
-# No need to run scan on ECR because all repositories have 'scanOnPush' option.
-# BUT, if it is needed, use following line:
-# for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr start-image-scan --repository-name voice/$image --image-id imageTag=$version; done
-for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version; done &gt; ecr.json
-echo "***** End Retrieve ECR"
+if [[ "$do_ecr" == "true" ]]; then
+	## ECR Clair
+	echo "***** Start Retrieve ECR"
+	## Create AWS files
+	[[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
+	cat &lt;&lt;-EOD &gt; /home/centos/.aws/config
+	[default]
+	region = eu-central-1
+	EOD
+	cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
+	[default]
+	aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+	aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+	EOD
+	
+	# Get yaml file for ECR from S3
+	curl -O https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/$version/docker-compose-vag-ecr-$version.yml
+	
+	# No need to run scan on ECR because all repositories have 'scanOnPush' option.
+	# BUT, if it is needed, use following line:
+	# for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr start-image-	scan --repository-name voice/$image --image-id imageTag=$version; done
+	for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr describe-image-	scan-findings --repository-name voice-ai/$image --image-id imageTag=$version; done &gt; ecr.json
+	echo "***** End Retrieve ECR"
+fi
 </command>
     </hudson.tasks.Shell>
   </builders>
