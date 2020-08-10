@@ -159,6 +159,7 @@ for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /us
 echo "***** End Snyk Docker
 
 echo "***** Start Snyk Security"
+cd ${WORKSPACE}
 for dir in common session-manager services-mngr; do 
 ( 
   echo "Scanning $dir" 
@@ -221,7 +222,7 @@ echo "***** End Retrieve ECR"
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yuvaly@audiocodes.com shukyr@audiocodes.com</recipients>
