@@ -159,13 +159,7 @@ echo "***** End Snyk Docker"
 
 echo "***** Start Snyk Security"
 cd ${WORKSPACE}
-for dir in common session-manager services-mngr; do 
-( 
-  echo "Scanning $dir" 
-  cd $dir 
-  snyk test
-) 
-Done &gt; snyk_seccity.log
+for dir in common session-manager services-mngr; do ( echo "Scanning $dir"; cd $dir; snyk test ); done &gt; snyk_security.log
 echo "***** End Snyk Security"
 
 ## trivy
