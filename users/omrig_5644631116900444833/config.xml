@@ -62,6 +62,7 @@
         <string>Mailvision Branch Office Users</string>
         <string># VAIG_AUTOMATION_RESULT</string>
         <string>AudioCodes_VPN</string>
+        <string># SBC SIP Infra</string>
         <string># RnD Israel</string>
         <string># All AudioCodes</string>
         <string>NewUser_Israel-Lod</string>
@@ -71,7 +72,7 @@
         <string>365_MFA_Apps</string>
         <string># R&amp;D Application Group</string>
       </roles>
-      <timestamp>1595488865338</timestamp>
+      <timestamp>1597090437830</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>Omri.Golan@audiocodes.com</emailAddress>
