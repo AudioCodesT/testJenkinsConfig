@@ -175,7 +175,7 @@ echo "***** End Retrieve ECR"
         </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
       </configuredTriggers>
       <contentType>text/html</contentType>
-      <defaultSubject>$BUILD_STATUS: Docker Scan</defaultSubject>
+      <defaultSubject>$BUILD_STATUS: Docker Scan - $version</defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
       <attachmentsPattern>**/*.log,**/vag*.json</attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
