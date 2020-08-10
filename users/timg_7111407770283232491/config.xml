@@ -63,6 +63,7 @@
         <string># MSBR</string>
         <string>AudioCodes_VPN</string>
         <string># RnD Israel</string>
+        <string>Allow_Teamviewer_Support</string>
         <string>cc_sys_users</string>
         <string># All AudioCodes</string>
         <string>NewUser_Israel-Lod</string>
@@ -72,7 +73,7 @@
         <string>365_MFA_Apps</string>
         <string># MSBR ETAS</string>
       </roles>
-      <timestamp>1590484272976</timestamp>
+      <timestamp>1597061797659</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
     <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.3.2">
       <providerId>default</providerId>
