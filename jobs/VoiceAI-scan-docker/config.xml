@@ -1,7 +1,12 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>1. Scan docker images of given version from Artifactory with snyk and trivy&#13;
-2. Get ECR scan for given version</description>
+  <description>1. Pull docker images of given version from Artifactory&#13;
+    1.1 Scan docker images with snyk&#13;
+    1.2 Scan security with snyk&#13;
+    1.3 Scan docker images with trivy&#13;
+2. Get ECR scan for given version&#13;
+&#13;
+By default all steps are enabled, but they are selectable at run time.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
