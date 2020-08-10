@@ -118,11 +118,11 @@ fi
 ## Create .netrc
 [[ -f ~/.netrc ]] &amp;&amp; rm ~/.netrc
 echo "machine docker-voice-ai.artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
-echo "login jenkins" &gt;&gt; ~/.netrc
-echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
+echo "login ${artiUser}" &gt;&gt; ~/.netrc
+echo "password ${artiPasswd}" &gt;&gt; ~/.netrc
 echo "machine docker-voice-ai.test-artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
-echo "login jenkins" &gt;&gt; ~/.netrc
-echo "password ${jenkinsPass}" &gt;&gt; ~/.netrc
+echo "login ${artiUser}" &gt;&gt; ~/.netrc
+echo "password ${artiPasswd}" &gt;&gt; ~/.netrc
 
 ## Create AWS files
 [[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
@@ -347,6 +347,11 @@ DevOps Team</defaultContent>
           <accessKeyVariable>AWS_ACCESS_KEY_ID</accessKeyVariable>
           <secretKeyVariable>AWS_SECRET_ACCESS_KEY</secretKeyVariable>
         </com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
+          <usernameVariable>artiUser</usernameVariable>
+          <passwordVariable>artiPasswd</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
