@@ -164,7 +164,7 @@ if [[ "$do_snyk_docker" == "true" || "$do_snyk_security" == "true" || "$do_trivy
 		## snyk
 		echo "***** Start Snyk Docker"
 		export NODE_TLS_REJECT_UNAUTHORIZED=0
-		export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
+		export SNYK_TOKEN=4b4c2b13-8035-4bf1-888d-dae48eacce7e
 		#snyk config set disableSuggestions=true
 		for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk_docker.log
 		echo "***** End Snyk Docker"
