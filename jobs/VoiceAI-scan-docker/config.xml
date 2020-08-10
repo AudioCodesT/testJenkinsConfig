@@ -124,12 +124,22 @@ docker-compose -f docker-compose-vag-${version}.yml pull
 docker images
 
 ## snyk
-echo "***** Start Snyk"
+echo "***** Start Snyk Docker"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export SNYK_TOKEN=f09d7e87-3cb1-4973-8131-b6e2534e5d2e
 #snyk config set disableSuggestions=true
-for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk.log
-echo "***** End Snyk"
+for i in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep vag); do /usr/bin/snyk test --docker $i; done &gt; snyk_docker.log
+echo "***** End Snyk Docker
+
+echo "***** Start Snyk Security"
+for dir in common session-manager services-mngr; do 
+( 
+  echo "Scanning $dir" 
+  cd $dir 
+  snyk test
+) 
+Done &gt; snyk_seccity.log
+echo "***** End Snyk Security"
 
 ## trivy
 echo "***** Start Trivy"
