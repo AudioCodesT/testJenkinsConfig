@@ -195,7 +195,7 @@ ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
 ECR_DOCKER_PREFIX="voice-ai"
 
 ## Login to docker registry on Artifactory
-echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
+echo ${artiPasswd} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
 
 ## Login to ECR
 $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
