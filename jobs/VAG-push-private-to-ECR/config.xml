@@ -1,7 +1,8 @@
-<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
   <actions/>
-  <description>This job pulls VoiceAI docker images from the Artifactory repository and pushes them to ECR.&#13;
-Fill in the details for each image.&#13;
+  <description>This job pulls VoiceAI docker images from the Artifactory repository and pushes them to ECR.&#xd;
+Fill in the details for each image.&#xd;
 Images without tags will not be processed.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -10,7 +11,7 @@ Images without tags will not be processed.</description>
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs/>
+      <blockingJobs></blockingJobs>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
       <optOut>false</optOut>
@@ -23,14 +24,14 @@ Images without tags will not be processed.</description>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_CHANGE_NUMBER</name>
-          <description/>
-          <defaultValue/>
+          <description></description>
+          <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>GERRIT_PATCHSET_NUMBER</name>
-          <description/>
-          <defaultValue/>
+          <description></description>
+          <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -42,9 +43,9 @@ Images without tags will not be processed.</description>
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit/>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <assignedNode>VoiceAI-build</assignedNode>
@@ -60,17 +61,17 @@ Images without tags will not be processed.</description>
       <command>##
 
 ### Add AudioCodes Public certificate to local machine
-echo "*** Verify AUDC certificate ***"
+echo &quot;*** Verify AUDC certificate ***&quot;
 curl --version &amp;&gt;/dev/null || (sudo apt update &amp;&amp; sudo apt -y install curl)
 if ! curl -s -o /dev/null https://artifactory; then
-  echo "Installing AudioCodes CA certificate."
-  dist=$(cat /etc/*release* | grep -e "^ID=" | cut -d'=' -f2)
-  if [[ "$dist" == "ubuntu" ]]; then
+  echo &quot;Installing AudioCodes CA certificate.&quot;
+  dist=$(cat /etc/*release* | grep -e &quot;^ID=&quot; | cut -d&apos;=&apos; -f2)
+  if [[ &quot;$dist&quot; == &quot;ubuntu&quot; ]]; then
     cert=/usr/local/share/ca-certificates/audc2016.crt
-    updtCAcmd="update-ca-certificates"
-  elif [[ "$dist" =~ "centos" ]]; then
+    updtCAcmd=&quot;update-ca-certificates&quot;
+  elif [[ &quot;$dist&quot; =~ &quot;centos&quot; ]]; then
     cert=/etc/pki/ca-trust/source/anchors/audc2016.crt
-    updtCAcmd="update-ca-trust"
+    updtCAcmd=&quot;update-ca-trust&quot;
   fi
   sudo rm -f $cert
   cat &lt;&lt;-EOL | sudo tee $cert &gt; /dev/null
@@ -112,17 +113,17 @@ EOL
   sleep 3
   sudo systemctl restart docker
 else
-  echo "Skipped installing AudioCodes CA certificate."
+  echo &quot;Skipped installing AudioCodes CA certificate.&quot;
 fi
 
 ## Create .netrc
 [[ -f ~/.netrc ]] &amp;&amp; rm ~/.netrc
-echo "machine docker-voice-ai.artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
-echo "login ${artiUser}" &gt;&gt; ~/.netrc
-echo "password ${artiPasswd}" &gt;&gt; ~/.netrc
-echo "machine docker-voice-ai.test-artifactory.corp.audiocodes.com" &gt;&gt; ~/.netrc
-echo "login ${artiUser}" &gt;&gt; ~/.netrc
-echo "password ${artiPasswd}" &gt;&gt; ~/.netrc
+echo &quot;machine docker-voice-ai.artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
+echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
+echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
+echo &quot;machine docker-voice-ai.test-artifactory.corp.audiocodes.com&quot; &gt;&gt; ~/.netrc
+echo &quot;login jenkins&quot; &gt;&gt; ~/.netrc
+echo &quot;password ${jenkinsPass}&quot; &gt;&gt; ~/.netrc
 
 ## Create AWS files
 [[ ! -d /home/centos/.aws ]] &amp;&amp; mkdir -p /home/centos/.aws
@@ -135,8 +136,8 @@ cat /home/centos/.aws/config
 
 cat &lt;&lt;-EOD &gt; /home/centos/.aws/credentials
 [default]
-aws_access_key_id = ${AWS_SECRET_KEY_ID}
-aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+aws_access_key_id = ${jenkinsAWSkey}
+aws_secret_access_key = ${jenkinsAWSsecret}
 EOD
 
 cat /home/centos/.aws/credentials
@@ -159,49 +160,49 @@ EOD</command>
 ymlPath=$(ls review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag*.yml | grep -v central | grep -v sm)
 ymlFile=$(basename $ymlPath)
 cp $ymlPath ./$ymlFile
-version=$(echo $ymlFile | sed 's|docker-compose-vag-||' | sed 's|.yml||')
-TAG=$(echo $ymlFile | sed 's:docker-compose-vag-::' | sed 's:-.*::')
+version=$(echo $ymlFile | sed &apos;s|docker-compose-vag-||&apos; | sed &apos;s|.yml||&apos;)
+TAG=$(echo $ymlFile | sed &apos;s:docker-compose-vag-::&apos; | sed &apos;s:-.*::&apos;)
 
 ## Set branch by $version
 case $TAG in
 	1.1*|1.2*)
-    	BRANCH="1.2"
+    	BRANCH=&quot;1.2&quot;
         ;;
     1.3*|1.4*)
-    	BRANCH="1.4"
+    	BRANCH=&quot;1.4&quot;
         ;;
     1.5*|1.6*)
-        BRANCH="1.6"
+        BRANCH=&quot;1.6&quot;
         ;;
     1.7*|1.8*)
-        BRANCH="1.8"
+        BRANCH=&quot;1.8&quot;
         ;;
     1.9*|2.0*)
-        BRANCH="2.0"
+        BRANCH=&quot;2.0&quot;
         ;;
-    2.1*|2.2*)
-        BRANCH="2.2"
+   2.1*|2.2*)
+        BRANCH=&quot;2.2&quot;
         ;;
     *)
-    	echo "Could not resolve TAG from yml file!!"
+    	echo &quot;Could not resolve TAG from yml file!!&quot;
         exit 1
         ;;
 esac
 
 ### Build the project
 ## Set docker vars
-ART_DOCKER_REG="docker-voice-ai.artifactory.corp.audiocodes.com"
-ECR_DOCKER_REG="858367874798.dkr.ecr.eu-central-1.amazonaws.com"
-ECR_DOCKER_PREFIX="voice-ai"
+ART_DOCKER_REG=&quot;docker-voice-ai.artifactory.corp.audiocodes.com&quot;
+ECR_DOCKER_REG=&quot;858367874798.dkr.ecr.eu-central-1.amazonaws.com&quot;
+ECR_DOCKER_PREFIX=&quot;voice-ai&quot;
 
 ## Login to docker registry on Artifactory
-echo ${artiPasswd} | docker login -u ${artiUser} --password-stdin ${ART_DOCKER_REG}
+echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${ART_DOCKER_REG}
 
 ## Login to ECR
 $(aws ecr get-login --no-include-email --region eu-central-1) || exit 1
 
 ## Get images from yml file
-images=$(grep "image: docker-voice-ai" $ymlFile | cut -d/ -f2)
+images=$(grep &quot;image: docker-voice-ai&quot; $ymlFile | cut -d/ -f2)
 
 ## Pull images from Artifactory, tag for ECR &amp; push to ECR
 for img in ${images}; do
@@ -209,18 +210,18 @@ for img in ${images}; do
     tag=$(echo $img | cut -d: -f2)
     
     ## Create remote repository if not exist
-    awsCommand="aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}"
+    awsCommand=&quot;aws ecr describe-repositories --repository-name ${ECR_DOCKER_PREFIX}/${image}&quot;
     if [[ ! $($awsCommand) ]]; then
-        echo "*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}"
-        aws ecr create-repository --repository-name "${ECR_DOCKER_PREFIX}/${image}"
+        echo &quot;*** Creating remote repository ${ECR_DOCKER_PREFIX}/${image}&quot;
+        aws ecr create-repository --repository-name &quot;${ECR_DOCKER_PREFIX}/${image}&quot;
     fi
     
     ## Pull, tag and push image to remote repository
     #  Image is pushed to ECR once with the tag it was pulled from Artifactory
     #  and once with YAML version tag
-    docker pull ${ART_DOCKER_REG}/"${image}:${tag}"
-    docker tag ${ART_DOCKER_REG}/"${image}:${tag}" ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
-    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/"${image}:${version}"
+    docker pull ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot;
+    docker tag ${ART_DOCKER_REG}/&quot;${image}:${tag}&quot; ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
+    docker push ${ECR_DOCKER_REG}/${ECR_DOCKER_PREFIX}/&quot;${image}:${version}&quot;
 done
 
 ## Create YAMLs for ECR
@@ -234,12 +235,12 @@ done
 cd ${WORKSPACE}
 
 changeDir=${GERRIT_CHANGE_NUMBER: -2}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}
-git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-git fetch "ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector" refs/changes/$changeDir &amp;&amp; git checkout FETCH_HEAD
+git config core.sshCommand &apos;ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no&apos;
+git fetch &quot;ssh://jenkins@test-gerrit:29418/TP/Tools/VoiceAIConnector&quot; refs/changes/$changeDir &amp;&amp; git checkout FETCH_HEAD
 . docker/gen-ecr-files.sh
 #
 ## Copy YAML files to S3
-aws s3 sync "ecr" s3://voice-ai/docker-compose/${version}
+aws s3 sync &quot;ecr&quot; s3://voice-ai/docker-compose/${version}
 ls -l ecr
 
 ## Properties to export to environment
@@ -250,7 +251,7 @@ cat VAG.properties
     </hudson.tasks.Shell>
     <EnvInjectBuilder plugin="envinject@2.3.0">
       <info>
-        <propertiesFilePath>voiceAI.properties</propertiesFilePath>
+        <propertiesFilePath>VAG.properties</propertiesFilePath>
       </info>
     </EnvInjectBuilder>
   </builders>
@@ -267,7 +268,7 @@ version: ${version}</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern/>
+            <attachmentsPattern></attachmentsPattern>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -283,7 +284,7 @@ version: ${version}</body>
               <hudson.plugins.emailext.plugins.recipients.RequesterRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
             </recipientProviders>
-            <attachmentsPattern/>
+            <attachmentsPattern></attachmentsPattern>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
             <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
@@ -318,7 +319,7 @@ $BUILD_URL
 
 Regards,
 DevOps Team</defaultContent>
-      <attachmentsPattern/>
+      <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
@@ -328,7 +329,7 @@ DevOps Team</defaultContent>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
-      <recipients>ben.magriso, yuval.yosha shuky.riechard</recipients>
+      <recipients>shuky.riechard yuvaly</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
@@ -340,18 +341,8 @@ DevOps Team</defaultContent>
           <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
           <keyFileVariable>TEST_GERRIT_KEY</keyFileVariable>
           <usernameVariable>TEST_GERRIT_USER</usernameVariable>
-          <passphraseVariable/>
+          <passphraseVariable></passphraseVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
-        <com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding plugin="aws-credentials@1.28">
-          <credentialsId>e26ebef3-9d54-4910-8686-9989f959e8db</credentialsId>
-          <accessKeyVariable>AWS_ACCESS_KEY_ID</accessKeyVariable>
-          <secretKeyVariable>AWS_SECRET_ACCESS_KEY</secretKeyVariable>
-        </com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>
-        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-          <credentialsId>e7c58828-5cf7-40cb-9acd-00d9c7419212</credentialsId>
-          <usernameVariable>artiUser</usernameVariable>
-          <passwordVariable>artiPasswd</passwordVariable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jfrog.hudson.generic.ArtifactoryGenericConfigurator plugin="artifactory@3.6.1">
@@ -366,51 +357,51 @@ DevOps Team</defaultContent>
         <stagingPlugin/>
       </resolverDetails>
       <deployerCredentialsConfig>
-        <credentialsId/>
+        <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </deployerCredentialsConfig>
       <resolverCredentialsConfig>
-        <credentialsId/>
+        <credentialsId></credentialsId>
         <overridingCredentials>false</overridingCredentials>
         <ignoreCredentialPluginDisabled>false</ignoreCredentialPluginDisabled>
       </resolverCredentialsConfig>
       <useSpecs>true</useSpecs>
       <uploadSpec>
-        <spec/>
+        <spec></spec>
       </uploadSpec>
       <downloadSpec>
         <spec>{
-    "files": [
+    &quot;files&quot;: [
         {
-            "pattern": "docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag-*.yml"
+            &quot;pattern&quot;: &quot;docker-voice-ai-files/review/${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}/docker-compose-vag-*.yml&quot;
         }
     ]
 }
 
 </spec>
       </downloadSpec>
-      <deployPattern/>
-      <resolvePattern/>
-      <deploymentProperties/>
+      <deployPattern></deployPattern>
+      <resolvePattern></resolvePattern>
+      <deploymentProperties></deploymentProperties>
       <deployBuildInfo>true</deployBuildInfo>
       <includeEnvVars>false</includeEnvVars>
       <envVarsPatterns>
-        <includePatterns/>
+        <includePatterns></includePatterns>
         <excludePatterns>*password*,*secret*,*key*</excludePatterns>
       </envVarsPatterns>
       <discardOldBuilds>false</discardOldBuilds>
       <discardBuildArtifacts>true</discardBuildArtifacts>
       <asyncBuildRetention>false</asyncBuildRetention>
       <multiConfProject>false</multiConfProject>
-      <customBuildName/>
+      <customBuildName></customBuildName>
       <overrideBuildName>false</overrideBuildName>
     </org.jfrog.hudson.generic.ArtifactoryGenericConfigurator>
     <EnvInjectBuildWrapper plugin="envinject@2.3.0">
       <info>
         <propertiesContent>PATH=/usr/local/bin:$PATH</propertiesContent>
         <secureGroovyScript plugin="script-security@1.71">
-          <script/>
+          <script></script>
           <sandbox>false</sandbox>
         </secureGroovyScript>
         <loadFilesFromMaster>false</loadFilesFromMaster>
@@ -421,14 +412,22 @@ DevOps Team</defaultContent>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
-          <name>compile_password</name>
-          <value>{AQAAABAAAAAQPY50vRNvthCH7ggesYABcI96739w+VTBOPMAZnvNH1U=}</value>
+          <name>jenkinsPass</name>
+          <value>{AQAAABAAAAAQ6rtTtv8r70ltBj28MYVLbLVTeS4ml43orT+2gD6O9VI=}</value>
+        </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>jenkinsAWSkey</name>
+          <value>{AQAAABAAAAAgOHQ+FnGTnqCzo91JmbX91fV9w7bxM6ZojzmYWnyWgZUs86edpekeCBwi3NkXaA6f}</value>
+        </EnvInjectPasswordEntry>
+        <EnvInjectPasswordEntry>
+          <name>jenkinsAWSsecret</name>
+          <value>{AQAAABAAAAAwX2f2p41z6F9Up89quZKSI9m8FOW+SnJZdxYaSkXXfIRHJtN3fwYIbDf4gNGcPqzQaGRc3CA+EMKfdJEuVlMzvw==}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
-      <template>#${BUILD_NUMBER}__${NEWTAG}</template>
-      <descriptionTemplate/>
+      <template>#${BUILD_NUMBER}_${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}</template>
+      <descriptionTemplate></descriptionTemplate>
       <runAtStart>true</runAtStart>
       <runAtEnd>true</runAtEnd>
     </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
