@@ -32,7 +32,7 @@ In case the branch missing a TAG, the job will create it for each user after 5 m
         <hudson.model.StringParameterDefinition>
           <name>Branch</name>
           <description/>
-          <defaultValue/>
+          <defaultValue>NextGenCPE_R4</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
