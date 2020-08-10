@@ -142,13 +142,14 @@ echo "***** Start Retrieve ECR"
 # BUT, if it is needed, use following line:
 # for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr start-image-scan --repository-name voice/$image --image-id imageTag=$version; done
 for r in $(grep "image: " docker-compose-vag-ecr-${version}.yml | grep vag | gawk '{print $2}'); do image=$(echo ${r##*/} | cut -d':' -f1); /usr/local/bin/aws ecr describe-image-scan-findings --repository-name voice-ai/$image --image-id imageTag=$version &gt; $image.json; done
+zip ecr_json_files.zip *.json
 echo "***** End Retrieve ECR"
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>*.log,*.json</artifacts>
+      <artifacts>*.log,ecr_json_files.zip</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
