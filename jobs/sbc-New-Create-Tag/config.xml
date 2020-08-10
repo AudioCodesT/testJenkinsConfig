@@ -177,12 +177,12 @@ function createTag {
   Fix=`expr 1 + $FixNum`
   NEWTAG=`echo $LastTag | cut -d. -f1-3`.`printf "%03d" $Fix`
   #NEWTAG=`echo $LastTag | sed -r 's/(.*)\.[^\d]+$/\1/'`.`echo $LastTag | awk -F. '{print $NF+1}'`
-  ##git tag -a -m "Jenkins auto tag after $LastUser commit" $NEWTAG $LastSha1
-  ##git push origin $NEWTAG
-  ##curl -k "https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG" || echo Access Rebaser failed
+  git tag -a -m "Jenkins auto tag after $LastUser commit" $NEWTAG $LastSha1
+  git push origin $NEWTAG
+  curl -k "https://rebaser/build/job/GWApp-stats/buildWithParameters?delay=0sec&amp;token=stats&amp;Baseline=$NEWTAG" || echo Access Rebaser failed
   SubModules=`git diff --name-only $RealLastTag $LastSha1 -- OpenSource | sed 's:OpenSource/::; s:/.*::' | sort -u`
   LastTag=$NEWTAG
-  ##for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
+  for SubMod in `echo $SubModules`; do createSubModuleTag $SubMod $NEWTAG; done
 }
 
 if [ -z "$GERRIT_BRANCH" ]; then exit 0; fi
