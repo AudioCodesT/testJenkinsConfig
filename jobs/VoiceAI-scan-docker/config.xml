@@ -274,6 +274,8 @@ done</command>
       <defaultSubject>$BUILD_STATUS: VoiceAI Scan Report - $version</defaultSubject>
       <defaultContent>${FILE,path="report.html"}
 
+&lt;/br&gt;
+
 $DEFAULT_CONTENT</defaultContent>
       <attachmentsPattern>**/*.log,**/ecr.json</attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
