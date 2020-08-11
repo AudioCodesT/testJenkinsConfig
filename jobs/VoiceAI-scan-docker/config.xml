@@ -279,7 +279,7 @@ $DEFAULT_CONTENT</defaultContent>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
+      <disabled>true</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.32">
       <recipients>yuvaly@audiocodes.com shukyr@audiocodes.com</recipients>
