@@ -234,9 +234,9 @@ for f in snyk_docker.log snyk_security.log trivy.log ecr.json; do
     scoreLow=$(grep -i "low" $f | wc -l)
     cat &lt;&lt;-EOF &gt;&gt; report.html
 	&lt;h3&gt;&lt;u&gt;$f&lt;/u&gt;:&lt;/h3&gt;
-	&lt;font color="#ff0000"&gt;&lt;b&gt;High:&lt;/b&gt;	$scoreHigh&lt;/font&gt;&lt;/br&gt;
-	&lt;font color="#ff8800"&gt;&lt;b&gt;Medium:&lt;/b&gt;	$scoreMedium&lt;/font&gt;&lt;/br&gt;
-	&lt;font color="#ffff00"&gt;&lt;b&gt;Low:&lt;/b&gt;	$scoreLow&lt;/font&gt;&lt;/br&gt;
+	&lt;p style="color:red"&gt;&lt;b&gt;High:&lt;/b&gt;	$scoreHigh&lt;/p&gt;
+	&lt;p style="color:orange"&gt;&lt;b&gt;Medium:&lt;/b&gt;	$scoreMedium&lt;/p&gt;
+	&lt;p style="color:yellow"&gt;&lt;b&gt;Low:&lt;/b&gt;	$scoreLow&lt;/p&gt;
 EOF
 )
 done</command>
