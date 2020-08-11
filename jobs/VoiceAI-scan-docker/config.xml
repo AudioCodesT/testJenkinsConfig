@@ -119,6 +119,7 @@ Host test-gerrit
 EOD
 
 ## Checkout version - TAG or BRANCH
+echo "***** Checkout $version"
 git fetch --all --tags
 [[ $(git branch -r | grep -v HEAD | cut -d'/' -f2 | grep $version) ]] &amp;&amp; git checkout $version || git checkout refs/tags/$version
 
@@ -272,7 +273,7 @@ done</command>
       <defaultContent>${FILE,path="report.html"}
 
 $DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern>**/*.log,**/vag*.json</attachmentsPattern>
+      <attachmentsPattern>**/*.log,**/ecr.json</attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
       <attachBuildLog>false</attachBuildLog>
