@@ -310,7 +310,11 @@ echo "Step 1 - Login to docker registry."
 echo ${jenkinsPass} | docker login -u jenkins --password-stdin ${DOCKER_URL}
 
 echo "Step 2 - Tagging &amp; pushing images to Artifactory."
-## Tag images with NEWTAG &amp; BRANCH and push to Artifactory
+# Tag with TAG and push to artifactory only images that are changed in this build.
+#
+# If NEWTAG is lower then BRANCH,
+# tag all images of this build - changed and unchanged - with BRANCH
+#
 for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep ${BRANCH} | grep -v vag-common); do
     imageName=$(echo $outcomeImage | gawk -F: '{print $1}')
     imageID=$(echo $outcomeImage | gawk -F: '{print $3}')
@@ -318,22 +322,24 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
     #docker images vag-*
     #imageID=$(docker images vag-* | grep "${BRANCH}" | grep "$dockerImage" | gawk '{print $3}')
 
+    if [[ "$(echo $HASHES | grep -q ${imageID})" == "" ]]; then
         docker tag ${imageID} ${DOCKER_REG}/${imageName}:${NEWTAG}
         docker push ${DOCKER_REG}/${imageName}:${NEWTAG}
-        
-        if [[ $NEWTAG &lt; $BRANCH ]]; then
-	        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
-    	    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
-        fi
+    fi
+    
+    if [[ $NEWTAG &lt; $BRANCH ]]; then
+		docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
+    	docker push ${DOCKER_REG}/${imageName}:${BRANCH}
+    fi
 
-        #allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq '.tags[]')
-        #highTag=$(echo "$allTags" | grep -F ${TAGVER} | grep -v -e "\-g.*" | sort -t'.' -n -k3 | tail -n 1)
-        #highTag=${highTag:1:-1}
-        #higherTag=$(echo -e "$highTag\n${NEWTAG}" | sort -t'.' -n -k3 | tail -n 1)
-        #if [[ "$higherTag" == "${NEWTAG}" ]]; then
-        #    docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
-        #    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
-        #fi
+    #allTags=$(curl -u jenkins:$jenkinsPass -k https://$DOCKER_URL/v2/$imageName/tags/list | jq '.tags[]')
+    #highTag=$(echo "$allTags" | grep -F ${TAGVER} | grep -v -e "\-g.*" | sort -t'.' -n -k3 | tail -n 1)
+    #highTag=${highTag:1:-1}
+    #higherTag=$(echo -e "$highTag\n${NEWTAG}" | sort -t'.' -n -k3 | tail -n 1)
+    #if [[ "$higherTag" == "${NEWTAG}" ]]; then
+    #    docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
+    #    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
+    #fi
 done
 
 echo "Finished docker push to Artifactory."
