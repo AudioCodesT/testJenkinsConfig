@@ -256,11 +256,11 @@ cat &lt;&lt;EOF &gt; message.html
 &lt;html&gt;
         &lt;body&gt;
                 &lt;p&gt;
-	                &lt;H3&gt;Docker images pushed to ECR:&lt;/H3&gt;&lt;/br&gt;
+	                &lt;H3&gt;Docker images pushed to ECR:&lt;/H3&gt;
     	            ${IMAGES}&lt;/br&gt;
                 &lt;/p&gt;
                 &lt;p&gt;
-	                &lt;H3&gt;YAML files uploaded to S3:&lt;/H3&gt;&lt;/br&gt;
+	                &lt;H3&gt;YAML files uploaded to S3:&lt;/H3&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}.yml"&gt;docker-compose-vag-ecr-${version}.yml&lt;/a&gt;&lt;/br&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}-sm.yml"&gt;docker-compose-vag-ecr-${version}-sm.yml&lt;/a&gt;&lt;/br&gt;
 	                &lt;a href="https://voice-ai.s3.eu-central-1.amazonaws.com/docker-compose/${version}/docker-compose-vag-ecr-${version}-central.yml"&gt;docker-compose-vag-ecr-${version}-central.yml&lt;/a&gt;&lt;/br&gt;
