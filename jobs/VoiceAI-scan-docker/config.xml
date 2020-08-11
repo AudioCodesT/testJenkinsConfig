@@ -227,10 +227,10 @@ fi
 ## Generate report
 for f in snyk_docker.log snyk_security.log trivy.log ecr.json; do
 (
-	scoreHigh=$(grep -I "high" $f | wc -l)
-    scoreMedium=$(grep -I "medium" $f | wc -l)
-    scoreLow=$(grep -I "low" $f | wc -l)
-    cat &lt;&lt;-EOF &gt; report.html
+	scoreHigh=$(grep -i "high" $f | wc -l)
+    scoreMedium=$(grep -i "medium" $f | wc -l)
+    scoreLow=$(grep -i "low" $f | wc -l)
+    cat &lt;&lt;-EOF &gt;&gt; report.html
 "&lt;h3&gt;&lt;u&gt;$f&lt;/u&gt;:&lt;/h3&gt;"
 "&lt;b&gt;High:&lt;/b&gt;	$scoreHigh&lt;/br&gt;"
 "&lt;b&gt;Medium:&lt;/b&gt;	$scoreMedium&lt;/br&gt;"
