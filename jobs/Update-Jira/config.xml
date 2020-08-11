@@ -160,6 +160,7 @@ esac
 echo SendTo: $SendTo
 echo SendTo=$SendTo &gt; $WORKSPACE/SendTo.txt
 
+smtp_url=smtp://10.1.1.60:25
 ./Send_Email.pl $WORKSPACE/index.html "$EMAIL" "$SendTo" "yossim,Shuky.Riechard"
 </command>
     </hudson.tasks.Shell>
