@@ -107,7 +107,22 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>
+      <command>## Add private key for user jenkins on test-gerrit
+#  A bound credential is used.
+cat $TEST_GERRIT_KEY &gt; /home/centos/.ssh/id_rsa_test-gerrit
+chmod 600 /home/centos/.ssh/id_rsa_test-gerrit
+
+cat &lt;&lt;-EOD &gt;&gt; /home/centos/.ssh/config
+Host test-gerrit
+    Hostname test-gerrit
+    User $TEST_GERRIT_USER
+    IdentityFile ~/.ssh/id_rsa_test-gerrit
+EOD
+
+## Checkout version - TAG or BRANCH
+git fetch --all --tags
+[[ $(git branch -r | grep -v HEAD | cut -d'/' -f2 | grep $version) ]] &amp;&amp; git checkout $version || git checkout refs/tags/$version
+
 set +e
 
 ## Set docker vars
@@ -295,6 +310,12 @@ $DEFAULT_CONTENT</defaultContent>
           <credentialsId>b9b31af5-7c6c-4c60-9b7b-ab8e6551194e</credentialsId>
           <variable>snykToken</variable>
         </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+          <credentialsId>fef9964a-ddb7-4ce6-a445-a99a9e9802c0</credentialsId>
+          <keyFileVariable>TEST_GERRIT_KEY</keyFileVariable>
+          <usernameVariable>TEST_GERRIT_USER</usernameVariable>
+          <passphraseVariable/>
+        </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@2.0.3">
