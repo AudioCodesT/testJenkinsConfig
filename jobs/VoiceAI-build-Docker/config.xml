@@ -321,7 +321,7 @@ for outcomeImage in $(docker images vag-* --format "{{.Repository}}:{{.Tag}}:{{.
         docker tag ${imageID} ${DOCKER_REG}/${imageName}:${NEWTAG}
         docker push ${DOCKER_REG}/${imageName}:${NEWTAG}
         
-        if [[ NEWTAG &lt; BRANCH ]]; then
+        if [[ $NEWTAG &lt; $BRANCH ]]; then
 	        docker tag ${imageID} ${DOCKER_REG}/${imageName}:${BRANCH}
     	    docker push ${DOCKER_REG}/${imageName}:${BRANCH}
         fi
