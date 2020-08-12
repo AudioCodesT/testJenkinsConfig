@@ -239,7 +239,8 @@ for f in snyk_docker.log snyk_security.log trivy.log ecr.json; do
 	&lt;span style="color:gold"&gt;&lt;b&gt;Low:&lt;/b&gt;	$scoreLow&lt;/span&gt;&lt;/br&gt;
 EOF
 )
-done</command>
+done
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
