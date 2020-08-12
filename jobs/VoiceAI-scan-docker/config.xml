@@ -252,7 +252,7 @@ done</command>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
-      <recipientList>Orgad.Shaneh@audiocodes.com,Shmulik.Yudkovich@audiocodes.com,shuky.riechard@audiocodes.com,yuvaly@audiocodes.com</recipientList>
+      <recipientList>VAIGAUTOMATIONRESULT@audiocodes.com,shuky.riechard@audiocodes.com,yuvaly@audiocodes.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
