@@ -236,7 +236,7 @@ for f in snyk_docker.log snyk_security.log trivy.log ecr.json; do
 	&lt;h3&gt;&lt;u&gt;$f&lt;/u&gt;:&lt;/h3&gt;
 	&lt;span style="color:red"&gt;&lt;b&gt;High:&lt;/b&gt;	$scoreHigh&lt;/span&gt;
 	&lt;span style="color:orange"&gt;&lt;b&gt;Medium:&lt;/b&gt;	$scoreMedium&lt;/span&gt;
-	&lt;span style="color:yellow"&gt;&lt;b&gt;Low:&lt;/b&gt;	$scoreLow&lt;/span&gt;
+	&lt;span style="color:gold"&gt;&lt;b&gt;Low:&lt;/b&gt;	$scoreLow&lt;/span&gt;
 EOF
 )
 done</command>
