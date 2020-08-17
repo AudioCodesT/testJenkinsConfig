@@ -1,10 +1,9 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
   <actions/>
-  <description>1.       Get latest code&#xd;
-2.       Run clean install&#xd;
-3.       Run mkisofs command:&#xd;
-mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.properties&#xd;
+  <description>1.       Get latest code&#13;
+2.       Run clean install&#13;
+3.       Run mkisofs command:&#13;
+mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.properties&#13;
 </description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -13,7 +12,7 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       <useBuildBlocker>false</useBuildBlocker>
       <blockLevel>GLOBAL</blockLevel>
       <scanQueueFor>DISABLED</scanQueueFor>
-      <blockingJobs></blockingJobs>
+      <blockingJobs/>
     </hudson.plugins.buildblocker.BuildBlockerProperty>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
@@ -37,10 +36,11 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       <throttleEnabled>false</throttleEnabled>
       <throttleOption>project</throttleOption>
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-      <paramsToUseForLimit></paramsToUseForLimit>
+      <paramsToUseForLimit/>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -57,9 +57,11 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions>
-      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
+        <deleteUntrackedNestedRepositories>false</deleteUntrackedNestedRepositories>
+      </hudson.plugins.git.extensions.impl.CleanBeforeCheckout>
       <hudson.plugins.git.extensions.impl.BuildChooserSetting>
-        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.27.5">
+        <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser" plugin="gerrit-trigger@2.30.5">
           <separator>#</separator>
         </buildChooser>
       </hudson.plugins.git.extensions.impl.BuildChooserSetting>
@@ -71,8 +73,8 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.27.5">
-      <spec></spec>
+    <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger plugin="gerrit-trigger@2.30.5">
+      <spec/>
       <gerritProjects>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           <compareType>PLAIN</compareType>
@@ -94,6 +96,10 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
               <compareType>ANT</compareType>
               <pattern>7.8*</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              <compareType>PLAIN</compareType>
+              <pattern>8.0</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
@@ -107,31 +113,33 @@ mkisofs -V EMS_DVD -o /home/acems/hadas.iso -R -J -joliet-long /home/acems/*.pro
       </skipVote>
       <gerritBuildSuccessfulVerifiedValue>1</gerritBuildSuccessfulVerifiedValue>
       <silentMode>false</silentMode>
-      <notificationLevel></notificationLevel>
+      <notificationLevel/>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
-      <dependencyJobsNames></dependencyJobsNames>
+      <dependencyJobsNames/>
       <commitMessageParameterMode>BASE64</commitMessageParameterMode>
       <changeSubjectParameterMode>PLAIN</changeSubjectParameterMode>
       <commentTextParameterMode>BASE64</commentTextParameterMode>
-      <buildStartMessage></buildStartMessage>
-      <buildFailureMessage></buildFailureMessage>
-      <buildSuccessfulMessage></buildSuccessfulMessage>
-      <buildUnstableMessage></buildUnstableMessage>
-      <buildNotBuiltMessage></buildNotBuiltMessage>
-      <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-      <customUrl></customUrl>
+      <buildStartMessage/>
+      <buildFailureMessage/>
+      <buildSuccessfulMessage/>
+      <buildUnstableMessage/>
+      <buildNotBuiltMessage/>
+      <buildUnsuccessfulFilepath/>
+      <customUrl/>
       <serverName>test-gerrit</serverName>
       <triggerOnEvents>
         <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
           <excludeDrafts>false</excludeDrafts>
           <excludeTrivialRebase>false</excludeTrivialRebase>
           <excludeNoCodeChange>false</excludeNoCodeChange>
+          <excludePrivateState>false</excludePrivateState>
+          <excludeWipState>false</excludeWipState>
         </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent>
       </triggerOnEvents>
       <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-      <triggerConfigURL></triggerConfigURL>
+      <triggerConfigURL/>
       <triggerInformationAction/>
     </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger>
   </triggers>
@@ -148,15 +156,15 @@ mkdir -p ${WORKSPACE}/emsFiles/Logs
 cd EMS/tools/
 if [[ -e compile_perl_scripts.pl ]]
 then
-	if [[ ! &quot;$GERRIT_BRANCH&quot; == &quot;7.4.1000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.2000&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.4.3000&quot; ]]
+	if [[ ! "$GERRIT_BRANCH" == "7.4.1000" || "$GERRIT_BRANCH" == "7.4.2000" || "$GERRIT_BRANCH" == "7.4.3000" ]]
     then	
     	set +e
-        echo &quot;***************************** running the perl script******************************&quot;
+        echo "***************************** running the perl script******************************"
 		sudo perl compile_perl_scripts.pl
 		RetunedValue=$?
-        echo &quot;***************************** finish running the script******************************&quot;
+        echo "***************************** finish running the script******************************"
         set -e
-		if [[ ! $RetunedValue == &quot;0&quot; ]]
+		if [[ ! $RetunedValue == "0" ]]
     	then
     	#if the script failed
         cd ${WORKSPACE}
@@ -171,9 +179,9 @@ fi
 </command>
     </hudson.tasks.Shell>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
         <command>#execute to all branches until 7.8
-if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;7.4&quot; || &quot;$GERRIT_BRANCH&quot; =~ &quot;7.6&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.8&quot; ]]
+if [[ "$GERRIT_BRANCH" =~ "7.4" || "$GERRIT_BRANCH" =~ "7.6" || "$GERRIT_BRANCH" == "7.8" ]]
 then
 exit 0
 else
@@ -192,12 +200,12 @@ fi</command>
         <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
         <injectBuildVariables>false</injectBuildVariables>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder plugin="conditional-buildstep@1.3.6">
-      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.0">
+      <condition class="org.jenkins_ci.plugins.run_condition.contributed.ShellCondition" plugin="run-condition@1.3">
         <command>#execute to all branches from 7.8.1000
-if [[ &quot;$GERRIT_BRANCH&quot; =~ &quot;7.4&quot; || &quot;$GERRIT_BRANCH&quot; =~ &quot;7.6&quot; || &quot;$GERRIT_BRANCH&quot; == &quot;7.8&quot; ]]
+if [[ "$GERRIT_BRANCH" =~ "7.4" || "$GERRIT_BRANCH" =~ "7.6" || "$GERRIT_BRANCH" == "7.8" ]]
 then
 exit 1
 fi</command>
@@ -214,12 +222,12 @@ fi</command>
         <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
         <injectBuildVariables>false</injectBuildVariables>
       </buildStep>
-      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.0"/>
+      <runner class="org.jenkins_ci.plugins.run_condition.BuildStepRunner$Fail" plugin="run-condition@1.3"/>
     </org.jenkinsci.plugins.conditionalbuildstep.singlestep.SingleConditionalBuilder>
     <hudson.tasks.Shell>
       <command>############ OLD Sputnik ############
 #/home/centos/sputnik/bin/sputnik --conf /home/centos/sputnik/gerrit.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION
-#echo &quot;exit 0 workaround&quot;
+#echo "exit 0 workaround"
 
 # Run Sputnik pmd
 cat &lt;&lt;-EOF &gt; ~/.netrc
@@ -243,7 +251,7 @@ cd ${WORKSPACE}
 
 ## Run Sputnik
 cat ems-ovoc-pmd.properties
-/home/centos/sputnik/bin/sputnik --conf ${WORKSPACE}/ems-ovoc-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo &quot;*****   sputnik failed   *****&quot; &amp;&amp; exit 0; }
+/home/centos/sputnik/bin/sputnik --conf ${WORKSPACE}/ems-ovoc-pmd.properties --changeId $GERRIT_CHANGE_ID --revisionId $GERRIT_PATCHSET_REVISION || { echo "*****   sputnik failed   *****" &amp;&amp; exit 0; }
 
 
 </command>
@@ -273,8 +281,8 @@ cat ems-ovoc-pmd.properties
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <hudson.tasks.Mailer plugin="mailer@1.30">
-      <recipients></recipients>
+    <hudson.tasks.Mailer plugin="mailer@1.32">
+      <recipients/>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
@@ -297,7 +305,7 @@ cat ems-ovoc-pmd.properties
         <hudson.plugins.build__timeout.operations.FailOperation/>
       </operationList>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.6">
+    <EnvInjectPasswordWrapper plugin="envinject@2.3.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
