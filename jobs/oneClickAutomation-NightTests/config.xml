@@ -94,9 +94,9 @@ pip3 install --user -r requirements.txt
 cd Tests
 if [[ "${FullTesting}" == "1" ]]
 then
-	python -m pytest -m full_run --reportportal
+	python3 -m pytest -m full_run --reportportal
 else
-	python -m pytest -m short_run --reportportal
+	python3 -m pytest -m short_run --reportportal
 fi
 </command>
     </hudson.tasks.Shell>
