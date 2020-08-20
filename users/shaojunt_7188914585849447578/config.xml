@@ -9,7 +9,7 @@
         <tokenList/>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
-    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.0">
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.3.7">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
@@ -42,6 +42,7 @@
       <roles>
         <string># ROW employees</string>
         <string>authenticated</string>
+        <string>365_Comeet</string>
         <string>AWS_Jira_Users</string>
         <string>Citrix_Allow_Browsers</string>
         <string>Allowed RODC Password Replication Group</string>
@@ -49,6 +50,7 @@
         <string>ActionBase Users</string>
         <string># Kevin Zhu Team</string>
         <string>Palo_Amazon_RnD_Users_Access</string>
+        <string>Allow Office365 Groups</string>
         <string># ClearCase R&amp;D</string>
         <string># SZ Office</string>
         <string># R&amp;D System Software</string>
@@ -56,6 +58,7 @@
         <string># MP20x deliveries</string>
         <string>365_Tas</string>
         <string>Password Manager Apply</string>
+        <string>365_Lucca</string>
         <string># Abroad</string>
         <string>Offer Remote Assistance Helpers</string>
         <string>FTP_default</string>
@@ -67,11 +70,13 @@
         <string># All AudioCodes</string>
         <string>Certificate Service DCOM Access</string>
         <string>Domain Users</string>
+        <string>365_MFA_Apps</string>
       </roles>
-      <timestamp>1576052304054</timestamp>
+      <timestamp>1597916476421</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.29">
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.32">
       <emailAddress>ShaojunMidge.Tan@audiocodes.com</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>
