@@ -28,9 +28,15 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>OutputFileName</name>
+          <name>OutputFileNameM4000</name>
           <description/>
           <defaultValue>octeon_ebb6300_M4000</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>OutputFileNameM3100</name>
+          <description/>
+          <defaultValue>octeon_ebb6300_M3100</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
@@ -164,9 +170,15 @@ echo COMP_VER=${BL} &gt; generated_version.properties
       <command>sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+ls -l tools/mkimage*
+
 ./build_uboot
-zip -mj ${OutputFileName}_${COMP_VER}.zip ${OutputFileName}*
-ls -l ${OutputFileName}*
+zip -mj ${OutputFileNameM4000}_${COMP_VER}.zip ${OutputFileNameM4000}*
+ls -l ${OutputFileNameM4000}*
+
+./build_uboot M3100
+zip -mj ${OutputFileNameM3100}_${COMP_VER}.zip ${OutputFileNameM3100}*
+ls -l ${OutputFileNameM3100}*
 </command>
     </hudson.tasks.Shell>
   </builders>
@@ -230,7 +242,9 @@ ls -l ${OutputFileName}*
       <downloadSpec>
         <spec/>
       </downloadSpec>
-      <deployPattern>${WORKSPACE}/${OutputFileName}*.zip=&gt;com/ac/sbc/Flash/${GERRIT_BRANCH}/${COMP_VER}</deployPattern>
+      <deployPattern>${WORKSPACE}/${OutputFileNameM4000}*.zip=&gt;com/ac/sbc/Flash/${GERRIT_BRANCH}/${COMP_VER}
+${WORKSPACE}/${OutputFileNameM3100}*.zip=&gt;com/ac/sbc/Flash/${GERRIT_BRANCH}/${COMP_VER}
+${WORKSPACE}/tools/mkimage=&gt;com/ac/sbc/Flash/${GERRIT_BRANCH}/${COMP_VER}</deployPattern>
       <resolvePattern/>
       <deploymentProperties/>
       <deployBuildInfo>true</deployBuildInfo>
