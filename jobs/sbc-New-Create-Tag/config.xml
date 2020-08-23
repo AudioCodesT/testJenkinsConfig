@@ -130,7 +130,7 @@ In case the branch missing a TAG, the job will create it for each user after 5 m
         <onNotBuilt>false</onNotBuilt>
       </skipVote>
       <silentMode>false</silentMode>
-      <notificationLevel/>
+      <notificationLevel>NONE</notificationLevel>
       <silentStartMode>false</silentStartMode>
       <escapeQuotes>true</escapeQuotes>
       <nameAndEmailParameterMode>PLAIN</nameAndEmailParameterMode>
