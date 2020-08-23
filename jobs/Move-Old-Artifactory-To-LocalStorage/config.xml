@@ -31,7 +31,7 @@ Executed periodically every night.</description>
         <hudson.model.StringParameterDefinition>
           <name>OLD</name>
           <description>Delete all Artifacts OLD of this number of days </description>
-          <defaultValue>60</defaultValue>
+          <defaultValue>30</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
