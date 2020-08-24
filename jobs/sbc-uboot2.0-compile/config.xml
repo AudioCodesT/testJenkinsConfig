@@ -191,10 +191,12 @@ fi
       <command>sudo chmod -R 755 .
 sudo chown -R centos:centos .
 
+echo Compile M4000, no need parameter, it is the default uboot
 ./build_uboot
 zip -mj ${OutputFileNameM4000}_${COMP_VER}.zip ${OutputFileNameM4000}*
 ls -l ${OutputFileNameM4000}*
 
+echo Check if M3100 exist and compile it too
 if grep -q M3100 dceBuild_uboot; then
   ./build_uboot M3100
   zip -mj ${OutputFileNameM3100}_${COMP_VER}.zip ${OutputFileNameM3100}*
