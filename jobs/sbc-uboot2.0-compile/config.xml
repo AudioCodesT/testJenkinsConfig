@@ -195,10 +195,11 @@ sudo chown -R centos:centos .
 zip -mj ${OutputFileNameM4000}_${COMP_VER}.zip ${OutputFileNameM4000}*
 ls -l ${OutputFileNameM4000}*
 
-./build_uboot M3100
-zip -mj ${OutputFileNameM3100}_${COMP_VER}.zip ${OutputFileNameM3100}*
-ls -l ${OutputFileNameM3100}*
-</command>
+if grep -q M3100 dceBuild_uboot; then
+  ./build_uboot M3100
+  zip -mj ${OutputFileNameM3100}_${COMP_VER}.zip ${OutputFileNameM3100}*
+  ls -l ${OutputFileNameM3100}*
+fi</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
