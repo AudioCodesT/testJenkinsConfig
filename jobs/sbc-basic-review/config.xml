@@ -130,7 +130,7 @@ PATH=/bin:$PATH</propertiesContent>
           <branches>
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               <compareType>REG_EXP</compareType>
-              <pattern>^(?!(NextGenCPE|feature/M3100|7.)$).*$</pattern>
+              <pattern>^(?!(NextGenCPE|feature/M3100|7.*)$).*$</pattern>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
           </branches>
           <disableStrictForbiddenFileVerification>false</disableStrictForbiddenFileVerification>
